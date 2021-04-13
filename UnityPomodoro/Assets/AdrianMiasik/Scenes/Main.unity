@@ -173,13 +173,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fddaf18cac877e4a8c37fa3ac88abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playPause: {fileID: 1398670397}
+  playPauseButton: {fileID: 1918649965}
   reset: {fileID: 1299780897}
   progress: {fileID: 361292848}
-  setupColor: {r: 0, g: 0, b: 1, a: 1}
-  runningColor: {r: 0, g: 1, b: 0, a: 1}
-  completedColor: {r: 1, g: 0, b: 0, a: 1}
-  startingTime: 30
+  setupColor: {r: 0.05, g: 0.47, b: 0.95, a: 1}
+  runningColor: {r: 0.35, g: 0.89, b: 0.4, a: 1}
+  completedColor: {r: 0.97, g: 0.15, b: 0.15, a: 1}
+  startingTime: 15
 --- !u!114 &61516147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,7 +1474,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 61516146}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
-        m_MethodName: OnClickReset
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1579,7 +1579,7 @@ GameObject:
   - component: {fileID: 1398670395}
   - component: {fileID: 1398670397}
   m_Layer: 5
-  m_Name: Play/Pause Button
+  m_Name: PlayPause Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1687,9 +1687,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 61516146}
-        m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
-        m_MethodName: OnClickPlayPause
+      - m_Target: {fileID: 1918649965}
+        m_TargetAssemblyTypeName: AdrianMiasik.PlayPauseButton, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2050,7 +2050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1918649964}
   - component: {fileID: 1918649967}
-  - component: {fileID: 1918649966}
+  - component: {fileID: 1918649965}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -2077,7 +2077,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.625, y: 0.5}
---- !u!114 &1918649966
+--- !u!114 &1918649965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2086,11 +2086,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1918649963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
+  m_Script: {fileID: 11500000, guid: 12e537251d25487c9b15c3a87498e389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.34901962, g: 0.8901961, b: 0.4, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2099,6 +2099,40 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 3286163911610860551, guid: f83fc5dec6004d34bafc729346231d73, type: 3}
   m_PreserveAspect: 1
+  play: {fileID: 3286163911610860551, guid: f83fc5dec6004d34bafc729346231d73, type: 3}
+  pause: {fileID: 3286163911610860551, guid: f220233a22aab5247948ba702f264a8f, type: 3}
+  playColor: {r: 0.35, g: 0.89, b: 0.4, a: 1}
+  pauseColor: {r: 0.05, g: 0.47, b: 0.95, a: 1}
+  playOnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 61516146}
+        m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  pauseOnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 61516146}
+        m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1918649967
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -3,76 +3,87 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    // TODO: Remove debug logs
+    // TODO: Clean up
     public class PomodoroTimer : MonoBehaviour
     {
         [Header("Buttons")]
-        [SerializeField] private Button playPause;
-        [SerializeField] private Button reset;
+        [SerializeField] private PlayPauseButton playPauseButton;
 
         [SerializeField] private Image progress;
 
-        // TODO: Get correct color palette
-        // TODO: Pass colors to ring shader
-        [Header("Colors")]
-        [SerializeField] private Color setupColor = Color.blue;
-        [SerializeField] private Color runningColor = Color.green;
-        [SerializeField] private Color completedColor = Color.red;
-        
+        [Header("Colors")] 
+        [SerializeField] private Color setupColor = new Color(0.05f, 0.47f, 0.95f);
+        [SerializeField] private Color runningColor = new Color(0.35f, 0.89f, 0.4f);
+        [SerializeField] private Color completedColor = new Color(0.97f, 0.15f, 0.15f);
+
         public float startingTime = 15f; // in seconds
 
         // Cache
-        private bool isRunning = false;
-        private float currentTime = 0;
-
+        private bool _isRunning;
+        private float _currentTime;
+        private bool _isComplete;
+        
+        // Specific to our ring shader
+        private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+        
         private void Start()
         {
-            progress.color = setupColor;
+            Setup();
+        }
+
+        private void Setup()
+        {
+            _isComplete = false;
+            
+            Pause();
+            _currentTime = startingTime;
+            progress.fillAmount = 1f;
+            
+            playPauseButton.Initialize(_isRunning);
         }
 
         private void Update()
         {
-            if (isRunning)
+            if (_isRunning)
             {
-                if (currentTime <= 0)
+                if (_currentTime <= 0)
                 {
-                    Debug.Log("Timer is complete");
-                    isRunning = false;
+                    _isRunning = false;
                     progress.fillAmount = 1f;
-                    progress.color = completedColor;
+                    progress.material.SetColor(RingColor, completedColor);
+                    playPauseButton.Initialize(_isRunning);
+
+                    _isComplete = true;
+                    
+                    // Early exit
+                    return;
                 }
-                
-                progress.fillAmount = currentTime / startingTime;
-                currentTime -= Time.deltaTime;
+
+                progress.fillAmount = _currentTime / startingTime;
+                _currentTime -= Time.deltaTime;
             }
         }
 
-        public void OnClickPlayPause()
+        public void Play()
         {
-            Debug.Log("On click play pause");
+            if (_isComplete)
+            {
+                Setup();
+            }
             
-            // Play button
-            if (!isRunning)
-            {
-                currentTime = startingTime;
-                isRunning = true;
-                progress.color = runningColor;
-                // TODO: swap button sprite to pause
-            }
-            // Pause button
-            else
-            {   
-                // TODO: swap button sprite to play
-            }
+            _isRunning = true;
+            progress.material.SetColor(RingColor, runningColor);
         }
-        
-        public void OnClickReset()
+
+        public void Pause()
         {
-            Debug.Log("On click reset");
-            if (isRunning)
-            {
-                currentTime = startingTime;
-            }
+            _isRunning = false;
+            progress.material.SetColor(RingColor, setupColor);
+        }
+
+        public void Restart()
+        {
+            Setup();
         }
     }
 }
