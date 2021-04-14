@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    // TODO: Clean up
     public class PomodoroTimer : MonoBehaviour
     {
         [Header("Digits")] 
@@ -31,15 +30,15 @@ namespace AdrianMiasik
         // Cache
         private bool _isRunning;
         private double _currentTime;
+        private float _totalTime; // In seconds
         private bool _isComplete;
         
         // Specific to our ring shader
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
-
-        private float totalTimeInSeconds;
-
+        
         private void OnValidate()
         {
+            // Prevent values from going over their limit
             hours = Mathf.Clamp(hours, 0, 99);
             minutes = Mathf.Clamp(minutes, 0, 59);
             seconds = Mathf.Clamp(seconds, 0, 59);
@@ -47,28 +46,41 @@ namespace AdrianMiasik
 
         private void Start()
         {
-            Setup();
+            // Initialize components
+            hourDigits.Initialize(this);
+            minuteDigits.Initialize(this);
+            secondDigits.Initialize(this);
+            
+            playPauseButton.Initialize(this);            
+            
+            Initialize();
         }
 
-        private void Setup()
+        /// <summary>
+        /// Sets up the timer for proper use - Updates visuals, and calculates digits
+        /// </summary>
+        private void Initialize()
         {
+            playPauseButton.gameObject.SetActive(true);
+            
             _isComplete = false;
-            TimeSpan ts = TimeSpan.FromHours(hours) +  TimeSpan.FromMinutes(minutes) +  TimeSpan.FromSeconds(seconds);
-            CalculateDigits(ts);
-            _currentTime = ts.TotalSeconds;
-            totalTimeInSeconds = (float) ts.TotalSeconds;
             
-            Pause();
+            // Update visuals
             progress.fillAmount = 1f;
-            
-            playPauseButton.Initialize(_isRunning);
+            playPauseButton.UpdateIcon();
+
+            // Calculate time
+            TimeSpan ts = TimeSpan.FromHours(hours) +  TimeSpan.FromMinutes(minutes) +  TimeSpan.FromSeconds(seconds);
+            _currentTime = ts.TotalSeconds;
+            _totalTime = (float) ts.TotalSeconds;
+            UpdateDigitValues(ts);
         }
 
-        private void CalculateDigits(TimeSpan timeSpan)
+        private void UpdateDigitValues(TimeSpan timeSpan)
         {
-            hourDigits.Initialize((int) timeSpan.TotalHours);
-            minuteDigits.Initialize(timeSpan.Minutes);
-            secondDigits.Initialize(timeSpan.Seconds);
+            hourDigits.SetDigits((int) timeSpan.TotalHours);
+            minuteDigits.SetDigits(timeSpan.Minutes);
+            secondDigits.SetDigits(timeSpan.Seconds);
         }
 
         private void Update()
@@ -78,44 +90,107 @@ namespace AdrianMiasik
                 if (_currentTime <= 0)
                 {
                     _isRunning = false;
-                    progress.fillAmount = 1f;
+                    
+                    Complete();
                     progress.material.SetColor(RingColor, completedColor);
-                    playPauseButton.Initialize(_isRunning);
-
-                    _isComplete = true;
                     
                     // Early exit
                     return;
                 }
 
-                progress.fillAmount = (float) _currentTime / totalTimeInSeconds;
-                
-                CalculateDigits(TimeSpan.FromSeconds(_currentTime));
-                
+                progress.fillAmount = (float) _currentTime / _totalTime;
+                UpdateDigitValues(TimeSpan.FromSeconds(_currentTime));
                 _currentTime -= Time.deltaTime;
             }
         }
 
+        /// <summary>
+        /// Marks timer as complete, fills progress to full, and updates play/pause visuals
+        /// </summary>
+        private void Complete()
+        {
+            _isComplete = true;
+            progress.fillAmount = 1f;
+            
+            playPauseButton.gameObject.SetActive(false);
+        }
+
         public void Play()
         {
-            if (_isComplete)
-            {
-                Setup();
-            }
+            // if (_isComplete) // Hitting play on a completed timer will restart the clock
+            // {
+            //     Restart();
+            // }
             
+            // Run timer
             _isRunning = true;
             progress.material.SetColor(RingColor, runningColor);
+            LockEditing();
+        }
+
+        private void LockEditing()
+        {
+            hourDigits.Lock();
+            minuteDigits.Lock();
+            secondDigits.Lock();
         }
 
         public void Pause()
         {
+            // if (_isComplete) // Hitting pause on a complete timer will re-init the clock
+            // {
+            //     Initialize();
+            // }
+            
+            // Pause timer
             _isRunning = false;
             progress.material.SetColor(RingColor, setupColor);
         }
 
+        /// <summary>
+        /// Unity OnClick
+        /// </summary>
         public void Restart()
         {
-            Setup();
+            Pause();
+            Initialize();
+            UnlockEditing();
         }
+
+        private void UnlockEditing()
+        {
+            hourDigits.Unlock();
+            minuteDigits.Unlock();
+            secondDigits.Unlock();
+        }
+
+        // Getter
+
+        public bool IsRunning()
+        {
+            return _isRunning;
+        }
+
+        // Setters
+        public void SetHours(string hours)
+        {
+            this.hours = string.IsNullOrEmpty(hours) ? 0 : int.Parse(hours);
+            OnValidate();
+            Initialize();
+        }
+        
+        public void SetMinutes(string minutes)
+        {
+            this.minutes = string.IsNullOrEmpty(minutes) ? 0 : int.Parse(minutes);
+            OnValidate();
+            Initialize();
+        }
+        
+        public void SetSeconds(string seconds)
+        {
+            this.seconds = string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds);
+            OnValidate();
+            Initialize();
+        } 
     }
 }

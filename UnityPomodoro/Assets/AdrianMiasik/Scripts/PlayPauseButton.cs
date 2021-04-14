@@ -4,8 +4,11 @@ using UnityEngine.Events;
 
 namespace AdrianMiasik
 {
-    public class PlayPauseButton : SVGImage
+    public class PlayPauseButton : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField] private SVGImage icon;
+        
         [Header("SVGs")]
         [SerializeField] private Sprite play;
         [SerializeField] private Sprite pause;
@@ -19,17 +22,26 @@ namespace AdrianMiasik
         public UnityEvent pauseOnClick;
 
         // Cache
-        private bool _isRunning = false;
+        private PomodoroTimer timer;
         
-        public void Initialize(bool isTimerCountingDown)
+        public void Initialize(PomodoroTimer timer)
         {
-            _isRunning = isTimerCountingDown;
+            this.timer = timer;
             UpdateIcon();
         }
-        
+
+        /// <summary>
+        /// Updates the icon sprite and color
+        /// </summary>
+        public void UpdateIcon()
+        {
+            icon.sprite = timer.IsRunning() ? pause : play;
+            icon.color = timer.IsRunning() ? pauseColor : playColor;
+        }
+
         public void OnClick()
         {
-            if (_isRunning)
+            if (timer.IsRunning())
             {
                 pauseOnClick.Invoke();
             }
@@ -38,18 +50,7 @@ namespace AdrianMiasik
                 playOnClick.Invoke();
             }
             
-            // Flip state
-            _isRunning = !_isRunning;
             UpdateIcon();
-        }
-
-        /// <summary>
-        /// Updates the icon sprite and color
-        /// </summary>
-        private void UpdateIcon()
-        {
-            sprite = _isRunning ? pause : play;
-            color = _isRunning ? pauseColor : playColor;
         }
     }
 }
