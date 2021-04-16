@@ -23,6 +23,7 @@ namespace AdrianMiasik
 
         // Cache
         private PomodoroTimer timer;
+        private float xPivot; 
         
         public void Initialize(PomodoroTimer timer)
         {

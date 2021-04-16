@@ -12,6 +12,7 @@ namespace AdrianMiasik
         [SerializeField] private DoubleDigit secondDigits;
 
         [Header("Buttons")]
+        [SerializeField] private GameObject playPauseParent;
         [SerializeField] private PlayPauseButton playPauseButton;
 
         [Header("Ring")]
@@ -61,9 +62,8 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
-            playPauseButton.gameObject.SetActive(true);
-            
             _isComplete = false;
+            playPauseParent.gameObject.SetActive(true);
             
             // Update visuals
             progress.fillAmount = 1f;
@@ -112,7 +112,7 @@ namespace AdrianMiasik
             _isComplete = true;
             progress.fillAmount = 1f;
             
-            playPauseButton.gameObject.SetActive(false);
+            playPauseParent.gameObject.SetActive(false);
         }
 
         public void Play()
