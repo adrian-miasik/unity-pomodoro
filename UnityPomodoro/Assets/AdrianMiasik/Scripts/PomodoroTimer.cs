@@ -115,6 +115,9 @@ namespace AdrianMiasik
             playPauseParent.gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Runs the pomodoro countdown timer
+        /// </summary>
         public void Play()
         {
             // if (_isComplete) // Hitting play on a completed timer will restart the clock
@@ -135,6 +138,9 @@ namespace AdrianMiasik
             secondDigits.Lock();
         }
 
+        /// <summary>
+        /// Prevents the timer from running
+        /// </summary>
         public void Pause()
         {
             // if (_isComplete) // Hitting pause on a complete timer will re-init the clock
