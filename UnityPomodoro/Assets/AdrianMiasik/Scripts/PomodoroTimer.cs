@@ -32,7 +32,6 @@ namespace AdrianMiasik
         private bool _isRunning;
         private double _currentTime;
         private float _totalTime; // In seconds
-        private bool _isComplete;
         
         // Specific to our ring shader
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -62,7 +61,6 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
-            _isComplete = false;
             playPauseParent.gameObject.SetActive(true);
             
             // Update visuals
@@ -109,7 +107,6 @@ namespace AdrianMiasik
         /// </summary>
         private void Complete()
         {
-            _isComplete = true;
             progress.fillAmount = 1f;
             
             playPauseParent.gameObject.SetActive(false);
@@ -120,12 +117,6 @@ namespace AdrianMiasik
         /// </summary>
         public void Play()
         {
-            // if (_isComplete) // Hitting play on a completed timer will restart the clock
-            // {
-            //     Restart();
-            // }
-            
-            // Run timer
             _isRunning = true;
             progress.material.SetColor(RingColor, runningColor);
             LockEditing();
@@ -143,12 +134,6 @@ namespace AdrianMiasik
         /// </summary>
         public void Pause()
         {
-            // if (_isComplete) // Hitting pause on a complete timer will re-init the clock
-            // {
-            //     Initialize();
-            // }
-            
-            // Pause timer
             _isRunning = false;
             progress.material.SetColor(RingColor, setupColor);
         }
@@ -171,7 +156,6 @@ namespace AdrianMiasik
         }
 
         // Getter
-
         public bool IsRunning()
         {
             return _isRunning;
