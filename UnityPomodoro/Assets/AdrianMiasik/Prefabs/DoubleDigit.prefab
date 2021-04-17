@@ -637,16 +637,20 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7388568932786236323, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Name
@@ -738,7 +742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8779545612152806735, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8863472634920768550, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Sprite
@@ -871,19 +875,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7388568932786236323, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Name
@@ -963,7 +967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8779545612152806735, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8863472634920768550, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Sprite
