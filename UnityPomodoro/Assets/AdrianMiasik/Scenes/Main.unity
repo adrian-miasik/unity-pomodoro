@@ -1167,6 +1167,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1348329453}
     m_Modifications:
+    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
+      propertyPath: m_GlobalFontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 080ad4b95c4277c4492743fa1dbb1b22, type: 2}
     - target: {fileID: 2939933545387467008, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1254,6 +1258,14 @@ PrefabInstance:
     - target: {fileID: 2939933545387467009, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_Name
       value: Hours
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939933546287668551, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
+      propertyPath: m_fontSize
+      value: 63.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939933546287668551, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
@@ -1482,6 +1494,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 24.8
       objectReference: {fileID: 0}
+    - target: {fileID: 2939933546287668551, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7377043911520732431, guid: 080ad4b95c4277c4492743fa1dbb1b22, type: 2}
     - target: {fileID: 2939933546287668551, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
@@ -1745,6 +1761,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 47.25
       objectReference: {fileID: 0}
+    - target: {fileID: 2939933546287668551, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7377043911520732431, guid: 080ad4b95c4277c4492743fa1dbb1b22, type: 2}
     - target: {fileID: 4978209697112331008, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1886,6 +1906,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!222 &1299780896
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2103,6 +2129,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1524052414 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2939933545387467015, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    public class ClickButton : Image, IPointerDownHandler, IPointerClickHandler, IPointerExitHandler
+    public class ClickButton : Image, IPointerDownHandler, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
     {
         public bool interactable = true;
         public RectTransform target;
@@ -17,8 +17,9 @@ namespace AdrianMiasik
 
         // Unity Events
         public UnityEvent OnClick;
-
-
+        public UnityEvent OnEnter;
+        public UnityEvent OnExit;
+        
         // Cache
         private Vector3 cachedScale;
         private bool isAnimating;
@@ -61,10 +62,17 @@ namespace AdrianMiasik
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            OnExit.Invoke();
+            
             if (!isAnimating)
             {
                 target.transform.localScale = cachedScale;
             }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            OnEnter.Invoke();
         }
 
         private void Update()

@@ -44,9 +44,9 @@ namespace AdrianMiasik
         private void OnValidate()
         {
             // Prevent values from going over their limit
-            hours = Mathf.Clamp(hours, 0, 99);
-            minutes = Mathf.Clamp(minutes, 0, 59);
-            seconds = Mathf.Clamp(seconds, 0, 59);
+            hours = Mathf.Clamp(hours, GetDigitMin(), GetDigitMax(Digits.HOURS));
+            minutes = Mathf.Clamp(minutes, GetDigitMin(), GetDigitMax(Digits.MINUTES));
+            seconds = Mathf.Clamp(seconds, GetDigitMin(), GetDigitMax(Digits.SECONDS));
         }
 
         private void Start()
@@ -56,7 +56,7 @@ namespace AdrianMiasik
             hourDigits.Initialize(Digits.HOURS, this, (int) ts.TotalHours);
             minuteDigits.Initialize(Digits.MINUTES, this, ts.Minutes);
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
-            
+
             // Initialize button
             playPauseButton.Initialize(this);
 
@@ -79,7 +79,7 @@ namespace AdrianMiasik
             _currentTime = ts.TotalSeconds;
             _totalTime = (float) ts.TotalSeconds;
             UpdateDigitValues(ts);
-            
+
             UnlockEditing();
         }
 
@@ -168,7 +168,7 @@ namespace AdrianMiasik
         {
             return _isRunning;
         }
-        
+
         // Setters
         public void SetHours(string hours)
         {
@@ -196,6 +196,26 @@ namespace AdrianMiasik
             SetDigit(digits, GetDigitValue(digits) + 1);
         }
 
+        public bool CanIncrementOne(Digits digits)
+        {
+            if (GetDigitValue(digits) + 1 > GetDigitMax(digits))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        
+        public bool CanDecrementOne(Digits digits)
+        {
+            if (GetDigitValue(digits) - 1 < GetDigitMin())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public void DecrementOne(Digits digits)
         {
             SetDigit(digits, GetDigitValue(digits) - 1);
@@ -214,6 +234,26 @@ namespace AdrianMiasik
                 default:
                     throw new ArgumentOutOfRangeException(nameof(digits), digits, null);
             }
+        }
+
+        private int GetDigitMax(Digits digits)
+        {
+            switch (digits)
+            {
+                case Digits.HOURS:
+                    return 99;
+                case Digits.MINUTES:
+                    return 59;
+                case Digits.SECONDS:
+                    return 59;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(digits), digits, null);
+            }
+        }
+
+        private int GetDigitMin()
+        {
+            return 0;
         }
 
         private void SetDigit(Digits digit, int newValue)

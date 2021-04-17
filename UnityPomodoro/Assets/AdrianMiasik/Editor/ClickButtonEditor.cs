@@ -35,9 +35,16 @@ namespace AdrianMiasik
             clickButton.clickedDownScale = EditorGUILayout.FloatField("Clicked Down Scale", clickButton.clickedDownScale);
             clickButton.clickReleaseScale = EditorGUILayout.CurveField("Click Release Scale", clickButton.clickReleaseScale);
 
-            // Draw OnClick UnityEvent
-            SerializedProperty prop = serializedObject.FindProperty("OnClick");
-            EditorGUILayout.PropertyField(prop);
+            // Draw UnityEvents
+            SerializedProperty onClick = serializedObject.FindProperty("OnClick");
+            EditorGUILayout.PropertyField(onClick);
+            
+            SerializedProperty onEnter = serializedObject.FindProperty("OnEnter");
+            EditorGUILayout.PropertyField(onEnter);
+            
+            SerializedProperty onExit = serializedObject.FindProperty("OnExit");
+            EditorGUILayout.PropertyField(onExit);
+            
             serializedObject.ApplyModifiedProperties();
             
             EditorGUILayout.EndVertical();

@@ -93,19 +93,8 @@ namespace AdrianMiasik
         public void OnPointerEnter(PointerEventData eventData)
         {
             SetSquircleColor(selectionColor);
-            
-            if (isInteractable)
-            {
-                ShowArrows();
-            }
         }
-
-        private void ShowArrows()
-        {
-            upArrow.Show();
-            downArrow.Show();
-        }
-
+        
         public void OnPointerExit(PointerEventData eventData)
         {
             SetSquircleColor(color);
@@ -123,7 +112,7 @@ namespace AdrianMiasik
             isInteractable = true;
             input.interactable = true;
         }
-
+        
         // Unity Events
         public void SetHours(string hours)
         {
@@ -155,6 +144,12 @@ namespace AdrianMiasik
             {
                 timer.IncrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
+
+                // Hide arrow if you can't increment again
+                if (!timer.CanIncrementOne(digit))
+                {
+                    HideUpArrow();
+                }
             }
         }
 
@@ -164,7 +159,51 @@ namespace AdrianMiasik
             {
                 timer.DecrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
+                
+                // Hide arrow if you can't decrement again
+                if (!timer.CanDecrementOne(digit))
+                {
+                    HideDownArrow();
+                }
             }
+        }
+        
+        public void ShowUpArrow()
+        {
+            if (timer == null)
+            {
+                // Early return
+                return;
+            }
+            
+            if (isInteractable && timer.CanIncrementOne(digit))
+            {
+                upArrow.Show();   
+            }
+        }
+
+        public void HideUpArrow()
+        {
+            upArrow.Hide();
+        }
+
+        public void ShowDownArrow()
+        {
+            if (timer == null)
+            {
+                // Early return
+                return;
+            }
+            
+            if (isInteractable && timer.CanDecrementOne(digit))
+            {
+                downArrow.Show();
+            }
+        }
+
+        public void HideDownArrow()
+        {
+            downArrow.Hide();
         }
     }
 }
