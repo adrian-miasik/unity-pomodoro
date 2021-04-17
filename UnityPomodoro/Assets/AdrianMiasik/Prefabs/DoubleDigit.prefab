@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: d1890b9d2e0489f43bcdb49b7dd980bd, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.40392157}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -333,6 +333,33 @@ MonoBehaviour:
   upArrow: {fileID: 3193815935680574172}
   input: {fileID: 2939933545338344003}
   downArrow: {fileID: 3387427563058191479}
+  animationDuration: 1
+  animationRamp:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 37.22995
+      outSlope: 37.22995
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.015267176
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.122337535
+      outSlope: 0.122337535
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.9832061
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  color: {r: 1, g: 1, b: 1, a: 1}
+  selectionColor: {r: 0.90588236, g: 0.90588236, b: 0.90588236, a: 1}
 --- !u!114 &6390431754232334622
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,16 +7,30 @@ namespace AdrianMiasik
 {
     public class DoubleDigit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [Header("References")] 
         [SerializeField] private Image background;
         [SerializeField] private ClickButton upArrow;
         [SerializeField] private TMP_InputField input;
         [SerializeField] private ClickButton downArrow;
-        
+
+        [Header("Color")] 
+        [SerializeField] private float animationDuration = 0.25f;
+
+        [SerializeField] private AnimationCurve animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
         private PomodoroTimer.Digits digit;
         private PomodoroTimer timer;
-        private int digits;
         private bool isInteractable;
-
+        
+        // Color animation
+        [SerializeField] private Color color = Color.white;
+        [SerializeField] private Color selectionColor;
+        private Color startingColor;
+        private Color endingColor;
+        private bool isColorAnimating;
+        private float accumulatedTime;
+        private float progress;
+        
         private Material _instanceMaterial;
         private static readonly int SquircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
@@ -24,27 +38,12 @@ namespace AdrianMiasik
         {
             this.digit = digit;
             this.timer = timer;
-            this.digits = digits;
-
+            
+            SetSquircleColor(color);
             SetDigitsLabel(digits);
             HideArrows();
         }
 
-        public void SetDigitsLabel(int digits)
-        {
-            input.text = digits.ToString("D2");
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            SetSquircleColor(new Color(0.91f, 0.91f, 0.91f));
-            
-            if (isInteractable)
-            {
-                ShowArrows();
-            }
-        }
-        
         private void SetSquircleColor(Color color)
         {
             // Create instance material
@@ -52,14 +51,55 @@ namespace AdrianMiasik
             {
                 _instanceMaterial = new Material(background.material);
             }
-
-            // Modify
-            _instanceMaterial.SetColor(SquircleColor, color);
-
-            // Apply
-            background.material = _instanceMaterial;
+            startingColor = _instanceMaterial.GetColor(SquircleColor);
+            
+            endingColor = color;
+            accumulatedTime = 0;
+            isColorAnimating = true;
         }
-        
+
+        public void SetDigitsLabel(int digits)
+        {
+            input.text = digits.ToString("D2");
+        }
+
+        private void HideArrows()
+        {
+            upArrow.Hide();
+            downArrow.Hide();
+        }
+
+        private void Update()
+        {
+            if (isColorAnimating)
+            {
+                accumulatedTime += Time.deltaTime;
+                progress = accumulatedTime / animationDuration;
+                if (progress >= 1)
+                {
+                    isColorAnimating = false;
+                }
+                
+                float evaluatedTime = animationRamp.Evaluate(progress);
+
+                // Animate and modify
+                _instanceMaterial.SetColor(SquircleColor, Color.Lerp(startingColor, endingColor, evaluatedTime));
+
+                // Apply
+                background.material = _instanceMaterial;
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            SetSquircleColor(selectionColor);
+            
+            if (isInteractable)
+            {
+                ShowArrows();
+            }
+        }
+
         private void ShowArrows()
         {
             upArrow.Show();
@@ -68,16 +108,10 @@ namespace AdrianMiasik
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            SetSquircleColor(Color.clear);
+            SetSquircleColor(color);
             HideArrows();
         }
-        
-        private void HideArrows()
-        {
-            upArrow.Hide();
-            downArrow.Hide();
-        }
-        
+
         public void Lock()
         {
             isInteractable = false;
