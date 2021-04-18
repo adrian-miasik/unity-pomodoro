@@ -313,13 +313,15 @@ MonoBehaviour:
   secondDigits: {fileID: 2096418338}
   playPauseParent: {fileID: 1398670393}
   playPauseButton: {fileID: 1595088272}
-  progress: {fileID: 361292848}
+  ring: {fileID: 361292848}
   setupColor: {r: 0.05, g: 0.47, b: 0.95, a: 1}
   runningColor: {r: 0.35, g: 0.89, b: 0.4, a: 1}
   completedColor: {r: 0.97, g: 0.15, b: 0.15, a: 1}
   hours: 0
   minutes: 25
   seconds: 0
+  _fadeDuration: 0.1
+  _pauseHoldDuration: 0.75
 --- !u!114 &61516147
 MonoBehaviour:
   m_ObjectHideFlags: 0

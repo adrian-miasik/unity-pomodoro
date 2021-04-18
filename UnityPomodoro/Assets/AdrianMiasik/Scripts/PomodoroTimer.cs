@@ -6,8 +6,6 @@ namespace AdrianMiasik
 {
     public class PomodoroTimer : MonoBehaviour
     {
-        // TODO: Create digit layouts
-        // TODO: Support more timer digit layouts
         public enum Digits
         {
             HOURS,
@@ -15,28 +13,43 @@ namespace AdrianMiasik
             SECONDS
         }
 
-        [Header("Digits")] [SerializeField] private DoubleDigit hourDigits;
+        [Header("Digits")] 
+        [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
 
-        [Header("Buttons")] [SerializeField] private GameObject playPauseParent;
+        [Header("Buttons")] 
+        [SerializeField] private GameObject playPauseParent;
         [SerializeField] private PlayPauseButton playPauseButton;
 
-        [Header("Ring")] [SerializeField] private Image progress;
+        [Header("Ring")] 
+        [SerializeField] private Image ring;
 
-        [Header("Colors")] [SerializeField] private Color setupColor = new Color(0.05f, 0.47f, 0.95f);
+        [Header("Colors")] 
+        [SerializeField] private Color setupColor = new Color(0.05f, 0.47f, 0.95f);
         [SerializeField] private Color runningColor = new Color(0.35f, 0.89f, 0.4f);
         [SerializeField] private Color completedColor = new Color(0.97f, 0.15f, 0.15f);
 
-        [Header("Data")] [SerializeField] private int hours = 0;
+        [Header("Data")] 
+        [SerializeField] private int hours = 0;
         [SerializeField] private int minutes = 0;
         [SerializeField] private int seconds = 15;
 
         // Cache
         private bool _isRunning;
+        private bool _isPaused;
         private double _currentTime;
         private float _totalTime; // In seconds
-
+        
+        // Pause Fade Animation
+        private bool _isFading;
+        private float _accumulatedFadeTime;
+        [SerializeField] float _fadeDuration = 0.25f;
+        private float _fadeProgress;
+        private Color _startingColor;
+        private Color _endingColor;
+        private bool _isFadeComplete;
+        [SerializeField] private float _pauseHoldDuration = 1f;
 
         // Specific to our ring shader
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -68,10 +81,12 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
+            _isPaused = false;
+            _isFading = false;
             playPauseParent.gameObject.SetActive(true);
 
             // Update visuals
-            progress.fillAmount = 1f;
+            ring.fillAmount = 1f;
             playPauseButton.UpdateIcon();
 
             // Calculate time
@@ -94,30 +109,72 @@ namespace AdrianMiasik
         {
             if (_isRunning)
             {
+                // Check exit condition
                 if (_currentTime <= 0)
                 {
                     _isRunning = false;
 
                     Complete();
-                    progress.material.SetColor(RingColor, completedColor);
 
                     // Early exit
                     return;
                 }
-
-                progress.fillAmount = (float) _currentTime / _totalTime;
+                
+                // Decrement timer
+                ring.fillAmount = (float) _currentTime / _totalTime;
                 UpdateDigitValues(TimeSpan.FromSeconds(_currentTime));
                 _currentTime -= Time.deltaTime;
             }
+            else if (_isPaused)
+            {
+                AnimatePausedDigits();
+            }
         }
 
+        private void AnimatePausedDigits()
+        {
+            _accumulatedFadeTime += Time.deltaTime;
+                
+            if (_isFadeComplete)  
+            {
+                if (_accumulatedFadeTime > _pauseHoldDuration)
+                {
+                    _isFadeComplete = false;
+                    _accumulatedFadeTime = 0;
+                }
+            }
+            else
+            {
+                _fadeProgress = _accumulatedFadeTime / _fadeDuration;
+                    
+                if (_isFading)
+                {
+                    SetDigitColor(Color.Lerp(_startingColor, _endingColor, _fadeProgress));
+                }
+                else
+                {
+                    SetDigitColor(Color.Lerp(_endingColor, _startingColor, _fadeProgress));
+                }
+                    
+                if (_fadeProgress >= 1)
+                {
+                    // Flip state
+                    _isFading = !_isFading;
+                    _accumulatedFadeTime = 0f;
+                        
+                    _isFadeComplete = true;
+                }
+            }
+        }
+        
         /// <summary>
         /// Marks timer as complete, fills progress to full, and updates play/pause visuals
         /// </summary>
         private void Complete()
         {
-            progress.fillAmount = 1f;
+            ring.fillAmount = 1f;
             playPauseParent.gameObject.SetActive(false);
+            ring.material.SetColor(RingColor, completedColor);
         }
 
         /// <summary>
@@ -125,9 +182,45 @@ namespace AdrianMiasik
         /// </summary>
         public void Play()
         {
+            if (_isPaused)
+            {
+                SetDigitColor(Color.black);
+            }
+            
             _isRunning = true;
-            progress.material.SetColor(RingColor, runningColor);
+            _isPaused = false;
+            ring.material.SetColor(RingColor, runningColor);
             LockEditing();
+        }
+
+        /// <summary>
+        /// Prevents the timer from running
+        /// </summary>
+        public void Pause()
+        {
+            _isRunning = false;
+            _isPaused = true;
+            
+            // Digit fade
+            _accumulatedFadeTime = 0;
+            _isFadeComplete = true;
+            _isFading = true;
+            _accumulatedFadeTime = 0f;
+            _startingColor = Color.black;
+            _endingColor = new Color(0.75f, 0.75f, 0.75f);
+
+            ring.material.SetColor(RingColor, setupColor);
+        }
+
+        /// <summary>
+        /// Unity OnClick
+        /// </summary>
+        public void Restart()
+        {
+            Pause();
+            SetDigitColor(Color.black);
+            Initialize();
+            UnlockEditing();
         }
 
         private void LockEditing()
@@ -137,25 +230,6 @@ namespace AdrianMiasik
             secondDigits.Lock();
         }
 
-        /// <summary>
-        /// Prevents the timer from running
-        /// </summary>
-        public void Pause()
-        {
-            _isRunning = false;
-            progress.material.SetColor(RingColor, setupColor);
-        }
-
-        /// <summary>
-        /// Unity OnClick
-        /// </summary>
-        public void Restart()
-        {
-            Pause();
-            Initialize();
-            UnlockEditing();
-        }
-
         private void UnlockEditing()
         {
             hourDigits.Unlock();
@@ -163,10 +237,82 @@ namespace AdrianMiasik
             secondDigits.Unlock();
         }
 
-        // Getter
+        public bool CanIncrementOne(Digits digits)
+        {
+            if (GetDigitValue(digits) + 1 > GetDigitMax(digits))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool CanDecrementOne(Digits digits)
+        {
+            if (GetDigitValue(digits) - 1 < GetDigitMin())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void IncrementOne(Digits digits)
+        {
+            SetDigit(digits, GetDigitValue(digits) + 1);
+        }
+
+        public void DecrementOne(Digits digits)
+        {
+            SetDigit(digits, GetDigitValue(digits) - 1);
+        }
+
+        private void SetDigitColor(Color newColor)
+        {
+            hourDigits.SetColor(newColor);
+            minuteDigits.SetColor(newColor);
+            secondDigits.SetColor(newColor);
+        }
+
+        // Getters
         public bool IsRunning()
         {
             return _isRunning;
+        }
+
+        private int GetDigitMax(Digits digits)
+        {
+            switch (digits)
+            {
+                case Digits.HOURS:
+                    return 99;
+                case Digits.MINUTES:
+                    return 59;
+                case Digits.SECONDS:
+                    return 59;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(digits), digits, null);
+            }
+        }
+
+        private int GetDigitMin()
+        {
+            return 0;
+        }
+
+        public int GetDigitValue(Digits digits)
+        {
+            switch (digits)
+            {
+                case Digits.HOURS:
+                    return hours;
+                case Digits.MINUTES:
+                    return minutes;
+                case Digits.SECONDS:
+                    return seconds;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(digits), digits, null);
+            }
         }
 
         // Setters
@@ -189,71 +335,6 @@ namespace AdrianMiasik
             this.seconds = string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds);
             OnValidate();
             Initialize();
-        }
-
-        public void IncrementOne(Digits digits)
-        {
-            SetDigit(digits, GetDigitValue(digits) + 1);
-        }
-
-        public bool CanIncrementOne(Digits digits)
-        {
-            if (GetDigitValue(digits) + 1 > GetDigitMax(digits))
-            {
-                return false;
-            }
-
-            return true;
-        }
-        
-        public bool CanDecrementOne(Digits digits)
-        {
-            if (GetDigitValue(digits) - 1 < GetDigitMin())
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public void DecrementOne(Digits digits)
-        {
-            SetDigit(digits, GetDigitValue(digits) - 1);
-        }
-
-        public int GetDigitValue(Digits digits)
-        {
-            switch (digits)
-            {
-                case Digits.HOURS:
-                    return hours;
-                case Digits.MINUTES:
-                    return minutes;
-                case Digits.SECONDS:
-                    return seconds;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(digits), digits, null);
-            }
-        }
-
-        private int GetDigitMax(Digits digits)
-        {
-            switch (digits)
-            {
-                case Digits.HOURS:
-                    return 99;
-                case Digits.MINUTES:
-                    return 59;
-                case Digits.SECONDS:
-                    return 59;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(digits), digits, null);
-            }
-        }
-
-        private int GetDigitMin()
-        {
-            return 0;
         }
 
         private void SetDigit(Digits digit, int newValue)

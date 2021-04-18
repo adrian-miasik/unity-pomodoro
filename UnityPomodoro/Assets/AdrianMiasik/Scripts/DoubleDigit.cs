@@ -44,31 +44,6 @@ namespace AdrianMiasik
             HideArrows();
         }
 
-        private void SetSquircleColor(Color color)
-        {
-            // Create instance material
-            if (_instanceMaterial == null)
-            {
-                _instanceMaterial = new Material(background.material);
-            }
-            startingColor = _instanceMaterial.GetColor(SquircleColor);
-            
-            endingColor = color;
-            accumulatedTime = 0;
-            isColorAnimating = true;
-        }
-
-        public void SetDigitsLabel(int digits)
-        {
-            input.text = digits.ToString("D2");
-        }
-
-        private void HideArrows()
-        {
-            upArrow.Hide();
-            downArrow.Hide();
-        }
-
         private void Update()
         {
             if (isColorAnimating)
@@ -94,11 +69,36 @@ namespace AdrianMiasik
         {
             SetSquircleColor(selectionColor);
         }
-        
+
         public void OnPointerExit(PointerEventData eventData)
         {
             SetSquircleColor(color);
             HideArrows();
+        }
+
+        private void SetSquircleColor(Color color)
+        {
+            // Create instance material
+            if (_instanceMaterial == null)
+            {
+                _instanceMaterial = new Material(background.material);
+            }
+            startingColor = _instanceMaterial.GetColor(SquircleColor);
+            
+            endingColor = color;
+            accumulatedTime = 0;
+            isColorAnimating = true;
+        }
+
+        public void SetDigitsLabel(int digits)
+        {
+            input.text = digits.ToString("D2");
+        }
+
+        private void HideArrows()
+        {
+            upArrow.Hide();
+            downArrow.Hide();
         }
 
         public void Lock()
@@ -112,7 +112,40 @@ namespace AdrianMiasik
             isInteractable = true;
             input.interactable = true;
         }
-        
+
+        public void ShowUpArrow()
+        {
+            if (timer == null)
+            {
+                // Early return
+                return;
+            }
+            
+            if (isInteractable && timer.CanIncrementOne(digit))
+            {
+                upArrow.Show();   
+            }
+        }
+
+        public void ShowDownArrow()
+        {
+            if (timer == null)
+            {
+                // Early return
+                return;
+            }
+            
+            if (isInteractable && timer.CanDecrementOne(digit))
+            {
+                downArrow.Show();
+            }
+        }
+
+        public void SetColor(Color newColor)
+        {
+            input.textComponent.color = newColor;
+        }
+
         // Unity Events
         public void SetHours(string hours)
         {
@@ -167,38 +200,10 @@ namespace AdrianMiasik
                 }
             }
         }
-        
-        public void ShowUpArrow()
-        {
-            if (timer == null)
-            {
-                // Early return
-                return;
-            }
-            
-            if (isInteractable && timer.CanIncrementOne(digit))
-            {
-                upArrow.Show();   
-            }
-        }
 
         public void HideUpArrow()
         {
             upArrow.Hide();
-        }
-
-        public void ShowDownArrow()
-        {
-            if (timer == null)
-            {
-                // Early return
-                return;
-            }
-            
-            if (isInteractable && timer.CanDecrementOne(digit))
-            {
-                downArrow.Show();
-            }
         }
 
         public void HideDownArrow()
