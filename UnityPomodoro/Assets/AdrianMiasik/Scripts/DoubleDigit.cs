@@ -74,6 +74,19 @@ namespace AdrianMiasik
                 // Apply
                 background.material = _instanceMaterial;
             }
+
+            if (isSelected)
+            {
+                // Scroll input
+                if (Input.mouseScrollDelta.y > 0)
+                {
+                    IncrementOne();
+                }
+                else if (Input.mouseScrollDelta.y < 0)
+                {
+                    DecrementOne();
+                }
+            }
         }
         
         private void SetSquircleColor(Color color)
