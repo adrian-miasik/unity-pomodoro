@@ -5,20 +5,18 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    public class ClickButton : Image, IPointerDownHandler, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
+    public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
     {
-        public bool interactable = true;
         public RectTransform target;
 
-        [Header("Animation")]
-        public float clickedDownScale = 0.75f;
+        [Header("Animation")] public float clickedDownScale = 0.75f;
 
         public AnimationCurve clickReleaseScale;
 
         // Unity Events
+        public UnityEvent OnDown;
+        public UnityEvent OnUp;
         public UnityEvent OnClick;
-        public UnityEvent OnEnter;
-        public UnityEvent OnExit;
         
         // Cache
         private Vector3 cachedScale;
@@ -28,27 +26,49 @@ namespace AdrianMiasik
         protected override void Start()
         {
             base.Start();
+            if (target == null)
+            {
+                Debug.LogWarning("Target is missing", this);
+                return;
+            }
+            
             cachedScale = target.localScale;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!interactable)
+            if (target == null)
             {
                 return;
             }
             
-            cachedScale = target.transform.localScale;
             target.transform.localScale = Vector3.one * clickedDownScale;
 
             // Release animation
             isAnimating = false;
             elapsedTime = 0f;
+
+            OnDown.Invoke();
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (target == null)
+            {
+                return;
+            }
+            
+            if (!isAnimating)
+            {
+                target.transform.localScale = cachedScale;
+            }
+
+            OnUp.Invoke();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (!interactable)
+            if (target == null)
             {
                 return;
             }
@@ -56,23 +76,8 @@ namespace AdrianMiasik
             // Start animation
             isAnimating = true;
             elapsedTime = 0f;
-            
+
             OnClick.Invoke();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            OnExit.Invoke();
-            
-            if (!isAnimating)
-            {
-                target.transform.localScale = cachedScale;
-            }
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            OnEnter.Invoke();
         }
 
         private void Update()
@@ -93,13 +98,13 @@ namespace AdrianMiasik
 
         public void Hide()
         {
-            interactable = false;
+            raycastTarget = false;
             target.gameObject.SetActive(false);
         }
 
         public void Show()
         {
-            interactable = true;
+            raycastTarget = true;
             target.gameObject.SetActive(true);
         }
     }

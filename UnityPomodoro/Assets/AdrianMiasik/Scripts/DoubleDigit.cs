@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    public class DoubleDigit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler
     {
         [Header("References")] 
         [SerializeField] private Image background;
@@ -21,6 +21,7 @@ namespace AdrianMiasik
         private PomodoroTimer.Digits digit;
         private PomodoroTimer timer;
         private bool isInteractable;
+        private bool isSelected;
         
         // Color animation
         [SerializeField] private Color color = Color.white;
@@ -30,6 +31,8 @@ namespace AdrianMiasik
         private bool isColorAnimating;
         private float accumulatedTime;
         private float progress;
+        private TMP_SelectionCaret caret;
+        private bool ignoreFirstClick = true;
         
         private Material _instanceMaterial;
         private static readonly int SquircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -38,6 +41,14 @@ namespace AdrianMiasik
         {
             this.digit = digit;
             this.timer = timer;
+            
+            // Disable run time caret interactions - We want to run input through this classes input events
+            caret = input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
+            if (caret)
+            {
+                // Prevent input field from getting selection focus
+                caret.raycastTarget = false;
+            }
             
             SetSquircleColor(color);
             SetDigitsLabel(digits);
@@ -64,18 +75,7 @@ namespace AdrianMiasik
                 background.material = _instanceMaterial;
             }
         }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            SetSquircleColor(selectionColor);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            SetSquircleColor(color);
-            HideArrows();
-        }
-
+        
         private void SetSquircleColor(Color color)
         {
             // Create instance material
@@ -101,6 +101,22 @@ namespace AdrianMiasik
             downArrow.Hide();
         }
 
+        private void ShowArrows()
+        {
+            if (timer != null)
+            {
+                if (timer.CanIncrementOne(digit))
+                {
+                    upArrow.Show();
+                }
+
+                if (timer.CanDecrementOne(digit))
+                {
+                    downArrow.Show();        
+                }
+            }
+        }
+
         public void Lock()
         {
             isInteractable = false;
@@ -112,36 +128,8 @@ namespace AdrianMiasik
             isInteractable = true;
             input.interactable = true;
         }
-
-        public void ShowUpArrow()
-        {
-            if (timer == null)
-            {
-                // Early return
-                return;
-            }
-            
-            if (isInteractable && timer.CanIncrementOne(digit))
-            {
-                upArrow.Show();   
-            }
-        }
-
-        public void ShowDownArrow()
-        {
-            if (timer == null)
-            {
-                // Early return
-                return;
-            }
-            
-            if (isInteractable && timer.CanDecrementOne(digit))
-            {
-                downArrow.Show();
-            }
-        }
-
-        public void SetColor(Color newColor)
+        
+        public void SetTextColor(Color newColor)
         {
             input.textComponent.color = newColor;
         }
@@ -152,6 +140,7 @@ namespace AdrianMiasik
             if (timer != null)
             {
                 timer.SetHours(hours);
+                UpdateArrows();
             }
         }
 
@@ -160,6 +149,7 @@ namespace AdrianMiasik
             if (timer != null)
             {
                 timer.SetMinutes(minutes);
+                UpdateArrows();
             }
         }
 
@@ -168,6 +158,7 @@ namespace AdrianMiasik
             if (timer != null)
             {
                 timer.SetSeconds(seconds);
+                UpdateArrows();
             }
         }
 
@@ -177,12 +168,7 @@ namespace AdrianMiasik
             {
                 timer.IncrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
-
-                // Hide arrow if you can't increment again
-                if (!timer.CanIncrementOne(digit))
-                {
-                    HideUpArrow();
-                }
+                UpdateArrows();
             }
         }
 
@@ -192,23 +178,74 @@ namespace AdrianMiasik
             {
                 timer.DecrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
-                
-                // Hide arrow if you can't decrement again
-                if (!timer.CanDecrementOne(digit))
-                {
-                    HideDownArrow();
-                }
+                UpdateArrows();
             }
         }
 
-        public void HideUpArrow()
+        private void UpdateArrows()
         {
-            upArrow.Hide();
+            // Up Arrow
+            if (timer.CanIncrementOne(digit))
+            {
+                upArrow.Show();
+            }
+            else
+            {
+                upArrow.Hide();
+            }
+            
+            // Down Arrow
+            if (timer.CanDecrementOne(digit))
+            {
+                downArrow.Show();
+            }
+            else
+            {
+                downArrow.Hide();
+            }
+        }
+        
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (!isInteractable)
+            {
+                return;
+            }
+            
+            ShowArrows();
+            SetSquircleColor(selectionColor);
+            
+            timer.SetSelection(this);
+            isSelected = true;
         }
 
-        public void HideDownArrow()
+        public void Deselect()
         {
-            downArrow.Hide();
+            HideArrows();
+            SetSquircleColor(color);
+
+            isSelected = false;
+            ignoreFirstClick = true;
+
+            // Disable caret selection
+            caret.raycastTarget = false;
+            input.DeactivateInputField();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            // First click is reserved for digit selection, second click is for editing the input field
+            if (ignoreFirstClick)
+            {
+                ignoreFirstClick = false;
+                return;
+            }
+
+            if (isSelected)
+            {
+                caret.raycastTarget = true;
+                input.ActivateInputField();
+            }
         }
     }
 }

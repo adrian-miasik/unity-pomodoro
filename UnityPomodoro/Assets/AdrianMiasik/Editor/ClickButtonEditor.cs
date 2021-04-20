@@ -30,21 +30,20 @@ namespace AdrianMiasik
             EditorGUILayout.LabelField("Click Button", style);
 
             // Draw property fields
-            clickButton.interactable = EditorGUILayout.Toggle("Interactable", clickButton.interactable);
             clickButton.target = (RectTransform) EditorGUILayout.ObjectField("Target", clickButton.target, typeof(RectTransform), true);
             clickButton.clickedDownScale = EditorGUILayout.FloatField("Clicked Down Scale", clickButton.clickedDownScale);
             clickButton.clickReleaseScale = EditorGUILayout.CurveField("Click Release Scale", clickButton.clickReleaseScale);
 
             // Draw UnityEvents
+            SerializedProperty onDown = serializedObject.FindProperty("OnDown");
+            EditorGUILayout.PropertyField(onDown);
+
+            SerializedProperty onUp = serializedObject.FindProperty("OnUp");
+            EditorGUILayout.PropertyField(onUp);
+            
             SerializedProperty onClick = serializedObject.FindProperty("OnClick");
             EditorGUILayout.PropertyField(onClick);
-            
-            SerializedProperty onEnter = serializedObject.FindProperty("OnEnter");
-            EditorGUILayout.PropertyField(onEnter);
-            
-            SerializedProperty onExit = serializedObject.FindProperty("OnExit");
-            EditorGUILayout.PropertyField(onExit);
-            
+
             serializedObject.ApplyModifiedProperties();
             
             EditorGUILayout.EndVertical();

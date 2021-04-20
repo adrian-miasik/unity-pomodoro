@@ -40,7 +40,7 @@ namespace AdrianMiasik
         private bool _isPaused;
         private double _currentTime;
         private float _totalTime; // In seconds
-        
+
         // Pause Fade Animation
         private bool _isFading;
         private float _accumulatedFadeTime;
@@ -53,6 +53,8 @@ namespace AdrianMiasik
 
         // Specific to our ring shader
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+        private DoubleDigit selectedDigit;
+        private DoubleDigit lastSelectedDigit;
 
         private void OnValidate()
         {
@@ -119,7 +121,7 @@ namespace AdrianMiasik
                     // Early exit
                     return;
                 }
-                
+
                 // Decrement timer
                 ring.fillAmount = (float) _currentTime / _totalTime;
                 UpdateDigitValues(TimeSpan.FromSeconds(_currentTime));
@@ -134,8 +136,8 @@ namespace AdrianMiasik
         private void AnimatePausedDigits()
         {
             _accumulatedFadeTime += Time.deltaTime;
-                
-            if (_isFadeComplete)  
+
+            if (_isFadeComplete)
             {
                 if (_accumulatedFadeTime > _pauseHoldDuration)
                 {
@@ -146,7 +148,7 @@ namespace AdrianMiasik
             else
             {
                 _fadeProgress = _accumulatedFadeTime / _fadeDuration;
-                    
+
                 if (_isFading)
                 {
                     SetDigitColor(Color.Lerp(_startingColor, _endingColor, _fadeProgress));
@@ -155,18 +157,18 @@ namespace AdrianMiasik
                 {
                     SetDigitColor(Color.Lerp(_endingColor, _startingColor, _fadeProgress));
                 }
-                    
+
                 if (_fadeProgress >= 1)
                 {
                     // Flip state
                     _isFading = !_isFading;
                     _accumulatedFadeTime = 0f;
-                        
+
                     _isFadeComplete = true;
                 }
             }
         }
-        
+
         /// <summary>
         /// Marks timer as complete, fills progress to full, and updates play/pause visuals
         /// </summary>
@@ -186,10 +188,12 @@ namespace AdrianMiasik
             {
                 SetDigitColor(Color.black);
             }
-            
+
             _isRunning = true;
             _isPaused = false;
             ring.material.SetColor(RingColor, runningColor);
+            ClearSelection();
+            
             LockEditing();
         }
 
@@ -200,7 +204,7 @@ namespace AdrianMiasik
         {
             _isRunning = false;
             _isPaused = true;
-            
+
             // Digit fade
             _accumulatedFadeTime = 0;
             _isFadeComplete = true;
@@ -220,6 +224,7 @@ namespace AdrianMiasik
             Pause();
             SetDigitColor(Color.black);
             Initialize();
+            ClearSelection();
             UnlockEditing();
         }
 
@@ -269,9 +274,9 @@ namespace AdrianMiasik
 
         private void SetDigitColor(Color newColor)
         {
-            hourDigits.SetColor(newColor);
-            minuteDigits.SetColor(newColor);
-            secondDigits.SetColor(newColor);
+            hourDigits.SetTextColor(newColor);
+            minuteDigits.SetTextColor(newColor);
+            secondDigits.SetTextColor(newColor);
         }
 
         // Getters
@@ -353,9 +358,26 @@ namespace AdrianMiasik
                 default:
                     throw new ArgumentOutOfRangeException(nameof(digit), digit, null);
             }
-            
+
             OnValidate();
             Initialize();
+        }
+
+        public void SetSelection(DoubleDigit currentDigit)
+        {
+            lastSelectedDigit = selectedDigit;
+            selectedDigit = currentDigit;
+
+            // Deselect previous digit selection
+            if (lastSelectedDigit != null && lastSelectedDigit != currentDigit)
+            {
+                lastSelectedDigit.Deselect();
+            }
+        }
+
+        public void ClearSelection()
+        {
+            SetSelection(null);
         }
     }
 }
