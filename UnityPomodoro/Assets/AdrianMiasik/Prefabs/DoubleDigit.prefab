@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b5941e3fae71a49b7a046883792627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectable: {fileID: 9103386490340751771}
   background: {fileID: 2939933544673941019}
   upArrow: {fileID: 1072131722627031130}
   input: {fileID: 2939933545338344003}
@@ -326,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -517,7 +518,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.25
+  m_fontSize: 58.55
   m_fontSizeBase: 47.9
   m_fontWeight: 400
   m_enableAutoSizing: 1

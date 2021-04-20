@@ -5,24 +5,25 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler
+    public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler, ISubmitHandler
     {
         [Header("References")] 
+        [SerializeField] private Selectable selectable;
         [SerializeField] private Image background;
+
         [SerializeField] private ClickButton upArrow;
         [SerializeField] private TMP_InputField input;
         [SerializeField] private ClickButton downArrow;
 
         [Header("Color")] 
         [SerializeField] private float animationDuration = 0.25f;
-
         [SerializeField] private AnimationCurve animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
+        
         private PomodoroTimer.Digits digit;
         private PomodoroTimer timer;
         private bool isInteractable;
         private bool isSelected;
-        
+
         // Color animation
         [SerializeField] private Color color = Color.white;
         [SerializeField] private Color selectionColor;
@@ -31,9 +32,12 @@ namespace AdrianMiasik
         private bool isColorAnimating;
         private float accumulatedTime;
         private float progress;
+        
+        // Controls
         private TMP_SelectionCaret caret;
         private bool ignoreFirstClick = true;
-        
+
+        // Shaders
         private Material _instanceMaterial;
         private static readonly int SquircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
@@ -83,6 +87,16 @@ namespace AdrianMiasik
                     IncrementOne();
                 }
                 else if (Input.mouseScrollDelta.y < 0)
+                {
+                    DecrementOne();
+                }
+
+                // Arrow keys
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    IncrementOne();
+                }
+                if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     DecrementOne();
                 }
@@ -239,10 +253,20 @@ namespace AdrianMiasik
 
             isSelected = false;
             ignoreFirstClick = true;
-
+            
             // Disable caret selection
             caret.raycastTarget = false;
             input.DeactivateInputField();
+        }
+
+        public void DeselectInput()
+        {
+            // Disable caret selection
+            caret.raycastTarget = false;
+            input.DeactivateInputField();
+            
+            // Select self
+            selectable.Select();
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -258,6 +282,20 @@ namespace AdrianMiasik
             {
                 caret.raycastTarget = true;
                 input.ActivateInputField();
+            }
+        }
+
+        public void OnSubmit(BaseEventData eventData)
+        {
+            if (!caret.raycastTarget)
+            {
+                caret.raycastTarget = true;
+                input.ActivateInputField();
+            }
+            else
+            {
+                caret.raycastTarget = false;
+                input.DeactivateInputField(true);
             }
         }
     }
