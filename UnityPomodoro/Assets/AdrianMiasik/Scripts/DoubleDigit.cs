@@ -18,7 +18,7 @@ namespace AdrianMiasik
         [Header("Color")] 
         [SerializeField] private float animationDuration = 0.25f;
         [SerializeField] private AnimationCurve animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        
+
         private PomodoroTimer.Digits digit;
         private PomodoroTimer timer;
         private bool isInteractable;
@@ -30,8 +30,12 @@ namespace AdrianMiasik
         private Color startingColor;
         private Color endingColor;
         private bool isColorAnimating;
-        private float accumulatedTime;
+        private float accumulatedColorTime;
         private float progress;
+
+        // Deselection
+        private float accumulatedSelectionTime;
+        private float deselectionDuration = 3f; // How long to wait before deselecting automatically on touch devices
         
         // Controls
         private TMP_SelectionCaret caret;
@@ -63,8 +67,8 @@ namespace AdrianMiasik
         {
             if (isColorAnimating)
             {
-                accumulatedTime += Time.deltaTime;
-                progress = accumulatedTime / animationDuration;
+                accumulatedColorTime += Time.deltaTime;
+                progress = accumulatedColorTime / animationDuration;
                 if (progress >= 1)
                 {
                     isColorAnimating = false;
@@ -100,9 +104,23 @@ namespace AdrianMiasik
                 {
                     DecrementOne();
                 }
+
+
+                // Automatic deselection on mobile
+                if (Input.touchSupported && !input.isFocused)
+                {
+                    accumulatedSelectionTime += Time.deltaTime;
+                    
+                    if (accumulatedSelectionTime > deselectionDuration)
+                    {
+                        accumulatedSelectionTime = 0;
+                        DeselectInput();
+                        timer.ClearSelection();
+                    }
+                }
             }
         }
-        
+
         private void SetSquircleColor(Color color)
         {
             // Create instance material
@@ -113,7 +131,7 @@ namespace AdrianMiasik
             startingColor = _instanceMaterial.GetColor(SquircleColor);
             
             endingColor = color;
-            accumulatedTime = 0;
+            accumulatedColorTime = 0;
             isColorAnimating = true;
         }
 
@@ -238,21 +256,23 @@ namespace AdrianMiasik
             {
                 return;
             }
+
+            isSelected = true;
+            accumulatedSelectionTime = 0;
             
             ShowArrows();
             SetSquircleColor(selectionColor);
-            
+
             timer.SetSelection(this);
-            isSelected = true;
         }
 
         public void Deselect()
         {
-            HideArrows();
-            SetSquircleColor(color);
-
             isSelected = false;
             ignoreFirstClick = true;
+            
+            HideArrows();
+            SetSquircleColor(color);
             
             // Disable caret selection
             caret.raycastTarget = false;
@@ -264,8 +284,10 @@ namespace AdrianMiasik
             // Disable caret selection
             caret.raycastTarget = false;
             input.DeactivateInputField();
+
+            accumulatedSelectionTime = 0;
             
-            // Select self
+            // Select self (Deselect input field)
             selectable.Select();
         }
 

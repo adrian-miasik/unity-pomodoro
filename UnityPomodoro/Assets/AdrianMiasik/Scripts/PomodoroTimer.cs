@@ -13,6 +13,8 @@ namespace AdrianMiasik
             SECONDS
         }
 
+        [SerializeField] private Selectable background;
+        
         [Header("Digits")] 
         [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
@@ -378,6 +380,7 @@ namespace AdrianMiasik
         public void ClearSelection()
         {
             SetSelection(null);
+            background.Select();
         }
     }
 }

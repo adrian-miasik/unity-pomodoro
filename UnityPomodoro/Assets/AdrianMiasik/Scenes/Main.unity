@@ -207,7 +207,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.7
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -266,10 +266,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 61516145}
-  - component: {fileID: 61516146}
   - component: {fileID: 61516147}
   m_Layer: 5
-  m_Name: PomodoroTimer
+  m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,7 +287,7 @@ RectTransform:
   m_Children:
   - {fileID: 1090976623}
   - {fileID: 361292846}
-  m_Father: {fileID: 1601903655}
+  m_Father: {fileID: 1532996932}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -296,32 +295,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &61516146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 61516144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fddaf18cac877e4a8c37fa3ac88abd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hourDigits: {fileID: 1524052414}
-  minuteDigits: {fileID: 429705704}
-  secondDigits: {fileID: 2096418338}
-  playPauseParent: {fileID: 1398670393}
-  playPauseButton: {fileID: 1595088272}
-  ring: {fileID: 361292848}
-  setupColor: {r: 0.05, g: 0.47, b: 0.95, a: 1}
-  runningColor: {r: 0.35, g: 0.89, b: 0.4, a: 1}
-  completedColor: {r: 0.97, g: 0.15, b: 0.15, a: 1}
-  hours: 0
-  minutes: 25
-  seconds: 0
-  _fadeDuration: 0.1
-  _pauseHoldDuration: 0.75
 --- !u!114 &61516147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +351,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 0
-  m_Antialiasing: 2
+  m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -405,7 +378,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 1, g: 0, b: 0.8249526, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -420,7 +393,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -663,11 +636,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407842491}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1237520527}
+  m_Father: {fileID: 1601903655}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -719,7 +692,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 61516146}
+      - m_Target: {fileID: 1601903656}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
         m_MethodName: ClearSelection
         m_Mode: 1
@@ -744,7 +717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -1047,7 +1020,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.7
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1251,7 +1224,7 @@ PrefabInstance:
     - target: {fileID: 251220132884393124, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 61516146}
+      objectReference: {fileID: 0}
     - target: {fileID: 1072131722627031130, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnSelection.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1562,7 +1535,7 @@ PrefabInstance:
     - target: {fileID: 251220132884393124, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 61516146}
+      objectReference: {fileID: 0}
     - target: {fileID: 251220132884393124, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SelectDigit
@@ -1867,8 +1840,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 407842492}
-  - {fileID: 1532996932}
+  - {fileID: 1601903655}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1895,7 +1867,7 @@ PrefabInstance:
     - target: {fileID: 251220132884393124, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 61516146}
+      objectReference: {fileID: 0}
     - target: {fileID: 251220132884393124, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SelectDigit
@@ -2242,7 +2214,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 61516146}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
@@ -2519,8 +2491,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1601903655}
-  m_Father: {fileID: 1237520527}
+  - {fileID: 61516145}
+  m_Father: {fileID: 1601903655}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2587,7 +2559,7 @@ MonoBehaviour:
   playOnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 61516146}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
@@ -2602,7 +2574,7 @@ MonoBehaviour:
   pauseOnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 61516146}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 1
@@ -2661,8 +2633,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1601903655}
+  - component: {fileID: 1601903656}
   m_Layer: 5
-  m_Name: Container
+  m_Name: PomodoroTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2675,12 +2648,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601903654}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 61516145}
-  m_Father: {fileID: 1532996932}
+  - {fileID: 407842492}
+  - {fileID: 1532996932}
+  m_Father: {fileID: 1237520527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2688,6 +2662,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1601903656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601903654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fddaf18cac877e4a8c37fa3ac88abd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 407842493}
+  hourDigits: {fileID: 1524052414}
+  minuteDigits: {fileID: 429705704}
+  secondDigits: {fileID: 2096418338}
+  playPauseParent: {fileID: 1398670393}
+  playPauseButton: {fileID: 1595088272}
+  ring: {fileID: 361292848}
+  setupColor: {r: 0.05, g: 0.47, b: 0.95, a: 1}
+  runningColor: {r: 0.35, g: 0.89, b: 0.4, a: 1}
+  completedColor: {r: 0.97, g: 0.15, b: 0.15, a: 1}
+  hours: 0
+  minutes: 25
+  seconds: 0
+  _fadeDuration: 0.1
+  _pauseHoldDuration: 0.75
 --- !u!1 &1608452770
 GameObject:
   m_ObjectHideFlags: 0
