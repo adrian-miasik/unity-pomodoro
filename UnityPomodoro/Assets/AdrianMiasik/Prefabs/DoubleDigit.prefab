@@ -284,9 +284,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectable: {fileID: 9103386490340751771}
   background: {fileID: 2939933544673941019}
-  upArrow: {fileID: 1072131722627031130}
+  upArrow: {fileID: 7609617135643505033}
   input: {fileID: 2939933545338344003}
-  downArrow: {fileID: 3387427563058191479}
+  downArrow: {fileID: 5222133789675638180}
   animationDuration: 1
   animationRamp:
     serializedVersion: 2
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 58.85
+  m_fontSize: 72
   m_fontSizeBase: 47.9
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -611,9 +611,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 7388568932786236323, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Name
       value: Up Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7388568932786236323, guid: 9daadf459f8011248853888019889a8d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7835362842644785459, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Pivot.x
@@ -699,10 +707,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8779545612152806735, guid: 9daadf459f8011248853888019889a8d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daadf459f8011248853888019889a8d, type: 3}
 --- !u!224 &7274529650735771437 stripped
@@ -710,15 +714,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7835362842644785459, guid: 9daadf459f8011248853888019889a8d, type: 3}
   m_PrefabInstance: {fileID: 596901572018292254}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1072131722627031130 stripped
+--- !u!114 &7609617135643505033 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 479744197207352900, guid: 9daadf459f8011248853888019889a8d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7048789441158346647, guid: 9daadf459f8011248853888019889a8d, type: 3}
   m_PrefabInstance: {fileID: 596901572018292254}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a47d129517b47d89683a978f4ebdda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3002471199523093043
@@ -756,9 +760,17 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6100996505708685272, guid: 9daadf459f8011248853888019889a8d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 7388568932786236323, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Name
       value: Down Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7388568932786236323, guid: 9daadf459f8011248853888019889a8d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7835362842644785459, guid: 9daadf459f8011248853888019889a8d, type: 3}
       propertyPath: m_Pivot.x
@@ -844,10 +856,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8779545612152806735, guid: 9daadf459f8011248853888019889a8d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9daadf459f8011248853888019889a8d, type: 3}
 --- !u!224 &4978209697112331008 stripped
@@ -855,14 +863,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7835362842644785459, guid: 9daadf459f8011248853888019889a8d, type: 3}
   m_PrefabInstance: {fileID: 3002471199523093043}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3387427563058191479 stripped
+--- !u!114 &5222133789675638180 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 479744197207352900, guid: 9daadf459f8011248853888019889a8d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7048789441158346647, guid: 9daadf459f8011248853888019889a8d, type: 3}
   m_PrefabInstance: {fileID: 3002471199523093043}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a47d129517b47d89683a978f4ebdda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

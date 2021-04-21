@@ -77,15 +77,17 @@ GameObject:
   m_Component:
   - component: {fileID: 7835362842644785459}
   - component: {fileID: 3173786275780890997}
+  - component: {fileID: 7048789441158346647}
   - component: {fileID: 479744197207352900}
   - component: {fileID: 4222481781619659948}
+  - component: {fileID: 2803852818410448301}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7835362842644785459
 RectTransform:
   m_ObjectHideFlags: 0
@@ -114,6 +116,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7388568932786236323}
   m_CullTransparentMesh: 1
+--- !u!114 &7048789441158346647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388568932786236323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a47d129517b47d89683a978f4ebdda7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 479744197207352900}
+  animation: {fileID: 2803852818410448301}
 --- !u!114 &479744197207352900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +236,22 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 479744197207352900}
+--- !u!111 &2803852818410448301
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388568932786236323}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 78d801a2160833e4c9dafa9556eb15c5, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 78d801a2160833e4c9dafa9556eb15c5, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8779545612152806735
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +262,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4634568764479694100}
   - component: {fileID: 4451810500621254531}
+  - component: {fileID: 6393641347734410625}
+  - component: {fileID: 7654852881337932008}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -265,3 +299,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8779545612152806735}
   m_CullTransparentMesh: 1
+--- !u!114 &6393641347734410625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779545612152806735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7654852881337932008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779545612152806735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0

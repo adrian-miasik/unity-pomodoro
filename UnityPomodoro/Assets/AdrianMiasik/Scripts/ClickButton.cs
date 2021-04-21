@@ -95,17 +95,5 @@ namespace AdrianMiasik
                 }
             }
         }
-
-        public void Hide()
-        {
-            raycastTarget = false;
-            target.gameObject.SetActive(false);
-        }
-
-        public void Show()
-        {
-            raycastTarget = true;
-            target.gameObject.SetActive(true);
-        }
     }
 }

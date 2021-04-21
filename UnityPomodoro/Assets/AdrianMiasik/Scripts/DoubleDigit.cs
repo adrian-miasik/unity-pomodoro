@@ -11,9 +11,9 @@ namespace AdrianMiasik
         [SerializeField] private Selectable selectable;
         [SerializeField] private Image background;
 
-        [SerializeField] private ClickButton upArrow;
+        [SerializeField] private Arrow upArrow;
         [SerializeField] private TMP_InputField input;
-        [SerializeField] private ClickButton downArrow;
+        [SerializeField] private Arrow downArrow;
 
         [Header("Color")] 
         [SerializeField] private float animationDuration = 0.25f;
