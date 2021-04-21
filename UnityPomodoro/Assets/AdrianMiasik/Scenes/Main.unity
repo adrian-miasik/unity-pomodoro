@@ -2214,7 +2214,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1601903656}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
@@ -2559,7 +2559,7 @@ MonoBehaviour:
   playOnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1601903656}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
@@ -2574,7 +2574,7 @@ MonoBehaviour:
   pauseOnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1601903656}
         m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 1
