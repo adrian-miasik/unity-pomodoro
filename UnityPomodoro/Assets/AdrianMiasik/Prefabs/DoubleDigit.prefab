@@ -32,8 +32,8 @@ RectTransform:
   m_Father: {fileID: 2939933545387467008}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.29419765}
-  m_AnchorMax: {x: 1, y: 0.7058024}
+  m_AnchorMin: {x: 0, y: 0.3206577}
+  m_AnchorMax: {x: 1, y: 0.67934227}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 080ad4b95c4277c4492743fa1dbb1b22, type: 2}
+  m_GlobalFontAsset: {fileID: 0}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -370,7 +370,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 73
+  m_PreferredWidth: 74
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -407,8 +407,8 @@ RectTransform:
   m_Father: {fileID: 2939933545338343996}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.29419765}
-  m_AnchorMax: {x: 1, y: 0.7058024}
+  m_AnchorMin: {x: 0, y: 0.3206577}
+  m_AnchorMax: {x: 1, y: 0.67934227}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -453,16 +453,16 @@ RectTransform:
   m_GameObject: {fileID: 2939933546287668545}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2654321, y: 1.2654321, z: 1.2654321}
+  m_LocalScale: {x: 1.5475214, y: 1.5475214, z: 1.5475214}
   m_Children: []
   m_Father: {fileID: 2939933545557774699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.79999924}
-  m_SizeDelta: {x: 0, y: -1.6000016}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.58}
 --- !u!222 &2939933546287668550
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -493,8 +493,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "00\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 080ad4b95c4277c4492743fa1dbb1b22, type: 2}
-  m_sharedMaterial: {fileID: 7377043911520732431, guid: 080ad4b95c4277c4492743fa1dbb1b22, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 48abdf5fe5a17fe4487f4319d8e460c5, type: 2}
+  m_sharedMaterial: {fileID: 4542966440292593672, guid: 48abdf5fe5a17fe4487f4319d8e460c5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 37.05
   m_fontSizeBase: 47.9
   m_fontWeight: 400
   m_enableAutoSizing: 1
