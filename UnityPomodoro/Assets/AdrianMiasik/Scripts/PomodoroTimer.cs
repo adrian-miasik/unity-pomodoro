@@ -14,8 +14,9 @@ namespace AdrianMiasik
         }
 
         [SerializeField] private Selectable background;
-        
+
         [Header("Digits")] 
+        [SerializeField] private GameObject digitContainer;
         [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
@@ -26,6 +27,9 @@ namespace AdrianMiasik
 
         [Header("Ring")] 
         [SerializeField] private Image ring;
+
+        [Header("Completion")] 
+        [SerializeField] private GameObject completionLabel;
 
         [Header("Colors")] 
         [SerializeField] private Color setupColor = new Color(0.05f, 0.47f, 0.95f);
@@ -46,6 +50,7 @@ namespace AdrianMiasik
         // Pause Fade Animation
         private bool _isFading;
         private float _accumulatedFadeTime;
+        [Header("Fade Animation")]
         [SerializeField] float _fadeDuration = 0.25f;
         private float _fadeProgress;
         private Color _startingColor;
@@ -179,6 +184,10 @@ namespace AdrianMiasik
             ring.fillAmount = 1f;
             playPauseParent.gameObject.SetActive(false);
             ring.material.SetColor(RingColor, completedColor);
+            
+            // Switch body visuals
+            digitContainer.gameObject.SetActive(false);
+            completionLabel.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -223,6 +232,10 @@ namespace AdrianMiasik
         /// </summary>
         public void Restart()
         {
+            // Revert body visuals
+            completionLabel.gameObject.SetActive(false);
+            digitContainer.gameObject.SetActive(true);
+            
             Pause();
             SetDigitColor(Color.black);
             Initialize();
