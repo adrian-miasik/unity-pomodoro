@@ -214,6 +214,7 @@ namespace AdrianMiasik
                 timer.IncrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
                 UpdateArrows();
+                accumulatedSelectionTime = 0;
             }
         }
 
@@ -224,6 +225,7 @@ namespace AdrianMiasik
                 timer.DecrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
                 UpdateArrows();
+                accumulatedSelectionTime = 0;
             }
         }
 
