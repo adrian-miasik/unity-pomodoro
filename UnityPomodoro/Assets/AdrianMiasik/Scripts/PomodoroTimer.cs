@@ -29,7 +29,7 @@ namespace AdrianMiasik
         [SerializeField] private Image ring;
 
         [Header("Completion")] 
-        [SerializeField] private GameObject completionLabel;
+        [SerializeField] private Animation completion;
 
         [Header("Colors")] 
         [SerializeField] private Color setupColor = new Color(0.05f, 0.47f, 0.95f);
@@ -187,7 +187,7 @@ namespace AdrianMiasik
             
             // Switch body visuals
             digitContainer.gameObject.SetActive(false);
-            completionLabel.gameObject.SetActive(true);
+            completion.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace AdrianMiasik
         public void Restart()
         {
             // Revert body visuals
-            completionLabel.gameObject.SetActive(false);
+            completion.gameObject.SetActive(false);
             digitContainer.gameObject.SetActive(true);
             
             Pause();
