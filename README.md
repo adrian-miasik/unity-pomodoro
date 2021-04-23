@@ -1,2 +1,2 @@
 # unity-pomodoro
-![Mock](sources/mocks/Light.png)
+![Mock](sources/mocks/pomodoro-setup.png)
