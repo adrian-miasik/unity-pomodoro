@@ -665,8 +665,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -774.005859375,
-            "y": -238.00584411621095,
+            "x": -797.0,
+            "y": -253.99996948242188,
             "width": 208.0,
             "height": 278.0
         }
@@ -829,7 +829,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "684129cf1d9a4cc29734841bfa6e6a7d",
     "m_Id": 0,
-    "m_DisplayName": "InnerSize",
+    "m_DisplayName": "Diameter",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1162,7 +1162,7 @@
     "m_Guid": {
         "m_GuidSerialized": "5b822036-66d8-4951-8eae-73278e3b0809"
     },
-    "m_Name": "InnerSize",
+    "m_Name": "Diameter",
     "m_DefaultReferenceName": "Vector1_98525729712540259c19ac6e37e93b62",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,

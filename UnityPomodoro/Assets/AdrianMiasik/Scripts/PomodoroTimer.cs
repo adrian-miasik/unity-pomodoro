@@ -30,6 +30,7 @@ namespace AdrianMiasik
 
         [Header("Completion")] 
         [SerializeField] private Animation completion;
+        [SerializeField] private AnimationCurve completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
 
         [Header("Colors")] 
         [SerializeField] private Color setupColor = new Color(0.05f, 0.47f, 0.95f);
@@ -46,6 +47,9 @@ namespace AdrianMiasik
         private bool _isPaused;
         private double _currentTime;
         private float _totalTime; // In seconds
+        private bool _isComplete;
+        private DoubleDigit selectedDigit;
+        private DoubleDigit lastSelectedDigit;
 
         // Pause Fade Animation
         private bool _isFading;
@@ -56,12 +60,17 @@ namespace AdrianMiasik
         private Color _startingColor;
         private Color _endingColor;
         private bool _isFadeComplete;
-        [SerializeField] private float _pauseHoldDuration = 1f;
+        [SerializeField] 
+        private float _pauseHoldDuration = 1f;
+        
+        // Pulse Ring Animation
+        private bool _animateRingPulse;
+        private float _accumulatedRingPulseTime;
 
         // Specific to our ring shader
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
-        private DoubleDigit selectedDigit;
-        private DoubleDigit lastSelectedDigit;
+
+        private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
 
         private void OnValidate()
         {
@@ -92,6 +101,8 @@ namespace AdrianMiasik
         {
             _isPaused = false;
             _isFading = false;
+            _isComplete = false;
+            
             playPauseParent.gameObject.SetActive(true);
 
             // Update visuals
@@ -134,10 +145,22 @@ namespace AdrianMiasik
                 UpdateDigitValues(TimeSpan.FromSeconds(_currentTime));
                 _currentTime -= Time.deltaTime;
             }
+            else if (_isComplete)
+            {
+                AnimateRingPulse();
+            }
             else if (_isPaused)
             {
                 AnimatePausedDigits();
             }
+        }
+
+        private void AnimateRingPulse()
+        {
+            _accumulatedRingPulseTime += Time.deltaTime;
+            ring.material.SetFloat(RingDiameter, completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime));
+            completion.gameObject.transform.localScale =  
+                Vector3.one * completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime - 0.05f);
         }
 
         private void AnimatePausedDigits()
@@ -181,10 +204,12 @@ namespace AdrianMiasik
         /// </summary>
         private void Complete()
         {
+            _isComplete = true;
+
             ring.fillAmount = 1f;
             playPauseParent.gameObject.SetActive(false);
             ring.material.SetColor(RingColor, completedColor);
-            
+
             // Switch body visuals
             digitContainer.gameObject.SetActive(false);
             completion.gameObject.SetActive(true);
@@ -235,7 +260,10 @@ namespace AdrianMiasik
             // Revert body visuals
             completion.gameObject.SetActive(false);
             digitContainer.gameObject.SetActive(true);
-            
+
+            ring.material.SetFloat(RingDiameter, 0.9f);
+            completion.gameObject.transform.localScale = Vector3.one;
+
             Pause();
             SetDigitColor(Color.black);
             Initialize();
