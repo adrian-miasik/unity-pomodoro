@@ -261,6 +261,7 @@ namespace AdrianMiasik
             completion.gameObject.SetActive(false);
             digitContainer.gameObject.SetActive(true);
 
+            _accumulatedRingPulseTime = 0;
             ring.material.SetFloat(RingDiameter, 0.9f);
             completion.gameObject.transform.localScale = Vector3.one;
 
