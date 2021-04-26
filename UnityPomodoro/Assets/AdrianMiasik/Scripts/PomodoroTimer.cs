@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,9 @@ namespace AdrianMiasik
         [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
+
+        [Header("Text")] 
+        [SerializeField] private TextMeshProUGUI text;
 
         [Header("Buttons")] 
         [SerializeField] private GameObject playPauseParent;
@@ -104,6 +108,8 @@ namespace AdrianMiasik
             _isComplete = false;
             
             playPauseParent.gameObject.SetActive(true);
+
+            text.text = "Setup";
 
             // Update visuals
             ring.fillAmount = 1f;
@@ -208,6 +214,7 @@ namespace AdrianMiasik
 
             ring.fillAmount = 1f;
             playPauseParent.gameObject.SetActive(false);
+            text.gameObject.SetActive(false);
             ring.material.SetColor(RingColor, completedColor);
 
             // Switch body visuals
@@ -227,6 +234,9 @@ namespace AdrianMiasik
 
             _isRunning = true;
             _isPaused = false;
+            
+            text.text = "Running";
+
             ring.material.SetColor(RingColor, runningColor);
             ClearSelection();
             
@@ -240,6 +250,8 @@ namespace AdrianMiasik
         {
             _isRunning = false;
             _isPaused = true;
+            
+            text.text = "Paused";
 
             // Digit fade
             _accumulatedFadeTime = 0;
@@ -263,6 +275,7 @@ namespace AdrianMiasik
 
             _accumulatedRingPulseTime = 0;
             ring.material.SetFloat(RingDiameter, 0.9f);
+            text.gameObject.SetActive(true);
             completion.gameObject.transform.localScale = Vector3.one;
 
             Pause();
@@ -416,6 +429,18 @@ namespace AdrianMiasik
             if (lastSelectedDigit != null && lastSelectedDigit != currentDigit)
             {
                 lastSelectedDigit.Deselect();
+            }
+
+            if (selectedDigit == null)
+            {
+                if (!_isComplete)
+                {
+                    text.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                text.gameObject.SetActive(false);
             }
         }
 
