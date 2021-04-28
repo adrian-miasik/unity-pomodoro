@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.PomodoroTimer.Components
 {
     public class Arrow : MonoBehaviour
     {

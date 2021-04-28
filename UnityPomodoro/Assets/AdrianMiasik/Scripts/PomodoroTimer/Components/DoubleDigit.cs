@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.PomodoroTimer.Components
 {
     public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler, ISubmitHandler
     {
@@ -105,8 +105,7 @@ namespace AdrianMiasik
                     DecrementOne();
                 }
 
-
-                // Automatic deselection on mobile
+                // Automatic digit deselection on mobile
                 if (Input.touchSupported && !input.isFocused)
                 {
                     accumulatedSelectionTime += Time.deltaTime;
