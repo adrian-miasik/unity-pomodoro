@@ -1,4 +1,4 @@
-namespace AdrianMiasik.PomodoroTimer
+namespace AdrianMiasik.PomodoroTimer.Interfaces
 {
     public interface ITimerState
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik;
 using AdrianMiasik.PomodoroTimer.Components;
+using AdrianMiasik.PomodoroTimer.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
