@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using AdrianMiasik;
-using AdrianMiasik.PomodoroTimer.Components;
-using AdrianMiasik.PomodoroTimer.Interfaces;
+using AdrianMiasik.Components;
+using AdrianMiasik.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.PomodoroTimer
+namespace AdrianMiasik
 {
     public class PomodoroTimer : MonoBehaviour
     {
@@ -35,11 +34,15 @@ namespace AdrianMiasik.PomodoroTimer
 
         public States state = States.SETUP;
 
+        [Header("Containers")]
+        [SerializeField] private GameObject contentContainer; // main content
+        [SerializeField] private GameObject infoContainer; // info content
+        [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
+
         [Header("Background")] 
         [SerializeField] private Selectable background; // Used to pull select focus
 
-        [Header("Digits")] 
-        [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
+        [Header("Digits")]
         [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
@@ -48,6 +51,7 @@ namespace AdrianMiasik.PomodoroTimer
         [SerializeField] private TextMeshProUGUI text;
 
         [Header("Buttons")] 
+        [SerializeField] private InformationToggle infoToggle;
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
@@ -127,6 +131,7 @@ namespace AdrianMiasik.PomodoroTimer
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
             // Initialize buttons
+            infoToggle.Initialize(this);
             rightButton.Initialize(this);
             breakSlider.Initialize(false, colorDeselected, colorRelax);
 
@@ -544,6 +549,20 @@ namespace AdrianMiasik.PomodoroTimer
         {
             SetSelection(null);
             background.Select();
+        }
+
+        public void ShowInfo()
+        {
+            // Hide main content, show info
+            contentContainer.gameObject.SetActive(false);
+            infoContainer.gameObject.SetActive(true);
+        }
+
+        public void HideInfo()
+        {
+            // Hide info, show main content
+            infoContainer.gameObject.SetActive(false);
+            contentContainer.gameObject.SetActive(true);
         }
     }
 }

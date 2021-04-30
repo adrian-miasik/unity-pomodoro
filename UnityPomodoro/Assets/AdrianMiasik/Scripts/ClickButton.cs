@@ -9,7 +9,8 @@ namespace AdrianMiasik
     {
         public RectTransform target;
 
-        [Header("Animation")] public float clickedDownScale = 0.75f;
+        [Header("Animation")] 
+        public float clickedDownScale = 0.75f;
 
         public AnimationCurve clickReleaseScale;
 

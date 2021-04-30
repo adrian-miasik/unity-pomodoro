@@ -1,10 +1,10 @@
 using System;
-using AdrianMiasik.PomodoroTimer.Interfaces;
+using AdrianMiasik.Interfaces;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace AdrianMiasik.PomodoroTimer.Components
+namespace AdrianMiasik.Components
 {
     public class RightButton : MonoBehaviour, ITimerState
     {
