@@ -33,6 +33,7 @@ namespace AdrianMiasik
             clickButton.target = (RectTransform) EditorGUILayout.ObjectField("Target", clickButton.target, typeof(RectTransform), true);
             clickButton.clickedDownScale = EditorGUILayout.FloatField("Clicked Down Scale", clickButton.clickedDownScale);
             clickButton.clickReleaseScale = EditorGUILayout.CurveField("Click Release Scale", clickButton.clickReleaseScale);
+            clickButton.holdRamp = EditorGUILayout.CurveField("Hold Ramp", clickButton.holdRamp);
 
             // Draw UnityEvents
             SerializedProperty onDown = serializedObject.FindProperty("OnDown");

@@ -186,6 +186,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  holdRamp:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.40069294
+      inSlope: -0.00101677
+      outSlope: -0.00101677
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.43787375
+    - serializedVersion: 3
+      time: 5
+      value: 0
+      inSlope: -0.017921256
+      outSlope: -0.017130714
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   OnDown:
     m_PersistentCalls:
       m_Calls: []

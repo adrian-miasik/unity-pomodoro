@@ -9,6 +9,11 @@ namespace AdrianMiasik.Components
         
         public void Hide()
         {
+            if (button.IsHolding())
+            {
+                button.CancelHold();
+            }
+
             button.raycastTarget = false;
             gameObject.SetActive(false);
         }
