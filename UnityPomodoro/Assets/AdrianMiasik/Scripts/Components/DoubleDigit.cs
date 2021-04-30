@@ -94,15 +94,27 @@ namespace AdrianMiasik.Components
                 {
                     DecrementOne();
                 }
-
-                // Arrow keys
+                
+                // Arrow keys : Up arrow
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
+                    upArrow.Hold();
                     IncrementOne();
                 }
+                else if (Input.GetKeyUp(KeyCode.UpArrow))
+                {
+                    upArrow.Release();
+                }
+                
+                // Arrow keys : Down arrow
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
+                    downArrow.Hold();
                     DecrementOne();
+                }
+                else if (Input.GetKeyUp(KeyCode.DownArrow))
+                {
+                    downArrow.Release();
                 }
 
                 // Automatic digit deselection on mobile

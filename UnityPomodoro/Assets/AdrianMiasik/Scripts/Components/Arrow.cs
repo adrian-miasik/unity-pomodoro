@@ -9,10 +9,7 @@ namespace AdrianMiasik.Components
         
         public void Hide()
         {
-            if (button.IsHolding())
-            {
-                button.CancelHold();
-            }
+            Release();
 
             button.raycastTarget = false;
             gameObject.SetActive(false);
@@ -22,6 +19,19 @@ namespace AdrianMiasik.Components
         {
             button.raycastTarget = true;
             gameObject.SetActive(true);
+        }
+
+        public void Hold()
+        {
+            button.OnPointerDown(null);
+        }
+
+        public void Release()
+        {
+            if (button.IsHolding())
+            {
+                button.CancelHold();
+            }
         }
     }
 }
