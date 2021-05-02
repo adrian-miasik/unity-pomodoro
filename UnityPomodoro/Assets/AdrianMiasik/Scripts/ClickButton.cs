@@ -144,5 +144,10 @@ namespace AdrianMiasik
             }
             
         }
+
+        public void OpenURL(string url)
+        {
+            Application.OpenURL(url);
+        }
     }
 }

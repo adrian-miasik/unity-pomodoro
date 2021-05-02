@@ -207,7 +207,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 39.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -325,9 +325,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1804729923}
   - {fileID: 1090976623}
   - {fileID: 361292846}
+  - {fileID: 1804729923}
   m_Father: {fileID: 1532996932}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.55
+  m_fontSize: 14.45
   m_fontSizeBase: 16.01
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.5
+  m_fontSize: 25.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -981,7 +981,7 @@ RectTransform:
   m_Children:
   - {fileID: 288170239}
   m_Father: {fileID: 61516145}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 39.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1659,7 +1659,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.55
+  m_fontSize: 36.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1793,7 +1793,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.5
+  m_fontSize: 25.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1996,7 +1996,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.55
+  m_fontSize: 14.45
   m_fontSizeBase: 16.01
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2246,8 +2246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57.591846, y: -16.92424}
-  m_SizeDelta: {x: 31.21801, y: 33.84848}
+  m_AnchoredPosition: {x: 71.88751, y: -21.125244}
+  m_SizeDelta: {x: 38.967064, y: 42.25049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &926326592
 MonoBehaviour:
@@ -2307,7 +2307,25 @@ MonoBehaviour:
     m_RotationOrder: 4
   holdRamp:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.40069294
+      inSlope: -0.00101677
+      outSlope: -0.00101677
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.43787375
+    - serializedVersion: 3
+      time: 5
+      value: 0
+      inSlope: -0.017921256
+      outSlope: -0.017130714
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 1
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2319,7 +2337,19 @@ MonoBehaviour:
       m_Calls: []
   OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 926326592}
+        m_TargetAssemblyTypeName: AdrianMiasik.ClickButton, Assembly-CSharp
+        m_MethodName: OpenURL
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: https://github.com/adrian-miasik/unity-pomodoro
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &926326593
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2631,7 +2661,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 61516145}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2976,8 +3006,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 36.600426, y: -16.92424}
-  m_SizeDelta: {x: 10.764831, y: 33.84848}
+  m_AnchoredPosition: {x: 45.685524, y: -21.125244}
+  m_SizeDelta: {x: 13.436918, y: 42.25049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1212663463
 MonoBehaviour:
@@ -3149,8 +3179,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15.609005, y: -16.92424}
-  m_SizeDelta: {x: 31.21801, y: 33.84848}
+  m_AnchoredPosition: {x: 19.483532, y: -21.125244}
+  m_SizeDelta: {x: 38.967064, y: 42.25049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1242535446
 MonoBehaviour:
@@ -3210,7 +3240,25 @@ MonoBehaviour:
     m_RotationOrder: 4
   holdRamp:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.40069294
+      inSlope: -0.00101677
+      outSlope: -0.00101677
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.43787375
+    - serializedVersion: 3
+      time: 5
+      value: 0
+      inSlope: -0.017921256
+      outSlope: -0.017130714
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 1
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -3222,7 +3270,19 @@ MonoBehaviour:
       m_Calls: []
   OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1242535446}
+        m_TargetAssemblyTypeName: AdrianMiasik.ClickButton, Assembly-CSharp
+        m_MethodName: OpenURL
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: https://www.adrianmiasik.com/
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1242535447
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4599,7 +4659,7 @@ RectTransform:
   m_Children:
   - {fileID: 882201132}
   m_Father: {fileID: 61516145}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.85, y: 0.85}
   m_AnchorMax: {x: 1, y: 1}
@@ -4837,7 +4897,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.5
+  m_fontSize: 25.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5116,7 +5176,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.05
+  m_fontSize: 8.8
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5252,7 +5312,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.25
+  m_fontSize: 14.55
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1

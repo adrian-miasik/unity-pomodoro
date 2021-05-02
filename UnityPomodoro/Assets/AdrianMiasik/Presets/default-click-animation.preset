@@ -113,10 +113,6 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: interactable
-    value: 1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
     propertyPath: target
     value: 
     objectReference: {fileID: 0}
@@ -203,6 +199,94 @@ Preset:
   - target: {fileID: 0}
     propertyPath: clickReleaseScale.m_RotationOrder
     value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].time
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].value
+    value: 0.40069294
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].inSlope
+    value: -0.00101677
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].outSlope
+    value: -0.00101677
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].tangentMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].weightedMode
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].inWeight
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[0].outWeight
+    value: 0.43787375
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].time
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].value
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].inSlope
+    value: -0.017921256
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].outSlope
+    value: -0.017130714
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].tangentMode
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].weightedMode
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].inWeight
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_Curve.Array.data[1].outWeight
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_PreInfinity
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_PostInfinity
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: holdRamp.m_RotationOrder
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: OnDown.m_PersistentCalls.m_Calls.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: OnUp.m_PersistentCalls.m_Calls.Array.size
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
