@@ -39,6 +39,11 @@ namespace AdrianMiasik
             
             cachedScale = target.localScale;
         }
+        
+        public void Hold()
+        {
+            OnPointerDown(null);
+        }
 
         public void OnPointerDown(PointerEventData eventData)
         {

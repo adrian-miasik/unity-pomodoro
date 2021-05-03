@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -44,6 +45,9 @@ namespace AdrianMiasik.Components
         // Shaders
         private Material _instanceMaterial;
         private static readonly int SquircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+        
+        // Unity Events
+        public UnityEvent OnSelection;
 
         public void Initialize(PomodoroTimer.Digits digit, PomodoroTimer timer, int digits)
         {
@@ -88,18 +92,24 @@ namespace AdrianMiasik.Components
                 // Scroll input
                 if (Input.mouseScrollDelta.y > 0)
                 {
-                    IncrementOne();
+                    if (timer.CanIncrementOne(digit))
+                    {
+                        upArrow.Click();
+                    }
                 }
                 else if (Input.mouseScrollDelta.y < 0)
                 {
-                    DecrementOne();
+                    if (timer.CanDecrementOne(digit))
+                    {
+                        downArrow.Click();
+                    }
                 }
                 
                 // Arrow keys : Up arrow
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
+                    upArrow.Click();
                     upArrow.Hold();
-                    IncrementOne();
                 }
                 else if (Input.GetKeyUp(KeyCode.UpArrow))
                 {
@@ -109,8 +119,8 @@ namespace AdrianMiasik.Components
                 // Arrow keys : Down arrow
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
+                    downArrow.Click();
                     downArrow.Hold();
-                    DecrementOne();
                 }
                 else if (Input.GetKeyUp(KeyCode.DownArrow))
                 {
@@ -277,6 +287,8 @@ namespace AdrianMiasik.Components
             SetSquircleColor(selectionColor);
 
             timer.SetSelection(this);
+
+            OnSelection.Invoke();
         }
 
         public void Deselect()

@@ -15,6 +15,7 @@ namespace AdrianMiasik
 
         public UnityEvent OnSetToTrueClick; // clicking a disabled boolean
         public UnityEvent OnSetToFalseClick; // clicking on an enabled boolean
+        public UnityEvent OnClick;
 
         // Cache
         private bool state = false;
@@ -36,6 +37,8 @@ namespace AdrianMiasik
             // Flip state
             state = !state;
             OnStateChanged(true); // User interacted with this, we treating this as a click
+            
+            OnClick.Invoke();
         }
 
         /// <summary>

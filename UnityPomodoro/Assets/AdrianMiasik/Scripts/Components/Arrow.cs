@@ -5,6 +5,7 @@ namespace AdrianMiasik.Components
     public class Arrow : MonoBehaviour
     {
         [SerializeField] private ClickButton button;
+        [SerializeField] private Transform icon; // Toggles visibility
         [SerializeField] private new Animation animation;
         
         public void Hide()
@@ -12,18 +13,18 @@ namespace AdrianMiasik.Components
             Release();
 
             button.raycastTarget = false;
-            gameObject.SetActive(false);
+            icon.gameObject.SetActive(false);
         }
 
         public void Show()
         {
             button.raycastTarget = true;
-            gameObject.SetActive(true);
+            icon.gameObject.SetActive(true);
         }
 
         public void Hold()
         {
-            button.OnPointerDown(null);
+            button.Hold();
         }
 
         public void Release()
@@ -32,6 +33,11 @@ namespace AdrianMiasik.Components
             {
                 button.CancelHold();
             }
+        }
+
+        public void Click()
+        {
+            button.OnPointerClick(null);
         }
     }
 }
