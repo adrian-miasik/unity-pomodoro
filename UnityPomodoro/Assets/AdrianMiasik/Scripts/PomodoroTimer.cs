@@ -124,6 +124,8 @@ namespace AdrianMiasik
 
         private void Initialize()
         {
+            HideInfo();
+            
             // Initialize digits
             TimeSpan ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
             hourDigits.Initialize(Digits.HOURS, this, (int) ts.TotalHours);

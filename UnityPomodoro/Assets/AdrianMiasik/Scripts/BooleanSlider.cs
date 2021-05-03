@@ -19,17 +19,28 @@ namespace AdrianMiasik
 
         // Cache
         private bool state = false;
-        private Color offColor;
-        private Color onColor;
+        private Color trueColor;
+        private Color falseColor;
 
-        public void Initialize(bool state, Color offColor, Color onColor)
+        public void Initialize(bool state, Color falseColor, Color trueColor)
         {
             this.state = state;
-            this.offColor = offColor;
-            this.onColor = onColor;
+            this.falseColor = falseColor;
+            this.trueColor = trueColor;
 
             // Set background color to match state
-            background.color = state ? onColor : offColor;
+            background.color = state ? trueColor : falseColor;
+        }
+        
+        /// <summary>
+        /// Changes the visibility of the boolean slider to the ON or OFF position. Position depends on current state.
+        /// </summary>
+        /// <summary>
+        /// Note: Unity Event
+        /// </summary>>
+        public void Press()
+        {
+            OnPointerClick(null);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -40,24 +51,14 @@ namespace AdrianMiasik
             
             OnClick.Invoke();
         }
-
-        /// <summary>
-        /// Changes the visibility of the boolean slider to the ON or OFF position. Position depends on current state.
-        /// Note: OnClick Unity Events won't be triggered.
-        /// </summary>
-        public void FlipState()
-        {
-            state = !state;
-            OnStateChanged();
-        }
-
+        
         private void OnStateChanged(bool invokeEvents = false)
         {
             if (state)
             {
                 // Set to on position
                 animation.clip = leftToRight;
-                background.color = onColor;
+                background.color = trueColor;
 
                 if (invokeEvents)
                 {
@@ -68,7 +69,7 @@ namespace AdrianMiasik
             {
                 // Set to off position
                 animation.clip = rightToLeft;
-                background.color = offColor;
+                background.color = falseColor;
 
                 if (invokeEvents)
                 {
