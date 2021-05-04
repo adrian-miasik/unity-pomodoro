@@ -4,6 +4,7 @@ using AdrianMiasik.Components;
 using AdrianMiasik.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace AdrianMiasik
@@ -61,8 +62,10 @@ namespace AdrianMiasik
 
         [Header("Completion")]
         [SerializeField] private Animation completion;
+        // Wrap mode doesn't matter
         [SerializeField] private AnimationCurve completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
-
+        public UnityEvent OnRingPulse;
+        
         [Header("Data")]
         [SerializeField] private int hours = 0;
         [SerializeField] private int minutes = 25;
@@ -95,6 +98,7 @@ namespace AdrianMiasik
 
         // Pulse Ring Animation
         private float _accumulatedRingPulseTime;
+        private bool hasRingPulseBeenInvoked;
 
         // Ring Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -240,6 +244,8 @@ namespace AdrianMiasik
                     // Hide digits and reveal completion label
                     digitContainer.gameObject.SetActive(false);
                     completion.gameObject.SetActive(true);
+                    
+                    OnRingPulse.Invoke();
                     break;
             }
         }
@@ -369,10 +375,26 @@ namespace AdrianMiasik
 
         private void AnimateRingPulse()
         {
+            // Calculate diameter
             _accumulatedRingPulseTime += Time.deltaTime;
-            ring.material.SetFloat(RingDiameter, completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime));
-            completion.gameObject.transform.localScale =  
-                Vector3.one * completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime - 0.05f);
+            float ringDiameter = completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime);
+            
+            // Set diameter
+            ring.material.SetFloat(RingDiameter, ringDiameter);
+            completion.gameObject.transform.localScale = Vector3.one * ringDiameter;
+
+            if (!hasRingPulseBeenInvoked)
+            {
+                OnRingPulse.Invoke();
+                hasRingPulseBeenInvoked = true;
+            }
+
+            // Ignore wrap mode and replay completion animation from start
+            if (hasRingPulseBeenInvoked && _accumulatedRingPulseTime > completeRingPulseDiameter[completeRingPulseDiameter.length - 1].time)
+            {
+                _accumulatedRingPulseTime = 0;
+                hasRingPulseBeenInvoked = false;
+            }
         }
 
         public bool CanIncrementOne(Digits digits)
