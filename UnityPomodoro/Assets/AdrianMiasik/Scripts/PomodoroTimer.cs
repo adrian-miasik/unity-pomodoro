@@ -4,7 +4,6 @@ using AdrianMiasik.Components;
 using AdrianMiasik.Interfaces;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace AdrianMiasik
@@ -62,7 +61,6 @@ namespace AdrianMiasik
 
         [Header("Completion")]
         [SerializeField] private Animation completion;
-        // Note: Wrap mode will be ignored
         [SerializeField] private AnimationCurve completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
 
         [Header("Data")]
@@ -97,8 +95,6 @@ namespace AdrianMiasik
 
         // Pulse Ring Animation
         private float _accumulatedRingPulseTime;
-        public UnityEvent OnRingPulse;
-        private bool _hasRingPulseBeenInvoked;
 
         // Ring Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -198,7 +194,6 @@ namespace AdrianMiasik
                     hourDigits.Unlock();
                     minuteDigits.Unlock();
                     secondDigits.Unlock();
-                    
                     break;
 
                 case States.RUNNING:
@@ -212,7 +207,6 @@ namespace AdrianMiasik
                     hourDigits.Lock();
                     minuteDigits.Lock();
                     secondDigits.Lock();
-                    
                     break;
 
                 case States.PAUSED:
@@ -233,7 +227,6 @@ namespace AdrianMiasik
                     _accumulatedFadeTime = 0f;
                     _startingColor = Color.black;
                     _endingColor = new Color(0.75f, 0.75f, 0.75f);
-                    
                     break;
 
                 case States.COMPLETE:
@@ -247,9 +240,6 @@ namespace AdrianMiasik
                     // Hide digits and reveal completion label
                     digitContainer.gameObject.SetActive(false);
                     completion.gameObject.SetActive(true);
-
-                    _hasRingPulseBeenInvoked = false;
-                    
                     break;
             }
         }
@@ -383,25 +373,6 @@ namespace AdrianMiasik
             ring.material.SetFloat(RingDiameter, completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime));
             completion.gameObject.transform.localScale =  
                 Vector3.one * completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime - 0.05f);
-
-            // If our pulse event hasn't been invoked this animation cycle...
-            if (!_hasRingPulseBeenInvoked)
-            {
-                OnRingPulse.Invoke();
-                
-                // Dirty flag
-                _hasRingPulseBeenInvoked = true;
-            }
-
-            if (_hasRingPulseBeenInvoked)
-            {
-                // Clear pulse event flag when animation cycle is complete.
-                if (_accumulatedRingPulseTime > completeRingPulseDiameter[completeRingPulseDiameter.length - 1].time)
-                {
-                    _hasRingPulseBeenInvoked = false;
-                    _accumulatedRingPulseTime = 0;
-                }
-            }
         }
 
         public bool CanIncrementOne(Digits digits)
