@@ -30,6 +30,11 @@ namespace AdrianMiasik
         private float holdActivationTime = 0.5f; // How long does the user have to hold to activate our hold click logic?
         private float accumlatedHoldTime; // How long has the hold logic been running for? Not to be confused with userHoldTime.
         
+        // Click sound pitch variation
+        public bool isPitchVariationOn = true;
+        public float lowestPitch = 0.95f;
+        public float highestPitch = 1.05f;
+
         protected override void Start()
         {
             base.Start();
@@ -105,6 +110,7 @@ namespace AdrianMiasik
         public void OnPointerClick(PointerEventData eventData)
         {
             OnClick.Invoke();
+            PlayClickSound();
             
             if (target == null)
             {
@@ -114,6 +120,21 @@ namespace AdrianMiasik
             // Start click release animation
             isAnimatingRelease = true;
             accumulatedReleaseTime = 0f;
+        }
+
+        private void PlayClickSound()
+        {
+            if (isPitchVariationOn)
+            {
+                clickSound.pitch = Random.Range(lowestPitch, highestPitch);
+            }
+            else
+            {
+                // Reset pitch back to default
+                clickSound.pitch = 1;
+            }
+
+            clickSound.Play();
         }
 
         private void Update()
@@ -132,6 +153,7 @@ namespace AdrianMiasik
                     {
                         accumlatedHoldTime = 0f;
                         OnClick.Invoke();
+                        PlayClickSound();
                     }
                 }
             }

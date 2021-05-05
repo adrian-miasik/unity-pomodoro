@@ -31,7 +31,17 @@ namespace AdrianMiasik
 
             // Draw property fields
             clickButton.target = (RectTransform) EditorGUILayout.ObjectField("Target", clickButton.target, typeof(RectTransform), true);
-            clickButton.clickedDownScale = EditorGUILayout.FloatField("Clicked Down Scale", clickButton.clickedDownScale);
+            clickButton.clickSound = (AudioSource) EditorGUILayout.ObjectField("Click Sound", clickButton.clickSound, typeof(AudioSource), true);
+            string pitchVariationString = clickButton.isPitchVariationOn ? "Disable Pitch Variation" : "Enable Pitch Variation";
+            clickButton.isPitchVariationOn = EditorGUILayout.Toggle(pitchVariationString, clickButton.isPitchVariationOn);
+            if (clickButton.isPitchVariationOn)
+            {
+                clickButton.lowestPitch = EditorGUILayout.FloatField("Lowest Pitch", clickButton.lowestPitch);
+                clickButton.highestPitch = EditorGUILayout.FloatField("Highest Pitch", clickButton.highestPitch);
+                EditorGUILayout.MinMaxSlider("Pitch Variation", ref clickButton.lowestPitch, ref clickButton.highestPitch, 0, 2);
+                EditorGUILayout.Space();
+            }
+            clickButton.clickHoldScale = EditorGUILayout.FloatField("Click Hold Scale", clickButton.clickHoldScale);
             clickButton.clickReleaseScale = EditorGUILayout.CurveField("Click Release Scale", clickButton.clickReleaseScale);
             clickButton.holdRamp = EditorGUILayout.CurveField("Hold Ramp", clickButton.holdRamp);
 
