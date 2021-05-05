@@ -7,11 +7,13 @@ namespace AdrianMiasik
 {
     public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
     {
+        // Inspector References
         public RectTransform target;
-        public float clickedDownScale = 0.75f;  // What scale do you want the target to scale to on press?
+        public AudioSource clickSound;
+        public float clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
         public AnimationCurve clickReleaseScale; // What scale do you want the target to scale after click
         public AnimationCurve holdRamp;
-        
+
         // Unity Events
         public UnityEvent OnDown;
         public UnityEvent OnUp;
@@ -26,7 +28,7 @@ namespace AdrianMiasik
         private bool isUserHolding; // Is the user pressing down?
         private float userHoldTime; // How long has the user been holding down for?
         private float holdActivationTime = 0.5f; // How long does the user have to hold to activate our hold click logic?
-        private float accumlatedHoldTime; // How long has the hold logic been running for?
+        private float accumlatedHoldTime; // How long has the hold logic been running for? Not to be confused with userHoldTime.
         
         protected override void Start()
         {
@@ -63,7 +65,7 @@ namespace AdrianMiasik
             }
             
             // Set target scale to clicked down scale
-            target.transform.localScale = Vector3.one * clickedDownScale;
+            target.transform.localScale = Vector3.one * clickHoldScale;
         }
 
         public void OnPointerUp(PointerEventData eventData)
