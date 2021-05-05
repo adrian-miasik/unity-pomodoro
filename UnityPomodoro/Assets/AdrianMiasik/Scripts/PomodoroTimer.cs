@@ -35,6 +35,9 @@ namespace AdrianMiasik
 
         public States state = States.SETUP;
 
+        [Header("Animations")] 
+        [SerializeField] private Animation spawnAnimation;
+
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
         [SerializeField] private GameObject infoContainer; // info content
@@ -128,6 +131,7 @@ namespace AdrianMiasik
 
         private void Initialize()
         {
+            // Setup view
             HideInfo();
             
             // Initialize digits
@@ -141,14 +145,18 @@ namespace AdrianMiasik
             rightButton.Initialize(this);
             breakSlider.Initialize(false, colorDeselected, colorRelax);
 
-            // Register elements that need updating per state change
+            // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
 
             // Calculate time
             _currentTime = ts.TotalSeconds;
             _totalTime = (float) ts.TotalSeconds;
 
+            // Transition to setup state
             SwitchState(States.SETUP);
+
+            // Animate in
+            PlaySpawnAnimation();
         }
 
         private void SwitchState(States desiredState)
@@ -587,6 +595,11 @@ namespace AdrianMiasik
             // Hide info, show main content
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
+        }
+
+        public void PlaySpawnAnimation()
+        {
+            spawnAnimation.Play();
         }
     }
 }

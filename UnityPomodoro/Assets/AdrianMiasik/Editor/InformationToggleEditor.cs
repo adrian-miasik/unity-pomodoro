@@ -33,12 +33,19 @@ namespace AdrianMiasik
 
             // Draw property fields
             informationToggle.icon = (SVGImage) EditorGUILayout.ObjectField("Icon", informationToggle.icon, typeof(SVGImage), true);
-            informationToggle.offSprite = (Sprite) EditorGUILayout.ObjectField("Off Sprite", informationToggle.offSprite, typeof(Sprite), true);
-            informationToggle.offColor = (Color) EditorGUILayout.ColorField("Off Sprite Color", informationToggle.offColor);
-            informationToggle.offZRotation = EditorGUILayout.FloatField("Off Z Rotation", informationToggle.offZRotation);
-            informationToggle.onSprite = (Sprite) EditorGUILayout.ObjectField("On Sprite", informationToggle.onSprite, typeof(Sprite), true);
-            informationToggle.onZRotation = EditorGUILayout.FloatField("On Z Rotation", informationToggle.onZRotation);
-            informationToggle.onColor = (Color) EditorGUILayout.ColorField("On Sprite Color", informationToggle.onColor);
+            informationToggle.falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", informationToggle.falseSprite, typeof(Sprite), true);
+            informationToggle.falseColor = EditorGUILayout.ColorField("False Sprite Color", informationToggle.falseColor);
+            informationToggle.falseZRotation = EditorGUILayout.FloatField("False Z Rotation", informationToggle.falseZRotation);
+            informationToggle.trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", informationToggle.trueSprite, typeof(Sprite), true);
+            informationToggle.trueZRotation = EditorGUILayout.FloatField("True Z Rotation", informationToggle.trueZRotation);
+            informationToggle.trueColor = EditorGUILayout.ColorField("True Sprite Color", informationToggle.trueColor);
+            
+            // Draw UnityEvents
+            SerializedProperty onFalseClick = serializedObject.FindProperty("OnSetToFalseClick");
+            EditorGUILayout.PropertyField(onFalseClick);
+            
+            SerializedProperty onTrueClick = serializedObject.FindProperty("OnSetToTrueClick");
+            EditorGUILayout.PropertyField(onTrueClick);
             
             serializedObject.ApplyModifiedProperties();
             
