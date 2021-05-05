@@ -19,39 +19,39 @@ namespace AdrianMiasik.Components
         public Color trueColor;
         public float trueZRotation;
         
-        // Cache
-        private PomodoroTimer timer;
-        
         // Unity Events
         public UnityEvent OnSetToTrueClick;
         public UnityEvent OnSetToFalseClick;
-        
-        public void Initialize(PomodoroTimer timer, bool isToggled = false)
+
+        public void Initialize(bool isToggled, bool invokeEvents = false)
         {
-            this.timer = timer;
             isOn = isToggled;
 
-            UpdateToggle();
+            UpdateToggle(invokeEvents);
         }
 
         // Unity Event
-        public void UpdateToggle()
+        public void UpdateToggle(bool invokeEvents)
         {
             if (isOn)
             {
-                timer.ShowInfo();
                 icon.sprite = trueSprite;
                 icon.color = trueColor;
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,trueZRotation));
-                OnSetToTrueClick.Invoke();
+                if (invokeEvents)
+                {
+                    OnSetToTrueClick.Invoke();
+                }
             }
             else
             {
-                timer.HideInfo();
                 icon.sprite = falseSprite;
                 icon.color = falseColor;
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,falseZRotation));
-                OnSetToFalseClick.Invoke();
+                if (invokeEvents)
+                {
+                    OnSetToFalseClick.Invoke();
+                }
             }
         }
     }

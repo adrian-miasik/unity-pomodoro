@@ -141,7 +141,7 @@ namespace AdrianMiasik
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
             // Initialize buttons
-            infoToggle.Initialize(this);
+            infoToggle.Initialize(false);
             rightButton.Initialize(this);
             breakSlider.Initialize(false, colorDeselected, colorRelax);
 
