@@ -6,7 +6,7 @@ Preset:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: default-click-animation
+  m_Name: default-clickbutton
   m_TargetType:
     m_NativeTypeID: 114
     m_ManagedTypePPtr: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
@@ -117,7 +117,11 @@ Preset:
     value: 
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: clickedDownScale
+    propertyPath: clickSound
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: clickHoldScale
     value: 0.75
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -291,5 +295,17 @@ Preset:
   - target: {fileID: 0}
     propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: isPitchVariationOn
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: lowestPitch
+    value: 0.95
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: highestPitch
+    value: 1.05
     objectReference: {fileID: 0}
   m_ExcludedProperties: []
