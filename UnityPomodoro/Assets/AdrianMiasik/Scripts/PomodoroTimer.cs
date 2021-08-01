@@ -13,9 +13,9 @@ namespace AdrianMiasik
     {
         // Colors
         public static Color colorWork = new Color(0.05f, 0.47f, 0.95f); // or pause
+        public static Color colorRelax = new Color(1f, 0.83f, 0.23f);
         public static Color colorRunning = new Color(0.35f, 0.89f, 0.4f);
         public static Color colorComplete = new Color(0.97f, 0.15f, 0.15f);
-        public static Color colorRelax = new Color(1f, 0.83f, 0.23f);
         public static Color colorDeselected = new Color(0.91f, 0.91f, 0.91f);
 
         public enum Digits
