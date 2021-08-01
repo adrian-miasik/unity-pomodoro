@@ -426,7 +426,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.9
+  m_fontSize: 40.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -602,8 +602,8 @@ RectTransform:
   m_Father: {fileID: 2138225465}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.37630305, y: 0.25141615}
-  m_AnchorMax: {x: 0.623697, y: 0.3495751}
+  m_AnchorMin: {x: 0.37635335, y: 0.2623356}
+  m_AnchorMax: {x: 0.6237473, y: 0.36049455}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -881,11 +881,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 36.672516
+      value: 38.593452
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 33.951454
+      value: 35.72986
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_LocalPosition.x
@@ -917,11 +917,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 67.23294
+      value: 70.75467
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -16.975727
+      value: -17.86493
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1377,11 +1377,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 36.672516
+      value: 38.593452
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 33.951454
+      value: 35.72986
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1413,11 +1413,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 18.336258
+      value: 19.296726
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -16.975727
+      value: -17.86493
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263118, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1846,7 +1846,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.9
+  m_fontSize: 40.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.15
+  m_fontSize: 29.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3394,8 +3394,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 42.784603, y: -16.975727}
-  m_SizeDelta: {x: 12.224172, y: 33.951454}
+  m_AnchoredPosition: {x: 45.025696, y: -17.86493}
+  m_SizeDelta: {x: 12.864485, y: 35.72986}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1212663463
 MonoBehaviour:
@@ -3995,8 +3995,8 @@ RectTransform:
   m_Father: {fileID: 2138225465}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.13937634, y: 0.39661145}
-  m_AnchorMax: {x: 0.8606237, y: 0.7185864}
+  m_AnchorMin: {x: 0.13937634, y: 0.40199995}
+  m_AnchorMax: {x: 0.8606237, y: 0.7322276}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4020,8 +4020,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>Unity Pomodoro</b> is an open source countdown timer created in Unity.
-    A time management tool based on the <color=#F72525>Pomodoro Technique.</color>
+  m_text: 'Unity Pomodoro is an open source countdown timer created in Unity. A time
+    management tool based on the <color=#F72525>Pomodoro Technique.</color>
 
 
     The
@@ -4054,7 +4054,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.7
+  m_fontSize: 11.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4064,7 +4064,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: -4
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: -5
   m_lineSpacingMax: 0
@@ -4918,8 +4918,8 @@ RectTransform:
   m_Father: {fileID: 2138225465}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.38983384, y: 0.73537636}
-  m_AnchorMax: {x: 0.61015904, y: 0.81849676}
+  m_AnchorMin: {x: 0.38983384, y: 0.77387965}
+  m_AnchorMax: {x: 0.61015904, y: 0.85700005}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4970,7 +4970,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.35
+  m_fontSize: 22.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5178,7 +5178,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.35
+  m_fontSize: 7.75
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5286,7 +5286,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.0
+  m_text: Version 0.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 11ce78b5b78ee0a4eb69b735c31488aa, type: 2}
   m_sharedMaterial: {fileID: -415692639485963590, guid: 11ce78b5b78ee0a4eb69b735c31488aa, type: 2}
@@ -5376,6 +5376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2085487368}
+  prefixString: v
 --- !u!114 &2096418338 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2939933545387467015, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
@@ -5688,7 +5689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -5696,7 +5697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5720,7 +5721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: Restart
+      value: PlaySpawnAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
