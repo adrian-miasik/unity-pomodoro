@@ -250,6 +250,7 @@ namespace AdrianMiasik
                     ring.material.SetColor(RingColor, colorComplete);
 
                     // Hide digits and reveal completion label
+                    spawnAnimation.Stop();
                     digitContainer.gameObject.SetActive(false);
                     completion.gameObject.SetActive(true);
                     
@@ -599,6 +600,7 @@ namespace AdrianMiasik
 
         public void PlaySpawnAnimation()
         {
+            spawnAnimation.Stop();
             spawnAnimation.Play();
         }
     }
