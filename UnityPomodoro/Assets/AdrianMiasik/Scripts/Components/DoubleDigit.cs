@@ -12,9 +12,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private Selectable selectable;
         [SerializeField] private Image background;
 
-        [SerializeField] private Arrow upArrow;
+        [SerializeField] private ClickButton upArrow;
         [SerializeField] private TMP_InputField input;
-        [SerializeField] private Arrow downArrow;
+        [SerializeField] private ClickButton downArrow;
 
         [Header("Color")] 
         [SerializeField] private float animationDuration = 0.25f;
@@ -94,21 +94,21 @@ namespace AdrianMiasik.Components
                 {
                     if (timer.CanIncrementOne(digit))
                     {
-                        upArrow.Click();
+                        upArrow.OnPointerClick(null);
                     }
                 }
                 else if (Input.mouseScrollDelta.y < 0)
                 {
                     if (timer.CanDecrementOne(digit))
                     {
-                        downArrow.Click();
+                        downArrow.OnPointerClick(null);
                     }
                 }
                 
                 // Arrow keys : Up arrow
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    upArrow.Click();
+                    upArrow.OnPointerClick(null);
                     upArrow.Hold();
                 }
                 else if (Input.GetKeyUp(KeyCode.UpArrow))
@@ -119,7 +119,7 @@ namespace AdrianMiasik.Components
                 // Arrow keys : Down arrow
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    downArrow.Click();
+                    downArrow.OnPointerClick(null);
                     downArrow.Hold();
                 }
                 else if (Input.GetKeyUp(KeyCode.DownArrow))

@@ -8,7 +8,8 @@ namespace AdrianMiasik
     public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
     {
         // Inspector References
-        public RectTransform target;
+        public RectTransform containerTarget; // The rect transform that will scale
+        public Transform visibilityTarget;
         public AudioSource clickSound;
         public float clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
         public AnimationCurve clickReleaseScale; // What scale do you want the target to scale after click
@@ -38,18 +39,40 @@ namespace AdrianMiasik
         protected override void Start()
         {
             base.Start();
-            if (target == null)
+            if (containerTarget == null)
             {
                 Debug.LogWarning("Target is missing", this);
                 return;
             }
             
-            cachedScale = target.localScale;
+            cachedScale = containerTarget.localScale;
         }
         
+        public void Hide()
+        {
+            Release();
+
+            raycastTarget = false;
+            visibilityTarget.gameObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            raycastTarget = true;
+            visibilityTarget.gameObject.SetActive(true);
+        }
+
         public void Hold()
         {
             OnPointerDown(null);
+        }
+        
+        public void Release()
+        {
+            if (IsHolding())
+            {
+                CancelHold();
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -64,13 +87,13 @@ namespace AdrianMiasik
 
             OnDown.Invoke();
             
-            if (target == null)
+            if (containerTarget == null)
             {
                 return;
             }
             
             // Set target scale to clicked down scale
-            target.transform.localScale = Vector3.one * clickHoldScale;
+            containerTarget.transform.localScale = Vector3.one * clickHoldScale;
         }
 
         public void OnPointerUp(PointerEventData eventData)
@@ -78,7 +101,7 @@ namespace AdrianMiasik
             CancelHold();
             OnUp.Invoke();
 
-            if (target == null)
+            if (containerTarget == null)
             {
                 return;
             }
@@ -86,7 +109,7 @@ namespace AdrianMiasik
             // Return target to starting scale
             if (!isAnimatingRelease)
             {
-                target.transform.localScale = cachedScale;
+                containerTarget.transform.localScale = cachedScale;
             }            
         }
 
@@ -101,9 +124,9 @@ namespace AdrianMiasik
             userHoldTime = 0f;
             accumlatedHoldTime = 0f;
             
-            if (target != null)
+            if (containerTarget != null)
             {
-                target.transform.localScale = cachedScale;
+                containerTarget.transform.localScale = cachedScale;
             }
         }
 
@@ -112,7 +135,7 @@ namespace AdrianMiasik
             OnClick.Invoke();
             PlayClickSound();
             
-            if (target == null)
+            if (containerTarget == null)
             {
                 return;
             }
@@ -161,14 +184,14 @@ namespace AdrianMiasik
             // If button release is animating...
             if (isAnimatingRelease)
             {
-                target.transform.localScale = Vector3.one * clickReleaseScale.Evaluate(accumulatedReleaseTime);
+                containerTarget.transform.localScale = Vector3.one * clickReleaseScale.Evaluate(accumulatedReleaseTime);
                 accumulatedReleaseTime += Time.deltaTime;
                 
                 // If animation curve is complete...
                 if (accumulatedReleaseTime > clickReleaseScale.keys[clickReleaseScale.length - 1].time)
                 {
                     isAnimatingRelease = false;
-                    target.transform.localScale = cachedScale;
+                    containerTarget.transform.localScale = cachedScale;
                 }
             }
             
