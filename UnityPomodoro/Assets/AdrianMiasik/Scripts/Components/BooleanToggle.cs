@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class InformationToggle : Toggle
+    public class BooleanToggle : Toggle
     {
         public SVGImage icon;
         

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using TMPro;
 using UnityEngine;
@@ -55,7 +56,7 @@ namespace AdrianMiasik
         [SerializeField] private TextMeshProUGUI text;
 
         [Header("Buttons")] 
-        [SerializeField] private InformationToggle infoToggle;
+        [SerializeField] private BooleanToggle infoToggle;
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Components
 {
     public class WriteVersionNumber : MonoBehaviour
     {

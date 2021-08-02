@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace AdrianMiasik
 {
-    [CustomEditor(typeof(InformationToggle))]
-    public class InformationToggleEditor : ToggleEditor 
+    [CustomEditor(typeof(BooleanToggle))]
+    public class BooleanToggleEditor : ToggleEditor 
     {
         public override void OnInspectorGUI()
         {
@@ -22,7 +22,7 @@ namespace AdrianMiasik
             base.OnInspectorGUI();
             
             // Fetch target script
-            InformationToggle informationToggle = (InformationToggle) target;
+            BooleanToggle booleanToggle = (BooleanToggle) target;
 
             #region Vertical Group
             EditorGUILayout.BeginVertical();
@@ -32,13 +32,13 @@ namespace AdrianMiasik
             EditorGUILayout.LabelField("Information Button", style);
 
             // Draw property fields
-            informationToggle.icon = (SVGImage) EditorGUILayout.ObjectField("Icon", informationToggle.icon, typeof(SVGImage), true);
-            informationToggle.falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", informationToggle.falseSprite, typeof(Sprite), true);
-            informationToggle.falseColor = EditorGUILayout.ColorField("False Sprite Color", informationToggle.falseColor);
-            informationToggle.falseZRotation = EditorGUILayout.FloatField("False Z Rotation", informationToggle.falseZRotation);
-            informationToggle.trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", informationToggle.trueSprite, typeof(Sprite), true);
-            informationToggle.trueZRotation = EditorGUILayout.FloatField("True Z Rotation", informationToggle.trueZRotation);
-            informationToggle.trueColor = EditorGUILayout.ColorField("True Sprite Color", informationToggle.trueColor);
+            booleanToggle.icon = (SVGImage) EditorGUILayout.ObjectField("Icon", booleanToggle.icon, typeof(SVGImage), true);
+            booleanToggle.falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", booleanToggle.falseSprite, typeof(Sprite), true);
+            booleanToggle.falseColor = EditorGUILayout.ColorField("False Sprite Color", booleanToggle.falseColor);
+            booleanToggle.falseZRotation = EditorGUILayout.FloatField("False Z Rotation", booleanToggle.falseZRotation);
+            booleanToggle.trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", booleanToggle.trueSprite, typeof(Sprite), true);
+            booleanToggle.trueZRotation = EditorGUILayout.FloatField("True Z Rotation", booleanToggle.trueZRotation);
+            booleanToggle.trueColor = EditorGUILayout.ColorField("True Sprite Color", booleanToggle.trueColor);
             
             // Draw UnityEvents
             SerializedProperty onFalseClick = serializedObject.FindProperty("OnSetToFalseClick");

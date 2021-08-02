@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Components.Core
 {
     public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
     {

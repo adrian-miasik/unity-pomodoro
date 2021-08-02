@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Components.Core
 {
     public class BooleanSlider : MonoBehaviour, IPointerClickHandler
     {
