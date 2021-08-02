@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
-    public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
+    public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IPointerExitHandler
     {
         // Inspector References
         public RectTransform containerTarget; // The rect transform that will scale
@@ -200,6 +200,11 @@ namespace AdrianMiasik.Components.Core
         public void OpenURL(string url)
         {
             Application.OpenURL(url);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            isUserHolding = false;
         }
     }
 }
