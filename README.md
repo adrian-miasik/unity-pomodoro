@@ -39,14 +39,23 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Author Notes
 - Unity Pomodoro is a pet project I've been developing in my spare time
 - See [my GitHub profile](https://github.com/adrian-miasik) for more open source work
-- I'm also currently open for work, if you're hiring send me an email at: `adrian-work-pomodoro.3f56i@aleeas.com`
+- I'm also currently open for work, if you're hiring send me an email at: `hire-me.76240@adrian-miasik.com`
 - The svg assets have been created myself and/or sourced from The Noun Project
 - Fun fact: This was the first time I tried to do my own foley / audio
 - Special thanks to my microwave
 
 ## Contribute
-- Interested in contributing? Send me a message & poke me to make a contributing doc
-- We will also modify the credits bubble to include contributors if people start contributing
+Interested in contributing?  
+Send me an email & poke me to make a contributing doc.  
+We will also modify the credits bubble to include contributors if people start contributing.
+
+## Contact / Support
+Need help?  Found a bug?  
+Send your questions, bug reports, and other support related inquiries to:  
+`unity-pomodoro@adrian-miasik.com`
+
+For personal business related inquires / proposals:  
+`hire-me.76240@adrian-miasik.com` 
 
 ## Legal
 Copyrights and trademarks are the property of their respective owners.
