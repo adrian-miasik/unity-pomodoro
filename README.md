@@ -31,6 +31,7 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Downloads
 
 ### Latest Release
+Note: Builds in progress...check back in a bit! Should be up later today
 - Windows
 - Mac
 - Linux
