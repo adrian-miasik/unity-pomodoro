@@ -33,7 +33,7 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Downloads
 
 ### Latest Release
-Note: Builds in progress...check back in a bit! Should be up later today
+Note: Builds in progress...check back tomorrow (2021-08-14), should have a release drafted by then as well
 - Windows
 - Mac
 - Linux
