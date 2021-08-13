@@ -7,7 +7,7 @@
 <p align="center">
   <a href="#about">About</a> &bull;
   <a href="#downloads">Downloads</a> &bull;
-  <a href="#screenshots">Screenshots</a> &bull;
+  <a href="#media">Screenshots</a> &bull;
   <a href="#author-notes">Author Notes</a> &bull;
   <a href="#contribute">Contribute</a> &bull;
   <a href="#contact--support">Support</a> &bull;
@@ -18,8 +18,6 @@
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work ***and break sessions***. Quickly swap between the two timers to keep you on track and focused.
 
----
-
 **Version**:  1.0.0
 
 **Author**:  **[`Adrian Miasik`](https://AdrianMiasik.com)**
@@ -29,6 +27,7 @@ Unity Pomodoro is an open source countdown timer app created in Unity designed p
 **Contributor(s)**: `-`  
 Want to help? If you're interested in contributing to the project, please see the contributing document.
 
+&nbsp;
 ## Downloads
 
 ### Latest Release
@@ -36,21 +35,22 @@ Want to help? If you're interested in contributing to the project, please see th
 - Mac
 - Linux
 
-## Screenshots
+&nbsp;
+## Media
+<img src="promotional/release-banner.png" width="720">
+<img src="promotional/release-showcase.gif" width="720">
 
-<img src="promotional/screenshots/0.png" width="512">
+### Screenshots
 
-<img src="promotional/screenshots/1.png" width="512">
-
-<img src="promotional/screenshots/2.png" width="512">
-
-<img src="promotional/screenshots/3.png" width="512">
-
-<img src="promotional/screenshots/4.png" width="512">
-
-<img src="promotional/screenshots/5.png" width="512">
-
-<img src="promotional/screenshots/6.png" width="512">
+<p>
+<img src="promotional/screenshots/0.png" width="200">
+<img src="promotional/screenshots/1.png" width="200">
+<img src="promotional/screenshots/2.png" width="200">
+<img src="promotional/screenshots/3.png" width="200">
+<img src="promotional/screenshots/4.png" width="200">
+<img src="promotional/screenshots/5.png" width="200">
+<img src="promotional/screenshots/6.png" width="200">
+</p>
 
 ## Author Notes
 - Unity Pomodoro is a pet project I've been developing in my spare time
