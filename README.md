@@ -19,9 +19,9 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Downloads
 
 ### Latest Release
-- [Windows](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
-- [Mac](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
-- [Linux](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
+- Windows
+- Mac
+- Linux
 
 ## Screenshots
 
