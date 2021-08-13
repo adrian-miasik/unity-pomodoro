@@ -27,7 +27,7 @@ Unity Pomodoro is an open source countdown timer app created in Unity designed p
 **License**: [GPL-3.0](LICENSE)
 
 **Contributor(s)**: `-`  
-Want to help? If you're interested in contributing to the project, please see the contributing document.
+Want to help? If you're interested in contributing to the project, please see the <a href="#contribute">contribute</a> section.
 
 &nbsp;
 ## Downloads
