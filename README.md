@@ -1,7 +1,7 @@
-# Unity Pomodoro
-<img src="icons/application-icon.png" width="64"> 
+<h1 align="center">Unity Pomodoro</h1>
+<p align="center"><img src="icons/application-icon.png" width="64"></p>
 
-An open source countdown timer app created in Unity. A time management tool based on the Pomodoro Technique. The aim is to improve productivity by introducing time boxed timers for both your work and break sessions. Quickly swap between the two timers to keep you on track and focused.
+Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work ***and break sessions***. Quickly swap between the two timers to keep you on track and focused.
 
 ---
 
@@ -15,6 +15,13 @@ An open source countdown timer app created in Unity. A time management tool base
 Want to help? If you're interested in contributing to the project, please see the contributing document.
 
 ---
+
+// Testing Links
+<p>
+<a href="##Screenshots">Screenshots</a> -
+<a href="##Author Notes">Author Notes</a> -
+<a href="##Contribute">Contribute</a> -
+</p>
 
 ## Downloads
 
