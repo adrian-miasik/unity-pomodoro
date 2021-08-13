@@ -1,27 +1,31 @@
 <h1 align="center">Unity Pomodoro</h1>
-<p align="center"><img src="icons/application-icon.png" width="64"></p>
+
+<p align="center">
+  <img src="icons/application-icon.png" width="64">
+</p>
+
+<p align="center">
+  <a href="#About">About</a> &bull;
+  <a href="#Downloads">Downloads</a> &bull;
+  <a href="#Screenshots">Screenshots</a> &bull;
+  <a href="#Author Notes">Author Notes</a> &bull;
+  <a href="#Contribute">Contribute</a> &bull;
+  <a href="#Contact / Support">Support</a> &bull;
+  <a href="#Contact / Support">Contact Us</a>
+</p>
+
+## About
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work ***and break sessions***. Quickly swap between the two timers to keep you on track and focused.
-
----
 
 **Version**:  1.0.0
 
 **Author**:  **[`Adrian Miasik`](https://AdrianMiasik.com)**
 
-**License**: GPL-3.0
+**License**: [GPL-3.0](LICENSE)
 
 **Contributor(s)**: `-`  
 Want to help? If you're interested in contributing to the project, please see the contributing document.
-
----
-
-// Testing Links
-<p>
-<a href="##Screenshots">Screenshots</a> -
-<a href="##Author Notes">Author Notes</a> -
-<a href="##Contribute">Contribute</a> -
-</p>
 
 ## Downloads
 
