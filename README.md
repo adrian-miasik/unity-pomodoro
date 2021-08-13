@@ -5,13 +5,13 @@
 </p>
 
 <p align="center">
-  <a href="#About">About</a> &bull;
-  <a href="#Downloads">Downloads</a> &bull;
-  <a href="#Screenshots">Screenshots</a> &bull;
-  <a href="#Author-Notes">Author Notes</a> &bull;
-  <a href="#Contribute">Contribute</a> &bull;
-  <a href="#Contact-/-Support">Support</a> &bull;
-  <a href="#Contact-/-Support">Contact Us</a>
+  <a href="#about">About</a> &bull;
+  <a href="#downloads">Downloads</a> &bull;
+  <a href="#screenshots">Screenshots</a> &bull;
+  <a href="#author-notes">Author Notes</a> &bull;
+  <a href="#contribute">Contribute</a> &bull;
+  <a href="#contact--support">Support</a> &bull;
+  <a href="#contact--support">Contact Us</a>
 </p>
 
 ## About
