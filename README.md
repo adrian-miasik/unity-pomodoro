@@ -8,10 +8,10 @@
   <a href="#About">About</a> &bull;
   <a href="#Downloads">Downloads</a> &bull;
   <a href="#Screenshots">Screenshots</a> &bull;
-  <a href="#Author Notes">Author Notes</a> &bull;
+  <a href="#Author-Notes">Author Notes</a> &bull;
   <a href="#Contribute">Contribute</a> &bull;
-  <a href="#Contact / Support">Support</a> &bull;
-  <a href="#Contact / Support">Contact Us</a>
+  <a href="#Contact-/-Support">Support</a> &bull;
+  <a href="#Contact-/-Support">Contact Us</a>
 </p>
 
 ## About
