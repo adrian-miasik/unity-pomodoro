@@ -59,14 +59,14 @@ namespace AdrianMiasik
         [SerializeField] private BooleanToggle infoToggle;
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
+        [SerializeField] private CreditsBubble creditsBubble;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
 
         [Header("Ring")] 
         [SerializeField] private Image ring;
 
         [Header("Completion")]
-        [SerializeField] private Animation completion;
-        // Wrap mode doesn't matter
+        [SerializeField] private Animation completion; // Wrap mode doesn't matter
         [SerializeField] private AnimationCurve completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
         public UnityEvent OnRingPulse;
         
@@ -133,19 +133,21 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
-            HideInfo();
+            infoContainer.gameObject.SetActive(false);
+            contentContainer.gameObject.SetActive(true);
             
-            // Initialize digits
+            // Initialize components - digits
             TimeSpan ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
             hourDigits.Initialize(Digits.HOURS, this, (int) ts.TotalHours);
             minuteDigits.Initialize(Digits.MINUTES, this, ts.Minutes);
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
-            // Initialize buttons
+            // Initialize components - buttons
             infoToggle.Initialize(false);
             rightButton.Initialize(this);
             breakSlider.Initialize(false, colorDeselected, colorRelax);
-
+            creditsBubble.Initialize();
+            
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
 
@@ -590,6 +592,9 @@ namespace AdrianMiasik
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.gameObject.SetActive(true);
+            
+            creditsBubble.Lock();
+            creditsBubble.FadeIn();
         }
 
         public void HideInfo()
@@ -597,6 +602,9 @@ namespace AdrianMiasik
             // Hide info, show main content
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
+            
+            creditsBubble.Unlock();
+            creditsBubble.FadeOut();
         }
 
         public void PlaySpawnAnimation()
