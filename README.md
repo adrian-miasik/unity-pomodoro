@@ -33,8 +33,8 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Downloads
 
 ### Latest Release
-- [Windows (64-bit)](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-64-bit.zip)
-- [Windows (32-bit)](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-32-bit.zip) 
+- Windows (64-bit) - Coming soon
+- Windows (32-bit) - Coming soon
 - [Mac](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-mac-desktop-universal.zip)
 - [Linux (64-bit)](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-linux-desktop-64-bit.zip)
 
