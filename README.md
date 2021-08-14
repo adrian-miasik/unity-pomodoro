@@ -33,10 +33,10 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Downloads
 
 ### Latest Release
-Note: Builds in progress...check back tomorrow (2021-08-14), should have a release drafted by then as well
-- Windows
-- Mac
-- Linux
+- [Windows (64-bit)](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-64-bit.zip)
+- [Windows (32-bit)](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-32-bit.zip) 
+- [Mac](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-mac-desktop-universal.zip)
+- [Linux (64-bit)](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-linux-desktop-64-bit.zip)
 
 &nbsp;
 ## Media
