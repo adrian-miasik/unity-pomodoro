@@ -13,9 +13,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private CanvasGroup textContainer;
 
         private bool isAnimating;
-        private float elapsedTime;
+        private float accumulatedTime;
         private float fadeTime = 0.5f;
-        private float progress;
+        private float fadeProgress;
         private Color startingColor;
         private Color currentColor;
         private Color targetColor;
@@ -59,16 +59,16 @@ namespace AdrianMiasik.Components
             {
                 if (state == FadeState.FADING_OUT || state == FadeState.FADING_IN)
                 {
-                    elapsedTime += Time.deltaTime;
-                    progress = elapsedTime / fadeTime;
+                    accumulatedTime += Time.deltaTime;
+                    fadeProgress = accumulatedTime / fadeTime;
 
-                    currentColor = Color.Lerp(startingColor, targetColor, progress);
+                    currentColor = Color.Lerp(startingColor, targetColor, fadeProgress);
 
                     // Apply
                     background.color = currentColor;
                     textContainer.alpha = currentColor.a;
 
-                    if (elapsedTime >= fadeTime)
+                    if (accumulatedTime >= fadeTime)
                     {
                         state = FadeState.IDLE;
                         isAnimating = false;
@@ -85,7 +85,7 @@ namespace AdrianMiasik.Components
             startingColor = background.color;
             targetColor = background.color;
             targetColor.a = 0;
-            elapsedTime = 0;
+            accumulatedTime = 0;
             isAnimating = true;
         }
 
@@ -95,7 +95,7 @@ namespace AdrianMiasik.Components
             startingColor = background.color;
             targetColor = background.color;
             targetColor.a = 1;
-            elapsedTime = 0;
+            accumulatedTime = 0;
             isAnimating = true;
         }
 
