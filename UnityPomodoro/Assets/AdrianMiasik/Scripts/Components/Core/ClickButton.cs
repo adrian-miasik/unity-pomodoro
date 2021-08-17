@@ -199,7 +199,7 @@ namespace AdrianMiasik.Components.Core
 
         public void OpenURL(string url)
         {
-            Application.OpenURL(url);
+            UnityEngine.WSA.Launcher.LaunchUri(url, true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
