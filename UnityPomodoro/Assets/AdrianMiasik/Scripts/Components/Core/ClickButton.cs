@@ -199,7 +199,11 @@ namespace AdrianMiasik.Components.Core
 
         public void OpenURL(string url)
         {
+#if ENABLE_WINMD_SUPPORT
             UnityEngine.WSA.Launcher.LaunchUri(url, true);
+#else
+            Application.OpenURL(url);
+#endif
         }
 
         public void OnPointerExit(PointerEventData eventData)
