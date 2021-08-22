@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 namespace AdrianMiasik
 {
@@ -285,6 +286,23 @@ namespace AdrianMiasik
                     else
                     {
                         SwitchState(States.COMPLETE);
+                        
+                        Debug.LogWarning("Toast Activation!");
+
+#if ENABLE_WINMD_SUPPORT
+                        Toast toast = Toast.Create("", "Timer Complete!");
+                        toast.Show(); 
+
+                        // Also Worked
+                        // Toast toast = Toast.Create("Assets/AdrianMiasik/Sprites/application-icon.png", "Timer Complete");
+                        // toast.Show();  
+
+                        // Worked
+                        // UnityEngine.WSA.Toast.Create(UnityEngine.WSA.Toast.GetTemplate(UnityEngine.WSA.ToastTemplate.ToastText01)).Show();
+
+                        // Didn't work
+                        // UnityEngine.WSA.Toast.Create("Assets/AdrianMiasik/Scripts/MyToast.xml").Show();
+#endif
                     }
 
                     break;
