@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml;
 using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
@@ -8,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.WSA;
+using Application = UnityEngine.Application;
 
 namespace AdrianMiasik
 {
@@ -81,6 +83,11 @@ namespace AdrianMiasik
         [SerializeField] private int breakHours;
         [SerializeField] private int breakMinutes = 5;
         [SerializeField] private int breakSeconds;
+
+        // UWP
+        [Header("Toast")]
+        [Multiline]
+        public string customToast;
 
         // Digit Selection
         private DoubleDigit selectedDigit;
@@ -263,6 +270,18 @@ namespace AdrianMiasik
             }
         }
 
+        void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+            {
+                AudioListener.volume = 0;
+            }
+            else
+            {
+                AudioListener.volume = 1;
+            }
+        }
+
         private void Update()
         {
             switch (state)
@@ -287,17 +306,16 @@ namespace AdrianMiasik
                     {
                         SwitchState(States.COMPLETE);
                         
-                        Debug.LogWarning("Toast Activation!");
-
 #if ENABLE_WINMD_SUPPORT
-                        Toast toast = Toast.Create("", "Timer Complete!");
-                        toast.Show(); 
+                        // Works
+                        Toast xmlToast = Toast.Create(customToast);
+                        xmlToast.Show();
 
-                        // Also Worked
-                        // Toast toast = Toast.Create("Assets/AdrianMiasik/Sprites/application-icon.png", "Timer Complete");
-                        // toast.Show();  
+                        // Works
+                        // Toast toast = Toast.Create("", "Timer Complete!");
+                        // toast.Show();
 
-                        // Worked
+                        // Works
                         // UnityEngine.WSA.Toast.Create(UnityEngine.WSA.Toast.GetTemplate(UnityEngine.WSA.ToastTemplate.ToastText01)).Show();
 
                         // Didn't work
