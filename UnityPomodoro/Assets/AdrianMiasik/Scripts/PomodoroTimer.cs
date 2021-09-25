@@ -85,9 +85,8 @@ namespace AdrianMiasik
         [SerializeField] private int breakSeconds;
 
         // UWP
-        [Header("Toast")]
-        [Multiline]
-        public string customToast;
+        [Header("Toast")] 
+        [SerializeField] private TextAsset xmlToast;
 
         // Digit Selection
         private DoubleDigit selectedDigit;
@@ -308,8 +307,8 @@ namespace AdrianMiasik
                         
 #if ENABLE_WINMD_SUPPORT
                         // Works
-                        Toast xmlToast = Toast.Create(customToast);
-                        xmlToast.Show();
+                        Toast toast = Toast.Create(xmlToast.text);
+                        toast.Show();
 
                         // Works
                         // Toast toast = Toast.Create("", "Timer Complete!");
