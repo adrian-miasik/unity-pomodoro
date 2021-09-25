@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Xml;
 using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
@@ -8,8 +7,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.WSA;
-using Application = UnityEngine.Application;
+
+#if ENABLE_WINMD_SUPPORT
+    using UnityEngine.WSA;
+#endif
 
 namespace AdrianMiasik
 {
@@ -304,21 +305,10 @@ namespace AdrianMiasik
                     else
                     {
                         SwitchState(States.COMPLETE);
-                        
+
 #if ENABLE_WINMD_SUPPORT
-                        // Works
                         Toast toast = Toast.Create(xmlToast.text);
                         toast.Show();
-
-                        // Works
-                        // Toast toast = Toast.Create("", "Timer Complete!");
-                        // toast.Show();
-
-                        // Works
-                        // UnityEngine.WSA.Toast.Create(UnityEngine.WSA.Toast.GetTemplate(UnityEngine.WSA.ToastTemplate.ToastText01)).Show();
-
-                        // Didn't work
-                        // UnityEngine.WSA.Toast.Create("Assets/AdrianMiasik/Scripts/MyToast.xml").Show();
 #endif
                     }
 

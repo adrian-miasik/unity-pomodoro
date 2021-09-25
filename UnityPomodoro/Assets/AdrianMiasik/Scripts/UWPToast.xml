@@ -10,7 +10,7 @@
 
     <actions>
         <action arguments="switch" content="Switch to App" />
-        <action arguments="dismiss" content="Dismiss" />
+<!--        <action arguments="dismiss" content="Dismiss" />-->
     </actions>
 <!--    <audio src='ms-winsoundevent:Notification.Reminder'/>-->
     <audio src='ms-winsoundevent:Notification.Looping.Alarm'/>

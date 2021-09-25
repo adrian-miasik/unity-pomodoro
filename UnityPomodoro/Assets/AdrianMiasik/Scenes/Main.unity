@@ -4667,14 +4667,7 @@ MonoBehaviour:
   breakHours: 0
   breakMinutes: 5
   breakSeconds: 0
-  customToast: "<?xml version='1.0' encoding='utf-8'?>\r\n<toast launch='app-defined-string'
-    scenario=\"alarm\">\r\n    <visual>\r\n        <binding template='ToastGeneric'>\r\n           
-    <text hint-maxLines='1'>Timer Complete!</text>\r\n<!--            <text>Sentence
-    1</text>-->\r\n<!--            <text>Sentence 2</text>-->\r\n        </binding>\r\n   
-    </visual>\r\n\r\n    <actions>\r\n        <action arguments=\"Dismiss\" content=\"dismiss\"
-    />\r\n        <action arguments=\"Switch to App\" content=\"switch\" />\r\n   
-    </actions>\r\n<!--    <audio src='ms-winsoundevent:Notification.Reminder'/>-->\r\n   
-    <audio src='ms-winsoundevent:Notification.Looping.Alarm'/>\r\n</toast>\r\n"
+  xmlToast: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
   _fadeDuration: 0.1
   _pauseHoldDuration: 0.75
 --- !u!82 &1601903657
