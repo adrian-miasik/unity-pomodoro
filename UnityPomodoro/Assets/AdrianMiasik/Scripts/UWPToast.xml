@@ -3,15 +3,11 @@
     <visual>
         <binding template='ToastGeneric'>
             <text hint-maxLines='1'>Timer Complete!</text>
-<!--            <text>Sentence 1</text>-->
-<!--            <text>Sentence 2</text>-->
         </binding>
     </visual>
 
     <actions>
         <action arguments="switch" content="Switch to App" />
-<!--        <action arguments="dismiss" content="Dismiss" />-->
     </actions>
-<!--    <audio src='ms-winsoundevent:Notification.Reminder'/>-->
     <audio src='ms-winsoundevent:Notification.Looping.Alarm'/>
 </toast>
