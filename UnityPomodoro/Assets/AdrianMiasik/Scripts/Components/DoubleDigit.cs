@@ -163,7 +163,12 @@ namespace AdrianMiasik.Components
 
         public void SetDigitsLabel(int digits)
         {
-            input.text = digits.ToString("D2");
+            // If this digit value is actually different...
+            if (digits.ToString("D2") != input.text)
+            {
+                // Update the digit
+                input.text = digits.ToString("D2");   
+            }
         }
 
         private void HideArrows()
