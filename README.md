@@ -34,7 +34,7 @@ Want to help? If you're interested in contributing to the project, please see th
 
 ### Latest Release
 - Windows
-    - [Universal Windows Platform (Recommended)]()
+    - [Universal Windows Platform] - Coming Soon
     - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-64-bit.zip)
     - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-32-bit.zip)
 - Mac
