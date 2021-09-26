@@ -21,6 +21,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private float animationDuration = 0.25f;
         [SerializeField] private AnimationCurve animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
+        [Header("Wobble")] 
+        [SerializeField] private Animation pulseWobble;
+        
         private PomodoroTimer.Digits digit;
         private PomodoroTimer timer;
         private bool isInteractable;
@@ -66,6 +69,7 @@ namespace AdrianMiasik.Components
             SetSquircleColor(color);
             SetDigitsLabel(digits);
             HideArrows();
+            pulseWobble.Stop();
         }
 
         private void Update()
@@ -235,6 +239,8 @@ namespace AdrianMiasik.Components
             {
                 timer.IncrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
+                pulseWobble.Stop();
+                pulseWobble.Play();
                 UpdateArrows();
                 accumulatedSelectionTime = 0;
             }
@@ -246,6 +252,8 @@ namespace AdrianMiasik.Components
             {
                 timer.DecrementOne(digit);
                 SetDigitsLabel(timer.GetDigitValue(digit));
+                pulseWobble.Stop();
+                pulseWobble.Play();
                 UpdateArrows();
                 accumulatedSelectionTime = 0;
             }
