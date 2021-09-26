@@ -9,7 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 #if ENABLE_WINMD_SUPPORT
-    using UnityEngine.WSA;
+using UnityEngine.WSA;
 #endif
 
 namespace AdrianMiasik
