@@ -8,6 +8,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+#if ENABLE_WINMD_SUPPORT
+using UnityEngine.WSA;
+#endif
+
 namespace AdrianMiasik
 {
     public class PomodoroTimer : MonoBehaviour
@@ -80,6 +84,10 @@ namespace AdrianMiasik
         [SerializeField] private int breakHours;
         [SerializeField] private int breakMinutes = 5;
         [SerializeField] private int breakSeconds;
+
+        // UWP
+        [Header("Toast")] 
+        [SerializeField] private TextAsset xmlToast;
 
         // Digit Selection
         private DoubleDigit selectedDigit;
@@ -262,6 +270,18 @@ namespace AdrianMiasik
             }
         }
 
+        void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+            {
+                AudioListener.volume = 0;
+            }
+            else
+            {
+                AudioListener.volume = 1;
+            }
+        }
+
         private void Update()
         {
             switch (state)
@@ -285,6 +305,11 @@ namespace AdrianMiasik
                     else
                     {
                         SwitchState(States.COMPLETE);
+
+#if ENABLE_WINMD_SUPPORT
+                        Toast toast = Toast.Create(xmlToast.text);
+                        toast.Show();
+#endif
                     }
 
                     break;
