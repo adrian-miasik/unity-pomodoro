@@ -4546,6 +4546,7 @@ GameObject:
   - component: {fileID: 1601903656}
   - component: {fileID: 1601903657}
   - component: {fileID: 1601903658}
+  - component: {fileID: 1601903659}
   m_Layer: 5
   m_Name: Pomodoro Timer
   m_TagString: Untagged
@@ -4668,6 +4669,12 @@ MonoBehaviour:
   breakMinutes: 5
   breakSeconds: 0
   xmlToast: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
+  hotkeyDetector: {fileID: 1601903659}
+  selectedDigits: []
+  tabElements:
+  - {fileID: 1524052414}
+  - {fileID: 429705704}
+  - {fileID: 2096418338}
   _fadeDuration: 0.1
   _pauseHoldDuration: 0.75
 --- !u!82 &1601903657
@@ -4782,6 +4789,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1601903659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601903654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee5a48f537165b54dae3997a686be6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1608452770
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using AdrianMiasik.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 #if ENABLE_WINMD_SUPPORT
@@ -23,6 +24,7 @@ namespace AdrianMiasik
         public static Color colorComplete = new Color(0.97f, 0.15f, 0.15f);
         public static Color colorDeselected = new Color(0.91f, 0.91f, 0.91f);
 
+        // TODO: Support more timer digit formats
         public enum Digits
         {
             HOURS,
@@ -89,9 +91,13 @@ namespace AdrianMiasik
         [Header("Toast")] 
         [SerializeField] private TextAsset xmlToast;
 
+        [Header("Hotkeys")] 
+        [SerializeField] private HotkeyDetector hotkeyDetector;
+
         // Digit Selection
-        private DoubleDigit selectedDigit;
-        private DoubleDigit lastSelectedDigit;
+        [SerializeField] private List<DoubleDigit> selectedDigits = new List<DoubleDigit>();
+        [SerializeField] private List<DoubleDigit> tabElements = new List<DoubleDigit>();
+        private int tabIndex = 0;
 
         // Time
         private double _currentTime;
@@ -155,6 +161,9 @@ namespace AdrianMiasik
             rightButton.Initialize(this);
             breakSlider.Initialize(false, colorDeselected, colorRelax);
             creditsBubble.Initialize();
+            
+            // Initialize components - misc
+            hotkeyDetector.Initialize(this);
             
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
@@ -284,6 +293,28 @@ namespace AdrianMiasik
 
         private void Update()
         {
+            // Play / pause the timer
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                rightButton.OnClick();
+            }
+            
+            // Tab between digits
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                // TODO: Fix tab index value when selecting digits via other means
+                tabIndex++;
+                tabIndex = (tabIndex % tabElements.Count + tabElements.Count) % tabElements.Count;
+                SetSelection(tabElements[tabIndex]);
+                EventSystem.current.SetSelectedGameObject(tabElements[tabIndex].gameObject);
+            }
+
+            // Clear digit selection
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ClearSelection();
+            }
+            
             switch (state)
             {
                 case States.PAUSED:
@@ -518,7 +549,69 @@ namespace AdrianMiasik
                     return 0;
             }
         }
-        
+
+        public string GetTimerString()
+        {
+            return hourDigits.GetDigitsLabel() + ":" +
+                   minuteDigits.GetDigitsLabel() + ":" +
+                   secondDigits.GetDigitsLabel();
+        }
+
+        /// <summary>
+        /// Sets the value of the timer using the provided formatted string.
+        /// </summary>
+        /// <param name="formattedString">Expected format of ("00:25:00")</param>
+        public void SetTimerValue(string formattedString)
+        {
+            List<string> sections = new List<string>();
+            string value = String.Empty;
+            
+            // Determine how many sections there are
+            for (int i = 0; i < formattedString.Length; i++)
+            {
+                // If this character is a separator...
+                if (formattedString[i].ToString() == ":")
+                {
+                    // Save section
+                    if (value != String.Empty)
+                    {
+                        sections.Add(value);
+                        value = string.Empty;
+                    }
+                    continue;
+                }
+
+                // Add to section
+                value += formattedString[i].ToString();
+            }
+            // Last digit in string won't have a separator so we add the section in once the loop is complete
+            sections.Add(value);
+            
+            // Compare sections with timer format
+            if (sections.Count != 3)
+            {
+                Debug.LogWarning("The provided string does not match the pomodoro timer layout");
+                return;
+            }
+
+            // Set timer sections
+            for (int i = 0; i < sections.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        SetHours(sections[i]);
+                        break;
+                    case 1:
+                        SetMinutes(sections[i]);
+                        break;
+                    case 2:
+                        SetSeconds(sections[i]);
+                        break;
+                }
+            }
+        }
+
         public void SetHours(string hours)
         {
             SetDigit(Digits.HOURS, string.IsNullOrEmpty(hours) ? 0 : int.Parse(hours));
@@ -580,20 +673,61 @@ namespace AdrianMiasik
             OnValidate();
             UpdateDigits();
         }
+        
+        public void SelectAll()
+        {
+            ClearSelection();
+            
+            AddSelection(hourDigits);
+            AddSelection(minuteDigits);
+            AddSelection(secondDigits);
 
+            foreach (DoubleDigit digit in selectedDigits)
+            {
+                digit.Highlight();
+            }
+        }
+
+        public void AddSelection(DoubleDigit digitToAddToSelection)
+        {
+            if (!selectedDigits.Contains(digitToAddToSelection))
+            {
+                selectedDigits.Add(digitToAddToSelection);
+            }
+        }
+        
+        public void RemoveSelection(DoubleDigit digitToRemoveFromSelection)
+        {
+            if (selectedDigits.Contains(digitToRemoveFromSelection))
+            {
+                selectedDigits.Remove(digitToRemoveFromSelection);
+            }
+        }
+        
+        /// <summary>
+        /// Sets the selection to a single double digit.
+        /// If you'd like to select multiple digits, See AddSelection()
+        /// </summary>
+        /// <param name="currentDigit"></param>
         public void SetSelection(DoubleDigit currentDigit)
         {
-            lastSelectedDigit = selectedDigit;
-            selectedDigit = currentDigit;
-
-            // Deselect previous digit selection
-            if (lastSelectedDigit != null && lastSelectedDigit != currentDigit)
+            foreach (DoubleDigit digit in selectedDigits)
             {
-                lastSelectedDigit.Deselect();
+                // Deselect previous digit selections
+                if (digit != currentDigit)
+                {
+                    digit.Deselect();
+                }
+            }
+            
+            selectedDigits.Clear();
+            if (currentDigit != null)
+            {
+                selectedDigits.Add(currentDigit);
             }
 
             // Hide/show state text
-            if (selectedDigit == null)
+            if (selectedDigits == null)
             {
                 if (state != States.COMPLETE)
                 {
