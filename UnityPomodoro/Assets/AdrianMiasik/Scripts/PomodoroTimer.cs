@@ -170,6 +170,7 @@ namespace AdrianMiasik
 
             // Calculate time
             _currentTime = ts.TotalSeconds;
+            _totalTime = (float)ts.TotalSeconds;
 
             // Transition to setup state
             SwitchState(States.SETUP);
@@ -295,9 +296,29 @@ namespace AdrianMiasik
             // Play / pause the timer
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                ClearSelection();
+                foreach (DoubleDigit digit in selectedDigits)
+                {
+                    digit.Deselect();
+                    digit.Lock();
+                }
+
                 rightButton.OnClick();
             }
-            
+
+            // Restart timer
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                {
+                    breakSlider.OnPointerClick(null);
+                }
+                else
+                {
+                    Restart(state == States.COMPLETE);
+                }
+            }
+
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {
@@ -689,6 +710,10 @@ namespace AdrianMiasik
             {
                 digit.Highlight();
             }
+            
+            // Since we are highlighting (instead of selecting), we bypass the text state logic hence we 
+            // invoke it again here.
+            CalculateTextState();
         }
 
         public void AddSelection(DoubleDigit digitToAddToSelection)
@@ -706,7 +731,23 @@ namespace AdrianMiasik
                 selectedDigits.Remove(digitToRemoveFromSelection);
             }
         }
-        
+
+        private void CalculateTextState()
+        {
+            // Hide/show state text
+            if (selectedDigits.Count <= 0)
+            {
+                if (state != States.COMPLETE)
+                {
+                    text.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                text.gameObject.SetActive(false);
+            }
+        }
+
         /// <summary>
         /// Sets the selection to a single double digit.
         /// If you'd like to select multiple digits, See AddSelection()
@@ -728,19 +769,8 @@ namespace AdrianMiasik
             {
                 selectedDigits.Add(currentDigit);
             }
-
-            // Hide/show state text
-            if (selectedDigits == null)
-            {
-                if (state != States.COMPLETE)
-                {
-                    text.gameObject.SetActive(true);
-                }
-            }
-            else
-            {
-                text.gameObject.SetActive(false);
-            }
+            
+            CalculateTextState();
         }
 
         public void ClearSelection()
