@@ -149,10 +149,10 @@ namespace AdrianMiasik
             // Setup view
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
-            
+
             // Initialize components - digits
             TimeSpan ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
-            hourDigits.Initialize(Digits.HOURS, this, (int) ts.TotalHours);
+            hourDigits.Initialize(Digits.HOURS, this, (int)ts.TotalHours);
             minuteDigits.Initialize(Digits.MINUTES, this, ts.Minutes);
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
@@ -161,16 +161,15 @@ namespace AdrianMiasik
             rightButton.Initialize(this);
             breakSlider.Initialize(false, colorDeselected, colorRelax);
             creditsBubble.Initialize();
-            
+
             // Initialize components - misc
             hotkeyDetector.Initialize(this);
-            
+
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
 
             // Calculate time
             _currentTime = ts.TotalSeconds;
-            _totalTime = (float) ts.TotalSeconds;
 
             // Transition to setup state
             SwitchState(States.SETUP);
@@ -214,7 +213,7 @@ namespace AdrianMiasik
                     digitContainer.gameObject.SetActive(true);
                     SetDigitColor(Color.black);
                     completion.gameObject.SetActive(false);
-                    
+
                     // Reset
                     _isFading = false;
                     _accumulatedRingPulseTime = 0;
@@ -273,7 +272,7 @@ namespace AdrianMiasik
                     spawnAnimation.Stop();
                     digitContainer.gameObject.SetActive(false);
                     completion.gameObject.SetActive(true);
-                    
+
                     OnRingPulse.Invoke();
                     break;
             }
@@ -314,7 +313,7 @@ namespace AdrianMiasik
             {
                 ClearSelection();
             }
-            
+
             switch (state)
             {
                 case States.PAUSED:
@@ -328,8 +327,8 @@ namespace AdrianMiasik
                         _currentTime -= Time.deltaTime;
 
                         // Update visuals
-                        ring.fillAmount = (float) _currentTime / _totalTime;
-                        hourDigits.SetDigitsLabel((int) TimeSpan.FromSeconds(_currentTime).TotalHours);
+                        ring.fillAmount = (float)_currentTime / _totalTime;
+                        hourDigits.SetDigitsLabel((int)TimeSpan.FromSeconds(_currentTime).TotalHours);
                         minuteDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Minutes);
                         secondDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Seconds);
                     }
@@ -395,14 +394,15 @@ namespace AdrianMiasik
             }
             else
             {
-                ts = TimeSpan.FromHours(breakHours) + TimeSpan.FromMinutes(breakMinutes) + TimeSpan.FromSeconds(breakSeconds);
+                ts = TimeSpan.FromHours(breakHours) + TimeSpan.FromMinutes(breakMinutes) +
+                     TimeSpan.FromSeconds(breakSeconds);
             }
-            
-            hourDigits.SetDigitsLabel((int) ts.TotalHours);
+
+            hourDigits.SetDigitsLabel((int)ts.TotalHours);
             minuteDigits.SetDigitsLabel(ts.Minutes);
             secondDigits.SetDigitsLabel(ts.Seconds);
             _currentTime = ts.TotalSeconds;
-            _totalTime = (float) ts.TotalSeconds;
+            _totalTime = (float)ts.TotalSeconds;
         }
 
         private void AnimatePausedDigits()
@@ -446,7 +446,7 @@ namespace AdrianMiasik
             // Calculate diameter
             _accumulatedRingPulseTime += Time.deltaTime;
             float ringDiameter = completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime);
-            
+
             // Set diameter
             ring.material.SetFloat(RingDiameter, ringDiameter);
             completion.gameObject.transform.localScale = Vector3.one * ringDiameter;
@@ -458,7 +458,8 @@ namespace AdrianMiasik
             }
 
             // Ignore wrap mode and replay completion animation from start
-            if (hasRingPulseBeenInvoked && _accumulatedRingPulseTime > completeRingPulseDiameter[completeRingPulseDiameter.length - 1].time)
+            if (hasRingPulseBeenInvoked && _accumulatedRingPulseTime >
+                completeRingPulseDiameter[completeRingPulseDiameter.length - 1].time)
             {
                 _accumulatedRingPulseTime = 0;
                 hasRingPulseBeenInvoked = false;
@@ -565,7 +566,7 @@ namespace AdrianMiasik
         {
             List<string> sections = new List<string>();
             string value = String.Empty;
-            
+
             // Determine how many sections there are
             for (int i = 0; i < formattedString.Length; i++)
             {
@@ -578,15 +579,17 @@ namespace AdrianMiasik
                         sections.Add(value);
                         value = string.Empty;
                     }
+
                     continue;
                 }
 
                 // Add to section
                 value += formattedString[i].ToString();
             }
+
             // Last digit in string won't have a separator so we add the section in once the loop is complete
             sections.Add(value);
-            
+
             // Compare sections with timer format
             if (sections.Count != 3)
             {
@@ -626,7 +629,7 @@ namespace AdrianMiasik
         {
             SetDigit(Digits.SECONDS, string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds));
         }
-        
+
         public void IncrementOne(Digits digits)
         {
             SetDigit(digits, GetDigitValue(digits) + 1);
@@ -667,17 +670,17 @@ namespace AdrianMiasik
                     case Digits.SECONDS:
                         breakSeconds = newValue;
                         break;
-                }   
+                }
             }
 
             OnValidate();
             UpdateDigits();
         }
-        
+
         public void SelectAll()
         {
             ClearSelection();
-            
+
             AddSelection(hourDigits);
             AddSelection(minuteDigits);
             AddSelection(secondDigits);
@@ -695,7 +698,7 @@ namespace AdrianMiasik
                 selectedDigits.Add(digitToAddToSelection);
             }
         }
-        
+
         public void RemoveSelection(DoubleDigit digitToRemoveFromSelection)
         {
             if (selectedDigits.Contains(digitToRemoveFromSelection))
@@ -719,7 +722,7 @@ namespace AdrianMiasik
                     digit.Deselect();
                 }
             }
-            
+
             selectedDigits.Clear();
             if (currentDigit != null)
             {
