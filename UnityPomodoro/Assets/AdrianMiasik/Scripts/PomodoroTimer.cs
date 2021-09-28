@@ -96,8 +96,6 @@ namespace AdrianMiasik
 
         // Digit Selection
         [SerializeField] private List<DoubleDigit> selectedDigits = new List<DoubleDigit>();
-        [SerializeField] private List<DoubleDigit> tabElements = new List<DoubleDigit>();
-        private int tabIndex = 0;
 
         // Time
         private double _currentTime;
@@ -322,11 +320,14 @@ namespace AdrianMiasik
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                // TODO: Fix tab index value when selecting digits via other means
-                tabIndex++;
-                tabIndex = (tabIndex % tabElements.Count + tabElements.Count) % tabElements.Count;
-                SetSelection(tabElements[tabIndex]);
-                EventSystem.current.SetSelectedGameObject(tabElements[tabIndex].gameObject);
+                GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
+                Selectable selectable = selectedGameObject.GetComponent<Selectable>();
+
+                if (selectable != null && selectable.FindSelectableOnRight() != null 
+                                       && selectable.FindSelectableOnRight().gameObject != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(selectable.FindSelectableOnRight().gameObject);
+                }
             }
 
             // Clear digit selection

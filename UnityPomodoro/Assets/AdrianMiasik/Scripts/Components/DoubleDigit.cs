@@ -190,6 +190,11 @@ namespace AdrianMiasik.Components
             return input.text;
         }
 
+        public Selectable GetSelectable()
+        {
+            return selectable;
+        }
+        
         private void HideArrows()
         {
             upArrow.Hide();
