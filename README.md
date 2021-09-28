@@ -16,7 +16,9 @@
   <a href="#contact--support">Contact Us</a>
 </p>
 
-<img src="promotional/release-showcase.gif" width="720">
+<p align="center">
+  <img src="promotional/release-showcase.gif" width="720">
+</p>
 
 ## About
 
