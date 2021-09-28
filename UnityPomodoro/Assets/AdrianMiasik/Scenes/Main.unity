@@ -572,6 +572,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 3
   m_AspectRatio: 1
+--- !u!114 &74629570 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
+  m_PrefabInstance: {fileID: 1830320758431363088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &167431530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,6 +2256,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &810166524 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
+  m_PrefabInstance: {fileID: 1050340279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &837249547
 GameObject:
   m_ObjectHideFlags: 0
@@ -4599,6 +4621,8 @@ MonoBehaviour:
   secondDigits: {fileID: 2096418338}
   text: {fileID: 650676969}
   infoToggle: {fileID: 1617491758}
+  leftButtonClick: {fileID: 74629570}
+  rightButtonClick: {fileID: 810166524}
   rightButton: {fileID: 1430356801}
   breakSlider: {fileID: 1276951607}
   creditsBubble: {fileID: 929885561}
@@ -4671,10 +4695,6 @@ MonoBehaviour:
   xmlToast: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
   hotkeyDetector: {fileID: 1601903659}
   selectedDigits: []
-  tabElements:
-  - {fileID: 1524052414}
-  - {fileID: 429705704}
-  - {fileID: 2096418338}
   _fadeDuration: 0.1
   _pauseHoldDuration: 0.75
 --- !u!82 &1601903657

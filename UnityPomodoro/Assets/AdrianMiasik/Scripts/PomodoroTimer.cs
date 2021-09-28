@@ -63,6 +63,8 @@ namespace AdrianMiasik
 
         [Header("Buttons")] 
         [SerializeField] private BooleanToggle infoToggle;
+        [SerializeField] private ClickButton leftButtonClick;
+        [SerializeField] private ClickButton rightButtonClick;
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         [SerializeField] private CreditsBubble creditsBubble;
@@ -300,8 +302,7 @@ namespace AdrianMiasik
                     digit.Deselect();
                     digit.Lock();
                 }
-
-                rightButton.OnClick();
+                rightButtonClick.OnPointerClick(null);
             }
 
             // Restart timer
@@ -313,7 +314,7 @@ namespace AdrianMiasik
                 }
                 else
                 {
-                    Restart(state == States.COMPLETE);
+                    leftButtonClick.OnPointerClick(null);
                 }
             }
 
