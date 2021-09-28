@@ -16,13 +16,17 @@
   <a href="#contact--support">Contact Us</a>
 </p>
 
+<p align="center">
+  <img src="promotional/release-showcase.gif" width="720">
+</p>
+
 ## About
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work ***and break sessions***. Quickly swap between the two timers to keep you on track and focused.
 
 **Version**:  1.0.0
 
-**Author**:  **[`Adrian Miasik`](https://AdrianMiasik.com)**
+**Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
 **License**: [GPL-3.0](LICENSE)
 
@@ -33,10 +37,14 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Downloads
 
 ### Latest Release
-Note: Builds in progress...check back tomorrow (2021-08-14), should have a release drafted by then as well
 - Windows
+    - [Universal Windows Platform] - Coming Soon
+    - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-64-bit.zip)
+    - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-32-bit.zip)
 - Mac
+    - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-mac-desktop-universal.zip)
 - Linux
+    - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-linux-desktop-64-bit.zip)
 
 &nbsp;
 ## Media

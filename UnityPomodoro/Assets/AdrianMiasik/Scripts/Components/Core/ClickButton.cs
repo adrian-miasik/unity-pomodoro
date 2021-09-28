@@ -28,7 +28,7 @@ namespace AdrianMiasik.Components.Core
         // Hold
         private bool isUserHolding; // Is the user pressing down?
         private float userHoldTime; // How long has the user been holding down for?
-        private float holdActivationTime = 0.5f; // How long does the user have to hold to activate our hold click logic?
+        private float holdActivationTime = 0.25f; // How long does the user have to hold to activate our hold click logic?
         private float accumlatedHoldTime; // How long has the hold logic been running for? Not to be confused with userHoldTime.
         
         // Click sound pitch variation
@@ -199,7 +199,11 @@ namespace AdrianMiasik.Components.Core
 
         public void OpenURL(string url)
         {
+#if ENABLE_WINMD_SUPPORT
+            UnityEngine.WSA.Launcher.LaunchUri(url, true);
+#else
             Application.OpenURL(url);
+#endif
         }
 
         public void OnPointerExit(PointerEventData eventData)
