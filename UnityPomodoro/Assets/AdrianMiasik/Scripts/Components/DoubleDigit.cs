@@ -104,7 +104,10 @@ namespace AdrianMiasik.Components
 
                 if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
                 {
-                    SetValue(digit, "0");
+                    if (!input.isFocused)
+                    {
+                        SetValue(digit, "0");
+                    }
                 }
                 
                 // Scroll input
