@@ -572,6 +572,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 3
   m_AspectRatio: 1
+--- !u!114 &74629570 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
+  m_PrefabInstance: {fileID: 1830320758431363088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &167431530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,12 +1270,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 2022457357}
   m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1984,7 +1995,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.8
+  m_fontSize: 36.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2245,6 +2256,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &810166524 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
+  m_PrefabInstance: {fileID: 1050340279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &837249547
 GameObject:
   m_ObjectHideFlags: 0
@@ -4546,6 +4568,7 @@ GameObject:
   - component: {fileID: 1601903656}
   - component: {fileID: 1601903657}
   - component: {fileID: 1601903658}
+  - component: {fileID: 1601903659}
   m_Layer: 5
   m_Name: Pomodoro Timer
   m_TagString: Untagged
@@ -4598,6 +4621,8 @@ MonoBehaviour:
   secondDigits: {fileID: 2096418338}
   text: {fileID: 650676969}
   infoToggle: {fileID: 1617491758}
+  leftButtonClick: {fileID: 74629570}
+  rightButtonClick: {fileID: 810166524}
   rightButton: {fileID: 1430356801}
   breakSlider: {fileID: 1276951607}
   creditsBubble: {fileID: 929885561}
@@ -4668,6 +4693,8 @@ MonoBehaviour:
   breakMinutes: 5
   breakSeconds: 0
   xmlToast: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
+  hotkeyDetector: {fileID: 1601903659}
+  selectedDigits: []
   _fadeDuration: 0.1
   _pauseHoldDuration: 0.75
 --- !u!82 &1601903657
@@ -4782,6 +4809,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1601903659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601903654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee5a48f537165b54dae3997a686be6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1608452770
 GameObject:
   m_ObjectHideFlags: 0
