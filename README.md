@@ -35,19 +35,24 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
+### [Latest Release](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.1.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-windows-desktop-32-bit.zip)
+- Universal Windows Platform (UWP)
+  - [UWP - x64](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-uwp-x64.appx)
+  - [UWP - Win32](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-uwp-win32.appx)
+  - [UWP - ARM](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-uwp-arm.appx)
 - Mac
-    - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-mac-desktop-universal.zip)
 - Linux
-    - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.0.0/unity-pomodoro-1.0.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-linux-desktop-64-bit.zip)
 #### Platform Specific
-- [Universal Windows Platform (UWP) - Microsoft Store](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
+- Universal Windows Platform (UWP) 
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
+    - [Microsoft Store](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
 ### Previous Releases
 - [v1.0.0 - Initial Launch](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
 
