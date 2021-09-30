@@ -50,9 +50,9 @@ Want to help? If you're interested in contributing to the project, please see th
   - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-linux-desktop-64-bit.zip)
 #### Platform Specific
 - Universal Windows Platform (UWP) 
-  - The UWP version provides **Windows Notifications** when the timer is complete.
-  - The UWP version provides **Windows Launcher** when a user interacts with a URL.
-    - [Microsoft Store](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
+  - [Microsoft Store](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
+    - The UWP version provides **Windows Notifications** when the timer is complete.
+    - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
 - [v1.0.0 - Initial Launch](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
 
