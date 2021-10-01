@@ -114,9 +114,7 @@ namespace AdrianMiasik
         // Ring Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
-
-        #region Unity Methods
-
+        
         private void OnValidate()
         {
             // Prevent values from going over their limit
@@ -133,61 +131,19 @@ namespace AdrianMiasik
                 breakSeconds = Mathf.Clamp(breakSeconds, GetDigitMin(), GetDigitMax(Digits.SECONDS));
             }
         }
+        
+        void OnApplicationFocus(bool hasFocus)
+        {
+            // Prevent application from making noise when not in focus
+            AudioListener.volume = !hasFocus ? 0 : 1;
+        }
 
         private void Start()
         {
+            // Single entry point
             Initialize();
         }
-
-        private void Update()
-        {
-            switch (state)
-            {
-                case States.PAUSED:
-                    AnimatePausedDigits();
-                    break;
-
-                case States.RUNNING:
-                    if (_currentTime > 0)
-                    {
-                        // Decrement timer
-                        _currentTime -= Time.deltaTime;
-
-                        // Update visuals
-                        ring.fillAmount = (float)_currentTime / _totalTime;
-                        hourDigits.SetDigitsLabel((int)TimeSpan.FromSeconds(_currentTime).TotalHours);
-                        minuteDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Minutes);
-                        secondDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Seconds);
-                    }
-                    else
-                    {
-                        SwitchState(States.COMPLETE);
-                        OnTimerCompletion?.Invoke();
-                    }
-
-                    break;
-
-                case States.COMPLETE:
-                    AnimateRingPulse();
-                    break;
-            }
-        }
-
-        // Prevent application from making noise when not in focus
-        void OnApplicationFocus(bool hasFocus)
-        {
-            if (!hasFocus)
-            {
-                AudioListener.volume = 0;
-            }
-            else
-            {
-                AudioListener.volume = 1;
-            }
-        }
         
-        #endregion
-
         private void Initialize()
         {
             // Setup view
@@ -316,24 +272,49 @@ namespace AdrianMiasik
             }
         }
         
-        private void UpdateDigits()
+        // Unity Event
+        public void PlaySpawnAnimation()
         {
-            TimeSpan ts;
-            if (!_isOnBreak)
+            spawnAnimation.Stop();
+            spawnAnimation.Play();
+        }
+        
+        private void SetDigitColor(Color newColor)
+        {
+            hourDigits.SetTextColor(newColor);
+            minuteDigits.SetTextColor(newColor);
+            secondDigits.SetTextColor(newColor);
+        }
+        
+        public void ClearSelection()
+        {
+            SetSelection(null);
+            background.Select();
+        }
+        
+        /// <summary>
+        /// Sets the selection to a single double digit.
+        /// If you'd like to select multiple digits, See AddSelection()
+        /// </summary>
+        /// <param name="currentDigit"></param>
+        public void SetSelection(DoubleDigit currentDigit)
+        {
+            foreach (DoubleDigit digit in selectedDigits)
             {
-                ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
-            }
-            else
-            {
-                ts = TimeSpan.FromHours(breakHours) + TimeSpan.FromMinutes(breakMinutes) +
-                     TimeSpan.FromSeconds(breakSeconds);
+                // Deselect previous digit selections
+                if (digit != currentDigit)
+                {
+                    digit.Deselect();
+                }
             }
 
-            hourDigits.SetDigitsLabel((int)ts.TotalHours);
-            minuteDigits.SetDigitsLabel(ts.Minutes);
-            secondDigits.SetDigitsLabel(ts.Seconds);
-            _currentTime = ts.TotalSeconds;
-            _totalTime = (float)ts.TotalSeconds;
+            selectedDigits.Clear();
+            if (currentDigit != null)
+            {
+                selectedDigits.Add(currentDigit);
+            }
+            
+            CalculateTextState();
         }
         
         private void CalculateTextState()
@@ -351,33 +332,39 @@ namespace AdrianMiasik
                 text.gameObject.SetActive(false);
             }
         }
-        
-        public void ShowInfo()
-        {
-            // Hide main content, show info
-            contentContainer.gameObject.SetActive(false);
-            infoContainer.gameObject.SetActive(true);
-            
-            creditsBubble.Lock();
-            creditsBubble.FadeIn();
-        }
 
-        public void HideInfo()
+        private void Update()
         {
-            // Hide info, show main content
-            infoContainer.gameObject.SetActive(false);
-            contentContainer.gameObject.SetActive(true);
-            
-            creditsBubble.Unlock();
-            creditsBubble.FadeOut();
-        }
-        
-        #region Animations
-        
-        public void PlaySpawnAnimation()
-        {
-            spawnAnimation.Stop();
-            spawnAnimation.Play();
+            switch (state)
+            {
+                case States.PAUSED:
+                    AnimatePausedDigits();
+                    break;
+
+                case States.RUNNING:
+                    if (_currentTime > 0)
+                    {
+                        // Decrement timer
+                        _currentTime -= Time.deltaTime;
+
+                        // Update visuals
+                        ring.fillAmount = (float)_currentTime / _totalTime;
+                        hourDigits.SetDigitsLabel((int)TimeSpan.FromSeconds(_currentTime).TotalHours);
+                        minuteDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Minutes);
+                        secondDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Seconds);
+                    }
+                    else
+                    {
+                        SwitchState(States.COMPLETE);
+                        OnTimerCompletion?.Invoke();
+                    }
+
+                    break;
+
+                case States.COMPLETE:
+                    AnimateRingPulse();
+                    break;
+            }
         }
         
         private void AnimatePausedDigits()
@@ -415,7 +402,7 @@ namespace AdrianMiasik
                 }
             }
         }
-
+        
         private void AnimateRingPulse()
         {
             // Calculate diameter
@@ -440,11 +427,47 @@ namespace AdrianMiasik
                 hasRingPulseBeenInvoked = false;
             }
         }
-
-        #endregion
         
-        #region Interactions
+        private void UpdateDigits()
+        {
+            TimeSpan ts;
+            if (!_isOnBreak)
+            {
+                ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
+            }
+            else
+            {
+                ts = TimeSpan.FromHours(breakHours) + TimeSpan.FromMinutes(breakMinutes) +
+                     TimeSpan.FromSeconds(breakSeconds);
+            }
 
+            hourDigits.SetDigitsLabel((int)ts.TotalHours);
+            minuteDigits.SetDigitsLabel(ts.Minutes);
+            secondDigits.SetDigitsLabel(ts.Seconds);
+            _currentTime = ts.TotalSeconds;
+            _totalTime = (float)ts.TotalSeconds;
+        }
+
+        public void ShowInfo()
+        {
+            // Hide main content, show info
+            contentContainer.gameObject.SetActive(false);
+            infoContainer.gameObject.SetActive(true);
+            
+            creditsBubble.Lock();
+            creditsBubble.FadeIn();
+        }
+
+        public void HideInfo()
+        {
+            // Hide info, show main content
+            infoContainer.gameObject.SetActive(false);
+            contentContainer.gameObject.SetActive(true);
+            
+            creditsBubble.Unlock();
+            creditsBubble.FadeOut();
+        }
+        
         public void Play()
         {
             SwitchState(States.RUNNING);
@@ -490,10 +513,6 @@ namespace AdrianMiasik
             SetDigit(digits, GetDigitValue(digits) - 1);
         }
 
-        #endregion
-
-        #region Button Interactions
-        
         /// <summary>
         /// Activates the play/pause button to toggle the timer state (States.SETUP, etc...)
         /// </summary>
@@ -523,10 +542,6 @@ namespace AdrianMiasik
         {
             leftButtonClick.OnPointerClick(null);
         }
-
-        #endregion
-        
-        #region Selection
 
         public void SelectAll()
         {
@@ -559,17 +574,9 @@ namespace AdrianMiasik
                 selectedDigits.Add(digitToAddToSelection);
             }
         }
-
-        public void ClearSelection()
-        {
-            SetSelection(null);
-            background.Select();
-        }
-
-        #endregion
         
-        #region Getters
-
+        // Getters
+        
         private int GetDigitMax(Digits digits)
         {
             switch (digits)
@@ -654,10 +661,8 @@ namespace AdrianMiasik
             return true;
         }
 
-        #endregion
-
-        #region Setters
-
+        // Setters
+        
         private void SetDigit(Digits digit, int newValue)
         {
             if (!_isOnBreak)
@@ -693,13 +698,6 @@ namespace AdrianMiasik
 
             OnValidate();
             UpdateDigits();
-        }
-
-        private void SetDigitColor(Color newColor)
-        {
-            hourDigits.SetTextColor(newColor);
-            minuteDigits.SetTextColor(newColor);
-            secondDigits.SetTextColor(newColor);
         }
         
         /// <summary>
@@ -779,32 +777,5 @@ namespace AdrianMiasik
         {
             SetDigit(Digits.SECONDS, string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds));
         }
-
-        /// <summary>
-        /// Sets the selection to a single double digit.
-        /// If you'd like to select multiple digits, See AddSelection()
-        /// </summary>
-        /// <param name="currentDigit"></param>
-        public void SetSelection(DoubleDigit currentDigit)
-        {
-            foreach (DoubleDigit digit in selectedDigits)
-            {
-                // Deselect previous digit selections
-                if (digit != currentDigit)
-                {
-                    digit.Deselect();
-                }
-            }
-
-            selectedDigits.Clear();
-            if (currentDigit != null)
-            {
-                selectedDigits.Add(currentDigit);
-            }
-            
-            CalculateTextState();
-        }
-        
-        #endregion
     }
 }
