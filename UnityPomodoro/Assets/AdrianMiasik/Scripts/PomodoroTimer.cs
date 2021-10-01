@@ -715,7 +715,7 @@ namespace AdrianMiasik
             CalculateTextState();
         }
 
-        public void AddSelection(DoubleDigit digitToAddToSelection)
+        private void AddSelection(DoubleDigit digitToAddToSelection)
         {
             if (!selectedDigits.Contains(digitToAddToSelection))
             {
