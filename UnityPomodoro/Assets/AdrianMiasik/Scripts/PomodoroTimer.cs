@@ -95,7 +95,6 @@ namespace AdrianMiasik
         [Header("Toast")] 
         [SerializeField] private TextAsset xmlToast;
 
-        // TODO: Move all inputs to the HotkeyDetector class
         [Header("Hotkeys")] 
         [SerializeField] private HotkeyDetector hotkeyDetector;
 
