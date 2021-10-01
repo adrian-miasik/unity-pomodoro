@@ -245,14 +245,7 @@ namespace AdrianMiasik
 
                 case States.PAUSED:
                     text.text = "Paused";
-                    if (!_isOnBreak)
-                    {
-                        ring.material.SetColor(RingColor, colorWork);
-                    }
-                    else
-                    {
-                        ring.material.SetColor(RingColor, colorRelax);
-                    }
+                    ring.material.SetColor(RingColor, !_isOnBreak ? colorWork : colorRelax);
 
                     // Digit fade reset
                     _accumulatedFadeTime = 0;
