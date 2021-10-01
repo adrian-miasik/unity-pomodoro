@@ -6,12 +6,7 @@ using AdrianMiasik.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-#if ENABLE_WINMD_SUPPORT
-using UnityEngine.WSA;
-#endif
 
 namespace AdrianMiasik
 {
@@ -78,6 +73,7 @@ namespace AdrianMiasik
         [SerializeField] private Animation completion; // Wrap mode doesn't matter
         [SerializeField] private AnimationCurve completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
         public UnityEvent OnRingPulse;
+        public UnityEvent OnTimerCompletion;
         
         [Header("Data")]
         [SerializeField] private int hours = 0;
@@ -89,12 +85,7 @@ namespace AdrianMiasik
         [SerializeField] private int breakHours;
         [SerializeField] private int breakMinutes = 5;
         [SerializeField] private int breakSeconds;
-
-        // TODO: Move toast into a separate class
-        // UWP
-        [Header("Toast")] 
-        [SerializeField] private TextAsset xmlToast;
-
+        
         [Header("Hotkeys")] 
         [SerializeField] private HotkeyDetector hotkeyDetector;
 
@@ -336,11 +327,7 @@ namespace AdrianMiasik
                     else
                     {
                         SwitchState(States.COMPLETE);
-
-#if ENABLE_WINMD_SUPPORT
-                        Toast toast = Toast.Create(xmlToast.text);
-                        toast.Show();
-#endif
+                        OnTimerCompletion?.Invoke();
                     }
 
                     break;
