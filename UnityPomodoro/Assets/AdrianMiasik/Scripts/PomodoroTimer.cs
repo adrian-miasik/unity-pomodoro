@@ -295,52 +295,34 @@ namespace AdrianMiasik
             }
         }
 
+        // Activates the play/pause button to toggle the timer state (States.SETUP, etc...)
+        public void TriggerPlayPause()
+        {
+            ClearSelection();
+            foreach (DoubleDigit digit in selectedDigits)
+            {
+                digit.Deselect();
+                digit.Lock();
+            }
+            rightButtonClick.OnPointerClick(null);
+        }
+
+        /// <summary>
+        /// Activates the boolean slider to toggle between work/break
+        /// </summary>
+        public void TriggerTimerSwitch()
+        {
+            breakSlider.OnPointerClick(null);
+        }
+
+        // Activates the restart button to trigger a restart
+        public void TriggerTimerRestart()
+        {
+            leftButtonClick.OnPointerClick(null);
+        }
+
         private void Update()
         {
-            // Play / pause the timer
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ClearSelection();
-                foreach (DoubleDigit digit in selectedDigits)
-                {
-                    digit.Deselect();
-                    digit.Lock();
-                }
-                rightButtonClick.OnPointerClick(null);
-            }
-
-            // Restart timer
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-                {
-                    breakSlider.OnPointerClick(null);
-                }
-                else
-                {
-                    leftButtonClick.OnPointerClick(null);
-                }
-            }
-
-            // Tab between digits
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
-                Selectable selectable = selectedGameObject.GetComponent<Selectable>();
-
-                if (selectable != null && selectable.FindSelectableOnRight() != null 
-                                       && selectable.FindSelectableOnRight().gameObject != null)
-                {
-                    EventSystem.current.SetSelectedGameObject(selectable.FindSelectableOnRight().gameObject);
-                }
-            }
-
-            // Clear digit selection
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                ClearSelection();
-            }
-
             switch (state)
             {
                 case States.PAUSED:
@@ -591,6 +573,12 @@ namespace AdrianMiasik
         /// <param name="formattedString">Expected format of ("00:25:00")</param>
         public void SetTimerValue(string formattedString)
         {
+            // Only allow 'Set Timer Value' to work when we are in the setup state
+            if (state != States.SETUP)
+            {
+                return;
+            }
+            
             List<string> sections = new List<string>();
             string value = String.Empty;
 
@@ -706,6 +694,12 @@ namespace AdrianMiasik
 
         public void SelectAll()
         {
+            // Only allow 'select all' to work when we are in setup state
+            if (state != States.SETUP)
+            {
+                return;
+            }
+            
             ClearSelection();
 
             AddSelection(hourDigits);
