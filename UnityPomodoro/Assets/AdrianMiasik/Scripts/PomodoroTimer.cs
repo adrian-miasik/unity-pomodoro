@@ -723,14 +723,6 @@ namespace AdrianMiasik
             }
         }
 
-        public void RemoveSelection(DoubleDigit digitToRemoveFromSelection)
-        {
-            if (selectedDigits.Contains(digitToRemoveFromSelection))
-            {
-                selectedDigits.Remove(digitToRemoveFromSelection);
-            }
-        }
-
         private void CalculateTextState()
         {
             // Hide/show state text
