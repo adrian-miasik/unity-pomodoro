@@ -17,6 +17,7 @@ namespace AdrianMiasik
 {
     public class PomodoroTimer : MonoBehaviour
     {
+        // TODO: Move colors into their own data schema / class
         // Colors
         public static Color colorWork = new Color(0.05f, 0.47f, 0.95f); // or pause
         public static Color colorRelax = new Color(1f, 0.83f, 0.23f);
@@ -89,10 +90,12 @@ namespace AdrianMiasik
         [SerializeField] private int breakMinutes = 5;
         [SerializeField] private int breakSeconds;
 
+        // TODO: Move toast into a separate class
         // UWP
         [Header("Toast")] 
         [SerializeField] private TextAsset xmlToast;
 
+        // TODO: Move all inputs to the HotkeyDetector class
         [Header("Hotkeys")] 
         [SerializeField] private HotkeyDetector hotkeyDetector;
 
@@ -279,6 +282,7 @@ namespace AdrianMiasik
             }
         }
 
+        // Prevent application from making noise when not in focus
         void OnApplicationFocus(bool hasFocus)
         {
             if (!hasFocus)
