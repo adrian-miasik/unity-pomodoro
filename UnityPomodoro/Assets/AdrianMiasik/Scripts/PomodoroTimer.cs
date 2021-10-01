@@ -144,6 +144,9 @@ namespace AdrianMiasik
             Initialize();
         }
         
+        /// <summary>
+        /// Setup view, calculate time, initialize components, transition in, and animate.
+        /// </summary>
         private void Initialize()
         {
             // Setup view
@@ -179,6 +182,11 @@ namespace AdrianMiasik
             PlaySpawnAnimation();
         }
         
+        /// <summary>
+        /// Switches the timer to the provided state and handles all visual changes.
+        /// Basically handles our transitions between timer states. <see cref="PomodoroTimer.States"/>
+        /// </summary>
+        /// <param name="desiredState">The state you want to transition to</param>
         private void SwitchState(States desiredState)
         {
             state = desiredState;
@@ -279,6 +287,10 @@ namespace AdrianMiasik
             spawnAnimation.Play();
         }
         
+        /// <summary>
+        /// Sets the color of our digits to the provided color. <see cref="newColor"/>
+        /// </summary>
+        /// <param name="newColor"></param>
         private void SetDigitColor(Color newColor)
         {
             hourDigits.SetTextColor(newColor);
@@ -286,6 +298,9 @@ namespace AdrianMiasik
             secondDigits.SetTextColor(newColor);
         }
         
+        /// <summary>
+        /// Removes any digit selection, and selects the background by default.
+        /// </summary>
         public void ClearSelection()
         {
             SetSelection(null);
@@ -293,7 +308,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Sets the selection to a single double digit.
+        /// Sets the selection to a single double digit and calculates text visibility based on new selection data.
         /// If you'd like to select multiple digits, See AddSelection()
         /// </summary>
         /// <param name="currentDigit"></param>
@@ -317,6 +332,9 @@ namespace AdrianMiasik
             CalculateTextState();
         }
         
+        /// <summary>
+        /// Determines state text visibility depending on the selected digits and timer state.
+        /// </summary>
         private void CalculateTextState()
         {
             // Hide/show state text
@@ -367,6 +385,9 @@ namespace AdrianMiasik
             }
         }
         
+        /// <summary>
+        /// Animates our digits to flash on and off
+        /// </summary>
         private void AnimatePausedDigits()
         {
             _accumulatedFadeTime += Time.deltaTime;
@@ -403,6 +424,9 @@ namespace AdrianMiasik
             }
         }
         
+        /// <summary>
+        /// Animates our ring visuals to pulse
+        /// </summary>
         private void AnimateRingPulse()
         {
             // Calculate diameter
@@ -428,6 +452,9 @@ namespace AdrianMiasik
             }
         }
         
+        /// <summary>
+        /// Calculates the new time value based on the timer mode it's in (_isOnBreak)
+        /// </summary>
         private void UpdateDigits()
         {
             TimeSpan ts;
@@ -448,6 +475,9 @@ namespace AdrianMiasik
             _totalTime = (float)ts.TotalSeconds;
         }
 
+        /// <summary>
+        /// Shows info, hides main content, and shows credits bubble
+        /// </summary>
         public void ShowInfo()
         {
             // Hide main content, show info
@@ -458,6 +488,9 @@ namespace AdrianMiasik
             creditsBubble.FadeIn();
         }
 
+        /// <summary>
+        /// Shows main content, hides info, and hides credits bubble
+        /// </summary>
         public void HideInfo()
         {
             // Hide info, show main content
@@ -468,16 +501,25 @@ namespace AdrianMiasik
             creditsBubble.FadeOut();
         }
         
+        /// <summary>
+        /// Transitions timer into States.RUNNING mode
+        /// </summary>
         public void Play()
         {
             SwitchState(States.RUNNING);
         }
 
+        /// <summary>
+        /// Transitions timer into States.PAUSED mode
+        /// </summary>
         public void Pause()
         {
             SwitchState(States.PAUSED);
         }
 
+        /// <summary>
+        /// Transitions timer into States.SETUP mode in break mode
+        /// </summary>
         public void SwitchToBreakTimer()
         {
             _isOnBreak = true;
@@ -485,6 +527,9 @@ namespace AdrianMiasik
             UpdateDigits();
         }
 
+        /// <summary>
+        /// Transitions timer into States.SETUP mode in work mode
+        /// </summary>
         public void SwitchToWorkTimer()
         {
             _isOnBreak = false;
@@ -492,6 +537,10 @@ namespace AdrianMiasik
             UpdateDigits();
         }
 
+        /// <summary>
+        /// Toggles the timer mode to it's opposite mode (break/work) and transitions timer into States.SETUP
+        /// </summary>
+        /// <param name="isCompleted"></param>
         public void Restart(bool isCompleted)
         {
             if (isCompleted)
@@ -503,11 +552,19 @@ namespace AdrianMiasik
             UpdateDigits();
         }
         
+        /// <summary>
+        /// Increments the provided digit by one. (+1)
+        /// </summary>
+        /// <param name="digits"></param>
         public void IncrementOne(Digits digits)
         {
             SetDigit(digits, GetDigitValue(digits) + 1);
         }
 
+        /// <summary>
+        /// Decrements the provided digit by one. (-1)
+        /// </summary>
+        /// <param name="digits"></param>
         public void DecrementOne(Digits digits)
         {
             SetDigit(digits, GetDigitValue(digits) - 1);
@@ -543,6 +600,9 @@ namespace AdrianMiasik
             leftButtonClick.OnPointerClick(null);
         }
 
+        /// <summary>
+        /// Selects all the digits
+        /// </summary>
         public void SelectAll()
         {
             // Only allow 'select all' to work when we are in setup state
@@ -567,6 +627,10 @@ namespace AdrianMiasik
             CalculateTextState();
         }
 
+        /// <summary>
+        /// Adds the provided digit to our selection list
+        /// </summary>
+        /// <param name="digitToAddToSelection"></param>
         private void AddSelection(DoubleDigit digitToAddToSelection)
         {
             if (!selectedDigits.Contains(digitToAddToSelection))
@@ -641,6 +705,11 @@ namespace AdrianMiasik
             return _isOnBreak;
         }
         
+        /// <summary>
+        /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
+        /// </summary>
+        /// <param name="digits"></param>
+        /// <returns></returns>
         public bool CanIncrementOne(Digits digits)
         {
             if (GetDigitValue(digits) + 1 > GetDigitMax(digits))
@@ -651,6 +720,7 @@ namespace AdrianMiasik
             return true;
         }
 
+        /// Returns True if you can subtract one to this digit without hitting it's floor, otherwise returns False.
         public bool CanDecrementOne(Digits digits)
         {
             if (GetDigitValue(digits) - 1 < GetDigitMin())
@@ -663,6 +733,11 @@ namespace AdrianMiasik
 
         // Setters
         
+        /// <summary>
+        /// Sets the provided digit to it's provided value. (Will validate to make sure it's with bounds though)
+        /// </summary>
+        /// <param name="digit"></param>
+        /// <param name="newValue"></param>
         private void SetDigit(Digits digit, int newValue)
         {
             if (!_isOnBreak)
