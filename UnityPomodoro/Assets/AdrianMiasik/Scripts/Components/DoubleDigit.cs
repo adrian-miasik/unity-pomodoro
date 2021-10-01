@@ -95,13 +95,6 @@ namespace AdrianMiasik.Components
 
             if (isSelected)
             {
-                // // Deselection
-                // if (Input.GetKeyDown(KeyCode.Escape))
-                // {
-                //     Deselect();
-                //     timer.RemoveSelection(this);
-                // }
-
                 if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
                 {
                     if (!input.isFocused)
