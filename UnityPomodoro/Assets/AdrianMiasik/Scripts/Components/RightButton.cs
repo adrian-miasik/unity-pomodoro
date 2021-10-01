@@ -83,7 +83,7 @@ namespace AdrianMiasik.Components
                 
                 case PomodoroTimer.States.COMPLETE:
                     icon.transform.localScale = Vector3.one * 0.55f;                    
-                    if (timer.IsOnBreak())
+                    if (timer.GetIsOnBreak())
                     {
                         icon.sprite = breakComplete;
                         icon.color = PomodoroTimer.colorWork;
