@@ -64,6 +64,7 @@ namespace AdrianMiasik
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         [SerializeField] private CreditsBubble creditsBubble;
+        [SerializeField] private BooleanSlider themeSlider;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
 
         [Header("Ring")] 
@@ -163,6 +164,7 @@ namespace AdrianMiasik
             infoToggle.Initialize(false);
             rightButton.Initialize(this);
             breakSlider.Initialize(false, colorDeselected, colorRelax);
+            themeSlider.Initialize(false, colorDeselected, colorRelax);
             creditsBubble.Initialize();
 
             // Initialize components - misc
