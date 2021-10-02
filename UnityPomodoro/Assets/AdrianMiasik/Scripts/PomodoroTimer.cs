@@ -10,15 +10,9 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    public class PomodoroTimer : MonoBehaviour
+    public class PomodoroTimer : MonoBehaviour, IColorHook
     {
-        // TODO: Move colors into their own data schema / class
-        // Colors
-        public static Color colorWork = new Color(0.05f, 0.47f, 0.95f); // or pause
-        public static Color colorRelax = new Color(1f, 0.83f, 0.23f);
-        public static Color colorRunning = new Color(0.35f, 0.89f, 0.4f);
-        public static Color colorComplete = new Color(0.97f, 0.15f, 0.15f);
-        public static Color colorDeselected = new Color(0.91f, 0.91f, 0.91f);
+        [SerializeField] private Theme theme;
 
         // TODO: Support more timer digit formats
         public enum Digits
@@ -47,7 +41,7 @@ namespace AdrianMiasik
         [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
 
         [Header("Background")] 
-        [SerializeField] private Selectable background; // Used to pull select focus
+        [SerializeField] private Background background; // Used to pull select focus
 
         [Header("Digits")]
         [SerializeField] private DoubleDigit hourDigits;
@@ -151,6 +145,7 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
+            theme.RegisterColorHook(this);
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
 
@@ -161,14 +156,15 @@ namespace AdrianMiasik
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
             // Initialize components - buttons
-            infoToggle.Initialize(false);
-            rightButton.Initialize(this);
-            breakSlider.Initialize(false, colorDeselected, colorRelax);
-            themeSlider.Initialize(false, colorDeselected, colorRelax);
             creditsBubble.Initialize();
+            rightButton.Initialize(this);
+            infoToggle.Initialize(false, theme);
+            breakSlider.Initialize(false, theme);
+            themeSlider.Initialize(false, theme);
 
             // Initialize components - misc
             hotkeyDetector.Initialize(this);
+            background.Initialize(theme);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
@@ -196,7 +192,7 @@ namespace AdrianMiasik
             // Update the registered timer elements
             foreach (ITimerState element in timerElements)
             {
-                element.StateUpdate(state);
+                element.StateUpdate(state, theme);
             }
 
             // Do transition logic
@@ -209,20 +205,10 @@ namespace AdrianMiasik
                     // Complete ring
                     ring.fillAmount = 1f;
                     ring.material.SetFloat(RingDiameter, 0.9f);
-                    if (!_isOnBreak)
-                    {
-                        text.text = "Set a work time";
-                        ring.material.SetColor(RingColor, colorWork);
-                    }
-                    else
-                    {
-                        text.text = "Set a break time";
-                        ring.material.SetColor(RingColor, colorRelax);
-                    }
+                    text.text = !_isOnBreak ? "Set a work time" : "Set a break time";
 
                     // Show digits and hide completion label
                     digitContainer.gameObject.SetActive(true);
-                    SetDigitColor(Color.black);
                     completion.gameObject.SetActive(false);
 
                     // Reset
@@ -240,9 +226,7 @@ namespace AdrianMiasik
 
                 case States.RUNNING:
                     text.text = "Running";
-                    ring.material.SetColor(RingColor, colorRunning);
-
-                    SetDigitColor(Color.black);
+                    
                     ClearSelection();
 
                     // Lock Editing
@@ -253,8 +237,7 @@ namespace AdrianMiasik
 
                 case States.PAUSED:
                     text.text = "Paused";
-                    ring.material.SetColor(RingColor, !_isOnBreak ? colorWork : colorRelax);
-
+                    
                     // Digit fade reset
                     _accumulatedFadeTime = 0;
                     _isFadeComplete = true;
@@ -270,7 +253,6 @@ namespace AdrianMiasik
 
                     // Complete ring
                     ring.fillAmount = 1f;
-                    ring.material.SetColor(RingColor, colorComplete);
 
                     // Hide digits and reveal completion label
                     spawnAnimation.Stop();
@@ -280,6 +262,8 @@ namespace AdrianMiasik
                     OnRingPulse.Invoke();
                     break;
             }
+            
+            ColorUpdate(theme.GetCurrentColorScheme());
         }
         
         // Unity Event
@@ -706,6 +690,11 @@ namespace AdrianMiasik
         {
             return _isOnBreak;
         }
+
+        public Theme GetTheme()
+        {
+            return theme;
+        }
         
         /// <summary>
         /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
@@ -853,6 +842,33 @@ namespace AdrianMiasik
         public void SetSeconds(string seconds)
         {
             SetDigit(Digits.SECONDS, string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds));
+        }
+        
+        public void ColorUpdate(ColorScheme currentColors)
+        {
+            text.color = currentColors.selection;
+            
+            switch (state)
+            {
+                case States.SETUP:
+                    ring.material.SetColor(RingColor,
+                        !_isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
+                    SetDigitColor(Color.black);
+                    break;
+                case States.RUNNING:
+                    ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().running);
+                    SetDigitColor(Color.black);
+                    break;
+                case States.PAUSED:
+                    ring.material.SetColor(RingColor, 
+                        !_isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
+                    break;
+                case States.COMPLETE:
+                    ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().complete);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
