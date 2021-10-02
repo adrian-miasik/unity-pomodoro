@@ -1,3 +1,4 @@
+using AdrianMiasik.Interfaces;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Core
 {
-    public class BooleanSlider : MonoBehaviour, IPointerClickHandler
+    public class BooleanSlider : MonoBehaviour, IPointerClickHandler, IColorHook
     {
         [SerializeField] private SVGImage background;
         [SerializeField] private new Animation animation;
@@ -22,14 +23,11 @@ namespace AdrianMiasik.Components.Core
         private Color trueColor;
         private Color falseColor;
 
-        public void Initialize(bool state, Color falseColor, Color trueColor)
+        public void Initialize(bool state, Theme theme)
         {
             this.state = state;
-            this.falseColor = falseColor;
-            this.trueColor = trueColor;
-
-            // Set background color to match state
-            background.color = state ? trueColor : falseColor;
+            theme.RegisterColorHook(this);
+            ColorUpdate(theme.GetCurrentColorScheme());
         }
         
         /// <summary>
@@ -98,6 +96,13 @@ namespace AdrianMiasik.Components.Core
         {
             state = true;
             OnStateChanged();
+        }
+        
+        public void ColorUpdate(ColorScheme currentColors)
+        {
+            falseColor = currentColors.selection;
+            trueColor = currentColors.modeTwo;
+            background.color = state ? trueColor : falseColor;
         }
     }
 }
