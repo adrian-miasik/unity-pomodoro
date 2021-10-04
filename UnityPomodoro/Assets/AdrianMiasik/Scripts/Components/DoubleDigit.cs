@@ -1,5 +1,6 @@
 using System;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler, ISubmitHandler
+    public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler, ISubmitHandler, IColorHook
     {
         [Header("References")] 
         [SerializeField] private Selectable selectable;
@@ -66,6 +67,8 @@ namespace AdrianMiasik.Components
                 // Prevent input field from getting selection focus
                 caret.raycastTarget = false;
             }
+            
+            timer.GetTheme().RegisterColorHook(this);
 
             SetSquircleColor(color);
             SetDigitsLabel(digits);
@@ -409,6 +412,12 @@ namespace AdrianMiasik.Components
                 caret.raycastTarget = false;
                 input.DeactivateInputField(true);
             }
+        }
+
+        public void ColorUpdate(ColorScheme currentColors)
+        {
+            SetSquircleColor(currentColors.background);
+            SetTextColor(currentColors.foreground);
         }
     }
 }

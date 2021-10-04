@@ -3,12 +3,14 @@ using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
     public class BooleanSlider : MonoBehaviour, IPointerClickHandler, IColorHook
     {
-        [SerializeField] private SVGImage background;
+        [SerializeField] public SVGImage background;
+        [SerializeField] private Image dot;
         [SerializeField] private new Animation animation;
 
         [SerializeField] private AnimationClip leftToRight;
@@ -17,6 +19,9 @@ namespace AdrianMiasik.Components.Core
         public UnityEvent OnSetToTrueClick; // clicking a disabled boolean
         public UnityEvent OnSetToFalseClick; // clicking on an enabled boolean
         public UnityEvent OnClick;
+        
+        // Shader Property
+        private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Cache
         private bool state = false;
@@ -103,6 +108,7 @@ namespace AdrianMiasik.Components.Core
             falseColor = currentColors.selection;
             trueColor = currentColors.modeTwo;
             background.color = state ? trueColor : falseColor;
+            dot.material.SetColor(CircleColor, currentColors.background);
         }
     }
 }

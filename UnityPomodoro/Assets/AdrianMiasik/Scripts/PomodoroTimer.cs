@@ -4,6 +4,7 @@ using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -48,6 +49,9 @@ namespace AdrianMiasik
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
 
+        [Header("Separators")] 
+        [SerializeField] private List<TMP_Text> separators = new List<TMP_Text>();
+
         [Header("Text")] 
         [SerializeField] private TextMeshProUGUI text;
 
@@ -63,6 +67,7 @@ namespace AdrianMiasik
 
         [Header("Ring")] 
         [SerializeField] private Image ring;
+        [SerializeField] private Image ringBackground;
 
         [Header("Completion")]
         [SerializeField] private Animation completion; // Wrap mode doesn't matter
@@ -110,6 +115,8 @@ namespace AdrianMiasik
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         
+        private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+        
         private void OnValidate()
         {
             // Prevent values from going over their limit
@@ -149,6 +156,7 @@ namespace AdrianMiasik
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
 
+            // TODO: Create digit format class
             // Initialize components - digits
             TimeSpan ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
             hourDigits.Initialize(Digits.HOURS, this, (int)ts.TotalHours);
@@ -846,24 +854,69 @@ namespace AdrianMiasik
         
         public void ColorUpdate(ColorScheme currentColors)
         {
+            // State text
             text.color = currentColors.selection;
             
+            // Ring background
+            ringBackground.material.SetColor(RingColor, currentColors.selection);
+
+            // Left Button Background
+            Image leftContainerTarget = leftButtonClick.containerTarget.GetComponent<Image>();
+            if (leftContainerTarget != null)
+            {
+                leftContainerTarget.material.SetColor(CircleColor, currentColors.selection);
+            }
+            
+            // Left Button Icon
+            SVGImage leftVisibilityTarget = leftButtonClick.visibilityTarget.GetComponent<SVGImage>();
+            if (leftVisibilityTarget != null)
+            {
+                leftVisibilityTarget.color = currentColors.foreground;
+            }
+            
+            // Right Button Background
+            Image rightContainerTarget = rightButtonClick.containerTarget.GetComponent<Image>();
+            if (rightContainerTarget != null)
+            {
+                rightContainerTarget.material.SetColor(CircleColor, currentColors.selection);
+            }
+
             switch (state)
             {
                 case States.SETUP:
+                    // Ring
                     ring.material.SetColor(RingColor,
                         !_isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
-                    SetDigitColor(Color.black);
+                    
+                    // Digits
+                    SetDigitColor(currentColors.foreground);
+                    
+                    // Separators
+                    foreach (TMP_Text separator in separators)
+                    {
+                        separator.color = currentColors.foreground;
+                    }
                     break;
                 case States.RUNNING:
+                    // Ring
                     ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().running);
-                    SetDigitColor(Color.black);
+                    
+                    // Digits
+                    SetDigitColor(currentColors.foreground);
+                    
+                    // Separators
+                    foreach (TMP_Text separator in separators)
+                    {
+                        separator.color = currentColors.foreground;
+                    }
                     break;
                 case States.PAUSED:
+                    // Ring
                     ring.material.SetColor(RingColor, 
                         !_isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
                     break;
                 case States.COMPLETE:
+                    // Ring
                     ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().complete);
                     break;
                 default:
