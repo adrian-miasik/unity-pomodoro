@@ -38,7 +38,7 @@ namespace AdrianMiasik
 
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
-        [SerializeField] private GameObject infoContainer; // info content
+        [SerializeField] private InformationPanel infoContainer; // info content
         [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
 
         [Header("Background")] 
@@ -477,6 +477,7 @@ namespace AdrianMiasik
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.gameObject.SetActive(true);
+            infoContainer.ColorUpdate(theme.GetCurrentColorScheme());
             
             creditsBubble.Lock();
             creditsBubble.FadeIn();
@@ -854,6 +855,9 @@ namespace AdrianMiasik
         
         public void ColorUpdate(ColorScheme currentColors)
         {
+            // todo: check if info page is visible
+            infoContainer.ColorUpdate(currentColors);
+            
             // State text
             text.color = currentColors.selection;
             

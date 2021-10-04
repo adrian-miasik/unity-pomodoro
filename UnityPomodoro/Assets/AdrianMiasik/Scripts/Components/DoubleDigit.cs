@@ -2,6 +2,7 @@ using System;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -31,6 +32,9 @@ namespace AdrianMiasik.Components
         private bool isInteractable;
         private bool isSelected;
 
+        // Color
+        private Theme cachedTheme;
+        
         // Color animation
         [SerializeField] private Color color = Color.white;
         [SerializeField] private Color selectionColor;
@@ -67,8 +71,9 @@ namespace AdrianMiasik.Components
                 // Prevent input field from getting selection focus
                 caret.raycastTarget = false;
             }
-            
-            timer.GetTheme().RegisterColorHook(this);
+
+            cachedTheme = timer.GetTheme();
+            cachedTheme.RegisterColorHook(this);
 
             SetSquircleColor(color);
             SetDigitsLabel(digits);
@@ -349,7 +354,7 @@ namespace AdrianMiasik.Components
             accumulatedSelectionTime = 0;
             
             ShowArrows();
-            SetSquircleColor(selectionColor);
+            SetSquircleColor(cachedTheme.GetCurrentColorScheme().selection);
 
             if (setSelection)
             {
@@ -365,7 +370,7 @@ namespace AdrianMiasik.Components
             ignoreFirstClick = true;
             
             HideArrows();
-            SetSquircleColor(color);
+            SetSquircleColor(cachedTheme.GetCurrentColorScheme().background);
             
             // Disable caret selection
             caret.raycastTarget = false;
@@ -416,7 +421,34 @@ namespace AdrianMiasik.Components
 
         public void ColorUpdate(ColorScheme currentColors)
         {
-            SetSquircleColor(currentColors.background);
+            if (isSelected)
+            {
+                // Cancel animation
+                isColorAnimating = false;
+                
+                // Instantly swap color
+                _instanceMaterial.SetColor(SquircleColor, currentColors.selection);
+            }
+            else
+            {
+                SetSquircleColor(currentColors.background);
+            }
+            
+            // Up arrow
+            SVGImage upArrow = this.upArrow.visibilityTarget.GetComponent<SVGImage>();
+            if (upArrow != null)
+            {
+                upArrow.color = currentColors.foreground;
+            }
+            
+            // Down arrow
+            SVGImage downArrow = this.downArrow.visibilityTarget.GetComponent<SVGImage>();
+            if (downArrow != null)
+            {
+                downArrow.color = currentColors.foreground;
+            }
+
+            // Digit text
             SetTextColor(currentColors.foreground);
         }
     }
