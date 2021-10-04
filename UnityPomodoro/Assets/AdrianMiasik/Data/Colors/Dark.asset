@@ -15,7 +15,8 @@ MonoBehaviour:
   includedInTheseThemes:
   - {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
   background: {r: 0, g: 0, b: 0, a: 1}
-  selection: {r: 1, g: 0.051886797, b: 0.80625534, a: 1}
+  foreground: {r: 0.9058824, g: 0.9058824, b: 0.9058824, a: 1}
+  selection: {r: 0.2509804, g: 0.2509804, b: 0.2509804, a: 1}
   close: {r: 1, g: 0, b: 0, a: 1}
   modeOne: {r: 0.05, g: 0.47, b: 0.95, a: 1}
   modeTwo: {r: 1, g: 0.83, b: 0.23, a: 1}

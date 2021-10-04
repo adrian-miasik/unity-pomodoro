@@ -18,6 +18,7 @@ namespace AdrianMiasik
         }
 
         public Color background = Color.white;
+        public Color foreground = Color.black;
         public Color selection = new Color(0.91f, 0.91f, 0.91f);
         public Color close = Color.red;
         public Color modeOne = new Color(0.05f, 0.47f, 0.95f); // Work
