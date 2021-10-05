@@ -1,15 +1,15 @@
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Interfaces;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components
 {
-    public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler
-
+    public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler, IColorHook
     {
         [SerializeField] private SVGImage background;
-        [SerializeField] private ClickButton icon;
+        [SerializeField] private UPIcon icon;
         [SerializeField] private CanvasGroup textContainer;
 
         private bool isAnimating;
@@ -32,10 +32,13 @@ namespace AdrianMiasik.Components
 
         private FadeState state;
 
-        public void Initialize()
+        public void Initialize(Theme theme)
         {
             Initialize(duration);
             Lock();
+            
+            theme.RegisterColorHook(this);
+            ColorUpdate(theme);
         }
         
         protected override void OnUpdate(float progress)
@@ -131,6 +134,11 @@ namespace AdrianMiasik.Components
             }
             
             FadeOut();
+        }
+        
+        public void ColorUpdate(Theme theme)
+        {
+            icon.ColorUpdate(theme);
         }
     }
 }

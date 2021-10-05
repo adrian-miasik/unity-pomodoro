@@ -164,7 +164,7 @@ namespace AdrianMiasik
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
             // Initialize components - buttons
-            creditsBubble.Initialize();
+            creditsBubble.Initialize(theme);
             rightButton.Initialize(this);
             infoToggle.Initialize(false, theme);
             breakSlider.Initialize(false, theme);
@@ -271,7 +271,7 @@ namespace AdrianMiasik
                     break;
             }
             
-            ColorUpdate(theme.GetCurrentColorScheme());
+            ColorUpdate(theme);
         }
         
         // Unity Event
@@ -477,7 +477,7 @@ namespace AdrianMiasik
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.gameObject.SetActive(true);
-            infoContainer.ColorUpdate(theme.GetCurrentColorScheme());
+            infoContainer.ColorUpdate(theme);
             
             creditsBubble.Lock();
             creditsBubble.FadeIn();
@@ -853,22 +853,24 @@ namespace AdrianMiasik
             SetDigit(Digits.SECONDS, string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds));
         }
         
-        public void ColorUpdate(ColorScheme currentColors)
+        public void ColorUpdate(Theme theme)
         {
             // todo: check if info page is visible
-            infoContainer.ColorUpdate(currentColors);
+            infoContainer.ColorUpdate(theme);
+
+           ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             // State text
             text.color = currentColors.selection;
             
             // Ring background
-            ringBackground.material.SetColor(RingColor, currentColors.selection);
+            ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().selection);
 
             // Left Button Background
             Image leftContainerTarget = leftButtonClick.containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
-                leftContainerTarget.material.SetColor(CircleColor, currentColors.selection);
+                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().selection);
             }
             
             // Left Button Icon

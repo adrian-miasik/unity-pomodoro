@@ -49,7 +49,7 @@ namespace AdrianMiasik
         {
             foreach (IColorHook hook in colorElements)
             {
-                hook.ColorUpdate(GetCurrentColorScheme());
+                hook.ColorUpdate(this);
             }
         }
 

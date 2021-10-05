@@ -32,7 +32,7 @@ namespace AdrianMiasik.Components.Core
         {
             this.state = state;
             theme.RegisterColorHook(this);
-            ColorUpdate(theme.GetCurrentColorScheme());
+            ColorUpdate(theme);
         }
         
         /// <summary>
@@ -103,8 +103,9 @@ namespace AdrianMiasik.Components.Core
             OnStateChanged();
         }
         
-        public void ColorUpdate(ColorScheme currentColors)
+        public void ColorUpdate(Theme theme)
         {
+            ColorScheme currentColors = theme.GetCurrentColorScheme();
             falseColor = currentColors.selection;
             trueColor = currentColors.modeTwo;
             background.color = state ? trueColor : falseColor;

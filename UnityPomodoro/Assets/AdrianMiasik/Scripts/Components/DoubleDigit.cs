@@ -419,8 +419,10 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public void ColorUpdate(ColorScheme currentColors)
+        public void ColorUpdate(Theme theme)
         {
+            ColorScheme currentColors = theme.GetCurrentColorScheme();
+            
             if (isSelected)
             {
                 // Cancel animation

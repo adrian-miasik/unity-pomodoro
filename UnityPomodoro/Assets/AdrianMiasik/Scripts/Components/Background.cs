@@ -12,7 +12,7 @@ namespace AdrianMiasik.Components
         public void Initialize(Theme theme)
         {
             theme.RegisterColorHook(this);
-            ColorUpdate(theme.GetCurrentColorScheme());
+            ColorUpdate(theme);
         }
         
         public void Select()
@@ -20,9 +20,9 @@ namespace AdrianMiasik.Components
             selectable.Select();
         }
 
-        public void ColorUpdate(ColorScheme currentColors)
+        public void ColorUpdate(Theme theme)
         {
-            background.color = currentColors.background;
+            background.color = theme.GetCurrentColorScheme().background;
         }
     }
 }
