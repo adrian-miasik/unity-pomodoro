@@ -40,7 +40,8 @@ namespace AdrianMiasik
         [SerializeField] private GameObject contentContainer; // main content
         [SerializeField] private InformationPanel infoContainer; // info content
         [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
-
+        private bool isInfoPageOpen;
+        
         [Header("Background")] 
         [SerializeField] private Background background; // Used to pull select focus
 
@@ -152,7 +153,6 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
-            theme.RegisterColorHook(this);
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
 
@@ -164,7 +164,7 @@ namespace AdrianMiasik
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
             // Initialize components - buttons
-            creditsBubble.Initialize(theme);
+            creditsBubble.Initialize(this, theme);
             rightButton.Initialize(this);
             infoToggle.Initialize(false, theme);
             breakSlider.Initialize(false, theme);
@@ -186,6 +186,20 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
+            
+            // Setup theme
+            theme.RegisterColorHook(this);
+            if (theme.isLightModeOn)
+            {
+                themeSlider.Disable();
+            }
+            else
+            {
+                themeSlider.Enable();
+            }
+            
+            // Apply theme
+            theme.ApplyColorChanges();
         }
         
         /// <summary>
@@ -477,10 +491,14 @@ namespace AdrianMiasik
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.gameObject.SetActive(true);
+            isInfoPageOpen = true;
             infoContainer.ColorUpdate(theme);
-            
-            creditsBubble.Lock();
-            creditsBubble.FadeIn();
+
+            if (!creditsBubble.IsRunning())
+            {
+                creditsBubble.Lock();
+                creditsBubble.FadeIn();   
+            }
         }
 
         /// <summary>
@@ -490,10 +508,16 @@ namespace AdrianMiasik
         {
             // Hide info, show main content
             infoContainer.gameObject.SetActive(false);
+            isInfoPageOpen = false;
             contentContainer.gameObject.SetActive(true);
             
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
+        }
+        
+        public bool IsInfoPageOpen()
+        {
+            return isInfoPageOpen;
         }
         
         /// <summary>
@@ -861,16 +885,16 @@ namespace AdrianMiasik
            ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             // State text
-            text.color = currentColors.selection;
+            text.color = currentColors.backgroundHighlight;
             
             // Ring background
-            ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().selection);
+            ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().backgroundHighlight);
 
             // Left Button Background
             Image leftContainerTarget = leftButtonClick.containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
-                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().selection);
+                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().backgroundHighlight);
             }
             
             // Left Button Icon
@@ -884,7 +908,7 @@ namespace AdrianMiasik
             Image rightContainerTarget = rightButtonClick.containerTarget.GetComponent<Image>();
             if (rightContainerTarget != null)
             {
-                rightContainerTarget.material.SetColor(CircleColor, currentColors.selection);
+                rightContainerTarget.material.SetColor(CircleColor, currentColors.backgroundHighlight);
             }
 
             switch (state)

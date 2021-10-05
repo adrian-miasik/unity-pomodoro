@@ -66,7 +66,7 @@ namespace AdrianMiasik.Components.Core
                     icon.color = theme.GetCurrentColorScheme().close;
                     break;
                 case false:
-                    icon.color = theme.GetCurrentColorScheme().selection;
+                    icon.color = theme.GetCurrentColorScheme().backgroundHighlight;
                     break;
             }
         }

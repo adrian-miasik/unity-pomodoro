@@ -87,7 +87,7 @@ namespace AdrianMiasik.Components.Core
         /// Changes the visibility of the boolean slider to the OFF position (left).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        private void Disable()
+        public void Disable()
         {
             state = false;
             OnStateChanged();
@@ -97,7 +97,7 @@ namespace AdrianMiasik.Components.Core
         /// Changes the visibility of the boolean slider to the ON position (right).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        private void Enable()
+        public void Enable()
         {
             state = true;
             OnStateChanged();
@@ -106,7 +106,7 @@ namespace AdrianMiasik.Components.Core
         public void ColorUpdate(Theme theme)
         {
             ColorScheme currentColors = theme.GetCurrentColorScheme();
-            falseColor = currentColors.selection;
+            falseColor = currentColors.backgroundHighlight;
             trueColor = currentColors.modeTwo;
             background.color = state ? trueColor : falseColor;
             dot.material.SetColor(CircleColor, currentColors.background);
