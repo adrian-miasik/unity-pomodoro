@@ -55,18 +55,18 @@ namespace AdrianMiasik.Components.Core
                 }
             }
             
-            ColorUpdate(theme.GetCurrentColorScheme());
+            ColorUpdate(theme);
         }
 
-        public void ColorUpdate(ColorScheme currentColors)
+        public void ColorUpdate(Theme theme)
         {
             switch (isOn)
             {
                 case true:
-                    icon.color = currentColors.close;
+                    icon.color = theme.GetCurrentColorScheme().close;
                     break;
                 case false:
-                    icon.color = currentColors.selection;
+                    icon.color = theme.GetCurrentColorScheme().selection;
                     break;
             }
         }

@@ -12,11 +12,12 @@ namespace AdrianMiasik.Components
         [SerializeField] private WriteVersionNumber versionNumber;
         [SerializeField] private TMP_Text copyrightDisclaimer;
         
-        public void ColorUpdate(ColorScheme currentColors)
+        public void ColorUpdate(Theme theme)
         {
+            ColorScheme currentColors = theme.GetCurrentColorScheme();
             title.color = currentColors.foreground;
             description.color = currentColors.foreground;
-            // TODO: Socials
+            socials.ColorUpdate(theme);
             versionNumber.SetTextColor(currentColors.foreground);
             copyrightDisclaimer.color = currentColors.foreground;
         }

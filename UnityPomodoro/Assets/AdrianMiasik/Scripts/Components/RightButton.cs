@@ -92,24 +92,24 @@ namespace AdrianMiasik.Components
                     break;
             }
             
-            ColorUpdate(theme.GetCurrentColorScheme());
+            ColorUpdate(theme);
         }
 
-        public void ColorUpdate(ColorScheme currentColors)
+        public void ColorUpdate(Theme theme)
         {
             switch (timer.state)
             {
                 case PomodoroTimer.States.SETUP:
-                    icon.color = currentColors.running;
+                    icon.color = theme.GetCurrentColorScheme().running;
                     break;
                 case PomodoroTimer.States.RUNNING:
-                    icon.color = currentColors.modeOne;
+                    icon.color = theme.GetCurrentColorScheme().modeOne;
                     break;
                 case PomodoroTimer.States.PAUSED:
-                    icon.color = currentColors.running;
+                    icon.color = theme.GetCurrentColorScheme().running;
                     break;
                 case PomodoroTimer.States.COMPLETE:
-                    icon.color = timer.GetIsOnBreak() ? currentColors.modeOne : currentColors.modeTwo;
+                    icon.color = timer.GetIsOnBreak() ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo;
                     break;
             }
         }
