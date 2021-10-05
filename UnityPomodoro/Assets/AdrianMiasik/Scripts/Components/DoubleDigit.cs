@@ -354,7 +354,7 @@ namespace AdrianMiasik.Components
             accumulatedSelectionTime = 0;
             
             ShowArrows();
-            SetSquircleColor(cachedTheme.GetCurrentColorScheme().selection);
+            SetSquircleColor(cachedTheme.GetCurrentColorScheme().backgroundHighlight);
 
             if (setSelection)
             {
@@ -429,7 +429,7 @@ namespace AdrianMiasik.Components
                 isColorAnimating = false;
                 
                 // Instantly swap color
-                _instanceMaterial.SetColor(SquircleColor, currentColors.selection);
+                _instanceMaterial.SetColor(SquircleColor, currentColors.backgroundHighlight);
             }
             else
             {

@@ -6,7 +6,8 @@ namespace AdrianMiasik.Components.Core
     {
         [SerializeField] protected float duration = 3f;
         [SerializeField] private bool loop = false;
-        
+
+        private bool isRunning;
         private bool isInit; // Set this to true to run timer
         private float progress;
         private float elapsedTime;
@@ -17,6 +18,7 @@ namespace AdrianMiasik.Components.Core
             duration = timerDuration;
             isInit = true;
             hasCompleted = false;
+            isRunning = true;
         }
 
         protected void Restart()
@@ -52,7 +54,13 @@ namespace AdrianMiasik.Components.Core
                 OnComplete();
                 elapsedTime = 0;
                 hasCompleted = true;
+                isRunning = false;
             }
+        }
+
+        public bool IsRunning()
+        {
+            return isRunning;
         }
     }
 }
