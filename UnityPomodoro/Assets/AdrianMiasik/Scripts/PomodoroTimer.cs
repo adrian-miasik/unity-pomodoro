@@ -112,10 +112,9 @@ namespace AdrianMiasik
         private float _accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
 
-        // Ring Shader Properties
+        // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
-        
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         
         private void OnValidate()
