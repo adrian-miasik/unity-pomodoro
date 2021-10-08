@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b25e7fe913542e9b8e642169c5af836, type: 3}
+  m_Name: Dark
+  m_EditorClassIdentifier: 
+  includedInTheseThemes:
+  - {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
+  background: {r: 0, g: 0, b: 0, a: 1}
+  backgroundHighlight: {r: 0.36, g: 0.36, b: 0.36, a: 1}
+  foreground: {r: 1, g: 1, b: 1, a: 1}
+  close: {r: 1, g: 0, b: 0, a: 1}
+  modeOne: {r: 0.05, g: 0.47, b: 0.95, a: 1}
+  modeTwo: {r: 1, g: 0.83, b: 0.23, a: 1}
+  running: {r: 0.35, g: 0.89, b: 0.4, a: 1}
+  complete: {r: 0.97, g: 0.15, b: 0.15, a: 1}

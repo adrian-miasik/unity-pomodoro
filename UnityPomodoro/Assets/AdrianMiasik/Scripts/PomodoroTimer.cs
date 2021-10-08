@@ -4,21 +4,16 @@ using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    public class PomodoroTimer : MonoBehaviour
+    public class PomodoroTimer : MonoBehaviour, IColorHook
     {
-        // TODO: Move colors into their own data schema / class
-        // Colors
-        public static Color colorWork = new Color(0.05f, 0.47f, 0.95f); // or pause
-        public static Color colorRelax = new Color(1f, 0.83f, 0.23f);
-        public static Color colorRunning = new Color(0.35f, 0.89f, 0.4f);
-        public static Color colorComplete = new Color(0.97f, 0.15f, 0.15f);
-        public static Color colorDeselected = new Color(0.91f, 0.91f, 0.91f);
+        [SerializeField] private Theme theme;
 
         // TODO: Support more timer digit formats
         public enum Digits
@@ -43,16 +38,20 @@ namespace AdrianMiasik
 
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
-        [SerializeField] private GameObject infoContainer; // info content
+        [SerializeField] private InformationPanel infoContainer; // info content
         [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
-
+        private bool isInfoPageOpen;
+        
         [Header("Background")] 
-        [SerializeField] private Selectable background; // Used to pull select focus
+        [SerializeField] private Background background; // Used to pull select focus
 
         [Header("Digits")]
         [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
+
+        [Header("Separators")] 
+        [SerializeField] private List<TMP_Text> separators = new List<TMP_Text>();
 
         [Header("Text")] 
         [SerializeField] private TextMeshProUGUI text;
@@ -64,10 +63,12 @@ namespace AdrianMiasik
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         [SerializeField] private CreditsBubble creditsBubble;
+        [SerializeField] private BooleanSlider themeSlider;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
 
         [Header("Ring")] 
         [SerializeField] private Image ring;
+        [SerializeField] private Image ringBackground;
 
         [Header("Completion")]
         [SerializeField] private Animation completion; // Wrap mode doesn't matter
@@ -111,9 +112,10 @@ namespace AdrianMiasik
         private float _accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
 
-        // Ring Shader Properties
+        // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
+        private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         
         private void OnValidate()
         {
@@ -153,6 +155,7 @@ namespace AdrianMiasik
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
 
+            // TODO: Create digit format class
             // Initialize components - digits
             TimeSpan ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
             hourDigits.Initialize(Digits.HOURS, this, (int)ts.TotalHours);
@@ -160,13 +163,15 @@ namespace AdrianMiasik
             secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
 
             // Initialize components - buttons
-            infoToggle.Initialize(false);
+            creditsBubble.Initialize(this, theme);
             rightButton.Initialize(this);
-            breakSlider.Initialize(false, colorDeselected, colorRelax);
-            creditsBubble.Initialize();
+            infoToggle.Initialize(false, theme);
+            breakSlider.Initialize(false, theme);
+            themeSlider.Initialize(false, theme);
 
             // Initialize components - misc
             hotkeyDetector.Initialize(this);
+            background.Initialize(theme);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
@@ -180,6 +185,20 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
+            
+            // Setup theme
+            theme.RegisterColorHook(this);
+            if (theme.isLightModeOn)
+            {
+                themeSlider.Disable();
+            }
+            else
+            {
+                themeSlider.Enable();
+            }
+            
+            // Apply theme
+            theme.ApplyColorChanges();
         }
         
         /// <summary>
@@ -194,7 +213,7 @@ namespace AdrianMiasik
             // Update the registered timer elements
             foreach (ITimerState element in timerElements)
             {
-                element.StateUpdate(state);
+                element.StateUpdate(state, theme);
             }
 
             // Do transition logic
@@ -207,20 +226,10 @@ namespace AdrianMiasik
                     // Complete ring
                     ring.fillAmount = 1f;
                     ring.material.SetFloat(RingDiameter, 0.9f);
-                    if (!_isOnBreak)
-                    {
-                        text.text = "Set a work time";
-                        ring.material.SetColor(RingColor, colorWork);
-                    }
-                    else
-                    {
-                        text.text = "Set a break time";
-                        ring.material.SetColor(RingColor, colorRelax);
-                    }
+                    text.text = !_isOnBreak ? "Set a work time" : "Set a break time";
 
                     // Show digits and hide completion label
                     digitContainer.gameObject.SetActive(true);
-                    SetDigitColor(Color.black);
                     completion.gameObject.SetActive(false);
 
                     // Reset
@@ -238,9 +247,7 @@ namespace AdrianMiasik
 
                 case States.RUNNING:
                     text.text = "Running";
-                    ring.material.SetColor(RingColor, colorRunning);
-
-                    SetDigitColor(Color.black);
+                    
                     ClearSelection();
 
                     // Lock Editing
@@ -251,8 +258,7 @@ namespace AdrianMiasik
 
                 case States.PAUSED:
                     text.text = "Paused";
-                    ring.material.SetColor(RingColor, !_isOnBreak ? colorWork : colorRelax);
-
+                    
                     // Digit fade reset
                     _accumulatedFadeTime = 0;
                     _isFadeComplete = true;
@@ -268,7 +274,6 @@ namespace AdrianMiasik
 
                     // Complete ring
                     ring.fillAmount = 1f;
-                    ring.material.SetColor(RingColor, colorComplete);
 
                     // Hide digits and reveal completion label
                     spawnAnimation.Stop();
@@ -278,6 +283,8 @@ namespace AdrianMiasik
                     OnRingPulse.Invoke();
                     break;
             }
+            
+            ColorUpdate(theme);
         }
         
         // Unity Event
@@ -483,9 +490,14 @@ namespace AdrianMiasik
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.gameObject.SetActive(true);
-            
-            creditsBubble.Lock();
-            creditsBubble.FadeIn();
+            isInfoPageOpen = true;
+            infoContainer.ColorUpdate(theme);
+
+            if (!creditsBubble.IsRunning())
+            {
+                creditsBubble.Lock();
+                creditsBubble.FadeIn();   
+            }
         }
 
         /// <summary>
@@ -495,10 +507,16 @@ namespace AdrianMiasik
         {
             // Hide info, show main content
             infoContainer.gameObject.SetActive(false);
+            isInfoPageOpen = false;
             contentContainer.gameObject.SetActive(true);
             
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
+        }
+        
+        public bool IsInfoPageOpen()
+        {
+            return isInfoPageOpen;
         }
         
         /// <summary>
@@ -704,6 +722,11 @@ namespace AdrianMiasik
         {
             return _isOnBreak;
         }
+
+        public Theme GetTheme()
+        {
+            return theme;
+        }
         
         /// <summary>
         /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
@@ -851,6 +874,83 @@ namespace AdrianMiasik
         public void SetSeconds(string seconds)
         {
             SetDigit(Digits.SECONDS, string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds));
+        }
+        
+        public void ColorUpdate(Theme theme)
+        {
+            // todo: check if info page is visible
+            infoContainer.ColorUpdate(theme);
+
+           ColorScheme currentColors = theme.GetCurrentColorScheme();
+            
+            // State text
+            text.color = currentColors.backgroundHighlight;
+            
+            // Ring background
+            ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().backgroundHighlight);
+
+            // Left Button Background
+            Image leftContainerTarget = leftButtonClick.containerTarget.GetComponent<Image>();
+            if (leftContainerTarget != null)
+            {
+                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().backgroundHighlight);
+            }
+            
+            // Left Button Icon
+            SVGImage leftVisibilityTarget = leftButtonClick.visibilityTarget.GetComponent<SVGImage>();
+            if (leftVisibilityTarget != null)
+            {
+                leftVisibilityTarget.color = currentColors.foreground;
+            }
+            
+            // Right Button Background
+            Image rightContainerTarget = rightButtonClick.containerTarget.GetComponent<Image>();
+            if (rightContainerTarget != null)
+            {
+                rightContainerTarget.material.SetColor(CircleColor, currentColors.backgroundHighlight);
+            }
+
+            switch (state)
+            {
+                case States.SETUP:
+                    // Ring
+                    ring.material.SetColor(RingColor,
+                        !_isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
+                    
+                    // Digits
+                    SetDigitColor(currentColors.foreground);
+                    
+                    // Separators
+                    foreach (TMP_Text separator in separators)
+                    {
+                        separator.color = currentColors.foreground;
+                    }
+                    break;
+                case States.RUNNING:
+                    // Ring
+                    ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().running);
+                    
+                    // Digits
+                    SetDigitColor(currentColors.foreground);
+                    
+                    // Separators
+                    foreach (TMP_Text separator in separators)
+                    {
+                        separator.color = currentColors.foreground;
+                    }
+                    break;
+                case States.PAUSED:
+                    // Ring
+                    ring.material.SetColor(RingColor, 
+                        !_isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
+                    break;
+                case States.COMPLETE:
+                    // Ring
+                    ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().complete);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
