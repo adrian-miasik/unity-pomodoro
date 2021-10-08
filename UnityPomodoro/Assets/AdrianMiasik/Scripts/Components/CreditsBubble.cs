@@ -20,7 +20,6 @@ namespace AdrianMiasik.Components
         private float accumulatedTime;
         private float fadeTime = 0.5f;
         private float fadeProgress;
-        private float targetAlpha;
 
         private bool isPointerHovering;
         private bool lockInteraction;
@@ -105,8 +104,6 @@ namespace AdrianMiasik.Components
                 text.color = theme.GetCurrentColorScheme().foreground;
             }
             
-            targetAlpha = 0;
-            
             state = FadeState.FADING_OUT;
             accumulatedTime = 0;
             isAnimating = true;
@@ -118,8 +115,6 @@ namespace AdrianMiasik.Components
             {
                 text.color = theme.GetCurrentColorScheme().foreground;
             }
-
-            targetAlpha = 1;
             
             state = FadeState.FADING_IN;
             accumulatedTime = 0;
