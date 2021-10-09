@@ -24,8 +24,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private float animationDuration = 0.25f;
         [SerializeField] private AnimationCurve animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-        [Header("Wobble")] 
+        [Header("Animations")] 
         [SerializeField] private Animation pulseWobble;
+        [SerializeField] private Animation tick;
 
         private PomodoroTimer.Digits digit;
         private PomodoroTimer timer;
@@ -58,6 +59,7 @@ namespace AdrianMiasik.Components
 
         // Unity Events
         public UnityEvent OnSelection;
+        public UnityEvent OnDigitChange; // Invoked only when timer is running
 
         public void Initialize(PomodoroTimer.Digits digit, PomodoroTimer timer, int digits)
         {
@@ -186,7 +188,19 @@ namespace AdrianMiasik.Components
             {
                 // Update the digit
                 input.text = digits.ToString("D2");
+
+                if (timer.state == PomodoroTimer.States.RUNNING)
+                {
+                    OnDigitChange?.Invoke();
+                }
             }
+        }
+
+        // Unity Event
+        public void PlayTickAnimation()
+        {
+            tick.Stop();
+            tick.Play();
         }
 
         public string GetDigitsLabel()

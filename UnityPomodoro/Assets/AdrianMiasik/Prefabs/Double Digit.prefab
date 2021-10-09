@@ -315,6 +315,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   pulseWobble: {fileID: 4632816809682780623}
+  tick: {fileID: 3356050749571129949}
   color: {r: 1, g: 1, b: 1, a: 1}
   selectionColor: {r: 0.90588236, g: 0.90588236, b: 0.90588236, a: 1}
   OnSelection:
@@ -323,6 +324,21 @@ MonoBehaviour:
       - m_Target: {fileID: 2012381756492514942}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDigitChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2939933545387467015}
+        m_TargetAssemblyTypeName: AdrianMiasik.Components.DoubleDigit, Assembly-CSharp
+        m_MethodName: PlayTickAnimation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -515,6 +531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2939933545557774699}
   - component: {fileID: 2939933545557774698}
+  - component: {fileID: 3356050749571129949}
   m_Layer: 5
   m_Name: Text Area
   m_TagString: Untagged
@@ -556,6 +573,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!111 &3356050749571129949
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2939933545557774692}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: b928bc1c1b175f141bf334e658eaf49c, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: b928bc1c1b175f141bf334e658eaf49c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &2939933546287668545
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,7 +681,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.05
+  m_fontSize: 39.9
   m_fontSizeBase: 47.9
   m_fontWeight: 400
   m_enableAutoSizing: 1
