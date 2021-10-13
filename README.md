@@ -35,7 +35,7 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.1.0)
+### [Latest Release - v1.1.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.1.0)
 #### Direct
 - Windows
   - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.1.0/unity-pomodoro-1.1.0-windows-desktop-64-bit.zip)
