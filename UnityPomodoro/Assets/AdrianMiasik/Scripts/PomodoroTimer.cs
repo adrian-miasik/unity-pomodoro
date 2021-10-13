@@ -260,12 +260,7 @@ namespace AdrianMiasik
 
                 case States.PAUSED:
                     text.text = "Paused";
-                    
-                    // Digit fade reset
-                    accumulatedFadeTime = 0;
-                    isFadeComplete = true;
-                    isFading = true;
-                    accumulatedFadeTime = 0f;
+                    ResetDigitFadeAnim();
                     break;
 
                 case States.COMPLETE:
@@ -285,6 +280,14 @@ namespace AdrianMiasik
             }
             
             ColorUpdate(theme);
+        }
+
+        private void ResetDigitFadeAnim()
+        {
+            accumulatedFadeTime = 0;
+            isFadeComplete = true;
+            isFading = true;
+            accumulatedFadeTime = 0f;
         }
         
         // Unity Event
@@ -911,6 +914,18 @@ namespace AdrianMiasik
             // Paused Digits
             startingColor = theme.GetCurrentColorScheme().foreground;
             endingColor = theme.GetCurrentColorScheme().backgroundHighlight;
+            
+            // Separators
+            foreach (TMP_Text _separator in separators)
+            {
+                _separator.color = _currentColors.foreground;
+            }
+            
+            // Digits
+            SetDigitColor(_currentColors.foreground);
+            
+            // Reset paused digit anim
+            ResetDigitFadeAnim();
 
             switch (state)
             {
@@ -918,38 +933,26 @@ namespace AdrianMiasik
                     // Ring
                     ring.material.SetColor(RingColor,
                         !isOnBreak ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
-                    
-                    // Digits
-                    SetDigitColor(_currentColors.foreground);
-                    
-                    // Separators
-                    foreach (TMP_Text _separator in separators)
-                    {
-                        _separator.color = _currentColors.foreground;
-                    }
+
                     break;
+                
                 case States.RUNNING:
                     // Ring
                     ring.material.SetColor(RingColor, _theme.GetCurrentColorScheme().running);
-                    
-                    // Digits
-                    SetDigitColor(_currentColors.foreground);
-                    
-                    // Separators
-                    foreach (TMP_Text _separator in separators)
-                    {
-                        _separator.color = _currentColors.foreground;
-                    }
+
                     break;
+                
                 case States.PAUSED:
                     // Ring
                     ring.material.SetColor(RingColor, 
                         !isOnBreak ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
                     break;
+                
                 case States.COMPLETE:
                     // Ring
                     ring.material.SetColor(RingColor, _theme.GetCurrentColorScheme().complete);
                     break;
+                
                 default:
                     throw new ArgumentOutOfRangeException();
             }
