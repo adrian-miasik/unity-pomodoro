@@ -37,19 +37,19 @@ namespace AdrianMiasik.Components
 
         private FadeState state;
 
-        public void Initialize(PomodoroTimer _timer, Theme _theme)
+        public void Initialize(PomodoroTimer _timer)
         {
             timer = _timer;
-            theme = _theme;
+            theme = timer.GetTheme();
             
             // Setup
             Initialize(duration);
             Lock();
             
             // Theme
-            _theme.RegisterColorHook(this);
-            background.color = _theme.GetCurrentColorScheme().backgroundHighlight;
-            ColorUpdate(_theme);
+            theme.RegisterColorHook(this);
+            background.color = theme.GetCurrentColorScheme().backgroundHighlight;
+            ColorUpdate(theme);
         }
         
         protected override void OnUpdate(float _progress)

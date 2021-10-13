@@ -164,7 +164,7 @@ namespace AdrianMiasik
             secondDigits.Initialize(Digits.SECONDS, this, _ts.Seconds);
 
             // Initialize components - buttons
-            creditsBubble.Initialize(this, theme);
+            creditsBubble.Initialize(this);
             rightButton.Initialize(this);
             infoToggle.Initialize(false, theme);
             breakSlider.Initialize(false, theme);
