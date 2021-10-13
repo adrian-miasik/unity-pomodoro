@@ -876,7 +876,7 @@ namespace AdrianMiasik
         
         public void ColorUpdate(Theme _theme)
         {
-            // todo: check if info page is visible
+            // TODO: check if info page is visible
             infoContainer.ColorUpdate(_theme);
 
            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
