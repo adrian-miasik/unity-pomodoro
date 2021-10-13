@@ -75,7 +75,7 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData _eventData)
         {
             isUserHolding = true;
             userHoldTime = 0f;
@@ -96,7 +96,7 @@ namespace AdrianMiasik.Components.Core
             containerTarget.transform.localScale = Vector3.one * clickHoldScale;
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnPointerUp(PointerEventData _eventData)
         {
             CancelHold();
             OnUp.Invoke();
@@ -113,7 +113,7 @@ namespace AdrianMiasik.Components.Core
             }            
         }
 
-        public bool IsHolding()
+        private bool IsHolding()
         {
             return isUserHolding;
         }
@@ -130,7 +130,7 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData _eventData)
         {
             OnClick.Invoke();
             PlayClickSound();
@@ -197,16 +197,16 @@ namespace AdrianMiasik.Components.Core
             
         }
 
-        public void OpenURL(string url)
+        public void OpenURL(string _url)
         {
 #if ENABLE_WINMD_SUPPORT
             UnityEngine.WSA.Launcher.LaunchUri(url, true);
 #else
-            Application.OpenURL(url);
+            Application.OpenURL(_url);
 #endif
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void OnPointerExit(PointerEventData _eventData)
         {
             isUserHolding = false;
         }

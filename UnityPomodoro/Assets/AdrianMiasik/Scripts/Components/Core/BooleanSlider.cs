@@ -1,4 +1,5 @@
 using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,15 +25,15 @@ namespace AdrianMiasik.Components.Core
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Cache
-        private bool state = false;
+        private bool state;
         private Color trueColor;
         private Color falseColor;
 
-        public void Initialize(bool state, Theme theme)
+        public void Initialize(bool _state, Theme _theme)
         {
-            this.state = state;
-            theme.RegisterColorHook(this);
-            ColorUpdate(theme);
+            state = _state;
+            _theme.RegisterColorHook(this);
+            ColorUpdate(_theme);
         }
         
         /// <summary>
@@ -46,7 +47,7 @@ namespace AdrianMiasik.Components.Core
             OnPointerClick(null);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData _eventData)
         {
             // Flip state
             state = !state;
@@ -55,7 +56,7 @@ namespace AdrianMiasik.Components.Core
             OnClick.Invoke();
         }
         
-        private void OnStateChanged(bool invokeEvents = false)
+        private void OnStateChanged(bool _invokeEvents = false)
         {
             if (state)
             {
@@ -63,7 +64,7 @@ namespace AdrianMiasik.Components.Core
                 animation.clip = leftToRight;
                 background.color = trueColor;
 
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToTrueClick.Invoke();
                 }
@@ -74,7 +75,7 @@ namespace AdrianMiasik.Components.Core
                 animation.clip = rightToLeft;
                 background.color = falseColor;
 
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToFalseClick.Invoke();
                 }
@@ -103,13 +104,13 @@ namespace AdrianMiasik.Components.Core
             OnStateChanged();
         }
         
-        public void ColorUpdate(Theme theme)
+        public void ColorUpdate(Theme _theme)
         {
-            ColorScheme currentColors = theme.GetCurrentColorScheme();
-            falseColor = currentColors.backgroundHighlight;
-            trueColor = currentColors.modeTwo;
+            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
+            falseColor = _currentColors.backgroundHighlight;
+            trueColor = _currentColors.modeTwo;
             background.color = state ? trueColor : falseColor;
-            dot.material.SetColor(CircleColor, currentColors.background);
+            dot.material.SetColor(CircleColor, _currentColors.background);
         }
     }
 }

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Color Scheme", menuName = "Adrian Miasik/Create New Color Scheme")]
     public class ColorScheme : ScriptableObject
@@ -11,9 +10,9 @@ namespace AdrianMiasik
 
         private void OnValidate()
         {
-            foreach (Theme theme in includedInTheseThemes)
+            foreach (Theme _theme in includedInTheseThemes)
             {
-                theme.ApplyColorChanges();
+                _theme.ApplyColorChanges();
             }
         }
 

@@ -7,11 +7,11 @@ namespace AdrianMiasik.Components
     public class HotkeyDetector : MonoBehaviour
     {
         private PomodoroTimer timer;
-        private bool isInitialized = false;
+        private bool isInitialized;
 
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        public void Initialize(PomodoroTimer _pomodoroTimer)
         {
-            timer = pomodoroTimer;
+            timer = _pomodoroTimer;
             isInitialized = true;
         }
 
@@ -46,13 +46,13 @@ namespace AdrianMiasik.Components
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
-                Selectable selectable = selectedGameObject.GetComponent<Selectable>();
+                GameObject _selectedGameObject = EventSystem.current.currentSelectedGameObject;
+                Selectable _selectable = _selectedGameObject.GetComponent<Selectable>();
 
-                if (selectable != null && selectable.FindSelectableOnRight() != null 
-                                       && selectable.FindSelectableOnRight().gameObject != null)
+                if (_selectable != null && _selectable.FindSelectableOnRight() != null 
+                                       && _selectable.FindSelectableOnRight().gameObject != null)
                 {
-                    EventSystem.current.SetSelectedGameObject(selectable.FindSelectableOnRight().gameObject);
+                    EventSystem.current.SetSelectedGameObject(_selectable.FindSelectableOnRight().gameObject);
                 }
             }
         }

@@ -5,7 +5,7 @@ namespace AdrianMiasik.Components.Core
     public abstract class TimerProgress : MonoBehaviour
     {
         [SerializeField] protected float duration = 3f;
-        [SerializeField] private bool loop = false;
+        [SerializeField] private bool loop;
 
         private bool isRunning;
         private bool isInit; // Set this to true to run timer
@@ -13,9 +13,9 @@ namespace AdrianMiasik.Components.Core
         private float elapsedTime;
         private bool hasCompleted;
 
-        protected void Initialize(float timerDuration)
+        protected void Initialize(float _timerDuration)
         {
-            duration = timerDuration;
+            duration = _timerDuration;
             isInit = true;
             hasCompleted = false;
             isRunning = true;
@@ -30,8 +30,8 @@ namespace AdrianMiasik.Components.Core
         /// <summary>
         /// Update loop for timer
         /// </summary>
-        /// <param name="progress">A progress value between 0 to 1</param>
-        protected abstract void OnUpdate(float progress);
+        /// <param name="_progress">A progress value between 0 to 1</param>
+        protected abstract void OnUpdate(float _progress);
         
         /// <summary>
         /// Invoked when the timer has completed

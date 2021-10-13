@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace AdrianMiasik.Components
         
         private bool isAnimating;
         private float accumulatedTime;
-        private float fadeTime = 0.5f;
+        private readonly float fadeTime = 0.5f;
         private float fadeProgress;
 
         private bool isPointerHovering;
@@ -36,22 +37,22 @@ namespace AdrianMiasik.Components
 
         private FadeState state;
 
-        public void Initialize(PomodoroTimer timer, Theme theme)
+        public void Initialize(PomodoroTimer _timer, Theme _theme)
         {
-            this.timer = timer;
-            this.theme = theme;
+            timer = _timer;
+            theme = _theme;
             
             // Setup
             Initialize(duration);
             Lock();
             
             // Theme
-            theme.RegisterColorHook(this);
-            background.color = theme.GetCurrentColorScheme().backgroundHighlight;
-            ColorUpdate(theme);
+            _theme.RegisterColorHook(this);
+            background.color = _theme.GetCurrentColorScheme().backgroundHighlight;
+            ColorUpdate(_theme);
         }
         
-        protected override void OnUpdate(float progress)
+        protected override void OnUpdate(float _progress)
         {
             // Nothing
         }
@@ -99,9 +100,9 @@ namespace AdrianMiasik.Components
 
         public void FadeOut()
         {
-            foreach (TMP_Text text in text)
+            foreach (TMP_Text _text in text)
             {
-                text.color = theme.GetCurrentColorScheme().foreground;
+                _text.color = theme.GetCurrentColorScheme().foreground;
             }
             
             state = FadeState.FADING_OUT;
@@ -111,9 +112,9 @@ namespace AdrianMiasik.Components
 
         public void FadeIn()
         {
-            foreach (TMP_Text text in text)
+            foreach (TMP_Text _text in text)
             {
-                text.color = theme.GetCurrentColorScheme().foreground;
+                _text.color = theme.GetCurrentColorScheme().foreground;
             }
             
             state = FadeState.FADING_IN;
@@ -131,7 +132,7 @@ namespace AdrianMiasik.Components
             lockInteraction = false;
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public void OnPointerEnter(PointerEventData _eventData)
         {
             isPointerHovering = true;
             
@@ -143,7 +144,7 @@ namespace AdrianMiasik.Components
             FadeIn();
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void OnPointerExit(PointerEventData _eventData)
         {
             isPointerHovering = false;
             
@@ -155,16 +156,16 @@ namespace AdrianMiasik.Components
             FadeOut();
         }
 
-        public void ColorUpdate(Theme theme)
+        public void ColorUpdate(Theme _theme)
         {
-            background.color = theme.GetCurrentColorScheme().backgroundHighlight;
+            background.color = _theme.GetCurrentColorScheme().backgroundHighlight;
             
-            foreach (TMP_Text text in text)
+            foreach (TMP_Text _text in text)
             {
-                text.color = theme.GetCurrentColorScheme().foreground;
+                _text.color = _theme.GetCurrentColorScheme().foreground;
             }
             
-            icon.ColorUpdate(theme);
+            icon.ColorUpdate(_theme);
         }
     }
 }

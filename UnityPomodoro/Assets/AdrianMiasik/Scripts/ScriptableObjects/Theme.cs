@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Theme", menuName = "Adrian Miasik/Create New Theme")]
     public class Theme : ScriptableObject
@@ -22,21 +21,21 @@ namespace AdrianMiasik
         [ContextMenu("List Interfaces")]
         public void ListInterfaces()
         {
-            foreach (IColorHook colorHook in colorElements)
+            foreach (IColorHook _colorHook in colorElements)
             {
-                Debug.Log(colorHook.ToString(), colorHook.gameObject);    
+                Debug.Log(_colorHook.ToString(), _colorHook.gameObject);    
             }
         }
 
-        public void RegisterColorHook(IColorHook hook)
+        public void RegisterColorHook(IColorHook _hook)
         {
-            if (colorElements.Contains(hook))
+            if (colorElements.Contains(_hook))
             {
                 Debug.LogWarning("This interface has already been registered.");
             }
             else
             {
-                colorElements.Add(hook);
+                colorElements.Add(_hook);
             }
         }
 
@@ -47,9 +46,9 @@ namespace AdrianMiasik
         
         public void ApplyColorChanges()
         {
-            foreach (IColorHook hook in colorElements)
+            foreach (IColorHook _hook in colorElements)
             {
-                hook.ColorUpdate(this);
+                _hook.ColorUpdate(this);
             }
         }
 

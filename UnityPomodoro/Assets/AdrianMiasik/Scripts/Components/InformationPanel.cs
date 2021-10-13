@@ -1,4 +1,5 @@
 using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
@@ -12,14 +13,14 @@ namespace AdrianMiasik.Components
         [SerializeField] private WriteVersionNumber versionNumber;
         [SerializeField] private TMP_Text copyrightDisclaimer;
         
-        public void ColorUpdate(Theme theme)
+        public void ColorUpdate(Theme _theme)
         {
-            ColorScheme currentColors = theme.GetCurrentColorScheme();
-            title.color = currentColors.foreground;
-            description.color = currentColors.foreground;
-            socials.ColorUpdate(theme);
-            versionNumber.SetTextColor(currentColors.foreground);
-            copyrightDisclaimer.color = currentColors.foreground;
+            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
+            title.color = _currentColors.foreground;
+            description.color = _currentColors.foreground;
+            socials.ColorUpdate(_theme);
+            versionNumber.SetTextColor(_currentColors.foreground);
+            copyrightDisclaimer.color = _currentColors.foreground;
         }
     }
 }

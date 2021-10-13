@@ -1,16 +1,19 @@
-using AdrianMiasik;
+using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 
-public class UPIcon : MonoBehaviour
+namespace AdrianMiasik.Components
 {
-    [SerializeField] private SVGImage icon;
-
-    [SerializeField] private Sprite lightSprite;
-    [SerializeField] private Sprite darkSprite;
-
-    public void ColorUpdate(Theme theme)
+    public class UPIcon : MonoBehaviour
     {
-        icon.sprite = theme.isLightModeOn ? lightSprite : darkSprite;
+        [SerializeField] private SVGImage icon;
+
+        [SerializeField] private Sprite lightSprite;
+        [SerializeField] private Sprite darkSprite;
+
+        public void ColorUpdate(Theme _theme)
+        {
+            icon.sprite = _theme.isLightModeOn ? lightSprite : darkSprite;
+        }
     }
 }

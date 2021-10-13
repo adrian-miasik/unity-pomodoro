@@ -1,4 +1,5 @@
 using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,23 +25,23 @@ namespace AdrianMiasik.Components.Core
 
         private Theme theme;
 
-        public void Initialize(bool isOn, Theme theme, bool invokeEvents = false)
+        public void Initialize(bool _isOn, Theme _theme, bool _invokeEvents = false)
         {
-            this.isOn = isOn;
-            this.theme = theme;
+            isOn = _isOn;
+            theme = _theme;
             
-            theme.RegisterColorHook(this);
-            UpdateToggle(invokeEvents);
+            _theme.RegisterColorHook(this);
+            UpdateToggle(_invokeEvents);
         }
 
         // Unity Event
-        public void UpdateToggle(bool invokeEvents)
+        public void UpdateToggle(bool _invokeEvents)
         {
             if (isOn)
             {
                 icon.sprite = trueSprite;
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,trueZRotation));
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToTrueClick.Invoke();
                 }
@@ -49,7 +50,7 @@ namespace AdrianMiasik.Components.Core
             {
                 icon.sprite = falseSprite;
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,falseZRotation));
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToFalseClick.Invoke();
                 }
@@ -58,15 +59,15 @@ namespace AdrianMiasik.Components.Core
             ColorUpdate(theme);
         }
 
-        public void ColorUpdate(Theme theme)
+        public void ColorUpdate(Theme _theme)
         {
             switch (isOn)
             {
                 case true:
-                    icon.color = theme.GetCurrentColorScheme().close;
+                    icon.color = _theme.GetCurrentColorScheme().close;
                     break;
                 case false:
-                    icon.color = theme.GetCurrentColorScheme().backgroundHighlight;
+                    icon.color = _theme.GetCurrentColorScheme().backgroundHighlight;
                     break;
             }
         }

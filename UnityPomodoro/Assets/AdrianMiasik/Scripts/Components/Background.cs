@@ -1,4 +1,5 @@
 using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +10,10 @@ namespace AdrianMiasik.Components
         [SerializeField] private Image background;
         [SerializeField] private Selectable selectable;
 
-        public void Initialize(Theme theme)
+        public void Initialize(Theme _theme)
         {
-            theme.RegisterColorHook(this);
-            ColorUpdate(theme);
+            _theme.RegisterColorHook(this);
+            ColorUpdate(_theme);
         }
         
         public void Select()
@@ -20,9 +21,9 @@ namespace AdrianMiasik.Components
             selectable.Select();
         }
 
-        public void ColorUpdate(Theme theme)
+        public void ColorUpdate(Theme _theme)
         {
-            background.color = theme.GetCurrentColorScheme().background;
+            background.color = _theme.GetCurrentColorScheme().background;
         }
     }
 }

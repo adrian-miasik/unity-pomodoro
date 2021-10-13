@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 
 namespace AdrianMiasik.Components
@@ -7,11 +8,11 @@ namespace AdrianMiasik.Components
     {
         [SerializeField] private List<UPIcon> icons = new List<UPIcon>();
 
-        public void ColorUpdate(Theme theme)
+        public void ColorUpdate(Theme _theme)
         {
-            foreach (UPIcon icon in icons)
+            foreach (UPIcon _icon in icons)
             {
-                icon.ColorUpdate(theme);
+                _icon.ColorUpdate(_theme);
             }
         }
     }
