@@ -566,6 +566,11 @@ namespace AdrianMiasik
 
             SwitchState(States.SETUP);
             UpdateDigits();
+            
+            // Stop digit tick animation
+            hourDigits.ResetTextPosition();
+            minuteDigits.ResetTextPosition();
+            secondDigits.ResetTextPosition();
         }
         
         /// <summary>
