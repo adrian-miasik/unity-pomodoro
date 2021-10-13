@@ -837,7 +837,7 @@ namespace AdrianMiasik
             _sections.Add(_value);
 
             // Compare sections with timer format
-            if (_sections.Count != 3)
+            if (_sections.Count != 3) // TODO: Support more digit formats
             {
                 Debug.LogWarning("The provided string does not match the pomodoro timer layout");
                 return;
