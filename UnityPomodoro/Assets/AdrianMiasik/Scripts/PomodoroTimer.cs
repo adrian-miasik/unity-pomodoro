@@ -100,8 +100,8 @@ namespace AdrianMiasik
 
         // Pause Fade Animation
         [Header("Fade Animation")] 
-        [SerializeField] private float fadeDuration = 0.25f;
-        [SerializeField] private float pauseHoldDuration = 1f; // How long to wait between fade completions?
+        [SerializeField] private float fadeDuration = 0.1f;
+        [SerializeField] private float pauseHoldDuration = 0.75f; // How long to wait between fade completions?
         private bool isFading;
         private float accumulatedFadeTime;
         private float fadeProgress;
@@ -164,7 +164,7 @@ namespace AdrianMiasik
             secondDigits.Initialize(Digits.SECONDS, this, _ts.Seconds);
 
             // Initialize components - buttons
-            creditsBubble.Initialize(this, theme);
+            creditsBubble.Initialize(this);
             rightButton.Initialize(this);
             infoToggle.Initialize(false, theme);
             breakSlider.Initialize(false, theme);
@@ -566,6 +566,11 @@ namespace AdrianMiasik
 
             SwitchState(States.SETUP);
             UpdateDigits();
+            
+            // Stop digit tick animation
+            hourDigits.ResetTextPosition();
+            minuteDigits.ResetTextPosition();
+            secondDigits.ResetTextPosition();
         }
         
         /// <summary>
@@ -837,7 +842,7 @@ namespace AdrianMiasik
             _sections.Add(_value);
 
             // Compare sections with timer format
-            if (_sections.Count != 3)
+            if (_sections.Count != 3) // TODO: Support more digit formats
             {
                 Debug.LogWarning("The provided string does not match the pomodoro timer layout");
                 return;

@@ -203,6 +203,12 @@ namespace AdrianMiasik.Components
             tick.Play();
         }
 
+        public void ResetTextPosition()
+        {
+            input.textComponent.rectTransform.anchorMin = Vector2.zero;
+            input.textComponent.rectTransform.anchorMax = Vector2.one;
+        }
+        
         public string GetDigitsLabel()
         {
             return input.text;

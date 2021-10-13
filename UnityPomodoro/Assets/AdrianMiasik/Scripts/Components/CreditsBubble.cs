@@ -16,11 +16,10 @@ namespace AdrianMiasik.Components
         [SerializeField] private UPIcon icon;
         [SerializeField] private CanvasGroup textContainer;
         [SerializeField] private List<TMP_Text> text = new List<TMP_Text>();
+        [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")]
+        [SerializeField] private float fadeSpeed = 2f;
         
-        private bool isAnimating;
-        private float accumulatedTime;
-        private readonly float fadeTime = 0.5f;
-        private float fadeProgress;
+        private float fadeProgress = 1;
 
         private bool isPointerHovering;
         private bool lockInteraction;
@@ -37,19 +36,20 @@ namespace AdrianMiasik.Components
 
         private FadeState state;
 
-        public void Initialize(PomodoroTimer _timer, Theme _theme)
+        public void Initialize(PomodoroTimer _timer)
         {
             timer = _timer;
-            theme = _theme;
+            theme = timer.GetTheme();
             
             // Setup
             Initialize(duration);
             Lock();
+            fadeProgress = 1; // Starts at one since bubble is visible
             
             // Theme
-            _theme.RegisterColorHook(this);
-            background.color = _theme.GetCurrentColorScheme().backgroundHighlight;
-            ColorUpdate(_theme);
+            theme.RegisterColorHook(this);
+            background.color = theme.GetCurrentColorScheme().backgroundHighlight;
+            ColorUpdate(theme);
         }
         
         protected override void OnUpdate(float _progress)
@@ -63,35 +63,34 @@ namespace AdrianMiasik.Components
             {
                 FadeOut();
             }
-            
-            Unlock();
+
+            if (!timer.IsInfoPageOpen())
+            {
+                Unlock();
+            }
         }
 
         protected override void Update()
         {
-            if (isAnimating)
+            if (state != FadeState.IDLE)
             {
-                if (state == FadeState.FADING_OUT || state == FadeState.FADING_IN)
+                if (state == FadeState.FADING_IN)
                 {
-                    accumulatedTime += Time.deltaTime;
-                    fadeProgress = accumulatedTime / fadeTime;
-                    
-                    if (state == FadeState.FADING_IN)
-                    {
-                        backgroundContainer.alpha = fadeProgress;
-                        textContainer.alpha = fadeProgress;
-                    }
-                    else
-                    {
-                        textContainer.alpha = fadeProgress * -1 + 1;
-                        backgroundContainer.alpha = fadeProgress * -1 + 1;
-                    }
-
-                    if (accumulatedTime >= fadeTime)
-                    {
-                        state = FadeState.IDLE;
-                        isAnimating = false;
-                    }
+                    fadeProgress += Time.deltaTime * fadeSpeed;
+                }
+                else if (state == FadeState.FADING_OUT)
+                {
+                    fadeProgress -= Time.deltaTime * fadeSpeed;
+                }
+                
+                fadeProgress = Mathf.Clamp01(fadeProgress);
+                textContainer.alpha = fadeProgress;
+                backgroundContainer.alpha = fadeProgress;
+                
+                // If fade is completed...
+                if (fadeProgress <= 0 || fadeProgress >= 1)
+                {
+                    state = FadeState.IDLE;
                 }
             }
 
@@ -104,10 +103,8 @@ namespace AdrianMiasik.Components
             {
                 _text.color = theme.GetCurrentColorScheme().foreground;
             }
-            
+
             state = FadeState.FADING_OUT;
-            accumulatedTime = 0;
-            isAnimating = true;
         }
 
         public void FadeIn()
@@ -116,10 +113,8 @@ namespace AdrianMiasik.Components
             {
                 _text.color = theme.GetCurrentColorScheme().foreground;
             }
-            
+
             state = FadeState.FADING_IN;
-            accumulatedTime = 0;
-            isAnimating = true;
         }
 
         public void Lock()
