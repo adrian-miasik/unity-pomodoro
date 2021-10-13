@@ -100,8 +100,8 @@ namespace AdrianMiasik
 
         // Pause Fade Animation
         [Header("Fade Animation")] 
-        [SerializeField] private float fadeDuration = 0.25f;
-        [SerializeField] private float pauseHoldDuration = 1f; // How long to wait between fade completions?
+        [SerializeField] private float fadeDuration = 0.1f;
+        [SerializeField] private float pauseHoldDuration = 0.75f; // How long to wait between fade completions?
         private bool isFading;
         private float accumulatedFadeTime;
         private float fadeProgress;

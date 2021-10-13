@@ -5080,14 +5080,14 @@ MonoBehaviour:
   hours: 0
   minutes: 25
   seconds: 0
-  _isOnBreak: 0
+  isOnBreak: 0
   breakHours: 0
   breakMinutes: 5
   breakSeconds: 0
   hotkeyDetector: {fileID: 266651281}
   selectedDigits: []
-  _fadeDuration: 0.1
-  _pauseHoldDuration: 0.75
+  fadeDuration: 0.1
+  pauseHoldDuration: 0.75
 --- !u!82 &1601903657
 AudioSource:
   m_ObjectHideFlags: 0
