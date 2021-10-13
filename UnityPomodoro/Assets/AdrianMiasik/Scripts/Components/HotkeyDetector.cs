@@ -67,12 +67,10 @@ namespace AdrianMiasik.Components
             {
                 if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
                 {
-                    // Switch between work/break mode
                     timer.TriggerTimerSwitch();
                 }
                 else
                 {
-                    // Restart
                     timer.TriggerTimerRestart();
                 }
             }
