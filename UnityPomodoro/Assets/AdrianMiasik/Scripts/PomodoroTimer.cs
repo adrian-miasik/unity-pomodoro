@@ -266,8 +266,6 @@ namespace AdrianMiasik
                     isFadeComplete = true;
                     isFading = true;
                     accumulatedFadeTime = 0f;
-                    startingColor = Color.black;
-                    endingColor = new Color(0.75f, 0.75f, 0.75f);
                     break;
 
                 case States.COMPLETE:
@@ -909,6 +907,10 @@ namespace AdrianMiasik
             {
                 _rightContainerTarget.material.SetColor(CircleColor, _currentColors.backgroundHighlight);
             }
+            
+            // Paused Digits
+            startingColor = theme.GetCurrentColorScheme().foreground;
+            endingColor = theme.GetCurrentColorScheme().backgroundHighlight;
 
             switch (state)
             {
