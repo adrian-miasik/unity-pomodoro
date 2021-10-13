@@ -12,5 +12,10 @@ namespace AdrianMiasik.Components
         {
             text.text = prefixString + Application.version;
         }
+
+        public void SetTextColor(Color _newColor)
+        {
+            text.color = _newColor;
+        }
     }
 }

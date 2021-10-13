@@ -1,16 +1,17 @@
-using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Components
 {
     public class HotkeyDetector : MonoBehaviour
     {
         private PomodoroTimer timer;
-        private bool isInitialized = false;
+        private bool isInitialized;
 
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        public void Initialize(PomodoroTimer _pomodoroTimer)
         {
-            timer = pomodoroTimer;
+            timer = _pomodoroTimer;
             isInitialized = true;
         }
 
@@ -21,56 +22,100 @@ namespace AdrianMiasik
                 return;
             }
             
+            ProcessKeys();
+            ProcessKeybinds();
+        }
+
+        /// <summary>
+        /// Processes individual key strokes and single inputs
+        /// </summary>
+        private void ProcessKeys()
+        {
+            // Play / pause the timer
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                timer.TriggerPlayPause();
+            }
+
+            // Clear digit selection
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                timer.ClearSelection();
+            }
+            
+            // Tab between digits
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                GameObject _selectedGameObject = EventSystem.current.currentSelectedGameObject;
+                Selectable _selectable = _selectedGameObject.GetComponent<Selectable>();
+
+                if (_selectable != null && _selectable.FindSelectableOnRight() != null 
+                                       && _selectable.FindSelectableOnRight().gameObject != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(_selectable.FindSelectableOnRight().gameObject);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Processes combined key strokes and multiple inputs
+        /// </summary>
+        private void ProcessKeybinds()
+        {
+            // Restart timer
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                {
+                    timer.TriggerTimerSwitch();
+                }
+                else
+                {
+                    timer.TriggerTimerRestart();
+                }
+            }
+            
+            // Quick switch
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                timer.TriggerTimerSwitch();
+            }
+
             // Select All
-            if (IsSelectingAll() && timer.state == PomodoroTimer.States.SETUP)
+            if (IsUserSelectingAll())
             {
                 timer.SelectAll();
             }
             
             // Copy
-            if (IsCopying())
+            if (IsUserCopying())
             {
                 GUIUtility.systemCopyBuffer = timer.GetTimerString();
             }
             
             // Paste
-            if (IsPasting() && timer.state == PomodoroTimer.States.SETUP)
+            if (IsUserPasting())
             {
                 timer.SetTimerValue(GUIUtility.systemCopyBuffer);
             }
         }
 
-        private bool IsSelectingAll()
+        private bool IsUserSelectingAll()
         {
-            if (Input.GetKeyUp(KeyCode.A) && Input.GetKey(KeyCode.LeftControl) ||
-                Input.GetKeyUp(KeyCode.A) && Input.GetKey(KeyCode.RightControl)) 
-            {
-                return true;
-            }
-
-            return false;
+            return Input.GetKeyDown(KeyCode.A) && Input.GetKey(KeyCode.LeftControl) ||
+                   Input.GetKeyDown(KeyCode.A) && Input.GetKey(KeyCode.RightControl);
         }
         
-        private bool IsCopying()
+        private bool IsUserCopying()
         {
-            if (Input.GetKeyUp(KeyCode.C) && Input.GetKey(KeyCode.LeftControl) ||
-                Input.GetKeyUp(KeyCode.C) && Input.GetKey(KeyCode.RightControl)) 
-            {
-                return true;
-            }
-
-            return false;
+            return Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl) ||
+                   Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.RightControl);
         }
         
-        private bool IsPasting()
+        private bool IsUserPasting()
         {
-            if (Input.GetKeyUp(KeyCode.V) && Input.GetKey(KeyCode.LeftControl) ||
-                Input.GetKeyUp(KeyCode.V) && Input.GetKey(KeyCode.RightControl)) 
-            {
-                return true;
-            }
-
-            return false;
+            return Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl) ||
+                   Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.RightControl);
         }
     }
 }

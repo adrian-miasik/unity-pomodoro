@@ -29,7 +29,7 @@ namespace AdrianMiasik.Components.Core
         private bool isUserHolding; // Is the user pressing down?
         private float userHoldTime; // How long has the user been holding down for?
         private float holdActivationTime = 0.25f; // How long does the user have to hold to activate our hold click logic?
-        private float accumlatedHoldTime; // How long has the hold logic been running for? Not to be confused with userHoldTime.
+        private float accumulatedHoldTime; // How long has the hold logic been running for? Not to be confused with userHoldTime.
         
         // Click sound pitch variation
         public bool isPitchVariationOn = true;
@@ -75,11 +75,11 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData _eventData)
         {
             isUserHolding = true;
             userHoldTime = 0f;
-            accumlatedHoldTime = 0f;
+            accumulatedHoldTime = 0f;
 
             // Release animation
             isAnimatingRelease = false;
@@ -96,7 +96,7 @@ namespace AdrianMiasik.Components.Core
             containerTarget.transform.localScale = Vector3.one * clickHoldScale;
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnPointerUp(PointerEventData _eventData)
         {
             CancelHold();
             OnUp.Invoke();
@@ -113,7 +113,7 @@ namespace AdrianMiasik.Components.Core
             }            
         }
 
-        public bool IsHolding()
+        private bool IsHolding()
         {
             return isUserHolding;
         }
@@ -122,7 +122,7 @@ namespace AdrianMiasik.Components.Core
         {
             isUserHolding = false;
             userHoldTime = 0f;
-            accumlatedHoldTime = 0f;
+            accumulatedHoldTime = 0f;
             
             if (containerTarget != null)
             {
@@ -130,7 +130,7 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData _eventData)
         {
             OnClick.Invoke();
             PlayClickSound();
@@ -169,12 +169,12 @@ namespace AdrianMiasik.Components.Core
 
                 if (userHoldTime > holdActivationTime)
                 {
-                    accumlatedHoldTime += Time.deltaTime;
+                    accumulatedHoldTime += Time.deltaTime;
 
                     // Calculate how long to wait for before triggering next on click...
-                    if (accumlatedHoldTime > holdRamp.Evaluate(userHoldTime))
+                    if (accumulatedHoldTime > holdRamp.Evaluate(userHoldTime))
                     {
-                        accumlatedHoldTime = 0f;
+                        accumulatedHoldTime = 0f;
                         OnClick.Invoke();
                         PlayClickSound();
                     }
@@ -197,16 +197,16 @@ namespace AdrianMiasik.Components.Core
             
         }
 
-        public void OpenURL(string url)
+        public void OpenURL(string _url)
         {
 #if ENABLE_WINMD_SUPPORT
             UnityEngine.WSA.Launcher.LaunchUri(url, true);
 #else
-            Application.OpenURL(url);
+            Application.OpenURL(_url);
 #endif
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void OnPointerExit(PointerEventData _eventData)
         {
             isUserHolding = false;
         }

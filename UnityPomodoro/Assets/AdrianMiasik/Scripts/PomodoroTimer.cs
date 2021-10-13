@@ -3,26 +3,18 @@ using System.Collections.Generic;
 using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-#if ENABLE_WINMD_SUPPORT
-using UnityEngine.WSA;
-#endif
 
 namespace AdrianMiasik
 {
-    public class PomodoroTimer : MonoBehaviour
+    public class PomodoroTimer : MonoBehaviour, IColorHook
     {
-        // Colors
-        public static Color colorWork = new Color(0.05f, 0.47f, 0.95f); // or pause
-        public static Color colorRelax = new Color(1f, 0.83f, 0.23f);
-        public static Color colorRunning = new Color(0.35f, 0.89f, 0.4f);
-        public static Color colorComplete = new Color(0.97f, 0.15f, 0.15f);
-        public static Color colorDeselected = new Color(0.91f, 0.91f, 0.91f);
+        [SerializeField] private Theme theme;
 
         // TODO: Support more timer digit formats
         public enum Digits
@@ -47,16 +39,20 @@ namespace AdrianMiasik
 
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
-        [SerializeField] private GameObject infoContainer; // info content
+        [SerializeField] private InformationPanel infoContainer; // info content
         [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
-
+        private bool isInfoPageOpen;
+        
         [Header("Background")] 
-        [SerializeField] private Selectable background; // Used to pull select focus
+        [SerializeField] private Background background; // Used to pull select focus
 
         [Header("Digits")]
         [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
+
+        [Header("Separators")] 
+        [SerializeField] private List<TMP_Text> separators = new List<TMP_Text>();
 
         [Header("Text")] 
         [SerializeField] private TextMeshProUGUI text;
@@ -68,31 +64,30 @@ namespace AdrianMiasik
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         [SerializeField] private CreditsBubble creditsBubble;
+        [SerializeField] private BooleanSlider themeSlider;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
 
         [Header("Ring")] 
         [SerializeField] private Image ring;
+        [SerializeField] private Image ringBackground;
 
         [Header("Completion")]
         [SerializeField] private Animation completion; // Wrap mode doesn't matter
         [SerializeField] private AnimationCurve completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
         public UnityEvent OnRingPulse;
+        public UnityEvent OnTimerCompletion;
         
-        [Header("Data")]
-        [SerializeField] private int hours = 0;
+        [Header("Work Data")]
+        [SerializeField] private int hours;
         [SerializeField] private int minutes = 25;
-        [SerializeField] private int seconds = 0;
+        [SerializeField] private int seconds;
 
         [Header("Break Data")]
-        [SerializeField] private bool _isOnBreak;
+        [SerializeField] private bool isOnBreak;
         [SerializeField] private int breakHours;
         [SerializeField] private int breakMinutes = 5;
         [SerializeField] private int breakSeconds;
-
-        // UWP
-        [Header("Toast")] 
-        [SerializeField] private TextAsset xmlToast;
-
+        
         [Header("Hotkeys")] 
         [SerializeField] private HotkeyDetector hotkeyDetector;
 
@@ -100,32 +95,33 @@ namespace AdrianMiasik
         [SerializeField] private List<DoubleDigit> selectedDigits = new List<DoubleDigit>();
 
         // Time
-        private double _currentTime;
-        private float _totalTime; // In seconds
+        private double currentTime;
+        private float totalTime; // In seconds
 
         // Pause Fade Animation
         [Header("Fade Animation")] 
-        [SerializeField] float _fadeDuration = 0.25f;
-        [SerializeField] private float _pauseHoldDuration = 1f; // How long to wait between fade completions?
-        private bool _isFading;
-        private float _accumulatedFadeTime;
-        private float _fadeProgress;
-        private Color _startingColor;
-        private Color _endingColor;
-        private bool _isFadeComplete;
+        [SerializeField] private float fadeDuration = 0.1f;
+        [SerializeField] private float pauseHoldDuration = 0.75f; // How long to wait between fade completions?
+        private bool isFading;
+        private float accumulatedFadeTime;
+        private float fadeProgress;
+        private Color startingColor;
+        private Color endingColor;
+        private bool isFadeComplete;
 
         // Pulse Ring Animation
-        private float _accumulatedRingPulseTime;
+        private float accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
 
-        // Ring Shader Properties
+        // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
-
+        private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+        
         private void OnValidate()
         {
             // Prevent values from going over their limit
-            if (!_isOnBreak)
+            if (!isOnBreak)
             {
                 hours = Mathf.Clamp(hours, GetDigitMin(), GetDigitMax(Digits.HOURS));
                 minutes = Mathf.Clamp(minutes, GetDigitMin(), GetDigitMax(Digits.MINUTES));
@@ -139,54 +135,86 @@ namespace AdrianMiasik
             }
         }
 
-        private void Start()
+        private void OnApplicationFocus(bool _hasFocus)
         {
-            Initialize();
+            // Prevent application from making noise when not in focus
+            AudioListener.volume = !_hasFocus ? 0 : 1;
         }
 
+        private void Start()
+        {
+            // Single entry point
+            Initialize();
+        }
+        
+        /// <summary>
+        /// Setup view, calculate time, initialize components, transition in, and animate.
+        /// </summary>
         private void Initialize()
         {
             // Setup view
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
 
+            // TODO: Create digit format class
             // Initialize components - digits
-            TimeSpan ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
-            hourDigits.Initialize(Digits.HOURS, this, (int)ts.TotalHours);
-            minuteDigits.Initialize(Digits.MINUTES, this, ts.Minutes);
-            secondDigits.Initialize(Digits.SECONDS, this, ts.Seconds);
+            TimeSpan _ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
+            hourDigits.Initialize(Digits.HOURS, this, (int)_ts.TotalHours);
+            minuteDigits.Initialize(Digits.MINUTES, this, _ts.Minutes);
+            secondDigits.Initialize(Digits.SECONDS, this, _ts.Seconds);
 
             // Initialize components - buttons
-            infoToggle.Initialize(false);
+            creditsBubble.Initialize(this);
             rightButton.Initialize(this);
-            breakSlider.Initialize(false, colorDeselected, colorRelax);
-            creditsBubble.Initialize();
+            infoToggle.Initialize(false, theme);
+            breakSlider.Initialize(false, theme);
+            themeSlider.Initialize(false, theme);
 
             // Initialize components - misc
             hotkeyDetector.Initialize(this);
+            background.Initialize(theme);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
 
             // Calculate time
-            _currentTime = ts.TotalSeconds;
-            _totalTime = (float)ts.TotalSeconds;
+            currentTime = _ts.TotalSeconds;
+            totalTime = (float)_ts.TotalSeconds;
 
             // Transition to setup state
             SwitchState(States.SETUP);
 
             // Animate in
             PlaySpawnAnimation();
+            
+            // Setup theme
+            theme.RegisterColorHook(this);
+            if (theme.isLightModeOn)
+            {
+                themeSlider.Disable();
+            }
+            else
+            {
+                themeSlider.Enable();
+            }
+            
+            // Apply theme
+            theme.ApplyColorChanges();
         }
-
-        private void SwitchState(States desiredState)
+        
+        /// <summary>
+        /// Switches the timer to the provided state and handles all visual changes.
+        /// Basically handles our transitions between timer states. <see cref="PomodoroTimer.States"/>
+        /// </summary>
+        /// <param name="_desiredState">The state you want to transition to</param>
+        private void SwitchState(States _desiredState)
         {
-            state = desiredState;
+            state = _desiredState;
 
             // Update the registered timer elements
-            foreach (ITimerState element in timerElements)
+            foreach (ITimerState _element in timerElements)
             {
-                element.StateUpdate(state);
+                _element.StateUpdate(state, theme);
             }
 
             // Do transition logic
@@ -199,26 +227,17 @@ namespace AdrianMiasik
                     // Complete ring
                     ring.fillAmount = 1f;
                     ring.material.SetFloat(RingDiameter, 0.9f);
-                    if (!_isOnBreak)
-                    {
-                        text.text = "Set a work time";
-                        ring.material.SetColor(RingColor, colorWork);
-                    }
-                    else
-                    {
-                        text.text = "Set a break time";
-                        ring.material.SetColor(RingColor, colorRelax);
-                    }
+                    text.text = !isOnBreak ? "Set a work time" : "Set a break time";
 
                     // Show digits and hide completion label
                     digitContainer.gameObject.SetActive(true);
-                    SetDigitColor(Color.black);
-                    completion.gameObject.SetActive(false);
+                    GameObject _completionGO;
+                    (_completionGO = completion.gameObject).SetActive(false);
 
                     // Reset
-                    _isFading = false;
-                    _accumulatedRingPulseTime = 0;
-                    completion.gameObject.transform.localScale = Vector3.one;
+                    _completionGO.transform.localScale = Vector3.one;
+                    isFading = false;
+                    accumulatedRingPulseTime = 0;
 
                     ClearSelection();
 
@@ -230,9 +249,7 @@ namespace AdrianMiasik
 
                 case States.RUNNING:
                     text.text = "Running";
-                    ring.material.SetColor(RingColor, colorRunning);
-
-                    SetDigitColor(Color.black);
+                    
                     ClearSelection();
 
                     // Lock Editing
@@ -243,22 +260,7 @@ namespace AdrianMiasik
 
                 case States.PAUSED:
                     text.text = "Paused";
-                    if (!_isOnBreak)
-                    {
-                        ring.material.SetColor(RingColor, colorWork);
-                    }
-                    else
-                    {
-                        ring.material.SetColor(RingColor, colorRelax);
-                    }
-
-                    // Digit fade reset
-                    _accumulatedFadeTime = 0;
-                    _isFadeComplete = true;
-                    _isFading = true;
-                    _accumulatedFadeTime = 0f;
-                    _startingColor = Color.black;
-                    _endingColor = new Color(0.75f, 0.75f, 0.75f);
+                    ResetDigitFadeAnim();
                     break;
 
                 case States.COMPLETE:
@@ -267,7 +269,6 @@ namespace AdrianMiasik
 
                     // Complete ring
                     ring.fillAmount = 1f;
-                    ring.material.SetColor(RingColor, colorComplete);
 
                     // Hide digits and reveal completion label
                     spawnAnimation.Stop();
@@ -277,66 +278,91 @@ namespace AdrianMiasik
                     OnRingPulse.Invoke();
                     break;
             }
+            
+            ColorUpdate(theme);
         }
 
-        void OnApplicationFocus(bool hasFocus)
+        private void ResetDigitFadeAnim()
         {
-            if (!hasFocus)
+            accumulatedFadeTime = 0;
+            isFadeComplete = true;
+            isFading = true;
+            accumulatedFadeTime = 0f;
+        }
+        
+        // Unity Event
+        public void PlaySpawnAnimation()
+        {
+            spawnAnimation.Stop();
+            spawnAnimation.Play();
+        }
+
+        /// <summary>
+        /// Sets the color of our digits to the provided color. <see cref="_newColor"/>
+        /// </summary>
+        /// <param name="_newColor"></param>
+        private void SetDigitColor(Color _newColor)
+        {
+            hourDigits.SetTextColor(_newColor);
+            minuteDigits.SetTextColor(_newColor);
+            secondDigits.SetTextColor(_newColor);
+        }
+        
+        /// <summary>
+        /// Removes any digit selection, and selects the background by default.
+        /// </summary>
+        public void ClearSelection()
+        {
+            SetSelection(null);
+            background.Select();
+        }
+        
+        /// <summary>
+        /// Sets the selection to a single double digit and calculates text visibility based on new selection data.
+        /// If you'd like to select multiple digits, See AddSelection()
+        /// </summary>
+        /// <param name="_currentDigit"></param>
+        public void SetSelection(DoubleDigit _currentDigit)
+        {
+            foreach (DoubleDigit _digit in selectedDigits)
             {
-                AudioListener.volume = 0;
+                // Deselect previous digit selections
+                if (_digit != _currentDigit)
+                {
+                    _digit.Deselect();
+                }
+            }
+
+            selectedDigits.Clear();
+            if (_currentDigit != null)
+            {
+                selectedDigits.Add(_currentDigit);
+            }
+            
+            CalculateTextState();
+        }
+        
+        /// <summary>
+        /// Determines state text visibility depending on the selected digits and timer state.
+        /// </summary>
+        private void CalculateTextState()
+        {
+            // Hide/show state text
+            if (selectedDigits.Count <= 0)
+            {
+                if (state != States.COMPLETE)
+                {
+                    text.gameObject.SetActive(true);
+                }
             }
             else
             {
-                AudioListener.volume = 1;
+                text.gameObject.SetActive(false);
             }
         }
 
         private void Update()
         {
-            // Play / pause the timer
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ClearSelection();
-                foreach (DoubleDigit digit in selectedDigits)
-                {
-                    digit.Deselect();
-                    digit.Lock();
-                }
-                rightButtonClick.OnPointerClick(null);
-            }
-
-            // Restart timer
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-                {
-                    breakSlider.OnPointerClick(null);
-                }
-                else
-                {
-                    leftButtonClick.OnPointerClick(null);
-                }
-            }
-
-            // Tab between digits
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
-                Selectable selectable = selectedGameObject.GetComponent<Selectable>();
-
-                if (selectable != null && selectable.FindSelectableOnRight() != null 
-                                       && selectable.FindSelectableOnRight().gameObject != null)
-                {
-                    EventSystem.current.SetSelectedGameObject(selectable.FindSelectableOnRight().gameObject);
-                }
-            }
-
-            // Clear digit selection
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                ClearSelection();
-            }
-
             switch (state)
             {
                 case States.PAUSED:
@@ -344,25 +370,21 @@ namespace AdrianMiasik
                     break;
 
                 case States.RUNNING:
-                    if (_currentTime > 0)
+                    if (currentTime > 0)
                     {
                         // Decrement timer
-                        _currentTime -= Time.deltaTime;
+                        currentTime -= Time.deltaTime;
 
                         // Update visuals
-                        ring.fillAmount = (float)_currentTime / _totalTime;
-                        hourDigits.SetDigitsLabel((int)TimeSpan.FromSeconds(_currentTime).TotalHours);
-                        minuteDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Minutes);
-                        secondDigits.SetDigitsLabel(TimeSpan.FromSeconds(_currentTime).Seconds);
+                        ring.fillAmount = (float)currentTime / totalTime;
+                        hourDigits.SetDigitsLabel((int)TimeSpan.FromSeconds(currentTime).TotalHours);
+                        minuteDigits.SetDigitsLabel(TimeSpan.FromSeconds(currentTime).Minutes);
+                        secondDigits.SetDigitsLabel(TimeSpan.FromSeconds(currentTime).Seconds);
                     }
                     else
                     {
                         SwitchState(States.COMPLETE);
-
-#if ENABLE_WINMD_SUPPORT
-                        Toast toast = Toast.Create(xmlToast.text);
-                        toast.Show();
-#endif
+                        OnTimerCompletion?.Invoke();
                     }
 
                     break;
@@ -372,107 +394,53 @@ namespace AdrianMiasik
                     break;
             }
         }
-
-        public void Play()
-        {
-            SwitchState(States.RUNNING);
-        }
-
-        public void Pause()
-        {
-            SwitchState(States.PAUSED);
-        }
-
-        public void SwitchToBreakTimer()
-        {
-            _isOnBreak = true;
-            SwitchState(States.SETUP);
-            UpdateDigits();
-        }
-
-        public void SwitchToWorkTimer()
-        {
-            _isOnBreak = false;
-            SwitchState(States.SETUP);
-            UpdateDigits();
-        }
-
-        public void Restart(bool isCompleted)
-        {
-            if (isCompleted)
-            {
-                _isOnBreak = !_isOnBreak;
-            }
-
-            SwitchState(States.SETUP);
-            UpdateDigits();
-        }
-
-        private void UpdateDigits()
-        {
-            TimeSpan ts;
-            if (!_isOnBreak)
-            {
-                ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
-            }
-            else
-            {
-                ts = TimeSpan.FromHours(breakHours) + TimeSpan.FromMinutes(breakMinutes) +
-                     TimeSpan.FromSeconds(breakSeconds);
-            }
-
-            hourDigits.SetDigitsLabel((int)ts.TotalHours);
-            minuteDigits.SetDigitsLabel(ts.Minutes);
-            secondDigits.SetDigitsLabel(ts.Seconds);
-            _currentTime = ts.TotalSeconds;
-            _totalTime = (float)ts.TotalSeconds;
-        }
-
+        
+        /// <summary>
+        /// Animates our digits to flash on and off
+        /// </summary>
         private void AnimatePausedDigits()
         {
-            _accumulatedFadeTime += Time.deltaTime;
+            accumulatedFadeTime += Time.deltaTime;
 
-            if (_isFadeComplete)
+            if (isFadeComplete)
             {
-                if (_accumulatedFadeTime > _pauseHoldDuration)
+                if (accumulatedFadeTime > pauseHoldDuration)
                 {
-                    _isFadeComplete = false;
-                    _accumulatedFadeTime = 0;
+                    isFadeComplete = false;
+                    accumulatedFadeTime = 0;
                 }
             }
             else
             {
-                _fadeProgress = _accumulatedFadeTime / _fadeDuration;
+                fadeProgress = accumulatedFadeTime / fadeDuration;
 
-                if (_isFading)
-                {
-                    SetDigitColor(Color.Lerp(_startingColor, _endingColor, _fadeProgress));
-                }
-                else
-                {
-                    SetDigitColor(Color.Lerp(_endingColor, _startingColor, _fadeProgress));
-                }
+                SetDigitColor(isFading
+                    ? Color.Lerp(startingColor, endingColor, fadeProgress)
+                    : Color.Lerp(endingColor, startingColor, fadeProgress));
 
-                if (_fadeProgress >= 1)
+                if (fadeProgress >= 1)
                 {
                     // Flip state
-                    _isFading = !_isFading;
-                    _accumulatedFadeTime = 0f;
+                    isFading = !isFading;
+                    accumulatedFadeTime = 0f;
 
-                    _isFadeComplete = true;
+                    isFadeComplete = true;
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Animates our ring visuals to pulse
+        /// </summary>
         private void AnimateRingPulse()
         {
             // Calculate diameter
-            _accumulatedRingPulseTime += Time.deltaTime;
-            float ringDiameter = completeRingPulseDiameter.Evaluate(_accumulatedRingPulseTime);
+            accumulatedRingPulseTime += Time.deltaTime;
+            float _ringDiameter = completeRingPulseDiameter.Evaluate(accumulatedRingPulseTime);
 
             // Set diameter
-            ring.material.SetFloat(RingDiameter, ringDiameter);
-            completion.gameObject.transform.localScale = Vector3.one * ringDiameter;
+            ring.material.SetFloat(RingDiameter, _ringDiameter);
+            completion.gameObject.transform.localScale = Vector3.one * _ringDiameter;
 
             if (!hasRingPulseBeenInvoked)
             {
@@ -481,50 +449,222 @@ namespace AdrianMiasik
             }
 
             // Ignore wrap mode and replay completion animation from start
-            if (hasRingPulseBeenInvoked && _accumulatedRingPulseTime >
+            if (hasRingPulseBeenInvoked && accumulatedRingPulseTime >
                 completeRingPulseDiameter[completeRingPulseDiameter.length - 1].time)
             {
-                _accumulatedRingPulseTime = 0;
+                accumulatedRingPulseTime = 0;
                 hasRingPulseBeenInvoked = false;
             }
         }
-
-        public bool CanIncrementOne(Digits digits)
+        
+        /// <summary>
+        /// Calculates the new time value based on the timer mode it's in (_isOnBreak)
+        /// </summary>
+        private void UpdateDigits()
         {
-            if (GetDigitValue(digits) + 1 > GetDigitMax(digits))
+            TimeSpan _ts;
+            if (!isOnBreak)
             {
-                return false;
+                _ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
+            }
+            else
+            {
+                _ts = TimeSpan.FromHours(breakHours) + TimeSpan.FromMinutes(breakMinutes) +
+                     TimeSpan.FromSeconds(breakSeconds);
             }
 
-            return true;
+            hourDigits.SetDigitsLabel((int)_ts.TotalHours);
+            minuteDigits.SetDigitsLabel(_ts.Minutes);
+            secondDigits.SetDigitsLabel(_ts.Seconds);
+            currentTime = _ts.TotalSeconds;
+            totalTime = (float)_ts.TotalSeconds;
         }
 
-        public bool CanDecrementOne(Digits digits)
+        /// <summary>
+        /// Shows info, hides main content, and shows credits bubble
+        /// </summary>
+        public void ShowInfo()
         {
-            if (GetDigitValue(digits) - 1 < GetDigitMin())
+            // Hide main content, show info
+            contentContainer.gameObject.SetActive(false);
+            infoContainer.gameObject.SetActive(true);
+            isInfoPageOpen = true;
+            infoContainer.ColorUpdate(theme);
+
+            if (!creditsBubble.IsRunning())
             {
-                return false;
+                creditsBubble.Lock();
+                creditsBubble.FadeIn();   
+            }
+        }
+
+        /// <summary>
+        /// Shows main content, hides info, and hides credits bubble
+        /// </summary>
+        public void HideInfo()
+        {
+            // Hide info, show main content
+            infoContainer.gameObject.SetActive(false);
+            isInfoPageOpen = false;
+            contentContainer.gameObject.SetActive(true);
+            
+            creditsBubble.Unlock();
+            creditsBubble.FadeOut();
+        }
+        
+        public bool IsInfoPageOpen()
+        {
+            return isInfoPageOpen;
+        }
+        
+        /// <summary>
+        /// Transitions timer into States.RUNNING mode
+        /// </summary>
+        public void Play()
+        {
+            SwitchState(States.RUNNING);
+        }
+
+        /// <summary>
+        /// Transitions timer into States.PAUSED mode
+        /// </summary>
+        public void Pause()
+        {
+            SwitchState(States.PAUSED);
+        }
+
+        /// <summary>
+        /// Transitions timer into States.SETUP mode in break mode
+        /// </summary>
+        public void SwitchToBreakTimer()
+        {
+            isOnBreak = true;
+            SwitchState(States.SETUP);
+            UpdateDigits();
+        }
+
+        /// <summary>
+        /// Transitions timer into States.SETUP mode in work mode
+        /// </summary>
+        public void SwitchToWorkTimer()
+        {
+            isOnBreak = false;
+            SwitchState(States.SETUP);
+            UpdateDigits();
+        }
+
+        /// <summary>
+        /// Toggles the timer mode to it's opposite mode (break/work) and transitions timer into States.SETUP
+        /// </summary>
+        /// <param name="_isCompleted"></param>
+        public void Restart(bool _isCompleted)
+        {
+            if (_isCompleted)
+            {
+                isOnBreak = !isOnBreak;
             }
 
-            return true;
+            SwitchState(States.SETUP);
+            UpdateDigits();
+            
+            // Stop digit tick animation
+            hourDigits.ResetTextPosition();
+            minuteDigits.ResetTextPosition();
+            secondDigits.ResetTextPosition();
         }
-
-        private void SetDigitColor(Color newColor)
+        
+        /// <summary>
+        /// Increments the provided digit by one. (+1)
+        /// </summary>
+        /// <param name="_digits"></param>
+        public void IncrementOne(Digits _digits)
         {
-            hourDigits.SetTextColor(newColor);
-            minuteDigits.SetTextColor(newColor);
-            secondDigits.SetTextColor(newColor);
+            SetDigit(_digits, GetDigitValue(_digits) + 1);
         }
 
+        /// <summary>
+        /// Decrements the provided digit by one. (-1)
+        /// </summary>
+        /// <param name="_digits"></param>
+        public void DecrementOne(Digits _digits)
+        {
+            SetDigit(_digits, GetDigitValue(_digits) - 1);
+        }
+
+        /// <summary>
+        /// Activates the play/pause button to toggle the timer state (States.SETUP, etc...)
+        /// </summary>
+        public void TriggerPlayPause()
+        {
+            ClearSelection();
+            foreach (DoubleDigit _digit in selectedDigits)
+            {
+                _digit.Deselect();
+                _digit.Lock();
+            }
+            rightButtonClick.OnPointerClick(null);
+        }
+
+        /// <summary>
+        /// Activates the boolean slider to toggle between work/break
+        /// </summary>
+        public void TriggerTimerSwitch()
+        {
+            breakSlider.OnPointerClick(null);
+        }
+        
+        /// <summary>
+        /// Activates the restart button to trigger a restart
+        /// </summary>
+        public void TriggerTimerRestart()
+        {
+            leftButtonClick.OnPointerClick(null);
+        }
+
+        /// <summary>
+        /// Selects all the digits
+        /// </summary>
+        public void SelectAll()
+        {
+            // Only allow 'select all' to work when we are in setup state
+            if (state != States.SETUP)
+            {
+                return;
+            }
+            
+            ClearSelection();
+
+            AddSelection(hourDigits);
+            AddSelection(minuteDigits);
+            AddSelection(secondDigits);
+
+            foreach (DoubleDigit _digit in selectedDigits)
+            {
+                _digit.Highlight();
+            }
+            
+            // Since we are highlighting (instead of selecting), we bypass the text state logic hence we 
+            // invoke it again here.
+            CalculateTextState();
+        }
+
+        /// <summary>
+        /// Adds the provided digit to our selection list
+        /// </summary>
+        /// <param name="_digitToAddToSelection"></param>
+        private void AddSelection(DoubleDigit _digitToAddToSelection)
+        {
+            if (!selectedDigits.Contains(_digitToAddToSelection))
+            {
+                selectedDigits.Add(_digitToAddToSelection);
+            }
+        }
+        
         // Getters
-        public bool IsOnBreak()
+        
+        private int GetDigitMax(Digits _digits)
         {
-            return _isOnBreak;
-        }
-
-        private int GetDigitMax(Digits digits)
-        {
-            switch (digits)
+            switch (_digits)
             {
                 case Digits.HOURS:
                     return 99;
@@ -533,7 +673,7 @@ namespace AdrianMiasik
                 case Digits.SECONDS:
                     return 59;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(digits), digits, null);
+                    throw new ArgumentOutOfRangeException(nameof(_digits), _digits, null);
             }
         }
 
@@ -542,11 +682,11 @@ namespace AdrianMiasik
             return 0;
         }
 
-        public int GetDigitValue(Digits digits)
+        public int GetDigitValue(Digits _digits)
         {
-            if (!_isOnBreak)
+            if (!isOnBreak)
             {
-                switch (digits)
+                switch (_digits)
                 {
                     case Digits.HOURS:
                         return hours;
@@ -560,7 +700,7 @@ namespace AdrianMiasik
                 }
             }
 
-            switch (digits)
+            switch (_digits)
             {
                 case Digits.HOURS:
                     return breakHours;
@@ -580,118 +720,79 @@ namespace AdrianMiasik
                    minuteDigits.GetDigitsLabel() + ":" +
                    secondDigits.GetDigitsLabel();
         }
+        
+        public bool GetIsOnBreak()
+        {
+            return isOnBreak;
+        }
 
+        public Theme GetTheme()
+        {
+            return theme;
+        }
+        
         /// <summary>
-        /// Sets the value of the timer using the provided formatted string.
+        /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
         /// </summary>
-        /// <param name="formattedString">Expected format of ("00:25:00")</param>
-        public void SetTimerValue(string formattedString)
+        /// <param name="_digits"></param>
+        /// <returns></returns>
+        public bool CanIncrementOne(Digits _digits)
         {
-            List<string> sections = new List<string>();
-            string value = String.Empty;
-
-            // Determine how many sections there are
-            for (int i = 0; i < formattedString.Length; i++)
+            if (GetDigitValue(_digits) + 1 > GetDigitMax(_digits))
             {
-                // If this character is a separator...
-                if (formattedString[i].ToString() == ":")
-                {
-                    // Save section
-                    if (value != String.Empty)
-                    {
-                        sections.Add(value);
-                        value = string.Empty;
-                    }
-
-                    continue;
-                }
-
-                // Add to section
-                value += formattedString[i].ToString();
+                return false;
             }
 
-            // Last digit in string won't have a separator so we add the section in once the loop is complete
-            sections.Add(value);
+            return true;
+        }
 
-            // Compare sections with timer format
-            if (sections.Count != 3)
+        /// Returns True if you can subtract one to this digit without hitting it's floor, otherwise returns False.
+        public bool CanDecrementOne(Digits _digits)
+        {
+            if (GetDigitValue(_digits) - 1 < GetDigitMin())
             {
-                Debug.LogWarning("The provided string does not match the pomodoro timer layout");
-                return;
+                return false;
             }
 
-            // Set timer sections
-            for (int i = 0; i < sections.Count; i++)
+            return true;
+        }
+
+        // Setters
+        
+        /// <summary>
+        /// Sets the provided digit to it's provided value. (Will validate to make sure it's with bounds though)
+        /// </summary>
+        /// <param name="_digit"></param>
+        /// <param name="_newValue"></param>
+        private void SetDigit(Digits _digit, int _newValue)
+        {
+            if (!isOnBreak)
             {
-                switch (i)
-                {
-                    case 0:
-                        SetHours(sections[i]);
-                        break;
-                    case 1:
-                        SetMinutes(sections[i]);
-                        break;
-                    case 2:
-                        SetSeconds(sections[i]);
-                        break;
-                }
-            }
-        }
-
-        public void SetHours(string hours)
-        {
-            SetDigit(Digits.HOURS, string.IsNullOrEmpty(hours) ? 0 : int.Parse(hours));
-        }
-
-        public void SetMinutes(string minutes)
-        {
-            SetDigit(Digits.MINUTES, string.IsNullOrEmpty(minutes) ? 0 : int.Parse(minutes));
-        }
-
-        public void SetSeconds(string seconds)
-        {
-            SetDigit(Digits.SECONDS, string.IsNullOrEmpty(seconds) ? 0 : int.Parse(seconds));
-        }
-
-        public void IncrementOne(Digits digits)
-        {
-            SetDigit(digits, GetDigitValue(digits) + 1);
-        }
-
-        public void DecrementOne(Digits digits)
-        {
-            SetDigit(digits, GetDigitValue(digits) - 1);
-        }
-
-        private void SetDigit(Digits digit, int newValue)
-        {
-            if (!_isOnBreak)
-            {
-                switch (digit)
+                switch (_digit)
                 {
                     case Digits.HOURS:
-                        hours = newValue;
+                        hours = _newValue;
                         break;
                     case Digits.MINUTES:
-                        minutes = newValue;
+                        minutes = _newValue;
                         break;
                     case Digits.SECONDS:
-                        seconds = newValue;
+                        seconds = _newValue;
                         break;
                 }
             }
             else
             {
-                switch (digit)
+                switch (_digit)
                 {
                     case Digits.HOURS:
-                        breakHours = newValue;
+                        breakHours = _newValue;
                         break;
                     case Digits.MINUTES:
-                        breakMinutes = newValue;
+                        breakMinutes = _newValue;
                         break;
                     case Digits.SECONDS:
-                        breakSeconds = newValue;
+                        breakSeconds = _newValue;
                         break;
                 }
             }
@@ -699,112 +800,167 @@ namespace AdrianMiasik
             OnValidate();
             UpdateDigits();
         }
-
-        public void SelectAll()
-        {
-            ClearSelection();
-
-            AddSelection(hourDigits);
-            AddSelection(minuteDigits);
-            AddSelection(secondDigits);
-
-            foreach (DoubleDigit digit in selectedDigits)
-            {
-                digit.Highlight();
-            }
-            
-            // Since we are highlighting (instead of selecting), we bypass the text state logic hence we 
-            // invoke it again here.
-            CalculateTextState();
-        }
-
-        public void AddSelection(DoubleDigit digitToAddToSelection)
-        {
-            if (!selectedDigits.Contains(digitToAddToSelection))
-            {
-                selectedDigits.Add(digitToAddToSelection);
-            }
-        }
-
-        public void RemoveSelection(DoubleDigit digitToRemoveFromSelection)
-        {
-            if (selectedDigits.Contains(digitToRemoveFromSelection))
-            {
-                selectedDigits.Remove(digitToRemoveFromSelection);
-            }
-        }
-
-        private void CalculateTextState()
-        {
-            // Hide/show state text
-            if (selectedDigits.Count <= 0)
-            {
-                if (state != States.COMPLETE)
-                {
-                    text.gameObject.SetActive(true);
-                }
-            }
-            else
-            {
-                text.gameObject.SetActive(false);
-            }
-        }
-
+        
         /// <summary>
-        /// Sets the selection to a single double digit.
-        /// If you'd like to select multiple digits, See AddSelection()
+        /// Sets the value of the timer using the provided formatted string.
         /// </summary>
-        /// <param name="currentDigit"></param>
-        public void SetSelection(DoubleDigit currentDigit)
+        /// <param name="_formattedString">Expected format of ("00:25:00")</param>
+        public void SetTimerValue(string _formattedString)
         {
-            foreach (DoubleDigit digit in selectedDigits)
+            // Only allow 'Set Timer Value' to work when we are in the setup state
+            if (state != States.SETUP)
             {
-                // Deselect previous digit selections
-                if (digit != currentDigit)
+                return;
+            }
+            
+            List<string> _sections = new List<string>();
+            string _value = String.Empty;
+
+            // Determine how many sections there are
+            // ReSharper disable once InconsistentNaming
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (int i = 0; i < _formattedString.Length; i++)
+            {
+                // If this character is a separator...
+                if (_formattedString[i].ToString() == ":")
                 {
-                    digit.Deselect();
+                    // Save section
+                    if (_value != String.Empty)
+                    {
+                        _sections.Add(_value);
+                        _value = string.Empty;
+                    }
+
+                    continue;
+                }
+
+                // Add to section
+                _value += _formattedString[i].ToString();
+            }
+
+            // Last digit in string won't have a separator so we add the section in once the loop is complete
+            _sections.Add(_value);
+
+            // Compare sections with timer format
+            if (_sections.Count != 3) // TODO: Support more digit formats
+            {
+                Debug.LogWarning("The provided string does not match the pomodoro timer layout");
+                return;
+            }
+
+            // Set timer sections
+            // ReSharper disable once InconsistentNaming
+            for (int i = 0; i < _sections.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        SetHours(_sections[i]);
+                        break;
+                    case 1:
+                        SetMinutes(_sections[i]);
+                        break;
+                    case 2:
+                        SetSeconds(_sections[i]);
+                        break;
                 }
             }
+        }
 
-            selectedDigits.Clear();
-            if (currentDigit != null)
+        public void SetHours(string _hours)
+        {
+            SetDigit(Digits.HOURS, string.IsNullOrEmpty(_hours) ? 0 : int.Parse(_hours));
+        }
+
+        public void SetMinutes(string _minutes)
+        {
+            SetDigit(Digits.MINUTES, string.IsNullOrEmpty(_minutes) ? 0 : int.Parse(_minutes));
+        }
+
+        public void SetSeconds(string _seconds)
+        {
+            SetDigit(Digits.SECONDS, string.IsNullOrEmpty(_seconds) ? 0 : int.Parse(_seconds));
+        }
+        
+        public void ColorUpdate(Theme _theme)
+        {
+            // TODO: check if info page is visible
+            infoContainer.ColorUpdate(_theme);
+
+           ColorScheme _currentColors = _theme.GetCurrentColorScheme();
+            
+            // State text
+            text.color = _currentColors.backgroundHighlight;
+            
+            // Ring background
+            ringBackground.material.SetColor(RingColor, _theme.GetCurrentColorScheme().backgroundHighlight);
+
+            // Left Button Background
+            Image _leftContainerTarget = leftButtonClick.containerTarget.GetComponent<Image>();
+            if (_leftContainerTarget != null)
             {
-                selectedDigits.Add(currentDigit);
+                _leftContainerTarget.material.SetColor(CircleColor, _theme.GetCurrentColorScheme().backgroundHighlight);
             }
             
-            CalculateTextState();
-        }
-
-        public void ClearSelection()
-        {
-            SetSelection(null);
-            background.Select();
-        }
-
-        public void ShowInfo()
-        {
-            // Hide main content, show info
-            contentContainer.gameObject.SetActive(false);
-            infoContainer.gameObject.SetActive(true);
+            // Left Button Icon
+            SVGImage _leftVisibilityTarget = leftButtonClick.visibilityTarget.GetComponent<SVGImage>();
+            if (_leftVisibilityTarget != null)
+            {
+                _leftVisibilityTarget.color = _currentColors.foreground;
+            }
             
-            creditsBubble.Lock();
-            creditsBubble.FadeIn();
-        }
-
-        public void HideInfo()
-        {
-            // Hide info, show main content
-            infoContainer.gameObject.SetActive(false);
-            contentContainer.gameObject.SetActive(true);
+            // Right Button Background
+            Image _rightContainerTarget = rightButtonClick.containerTarget.GetComponent<Image>();
+            if (_rightContainerTarget != null)
+            {
+                _rightContainerTarget.material.SetColor(CircleColor, _currentColors.backgroundHighlight);
+            }
             
-            creditsBubble.Unlock();
-            creditsBubble.FadeOut();
-        }
+            // Paused Digits
+            startingColor = theme.GetCurrentColorScheme().foreground;
+            endingColor = theme.GetCurrentColorScheme().backgroundHighlight;
+            
+            // Separators
+            foreach (TMP_Text _separator in separators)
+            {
+                _separator.color = _currentColors.foreground;
+            }
+            
+            // Digits
+            SetDigitColor(_currentColors.foreground);
+            
+            // Reset paused digit anim
+            ResetDigitFadeAnim();
 
-        public void PlaySpawnAnimation()
-        {
-            spawnAnimation.Stop();
-            spawnAnimation.Play();
+            switch (state)
+            {
+                case States.SETUP:
+                    // Ring
+                    ring.material.SetColor(RingColor,
+                        !isOnBreak ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
+
+                    break;
+                
+                case States.RUNNING:
+                    // Ring
+                    ring.material.SetColor(RingColor, _theme.GetCurrentColorScheme().running);
+
+                    break;
+                
+                case States.PAUSED:
+                    // Ring
+                    ring.material.SetColor(RingColor, 
+                        !isOnBreak ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
+                    break;
+                
+                case States.COMPLETE:
+                    // Ring
+                    ring.material.SetColor(RingColor, _theme.GetCurrentColorScheme().complete);
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

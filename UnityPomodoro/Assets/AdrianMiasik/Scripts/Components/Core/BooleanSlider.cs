@@ -1,13 +1,17 @@
+using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
-    public class BooleanSlider : MonoBehaviour, IPointerClickHandler
+    public class BooleanSlider : MonoBehaviour, IPointerClickHandler, IColorHook
     {
-        [SerializeField] private SVGImage background;
+        [SerializeField] public SVGImage background;
+        [SerializeField] private Image dot;
         [SerializeField] private new Animation animation;
 
         [SerializeField] private AnimationClip leftToRight;
@@ -16,20 +20,20 @@ namespace AdrianMiasik.Components.Core
         public UnityEvent OnSetToTrueClick; // clicking a disabled boolean
         public UnityEvent OnSetToFalseClick; // clicking on an enabled boolean
         public UnityEvent OnClick;
+        
+        // Shader Property
+        private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Cache
-        private bool state = false;
+        private bool state;
         private Color trueColor;
         private Color falseColor;
 
-        public void Initialize(bool state, Color falseColor, Color trueColor)
+        public void Initialize(bool _state, Theme _theme)
         {
-            this.state = state;
-            this.falseColor = falseColor;
-            this.trueColor = trueColor;
-
-            // Set background color to match state
-            background.color = state ? trueColor : falseColor;
+            state = _state;
+            _theme.RegisterColorHook(this);
+            ColorUpdate(_theme);
         }
         
         /// <summary>
@@ -43,7 +47,7 @@ namespace AdrianMiasik.Components.Core
             OnPointerClick(null);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData _eventData)
         {
             // Flip state
             state = !state;
@@ -52,7 +56,7 @@ namespace AdrianMiasik.Components.Core
             OnClick.Invoke();
         }
         
-        private void OnStateChanged(bool invokeEvents = false)
+        private void OnStateChanged(bool _invokeEvents = false)
         {
             if (state)
             {
@@ -60,7 +64,7 @@ namespace AdrianMiasik.Components.Core
                 animation.clip = leftToRight;
                 background.color = trueColor;
 
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToTrueClick.Invoke();
                 }
@@ -71,7 +75,7 @@ namespace AdrianMiasik.Components.Core
                 animation.clip = rightToLeft;
                 background.color = falseColor;
 
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToFalseClick.Invoke();
                 }
@@ -84,7 +88,7 @@ namespace AdrianMiasik.Components.Core
         /// Changes the visibility of the boolean slider to the OFF position (left).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        private void Disable()
+        public void Disable()
         {
             state = false;
             OnStateChanged();
@@ -94,10 +98,19 @@ namespace AdrianMiasik.Components.Core
         /// Changes the visibility of the boolean slider to the ON position (right).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        private void Enable()
+        public void Enable()
         {
             state = true;
             OnStateChanged();
+        }
+        
+        public void ColorUpdate(Theme _theme)
+        {
+            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
+            falseColor = _currentColors.backgroundHighlight;
+            trueColor = _currentColors.modeTwo;
+            background.color = state ? trueColor : falseColor;
+            dot.material.SetColor(CircleColor, _currentColors.background);
         }
     }
 }

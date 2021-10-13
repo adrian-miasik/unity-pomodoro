@@ -1,12 +1,13 @@
 using System;
 using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace AdrianMiasik.Components
 {
-    public class RightButton : MonoBehaviour, ITimerState
+    public class RightButton : MonoBehaviour, ITimerState, IColorHook
     {
         [Header("References")] 
         [SerializeField] private SVGImage icon;
@@ -26,9 +27,10 @@ namespace AdrianMiasik.Components
         // Cache
         private PomodoroTimer timer;
 
-        public void Initialize(PomodoroTimer timer)
+        public void Initialize(PomodoroTimer _timer)
         {
-            this.timer = timer;
+            timer = _timer;
+            _timer.GetTheme().RegisterColorHook(this);
         }
         
         public void OnClick()
@@ -54,45 +56,54 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public void StateUpdate(PomodoroTimer.States state)
+        public void StateUpdate(PomodoroTimer.States _state, Theme _theme)
         {
             icon.transform.localScale = Vector3.one * 0.42f;
             icon.rectTransform.pivot = new Vector2(0.5f, icon.rectTransform.pivot.y);
             icon.rectTransform.anchoredPosition = Vector2.zero;
             
-            switch (state)
+            switch (_state)
             {
                 case PomodoroTimer.States.SETUP:
                     icon.sprite = setup;
-                    icon.color = PomodoroTimer.colorRunning;
                     icon.rectTransform.pivot = new Vector2(0.6f, icon.rectTransform.pivot.y);
                     icon.rectTransform.anchoredPosition = Vector2.zero;
                     break;
                 
                 case PomodoroTimer.States.RUNNING:
                     icon.sprite = running;
-                    icon.color = PomodoroTimer.colorWork;
                     break;
                 
                 case PomodoroTimer.States.PAUSED:
                     icon.sprite = setup;
-                    icon.color = PomodoroTimer.colorRunning;
                     icon.rectTransform.pivot = new Vector2(0.6f, icon.rectTransform.pivot.y);
                     icon.rectTransform.anchoredPosition = Vector2.zero;
                     break;
                 
                 case PomodoroTimer.States.COMPLETE:
                     icon.transform.localScale = Vector3.one * 0.55f;                    
-                    if (timer.IsOnBreak())
-                    {
-                        icon.sprite = breakComplete;
-                        icon.color = PomodoroTimer.colorWork;
-                    }
-                    else
-                    {
-                        icon.sprite = complete;
-                        icon.color = PomodoroTimer.colorRelax;
-                    }
+                    icon.sprite = timer.GetIsOnBreak() ? breakComplete : complete;
+                    break;
+            }
+            
+            ColorUpdate(_theme);
+        }
+
+        public void ColorUpdate(Theme _theme)
+        {
+            switch (timer.state)
+            {
+                case PomodoroTimer.States.SETUP:
+                    icon.color = _theme.GetCurrentColorScheme().running;
+                    break;
+                case PomodoroTimer.States.RUNNING:
+                    icon.color = _theme.GetCurrentColorScheme().modeOne;
+                    break;
+                case PomodoroTimer.States.PAUSED:
+                    icon.color = _theme.GetCurrentColorScheme().running;
+                    break;
+                case PomodoroTimer.States.COMPLETE:
+                    icon.color = timer.GetIsOnBreak() ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo;
                     break;
             }
         }

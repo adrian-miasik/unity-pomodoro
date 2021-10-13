@@ -1,3 +1,5 @@
+using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,40 +7,41 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
-    public class BooleanToggle : Toggle
+    public class BooleanToggle : Toggle, IColorHook
     {
         public SVGImage icon;
         
         // False / Off
         public Sprite falseSprite;
-        public Color falseColor;
         public float falseZRotation;
         
         // True / On
         public Sprite trueSprite;
-        public Color trueColor;
         public float trueZRotation;
         
         // Unity Events
         public UnityEvent OnSetToTrueClick;
         public UnityEvent OnSetToFalseClick;
 
-        public void Initialize(bool isToggled, bool invokeEvents = false)
-        {
-            isOn = isToggled;
+        private Theme theme;
 
-            UpdateToggle(invokeEvents);
+        public void Initialize(bool _isOn, Theme _theme, bool _invokeEvents = false)
+        {
+            isOn = _isOn;
+            theme = _theme;
+            
+            _theme.RegisterColorHook(this);
+            UpdateToggle(_invokeEvents);
         }
 
         // Unity Event
-        public void UpdateToggle(bool invokeEvents)
+        public void UpdateToggle(bool _invokeEvents)
         {
             if (isOn)
             {
                 icon.sprite = trueSprite;
-                icon.color = trueColor;
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,trueZRotation));
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToTrueClick.Invoke();
                 }
@@ -46,12 +49,26 @@ namespace AdrianMiasik.Components.Core
             else
             {
                 icon.sprite = falseSprite;
-                icon.color = falseColor;
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,falseZRotation));
-                if (invokeEvents)
+                if (_invokeEvents)
                 {
                     OnSetToFalseClick.Invoke();
                 }
+            }
+            
+            ColorUpdate(theme);
+        }
+
+        public void ColorUpdate(Theme _theme)
+        {
+            switch (isOn)
+            {
+                case true:
+                    icon.color = _theme.GetCurrentColorScheme().close;
+                    break;
+                case false:
+                    icon.color = _theme.GetCurrentColorScheme().backgroundHighlight;
+                    break;
             }
         }
     }
