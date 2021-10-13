@@ -75,6 +75,12 @@ namespace AdrianMiasik.Components
                 }
             }
             
+            // Quick switch
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                timer.TriggerTimerSwitch();
+            }
+
             // Select All
             if (IsUserSelectingAll())
             {
