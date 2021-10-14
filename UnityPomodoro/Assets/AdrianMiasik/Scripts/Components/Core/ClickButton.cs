@@ -200,7 +200,7 @@ namespace AdrianMiasik.Components.Core
         public void OpenURL(string _url)
         {
 #if ENABLE_WINMD_SUPPORT
-            UnityEngine.WSA.Launcher.LaunchUri(url, true);
+            UnityEngine.WSA.Launcher.LaunchUri(_url, true);
 #else
             Application.OpenURL(_url);
 #endif
