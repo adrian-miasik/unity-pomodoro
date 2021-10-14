@@ -485,6 +485,20 @@ namespace AdrianMiasik
         /// </summary>
         public void ShowInfo()
         {
+            // Prevent tick animations from pausing when switching to info page
+            if (hourDigits.IsTickAnimationPlaying())
+            {
+                hourDigits.ResetTextPosition();
+            }
+            if (minuteDigits.IsTickAnimationPlaying())
+            {
+                minuteDigits.ResetTextPosition();
+            }
+            if (secondDigits.IsTickAnimationPlaying())
+            {
+                secondDigits.ResetTextPosition();
+            }
+            
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.gameObject.SetActive(true);

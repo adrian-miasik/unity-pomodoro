@@ -203,6 +203,11 @@ namespace AdrianMiasik.Components
             tick.Play();
         }
 
+        public bool IsTickAnimationPlaying()
+        {
+            return tick.isPlaying;
+        }
+
         public void ResetTextPosition()
         {
             input.textComponent.rectTransform.anchorMin = Vector2.zero;
