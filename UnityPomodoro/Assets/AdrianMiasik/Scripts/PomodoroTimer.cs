@@ -109,9 +109,14 @@ namespace AdrianMiasik
         private Color endingColor;
         private bool isFadeComplete;
 
-        // Pulse Ring Animation
+        // Pulse Ring Complete Animation
         private float accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
+        
+        // Pulse Tick Ring Animation
+        private float cachedSeconds;
+        private bool isRingTickAnimating;
+        [SerializeField] private AnimationCurve ringTickWidth;
 
         // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -162,6 +167,7 @@ namespace AdrianMiasik
             hourDigits.Initialize(Digits.HOURS, this, (int)_ts.TotalHours);
             minuteDigits.Initialize(Digits.MINUTES, this, _ts.Minutes);
             secondDigits.Initialize(Digits.SECONDS, this, _ts.Seconds);
+            cachedSeconds = _ts.Seconds;
 
             // Initialize components - buttons
             creditsBubble.Initialize(this);
@@ -375,11 +381,24 @@ namespace AdrianMiasik
                         // Decrement timer
                         currentTime -= Time.deltaTime;
 
+                        if (cachedSeconds != TimeSpan.FromSeconds(currentTime).Seconds)
+                        {
+                            isRingTickAnimating = true;
+                        }
+
+                        if (isRingTickAnimating)
+                        {
+                            accumulatedRingPulseTime += Time.deltaTime;
+                            ring.material.SetFloat(RingDiameter, ringTickWidth.Evaluate(accumulatedRingPulseTime));
+                        }
+
                         // Update visuals
                         ring.fillAmount = (float)currentTime / totalTime;
                         hourDigits.SetDigitsLabel((int)TimeSpan.FromSeconds(currentTime).TotalHours);
                         minuteDigits.SetDigitsLabel(TimeSpan.FromSeconds(currentTime).Minutes);
                         secondDigits.SetDigitsLabel(TimeSpan.FromSeconds(currentTime).Seconds);
+
+                        cachedSeconds = TimeSpan.FromSeconds(currentTime).Seconds;
                     }
                     else
                     {

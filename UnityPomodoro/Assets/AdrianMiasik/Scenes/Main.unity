@@ -430,7 +430,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.45
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2180,7 +2180,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.45
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2314,7 +2314,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.3
+  m_fontSize: 38.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5171,6 +5171,30 @@ MonoBehaviour:
   selectedDigits: []
   fadeDuration: 0.1
   pauseHoldDuration: 0.75
+  ringTickWidth:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9
+      inSlope: 4.892026
+      outSlope: 4.892026
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.022193791
+    - serializedVersion: 3
+      time: 1
+      value: 0.9
+      inSlope: -0.002867563
+      outSlope: -0.002867563
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.20532233
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
 --- !u!82 &1601903657
 AudioSource:
   m_ObjectHideFlags: 0
