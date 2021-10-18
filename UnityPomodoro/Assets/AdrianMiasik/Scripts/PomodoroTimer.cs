@@ -655,6 +655,14 @@ namespace AdrianMiasik
         }
 
         /// <summary>
+        /// Activates the boolean slider to toggle between light/dark themes
+        /// </summary>
+        public void TriggerThemeSwitch()
+        {
+            themeSlider.OnPointerClick(null);
+        }
+
+        /// <summary>
         /// Selects all the digits
         /// </summary>
         public void SelectAll()

@@ -42,6 +42,12 @@ namespace AdrianMiasik.Components
             {
                 timer.TriggerTimerSwitch();
             }
+            
+            // Theme switch
+            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                timer.TriggerThemeSwitch();
+            }
 
             // Clear digit selection
             if (Input.GetKeyDown(KeyCode.Escape))
