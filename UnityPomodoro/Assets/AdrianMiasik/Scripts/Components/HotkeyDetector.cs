@@ -36,6 +36,12 @@ namespace AdrianMiasik.Components
             {
                 timer.TriggerPlayPause();
             }
+            
+            // Quick switch
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                timer.TriggerTimerSwitch();
+            }
 
             // Clear digit selection
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -75,12 +81,6 @@ namespace AdrianMiasik.Components
                 }
             }
             
-            // Quick switch
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                timer.TriggerTimerSwitch();
-            }
-
             // Select All
             if (IsUserSelectingAll())
             {
