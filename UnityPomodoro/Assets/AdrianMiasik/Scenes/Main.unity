@@ -2557,10 +2557,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338343997, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -2701,22 +2697,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hours
       objectReference: {fileID: 0}
-    - target: {fileID: 2939933545557774699, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545557774699, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545557774699, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933546287668551, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_fontSize
-      value: 36.05
-      objectReference: {fileID: 0}
     - target: {fileID: 4942980707186579467, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2744,10 +2724,6 @@ PrefabInstance:
     - target: {fileID: 4942980707186579467, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6390431754232334622, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_PreferredWidth
-      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 8901165802977940779, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -4869,9 +4845,6 @@ MonoBehaviour:
   infoContainer: {fileID: 2138225466}
   background: {fileID: 407842496}
   digitFormat: {fileID: 1348329455}
-  hourDigits: {fileID: 1524052414}
-  minuteDigits: {fileID: 429705704}
-  secondDigits: {fileID: 2096418338}
   text: {fileID: 650676969}
   infoToggle: {fileID: 1617491758}
   leftButtonClick: {fileID: 74629570}
