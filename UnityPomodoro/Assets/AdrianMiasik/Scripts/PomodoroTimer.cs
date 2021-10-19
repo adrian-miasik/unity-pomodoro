@@ -15,15 +15,7 @@ namespace AdrianMiasik
     public class PomodoroTimer : MonoBehaviour, IColorHook
     {
         [SerializeField] private Theme theme;
-
-        // TODO: Support more timer digit formats
-        public enum Digits
-        {
-            HOURS,
-            MINUTES,
-            SECONDS
-        }
-
+        
         public enum States
         {
             SETUP,
@@ -47,12 +39,6 @@ namespace AdrianMiasik
 
         [Header("Digits")] 
         [SerializeField] private DigitFormat digitFormat;
-        [SerializeField] private DoubleDigit hourDigits;
-        [SerializeField] private DoubleDigit minuteDigits;
-        [SerializeField] private DoubleDigit secondDigits;
-
-        [Header("Separators")] 
-        [SerializeField] private List<TMP_Text> separators = new List<TMP_Text>();
 
         [Header("Text")] 
         [SerializeField] private TextMeshProUGUI text;
@@ -128,15 +114,15 @@ namespace AdrianMiasik
             // Prevent values from going over their limit
             if (!isOnBreak)
             {
-                hours = Mathf.Clamp(hours, GetDigitMin(), GetDigitMax(Digits.HOURS));
-                minutes = Mathf.Clamp(minutes, GetDigitMin(), GetDigitMax(Digits.MINUTES));
-                seconds = Mathf.Clamp(seconds, GetDigitMin(), GetDigitMax(Digits.SECONDS));
+                hours = Mathf.Clamp(hours, digitFormat.GetDigitMin(), digitFormat.GetDigitMax(DigitFormat.Digits.HOURS));
+                minutes = Mathf.Clamp(minutes, digitFormat.GetDigitMin(), digitFormat.GetDigitMax(DigitFormat.Digits.MINUTES));
+                seconds = Mathf.Clamp(seconds, digitFormat.GetDigitMin(), digitFormat.GetDigitMax(DigitFormat.Digits.SECONDS));
             }
             else
             {
-                breakHours = Mathf.Clamp(breakHours, GetDigitMin(), GetDigitMax(Digits.HOURS));
-                breakMinutes = Mathf.Clamp(breakMinutes, GetDigitMin(), GetDigitMax(Digits.MINUTES));
-                breakSeconds = Mathf.Clamp(breakSeconds, GetDigitMin(), GetDigitMax(Digits.SECONDS));
+                breakHours = Mathf.Clamp(breakHours, digitFormat.GetDigitMin(), digitFormat.GetDigitMax(DigitFormat.Digits.HOURS));
+                breakMinutes = Mathf.Clamp(breakMinutes, digitFormat.GetDigitMin(), digitFormat.GetDigitMax(DigitFormat.Digits.MINUTES));
+                breakSeconds = Mathf.Clamp(breakSeconds, digitFormat.GetDigitMin(), digitFormat.GetDigitMax(DigitFormat.Digits.SECONDS));
             }
         }
 
@@ -161,32 +147,30 @@ namespace AdrianMiasik
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
 
-            // TODO: Create digit format class
-            // Initialize components - digits
+            // Calculate time
             TimeSpan _ts = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes) + TimeSpan.FromSeconds(seconds);
-            hourDigits.Initialize(Digits.HOURS, this, (int)_ts.TotalHours);
-            minuteDigits.Initialize(Digits.MINUTES, this, _ts.Minutes);
-            secondDigits.Initialize(Digits.SECONDS, this, _ts.Seconds);
             cachedSeconds = _ts.Seconds;
+            currentTime = _ts.TotalSeconds;
+            totalTime = (float)_ts.TotalSeconds;
+            
+            // Initialize digits
+            digitFormat.Initialize(this, theme);
+            digitFormat.SetFormatTime(_ts);
 
-            // Initialize components - buttons
+            // Initialize buttons
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);
             infoToggle.Initialize(false, theme);
             breakSlider.Initialize(false, theme);
             themeSlider.Initialize(false, theme);
 
-            // Initialize components - misc
+            // Initialize misc
             hotkeyDetector.Initialize(this);
             background.Initialize(theme);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
-
-            // Calculate time
-            currentTime = _ts.TotalSeconds;
-            totalTime = (float)_ts.TotalSeconds;
-
+            
             // Transition to setup state
             SwitchState(States.SETUP);
 
@@ -246,11 +230,9 @@ namespace AdrianMiasik
                     accumulatedRingPulseTime = 0;
 
                     ClearSelection();
-
+                    
                     // Unlock editing
-                    hourDigits.Unlock();
-                    minuteDigits.Unlock();
-                    secondDigits.Unlock();
+                    digitFormat.Unlock();
                     break;
 
                 case States.RUNNING:
@@ -259,9 +241,7 @@ namespace AdrianMiasik
                     ClearSelection();
 
                     // Lock Editing
-                    hourDigits.Lock();
-                    minuteDigits.Lock();
-                    secondDigits.Lock();
+                    digitFormat.Lock();
                     break;
 
                 case States.PAUSED:
@@ -301,17 +281,6 @@ namespace AdrianMiasik
         {
             spawnAnimation.Stop();
             spawnAnimation.Play();
-        }
-
-        /// <summary>
-        /// Sets the color of our digits to the provided color. <see cref="_newColor"/>
-        /// </summary>
-        /// <param name="_newColor"></param>
-        private void SetDigitColor(Color _newColor)
-        {
-            hourDigits.SetTextColor(_newColor);
-            minuteDigits.SetTextColor(_newColor);
-            secondDigits.SetTextColor(_newColor);
         }
         
         /// <summary>
@@ -394,9 +363,7 @@ namespace AdrianMiasik
 
                         // Update visuals
                         ring.fillAmount = (float)currentTime / totalTime;
-                        hourDigits.SetDigitsLabel((int)TimeSpan.FromSeconds(currentTime).TotalHours);
-                        minuteDigits.SetDigitsLabel(TimeSpan.FromSeconds(currentTime).Minutes);
-                        secondDigits.SetDigitsLabel(TimeSpan.FromSeconds(currentTime).Seconds);
+                        digitFormat.SetFormatTime(TimeSpan.FromSeconds(currentTime));
 
                         cachedSeconds = TimeSpan.FromSeconds(currentTime).Seconds;
                     }
@@ -433,7 +400,7 @@ namespace AdrianMiasik
             {
                 fadeProgress = accumulatedFadeTime / fadeDuration;
 
-                SetDigitColor(isFading
+                digitFormat.SetDigitColor(isFading
                     ? Color.Lerp(startingColor, endingColor, fadeProgress)
                     : Color.Lerp(endingColor, startingColor, fadeProgress));
 
@@ -492,9 +459,8 @@ namespace AdrianMiasik
                      TimeSpan.FromSeconds(breakSeconds);
             }
 
-            hourDigits.SetDigitsLabel((int)_ts.TotalHours);
-            minuteDigits.SetDigitsLabel(_ts.Minutes);
-            secondDigits.SetDigitsLabel(_ts.Seconds);
+            digitFormat.SetFormatTime(_ts);
+            
             currentTime = _ts.TotalSeconds;
             totalTime = (float)_ts.TotalSeconds;
         }
@@ -505,18 +471,7 @@ namespace AdrianMiasik
         public void ShowInfo()
         {
             // Prevent tick animations from pausing when switching to info page
-            if (hourDigits.IsTickAnimationPlaying())
-            {
-                hourDigits.ResetTextPosition();
-            }
-            if (minuteDigits.IsTickAnimationPlaying())
-            {
-                minuteDigits.ResetTextPosition();
-            }
-            if (secondDigits.IsTickAnimationPlaying())
-            {
-                secondDigits.ResetTextPosition();
-            }
+            digitFormat.CorrectTickAnimVisuals();
             
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
@@ -601,16 +556,14 @@ namespace AdrianMiasik
             UpdateDigits();
             
             // Stop digit tick animation
-            hourDigits.ResetTextPosition();
-            minuteDigits.ResetTextPosition();
-            secondDigits.ResetTextPosition();
+            digitFormat.ResetTextPositions();
         }
         
         /// <summary>
         /// Increments the provided digit by one. (+1)
         /// </summary>
         /// <param name="_digits"></param>
-        public void IncrementOne(Digits _digits)
+        public void IncrementOne(DigitFormat.Digits _digits)
         {
             SetDigit(_digits, GetDigitValue(_digits) + 1);
         }
@@ -619,7 +572,7 @@ namespace AdrianMiasik
         /// Decrements the provided digit by one. (-1)
         /// </summary>
         /// <param name="_digits"></param>
-        public void DecrementOne(Digits _digits)
+        public void DecrementOne(DigitFormat.Digits _digits)
         {
             SetDigit(_digits, GetDigitValue(_digits) - 1);
         }
@@ -675,9 +628,10 @@ namespace AdrianMiasik
             
             ClearSelection();
 
-            AddSelection(hourDigits);
-            AddSelection(minuteDigits);
-            AddSelection(secondDigits);
+            foreach (DoubleDigit _digit in digitFormat.GetDigits())
+            {
+                AddSelection(_digit);
+            }
 
             foreach (DoubleDigit _digit in selectedDigits)
             {
@@ -703,37 +657,17 @@ namespace AdrianMiasik
         
         // Getters
         
-        private int GetDigitMax(Digits _digits)
-        {
-            switch (_digits)
-            {
-                case Digits.HOURS:
-                    return 99;
-                case Digits.MINUTES:
-                    return 59;
-                case Digits.SECONDS:
-                    return 59;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(_digits), _digits, null);
-            }
-        }
-
-        private int GetDigitMin()
-        {
-            return 0;
-        }
-
-        public int GetDigitValue(Digits _digits)
+        public int GetDigitValue(DigitFormat.Digits _digits)
         {
             if (!isOnBreak)
             {
                 switch (_digits)
                 {
-                    case Digits.HOURS:
+                    case DigitFormat.Digits.HOURS:
                         return hours;
-                    case Digits.MINUTES:
+                    case DigitFormat.Digits.MINUTES:
                         return minutes;
-                    case Digits.SECONDS:
+                    case DigitFormat.Digits.SECONDS:
                         return seconds;
                     default:
                         Debug.LogWarning("Digit value not supported");
@@ -743,11 +677,11 @@ namespace AdrianMiasik
 
             switch (_digits)
             {
-                case Digits.HOURS:
+                case DigitFormat.Digits.HOURS:
                     return breakHours;
-                case Digits.MINUTES:
+                case DigitFormat.Digits.MINUTES:
                     return breakMinutes;
-                case Digits.SECONDS:
+                case DigitFormat.Digits.SECONDS:
                     return breakSeconds;
                 default:
                     Debug.LogWarning("Digit value not supported");
@@ -757,9 +691,7 @@ namespace AdrianMiasik
 
         public string GetTimerString()
         {
-            return hourDigits.GetDigitsLabel() + ":" +
-                   minuteDigits.GetDigitsLabel() + ":" +
-                   secondDigits.GetDigitsLabel();
+            return digitFormat.GetTimerString();
         }
         
         public bool GetIsOnBreak()
@@ -777,9 +709,9 @@ namespace AdrianMiasik
         /// </summary>
         /// <param name="_digits"></param>
         /// <returns></returns>
-        public bool CanIncrementOne(Digits _digits)
+        public bool CanIncrementOne(DigitFormat.Digits _digits)
         {
-            if (GetDigitValue(_digits) + 1 > GetDigitMax(_digits))
+            if (GetDigitValue(_digits) + 1 > digitFormat.GetDigitMax(_digits))
             {
                 return false;
             }
@@ -788,9 +720,9 @@ namespace AdrianMiasik
         }
 
         /// Returns True if you can subtract one to this digit without hitting it's floor, otherwise returns False.
-        public bool CanDecrementOne(Digits _digits)
+        public bool CanDecrementOne(DigitFormat.Digits _digits)
         {
-            if (GetDigitValue(_digits) - 1 < GetDigitMin())
+            if (GetDigitValue(_digits) - 1 < digitFormat.GetDigitMin())
             {
                 return false;
             }
@@ -800,24 +732,25 @@ namespace AdrianMiasik
 
         // Setters
         
+        // TODO: Move to DigitFormat class
         /// <summary>
         /// Sets the provided digit to it's provided value. (Will validate to make sure it's with bounds though)
         /// </summary>
         /// <param name="_digit"></param>
         /// <param name="_newValue"></param>
-        private void SetDigit(Digits _digit, int _newValue)
+        public void SetDigit(DigitFormat.Digits _digit, int _newValue)
         {
             if (!isOnBreak)
             {
                 switch (_digit)
                 {
-                    case Digits.HOURS:
+                    case DigitFormat.Digits.HOURS:
                         hours = _newValue;
                         break;
-                    case Digits.MINUTES:
+                    case DigitFormat.Digits.MINUTES:
                         minutes = _newValue;
                         break;
-                    case Digits.SECONDS:
+                    case DigitFormat.Digits.SECONDS:
                         seconds = _newValue;
                         break;
                 }
@@ -826,22 +759,22 @@ namespace AdrianMiasik
             {
                 switch (_digit)
                 {
-                    case Digits.HOURS:
+                    case DigitFormat.Digits.HOURS:
                         breakHours = _newValue;
                         break;
-                    case Digits.MINUTES:
+                    case DigitFormat.Digits.MINUTES:
                         breakMinutes = _newValue;
                         break;
-                    case Digits.SECONDS:
+                    case DigitFormat.Digits.SECONDS:
                         breakSeconds = _newValue;
                         break;
                 }
             }
 
             OnValidate();
-            UpdateDigits();
         }
         
+        // TODO: Move to DigitFormat class
         /// <summary>
         /// Sets the value of the timer using the provided formatted string.
         /// </summary>
@@ -908,19 +841,22 @@ namespace AdrianMiasik
             }
         }
 
+        [Obsolete("Please use SetDigit() instead. This will be deprecated / removed in future releases.")]
         public void SetHours(string _hours)
         {
-            SetDigit(Digits.HOURS, string.IsNullOrEmpty(_hours) ? 0 : int.Parse(_hours));
+            SetDigit(DigitFormat.Digits.HOURS, string.IsNullOrEmpty(_hours) ? 0 : int.Parse(_hours));
         }
-
+        
+        [Obsolete("Please use SetDigit() instead. This will be deprecated / removed in future releases.")]
         public void SetMinutes(string _minutes)
         {
-            SetDigit(Digits.MINUTES, string.IsNullOrEmpty(_minutes) ? 0 : int.Parse(_minutes));
+            SetDigit(DigitFormat.Digits.MINUTES, string.IsNullOrEmpty(_minutes) ? 0 : int.Parse(_minutes));
         }
 
+        [Obsolete("Please use SetDigit() instead. This will be deprecated / removed in future releases.")]
         public void SetSeconds(string _seconds)
         {
-            SetDigit(Digits.SECONDS, string.IsNullOrEmpty(_seconds) ? 0 : int.Parse(_seconds));
+            SetDigit(DigitFormat.Digits.SECONDS, string.IsNullOrEmpty(_seconds) ? 0 : int.Parse(_seconds));
         }
         
         public void ColorUpdate(Theme _theme)
@@ -928,7 +864,7 @@ namespace AdrianMiasik
             // TODO: check if info page is visible
             infoContainer.ColorUpdate(_theme);
 
-           ColorScheme _currentColors = _theme.GetCurrentColorScheme();
+            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
             
             // State text
             text.color = _currentColors.backgroundHighlight;
@@ -960,15 +896,6 @@ namespace AdrianMiasik
             // Paused Digits
             startingColor = theme.GetCurrentColorScheme().foreground;
             endingColor = theme.GetCurrentColorScheme().backgroundHighlight;
-            
-            // Separators
-            foreach (TMP_Text _separator in separators)
-            {
-                _separator.color = _currentColors.foreground;
-            }
-            
-            // Digits
-            SetDigitColor(_currentColors.foreground);
             
             // Reset paused digit anim
             ResetDigitFadeAnim();

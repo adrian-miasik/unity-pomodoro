@@ -29,7 +29,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private Animation pulseWobble;
         [SerializeField] private Animation tick;
 
-        private PomodoroTimer.Digits digit;
+        private DigitFormat.Digits digit;
         private PomodoroTimer timer;
         private bool isInteractable;
         private bool isSelected;
@@ -61,7 +61,7 @@ namespace AdrianMiasik.Components
         public UnityEvent OnSelection;
         public UnityEvent OnDigitChange; // Invoked only when timer is running
 
-        public void Initialize(PomodoroTimer.Digits _digit, PomodoroTimer _timer, int _digits)
+        public void Initialize(DigitFormat.Digits _digit, PomodoroTimer _timer, int _digits)
         {
             digit = _digit;
             timer = _timer;
@@ -76,11 +76,21 @@ namespace AdrianMiasik.Components
 
             cachedTheme = _timer.GetTheme();
             cachedTheme.RegisterColorHook(this);
+            
+            UpdateVisuals(_digits);
+        }
 
+        private void UpdateVisuals(int _value)
+        {
             SetSquircleColor(color);
-            SetDigitsLabel(_digits);
+            SetDigitsLabel(_value);
             HideArrows();
             pulseWobble.Stop();
+        }
+
+        public DigitFormat.Digits GetDigit()
+        {
+            return digit;
         }
 
         private void Update()
@@ -109,7 +119,7 @@ namespace AdrianMiasik.Components
                 {
                     if (!input.isFocused)
                     {
-                        SetValue(digit, "0");
+                        SetValue(0);
                     }
                 }
                 
@@ -264,51 +274,16 @@ namespace AdrianMiasik.Components
         }
         
         // Unity Events
-        public void SetValue(PomodoroTimer.Digits _digit, string _value)
+        public void SetValue(int _value)
         {
-            switch (_digit)
-            {
-                case PomodoroTimer.Digits.HOURS:
-                    SetHours(_value);
-                    break;
-                case PomodoroTimer.Digits.MINUTES:
-                    SetMinutes(_value);
-                    break;
-                case PomodoroTimer.Digits.SECONDS:
-                    SetSeconds(_value);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(_digit), _digit, null);
-            }
+            if (timer == null)
+                return;
+            
+            timer.SetDigit(digit, string.IsNullOrEmpty(_value.ToString()) ? 0 : int.Parse(_value.ToString()));
+            UpdateArrows();
+            UpdateVisuals(_value);
         }
         
-        public void SetHours(string _hours)
-        {
-            if (timer == null) 
-                return;
-            
-            timer.SetHours(_hours);
-            UpdateArrows();
-        }
-
-        public void SetMinutes(string _minutes)
-        {
-            if (timer == null)
-                return;
-            
-            timer.SetMinutes(_minutes);
-            UpdateArrows();
-        }
-
-        public void SetSeconds(string _seconds)
-        {
-            if (timer == null)
-                return;
-            
-            timer.SetSeconds(_seconds);
-            UpdateArrows();
-        }
-
         public void IncrementOne()
         {
             if (timer == null) 
