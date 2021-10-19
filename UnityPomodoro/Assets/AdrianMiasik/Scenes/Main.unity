@@ -2314,7 +2314,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.8
+  m_fontSize: 35.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4638,6 +4638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1348329453}
   - component: {fileID: 1348329458}
+  - component: {fileID: 1348329455}
   - component: {fileID: 1348329454}
   - component: {fileID: 1348329457}
   m_Layer: 5
@@ -4697,6 +4698,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1348329455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348329452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4caac76617041798f46b268b7e2ecb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  format: 0
 --- !u!114 &1348329457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5069,8 +5083,8 @@ MonoBehaviour:
   spawnAnimation: {fileID: 1601903658}
   contentContainer: {fileID: 59348933}
   infoContainer: {fileID: 2138225466}
-  digitContainer: {fileID: 1348329452}
   background: {fileID: 407842496}
+  digitFormat: {fileID: 1348329455}
   hourDigits: {fileID: 1524052414}
   minuteDigits: {fileID: 429705704}
   secondDigits: {fileID: 2096418338}

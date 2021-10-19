@@ -40,13 +40,13 @@ namespace AdrianMiasik
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
         [SerializeField] private InformationPanel infoContainer; // info content
-        [SerializeField] private GameObject digitContainer; // Used to toggle digit visibility
         private bool isInfoPageOpen;
         
         [Header("Background")] 
         [SerializeField] private Background background; // Used to pull select focus
 
-        [Header("Digits")]
+        [Header("Digits")] 
+        [SerializeField] private DigitFormat digitFormat;
         [SerializeField] private DoubleDigit hourDigits;
         [SerializeField] private DoubleDigit minuteDigits;
         [SerializeField] private DoubleDigit secondDigits;
@@ -236,7 +236,7 @@ namespace AdrianMiasik
                     text.text = !isOnBreak ? "Set a work time" : "Set a break time";
 
                     // Show digits and hide completion label
-                    digitContainer.gameObject.SetActive(true);
+                    digitFormat.Show();
                     GameObject _completionGO;
                     (_completionGO = completion.gameObject).SetActive(false);
 
@@ -278,7 +278,7 @@ namespace AdrianMiasik
 
                     // Hide digits and reveal completion label
                     spawnAnimation.Stop();
-                    digitContainer.gameObject.SetActive(false);
+                    digitFormat.Hide();
                     completion.gameObject.SetActive(true);
 
                     OnRingPulse.Invoke();
