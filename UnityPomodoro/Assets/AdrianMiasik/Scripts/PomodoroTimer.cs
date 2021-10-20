@@ -177,6 +177,8 @@ namespace AdrianMiasik
             switch (state)
             {
                 case States.SETUP:
+                    digitFormat.SetDigitColor(theme.GetCurrentColorScheme().foreground);
+                    
                     // Show state text
                     text.gameObject.SetActive(true);
 
@@ -203,6 +205,7 @@ namespace AdrianMiasik
 
                 case States.RUNNING:
                     CalculateTimeValues();
+                    digitFormat.SetDigitColor(theme.GetCurrentColorScheme().foreground);
                     
                     text.text = "Running";
                     
