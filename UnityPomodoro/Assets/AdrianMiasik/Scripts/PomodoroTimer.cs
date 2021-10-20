@@ -89,6 +89,7 @@ namespace AdrianMiasik
         private bool hasRingPulseBeenInvoked;
         
         // Pulse Tick Ring Animation
+        private bool isRingTickAnimationEnabled = false;
         private float cachedSeconds;
         private bool isRingTickAnimating;
         [SerializeField] private AnimationCurve ringTickWidth;
@@ -321,23 +322,13 @@ namespace AdrianMiasik
                     {
                         // Decrement timer
                         currentTime -= Time.deltaTime;
-
-                        if (cachedSeconds != TimeSpan.FromSeconds(currentTime).Seconds)
-                        {
-                            isRingTickAnimating = true;
-                        }
-
-                        if (isRingTickAnimating)
-                        {
-                            accumulatedRingPulseTime += Time.deltaTime;
-                            ring.material.SetFloat(RingDiameter, ringTickWidth.Evaluate(accumulatedRingPulseTime));
-                        }
-
+                        
                         // Update visuals
                         ring.fillAmount = (float)currentTime / totalTime;
                         digitFormat.ShowFormatTime(TimeSpan.FromSeconds(currentTime));
-
-                        cachedSeconds = TimeSpan.FromSeconds(currentTime).Seconds;
+     
+                        AnimateRingTickPulse();
+        
                     }
                     else
                     {
@@ -352,7 +343,31 @@ namespace AdrianMiasik
                     break;
             }
         }
-        
+
+        /// <summary>
+        /// Animates our ring width to pulse with each second change
+        /// </summary>
+        private void AnimateRingTickPulse()
+        {
+            if (!isRingTickAnimationEnabled)
+            {
+                return;
+            }
+            
+            if (cachedSeconds != TimeSpan.FromSeconds(currentTime).Seconds)
+            {
+                isRingTickAnimating = true;
+            }
+
+            if (isRingTickAnimating)
+            {
+                accumulatedRingPulseTime += Time.deltaTime;
+                ring.material.SetFloat(RingDiameter, ringTickWidth.Evaluate(accumulatedRingPulseTime));
+            }
+                            
+            cachedSeconds = TimeSpan.FromSeconds(currentTime).Seconds;
+        }
+
         /// <summary>
         /// Animates our digits to flash on and off
         /// </summary>
