@@ -208,6 +208,12 @@ namespace AdrianMiasik.Components
         // Unity Event
         public void PlayTickAnimation()
         {
+            // Prevent milliseconds from animating on tick (due to how fast it ticks)
+            if (digit == DigitFormat.Digits.MILLISECONDS)
+            {
+                return;
+            }
+            
             tick.Stop();
             tick.Play();
         }
