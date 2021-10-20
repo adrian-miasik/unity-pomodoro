@@ -25,27 +25,54 @@ namespace AdrianMiasik.Components
             MM_SS,          // Simple
             SS              // Bare
         }
-
-        private PomodoroTimer timer;
         
+        // Current format
         [SerializeField] private SupportedFormats format;
-        private KeyValuePair<string, int> doubleDigitSet;
 
-        [Tooltip("This is the digit prefab we will be cloning from.")]
+        [Header("Source Prefabs")]
         [SerializeField] private DoubleDigit digitSource;
-        
-        [Tooltip("This is the separator prefab we will be cloning from.")]
         [SerializeField] private DigitSeparator separatorSource;
-        
+
+        [Header("Work Data")]
+        [SerializeField] private int[] workTime = new int[5]{0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
+
+        [Header("Break Data")]
+        [SerializeField] private bool isOnBreak;
+        [SerializeField] private int[] breakTime = new int[5]{0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
+
+        // Cache
+        private PomodoroTimer timer;
+        private Theme theme;
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
-
+        private TimeSpan cachedTimeSpan;
+        
+        private void OnValidate()
+        {
+            // Prevent values from going over their limit
+            if (!isOnBreak)
+            {
+                for (int _i = 0; _i < workTime.Length; _i++)
+                {
+                    workTime[_i] = Mathf.Clamp(workTime[_i], GetDigitMin(), GetDigitMax((Digits)_i));
+                }
+            }
+            else
+            {
+                for (int _i = 0; _i < breakTime.Length; _i++)
+                {
+                    breakTime[_i] = Mathf.Clamp(breakTime[_i], GetDigitMin(), GetDigitMax((Digits)_i));
+                }
+            }
+        }
+        
         public void Initialize(PomodoroTimer _timer, Theme _theme)
         {
             timer = _timer;
-            _theme.RegisterColorHook(this);
+            theme = _theme;
+            theme.RegisterColorHook(this);
             
-            // Clear pre-generated digits
+            // Clear pre-generated digits / transforms
             foreach (Transform _t in transform.GetComponentsInChildren<Transform>())
             {
                 if (_t == transform)
@@ -58,9 +85,60 @@ namespace AdrianMiasik.Components
             
             // Generate our digits
             char[] _separatorChar = { '_' };
-            GenerateFormat(GetDoubleDigitSet(format, _separatorChar[0]));
+            GenerateDigits(GetDoubleDigitSet(format, _separatorChar[0]));
+
+            // Calculate time
+            cachedTimeSpan = TimeSpan.FromDays(workTime[0]) +
+                             TimeSpan.FromHours(workTime[1]) +
+                             TimeSpan.FromMinutes(workTime[2]) +
+                             TimeSpan.FromSeconds(workTime[3]) +
+                             TimeSpan.FromMilliseconds(workTime[4]);
+            SetFormatTime(cachedTimeSpan);
         }
         
+        public bool IsOnBreak()
+        {
+            return isOnBreak;
+        }
+
+        public void SetToBreak()
+        {
+            isOnBreak = true;
+        }
+
+        public void SetToWork()
+        {
+            isOnBreak = false;
+        }
+
+        public void FlipIsOnBreakBool()
+        {
+            isOnBreak = !isOnBreak;
+        }
+        
+        public TimeSpan GetTime()
+        {
+            TimeSpan _ts;
+            if (!isOnBreak)
+            {
+                _ts = TimeSpan.FromDays(workTime[0]) +
+                      TimeSpan.FromHours(workTime[1]) +
+                      TimeSpan.FromMinutes(workTime[2]) +
+                      TimeSpan.FromSeconds(workTime[3]) +
+                      TimeSpan.FromMilliseconds(workTime[4]);
+            }
+            else
+            {
+                _ts = TimeSpan.FromDays(breakTime[0]) +
+                      TimeSpan.FromHours(breakTime[1]) +
+                      TimeSpan.FromMinutes(breakTime[2]) +
+                      TimeSpan.FromSeconds(breakTime[3]) +
+                      TimeSpan.FromMilliseconds(breakTime[4]);
+            }
+
+            return _ts;
+        }
+
         /// <summary>
         /// Returns a list of key value pairs using the provided enum format.
         /// Each key string determines it's type (such as hour/minute/secound/etc...) and,
@@ -104,7 +182,11 @@ namespace AdrianMiasik.Components
             return _result;
         }
 
-        private void GenerateFormat(List<KeyValuePair<string, int>> _doubleDigitSetToGenerate)
+        /// <summary>
+        /// Generates the appropriate amount of digits and separators based on the provided data set
+        /// </summary>
+        /// <param name="_doubleDigitSetToGenerate">String represents abbreviation, and int represents value</param>
+        private void GenerateDigits(List<KeyValuePair<string, int>> _doubleDigitSetToGenerate)
         {
             generatedDigits = new List<DoubleDigit>();
             generatedSeparators = new List<DigitSeparator>();
@@ -115,7 +197,7 @@ namespace AdrianMiasik.Components
                 
                 // Generate double digit
                 DoubleDigit _dd = Instantiate(digitSource, transform);
-                _dd.Initialize(GetDigitType(_pair.Key), timer, _pair.Value);
+                _dd.Initialize(this, GetDigitType(_pair.Key), _pair.Value, theme);
                 generatedDigits.Add(_dd);
 
                 // Skip last iteration to avoid spacer generation
@@ -129,12 +211,51 @@ namespace AdrianMiasik.Components
                 generatedSeparators.Add(_separator);
             }
         }
-
-        public void SetFormatTime(TimeSpan _ts)
+        
+        public void ShowFormatTime(TimeSpan _ts)
         {
             foreach (DoubleDigit _digit in generatedDigits)
             {
+                switch (_digit.GetDigit())
+                {
+                    case Digits.DAYS:
+                        _digit.SetDigitsLabel(_ts.Days);
+                        break;
+                    case Digits.HOURS:
+                        _digit.SetDigitsLabel(_ts.Hours);
+                        break;
+                    case Digits.MINUTES:
+                        _digit.SetDigitsLabel(_ts.Minutes);
+                        break;
+                    case Digits.SECONDS:
+                        _digit.SetDigitsLabel(_ts.Seconds);
+                        break;
+                    case Digits.MILLISECONDS:
+                        _digit.SetDigitsLabel(_ts.Milliseconds);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public void SetFormatTime(TimeSpan _ts)
+        {
+            // Clear out time arrays
+            if (!isOnBreak)
+            {
+                Array.Clear(workTime, 0, workTime.Length);
+            }
+            else
+            {
+                Array.Clear(breakTime, 0, breakTime.Length);
+            }
+
+            // Apply time arrays to update only for generated digits (essentially throwing out data that's not used)
+            foreach (DoubleDigit _digit in generatedDigits)
+            {
                 Digits _type = _digit.GetDigit();
+                
                 switch (_type)
                 {
                     case Digits.DAYS:
@@ -152,13 +273,17 @@ namespace AdrianMiasik.Components
                     case Digits.MILLISECONDS:
                         _digit.SetValue(_ts.Milliseconds);
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                } 
             }
         }
 
-        private Digits GetDigitType(string _abbreviation)
+        /// <summary>
+        /// Returns the digit type using the provided abbreviation string
+        /// </summary>
+        /// <param name="_abbreviation"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static Digits GetDigitType(string _abbreviation)
         {
             switch (_abbreviation)
             {
@@ -172,42 +297,56 @@ namespace AdrianMiasik.Components
                     return Digits.SECONDS;
                 case "MS":
                     return Digits.MILLISECONDS;
-                default:
-                    Debug.LogAssertion("Unsupported abbreviation string!");
-                    throw new Exception();
             }
+
+            throw new Exception();
         }
-        
-        public int GetDigitMin()
+
+        private int GetDigitMin()
         {
             return 0;
         }
-        
-        public int GetDigitMax(DigitFormat.Digits _digits)
+
+        private int GetDigitMax(Digits _digits)
         {
+            // TODO: You'll need to change our max values depending on the current format we have
             switch (_digits)
             {
-                case DigitFormat.Digits.HOURS:
+                case Digits.DAYS:
                     return 99;
-                case DigitFormat.Digits.MINUTES:
+                case Digits.HOURS:
+                    return 24;
+                case Digits.MINUTES:
                     return 59;
-                case DigitFormat.Digits.SECONDS:
+                case Digits.SECONDS:
                     return 59;
+                case Digits.MILLISECONDS:
+                    return 10; // TODO: Should be a thousand but we are limited to double 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_digits), _digits, null);
+                    return 99;
             }
         }
 
+        /// <summary>
+        /// Shows this gameobject
+        /// </summary>
         public void Show()
         {
             gameObject.SetActive(true);
         }
 
+        /// <summary>
+        /// Hides this gameobject
+        /// </summary>
         public void Hide()
         {
             gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Applies our theme changes to our components when necessary
+        /// </summary>
+        /// <param name="_theme"></param>
         public void ColorUpdate(Theme _theme)
         {
             // Digits
@@ -232,6 +371,9 @@ namespace AdrianMiasik.Components
             }
         }
 
+        /// <summary>
+        /// Allows our generated digits to be interacted with
+        /// </summary>
         public void Unlock()
         {
             foreach (DoubleDigit _digit in generatedDigits)
@@ -240,11 +382,14 @@ namespace AdrianMiasik.Components
             }
         }
         
+        /// <summary>
+        /// Disallows our generated digits to be interacted with
+        /// </summary>
         public void Lock()
         {
             foreach (DoubleDigit _digit in generatedDigits)
             {
-                _digit.Unlock();
+                _digit.Lock();
             }
         }
 
@@ -255,7 +400,11 @@ namespace AdrianMiasik.Components
                 _digit.ResetTextPosition();
             }
         }
-
+        
+        /// <summary>
+        /// Returns our list of generated digits
+        /// </summary>
+        /// <returns></returns>
         public List<DoubleDigit> GetDigits()
         {
             return generatedDigits;
@@ -290,6 +439,154 @@ namespace AdrianMiasik.Components
                     _digit.ResetTextPosition();
                 }
             }
+        }
+        
+        /// <summary>
+        /// Increments the provided digit by one. (+1)
+        /// </summary>
+        /// <param name="_digits"></param>
+        public void IncrementOne(Digits _digits)
+        {
+            SetDigit(_digits, GetDigitValue(_digits) + 1);
+        }
+
+        /// <summary>
+        /// Decrements the provided digit by one. (-1)
+        /// </summary>
+        /// <param name="_digits"></param>
+        public void DecrementOne(Digits _digits)
+        {
+            SetDigit(_digits, GetDigitValue(_digits) - 1);
+        }
+        
+        /// <summary>
+        /// Sets the provided digit to it's provided value
+        /// </summary>
+        /// <param name="_digit"></param>
+        /// <param name="_newValue"></param>
+        public void SetDigit(Digits _digit, int _newValue)
+        {
+            if (!IsOnBreak())
+            {
+                workTime[(int)_digit] = _newValue;
+            }
+            else
+            {
+                breakTime[(int)_digit] = _newValue;
+            }
+
+            OnValidate();
+        }
+
+        /// <summary>
+        /// Sets the value of the timer using the provided formatted string.
+        /// </summary>
+        /// <param name="_formattedString">Expected format of ("00:25:00")</param>
+        public void SetTimerValue(string _formattedString)
+        {
+            // Only allow 'Set Timer Value' to work when we are in the setup state
+            if (GetTimer().state != PomodoroTimer.States.SETUP)
+            {
+                return;
+            }
+            
+            List<string> _sections = new List<string>();
+            string _value = String.Empty;
+
+            // ReSharper disable once InconsistentNaming
+            // ReSharper disable once ForCanBeConvertedToForeach
+            // Iterate through each character to determine how many sections there are...
+            for (int i = 0; i < _formattedString.Length; i++)
+            {
+                // If this character is a separator...
+                if (_formattedString[i].ToString() == ":")
+                {
+                    // Save section
+                    if (_value != String.Empty)
+                    {
+                        _sections.Add(_value);
+                        _value = string.Empty;
+                    }
+
+                    continue;
+                }
+
+                // Add to section
+                _value += _formattedString[i].ToString();
+            }
+
+            // Last digit in string won't have a separator so we add the section in once the loop is complete
+            _sections.Add(_value);
+
+            // Compare sections with timer format
+            if (_sections.Count != 3) // TODO: Support more digit formats
+            {
+                Debug.LogWarning("The provided string does not match the pomodoro timer layout");
+                return;
+            }
+
+            // Set timer sections
+            // ReSharper disable once InconsistentNaming
+            for (int i = 0; i < _sections.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        // SetHours(_sections[i]);
+                        break;
+                    case 1:
+                        // SetMinutes(_sections[i]);
+                        break;
+                    case 2:
+                        // SetSeconds(_sections[i]);
+                        break;
+                }
+            }
+        }
+        
+        public int GetDigitValue(Digits _digits)
+        {
+            if (!IsOnBreak())
+            {
+                return workTime[(int)_digits];
+            }
+
+            return breakTime[(int)_digits];
+        }
+        
+        /// <summary>
+        /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
+        /// </summary>
+        /// <param name="_digits"></param>
+        /// <returns></returns>
+        public bool CanIncrementOne(Digits _digits)
+        {
+            if (GetDigitValue(_digits) + 1 > GetDigitMax(_digits))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns True if you can subtract one to this digit without hitting it's floor, otherwise returns False.
+        /// </summary>
+        /// <param name="_digits"></param>
+        /// <returns></returns>
+        public bool CanDecrementOne(Digits _digits)
+        {
+            if (GetDigitValue(_digits) - 1 < GetDigitMin())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public PomodoroTimer GetTimer()
+        {
+            return timer;
         }
     }
  }

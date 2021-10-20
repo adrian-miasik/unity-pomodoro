@@ -29,8 +29,8 @@ namespace AdrianMiasik.Components
         [SerializeField] private Animation pulseWobble;
         [SerializeField] private Animation tick;
 
+        private DigitFormat format;
         private DigitFormat.Digits digit;
-        private PomodoroTimer timer;
         private bool isInteractable;
         private bool isSelected;
 
@@ -61,11 +61,13 @@ namespace AdrianMiasik.Components
         public UnityEvent OnSelection;
         public UnityEvent OnDigitChange; // Invoked only when timer is running
 
-        public void Initialize(DigitFormat.Digits _digit, PomodoroTimer _timer, int _digits)
+        public void Initialize(DigitFormat _format, DigitFormat.Digits _digit, int _value, Theme _theme)
         {
+            format = _format;
             digit = _digit;
-            timer = _timer;
-
+            cachedTheme = _theme;
+            cachedTheme.RegisterColorHook(this);
+            
             // Disable run time caret interactions - We want to run input through this classes input events
             caret = input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
             if (caret)
@@ -74,10 +76,7 @@ namespace AdrianMiasik.Components
                 caret.raycastTarget = false;
             }
 
-            cachedTheme = _timer.GetTheme();
-            cachedTheme.RegisterColorHook(this);
-            
-            UpdateVisuals(_digits);
+            UpdateVisuals(_value);
         }
 
         private void UpdateVisuals(int _value)
@@ -126,14 +125,14 @@ namespace AdrianMiasik.Components
                 // Scroll input
                 if (Input.mouseScrollDelta.y > 0)
                 {
-                    if (timer.CanIncrementOne(digit))
+                    if (format.CanIncrementOne(digit))
                     {
                         upArrow.OnPointerClick(null);
                     }
                 }
                 else if (Input.mouseScrollDelta.y < 0)
                 {
-                    if (timer.CanDecrementOne(digit))
+                    if (format.CanDecrementOne(digit))
                     {
                         downArrow.OnPointerClick(null);
                     }
@@ -170,7 +169,7 @@ namespace AdrianMiasik.Components
                     {
                         accumulatedSelectionTime = 0;
                         DeselectInput();
-                        timer.ClearSelection();
+                        format.GetTimer().ClearSelection();
                     }
                 }
             }
@@ -199,7 +198,7 @@ namespace AdrianMiasik.Components
                 // Update the digit
                 input.text = _digits.ToString("D2");
 
-                if (timer.state == PomodoroTimer.States.RUNNING)
+                if (format.GetTimer().state == PomodoroTimer.States.RUNNING)
                 {
                     OnDigitChange?.Invoke();
                 }
@@ -242,14 +241,14 @@ namespace AdrianMiasik.Components
 
         private void ShowArrows()
         {
-            if (timer != null)
+            if (format != null)
             {
-                if (timer.CanIncrementOne(digit))
+                if (format.CanIncrementOne(digit))
                 {
                     upArrow.Show();
                 }
 
-                if (timer.CanDecrementOne(digit))
+                if (format.CanDecrementOne(digit))
                 {
                     downArrow.Show();        
                 }
@@ -276,21 +275,22 @@ namespace AdrianMiasik.Components
         // Unity Events
         public void SetValue(int _value)
         {
-            if (timer == null)
+            if (format == null)
                 return;
             
-            timer.SetDigit(digit, string.IsNullOrEmpty(_value.ToString()) ? 0 : int.Parse(_value.ToString()));
+            format.SetDigit(digit, string.IsNullOrEmpty(_value.ToString()) ? 0 : int.Parse(_value.ToString()));
             UpdateArrows();
             UpdateVisuals(_value);
         }
         
         public void IncrementOne()
         {
-            if (timer == null) 
+            if (format == null) 
                 return;
             
-            timer.IncrementOne(digit);
-            SetDigitsLabel(timer.GetDigitValue(digit));
+            format.IncrementOne(digit);
+            SetValue(format.GetDigitValue(digit));
+            SetDigitsLabel(format.GetDigitValue(digit));
             pulseWobble.Stop();
             pulseWobble.Play();
             UpdateArrows();
@@ -299,11 +299,12 @@ namespace AdrianMiasik.Components
 
         public void DecrementOne()
         {
-            if (timer == null) 
+            if (format == null) 
                 return;
             
-            timer.DecrementOne(digit);
-            SetDigitsLabel(timer.GetDigitValue(digit));
+            format.DecrementOne(digit);
+            SetValue(format.GetDigitValue(digit));
+            SetDigitsLabel(format.GetDigitValue(digit));
             pulseWobble.Stop();
             pulseWobble.Play();
             UpdateArrows();
@@ -313,7 +314,7 @@ namespace AdrianMiasik.Components
         private void UpdateArrows()
         {
             // Up Arrow
-            if (timer.CanIncrementOne(digit))
+            if (format.CanIncrementOne(digit))
             {
                 upArrow.Show();
             }
@@ -323,7 +324,7 @@ namespace AdrianMiasik.Components
             }
             
             // Down Arrow
-            if (timer.CanDecrementOne(digit))
+            if (format.CanDecrementOne(digit))
             {
                 downArrow.Show();
             }
@@ -342,8 +343,8 @@ namespace AdrianMiasik.Components
         {
             OnSelect(_eventData, true);
         }
-        
-        public void OnSelect(BaseEventData _eventData, bool _setSelection)
+
+        private void OnSelect(BaseEventData _eventData, bool _setSelection)
         {
             if (!isInteractable)
             {
@@ -358,7 +359,7 @@ namespace AdrianMiasik.Components
 
             if (_setSelection)
             {
-                timer.SetSelection(this);
+                format.GetTimer().SetSelection(this);
             }
 
             OnSelection.Invoke();

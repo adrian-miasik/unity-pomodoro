@@ -4298,7 +4298,7 @@ GameObject:
   - component: {fileID: 1348329454}
   - component: {fileID: 1348329457}
   m_Layer: 5
-  m_Name: Digits
+  m_Name: DigitFormat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4369,6 +4369,9 @@ MonoBehaviour:
   format: 2
   digitSource: {fileID: 2939933545387467015, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
   separatorSource: {fileID: 5144564842751071115, guid: 094d9dd4e500d4f4991842ea23943c99, type: 3}
+  workTime: 0000000001000000190000000000000000000000
+  isOnBreak: 0
+  breakTime: 0000000000000000050000000000000000000000
 --- !u!114 &1348329457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4928,13 +4931,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  hours: 0
-  minutes: 25
-  seconds: 0
-  isOnBreak: 0
-  breakHours: 0
-  breakMinutes: 5
-  breakSeconds: 0
   hotkeyDetector: {fileID: 266651281}
   selectedDigits: []
   fadeDuration: 0.1
