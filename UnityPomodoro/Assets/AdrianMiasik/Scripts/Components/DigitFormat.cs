@@ -72,6 +72,15 @@ namespace AdrianMiasik.Components
             theme = _theme;
             theme.RegisterColorHook(this);
             
+            RegenerateFormat();
+        }
+
+        [ContextMenu("Regenerate Format")]
+        public void RegenerateFormat()
+        {
+            generatedDigits?.Clear();
+            generatedSeparators?.Clear();
+
             // Clear pre-generated digits / transforms
             foreach (Transform _t in transform.GetComponentsInChildren<Transform>())
             {
