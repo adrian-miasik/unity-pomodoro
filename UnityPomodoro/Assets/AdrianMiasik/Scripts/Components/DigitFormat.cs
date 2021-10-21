@@ -98,7 +98,7 @@ namespace AdrianMiasik.Components
 
             // Calculate time
             cachedTimeSpan = GetTime();
-            SetFormatTime(cachedTimeSpan);
+            SetTime(cachedTimeSpan);
             
             UpdateDigitVisuals(true);
         }
@@ -258,7 +258,7 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public void SetFormatTime(TimeSpan _ts)
+        public void SetTime(TimeSpan _ts)
         {
             // Clear out time arrays
             if (!isOnBreak)

@@ -441,8 +441,8 @@ namespace AdrianMiasik
             TimeSpan _ts = digitFormat.GetTime();
             currentTime = _ts.TotalSeconds;
             totalTime = (float)_ts.TotalSeconds;
-            digitFormat.SetFormatTime(_ts);
             digitFormat.UpdateDigitVisuals(_hideArrows);
+            digitFormat.SetTime(_ts);
         }
         
         /// <summary>
