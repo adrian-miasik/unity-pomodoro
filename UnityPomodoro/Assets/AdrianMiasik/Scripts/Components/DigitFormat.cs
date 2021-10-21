@@ -253,19 +253,19 @@ namespace AdrianMiasik.Components
                 switch (_doubleDigit.digit)
                 {
                     case Digits.DAYS:
-                        _doubleDigit.SetDigitsLabel(_ts.Days);
+                        _doubleDigit.SetTextLabel(_ts.Days);
                         break;
                     case Digits.HOURS:
-                        _doubleDigit.SetDigitsLabel(_ts.Hours);
+                        _doubleDigit.SetTextLabel(_ts.Hours);
                         break;
                     case Digits.MINUTES:
-                        _doubleDigit.SetDigitsLabel(_ts.Minutes);
+                        _doubleDigit.SetTextLabel(_ts.Minutes);
                         break;
                     case Digits.SECONDS:
-                        _doubleDigit.SetDigitsLabel(_ts.Seconds);
+                        _doubleDigit.SetTextLabel(_ts.Seconds);
                         break;
                     case Digits.MILLISECONDS:
-                        _doubleDigit.SetDigitsLabel(_ts.Milliseconds);
+                        _doubleDigit.SetTextLabel(_ts.Milliseconds);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

@@ -81,7 +81,7 @@ namespace AdrianMiasik.Components
 
         public void UpdateVisuals(int _value)
         {
-            SetDigitsLabel(_value);
+            SetTextLabel(_value);
             UpdateArrows();
             pulseWobble.Stop();
         }
@@ -255,7 +255,7 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Sets the digit data to the provided input.
         /// This is different from the current visuals of this digit.
-        /// If you are looking to modify the digit visual value <see cref="SetDigitsLabel"/>
+        /// If you are looking to modify the digit visual value <see cref="SetTextLabel"/>
         /// </summary>
         /// <param name="_value"></param>
         public void SetValue(int _value)
@@ -273,7 +273,7 @@ namespace AdrianMiasik.Components
         /// Also if you are looking to update arrows as well as the label <seealso cref="UpdateVisuals"/>
         /// </summary>
         /// <param name="_value"></param>
-        public void SetDigitsLabel(int _value)
+        public void SetTextLabel(int _value)
         {
             // If this digit value is actually different...
             if (_value.ToString("D2") != input.text)
