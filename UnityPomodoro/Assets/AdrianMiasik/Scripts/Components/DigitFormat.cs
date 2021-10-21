@@ -230,6 +230,15 @@ namespace AdrianMiasik.Components
                 // Apply navigation
                 _digit.GetSelectable().navigation = _digitNav;
             }
+            
+            // Fix background navigation
+            Navigation _backgroundNav = new Navigation
+            {
+                mode = Navigation.Mode.Explicit,
+                selectOnRight = generatedDigits[0].GetSelectable(),
+                selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
+            };
+            timer.SetBackgroundNavigation(_backgroundNav);
         }
 
         private int Wrap(int _index, int _length)

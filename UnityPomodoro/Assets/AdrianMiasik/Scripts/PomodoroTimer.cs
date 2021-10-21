@@ -711,5 +711,10 @@ namespace AdrianMiasik
         {
             return selectedDigits.Select(_doubleDigit => _doubleDigit.GetSelectable()).ToList();
         }
+
+        public void SetBackgroundNavigation(Navigation _backgroundNav)
+        {
+            background.SetSelectionNavigation(_backgroundNav);
+        }
     }
 }

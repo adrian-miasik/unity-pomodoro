@@ -25,5 +25,10 @@ namespace AdrianMiasik.Components
         {
             background.color = _theme.GetCurrentColorScheme().background;
         }
+
+        public void SetSelectionNavigation(Navigation _backgroundNav)
+        {
+            selectable.navigation = _backgroundNav;
+        }
     }
 }
