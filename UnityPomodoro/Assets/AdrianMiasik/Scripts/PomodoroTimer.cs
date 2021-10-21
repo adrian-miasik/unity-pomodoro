@@ -120,23 +120,20 @@ namespace AdrianMiasik
             infoContainer.gameObject.SetActive(false);
             contentContainer.gameObject.SetActive(true);
             
-            // Initialize digits
+            // Initialize components
+            hotkeyDetector.Initialize(this);
+            background.Initialize(theme);
             digitFormat.Initialize(this, theme);
-
-            // Initialize buttons
+            themeSlider.Initialize(false, theme);
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);
             infoToggle.Initialize(false, theme);
             breakSlider.Initialize(false, theme);
-            themeSlider.Initialize(false, theme);
-
-            // Initialize misc
-            hotkeyDetector.Initialize(this);
-            background.Initialize(theme);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
             
+            // Calculate time
             CalculateTimeValues();
             
             // Transition to setup state
