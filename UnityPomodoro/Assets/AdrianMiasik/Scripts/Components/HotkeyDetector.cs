@@ -70,15 +70,6 @@ namespace AdrianMiasik.Components
                         EventSystem.current.SetSelectedGameObject(_rightSelection.gameObject);
                     }
                 }
-                
-                // GameObject _selectedGameObject = EventSystem.current.currentSelectedGameObject;
-                // Selectable _selectable = _selectedGameObject.GetComponent<Selectable>();
-                //
-                // if (_selectable != null && _selectable.FindSelectableOnRight() != null 
-                //                        && _selectable.FindSelectableOnRight().gameObject != null)
-                // {
-                //     EventSystem.current.SetSelectedGameObject(_selectable.FindSelectableOnRight().gameObject);
-                // }
             }
         }
 
