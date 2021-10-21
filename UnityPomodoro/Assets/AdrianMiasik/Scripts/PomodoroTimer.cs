@@ -185,7 +185,7 @@ namespace AdrianMiasik
                     // Complete ring
                     ring.fillAmount = 1f;
                     ring.material.SetFloat(RingDiameter, 0.9f);
-                    text.text = !digitFormat.IsOnBreak() ? "Set a work time" : "Set a break time";
+                    text.text = !digitFormat.isOnBreak ? "Set a work time" : "Set a break time";
 
                     // Show digits and hide completion label
                     digitFormat.Show();
@@ -506,7 +506,7 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToBreakTimer()
         {
-            digitFormat.SetToBreak();
+            digitFormat.isOnBreak = true;
             SwitchState(States.SETUP);
             CalculateTimeValues();
         }
@@ -516,7 +516,7 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToWorkTimer()
         {
-            digitFormat.SetToWork();
+            digitFormat.isOnBreak = false;
             SwitchState(States.SETUP);
             CalculateTimeValues();
         }
@@ -681,7 +681,7 @@ namespace AdrianMiasik
                 case States.SETUP:
                     // Ring
                     ring.material.SetColor(RingColor,
-                        !digitFormat.IsOnBreak() ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
+                        !digitFormat.isOnBreak ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
 
                     break;
                 
@@ -694,7 +694,7 @@ namespace AdrianMiasik
                 case States.PAUSED:
                     // Ring
                     ring.material.SetColor(RingColor, 
-                        !digitFormat.IsOnBreak() ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
+                        !digitFormat.isOnBreak ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo);
                     break;
                 
                 case States.COMPLETE:
@@ -707,9 +707,9 @@ namespace AdrianMiasik
             }
         }
 
-        public bool GetIsOnBreak()
+        public bool IsOnBreak()
         {
-            return digitFormat.IsOnBreak();
+            return digitFormat.isOnBreak;
         }
     }
 }

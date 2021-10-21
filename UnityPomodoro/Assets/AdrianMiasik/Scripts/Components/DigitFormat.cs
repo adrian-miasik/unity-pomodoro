@@ -37,7 +37,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private int[] workTime = new int[5]{0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
 
         [Header("Break Data")]
-        [SerializeField] private bool isOnBreak;
+        public bool isOnBreak;
         [SerializeField] private int[] breakTime = new int[5]{0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
 
         // Cache
@@ -113,21 +113,6 @@ namespace AdrianMiasik.Components
                     _digit.HideArrows();
                 }
             }
-        }
-        
-        public bool IsOnBreak()
-        {
-            return isOnBreak;
-        }
-
-        public void SetToBreak()
-        {
-            isOnBreak = true;
-        }
-
-        public void SetToWork()
-        {
-            isOnBreak = false;
         }
 
         public void FlipIsOnBreakBool()
@@ -485,7 +470,7 @@ namespace AdrianMiasik.Components
         /// <param name="_newValue"></param>
         public void SetDigit(Digits _digit, int _newValue)
         {
-            if (!IsOnBreak())
+            if (!isOnBreak)
             {
                 workTime[(int)_digit] = _newValue;
             }
@@ -565,7 +550,7 @@ namespace AdrianMiasik.Components
         
         public int GetDigitValue(Digits _digits)
         {
-            if (!IsOnBreak())
+            if (!isOnBreak)
             {
                 return workTime[(int)_digits];
             }
