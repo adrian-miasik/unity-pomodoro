@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
@@ -704,6 +705,11 @@ namespace AdrianMiasik
         public bool IsInfoPageOpen()
         {
             return infoContainer.IsInfoPageOpen();
+        }
+
+        public List<Selectable> GetSelections()
+        {
+            return selectedDigits.Select(_doubleDigit => _doubleDigit.GetSelectable()).ToList();
         }
     }
 }

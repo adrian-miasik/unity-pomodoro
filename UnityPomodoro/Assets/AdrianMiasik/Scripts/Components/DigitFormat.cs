@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
@@ -183,8 +184,7 @@ namespace AdrianMiasik.Components
             // Return abbreviation and value set
             return _result;
         }
-
-        // TODO: Fix tabbed digit selection
+        
         /// <summary>
         /// Generates the appropriate amount of digits and separators based on the provided data set
         /// </summary>
@@ -213,6 +213,28 @@ namespace AdrianMiasik.Components
                 DigitSeparator _separator = Instantiate(separatorSource, transform);
                 generatedSeparators.Add(_separator);
             }
+
+            // Hook up selectable navigations
+            for (int _i = 0; _i < generatedDigits.Count; _i++)
+            {
+                DoubleDigit _digit = generatedDigits[_i];
+                
+                // Create navigation
+                Navigation _digitNav = new Navigation
+                {
+                    mode = Navigation.Mode.Explicit,
+                    selectOnLeft = generatedDigits[Wrap(_i - 1, generatedDigits.Count)].GetSelectable(),
+                    selectOnRight = generatedDigits[Wrap(_i + 1, generatedDigits.Count)].GetSelectable()
+                };
+
+                // Apply navigation
+                _digit.GetSelectable().navigation = _digitNav;
+            }
+        }
+
+        private int Wrap(int _index, int _length)
+        {
+            return (_index % _length + _length) % _length;
         }
         
         public void ShowTime(TimeSpan _ts)

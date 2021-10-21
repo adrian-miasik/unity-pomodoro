@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -58,14 +59,26 @@ namespace AdrianMiasik.Components
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                GameObject _selectedGameObject = EventSystem.current.currentSelectedGameObject;
-                Selectable _selectable = _selectedGameObject.GetComponent<Selectable>();
-
-                if (_selectable != null && _selectable.FindSelectableOnRight() != null 
-                                       && _selectable.FindSelectableOnRight().gameObject != null)
+                List<Selectable> _selectables = timer.GetSelections();
+                if (_selectables.Count >= 1)
                 {
-                    EventSystem.current.SetSelectedGameObject(_selectable.FindSelectableOnRight().gameObject);
+                    // Get only first selection
+                    Selectable _selection = _selectables[0];
+                    Selectable _rightSelection = _selection.FindSelectableOnRight();
+                    if (_rightSelection != null && _rightSelection.gameObject != null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(_rightSelection.gameObject);
+                    }
                 }
+                
+                // GameObject _selectedGameObject = EventSystem.current.currentSelectedGameObject;
+                // Selectable _selectable = _selectedGameObject.GetComponent<Selectable>();
+                //
+                // if (_selectable != null && _selectable.FindSelectableOnRight() != null 
+                //                        && _selectable.FindSelectableOnRight().gameObject != null)
+                // {
+                //     EventSystem.current.SetSelectedGameObject(_selectable.FindSelectableOnRight().gameObject);
+                // }
             }
         }
 

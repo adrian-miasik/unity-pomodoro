@@ -450,5 +450,10 @@ namespace AdrianMiasik.Components
             // Digit text
             SetTextColor(_currentColors.foreground);
         }
+
+        public Selectable GetSelectable()
+        {
+            return selectable;
+        }
     }
 }
