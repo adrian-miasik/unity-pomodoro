@@ -543,7 +543,7 @@ namespace AdrianMiasik.Components
             for (int i = 0; i < _formattedString.Length; i++)
             {
                 // If this character is a separator...
-                if (_formattedString[i].ToString() == ":")
+                if (_formattedString[i].ToString() == ":") // TODO: Allow the use of other separators like '-'?
                 {
                     // Save section
                     if (_value != String.Empty)
