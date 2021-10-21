@@ -100,18 +100,15 @@ namespace AdrianMiasik.Components
             cachedTimeSpan = GetTime();
             SetTime(cachedTimeSpan);
             
-            UpdateDigitVisuals(true);
+            RefreshDigitVisuals();
         }
 
-        public void UpdateDigitVisuals(bool _hideArrows = false)
+        public void RefreshDigitVisuals()
         {
             foreach (DoubleDigit _digit in generatedDigits)
             {
                 _digit.UpdateVisuals(GetDigitValue(_digit.GetDigit()));
-                if (_hideArrows)
-                {
-                    _digit.HideArrows();
-                }
+                _digit.HideArrows();
             }
         }
 

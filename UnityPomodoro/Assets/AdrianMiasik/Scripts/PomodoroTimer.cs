@@ -436,13 +436,13 @@ namespace AdrianMiasik
         /// <summary>
         /// Updates our core timer values based on the digit format time span
         /// </summary>
-        private void CalculateTimeValues(bool _hideArrows = true)
+        private void CalculateTimeValues()
         {
             TimeSpan _ts = digitFormat.GetTime();
             currentTime = _ts.TotalSeconds;
             totalTime = (float)_ts.TotalSeconds;
-            digitFormat.UpdateDigitVisuals(_hideArrows);
             digitFormat.SetTime(_ts);
+            digitFormat.RefreshDigitVisuals();
         }
         
         /// <summary>
