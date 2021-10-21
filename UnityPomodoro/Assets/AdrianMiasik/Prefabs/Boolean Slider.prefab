@@ -65,13 +65,13 @@ MonoBehaviour:
   animation: {fileID: 6462380845811431248}
   leftToRight: {fileID: 7400000, guid: 80cc4326c7f0d254f8830af328ea72ff, type: 2}
   rightToLeft: {fileID: 7400000, guid: 8ea65168c23332d46b8acd14dc2197a7, type: 2}
-  OnSetToTrueClick:
+  onSetToTrueClick:
     m_PersistentCalls:
       m_Calls: []
-  OnSetToFalseClick:
+  onSetToFalseClick:
     m_PersistentCalls:
       m_Calls: []
-  OnClick:
+  onClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6462380844780233063}
