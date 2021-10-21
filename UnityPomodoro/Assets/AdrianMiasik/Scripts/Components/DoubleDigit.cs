@@ -29,8 +29,8 @@ namespace AdrianMiasik.Components
         [SerializeField] private Animation pulseWobble;
         [SerializeField] private Animation tick;
 
+        [HideInInspector] public DigitFormat.Digits digit;
         private DigitFormat format;
-        private DigitFormat.Digits digit;
         private bool isInteractable;
         private bool isSelected;
 
@@ -85,12 +85,7 @@ namespace AdrianMiasik.Components
             UpdateArrows();
             pulseWobble.Stop();
         }
-
-        public DigitFormat.Digits GetDigit()
-        {
-            return digit;
-        }
-
+        
         private void Update()
         {
             if (isColorAnimating)

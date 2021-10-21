@@ -72,11 +72,11 @@ namespace AdrianMiasik.Components
             theme = _theme;
             theme.RegisterColorHook(this);
             
-            RegenerateFormat();
+            GenerateFormat();
         }
 
-        [ContextMenu("Regenerate Format")]
-        public void RegenerateFormat()
+        [ContextMenu("Generate Format")]
+        public void GenerateFormat()
         {
             generatedDigits?.Clear();
             generatedSeparators?.Clear();
@@ -92,14 +92,15 @@ namespace AdrianMiasik.Components
                 Destroy(_t.gameObject);
             }
             
-            // Generate our digits
+            // Generate our digits and separators (format)
             char[] _separatorChar = { '_' };
-            GenerateDigits(GetDoubleDigitSet(format, _separatorChar[0]));
+            GenerateFormat(GetDoubleDigitSet(format, _separatorChar[0]));
 
             // Calculate time
             cachedTimeSpan = GetTime();
             SetTime(cachedTimeSpan);
             
+            // Apply
             RefreshDigitVisuals();
         }
 
@@ -107,7 +108,7 @@ namespace AdrianMiasik.Components
         {
             foreach (DoubleDigit _digit in generatedDigits)
             {
-                _digit.UpdateVisuals(GetDigitValue(_digit.GetDigit()));
+                _digit.UpdateVisuals(GetDigitValue(_digit.digit));
                 _digit.HideArrows();
             }
         }
@@ -142,7 +143,7 @@ namespace AdrianMiasik.Components
 
         /// <summary>
         /// Returns a list of key value pairs using the provided enum format.
-        /// Each key string determines it's type (such as hour/minute/secound/etc...) and,
+        /// Each key string determines it's type (such as hour/minute/second/etc...) and,
         /// each value int determines it's starting value.
         /// </summary>
         /// <param name="_format"></param>
@@ -183,11 +184,12 @@ namespace AdrianMiasik.Components
             return _result;
         }
 
+        // TODO: Fix tabbed digit selection
         /// <summary>
         /// Generates the appropriate amount of digits and separators based on the provided data set
         /// </summary>
         /// <param name="_doubleDigitSetToGenerate">String represents abbreviation, and int represents value</param>
-        private void GenerateDigits(List<KeyValuePair<string, int>> _doubleDigitSetToGenerate)
+        private void GenerateFormat(List<KeyValuePair<string, int>> _doubleDigitSetToGenerate)
         {
             generatedDigits = new List<DoubleDigit>();
             generatedSeparators = new List<DigitSeparator>();
@@ -213,26 +215,26 @@ namespace AdrianMiasik.Components
             }
         }
         
-        public void ShowFormatTime(TimeSpan _ts)
+        public void ShowTime(TimeSpan _ts)
         {
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit _doubleDigit in generatedDigits)
             {
-                switch (_digit.GetDigit())
+                switch (_doubleDigit.digit)
                 {
                     case Digits.DAYS:
-                        _digit.SetDigitsLabel(_ts.Days);
+                        _doubleDigit.SetDigitsLabel(_ts.Days);
                         break;
                     case Digits.HOURS:
-                        _digit.SetDigitsLabel(_ts.Hours);
+                        _doubleDigit.SetDigitsLabel(_ts.Hours);
                         break;
                     case Digits.MINUTES:
-                        _digit.SetDigitsLabel(_ts.Minutes);
+                        _doubleDigit.SetDigitsLabel(_ts.Minutes);
                         break;
                     case Digits.SECONDS:
-                        _digit.SetDigitsLabel(_ts.Seconds);
+                        _doubleDigit.SetDigitsLabel(_ts.Seconds);
                         break;
                     case Digits.MILLISECONDS:
-                        _digit.SetDigitsLabel(_ts.Milliseconds);
+                        _doubleDigit.SetDigitsLabel(_ts.Milliseconds);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -253,26 +255,26 @@ namespace AdrianMiasik.Components
             }
 
             // Apply time arrays to update only for generated digits (essentially throwing out data that's not used)
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit _doubleDigit in generatedDigits)
             {
-                Digits _type = _digit.GetDigit();
+                Digits _type = _doubleDigit.digit;
                 
                 switch (_type)
                 {
                     case Digits.DAYS:
-                        _digit.SetValue(_ts.Days);
+                        _doubleDigit.SetValue(_ts.Days);
                         break;
                     case Digits.HOURS:
-                        _digit.SetValue(_ts.Hours);
+                        _doubleDigit.SetValue(_ts.Hours);
                         break;
                     case Digits.MINUTES:
-                        _digit.SetValue(_ts.Minutes);
+                        _doubleDigit.SetValue(_ts.Minutes);
                         break;
                     case Digits.SECONDS:
-                        _digit.SetValue(_ts.Seconds);
+                        _doubleDigit.SetValue(_ts.Seconds);
                         break;
                     case Digits.MILLISECONDS:
-                        _digit.SetValue(_ts.Milliseconds);
+                        _doubleDigit.SetValue(_ts.Milliseconds);
                         break;
                 } 
             }
@@ -384,7 +386,7 @@ namespace AdrianMiasik.Components
         }
         
         /// <summary>
-        /// Disallows our generated digits to be interacted with
+        /// Prevents / disallows our generated digits to be interacted with
         /// </summary>
         public void Lock()
         {
@@ -394,6 +396,9 @@ namespace AdrianMiasik.Components
             }
         }
 
+        /// <summary>
+        /// Moves all our generated digits into their default viewport positions & anchors
+        /// </summary>
         public void ResetTextPositions()
         {
             foreach (DoubleDigit _digit in generatedDigits)
@@ -411,6 +416,10 @@ namespace AdrianMiasik.Components
             return generatedDigits;
         }
 
+        /// <summary>
+        /// Returns our timer in string format
+        /// </summary>
+        /// <returns></returns>
         public string GetTimerString()
         {
             string _result = String.Empty;
@@ -431,6 +440,9 @@ namespace AdrianMiasik.Components
             return _result;
         }
 
+        /// <summary>
+        /// Prevents tick animation from holding
+        /// </summary>
         public void CorrectTickAnimVisuals()
         {
             foreach (DoubleDigit _digit in generatedDigits)
@@ -479,6 +491,7 @@ namespace AdrianMiasik.Components
             OnValidate();
         }
 
+        // TODO: Fix this functionality
         /// <summary>
         /// Sets the value of the timer using the provided formatted string.
         /// </summary>

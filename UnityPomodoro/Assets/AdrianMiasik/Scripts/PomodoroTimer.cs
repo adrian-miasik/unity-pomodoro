@@ -337,7 +337,7 @@ namespace AdrianMiasik
                         
                 // Update visuals
                 ring.fillAmount = (float)currentTime / totalTime;
-                digitFormat.ShowFormatTime(TimeSpan.FromSeconds(currentTime));
+                digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime));
      
                 AnimateRingTickPulse();
             }
