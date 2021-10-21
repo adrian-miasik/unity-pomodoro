@@ -22,5 +22,15 @@ namespace AdrianMiasik.Components
             versionNumber.SetTextColor(_currentColors.foreground);
             copyrightDisclaimer.color = _currentColors.foreground;
         }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

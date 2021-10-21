@@ -117,7 +117,7 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
-            infoContainer.gameObject.SetActive(false);
+            infoContainer.Hide();
             contentContainer.gameObject.SetActive(true);
             
             // Initialize components
@@ -453,7 +453,7 @@ namespace AdrianMiasik
             
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
-            infoContainer.gameObject.SetActive(true);
+            infoContainer.Show();
             isInfoPageOpen = true;
             infoContainer.ColorUpdate(theme);
 
@@ -470,7 +470,7 @@ namespace AdrianMiasik
         public void HideInfo()
         {
             // Hide info, show main content
-            infoContainer.gameObject.SetActive(false);
+            infoContainer.Hide();
             isInfoPageOpen = false;
             contentContainer.gameObject.SetActive(true);
             
