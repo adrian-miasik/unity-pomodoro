@@ -580,24 +580,6 @@ namespace AdrianMiasik.Components
                     generatedDigits[_i].UpdateVisuals(GetDigitValue(generatedDigits[_i].digit));
                 }
             }
-
-            // Set timer sections
-            // ReSharper disable once InconsistentNaming
-            // for (int i = 0; i < _sections.Count; i++)
-            // {
-            //     switch (i)
-            //     {
-            //         case 0:
-            //             // SetHours(_sections[i]);
-            //             break;
-            //         case 1:
-            //             // SetMinutes(_sections[i]);
-            //             break;
-            //         case 2:
-            //             // SetSeconds(_sections[i]);
-            //             break;
-            //     }
-            // }
         }
         
         public int GetDigitValue(Digits _digits)
