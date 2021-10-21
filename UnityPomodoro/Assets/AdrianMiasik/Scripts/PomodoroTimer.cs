@@ -32,7 +32,6 @@ namespace AdrianMiasik
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
         [SerializeField] private InformationPanel infoContainer; // info content
-        private bool isInfoPageOpen;
         
         [Header("Background")] 
         [SerializeField] private Background background; // Used to pull select focus
@@ -329,7 +328,6 @@ namespace AdrianMiasik
                         digitFormat.ShowFormatTime(TimeSpan.FromSeconds(currentTime));
      
                         AnimateRingTickPulse();
-        
                     }
                     else
                     {
@@ -454,7 +452,6 @@ namespace AdrianMiasik
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.Show();
-            isInfoPageOpen = true;
             infoContainer.ColorUpdate(theme);
 
             if (!creditsBubble.IsRunning())
@@ -471,16 +468,10 @@ namespace AdrianMiasik
         {
             // Hide info, show main content
             infoContainer.Hide();
-            isInfoPageOpen = false;
             contentContainer.gameObject.SetActive(true);
             
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
-        }
-        
-        public bool IsInfoPageOpen()
-        {
-            return isInfoPageOpen;
         }
         
         /// <summary>
@@ -625,7 +616,7 @@ namespace AdrianMiasik
         {
             digitFormat.SetTimerValue(_timeString);
         }
-        
+
         /// <summary>
         /// Apply our color updates to relevant components
         /// </summary>
@@ -633,11 +624,6 @@ namespace AdrianMiasik
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void ColorUpdate(Theme _theme)
         {
-            if (isInfoPageOpen)
-            {
-                infoContainer.ColorUpdate(_theme);
-            }
-
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
             
             // State text
@@ -708,6 +694,11 @@ namespace AdrianMiasik
         public bool IsOnBreak()
         {
             return digitFormat.isOnBreak;
+        }
+
+        public bool IsInfoPageOpen()
+        {
+            return infoContainer.IsInfoPageOpen();
         }
     }
 }
