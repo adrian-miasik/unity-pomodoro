@@ -13,16 +13,23 @@ namespace AdrianMiasik.Components
         [SerializeField] private WriteVersionNumber versionNumber;
         [SerializeField] private TMP_Text copyrightDisclaimer;
 
+        private Theme theme;
         private bool isInfoPageOpen;
-        
+
+        public void Initialize(Theme _theme)
+        {
+            theme = _theme;
+            _theme.RegisterColorHook(this);
+        }
+
         public void ColorUpdate(Theme _theme)
         {
-            // Prevent
             if (!isInfoPageOpen)
             {
                 return;
             }
 
+            Debug.Log("Updating theme");
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
             title.color = _currentColors.foreground;
             description.color = _currentColors.foreground;
@@ -40,6 +47,8 @@ namespace AdrianMiasik.Components
         {
             gameObject.SetActive(true);
             isInfoPageOpen = true;
+            
+            ColorUpdate(theme);
         }
 
         public void Hide()

@@ -116,6 +116,7 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
+            infoContainer.Initialize(theme);
             infoContainer.Hide();
             contentContainer.gameObject.SetActive(true);
             
@@ -452,7 +453,6 @@ namespace AdrianMiasik
             // Hide main content, show info
             contentContainer.gameObject.SetActive(false);
             infoContainer.Show();
-            infoContainer.ColorUpdate(theme);
 
             if (!creditsBubble.IsRunning())
             {
