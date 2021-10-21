@@ -12,6 +12,7 @@ namespace AdrianMiasik
         public override void OnInspectorGUI()
         {
             // Define style
+            // ReSharper disable once UseObjectOrCollectionInitializer
             GUIStyle _style = new GUIStyle();
             _style.fontStyle = FontStyle.Bold;
             _style.normal.textColor = Color.white;
