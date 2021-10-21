@@ -629,14 +629,16 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Apply our color updates to relevant compenents
+        /// Apply our color updates to relevant components
         /// </summary>
         /// <param name="_theme"></param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void ColorUpdate(Theme _theme)
         {
-            // TODO: check if info page is visible
-            infoContainer.ColorUpdate(_theme);
+            if (isInfoPageOpen)
+            {
+                infoContainer.ColorUpdate(_theme);
+            }
 
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
             
