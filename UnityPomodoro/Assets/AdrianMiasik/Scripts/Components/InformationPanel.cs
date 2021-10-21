@@ -28,8 +28,7 @@ namespace AdrianMiasik.Components
             {
                 return;
             }
-
-            Debug.Log("Updating theme");
+            
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
             title.color = _currentColors.foreground;
             description.color = _currentColors.foreground;
