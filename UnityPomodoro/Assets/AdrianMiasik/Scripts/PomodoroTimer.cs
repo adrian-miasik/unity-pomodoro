@@ -436,19 +436,15 @@ namespace AdrianMiasik
         /// <summary>
         /// Updates our core timer values based on the digit format time span
         /// </summary>
-        private TimeSpan CalculateTimeValues()
+        private void CalculateTimeValues(bool _hideArrows = true)
         {
             TimeSpan _ts = digitFormat.GetTime();
             currentTime = _ts.TotalSeconds;
             totalTime = (float)_ts.TotalSeconds;
-            return _ts;
-        }
-
-        private void ApplyTimeValues(TimeSpan _ts)
-        {
             digitFormat.SetFormatTime(_ts);
+            digitFormat.UpdateDigitVisuals(_hideArrows);
         }
-
+        
         /// <summary>
         /// Shows info, hides main content, and shows credits bubble
         /// </summary>
@@ -512,7 +508,7 @@ namespace AdrianMiasik
         {
             digitFormat.SetToBreak();
             SwitchState(States.SETUP);
-            ApplyTimeValues(CalculateTimeValues());
+            CalculateTimeValues();
         }
 
         /// <summary>
@@ -522,7 +518,7 @@ namespace AdrianMiasik
         {
             digitFormat.SetToWork();
             SwitchState(States.SETUP);
-            ApplyTimeValues(CalculateTimeValues());
+            CalculateTimeValues();
         }
 
         /// <summary>
@@ -537,7 +533,7 @@ namespace AdrianMiasik
             }
 
             SwitchState(States.SETUP);
-            ApplyTimeValues(CalculateTimeValues());
+            CalculateTimeValues();
 
             // Stop digit tick animation
             digitFormat.ResetTextPositions();

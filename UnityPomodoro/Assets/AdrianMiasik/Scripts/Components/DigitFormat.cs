@@ -97,12 +97,22 @@ namespace AdrianMiasik.Components
             GenerateDigits(GetDoubleDigitSet(format, _separatorChar[0]));
 
             // Calculate time
-            cachedTimeSpan = TimeSpan.FromDays(workTime[0]) +
-                             TimeSpan.FromHours(workTime[1]) +
-                             TimeSpan.FromMinutes(workTime[2]) +
-                             TimeSpan.FromSeconds(workTime[3]) +
-                             TimeSpan.FromMilliseconds(workTime[4]);
+            cachedTimeSpan = GetTime();
             SetFormatTime(cachedTimeSpan);
+            
+            UpdateDigitVisuals(true);
+        }
+
+        public void UpdateDigitVisuals(bool _hideArrows = false)
+        {
+            foreach (DoubleDigit _digit in generatedDigits)
+            {
+                _digit.UpdateVisuals(GetDigitValue(_digit.GetDigit()));
+                if (_hideArrows)
+                {
+                    _digit.HideArrows();
+                }
+            }
         }
         
         public bool IsOnBreak()

@@ -75,15 +75,14 @@ namespace AdrianMiasik.Components
                 // Prevent input field from getting selection focus
                 caret.raycastTarget = false;
             }
-
-            UpdateVisuals(_value);
+            
+            HideArrows();
         }
 
-        private void UpdateVisuals(int _value)
+        public void UpdateVisuals(int _value)
         {
-            SetSquircleColor(color);
             SetDigitsLabel(_value);
-            HideArrows();
+            UpdateArrows();
             pulseWobble.Stop();
         }
 
@@ -233,13 +232,8 @@ namespace AdrianMiasik.Components
         {
             return input.text;
         }
-
-        public Selectable GetSelectable()
-        {
-            return selectable;
-        }
         
-        private void HideArrows()
+        public void HideArrows()
         {
             upArrow.Hide();
             downArrow.Hide();
@@ -278,15 +272,12 @@ namespace AdrianMiasik.Components
             input.textComponent.color = _newColor;
         }
         
-        // Unity Events
         public void SetValue(int _value)
         {
             if (format == null)
                 return;
             
-            format.SetDigit(digit, string.IsNullOrEmpty(_value.ToString()) ? 0 : int.Parse(_value.ToString()));
-            UpdateArrows();
-            UpdateVisuals(_value);
+            format.SetDigit(digit, _value);
         }
         
         public void IncrementOne()
@@ -295,11 +286,9 @@ namespace AdrianMiasik.Components
                 return;
             
             format.IncrementOne(digit);
-            SetValue(format.GetDigitValue(digit));
-            SetDigitsLabel(format.GetDigitValue(digit));
-            pulseWobble.Stop();
+            UpdateVisuals(format.GetDigitValue(digit));
+            
             pulseWobble.Play();
-            UpdateArrows();
             accumulatedSelectionTime = 0;
         }
 
@@ -309,11 +298,9 @@ namespace AdrianMiasik.Components
                 return;
             
             format.DecrementOne(digit);
-            SetValue(format.GetDigitValue(digit));
-            SetDigitsLabel(format.GetDigitValue(digit));
-            pulseWobble.Stop();
+            UpdateVisuals(format.GetDigitValue(digit));
+            
             pulseWobble.Play();
-            UpdateArrows();
             accumulatedSelectionTime = 0;
         }
 
@@ -382,6 +369,14 @@ namespace AdrianMiasik.Components
             // Disable caret selection
             caret.raycastTarget = false;
             input.DeactivateInputField();
+        }
+
+        // Unity Event
+        public void SetValueEndEdit()
+        {
+            input.text = string.IsNullOrEmpty(input.text) ? "00" : input.text;
+            SetValue(int.Parse(input.text));
+            UpdateVisuals(format.GetDigitValue(digit));
         }
 
         public void DeselectInput()

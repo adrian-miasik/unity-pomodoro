@@ -1994,7 +1994,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.55
+  m_fontSize: 31.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3884,52 +3884,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 429705704}
     - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 429705704}
     - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetMinutes
       objectReference: {fileID: 0}
     - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: DeselectInput
       objectReference: {fileID: 0}
     - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AdrianMiasik.DoubleDigit, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: AdrianMiasik.DoubleDigit, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2939933545338344003, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
