@@ -137,6 +137,8 @@ namespace AdrianMiasik
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
             
+            CalculateTimeValues();
+            
             // Transition to setup state
             SwitchState(States.SETUP);
 
@@ -204,7 +206,6 @@ namespace AdrianMiasik
                     break;
 
                 case States.RUNNING:
-                    CalculateTimeValues();
                     digitFormat.SetDigitColor(theme.GetCurrentColorScheme().foreground);
                     
                     text.text = "Running";
