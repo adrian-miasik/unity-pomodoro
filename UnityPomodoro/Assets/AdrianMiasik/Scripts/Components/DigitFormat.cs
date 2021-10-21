@@ -521,8 +521,7 @@ namespace AdrianMiasik.Components
 
             OnValidate();
         }
-
-        // TODO: Fix this functionality
+        
         /// <summary>
         /// Sets the value of the timer using the provided formatted string.
         /// </summary>
@@ -571,22 +570,34 @@ namespace AdrianMiasik.Components
             }
 
             // Set timer sections
-            // ReSharper disable once InconsistentNaming
-            for (int i = 0; i < _sections.Count; i++)
+            // Check if we have enough generated digits...(We will allow users to paste longer values, but only
+            // carry over the values that can fit within the number of generated digits we have)
+            if (generatedDigits.Count >= _sections.Count)
             {
-                switch (i)
+                for (int _i = 0; _i < _sections.Count; _i++)
                 {
-                    case 0:
-                        // SetHours(_sections[i]);
-                        break;
-                    case 1:
-                        // SetMinutes(_sections[i]);
-                        break;
-                    case 2:
-                        // SetSeconds(_sections[i]);
-                        break;
+                    generatedDigits[_i].SetValue(int.Parse(_sections[_i]));
+                    generatedDigits[_i].UpdateVisuals(GetDigitValue(generatedDigits[_i].digit));
                 }
             }
+
+            // Set timer sections
+            // ReSharper disable once InconsistentNaming
+            // for (int i = 0; i < _sections.Count; i++)
+            // {
+            //     switch (i)
+            //     {
+            //         case 0:
+            //             // SetHours(_sections[i]);
+            //             break;
+            //         case 1:
+            //             // SetMinutes(_sections[i]);
+            //             break;
+            //         case 2:
+            //             // SetSeconds(_sections[i]);
+            //             break;
+            //     }
+            // }
         }
         
         public int GetDigitValue(Digits _digits)

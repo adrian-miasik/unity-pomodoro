@@ -269,7 +269,8 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Sets the digit label to the provided input.
         /// This is different from setting the digit time.
-        /// If you are looking to modify the users set/edited time <see cref="SetValue"/>
+        /// If you are looking to modify the users set/edited time <see cref="SetValue"/>.
+        /// Also if you are looking to update arrows as well as the label <seealso cref="UpdateVisuals"/>
         /// </summary>
         /// <param name="_value"></param>
         public void SetDigitsLabel(int _value)
