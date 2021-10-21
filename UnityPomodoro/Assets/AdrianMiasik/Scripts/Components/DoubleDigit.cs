@@ -184,21 +184,6 @@ namespace AdrianMiasik.Components
             isColorAnimating = true;
         }
 
-        public void SetDigitsLabel(int _digits)
-        {
-            // If this digit value is actually different...
-            if (_digits.ToString("D2") != input.text)
-            {
-                // Update the digit
-                input.text = _digits.ToString("D2");
-
-                if (format.GetTimer().state == PomodoroTimer.States.RUNNING)
-                {
-                    OnDigitChange?.Invoke();
-                }
-            }
-        }
-
         // Unity Event
         public void PlayTickAnimation()
         {
@@ -267,12 +252,39 @@ namespace AdrianMiasik.Components
             input.textComponent.color = _newColor;
         }
         
+        /// <summary>
+        /// Sets the digit data to the provided input.
+        /// This is different from the current visuals of this digit.
+        /// If you are looking to modify the digit visual value <see cref="SetDigitsLabel"/>
+        /// </summary>
+        /// <param name="_value"></param>
         public void SetValue(int _value)
         {
             if (format == null)
                 return;
             
             format.SetDigit(digit, _value);
+        }
+        
+        /// <summary>
+        /// Sets the digit label to the provided input.
+        /// This is different from setting the digit time.
+        /// If you are looking to modify the users set/edited time <see cref="SetValue"/>
+        /// </summary>
+        /// <param name="_value"></param>
+        public void SetDigitsLabel(int _value)
+        {
+            // If this digit value is actually different...
+            if (_value.ToString("D2") != input.text)
+            {
+                // Update the digit
+                input.text = _value.ToString("D2");
+
+                if (format.GetTimer().state == PomodoroTimer.States.RUNNING)
+                {
+                    OnDigitChange?.Invoke();
+                }
+            }
         }
         
         public void IncrementOne()
@@ -282,7 +294,6 @@ namespace AdrianMiasik.Components
             
             format.IncrementOne(digit);
             UpdateVisuals(format.GetDigitValue(digit));
-            
             pulseWobble.Play();
             accumulatedSelectionTime = 0;
         }
@@ -294,7 +305,6 @@ namespace AdrianMiasik.Components
             
             format.DecrementOne(digit);
             UpdateVisuals(format.GetDigitValue(digit));
-            
             pulseWobble.Play();
             accumulatedSelectionTime = 0;
         }
