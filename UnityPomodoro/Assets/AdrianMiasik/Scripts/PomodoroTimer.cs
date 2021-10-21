@@ -319,28 +319,32 @@ namespace AdrianMiasik
                     break;
 
                 case States.RUNNING:
-                    if (currentTime > 0)
-                    {
-                        // Decrement timer
-                        currentTime -= Time.deltaTime;
-                        
-                        // Update visuals
-                        ring.fillAmount = (float)currentTime / totalTime;
-                        digitFormat.ShowFormatTime(TimeSpan.FromSeconds(currentTime));
-     
-                        AnimateRingTickPulse();
-                    }
-                    else
-                    {
-                        SwitchState(States.COMPLETE);
-                        OnTimerCompletion?.Invoke();
-                    }
-
+                    Tick();
                     break;
 
                 case States.COMPLETE:
                     AnimateRingPulse();
                     break;
+            }
+        }
+
+        private void Tick()
+        {
+            if (currentTime > 0)
+            {
+                // Decrement timer
+                currentTime -= Time.deltaTime;
+                        
+                // Update visuals
+                ring.fillAmount = (float)currentTime / totalTime;
+                digitFormat.ShowFormatTime(TimeSpan.FromSeconds(currentTime));
+     
+                AnimateRingTickPulse();
+            }
+            else
+            {
+                SwitchState(States.COMPLETE);
+                OnTimerCompletion?.Invoke();
             }
         }
 
