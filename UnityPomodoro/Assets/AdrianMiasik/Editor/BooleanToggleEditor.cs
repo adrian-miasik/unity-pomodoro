@@ -1,4 +1,3 @@
-using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using Unity.VectorGraphics;
 using UnityEditor;
@@ -13,38 +12,38 @@ namespace AdrianMiasik
         public override void OnInspectorGUI()
         {
             // Define style
-            GUIStyle style = new GUIStyle();
-            style.fontStyle = FontStyle.Bold;
-            style.normal.textColor = Color.white;
+            GUIStyle _style = new GUIStyle();
+            _style.fontStyle = FontStyle.Bold;
+            _style.normal.textColor = Color.white;
             
             // Draw title
-            EditorGUILayout.LabelField("Toggle", style);
+            EditorGUILayout.LabelField("Toggle", _style);
             
             base.OnInspectorGUI();
             
             // Fetch target script
-            BooleanToggle booleanToggle = (BooleanToggle) target;
+            BooleanToggle _booleanToggle = (BooleanToggle) target;
 
             #region Vertical Group
             EditorGUILayout.BeginVertical();
             EditorGUILayout.Space();
 
             // Draw title
-            EditorGUILayout.LabelField("Information Button", style);
+            EditorGUILayout.LabelField("Information Button", _style);
 
             // Draw property fields
-            booleanToggle.icon = (SVGImage) EditorGUILayout.ObjectField("Icon", booleanToggle.icon, typeof(SVGImage), true);
-            booleanToggle.falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", booleanToggle.falseSprite, typeof(Sprite), true);
-            booleanToggle.falseZRotation = EditorGUILayout.FloatField("False Z Rotation", booleanToggle.falseZRotation);
-            booleanToggle.trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", booleanToggle.trueSprite, typeof(Sprite), true);
-            booleanToggle.trueZRotation = EditorGUILayout.FloatField("True Z Rotation", booleanToggle.trueZRotation);
+            _booleanToggle.icon = (SVGImage) EditorGUILayout.ObjectField("Icon", _booleanToggle.icon, typeof(SVGImage), true);
+            _booleanToggle.falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", _booleanToggle.falseSprite, typeof(Sprite), true);
+            _booleanToggle.falseZRotation = EditorGUILayout.FloatField("False Z Rotation", _booleanToggle.falseZRotation);
+            _booleanToggle.trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", _booleanToggle.trueSprite, typeof(Sprite), true);
+            _booleanToggle.trueZRotation = EditorGUILayout.FloatField("True Z Rotation", _booleanToggle.trueZRotation);
             
             // Draw UnityEvents
-            SerializedProperty onFalseClick = serializedObject.FindProperty("OnSetToFalseClick");
-            EditorGUILayout.PropertyField(onFalseClick);
+            SerializedProperty _onFalseClick = serializedObject.FindProperty("onSetToFalseClick");
+            EditorGUILayout.PropertyField(_onFalseClick);
             
-            SerializedProperty onTrueClick = serializedObject.FindProperty("OnSetToTrueClick");
-            EditorGUILayout.PropertyField(onTrueClick);
+            SerializedProperty _onTrueClick = serializedObject.FindProperty("onSetToTrueClick");
+            EditorGUILayout.PropertyField(_onTrueClick);
             
             serializedObject.ApplyModifiedProperties();
             

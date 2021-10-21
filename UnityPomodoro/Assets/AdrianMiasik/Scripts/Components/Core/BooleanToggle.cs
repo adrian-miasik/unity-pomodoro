@@ -20,8 +20,8 @@ namespace AdrianMiasik.Components.Core
         public float trueZRotation;
         
         // Unity Events
-        public UnityEvent OnSetToTrueClick;
-        public UnityEvent OnSetToFalseClick;
+        public UnityEvent onSetToTrueClick;
+        public UnityEvent onSetToFalseClick;
 
         private Theme theme;
 
@@ -43,7 +43,7 @@ namespace AdrianMiasik.Components.Core
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,trueZRotation));
                 if (_invokeEvents)
                 {
-                    OnSetToTrueClick.Invoke();
+                    onSetToTrueClick.Invoke();
                 }
             }
             else
@@ -52,7 +52,7 @@ namespace AdrianMiasik.Components.Core
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,falseZRotation));
                 if (_invokeEvents)
                 {
-                    OnSetToFalseClick.Invoke();
+                    onSetToFalseClick.Invoke();
                 }
             }
             
