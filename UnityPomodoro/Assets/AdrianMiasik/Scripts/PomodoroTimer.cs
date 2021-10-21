@@ -483,8 +483,8 @@ namespace AdrianMiasik
         /// </summary>
         public void Play()
         {
-            CalculateTimeValues();
             SwitchState(States.RUNNING);
+            CalculateTimeValues();
         }
 
         /// <summary>
@@ -501,8 +501,8 @@ namespace AdrianMiasik
         public void SwitchToBreakTimer()
         {
             digitFormat.isOnBreak = true;
-            CalculateTimeValues();
             SwitchState(States.SETUP);
+            CalculateTimeValues();
         }
 
         /// <summary>
