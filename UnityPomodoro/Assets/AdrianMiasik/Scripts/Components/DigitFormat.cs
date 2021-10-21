@@ -563,9 +563,10 @@ namespace AdrianMiasik.Components
             _sections.Add(_value);
 
             // Compare sections with timer format
-            if (_sections.Count != 3) // TODO: Support more digit formats
+            if (_sections.Count != generatedDigits.Count)
             {
-                Debug.LogWarning("The provided string does not match the pomodoro timer layout");
+                Debug.LogWarning("The provided string does not match the pomodoro timer layout exactly. " +
+                                 "Truncation may occur.");
                 return;
             }
 
