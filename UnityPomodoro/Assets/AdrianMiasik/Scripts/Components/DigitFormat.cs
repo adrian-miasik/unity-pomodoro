@@ -17,8 +17,8 @@ namespace AdrianMiasik.Components
             SECONDS,
             MILLISECONDS
         }
-        
-        private enum SupportedFormats
+
+        public enum SupportedFormats
         {
             DD_HH_MM_SS_MS, // Full
             HH_MM_SS_MS,    // Detail
@@ -625,6 +625,11 @@ namespace AdrianMiasik.Components
         public PomodoroTimer GetTimer()
         {
             return timer;
+        }
+
+        public void SwitchFormat(SupportedFormats _desiredFormat)
+        {
+            format = _desiredFormat;
         }
     }
  }

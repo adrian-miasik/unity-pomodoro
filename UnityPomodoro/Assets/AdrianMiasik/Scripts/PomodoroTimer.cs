@@ -725,5 +725,11 @@ namespace AdrianMiasik
         {
             background.SetSelectionNavigation(_backgroundNav);
         }
+
+        public void ChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
+        {
+            digitFormat.SwitchFormat(_desiredFormat);
+            digitFormat.GenerateFormat();
+        }
     }
 }
