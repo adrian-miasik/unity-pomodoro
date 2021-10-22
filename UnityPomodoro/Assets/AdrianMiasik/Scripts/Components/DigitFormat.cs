@@ -567,7 +567,6 @@ namespace AdrianMiasik.Components
             {
                 Debug.LogWarning("The provided string does not match the pomodoro timer layout exactly. " +
                                  "Truncation may occur.");
-                return;
             }
 
             // Set timer sections
