@@ -72,6 +72,7 @@ namespace AdrianMiasik
         // Time
         private double currentTime;
         private float totalTime; // In seconds
+        private bool firstTimePlaying = true;
 
         // Pause Fade Animation
         [Header("Fade Animation")] 
@@ -484,6 +485,12 @@ namespace AdrianMiasik
         /// </summary>
         public void Play()
         {
+            if (firstTimePlaying)
+            {
+                firstTimePlaying = false;
+                CalculateTimeValues();
+            }
+
             SwitchState(States.RUNNING);
         }
 
@@ -502,6 +509,7 @@ namespace AdrianMiasik
         {
             digitFormat.isOnBreak = true;
             SwitchState(States.SETUP);
+            firstTimePlaying = true;
             CalculateTimeValues();
         }
 
@@ -512,6 +520,7 @@ namespace AdrianMiasik
         {
             digitFormat.isOnBreak = false;
             SwitchState(States.SETUP);
+            firstTimePlaying = true;
             CalculateTimeValues();
         }
 
@@ -527,6 +536,7 @@ namespace AdrianMiasik
             }
 
             SwitchState(States.SETUP);
+            firstTimePlaying = true;
             CalculateTimeValues();
 
             // Stop digit tick animation
