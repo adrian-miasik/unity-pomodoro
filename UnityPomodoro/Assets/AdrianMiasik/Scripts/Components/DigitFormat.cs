@@ -26,7 +26,7 @@ namespace AdrianMiasik.Components
             MM_SS,          // Simple
             SS              // Bare
         }
-        
+
         // Current format
         [SerializeField] private SupportedFormats format;
 
@@ -47,7 +47,7 @@ namespace AdrianMiasik.Components
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
         private TimeSpan cachedTimeSpan;
-        
+
         private void OnValidate()
         {
             // Prevent values from going over their limit
@@ -66,13 +66,13 @@ namespace AdrianMiasik.Components
                 }
             }
         }
-        
+
         public void Initialize(PomodoroTimer _timer, Theme _theme)
         {
             timer = _timer;
             theme = _theme;
             theme.RegisterColorHook(this);
-            
+
             GenerateFormat();
         }
 
@@ -89,10 +89,10 @@ namespace AdrianMiasik.Components
                 {
                     continue;
                 }
-                
+
                 Destroy(_t.gameObject);
             }
-            
+
             // Generate our digits and separators (format)
             char[] _separatorChar = { '_' };
             GenerateFormat(GetDoubleDigitSet(format, _separatorChar[0]));
@@ -100,7 +100,7 @@ namespace AdrianMiasik.Components
             // Calculate time
             cachedTimeSpan = GetTime();
             SetTime(cachedTimeSpan);
-            
+
             // Apply
             RefreshDigitVisuals();
         }
@@ -118,7 +118,7 @@ namespace AdrianMiasik.Components
         {
             isOnBreak = !isOnBreak;
         }
-        
+
         public TimeSpan GetTime()
         {
             TimeSpan _ts;
@@ -172,7 +172,7 @@ namespace AdrianMiasik.Components
                 else
                 {
                     _currentAbbreviation += _currentCharacter;
-                    
+
                     // If we reached the end of our list...
                     if (_i == _formatString.Length - 1)
                     {
@@ -184,7 +184,7 @@ namespace AdrianMiasik.Components
             // Return abbreviation and value set
             return _result;
         }
-        
+
         /// <summary>
         /// Generates the appropriate amount of digits and separators based on the provided data set
         /// </summary>
@@ -197,7 +197,7 @@ namespace AdrianMiasik.Components
             for (int _i = 0; _i < _doubleDigitSetToGenerate.Count; _i++)
             {
                 KeyValuePair<string, int> _pair = _doubleDigitSetToGenerate[_i];
-                
+
                 // Generate double digit
                 DoubleDigit _dd = Instantiate(digitSource, transform);
                 _dd.Initialize(this, GetDigitType(_pair.Key), _pair.Value, theme);
@@ -208,7 +208,7 @@ namespace AdrianMiasik.Components
                 {
                     break;
                 }
-                
+
                 // Generate spacer (between each character)
                 DigitSeparator _separator = Instantiate(separatorSource, transform);
                 generatedSeparators.Add(_separator);
@@ -218,7 +218,7 @@ namespace AdrianMiasik.Components
             for (int _i = 0; _i < generatedDigits.Count; _i++)
             {
                 DoubleDigit _digit = generatedDigits[_i];
-                
+
                 // Create navigation
                 Navigation _digitNav = new Navigation
                 {
@@ -230,7 +230,7 @@ namespace AdrianMiasik.Components
                 // Apply navigation
                 _digit.GetSelectable().navigation = _digitNav;
             }
-            
+
             // Fix background navigation
             Navigation _backgroundNav = new Navigation
             {
@@ -245,7 +245,7 @@ namespace AdrianMiasik.Components
         {
             return (_index % _length + _length) % _length;
         }
-        
+
         public void ShowTime(TimeSpan _ts)
         {
             foreach (DoubleDigit _doubleDigit in generatedDigits)
@@ -289,7 +289,7 @@ namespace AdrianMiasik.Components
             foreach (DoubleDigit _doubleDigit in generatedDigits)
             {
                 Digits _type = _doubleDigit.digit;
-                
+
                 switch (_type)
                 {
                     case Digits.DAYS:
@@ -307,7 +307,7 @@ namespace AdrianMiasik.Components
                     case Digits.MILLISECONDS:
                         _doubleDigit.SetValue(_ts.Milliseconds);
                         break;
-                } 
+                }
             }
         }
 
@@ -385,14 +385,14 @@ namespace AdrianMiasik.Components
         {
             // Digits
             SetDigitColor(_theme.GetCurrentColorScheme().foreground);
-            
+
             // Separators
             foreach (DigitSeparator _separator in generatedSeparators)
             {
                 _separator.SetSeparatorColor(_theme.GetCurrentColorScheme().foreground);
             }
         }
-        
+
         /// <summary>
         /// Sets the color of our digits to the provided color. <see cref="_newColor"/>
         /// </summary>
@@ -415,7 +415,7 @@ namespace AdrianMiasik.Components
                 _digit.Unlock();
             }
         }
-        
+
         /// <summary>
         /// Prevents / disallows our generated digits to be interacted with
         /// </summary>
@@ -437,7 +437,7 @@ namespace AdrianMiasik.Components
                 _digit.ResetTextPosition();
             }
         }
-        
+
         /// <summary>
         /// Returns our list of generated digits
         /// </summary>
@@ -465,6 +465,7 @@ namespace AdrianMiasik.Components
                 {
                     break;
                 }
+
                 _result += ":";
             }
 
@@ -484,7 +485,7 @@ namespace AdrianMiasik.Components
                 }
             }
         }
-        
+
         /// <summary>
         /// Increments the provided digit by one. (+1)
         /// </summary>
@@ -502,7 +503,7 @@ namespace AdrianMiasik.Components
         {
             SetDigit(_digits, GetDigitValue(_digits) - 1);
         }
-        
+
         /// <summary>
         /// Sets the provided digit to it's provided value
         /// </summary>
@@ -521,7 +522,7 @@ namespace AdrianMiasik.Components
 
             OnValidate();
         }
-        
+
         /// <summary>
         /// Sets the value of the timer using the provided formatted string.
         /// </summary>
@@ -533,7 +534,7 @@ namespace AdrianMiasik.Components
             {
                 return;
             }
-            
+
             List<string> _sections = new List<string>();
             string _value = String.Empty;
 
@@ -581,7 +582,7 @@ namespace AdrianMiasik.Components
                 }
             }
         }
-        
+
         public int GetDigitValue(Digits _digits)
         {
             if (!isOnBreak)
@@ -591,7 +592,7 @@ namespace AdrianMiasik.Components
 
             return breakTime[(int)_digits];
         }
-        
+
         /// <summary>
         /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
         /// </summary>
