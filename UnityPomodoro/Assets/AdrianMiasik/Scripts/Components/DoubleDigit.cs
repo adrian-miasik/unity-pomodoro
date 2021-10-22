@@ -113,6 +113,7 @@ namespace AdrianMiasik.Components
                     if (!input.isFocused)
                     {
                         SetValue(0);
+                        UpdateVisuals(format.GetDigitValue(digit));
                     }
                 }
                 
