@@ -730,6 +730,7 @@ namespace AdrianMiasik
         {
             digitFormat.SwitchFormat(_desiredFormat);
             digitFormat.GenerateFormat();
+            Restart(false);
         }
     }
 }

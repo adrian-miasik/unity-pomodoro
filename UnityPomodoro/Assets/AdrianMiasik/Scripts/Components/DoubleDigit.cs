@@ -31,7 +31,7 @@ namespace AdrianMiasik.Components
 
         [HideInInspector] public DigitFormat.Digits digit;
         private DigitFormat format;
-        private bool isInteractable;
+        private bool isInteractable = true;
         private bool isSelected;
 
         // Color
@@ -77,6 +77,7 @@ namespace AdrianMiasik.Components
             }
             
             HideArrows();
+            ColorUpdate(_theme);
         }
 
         public void UpdateVisuals(int _value)
