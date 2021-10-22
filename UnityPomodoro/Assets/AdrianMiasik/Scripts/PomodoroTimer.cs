@@ -485,7 +485,6 @@ namespace AdrianMiasik
         public void Play()
         {
             SwitchState(States.RUNNING);
-            CalculateTimeValues();
         }
 
         /// <summary>
