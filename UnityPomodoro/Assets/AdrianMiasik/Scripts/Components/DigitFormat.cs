@@ -572,9 +572,9 @@ namespace AdrianMiasik.Components
             // Set timer sections
             // Check if we have enough generated digits...(We will allow users to paste longer values, but only
             // carry over the values that can fit within the number of generated digits we have)
-            if (generatedDigits.Count >= _sections.Count)
+            if (_sections.Count >= generatedDigits.Count)
             {
-                for (int _i = 0; _i < _sections.Count; _i++)
+                for (int _i = 0; _i < generatedDigits.Count; _i++)
                 {
                     generatedDigits[_i].SetValue(int.Parse(_sections[_i]));
                     generatedDigits[_i].UpdateVisuals(GetDigitValue(generatedDigits[_i].digit));
