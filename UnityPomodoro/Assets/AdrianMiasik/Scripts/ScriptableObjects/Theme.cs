@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
@@ -36,6 +37,14 @@ namespace AdrianMiasik.ScriptableObjects
             else
             {
                 colorElements.Add(_hook);
+            }
+        }
+
+        public void Deregister(IColorHook _colorHook)
+        {
+            if (colorElements.Contains(_colorHook))
+            {
+                colorElements.Remove(_colorHook);
             }
         }
 
