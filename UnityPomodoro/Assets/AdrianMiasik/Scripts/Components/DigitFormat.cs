@@ -110,6 +110,8 @@ namespace AdrianMiasik.Components
 
             // Apply
             RefreshDigitVisuals();
+            
+            ColorUpdate(timer.GetTheme());
         }
 
         public void RefreshDigitVisuals()
