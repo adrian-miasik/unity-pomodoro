@@ -29,11 +29,11 @@ namespace AdrianMiasik.Components.Core
         private Color trueColor;
         private Color falseColor;
 
-        public void Initialize(bool _state, Theme _theme)
+        public void Initialize(PomodoroTimer _timer, bool _state)
         {
             state = _state;
-            _theme.RegisterColorHook(this);
-            ColorUpdate(_theme);
+            _timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(_timer.GetTheme());
         }
         
         /// <summary>

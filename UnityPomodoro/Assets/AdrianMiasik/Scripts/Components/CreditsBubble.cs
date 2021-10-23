@@ -25,7 +25,6 @@ namespace AdrianMiasik.Components
         private bool lockInteraction;
 
         private PomodoroTimer timer;
-        private Theme theme;
 
         private enum FadeState
         {
@@ -39,17 +38,16 @@ namespace AdrianMiasik.Components
         public void Initialize(PomodoroTimer _timer)
         {
             timer = _timer;
-            theme = timer.GetTheme();
-            
+
             // Setup
             Initialize(duration);
             Lock();
             fadeProgress = 1; // Starts at one since bubble is visible
             
             // Theme
-            theme.RegisterColorHook(this);
-            background.color = theme.GetCurrentColorScheme().backgroundHighlight;
-            ColorUpdate(theme);
+            timer.GetTheme().RegisterColorHook(this);
+            background.color = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            ColorUpdate(timer.GetTheme());
         }
         
         protected override void OnUpdate(float _progress)
@@ -101,7 +99,7 @@ namespace AdrianMiasik.Components
         {
             foreach (TMP_Text _text in text)
             {
-                _text.color = theme.GetCurrentColorScheme().foreground;
+                _text.color = timer.GetTheme().GetCurrentColorScheme().foreground;
             }
 
             state = FadeState.FADING_OUT;
@@ -111,7 +109,7 @@ namespace AdrianMiasik.Components
         {
             foreach (TMP_Text _text in text)
             {
-                _text.color = theme.GetCurrentColorScheme().foreground;
+                _text.color = timer.GetTheme().GetCurrentColorScheme().foreground;
             }
 
             state = FadeState.FADING_IN;

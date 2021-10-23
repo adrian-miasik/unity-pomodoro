@@ -10,10 +10,10 @@ namespace AdrianMiasik.Components
     {
         [SerializeField] private List<TMP_Text> labels = new List<TMP_Text>();
 
-        public void Initialize(Theme _theme)
+        public void Initialize(PomodoroTimer _timer)
         {
-            _theme.RegisterColorHook(this);
-            ColorUpdate(_theme);
+            _timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(_timer.GetTheme());
         }
 
         public void ColorUpdate(Theme _theme)

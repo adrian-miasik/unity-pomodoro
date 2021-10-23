@@ -52,6 +52,7 @@ namespace AdrianMiasik
         [SerializeField] private BooleanSlider breakSlider;
         [SerializeField] private CreditsBubble creditsBubble;
         [SerializeField] private BooleanSlider themeSlider;
+        [SerializeField] private BooleanToggle halloweenToggle;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
 
         [Header("Ring")] 
@@ -119,20 +120,21 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
-            infoContainer.Initialize(theme);
+            infoContainer.Initialize(this);
             infoContainer.Hide();
             contentContainer.gameObject.SetActive(true);
-            
+
             // Initialize components
             hotkeyDetector.Initialize(this);
-            background.Initialize(theme);
-            digitFormat.Initialize(this, theme);
-            completionLabel.Initialize(theme);
-            themeSlider.Initialize(false, theme);
+            background.Initialize(this);
+            digitFormat.Initialize(this);
+            completionLabel.Initialize(this);
+            themeSlider.Initialize(this, false);
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);
-            infoToggle.Initialize(false, theme);
-            breakSlider.Initialize(false, theme);
+            infoToggle.Initialize(this, false);
+            breakSlider.Initialize(this, false);
+            halloweenToggle.Initialize(this, false);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
@@ -623,11 +625,6 @@ namespace AdrianMiasik
             return digitFormat.GetTimerString();
         }
         
-        public Theme GetTheme()
-        {
-            return theme;
-        }
-        
         // Setters
         public void SetTimerValue(string _timeString)
         {
@@ -673,7 +670,7 @@ namespace AdrianMiasik
             // Paused Digits
             startingColor = theme.GetCurrentColorScheme().foreground;
             endingColor = theme.GetCurrentColorScheme().backgroundHighlight;
-            
+
             // Reset paused digit anim
             ResetDigitFadeAnim();
 
@@ -735,14 +732,35 @@ namespace AdrianMiasik
             Restart(false);
         }
         
+        // TODO: Create theme manager class?
+        public Theme GetTheme()
+        {
+            return theme;
+        }
+        
+        // Unity Event
         public void SetToLightMode()
         {
             theme.SetToLightMode();
         }
 
+        // Unity Event
         public void SetToDarkMode()
         {
             theme.SetToDarkMode();
+        }
+        
+        // Unity Event
+        public void SwitchTheme(Theme _desiredTheme)
+        {
+            // Transfer elements to new theme (So theme knows which elements to color update)
+            theme.TransferColorElements(theme, _desiredTheme);
+            
+            // Swap our theme
+            theme = _desiredTheme;
+            
+            // Apply our changes
+            theme.ApplyColorChanges();
         }
     }
 }

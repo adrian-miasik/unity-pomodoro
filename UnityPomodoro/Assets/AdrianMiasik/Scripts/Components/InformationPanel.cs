@@ -13,13 +13,13 @@ namespace AdrianMiasik.Components
         [SerializeField] private WriteVersionNumber versionNumber;
         [SerializeField] private TMP_Text copyrightDisclaimer;
 
-        private Theme theme;
+        private PomodoroTimer timer;
         private bool isInfoPageOpen;
 
-        public void Initialize(Theme _theme)
+        public void Initialize(PomodoroTimer _timer)
         {
-            theme = _theme;
-            _theme.RegisterColorHook(this);
+            timer = _timer;
+            timer.GetTheme().RegisterColorHook(this);
         }
 
         public void ColorUpdate(Theme _theme)
@@ -47,7 +47,7 @@ namespace AdrianMiasik.Components
             gameObject.SetActive(true);
             isInfoPageOpen = true;
             
-            ColorUpdate(theme);
+            ColorUpdate(timer.GetTheme());
         }
 
         public void Hide()

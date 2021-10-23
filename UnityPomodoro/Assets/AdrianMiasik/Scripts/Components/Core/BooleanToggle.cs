@@ -23,14 +23,17 @@ namespace AdrianMiasik.Components.Core
         public UnityEvent onSetToTrueClick;
         public UnityEvent onSetToFalseClick;
 
-        private Theme theme;
+        private PomodoroTimer timer;
+        private bool isInitialized;
 
-        public void Initialize(bool _isOn, Theme _theme, bool _invokeEvents = false)
+        public void Initialize(PomodoroTimer _timer, bool _isOn, bool _invokeEvents = false)
         {
+            timer = _timer;
             isOn = _isOn;
-            theme = _theme;
+            isInitialized = true;
             
-            _theme.RegisterColorHook(this);
+            _timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(_timer.GetTheme());
             UpdateToggle(_invokeEvents);
         }
 
@@ -55,10 +58,13 @@ namespace AdrianMiasik.Components.Core
                     onSetToFalseClick.Invoke();
                 }
             }
-            
-            ColorUpdate(theme);
-        }
 
+            if (isInitialized)
+            {
+                ColorUpdate(timer.GetTheme());
+            }
+        }
+        
         public void ColorUpdate(Theme _theme)
         {
             switch (isOn)

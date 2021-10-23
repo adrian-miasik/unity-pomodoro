@@ -33,9 +33,9 @@ namespace AdrianMiasik.Components
         private DigitFormat format;
         private bool isInteractable = true;
         private bool isSelected;
-
-        // Color
-        private Theme cachedTheme;
+        
+        // Cache
+        private PomodoroTimer timer;
         
         // Color animation
         [SerializeField] private Color color = Color.white;
@@ -61,12 +61,12 @@ namespace AdrianMiasik.Components
         public UnityEvent OnSelection;
         public UnityEvent OnDigitChange; // Invoked only when timer is running
 
-        public void Initialize(DigitFormat _format, DigitFormat.Digits _digit, int _value, Theme _theme)
+        public void Initialize(PomodoroTimer _timer, DigitFormat _format, DigitFormat.Digits _digit)
         {
             format = _format;
             digit = _digit;
-            cachedTheme = _theme;
-            cachedTheme.RegisterColorHook(this);
+            timer = _timer;
+            timer.GetTheme().RegisterColorHook(this);
             
             // Disable run time caret interactions - We want to run input through this classes input events
             caret = input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
@@ -77,7 +77,7 @@ namespace AdrianMiasik.Components
             }
             
             HideArrows();
-            ColorUpdate(_theme);
+            ColorUpdate(timer.GetTheme());
         }
 
         public void UpdateVisuals(int _value)
@@ -179,7 +179,8 @@ namespace AdrianMiasik.Components
                 instanceMaterial = new Material(background.material);
             }
 
-            startingColor = instanceMaterial.GetColor(SquircleColor);
+            startingColor = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            // startingColor = instanceMaterial.GetColor(SquircleColor);
 
             endingColor = _color;
             accumulatedColorTime = 0;
@@ -356,7 +357,7 @@ namespace AdrianMiasik.Components
             accumulatedSelectionTime = 0;
             
             ShowArrows();
-            SetSquircleColor(cachedTheme.GetCurrentColorScheme().backgroundHighlight);
+            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().backgroundHighlight);
 
             if (_setSelection)
             {
@@ -372,7 +373,7 @@ namespace AdrianMiasik.Components
             ignoreFirstClick = true;
             
             HideArrows();
-            SetSquircleColor(cachedTheme.GetCurrentColorScheme().background);
+            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().background);
             
             // Disable caret selection
             caret.raycastTarget = false;
