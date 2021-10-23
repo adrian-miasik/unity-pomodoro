@@ -2436,7 +2436,7 @@ PrefabInstance:
       objectReference: {fileID: 3286163911610860551, guid: a6ad58048be4ce8438bf406debcfe6a5, type: 3}
     - target: {fileID: 4742492904989172165, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: trueZRotation
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4742492904989172165, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: falseZRotation
@@ -2660,7 +2660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4742492906207072354, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.2499995
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 4742492906207072356, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: m_Sprite
@@ -5455,7 +5455,6 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   m_IsOn: 0
-  self: {fileID: 0}
   icon: {fileID: 743643910}
   falseSprite: {fileID: 3286163911610860551, guid: 7200ff7fc1c23d143bfc8224e8226ff3, type: 3}
   falseZRotation: 0
