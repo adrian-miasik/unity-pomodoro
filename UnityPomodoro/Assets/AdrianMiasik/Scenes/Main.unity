@@ -1799,7 +1799,7 @@ PrefabInstance:
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: onSetToTrueClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
+      objectReference: {fileID: 1601903656}
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: OnSetToFalseClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1807,7 +1807,7 @@ PrefabInstance:
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: onSetToFalseClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
+      objectReference: {fileID: 1601903656}
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: OnSetToTrueClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1846,7 +1846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: onSetToTrueClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AdrianMiasik.ScriptableObjects.Theme, Assembly-CSharp
+      value: AdrianMiasik.PomodoroTimer, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: OnSetToFalseClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1854,7 +1854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: onSetToFalseClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AdrianMiasik.ScriptableObjects.Theme, Assembly-CSharp
+      value: AdrianMiasik.PomodoroTimer, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: OnSetToTrueClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2062,7 +2062,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.8
+  m_fontSize: 39.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4829,7 +4829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fddaf18cac877e4a8c37fa3ac88abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theme: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
+  theme: {fileID: 11400000, guid: aa574f8d6259f814ca7db509c8d1c167, type: 2}
   state: 0
   spawnAnimation: {fileID: 1601903658}
   contentContainer: {fileID: 59348933}

@@ -732,5 +732,15 @@ namespace AdrianMiasik
             digitFormat.GenerateFormat();
             Restart(false);
         }
+        
+        public void SetToLightMode()
+        {
+            theme.SetToLightMode();
+        }
+
+        public void SetToDarkMode()
+        {
+            theme.SetToDarkMode();
+        }
     }
 }
