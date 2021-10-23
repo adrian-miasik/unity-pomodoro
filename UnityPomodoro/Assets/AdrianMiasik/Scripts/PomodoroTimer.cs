@@ -42,6 +42,7 @@ namespace AdrianMiasik
 
         [Header("Text")] 
         [SerializeField] private TextMeshProUGUI text;
+        [SerializeField] private CompletionLabel completionLabel;
 
         [Header("Buttons")] 
         [SerializeField] private BooleanToggle infoToggle;
@@ -126,6 +127,7 @@ namespace AdrianMiasik
             hotkeyDetector.Initialize(this);
             background.Initialize(theme);
             digitFormat.Initialize(this, theme);
+            completionLabel.Initialize(theme);
             themeSlider.Initialize(false, theme);
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);

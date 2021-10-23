@@ -540,6 +540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 222858662}
   - component: {fileID: 222858664}
+  - component: {fileID: 222858663}
   m_Layer: 5
   m_Name: Completion Label
   m_TagString: Untagged
@@ -568,6 +569,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &222858663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222858661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84cfa284f67aab24580e0fb80d5b22cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labels:
+  - {fileID: 1509926446}
+  - {fileID: 2140539846}
 --- !u!111 &222858664
 Animation:
   m_ObjectHideFlags: 0
@@ -2062,7 +2078,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.45
+  m_fontSize: 39.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4837,6 +4853,7 @@ MonoBehaviour:
   background: {fileID: 407842496}
   digitFormat: {fileID: 1348329455}
   text: {fileID: 650676969}
+  completionLabel: {fileID: 222858663}
   infoToggle: {fileID: 1617491758}
   leftButtonClick: {fileID: 74629570}
   rightButtonClick: {fileID: 810166524}
