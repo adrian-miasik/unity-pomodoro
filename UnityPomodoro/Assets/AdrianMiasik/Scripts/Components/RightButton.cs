@@ -82,7 +82,7 @@ namespace AdrianMiasik.Components
                 
                 case PomodoroTimer.States.COMPLETE:
                     icon.transform.localScale = Vector3.one * 0.55f;                    
-                    icon.sprite = timer.GetIsOnBreak() ? breakComplete : complete;
+                    icon.sprite = timer.IsOnBreak() ? breakComplete : complete;
                     break;
             }
             
@@ -103,7 +103,7 @@ namespace AdrianMiasik.Components
                     icon.color = _theme.GetCurrentColorScheme().running;
                     break;
                 case PomodoroTimer.States.COMPLETE:
-                    icon.color = timer.GetIsOnBreak() ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo;
+                    icon.color = timer.IsOnBreak() ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo;
                     break;
             }
         }

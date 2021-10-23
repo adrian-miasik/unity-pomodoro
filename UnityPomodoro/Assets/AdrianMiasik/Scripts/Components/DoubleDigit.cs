@@ -29,9 +29,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private Animation pulseWobble;
         [SerializeField] private Animation tick;
 
-        private PomodoroTimer.Digits digit;
-        private PomodoroTimer timer;
-        private bool isInteractable;
+        [HideInInspector] public DigitFormat.Digits digit;
+        private DigitFormat format;
+        private bool isInteractable = true;
         private bool isSelected;
 
         // Color
@@ -61,11 +61,13 @@ namespace AdrianMiasik.Components
         public UnityEvent OnSelection;
         public UnityEvent OnDigitChange; // Invoked only when timer is running
 
-        public void Initialize(PomodoroTimer.Digits _digit, PomodoroTimer _timer, int _digits)
+        public void Initialize(DigitFormat _format, DigitFormat.Digits _digit, int _value, Theme _theme)
         {
+            format = _format;
             digit = _digit;
-            timer = _timer;
-
+            cachedTheme = _theme;
+            cachedTheme.RegisterColorHook(this);
+            
             // Disable run time caret interactions - We want to run input through this classes input events
             caret = input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
             if (caret)
@@ -73,16 +75,18 @@ namespace AdrianMiasik.Components
                 // Prevent input field from getting selection focus
                 caret.raycastTarget = false;
             }
-
-            cachedTheme = _timer.GetTheme();
-            cachedTheme.RegisterColorHook(this);
-
-            SetSquircleColor(color);
-            SetDigitsLabel(_digits);
+            
             HideArrows();
-            pulseWobble.Stop();
+            ColorUpdate(_theme);
         }
 
+        public void UpdateVisuals(int _value)
+        {
+            SetTextLabel(_value);
+            UpdateArrows();
+            pulseWobble.Stop();
+        }
+        
         private void Update()
         {
             if (isColorAnimating)
@@ -109,21 +113,22 @@ namespace AdrianMiasik.Components
                 {
                     if (!input.isFocused)
                     {
-                        SetValue(digit, "0");
+                        SetValue(0);
+                        UpdateVisuals(format.GetDigitValue(digit));
                     }
                 }
                 
                 // Scroll input
                 if (Input.mouseScrollDelta.y > 0)
                 {
-                    if (timer.CanIncrementOne(digit))
+                    if (format.CanIncrementOne(digit))
                     {
                         upArrow.OnPointerClick(null);
                     }
                 }
                 else if (Input.mouseScrollDelta.y < 0)
                 {
-                    if (timer.CanDecrementOne(digit))
+                    if (format.CanDecrementOne(digit))
                     {
                         downArrow.OnPointerClick(null);
                     }
@@ -160,7 +165,7 @@ namespace AdrianMiasik.Components
                     {
                         accumulatedSelectionTime = 0;
                         DeselectInput();
-                        timer.ClearSelection();
+                        format.GetTimer().ClearSelection();
                     }
                 }
             }
@@ -181,24 +186,15 @@ namespace AdrianMiasik.Components
             isColorAnimating = true;
         }
 
-        public void SetDigitsLabel(int _digits)
-        {
-            // If this digit value is actually different...
-            if (_digits.ToString("D2") != input.text)
-            {
-                // Update the digit
-                input.text = _digits.ToString("D2");
-
-                if (timer.state == PomodoroTimer.States.RUNNING)
-                {
-                    OnDigitChange?.Invoke();
-                }
-            }
-        }
-
         // Unity Event
         public void PlayTickAnimation()
         {
+            // Prevent milliseconds from animating on tick (due to how fast it ticks)
+            if (digit == DigitFormat.Digits.MILLISECONDS)
+            {
+                return;
+            }
+            
             tick.Stop();
             tick.Play();
         }
@@ -218,13 +214,8 @@ namespace AdrianMiasik.Components
         {
             return input.text;
         }
-
-        public Selectable GetSelectable()
-        {
-            return selectable;
-        }
         
-        private void HideArrows()
+        public void HideArrows()
         {
             upArrow.Hide();
             downArrow.Hide();
@@ -232,14 +223,14 @@ namespace AdrianMiasik.Components
 
         private void ShowArrows()
         {
-            if (timer != null)
+            if (format != null)
             {
-                if (timer.CanIncrementOne(digit))
+                if (format.CanIncrementOne(digit))
                 {
                     upArrow.Show();
                 }
 
-                if (timer.CanDecrementOne(digit))
+                if (format.CanDecrementOne(digit))
                 {
                     downArrow.Show();        
                 }
@@ -263,82 +254,68 @@ namespace AdrianMiasik.Components
             input.textComponent.color = _newColor;
         }
         
-        // Unity Events
-        public void SetValue(PomodoroTimer.Digits _digit, string _value)
+        /// <summary>
+        /// Sets the digit data to the provided input.
+        /// This is different from the current visuals of this digit.
+        /// If you are looking to modify the digit visual value <see cref="SetTextLabel"/>
+        /// </summary>
+        /// <param name="_value"></param>
+        public void SetValue(int _value)
         {
-            switch (_digit)
+            if (format == null)
+                return;
+            
+            format.SetDigit(digit, _value);
+        }
+        
+        /// <summary>
+        /// Sets the digit label to the provided input.
+        /// This is different from setting the digit time.
+        /// If you are looking to modify the users set/edited time <see cref="SetValue"/>.
+        /// Also if you are looking to update arrows as well as the label <seealso cref="UpdateVisuals"/>
+        /// </summary>
+        /// <param name="_value"></param>
+        public void SetTextLabel(int _value)
+        {
+            // If this digit value is actually different...
+            if (_value.ToString("D2") != input.text)
             {
-                case PomodoroTimer.Digits.HOURS:
-                    SetHours(_value);
-                    break;
-                case PomodoroTimer.Digits.MINUTES:
-                    SetMinutes(_value);
-                    break;
-                case PomodoroTimer.Digits.SECONDS:
-                    SetSeconds(_value);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(_digit), _digit, null);
+                // Update the digit
+                input.text = _value.ToString("D2");
+
+                if (format.GetTimer().state == PomodoroTimer.States.RUNNING)
+                {
+                    OnDigitChange?.Invoke();
+                }
             }
         }
         
-        public void SetHours(string _hours)
-        {
-            if (timer == null) 
-                return;
-            
-            timer.SetHours(_hours);
-            UpdateArrows();
-        }
-
-        public void SetMinutes(string _minutes)
-        {
-            if (timer == null)
-                return;
-            
-            timer.SetMinutes(_minutes);
-            UpdateArrows();
-        }
-
-        public void SetSeconds(string _seconds)
-        {
-            if (timer == null)
-                return;
-            
-            timer.SetSeconds(_seconds);
-            UpdateArrows();
-        }
-
         public void IncrementOne()
         {
-            if (timer == null) 
+            if (format == null) 
                 return;
             
-            timer.IncrementOne(digit);
-            SetDigitsLabel(timer.GetDigitValue(digit));
-            pulseWobble.Stop();
+            format.IncrementOne(digit);
+            UpdateVisuals(format.GetDigitValue(digit));
             pulseWobble.Play();
-            UpdateArrows();
             accumulatedSelectionTime = 0;
         }
 
         public void DecrementOne()
         {
-            if (timer == null) 
+            if (format == null) 
                 return;
             
-            timer.DecrementOne(digit);
-            SetDigitsLabel(timer.GetDigitValue(digit));
-            pulseWobble.Stop();
+            format.DecrementOne(digit);
+            UpdateVisuals(format.GetDigitValue(digit));
             pulseWobble.Play();
-            UpdateArrows();
             accumulatedSelectionTime = 0;
         }
 
         private void UpdateArrows()
         {
             // Up Arrow
-            if (timer.CanIncrementOne(digit))
+            if (format.CanIncrementOne(digit))
             {
                 upArrow.Show();
             }
@@ -348,7 +325,7 @@ namespace AdrianMiasik.Components
             }
             
             // Down Arrow
-            if (timer.CanDecrementOne(digit))
+            if (format.CanDecrementOne(digit))
             {
                 downArrow.Show();
             }
@@ -367,8 +344,8 @@ namespace AdrianMiasik.Components
         {
             OnSelect(_eventData, true);
         }
-        
-        public void OnSelect(BaseEventData _eventData, bool _setSelection)
+
+        private void OnSelect(BaseEventData _eventData, bool _setSelection)
         {
             if (!isInteractable)
             {
@@ -383,7 +360,7 @@ namespace AdrianMiasik.Components
 
             if (_setSelection)
             {
-                timer.SetSelection(this);
+                format.GetTimer().SetSelection(this);
             }
 
             OnSelection.Invoke();
@@ -400,6 +377,14 @@ namespace AdrianMiasik.Components
             // Disable caret selection
             caret.raycastTarget = false;
             input.DeactivateInputField();
+        }
+
+        // Unity Event
+        public void SetValueEndEdit()
+        {
+            input.text = string.IsNullOrEmpty(input.text) ? "00" : input.text;
+            SetValue(int.Parse(input.text));
+            UpdateVisuals(format.GetDigitValue(digit));
         }
 
         public void DeselectInput()
@@ -477,6 +462,11 @@ namespace AdrianMiasik.Components
 
             // Digit text
             SetTextColor(_currentColors.foreground);
+        }
+
+        public Selectable GetSelectable()
+        {
+            return selectable;
         }
     }
 }
