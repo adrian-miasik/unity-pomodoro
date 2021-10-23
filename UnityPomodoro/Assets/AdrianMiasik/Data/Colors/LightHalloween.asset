@@ -15,10 +15,10 @@ MonoBehaviour:
   includedInTheseThemes:
   - {fileID: 11400000, guid: aa574f8d6259f814ca7db509c8d1c167, type: 2}
   background: {r: 1, g: 1, b: 1, a: 1}
-  backgroundHighlight: {r: 1, g: 0.67031866, b: 0, a: 1}
+  backgroundHighlight: {r: 1, g: 0.8036355, b: 0.2688679, a: 1}
   foreground: {r: 0, g: 0, b: 0, a: 1}
   close: {r: 1, g: 0, b: 0, a: 1}
-  modeOne: {r: 1, g: 0.44935164, b: 0, a: 1}
+  modeOne: {r: 1, g: 0.5921569, b: 0, a: 1}
   modeTwo: {r: 0.5058824, g: 0.19607843, b: 1, a: 1}
-  running: {r: 0, g: 0, b: 0, a: 1}
+  running: {r: 1, g: 0.59171915, b: 0, a: 1}
   complete: {r: 0, g: 0, b: 0, a: 1}
