@@ -124,6 +124,9 @@ namespace AdrianMiasik
             infoContainer.Hide();
             contentContainer.gameObject.SetActive(true);
 
+            // Override
+            themeSlider.OverrideFalseColor(theme.GetCurrentColorScheme().backgroundHighlight);
+            
             // Initialize components
             hotkeyDetector.Initialize(this);
             background.Initialize(this);
