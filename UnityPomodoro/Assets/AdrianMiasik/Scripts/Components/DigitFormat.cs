@@ -67,10 +67,10 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public void Initialize(PomodoroTimer _timer, Theme _theme)
+        public void Initialize(PomodoroTimer _timer)
         {
             timer = _timer;
-            theme = _theme;
+            theme = _timer.GetTheme();
             theme.RegisterColorHook(this);
 
             GenerateFormat();
@@ -90,6 +90,13 @@ namespace AdrianMiasik.Components
                     continue;
                 }
 
+                // TODO: Improve performance / remove get component call, possibly with a theme manager class?
+                // Deregister color hook
+                foreach (IColorHook _colorHook in _t.GetComponentsInChildren<IColorHook>())
+                {
+                    timer.GetTheme().Deregister(_colorHook);
+                }
+                
                 Destroy(_t.gameObject);
             }
 
@@ -103,6 +110,8 @@ namespace AdrianMiasik.Components
 
             // Apply
             RefreshDigitVisuals();
+            
+            ColorUpdate(timer.GetTheme());
         }
 
         public void RefreshDigitVisuals()
@@ -200,9 +209,9 @@ namespace AdrianMiasik.Components
 
                 // Generate double digit
                 DoubleDigit _dd = Instantiate(digitSource, transform);
-                _dd.Initialize(this, GetDigitType(_pair.Key), _pair.Value, theme);
+                _dd.Initialize(timer, this, GetDigitType(_pair.Key));
                 generatedDigits.Add(_dd);
-
+                
                 // Skip last iteration to avoid spacer generation
                 if (_i == _doubleDigitSetToGenerate.Count - 1)
                 {

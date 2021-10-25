@@ -1,3 +1,4 @@
+using System.Timers;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
@@ -10,10 +11,10 @@ namespace AdrianMiasik.Components
         [SerializeField] private Image background;
         [SerializeField] private Selectable selectable;
 
-        public void Initialize(Theme _theme)
+        public void Initialize(PomodoroTimer _timer)
         {
-            _theme.RegisterColorHook(this);
-            ColorUpdate(_theme);
+            _timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(_timer.GetTheme());
         }
         
         public void Select()

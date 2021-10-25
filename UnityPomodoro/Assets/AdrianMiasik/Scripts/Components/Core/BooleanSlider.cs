@@ -29,11 +29,24 @@ namespace AdrianMiasik.Components.Core
         private Color trueColor;
         private Color falseColor;
 
-        public void Initialize(bool _state, Theme _theme)
+        private bool overrideFalseColor;
+        private Color overridenFalseColor;
+        
+        /// <summary>
+        /// Note: Needs to be invoked before initialize
+        /// </summary>
+        /// <param name="_color"></param>
+        public void OverrideFalseColor(Color _color)
+        {
+            overrideFalseColor = true;
+            overridenFalseColor = _color;
+        }
+
+        public void Initialize(PomodoroTimer _timer, bool _state)
         {
             state = _state;
-            _theme.RegisterColorHook(this);
-            ColorUpdate(_theme);
+            _timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(_timer.GetTheme());
         }
         
         /// <summary>
@@ -107,7 +120,7 @@ namespace AdrianMiasik.Components.Core
         public void ColorUpdate(Theme _theme)
         {
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
-            falseColor = _currentColors.backgroundHighlight;
+            falseColor = overrideFalseColor ? overridenFalseColor : _currentColors.modeOne;
             trueColor = _currentColors.modeTwo;
             background.color = state ? trueColor : falseColor;
             dot.material.SetColor(CircleColor, _currentColors.background);
