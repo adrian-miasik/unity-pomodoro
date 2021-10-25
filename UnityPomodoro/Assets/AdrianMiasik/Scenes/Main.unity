@@ -2180,7 +2180,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.15
+  m_fontSize: 35.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2522,7 +2522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4742492904989172164, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4742492904989172165, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: trueSprite
@@ -2686,7 +2686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4742492904989172167, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4742492904989172167, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: m_AnchorMin.x
@@ -2702,7 +2702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4742492904989172167, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -33.141747
       objectReference: {fileID: 0}
     - target: {fileID: 4742492904989172167, guid: 9486cf3e346c0ed4e866c9ee8a6e8604, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5793,7 +5793,7 @@ GameObject:
   - component: {fileID: 2029569176}
   - component: {fileID: 2029569175}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: TopLeftIcons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5832,7 +5832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
+  m_HorizontalFit: 1
   m_VerticalFit: 0
 --- !u!114 &2029569176
 MonoBehaviour:
@@ -5852,7 +5852,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
