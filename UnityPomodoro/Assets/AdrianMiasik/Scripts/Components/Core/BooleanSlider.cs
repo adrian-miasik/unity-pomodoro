@@ -10,13 +10,16 @@ namespace AdrianMiasik.Components.Core
 {
     public class BooleanSlider : MonoBehaviour, IPointerClickHandler, IColorHook
     {
+        // General
         [SerializeField] public SVGImage background;
         [SerializeField] private Image dot;
-        [SerializeField] private new Animation animation;
 
+        // Animation
+        [SerializeField] private new Animation animation;
         [SerializeField] private AnimationClip leftToRight;
         [SerializeField] private AnimationClip rightToLeft;
 
+        // Unity Events
         public UnityEvent onSetToTrueClick; // clicking a disabled boolean
         public UnityEvent onSetToFalseClick; // clicking on an enabled boolean
         public UnityEvent onClick;
@@ -29,11 +32,12 @@ namespace AdrianMiasik.Components.Core
         private Color trueColor;
         private Color falseColor;
 
+        // Override
         private bool overrideFalseColor;
         private Color overridenFalseColor;
         
         /// <summary>
-        /// Note: Needs to be invoked before initialize
+        /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
         /// </summary>
         /// <param name="_color"></param>
         public void OverrideFalseColor(Color _color)

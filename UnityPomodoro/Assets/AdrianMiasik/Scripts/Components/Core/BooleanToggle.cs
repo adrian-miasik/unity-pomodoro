@@ -23,9 +23,20 @@ namespace AdrianMiasik.Components.Core
         public UnityEvent onSetToTrueClick;
         public UnityEvent onSetToFalseClick;
 
+        // Cache
         private PomodoroTimer timer;
         private bool isInitialized;
 
+        // Override
+        private bool overrideTrueColor;
+        private Color overridenTrueColor;
+        
+        public void OverrideTrueColor(Color _color)
+        {
+            overrideTrueColor = true;
+            overridenTrueColor = _color;
+        }
+        
         public void Initialize(PomodoroTimer _timer, bool _isOn, bool _invokeEvents = false)
         {
             timer = _timer;
@@ -70,7 +81,7 @@ namespace AdrianMiasik.Components.Core
             switch (isOn)
             {
                 case true:
-                    icon.color = _theme.GetCurrentColorScheme().close;
+                    icon.color = overrideTrueColor ? overridenTrueColor : _theme.GetCurrentColorScheme().close;
                     break;
                 case false:
                     icon.color = _theme.GetCurrentColorScheme().backgroundHighlight;

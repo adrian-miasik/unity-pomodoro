@@ -138,6 +138,7 @@ namespace AdrianMiasik
                     if (DateTime.Now.Day == _i)
                     {
                         halloweenToggle.gameObject.SetActive(true);
+                        halloweenToggle.OverrideTrueColor(new Color(1f, 0.59f, 0f));
                         halloweenToggle.Initialize(this, false);
                         break;
                     }
