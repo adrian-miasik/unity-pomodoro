@@ -469,5 +469,10 @@ namespace AdrianMiasik.Components
         {
             return selectable;
         }
+
+        public void SetTextScale(float _scale = 1.55f)
+        {
+            input.textComponent.gameObject.transform.localScale = Vector3.one * _scale;
+        }
     }
 }

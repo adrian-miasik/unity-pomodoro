@@ -28,6 +28,7 @@ namespace AdrianMiasik.Components
         }
 
         // Current format
+        [SerializeField] private RectTransform self;
         [SerializeField] private SupportedFormats format;
 
         [Header("Source Prefabs")]
@@ -103,15 +104,68 @@ namespace AdrianMiasik.Components
             // Generate our digits and separators (format)
             char[] _separatorChar = { '_' };
             GenerateFormat(GetDoubleDigitSet(format, _separatorChar[0]));
-
+            CorrectLayoutBounds();
+            
             // Calculate time
             cachedTimeSpan = GetTime();
             SetTime(cachedTimeSpan);
 
             // Apply
             RefreshDigitVisuals();
-            
+
             ColorUpdate(timer.GetTheme());
+        }
+
+        private void CorrectLayoutBounds()
+        {
+            switch (generatedDigits.Count)
+            {
+                // One generated digit
+                case 1:
+                    self.offsetMin = new Vector2(120, self.offsetMin.y); // Left
+                    self.offsetMax = new Vector2(-120, self.offsetMax.y); // Right
+                    break;
+                
+                // Two generated digits
+                case 2:
+                    self.offsetMin = new Vector2(60, self.offsetMin.y); // Left
+                    self.offsetMax = new Vector2(-60, self.offsetMax.y); // Right
+                    break;
+                
+                // Three generated digits
+                case 3:
+                    self.offsetMin = Vector2.zero; // Left
+                    self.offsetMax = Vector2.zero;; // Right
+                    break;
+                
+                // Four generated digits
+                case 4:
+                    self.offsetMin = Vector2.zero; // Left
+                    self.offsetMax = Vector2.zero;; // Right
+                    foreach (DoubleDigit _doubleDigit in generatedDigits)
+                    {
+                        _doubleDigit.SetTextScale(1.25f);
+                    }
+                    foreach (DigitSeparator _digitSeparator in generatedSeparators)
+                    {
+                        _digitSeparator.SetSeparatorScale(2f);
+                    }
+                    break;
+                
+                // Five generated digits
+                case 5:
+                    self.offsetMin = Vector2.zero; // Left
+                    self.offsetMax = Vector2.zero;; // Right
+                    foreach (DoubleDigit _doubleDigit in generatedDigits)
+                    {
+                        _doubleDigit.SetTextScale(1f);
+                    }
+                    foreach (DigitSeparator _digitSeparator in generatedSeparators)
+                    {
+                        _digitSeparator.SetSeparatorScale(1.85f);
+                    }
+                    break;
+            }
         }
 
         public void RefreshDigitVisuals()
@@ -274,7 +328,16 @@ namespace AdrianMiasik.Components
                         _doubleDigit.SetTextLabel(_ts.Seconds);
                         break;
                     case Digits.MILLISECONDS:
-                        _doubleDigit.SetTextLabel(_ts.Milliseconds);
+                        string _millisecondsString = _ts.Milliseconds.ToString();
+                        if (_millisecondsString.Length > 1)
+                        {
+                            _doubleDigit.SetTextLabel(
+                                int.Parse(_millisecondsString.Remove(_millisecondsString.Length - 1)));
+                        }
+                        else
+                        {
+                            _doubleDigit.SetTextLabel(_ts.Milliseconds);
+                        }
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

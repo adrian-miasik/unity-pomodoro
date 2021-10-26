@@ -340,6 +340,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   pulseWobble: {fileID: 4632816809682780623}
   tick: {fileID: 3356050749571129949}
+  digit: 0
   color: {r: 1, g: 1, b: 1, a: 1}
   OnSelection:
     m_PersistentCalls:
@@ -639,7 +640,7 @@ RectTransform:
   m_GameObject: {fileID: 2939933546287668545}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5475214, y: 1.5475214, z: 1.5475214}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1.55}
   m_Children: []
   m_Father: {fileID: 2939933545557774699}
   m_RootOrder: 0
@@ -712,7 +713,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

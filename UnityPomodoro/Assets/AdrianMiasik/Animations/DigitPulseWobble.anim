@@ -21,7 +21,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 1.8062174, y: 1.8062174, z: 0.96}
+        value: {x: 1.2587309, y: 1.2587309, z: 0.96}
         inSlope: {x: 0.058724865, y: 0.058724865, z: 0}
         outSlope: {x: 0.058724865, y: 0.058724865, z: 0}
         tangentMode: 0
@@ -30,7 +30,7 @@ AnimationClip:
         outWeight: {x: 0.5331088, y: 0.5331088, z: 0.33333334}
       - serializedVersion: 3
         time: 0.033333335
-        value: {x: 1.5206021, y: 1.5206021, z: 1.00224}
+        value: {x: 0.97311556, y: 0.97311556, z: 1.00224}
         inSlope: {x: -4.948374, y: -4.948374, z: 2.0736008}
         outSlope: {x: -4.948374, y: -4.948374, z: 2.0736008}
         tangentMode: 0
@@ -39,16 +39,16 @@ AnimationClip:
         outWeight: {x: 0.197043, y: 0.197043, z: 0.33333334}
       - serializedVersion: 3
         time: 0.083333336
-        value: {x: 1.4206231, y: 1.4206231, z: 1.08}
-        inSlope: {x: -0.6985342, y: -0.6985342, z: 0}
-        outSlope: {x: -0.6985342, y: -0.6985342, z: 0}
+        value: {x: 0.8731365, y: 0.8731365, z: 1.08}
+        inSlope: {x: -0.6985365, y: -0.6985365, z: 0}
+        outSlope: {x: -0.6985365, y: -0.6985365, z: 0}
         tangentMode: 0
         weightedMode: 3
         inWeight: {x: 0.41240925, y: 0.41240925, z: 0.33333334}
         outWeight: {x: 0.33192667, y: 0.33192667, z: 0.33333334}
       - serializedVersion: 3
         time: 0.1
-        value: {x: 1.4140732, y: 1.4140732, z: 1.08}
+        value: {x: 0.8665867, y: 0.8665867, z: 1.08}
         inSlope: {x: -0.07868465, y: -0.07868465, z: 0}
         outSlope: {x: -0.07868465, y: -0.07868465, z: 0}
         tangentMode: 0
@@ -57,7 +57,7 @@ AnimationClip:
         outWeight: {x: 0.611428, y: 0.611428, z: 0.33333334}
       - serializedVersion: 3
         time: 0.18333334
-        value: {x: 1.57, y: 1.57, z: 1.08}
+        value: {x: 1.0225135, y: 1.0225135, z: 1.08}
         inSlope: {x: -0.054426692, y: -0.054426692, z: 0}
         outSlope: {x: -0.054426692, y: -0.054426692, z: 0}
         tangentMode: 0
@@ -66,7 +66,7 @@ AnimationClip:
         outWeight: {x: 0.6917319, y: 0.6917319, z: 0.33333334}
       - serializedVersion: 3
         time: 0.25
-        value: {x: 1.5158616, y: 1.5158616, z: 1.08}
+        value: {x: 0.9683751, y: 0.9683751, z: 1.08}
         inSlope: {x: 0.036081824, y: 0.036081824, z: 0}
         outSlope: {x: 0.036081824, y: 0.036081824, z: 0}
         tangentMode: 0
@@ -75,7 +75,7 @@ AnimationClip:
         outWeight: {x: 0.45454505, y: 0.45454505, z: 0.33333334}
       - serializedVersion: 3
         time: 0.3
-        value: {x: 1.5571349, y: 1.5571349, z: 1.08}
+        value: {x: 1.0096483, y: 1.0096483, z: 1.08}
         inSlope: {x: 0.022659332, y: 0.022659332, z: 0}
         outSlope: {x: 0.022659332, y: 0.022659332, z: 0}
         tangentMode: 0
@@ -84,7 +84,7 @@ AnimationClip:
         outWeight: {x: 0.4242419, y: 0.4242419, z: 0.33333334}
       - serializedVersion: 3
         time: 0.36666667
-        value: {x: 1.5475214, y: 1.5475214, z: 1.08}
+        value: {x: 1.0000348, y: 1.0000348, z: 1.08}
         inSlope: {x: -0.002655634, y: -0.002655634, z: 0}
         outSlope: {x: 0, y: -0.002655634, z: 0}
         tangentMode: 0
@@ -93,7 +93,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.41666666
-        value: {x: 1.5475214, y: 1.5475214, z: 1.08}
+        value: {x: 1.0000348, y: 1.0000348, z: 1.08}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -103,7 +103,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: InputField (TMP)/Text Area/Text
+    path: InputField (TMP)/Text Area
   m_FloatCurves: []
   m_PPtrCurves: []
   m_SampleRate: 60
@@ -140,7 +140,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1.8062174
+        value: 1.2587309
         inSlope: 0.058724865
         outSlope: 0.058724865
         tangentMode: 0
@@ -149,7 +149,7 @@ AnimationClip:
         outWeight: 0.5331088
       - serializedVersion: 3
         time: 0.033333335
-        value: 1.5206021
+        value: 0.97311556
         inSlope: -4.948374
         outSlope: -4.948374
         tangentMode: 0
@@ -158,7 +158,7 @@ AnimationClip:
         outWeight: 0.18742982
       - serializedVersion: 3
         time: 0.1
-        value: 1.4140732
+        value: 0.8665867
         inSlope: -0.07868465
         outSlope: -0.07868465
         tangentMode: 0
@@ -167,7 +167,7 @@ AnimationClip:
         outWeight: 0.611428
       - serializedVersion: 3
         time: 0.18333334
-        value: 1.57
+        value: 1.0225135
         inSlope: -0.054426692
         outSlope: -0.054426692
         tangentMode: 0
@@ -176,7 +176,7 @@ AnimationClip:
         outWeight: 0.6917319
       - serializedVersion: 3
         time: 0.25
-        value: 1.5158616
+        value: 0.9683751
         inSlope: 0.036081824
         outSlope: 0.036081824
         tangentMode: 0
@@ -185,7 +185,7 @@ AnimationClip:
         outWeight: 0.45454505
       - serializedVersion: 3
         time: 0.3
-        value: 1.5571349
+        value: 1.0096483
         inSlope: 0.022659332
         outSlope: 0.022659332
         tangentMode: 0
@@ -194,7 +194,7 @@ AnimationClip:
         outWeight: 0.4242419
       - serializedVersion: 3
         time: 0.36666667
-        value: 1.5475214
+        value: 1.0000348
         inSlope: -0.002655634
         outSlope: -0.002655634
         tangentMode: 0
@@ -205,7 +205,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: InputField (TMP)/Text Area/Text
+    path: InputField (TMP)/Text Area
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -213,7 +213,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1.8062174
+        value: 1.2587309
         inSlope: 0.058724865
         outSlope: 0.058724865
         tangentMode: 0
@@ -222,7 +222,7 @@ AnimationClip:
         outWeight: 0.5331088
       - serializedVersion: 3
         time: 0.033333335
-        value: 1.5206021
+        value: 0.97311556
         inSlope: -4.948374
         outSlope: -4.948374
         tangentMode: 0
@@ -231,7 +231,7 @@ AnimationClip:
         outWeight: 0.18742982
       - serializedVersion: 3
         time: 0.1
-        value: 1.4140732
+        value: 0.8665867
         inSlope: -0.07868465
         outSlope: -0.07868465
         tangentMode: 0
@@ -240,7 +240,7 @@ AnimationClip:
         outWeight: 0.611428
       - serializedVersion: 3
         time: 0.18333334
-        value: 1.57
+        value: 1.0225135
         inSlope: -0.054426692
         outSlope: -0.054426692
         tangentMode: 0
@@ -249,7 +249,7 @@ AnimationClip:
         outWeight: 0.6917319
       - serializedVersion: 3
         time: 0.25
-        value: 1.5158616
+        value: 0.9683751
         inSlope: 0.036081824
         outSlope: 0.036081824
         tangentMode: 0
@@ -258,7 +258,7 @@ AnimationClip:
         outWeight: 0.45454505
       - serializedVersion: 3
         time: 0.3
-        value: 1.5571349
+        value: 1.0096483
         inSlope: 0.022659332
         outSlope: 0.022659332
         tangentMode: 0
@@ -267,7 +267,7 @@ AnimationClip:
         outWeight: 0.4242419
       - serializedVersion: 3
         time: 0.36666667
-        value: 1.5475214
+        value: 1.0000348
         inSlope: -0.002655634
         outSlope: -0.002655634
         tangentMode: 0
@@ -276,7 +276,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.41666666
-        value: 1.5475214
+        value: 1.0000348
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -287,7 +287,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: InputField (TMP)/Text Area/Text
+    path: InputField (TMP)/Text Area
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -315,7 +315,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: InputField (TMP)/Text Area/Text
+    path: InputField (TMP)/Text Area
     classID: 224
     script: {fileID: 0}
   m_EulerEditorCurves: []
