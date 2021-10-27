@@ -135,27 +135,19 @@ namespace AdrianMiasik.Components
 
         private void ImproveLayoutVisuals()
         {
+            // Reset
+            self.offsetMin = new Vector2(self.offsetMin.x, 0);
+            self.offsetMax = new Vector2(self.offsetMax.x, 0);
+            
             switch (generatedDigits.Count)
             {
-                case 1:
-                case 2:
-                case 3:
-                    foreach (DoubleDigit _doubleDigit in generatedDigits)
-                    {
-                        _doubleDigit.SetTextScale(1.25f);
-                    }
-                    break;
                 case 4:
-                    foreach (DoubleDigit _doubleDigit in generatedDigits)
-                    {
-                        _doubleDigit.SetTextScale(1.2f);
-                    }
+                    self.offsetMin = new Vector2(self.offsetMin.x, 20);
+                    self.offsetMax = new Vector2(self.offsetMax.x, -20);
                     break;
-                default:
-                    foreach (DoubleDigit _doubleDigit in generatedDigits)
-                    {
-                        _doubleDigit.SetTextScale(1f);
-                    }
+                case 5:
+                    self.offsetMin = new Vector2(self.offsetMin.x, 30);
+                    self.offsetMax = new Vector2(self.offsetMax.x, -30);
                     break;
             }
         }
