@@ -473,6 +473,7 @@ namespace AdrianMiasik.Components
         public void SetTextScale(float _scale = 1.55f)
         {
             input.textComponent.gameObject.transform.localScale = Vector3.one * _scale;
+            caret.gameObject.transform.localScale = Vector3.one * _scale;
         }
     }
 }

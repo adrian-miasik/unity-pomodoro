@@ -29,6 +29,7 @@ namespace AdrianMiasik.Components
 
         // Current format
         [SerializeField] private RectTransform self;
+        [SerializeField] private ContentSizeFitter sizeFitter;
         [SerializeField] private SupportedFormats format;
 
         [Header("Source Prefabs")]
@@ -104,7 +105,10 @@ namespace AdrianMiasik.Components
             // Generate our digits and separators (format)
             char[] _separatorChar = { '_' };
             GenerateFormat(GetDoubleDigitSet(format, _separatorChar[0]));
-            CorrectLayoutBounds();
+
+            // Calculate bounds and fix visuals
+            CalculateLayoutBounds();
+            ImproveLayoutVisuals();
             
             // Calculate time
             cachedTimeSpan = GetTime();
@@ -115,54 +119,42 @@ namespace AdrianMiasik.Components
 
             ColorUpdate(timer.GetTheme());
         }
+        
+        private void CalculateLayoutBounds()
+        {
+            sizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(self);
 
-        private void CorrectLayoutBounds()
+            if (self.sizeDelta.x >= 0)
+            {
+                sizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+                self.offsetMin = new Vector2(0, self.offsetMin.y);
+                self.offsetMax = new Vector2(0, self.offsetMax.y);
+            }
+        }
+
+        private void ImproveLayoutVisuals()
         {
             switch (generatedDigits.Count)
             {
-                // One generated digit
                 case 1:
-                    self.offsetMin = new Vector2(120, self.offsetMin.y); // Left
-                    self.offsetMax = new Vector2(-120, self.offsetMax.y); // Right
-                    break;
-                
-                // Two generated digits
                 case 2:
-                    self.offsetMin = new Vector2(60, self.offsetMin.y); // Left
-                    self.offsetMax = new Vector2(-60, self.offsetMax.y); // Right
-                    break;
-                
-                // Three generated digits
                 case 3:
-                    self.offsetMin = Vector2.zero; // Left
-                    self.offsetMax = Vector2.zero;; // Right
-                    break;
-                
-                // Four generated digits
-                case 4:
-                    self.offsetMin = Vector2.zero; // Left
-                    self.offsetMax = Vector2.zero;; // Right
                     foreach (DoubleDigit _doubleDigit in generatedDigits)
                     {
                         _doubleDigit.SetTextScale(1.25f);
                     }
-                    foreach (DigitSeparator _digitSeparator in generatedSeparators)
+                    break;
+                case 4:
+                    foreach (DoubleDigit _doubleDigit in generatedDigits)
                     {
-                        _digitSeparator.SetSeparatorScale(2f);
+                        _doubleDigit.SetTextScale(1.2f);
                     }
                     break;
-                
-                // Five generated digits
-                case 5:
-                    self.offsetMin = Vector2.zero; // Left
-                    self.offsetMax = Vector2.zero;; // Right
+                default:
                     foreach (DoubleDigit _doubleDigit in generatedDigits)
                     {
                         _doubleDigit.SetTextScale(1f);
-                    }
-                    foreach (DigitSeparator _digitSeparator in generatedSeparators)
-                    {
-                        _digitSeparator.SetSeparatorScale(1.85f);
                     }
                     break;
             }
@@ -329,7 +321,7 @@ namespace AdrianMiasik.Components
                         break;
                     case Digits.MILLISECONDS:
                         string _millisecondsString = _ts.Milliseconds.ToString();
-                        if (_millisecondsString.Length > 1)
+                        if (_millisecondsString.Length >= 2)
                         {
                             _doubleDigit.SetTextLabel(
                                 int.Parse(_millisecondsString.Remove(_millisecondsString.Length - 1)));
