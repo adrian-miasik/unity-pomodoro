@@ -106,8 +106,7 @@ namespace AdrianMiasik.Components
             char[] _separatorChar = { '_' };
             GenerateFormat(GetDoubleDigitSet(format, _separatorChar[0]));
 
-            // Calculate bounds and fix visuals
-            CalculateLayoutBounds();
+            // Improve visuals based on number of generated elements
             ImproveLayoutVisuals();
             
             // Calculate time
@@ -120,34 +119,25 @@ namespace AdrianMiasik.Components
             ColorUpdate(timer.GetTheme());
         }
         
-        private void CalculateLayoutBounds()
-        {
-            sizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-            LayoutRebuilder.ForceRebuildLayoutImmediate(self);
-
-            if (self.sizeDelta.x >= 0)
-            {
-                sizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
-                self.offsetMin = new Vector2(0, self.offsetMin.y);
-                self.offsetMax = new Vector2(0, self.offsetMax.y);
-            }
-        }
-
         private void ImproveLayoutVisuals()
         {
-            // Reset
-            self.offsetMin = new Vector2(self.offsetMin.x, 0);
-            self.offsetMax = new Vector2(self.offsetMax.x, 0);
-            
             switch (generatedDigits.Count)
             {
-                case 4:
-                    self.offsetMin = new Vector2(self.offsetMin.x, 20);
-                    self.offsetMax = new Vector2(self.offsetMax.x, -20);
+                case 1:
+                    self.anchorMin = new Vector2(0.38f ,self.anchorMin.y);
+                    self.anchorMax = new Vector2(0.62f ,self.anchorMax.y);
+                    self.anchoredPosition = Vector2.zero;
                     break;
-                case 5:
-                    self.offsetMin = new Vector2(self.offsetMin.x, 30);
-                    self.offsetMax = new Vector2(self.offsetMax.x, -30);
+                case 2:
+                    self.anchorMin = new Vector2(0.25f ,self.anchorMin.y);
+                    self.anchorMax = new Vector2(0.75f ,self.anchorMax.y);
+                    self.anchoredPosition = Vector2.zero;
+                    break;
+                default:
+                    // Reset
+                    self.anchorMin = new Vector2(0.05f ,self.anchorMin.y);
+                    self.anchorMax = new Vector2(0.95f ,self.anchorMax.y);
+                    self.anchoredPosition = Vector2.zero;
                     break;
             }
         }
