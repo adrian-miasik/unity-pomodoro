@@ -20,17 +20,31 @@ namespace AdrianMiasik.Components.Core
         public float trueZRotation;
         
         // Unity Events
-        public UnityEvent OnSetToTrueClick;
-        public UnityEvent OnSetToFalseClick;
+        public UnityEvent onSetToTrueClick;
+        public UnityEvent onSetToFalseClick;
 
-        private Theme theme;
+        // Cache
+        private PomodoroTimer timer;
+        private bool isInitialized;
 
-        public void Initialize(bool _isOn, Theme _theme, bool _invokeEvents = false)
+        // Override
+        private bool overrideTrueColor;
+        private Color overridenTrueColor;
+        
+        public void OverrideTrueColor(Color _color)
         {
+            overrideTrueColor = true;
+            overridenTrueColor = _color;
+        }
+        
+        public void Initialize(PomodoroTimer _timer, bool _isOn, bool _invokeEvents = false)
+        {
+            timer = _timer;
             isOn = _isOn;
-            theme = _theme;
+            isInitialized = true;
             
-            _theme.RegisterColorHook(this);
+            _timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(_timer.GetTheme());
             UpdateToggle(_invokeEvents);
         }
 
@@ -43,7 +57,7 @@ namespace AdrianMiasik.Components.Core
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,trueZRotation));
                 if (_invokeEvents)
                 {
-                    OnSetToTrueClick.Invoke();
+                    onSetToTrueClick.Invoke();
                 }
             }
             else
@@ -52,19 +66,22 @@ namespace AdrianMiasik.Components.Core
                 icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,falseZRotation));
                 if (_invokeEvents)
                 {
-                    OnSetToFalseClick.Invoke();
+                    onSetToFalseClick.Invoke();
                 }
             }
-            
-            ColorUpdate(theme);
-        }
 
+            if (isInitialized)
+            {
+                ColorUpdate(timer.GetTheme());
+            }
+        }
+        
         public void ColorUpdate(Theme _theme)
         {
             switch (isOn)
             {
                 case true:
-                    icon.color = _theme.GetCurrentColorScheme().close;
+                    icon.color = overrideTrueColor ? overridenTrueColor : _theme.GetCurrentColorScheme().close;
                     break;
                 case false:
                     icon.color = _theme.GetCurrentColorScheme().backgroundHighlight;

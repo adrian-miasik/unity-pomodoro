@@ -10,16 +10,19 @@ namespace AdrianMiasik.Components.Core
 {
     public class BooleanSlider : MonoBehaviour, IPointerClickHandler, IColorHook
     {
+        // General
         [SerializeField] public SVGImage background;
         [SerializeField] private Image dot;
-        [SerializeField] private new Animation animation;
 
+        // Animation
+        [SerializeField] private new Animation animation;
         [SerializeField] private AnimationClip leftToRight;
         [SerializeField] private AnimationClip rightToLeft;
 
-        public UnityEvent OnSetToTrueClick; // clicking a disabled boolean
-        public UnityEvent OnSetToFalseClick; // clicking on an enabled boolean
-        public UnityEvent OnClick;
+        // Unity Events
+        public UnityEvent onSetToTrueClick; // clicking a disabled boolean
+        public UnityEvent onSetToFalseClick; // clicking on an enabled boolean
+        public UnityEvent onClick;
         
         // Shader Property
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -29,11 +32,25 @@ namespace AdrianMiasik.Components.Core
         private Color trueColor;
         private Color falseColor;
 
-        public void Initialize(bool _state, Theme _theme)
+        // Override
+        private bool overrideFalseColor;
+        private Color overridenFalseColor;
+        
+        /// <summary>
+        /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
+        /// </summary>
+        /// <param name="_color"></param>
+        public void OverrideFalseColor(Color _color)
+        {
+            overrideFalseColor = true;
+            overridenFalseColor = _color;
+        }
+
+        public void Initialize(PomodoroTimer _timer, bool _state)
         {
             state = _state;
-            _theme.RegisterColorHook(this);
-            ColorUpdate(_theme);
+            _timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(_timer.GetTheme());
         }
         
         /// <summary>
@@ -53,7 +70,7 @@ namespace AdrianMiasik.Components.Core
             state = !state;
             OnStateChanged(true); // User interacted with this, we treating this as a click
             
-            OnClick.Invoke();
+            onClick.Invoke();
         }
         
         private void OnStateChanged(bool _invokeEvents = false)
@@ -66,7 +83,7 @@ namespace AdrianMiasik.Components.Core
 
                 if (_invokeEvents)
                 {
-                    OnSetToTrueClick.Invoke();
+                    onSetToTrueClick.Invoke();
                 }
             }
             else
@@ -77,7 +94,7 @@ namespace AdrianMiasik.Components.Core
 
                 if (_invokeEvents)
                 {
-                    OnSetToFalseClick.Invoke();
+                    onSetToFalseClick.Invoke();
                 }
             }
 
@@ -107,7 +124,7 @@ namespace AdrianMiasik.Components.Core
         public void ColorUpdate(Theme _theme)
         {
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
-            falseColor = _currentColors.backgroundHighlight;
+            falseColor = overrideFalseColor ? overridenFalseColor : _currentColors.modeOne;
             trueColor = _currentColors.modeTwo;
             background.color = state ? trueColor : falseColor;
             dot.material.SetColor(CircleColor, _currentColors.background);

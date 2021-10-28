@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -36,6 +37,18 @@ namespace AdrianMiasik.Components
             {
                 timer.TriggerPlayPause();
             }
+            
+            // Quick switch
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                timer.TriggerTimerSwitch();
+            }
+            
+            // Theme switch
+            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                timer.TriggerThemeSwitch();
+            }
 
             // Clear digit selection
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -46,14 +59,42 @@ namespace AdrianMiasik.Components
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                GameObject _selectedGameObject = EventSystem.current.currentSelectedGameObject;
-                Selectable _selectable = _selectedGameObject.GetComponent<Selectable>();
-
-                if (_selectable != null && _selectable.FindSelectableOnRight() != null 
-                                       && _selectable.FindSelectableOnRight().gameObject != null)
+                List<Selectable> _selectables = timer.GetSelections();
+                if (_selectables.Count >= 1)
                 {
-                    EventSystem.current.SetSelectedGameObject(_selectable.FindSelectableOnRight().gameObject);
+                    // Get only first selection
+                    Selectable _selection = _selectables[0];
+                    Selectable _rightSelection = _selection.FindSelectableOnRight();
+                    if (_rightSelection != null && _rightSelection.gameObject != null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(_rightSelection.gameObject);
+                    }
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                timer.ChangeFormat(DigitFormat.SupportedFormats.SS);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                timer.ChangeFormat(DigitFormat.SupportedFormats.MM_SS);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                timer.ChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                timer.ChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                timer.ChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
             }
         }
 
@@ -75,12 +116,6 @@ namespace AdrianMiasik.Components
                 }
             }
             
-            // Quick switch
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                timer.TriggerTimerSwitch();
-            }
-
             // Select All
             if (IsUserSelectingAll())
             {

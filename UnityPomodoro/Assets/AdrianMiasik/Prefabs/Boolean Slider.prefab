@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6462380844780233065}
   - component: {fileID: 6462380844780233064}
   - component: {fileID: 6462380844780233063}
-  - component: {fileID: 7920394630844187043}
   m_Layer: 5
   m_Name: Boolean Slider
   m_TagString: Untagged
@@ -65,27 +64,15 @@ MonoBehaviour:
   animation: {fileID: 6462380845811431248}
   leftToRight: {fileID: 7400000, guid: 80cc4326c7f0d254f8830af328ea72ff, type: 2}
   rightToLeft: {fileID: 7400000, guid: 8ea65168c23332d46b8acd14dc2197a7, type: 2}
-  OnSetToTrueClick:
+  onSetToTrueClick:
     m_PersistentCalls:
       m_Calls: []
-  OnSetToFalseClick:
+  onSetToFalseClick:
     m_PersistentCalls:
       m_Calls: []
-  OnClick:
+  onClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6462380844780233063}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!82 &6462380844780233063
 AudioSource:
   m_ObjectHideFlags: 0
@@ -182,20 +169,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7920394630844187043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6462380844780233067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 1
-  m_AspectRatio: 1.825
 --- !u!1 &6462380845811431252
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +181,7 @@ GameObject:
   - component: {fileID: 6462380845811431249}
   - component: {fileID: 6462380845811431250}
   - component: {fileID: 6462380845811431248}
+  - component: {fileID: 7754648445332483155}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -233,8 +207,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: -13.346619, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &6462380845811431249
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -282,6 +256,20 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &7754648445332483155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6462380845811431252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 3
+  m_AspectRatio: 1.825
 --- !u!1 &6462380846313843328
 GameObject:
   m_ObjectHideFlags: 0
