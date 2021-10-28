@@ -312,11 +312,11 @@ namespace AdrianMiasik.Components
                         _doubleDigit.SetTextLabel(_ts.Seconds);
                         break;
                     case Digits.MILLISECONDS:
-                        string _millisecondsString = _ts.Milliseconds.ToString();
+                        string _millisecondsString = Mathf.Abs(_ts.Milliseconds).ToString();
                         if (_millisecondsString.Length >= 2)
                         {
                             _doubleDigit.SetTextLabel(
-                                int.Parse(_millisecondsString.Remove(_millisecondsString.Length - 1)));
+                                    int.Parse(_millisecondsString.Remove(_millisecondsString.Length - 1, 1)));
                         }
                         else
                         {
