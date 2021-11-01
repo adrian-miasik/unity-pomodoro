@@ -37,11 +37,11 @@ namespace AdrianMiasik.Components
         [SerializeField] private DigitSeparator separatorSource;
 
         [Header("Work Data")]
-        [SerializeField] private int[] workTime = new int[5]{0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
+        [SerializeField] private int[] workTime = {0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
 
         [Header("Break Data")]
         public bool isOnBreak;
-        [SerializeField] private int[] breakTime = new int[5]{0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
+        [SerializeField] private int[] breakTime = {0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
 
         // Cache
         private PomodoroTimer timer;
