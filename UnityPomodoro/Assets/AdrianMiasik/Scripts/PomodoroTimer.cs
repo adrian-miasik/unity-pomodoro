@@ -752,6 +752,15 @@ namespace AdrianMiasik
             Restart(false);
         }
         
+        /// <summary>
+        /// Change to format using enum index
+        /// </summary>
+        /// <param name="_i"></param>
+        public void ChangeFormat(Int32 _i)
+        {
+            ChangeFormat((DigitFormat.SupportedFormats)_i);
+        }
+        
         // TODO: Create theme manager class?
         public Theme GetTheme()
         {
