@@ -33,6 +33,7 @@ namespace AdrianMiasik
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
         [SerializeField] private InformationPanel infoContainer; // info content
+        [SerializeField] private Sidebar sidebarMenu;
         
         [Header("Background")] 
         [SerializeField] private Background background; // Used to pull select focus
@@ -156,6 +157,7 @@ namespace AdrianMiasik
             rightButton.Initialize(this);
             menuToggle.Initialize(this, false);
             breakSlider.Initialize(this, false);
+            sidebarMenu.Initialize(this);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);

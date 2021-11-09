@@ -87,6 +87,18 @@ namespace AdrianMiasik.Components.Core
                 ColorUpdate(timer.GetTheme());
             }
         }
+
+        public void SetToTrue()
+        {
+            isOn = true;
+            UpdateToggle(false);
+        }
+
+        public void SetToFalse()
+        {
+            isOn = false;
+            UpdateToggle(false);
+        }
         
         public void ColorUpdate(Theme _theme)
         {

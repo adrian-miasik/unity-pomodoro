@@ -175,8 +175,8 @@ namespace AdrianMiasik.Components.Core
                     if (accumulatedHoldTime > holdRamp.Evaluate(userHoldTime))
                     {
                         accumulatedHoldTime = 0f;
-                        OnClick.Invoke();
                         PlayClickSound();
+                        OnClick.Invoke();
                     }
                 }
             }
