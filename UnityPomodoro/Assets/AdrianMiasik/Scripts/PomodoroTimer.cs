@@ -45,7 +45,7 @@ namespace AdrianMiasik
         [SerializeField] private CompletionLabel completionLabel;
 
         [Header("Buttons")] 
-        [SerializeField] private BooleanToggle infoToggle;
+        [SerializeField] private BooleanToggle menuToggle;
         [SerializeField] private ClickButton leftButtonClick;
         [SerializeField] private ClickButton rightButtonClick;
         [SerializeField] private RightButton rightButton;
@@ -126,7 +126,8 @@ namespace AdrianMiasik
 
             // Override
             themeSlider.OverrideFalseColor(theme.GetCurrentColorScheme().backgroundHighlight);
-            
+            menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
+
             // Halloween Theme Toggle
             // Check if it's October...
             if (DateTime.Now.Month == 10)
@@ -153,7 +154,7 @@ namespace AdrianMiasik
             themeSlider.Initialize(this, false);
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);
-            infoToggle.Initialize(this, false);
+            menuToggle.Initialize(this, false);
             breakSlider.Initialize(this, false);
 
             // Register elements that need updating per timer state change
