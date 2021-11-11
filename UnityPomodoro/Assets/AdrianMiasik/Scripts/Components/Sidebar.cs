@@ -11,6 +11,7 @@ namespace AdrianMiasik.Components
       [SerializeField] private BooleanToggle menuToggle;
       [SerializeField] private RectTransform container;
       [SerializeField] private Image overlayImage;
+      [SerializeField] private Animation entryAnimation;
 
       private PomodoroTimer timer;
       private Color overlay;
@@ -26,6 +27,7 @@ namespace AdrianMiasik.Components
       {
           container.gameObject.SetActive(true);
           gameObject.SetActive(true);
+          entryAnimation.Play();
           overlayImage.enabled = true;
           ColorUpdate(timer.GetTheme());
       }
@@ -34,6 +36,7 @@ namespace AdrianMiasik.Components
       {
           menuToggle.SetToFalse();
           container.gameObject.SetActive(false);
+          entryAnimation.Stop();
           gameObject.SetActive(false);
           overlayImage.enabled = false;
       }
