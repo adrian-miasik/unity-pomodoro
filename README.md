@@ -49,6 +49,7 @@ Want to help? If you're interested in contributing to the project, please see th
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v1.3.0 - 🎃 Halloween Theme & Digit Format Support](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.3.0)
 - [v1.2.1 - Dark Mode, Tick Animation, and Architectural Improvements](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.2.1)
 - [v1.1.0 - UWP, Keyboard Support, New Digit Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.1.0)
 - [v1.0.0 - Initial Launch](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
