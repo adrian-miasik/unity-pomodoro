@@ -59,15 +59,30 @@ Want to help? If you're interested in contributing to the project, please see th
 <img src="promotional/release-banner.png" width="720">
 <img src="promotional/release-showcase.gif" width="720">
 
-### Screenshots
+### Screenshots & Mocks
+#### Light
 <p>
-<img src="promotional/screenshots/0.png" width="200">
-<img src="promotional/screenshots/1.png" width="200">
-<img src="promotional/screenshots/2.png" width="200">
-<img src="promotional/screenshots/3.png" width="200">
-<img src="promotional/screenshots/4.png" width="200">
-<img src="promotional/screenshots/5.png" width="200">
-<img src="promotional/screenshots/6.png" width="200">
+<img src="sources/design/mocks/light-color-scheme.png" width="200">
+<img src="sources/design/mocks/light-mode-one" width="200">
+<img src="sources/design/mocks/light-running" width="200">
+<img src="sources/design/mocks/light-complete" width="200">
+<img src="sources/design/mocks/light-mode-two" width="200">
+<img src="sources/design/mocks/light-menu" width="200">
+<img src="sources/design/mocks/light-edit" width="200">
+<img src="sources/design/mocks/light-settings" width="200">
+<img src="sources/design/mocks/light-about" width="200">
+</p>
+#### Dark
+<p>
+<img src="sources/design/mocks/dark-color-scheme.png" width="200">
+<img src="sources/design/mocks/dark-mode-one" width="200">
+<img src="sources/design/mocks/dark-running" width="200">
+<img src="sources/design/mocks/dark-complete" width="200">
+<img src="sources/design/mocks/dark-mode-two" width="200">
+<img src="sources/design/mocks/dark-menu" width="200">
+<img src="sources/design/mocks/dark-edit" width="200">
+<img src="sources/design/mocks/dark-settings" width="200">
+<img src="sources/design/mocks/dark-about" width="200">
 </p>
 
 ## Author Notes
