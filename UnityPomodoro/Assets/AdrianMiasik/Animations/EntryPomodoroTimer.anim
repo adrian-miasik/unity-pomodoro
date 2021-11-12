@@ -384,10 +384,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Color.a
-    path: Padding/Menu Toggle/Background/Icon
-    classID: 114
-    script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
+    attribute: m_Alpha
+    path: Padding/Menu Toggle
+    classID: 225
+    script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -1301,10 +1301,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Color.a
-    path: Padding/Menu Toggle/Background/Icon
-    classID: 114
-    script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
+    attribute: m_Alpha
+    path: Padding/Menu Toggle
+    classID: 225
+    script: {fileID: 0}
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0

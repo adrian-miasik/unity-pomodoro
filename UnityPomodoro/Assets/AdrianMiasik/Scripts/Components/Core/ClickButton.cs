@@ -123,7 +123,7 @@ namespace AdrianMiasik.Components.Core
             isUserHolding = false;
             userHoldTime = 0f;
             accumulatedHoldTime = 0f;
-            
+
             if (containerTarget != null)
             {
                 containerTarget.transform.localScale = cachedScale;

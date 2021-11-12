@@ -97,7 +97,7 @@ namespace AdrianMiasik
         private float cachedSeconds;
         private bool isRingTickAnimating;
         [SerializeField] private AnimationCurve ringTickWidth;
-
+        
         // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
@@ -128,6 +128,7 @@ namespace AdrianMiasik
             // Override
             themeSlider.OverrideFalseColor(theme.GetCurrentColorScheme().backgroundHighlight);
             menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
+            menuToggle.OverrideTrueColor(Color.clear);
 
             // Halloween Theme Toggle
             // Check if it's October...
@@ -268,6 +269,7 @@ namespace AdrianMiasik
                     break;
             }
             
+            // TODO: Redundant?
             ColorUpdate(theme);
         }
 
@@ -696,6 +698,9 @@ namespace AdrianMiasik
 
             // Reset paused digit anim
             ResetDigitFadeAnim();
+            
+            menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
+            menuToggle.ColorUpdate(theme);
 
             switch (state)
             {
@@ -733,7 +738,7 @@ namespace AdrianMiasik
             return digitFormat.isOnBreak;
         }
 
-        public bool IsInfoPageOpen()
+        public bool IsAboutPageOpen()
         {
             return infoContainer.IsInfoPageOpen();
         }
@@ -793,6 +798,16 @@ namespace AdrianMiasik
             
             // Apply our changes
             theme.ApplyColorChanges();
+        }
+
+        public bool IsSidebarOpen()
+        {
+            return sidebarMenu.IsOpen();
+        }
+
+        public void ColorUpdateCreditsBubble()
+        {
+            creditsBubble.ColorUpdate(theme);
         }
     }
 }

@@ -33,6 +33,10 @@ namespace AdrianMiasik.Components.Core
         private bool overrideFalseColor;
         private Color overridenFalseColor;
         
+        /// <summary>
+        /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
+        /// </summary>
+        /// <param name="_color"></param>
         public void OverrideTrueColor(Color _color)
         {
             overrideTrueColor = true;
