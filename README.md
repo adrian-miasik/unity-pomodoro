@@ -1,7 +1,7 @@
 <h1 align="center">Unity Pomodoro</h1>
 
 <p align="center">
-  <img src="icons/application-icon.png" width="64">
+  <img src="UnityPomodoro/Assets/AdrianMiasik/Sprites/icon-unity-pomodoro.png" width="64">
 </p>
 
 <p align="center">
