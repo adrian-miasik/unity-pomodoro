@@ -64,23 +64,24 @@ Want to help? If you're interested in contributing to the project, please see th
 #### Light
 <p>
 <img src="sources/design/mocks/light-color-scheme.png" width="200">
+<img src="sources/design/mocks/light-menu.png" width="200">
 <img src="sources/design/mocks/light-mode-one.png" width="200">
 <img src="sources/design/mocks/light-running.png" width="200">
 <img src="sources/design/mocks/light-complete.png" width="200">
 <img src="sources/design/mocks/light-mode-two.png" width="200">
-<img src="sources/design/mocks/light-menu.png" width="200">
 <img src="sources/design/mocks/light-edit.png" width="200">
 <img src="sources/design/mocks/light-settings.png" width="200">
 <img src="sources/design/mocks/light-about.png" width="200">
 </p>
+
 #### Dark
 <p>
 <img src="sources/design/mocks/dark-color-scheme.png" width="200">
+<img src="sources/design/mocks/dark-menu.png" width="200">
 <img src="sources/design/mocks/dark-mode-one.png" width="200">
 <img src="sources/design/mocks/dark-running.png" width="200">
 <img src="sources/design/mocks/dark-complete.png" width="200">
 <img src="sources/design/mocks/dark-mode-two.png" width="200">
-<img src="sources/design/mocks/dark-menu.png" width="200">
 <img src="sources/design/mocks/dark-edit.png" width="200">
 <img src="sources/design/mocks/dark-settings.png" width="200">
 <img src="sources/design/mocks/dark-about.png" width="200">
