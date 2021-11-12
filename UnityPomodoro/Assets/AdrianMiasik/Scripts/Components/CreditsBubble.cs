@@ -57,12 +57,12 @@ namespace AdrianMiasik.Components
 
         protected override void OnComplete()
         {
-            if (!isPointerHovering && !timer.IsInfoPageOpen())
+            if (!isPointerHovering && !timer.IsAboutPageOpen())
             {
                 FadeOut();
             }
 
-            if (!timer.IsInfoPageOpen())
+            if (!timer.IsAboutPageOpen())
             {
                 Unlock();
             }
@@ -151,13 +151,15 @@ namespace AdrianMiasik.Components
 
         public void ColorUpdate(Theme _theme)
         {
-            background.color = _theme.GetCurrentColorScheme().backgroundHighlight;
-            
+            background.color = timer.IsSidebarOpen() ?
+                _theme.GetCurrentColorScheme().background : 
+                _theme.GetCurrentColorScheme().backgroundHighlight;
+
             foreach (TMP_Text _text in text)
             {
                 _text.color = _theme.GetCurrentColorScheme().foreground;
             }
-            
+
             icon.ColorUpdate(_theme);
         }
     }

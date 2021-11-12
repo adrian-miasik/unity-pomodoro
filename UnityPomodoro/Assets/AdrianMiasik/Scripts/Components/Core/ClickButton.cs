@@ -123,7 +123,7 @@ namespace AdrianMiasik.Components.Core
             isUserHolding = false;
             userHoldTime = 0f;
             accumulatedHoldTime = 0f;
-            
+
             if (containerTarget != null)
             {
                 containerTarget.transform.localScale = cachedScale;
@@ -175,8 +175,8 @@ namespace AdrianMiasik.Components.Core
                     if (accumulatedHoldTime > holdRamp.Evaluate(userHoldTime))
                     {
                         accumulatedHoldTime = 0f;
-                        OnClick.Invoke();
                         PlayClickSound();
+                        OnClick.Invoke();
                     }
                 }
             }

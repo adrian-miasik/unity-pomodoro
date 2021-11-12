@@ -33,6 +33,7 @@ namespace AdrianMiasik
         [Header("Containers")]
         [SerializeField] private GameObject contentContainer; // main content
         [SerializeField] private InformationPanel infoContainer; // info content
+        [SerializeField] private Sidebar sidebarMenu;
         
         [Header("Background")] 
         [SerializeField] private Background background; // Used to pull select focus
@@ -45,7 +46,7 @@ namespace AdrianMiasik
         [SerializeField] private CompletionLabel completionLabel;
 
         [Header("Buttons")] 
-        [SerializeField] private BooleanToggle infoToggle;
+        [SerializeField] private BooleanToggle menuToggle;
         [SerializeField] private ClickButton leftButtonClick;
         [SerializeField] private ClickButton rightButtonClick;
         [SerializeField] private RightButton rightButton;
@@ -96,7 +97,7 @@ namespace AdrianMiasik
         private float cachedSeconds;
         private bool isRingTickAnimating;
         [SerializeField] private AnimationCurve ringTickWidth;
-
+        
         // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
@@ -126,7 +127,9 @@ namespace AdrianMiasik
 
             // Override
             themeSlider.OverrideFalseColor(theme.GetCurrentColorScheme().backgroundHighlight);
-            
+            menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
+            menuToggle.OverrideTrueColor(Color.clear);
+
             // Halloween Theme Toggle
             // Check if it's October...
             if (DateTime.Now.Month == 10)
@@ -153,8 +156,9 @@ namespace AdrianMiasik
             themeSlider.Initialize(this, false);
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);
-            infoToggle.Initialize(this, false);
+            menuToggle.Initialize(this, false);
             breakSlider.Initialize(this, false);
+            sidebarMenu.Initialize(this);
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
@@ -265,6 +269,7 @@ namespace AdrianMiasik
                     break;
             }
             
+            // TODO: Redundant?
             ColorUpdate(theme);
         }
 
@@ -693,6 +698,9 @@ namespace AdrianMiasik
 
             // Reset paused digit anim
             ResetDigitFadeAnim();
+            
+            menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
+            menuToggle.ColorUpdate(theme);
 
             switch (state)
             {
@@ -730,7 +738,7 @@ namespace AdrianMiasik
             return digitFormat.isOnBreak;
         }
 
-        public bool IsInfoPageOpen()
+        public bool IsAboutPageOpen()
         {
             return infoContainer.IsInfoPageOpen();
         }
@@ -750,6 +758,15 @@ namespace AdrianMiasik
             digitFormat.SwitchFormat(_desiredFormat);
             digitFormat.GenerateFormat();
             Restart(false);
+        }
+        
+        /// <summary>
+        /// Change to format using enum index
+        /// </summary>
+        /// <param name="_i"></param>
+        public void ChangeFormat(Int32 _i)
+        {
+            ChangeFormat((DigitFormat.SupportedFormats)_i);
         }
         
         // TODO: Create theme manager class?
@@ -781,6 +798,16 @@ namespace AdrianMiasik
             
             // Apply our changes
             theme.ApplyColorChanges();
+        }
+
+        public bool IsSidebarOpen()
+        {
+            return sidebarMenu.IsOpen();
+        }
+
+        public void ColorUpdateCreditsBubble()
+        {
+            creditsBubble.ColorUpdate(theme);
         }
     }
 }
