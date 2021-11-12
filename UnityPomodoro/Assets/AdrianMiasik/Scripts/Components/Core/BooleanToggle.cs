@@ -30,11 +30,27 @@ namespace AdrianMiasik.Components.Core
         // Override
         private bool overrideTrueColor;
         private Color overridenTrueColor;
+        private bool overrideFalseColor;
+        private Color overridenFalseColor;
         
+        /// <summary>
+        /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
+        /// </summary>
+        /// <param name="_color"></param>
         public void OverrideTrueColor(Color _color)
         {
             overrideTrueColor = true;
             overridenTrueColor = _color;
+        }
+
+        /// <summary>
+        /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
+        /// </summary>
+        /// <param name="_color"></param>
+        public void OverrideFalseColor(Color _color)
+        {
+            overrideFalseColor = true;
+            overridenFalseColor = _color;
         }
         
         public void Initialize(PomodoroTimer _timer, bool _isOn, bool _invokeEvents = false)
@@ -75,6 +91,18 @@ namespace AdrianMiasik.Components.Core
                 ColorUpdate(timer.GetTheme());
             }
         }
+
+        public void SetToTrue()
+        {
+            isOn = true;
+            UpdateToggle(false);
+        }
+
+        public void SetToFalse()
+        {
+            isOn = false;
+            UpdateToggle(false);
+        }
         
         public void ColorUpdate(Theme _theme)
         {
@@ -84,7 +112,7 @@ namespace AdrianMiasik.Components.Core
                     icon.color = overrideTrueColor ? overridenTrueColor : _theme.GetCurrentColorScheme().close;
                     break;
                 case false:
-                    icon.color = _theme.GetCurrentColorScheme().backgroundHighlight;
+                    icon.color = overrideFalseColor ? overridenFalseColor : _theme.GetCurrentColorScheme().backgroundHighlight;
                     break;
             }
         }

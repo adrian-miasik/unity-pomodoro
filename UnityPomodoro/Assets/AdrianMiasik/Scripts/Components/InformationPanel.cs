@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components
 {
+    // TODO: Rename to AboutPanel
     public class InformationPanel : MonoBehaviour, IColorHook
     {
         [SerializeField] private TMP_Text title;

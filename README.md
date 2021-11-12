@@ -1,7 +1,7 @@
 <h1 align="center">Unity Pomodoro</h1>
 
 <p align="center">
-  <img src="icons/application-icon.png" width="64">
+  <img src="UnityPomodoro/Assets/AdrianMiasik/Sprites/icon-unity-pomodoro.png" width="64">
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work and break sessions. Quickly swap between the two timers to keep you on track and focused.
 
-**Version**:  1.2.1
+**Version**:  1.3.0
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
@@ -35,20 +35,22 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release - v1.2.1](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.2.1)
+### [Latest Release - v1.3.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.3.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.2.1/unity-pomodoro-1.2.1-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.2.1/unity-pomodoro-1.2.1-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.2.1/unity-pomodoro-1.2.1-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.2.1/unity-pomodoro-1.2.1-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-linux-desktop-64-bit.zip)
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v1.3.0 - 🎃 Halloween Theme & Digit Format Support](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.3.0)
+- [v1.2.1 - Dark Mode, Tick Animation, and Architectural Improvements](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.2.1)
 - [v1.1.0 - UWP, Keyboard Support, New Digit Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.1.0)
 - [v1.0.0 - Initial Launch](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
 
@@ -58,15 +60,30 @@ Want to help? If you're interested in contributing to the project, please see th
 <img src="promotional/release-banner.png" width="720">
 <img src="promotional/release-showcase.gif" width="720">
 
-### Screenshots
+### Screenshots & Mocks
+#### Light
 <p>
-<img src="promotional/screenshots/0.png" width="200">
-<img src="promotional/screenshots/1.png" width="200">
-<img src="promotional/screenshots/2.png" width="200">
-<img src="promotional/screenshots/3.png" width="200">
-<img src="promotional/screenshots/4.png" width="200">
-<img src="promotional/screenshots/5.png" width="200">
-<img src="promotional/screenshots/6.png" width="200">
+<img src="sources/design/mocks/light-color-scheme.png" width="200">
+<img src="sources/design/mocks/light-mode-one.png" width="200">
+<img src="sources/design/mocks/light-running.png" width="200">
+<img src="sources/design/mocks/light-complete.png" width="200">
+<img src="sources/design/mocks/light-mode-two.png" width="200">
+<img src="sources/design/mocks/light-menu.png" width="200">
+<img src="sources/design/mocks/light-edit.png" width="200">
+<img src="sources/design/mocks/light-settings.png" width="200">
+<img src="sources/design/mocks/light-about.png" width="200">
+</p>
+#### Dark
+<p>
+<img src="sources/design/mocks/dark-color-scheme.png" width="200">
+<img src="sources/design/mocks/dark-mode-one.png" width="200">
+<img src="sources/design/mocks/dark-running.png" width="200">
+<img src="sources/design/mocks/dark-complete.png" width="200">
+<img src="sources/design/mocks/dark-mode-two.png" width="200">
+<img src="sources/design/mocks/dark-menu.png" width="200">
+<img src="sources/design/mocks/dark-edit.png" width="200">
+<img src="sources/design/mocks/dark-settings.png" width="200">
+<img src="sources/design/mocks/dark-about.png" width="200">
 </p>
 
 ## Author Notes
