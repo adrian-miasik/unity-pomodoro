@@ -88,7 +88,7 @@ Want to help? If you're interested in contributing to the project, please see th
 </p>
 
 ## Author Notes
-- Unity Pomodoro is a pet project I've been developing in my spare time
+- Unity Pomodoro is a pet project I've been developing in my spare time - A labour of love of sorts
 - See [my GitHub profile](https://github.com/adrian-miasik) for more open source work
 - I'm also currently open for work, if you're hiring send me an email at: `hire-me.76240@adrian-miasik.com`
 - The svg assets have been created myself and/or sourced from The Noun Project
