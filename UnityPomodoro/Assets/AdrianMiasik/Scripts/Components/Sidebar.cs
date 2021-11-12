@@ -97,7 +97,7 @@ namespace AdrianMiasik.Components
       {
           // Overlay
           overlay = _theme.GetCurrentColorScheme().foreground;
-          overlay.a = _theme.isLightModeOn ? 0.8f : 0.2f; // Following mock
+          overlay.a = _theme.isLightModeOn ? 0.5f : 0.05f;
           overlayImage.color = overlay;
 
           // Background
