@@ -370,34 +370,6 @@ AnimationClip:
     path: Background/Mask/BG/Header
     classID: 1
     script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 2.46415
-        outSlope: 2.46415
-        tangentMode: 0
-        weightedMode: 3
-        inWeight: 0.33333334
-        outWeight: 0.09548693
-      - serializedVersion: 3
-        time: 0.083333336
-        value: 1
-        inSlope: 0.16572917
-        outSlope: 0.16572917
-        tangentMode: 0
-        weightedMode: 3
-        inWeight: 1
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Alpha
-    path: Overlay
-    classID: 225
-    script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -733,34 +705,6 @@ AnimationClip:
     attribute: m_LocalScale.z
     path: Background/Mask/BG/Close
     classID: 224
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 2.46415
-        outSlope: 2.46415
-        tangentMode: 0
-        weightedMode: 3
-        inWeight: 0.33333334
-        outWeight: 0.09548693
-      - serializedVersion: 3
-        time: 0.083333336
-        value: 1
-        inSlope: 0.16572917
-        outSlope: 0.16572917
-        tangentMode: 0
-        weightedMode: 3
-        inWeight: 1
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Alpha
-    path: Overlay
-    classID: 225
     script: {fileID: 0}
   - curve:
       serializedVersion: 2

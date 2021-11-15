@@ -1,3 +1,4 @@
+using System;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
@@ -7,13 +8,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
-{
-  public class Sidebar : MonoBehaviour, IColorHook
-  {
+{ 
+    [ExecuteInEditMode]
+    public class Sidebar : MonoBehaviour, IColorHook
+    {
       [Header("Components")]
       [SerializeField] private BooleanToggle menuToggle;
       [SerializeField] private RectTransform container;
+      [SerializeField] private RectTransform background;
       [SerializeField] private Image overlayImage;
+      [SerializeField] private CanvasGroup overlayGroup;
       [SerializeField] private Animation entryAnimation;
       [SerializeField] private SVGImage fill;
       [SerializeField] private SVGImage edge;
@@ -25,9 +29,13 @@ namespace AdrianMiasik.Components
       [SerializeField] private SidebarRow settings;
       [SerializeField] private SidebarRow about;
       
+      // Cache
       private PomodoroTimer timer;
       private bool isOpen;
       private Color overlay;
+      
+      private int screenWidth;
+      private int screenHeight;
 
       public void Initialize(PomodoroTimer _timer)
       {
@@ -39,6 +47,33 @@ namespace AdrianMiasik.Components
           pomodoroTimer.Initialize(_timer, this, true);
           settings.Initialize(_timer, this);
           about.Initialize(_timer, this);
+          
+          // Calculate screen dimensions
+          screenWidth = Screen.width;
+          screenHeight = Screen.height;
+      }
+
+      private void Update()
+      {
+          if (Screen.height != screenHeight || Screen.width != screenWidth)
+          {
+              screenWidth = Screen.width;
+              screenHeight = Screen.height;
+
+              Debug.Log("Resolution Changed!");
+              CalculateSidebarWidth();
+          }
+          
+          if (Input.GetMouseButtonDown(2))
+          {
+              CalculateSidebarWidth();
+          }
+      }
+      
+      private void CalculateSidebarWidth()
+      {
+          float _scalar = (float)Screen.height / Screen.width;
+          background.anchorMax = new Vector2(Mathf.Clamp(0.5f * _scalar,0,0.75f), background.anchorMax.y);
       }
       
       public void Open()
@@ -49,6 +84,7 @@ namespace AdrianMiasik.Components
           gameObject.SetActive(true);
           entryAnimation.Play();
           overlayImage.enabled = true;
+          overlayGroup.alpha = 1;
           
           ColorUpdate(timer.GetTheme());
           timer.ColorUpdateCreditsBubble();
@@ -68,6 +104,7 @@ namespace AdrianMiasik.Components
           entryAnimation.Stop();
           gameObject.SetActive(false);
           overlayImage.enabled = false;
+          overlayGroup.alpha = 0;
           
           timer.ColorUpdateCreditsBubble();
       }
@@ -97,7 +134,7 @@ namespace AdrianMiasik.Components
       {
           // Overlay
           overlay = _theme.GetCurrentColorScheme().foreground;
-          overlay.a = _theme.isLightModeOn ? 0.5f : 0.05f;
+          overlay.a = _theme.isLightModeOn ? 0.7f : 0.05f;
           overlayImage.color = overlay;
 
           // Background
