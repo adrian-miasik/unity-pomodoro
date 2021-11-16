@@ -51,6 +51,7 @@ namespace AdrianMiasik.Components
           // Calculate screen dimensions
           screenWidth = Screen.width;
           screenHeight = Screen.height;
+          CalculateSidebarWidth();
       }
 
       private void Update()
