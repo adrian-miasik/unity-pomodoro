@@ -104,6 +104,7 @@ namespace AdrianMiasik.Components
       public void Open()
       {
           rowsToSpawn = new List<SidebarRow>(contentRows);
+          rowStaggerTime = rowStaggerDelay; // First stagger has no delay
           foreach (SidebarRow _row in contentRows)
           {
               _row.Hide();
