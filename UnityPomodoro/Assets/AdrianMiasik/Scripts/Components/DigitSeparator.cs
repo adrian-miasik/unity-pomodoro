@@ -11,10 +11,5 @@ namespace AdrianMiasik.Components
         {
             separator.color = _newColor;
         }
-
-        public void SetSeparatorScale(float _scale = 1f)
-        {
-            separator.transform.localScale = Vector3.one * _scale;
-        }
     }
 }
