@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
@@ -25,10 +26,9 @@ namespace AdrianMiasik.Components
       
       // Components
       [Header("Sidebar Rows (Content)")]
-      [SerializeField] private SidebarRow pomodoroTimer;
-      [SerializeField] private SidebarRow settings;
-      [SerializeField] private SidebarRow about;
-      
+      [SerializeField] private List<SidebarRow> contentRows = new List<SidebarRow>();
+      [SerializeField] private List<SidebarRow> rowsToSpawn;
+
       // Cache
       private PomodoroTimer timer;
       private bool isOpen;
@@ -36,6 +36,9 @@ namespace AdrianMiasik.Components
       
       private int screenWidth;
       private int screenHeight;
+      
+      private float rowStaggerDelay = 0.25f;
+      private float rowStaggerTime;
 
       public void Initialize(PomodoroTimer _timer)
       {
@@ -44,10 +47,21 @@ namespace AdrianMiasik.Components
           ColorUpdate(_timer.GetTheme());
           
           // Initialize row components
-          pomodoroTimer.Initialize(_timer, this, true);
-          settings.Initialize(_timer, this);
-          about.Initialize(_timer, this);
-          
+          for (int _i = 0; _i < contentRows.Count; _i++)
+          {
+              SidebarRow _row = contentRows[_i];
+
+              // Only select first item
+              if (_i == 0)
+              {
+                  _row.Initialize(_timer, this, true);
+              }
+              else
+              {
+                  _row.Initialize(_timer, this);
+              }
+          }
+
           // Calculate screen dimensions
           screenWidth = Screen.width;
           screenHeight = Screen.height;
@@ -64,10 +78,20 @@ namespace AdrianMiasik.Components
               Debug.Log("Resolution Changed!");
               CalculateSidebarWidth();
           }
-          
-          if (Input.GetMouseButtonDown(2))
+
+          if (isOpen)
           {
-              CalculateSidebarWidth();
+              if (rowsToSpawn.Count > 0)
+              {
+                  rowStaggerTime += Time.deltaTime;
+                  
+                  if (rowStaggerTime >= rowStaggerDelay)
+                  {
+                      rowStaggerTime = 0;
+                      rowsToSpawn[0].PlaySpawnAnimation();
+                      rowsToSpawn.RemoveAt(0);
+                  }
+              }
           }
       }
       
@@ -79,6 +103,12 @@ namespace AdrianMiasik.Components
       
       public void Open()
       {
+          rowsToSpawn = new List<SidebarRow>(contentRows);
+          foreach (SidebarRow _row in contentRows)
+          {
+              _row.Hide();
+          }
+
           isOpen = true;
           
           container.gameObject.SetActive(true);
@@ -94,10 +124,12 @@ namespace AdrianMiasik.Components
       public void Close()
       {
           isOpen = false;
-          
+
           // Cancel holds in-case user holds button down and closes our menu prematurely
-          pomodoroTimer.CancelHold();
-          about.CancelHold();
+          foreach (SidebarRow _row in contentRows)
+          {
+              _row.CancelHold();
+          }
 
           menuToggle.SetToFalse();
           
@@ -118,16 +150,20 @@ namespace AdrianMiasik.Components
       // Unity Event
       public void UpdateRows()
       {
+          // Deselect all rows
+          foreach (SidebarRow _row in contentRows)
+          {
+              _row.Deselect();
+          }
+          
           // Determine which row is selected
           if (timer.IsAboutPageOpen())
           {
-              pomodoroTimer.Deselect();
-              about.Select();
+              contentRows[contentRows.Count - 1].Select(); // TODO: Don't look at specific indices
           }
-          else
+          else // TODO: else if settings page open...
           {
-              pomodoroTimer.Select();
-              about.Deselect();
+              contentRows[0].Select();
           }
       }
 

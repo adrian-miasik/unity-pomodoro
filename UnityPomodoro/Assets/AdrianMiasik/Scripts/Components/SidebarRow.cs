@@ -10,6 +10,8 @@ namespace AdrianMiasik.Components
 {
     public class SidebarRow : MonoBehaviour, IColorHook
     {
+        [SerializeField] private Animation spawn;
+        [SerializeField] private RectTransform container;
         [SerializeField] private ClickButton button;
         [SerializeField] private Image accent;
         [SerializeField] private RectTransform contentContainer;
@@ -28,6 +30,24 @@ namespace AdrianMiasik.Components
             isSelected = _isSelected;
             _timer.GetTheme().RegisterColorHook(this);
             ColorUpdate(_timer.GetTheme());
+            Hide();
+        }
+
+        public void Hide()
+        {
+            container.gameObject.SetActive(false);
+        }
+        
+        public void PlaySpawnAnimation()
+        {
+            Show();
+            spawn.Stop();
+            spawn.Play();
+        }
+        
+        public void Show()
+        {
+            container.gameObject.SetActive(true);
         }
 
         [ContextMenu("Select")]
