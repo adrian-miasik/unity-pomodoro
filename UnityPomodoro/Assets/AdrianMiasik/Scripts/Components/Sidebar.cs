@@ -74,8 +74,6 @@ namespace AdrianMiasik.Components
             {
                 screenWidth = Screen.width;
                 screenHeight = Screen.height;
-
-                Debug.Log("Resolution Changed!");
                 CalculateSidebarWidth();
             }
 

@@ -30,10 +30,13 @@ namespace AdrianMiasik
         [Header("Animations")] 
         [SerializeField] private Animation spawnAnimation;
 
-        [Header("Containers")]
-        [SerializeField] private GameObject contentContainer; // main content
-        [SerializeField] private InformationPanel infoContainer; // info content
+        [Header("Menu")]
         [SerializeField] private Sidebar sidebarMenu;
+        
+        [Header("Content")]
+        [SerializeField] private GameObject mainContainer;
+        [SerializeField] private AboutPanel aboutContainer; // previously called info container
+        [SerializeField] private SettingsPanel settingsContainer;
         
         [Header("Background")] 
         [SerializeField] private Background background; // Used to pull select focus
@@ -121,9 +124,13 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
-            infoContainer.Initialize(this);
-            infoContainer.Hide();
-            contentContainer.gameObject.SetActive(true);
+            settingsContainer.Initialize(this);
+            aboutContainer.Initialize(this);
+            
+            settingsContainer.Hide();
+            aboutContainer.Hide();
+            
+            mainContainer.gameObject.SetActive(true);
 
             // Override
             themeSlider.OverrideFalseColor(theme.GetCurrentColorScheme().backgroundHighlight);
@@ -478,16 +485,19 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Shows info, hides main content, and shows credits bubble
+        /// Shows about content, hides main content, and shows credits bubble
         /// </summary>
-        public void ShowInfo()
+        public void ShowAbout()
         {
             // Prevent tick animations from pausing when switching to info page
             digitFormat.CorrectTickAnimVisuals();
             
-            // Hide main content, show info
-            contentContainer.gameObject.SetActive(false);
-            infoContainer.Show();
+            // Hide other content
+            mainContainer.gameObject.SetActive(false);
+            settingsContainer.Hide();
+            
+            // Show about page content
+            aboutContainer.Show();
 
             if (!creditsBubble.IsRunning())
             {
@@ -499,14 +509,29 @@ namespace AdrianMiasik
         /// <summary>
         /// Shows main content, hides info, and hides credits bubble
         /// </summary>
-        public void HideInfo()
+        public void ShowMainContent()
         {
-            // Hide info, show main content
-            infoContainer.Hide();
-            contentContainer.gameObject.SetActive(true);
+            // Hide other content
+            aboutContainer.Hide();
+            settingsContainer.Hide();
+            
+            // Show main content
+            mainContainer.gameObject.SetActive(true);
+            digitFormat.GenerateFormat();
+            leftButtonClick.OnPointerClick(null);
             
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
+        }
+
+        public void ShowSettings()
+        {
+            // Hide other content
+            aboutContainer.Hide();
+            mainContainer.gameObject.SetActive(false);
+            
+            // Show settings content
+            settingsContainer.Show();
         }
         
         /// <summary>
@@ -740,7 +765,7 @@ namespace AdrianMiasik
 
         public bool IsAboutPageOpen()
         {
-            return infoContainer.IsInfoPageOpen();
+            return aboutContainer.IsInfoPageOpen();
         }
 
         public List<Selectable> GetSelections()
