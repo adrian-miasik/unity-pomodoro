@@ -37,7 +37,7 @@ namespace AdrianMiasik.Components
         private int screenWidth;
         private int screenHeight;
         
-        private float rowStaggerDelay = 0.25f;
+        private float rowStaggerDelay = 0.15f;
         private float rowStaggerTime;
 
         public void Initialize(PomodoroTimer _timer)
