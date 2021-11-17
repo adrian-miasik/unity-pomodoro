@@ -129,8 +129,8 @@ namespace AdrianMiasik.Components
                     self.anchoredPosition = Vector2.zero;
                     break;
                 case 2:
-                    self.anchorMin = new Vector2(0.25f ,self.anchorMin.y);
-                    self.anchorMax = new Vector2(0.75f ,self.anchorMax.y);
+                    self.anchorMin = new Vector2(0.225f ,self.anchorMin.y);
+                    self.anchorMax = new Vector2(0.775f ,self.anchorMax.y);
                     self.anchoredPosition = Vector2.zero;
                     break;
                 default:
