@@ -10,6 +10,7 @@ namespace AdrianMiasik.Components.Core
         // Inspector References
         public RectTransform containerTarget; // The rect transform that will scale
         public Transform visibilityTarget;
+        public bool enableClickSound = true;
         public AudioSource clickSound;
         public float clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
         public AnimationCurve clickReleaseScale; // What scale do you want the target to scale after click
@@ -133,8 +134,12 @@ namespace AdrianMiasik.Components.Core
         public void OnPointerClick(PointerEventData _eventData)
         {
             OnClick.Invoke();
-            PlayClickSound();
-            
+
+            if (enableClickSound)
+            {
+                PlayClickSound();
+            }
+
             if (containerTarget == null)
             {
                 return;
@@ -175,7 +180,10 @@ namespace AdrianMiasik.Components.Core
                     if (accumulatedHoldTime > holdRamp.Evaluate(userHoldTime))
                     {
                         accumulatedHoldTime = 0f;
-                        PlayClickSound();
+                        if (enableClickSound)
+                        {
+                            PlayClickSound();
+                        }
                         OnClick.Invoke();
                     }
                 }
