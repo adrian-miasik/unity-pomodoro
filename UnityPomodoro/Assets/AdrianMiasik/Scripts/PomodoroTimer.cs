@@ -132,8 +132,9 @@ namespace AdrianMiasik
             
             mainContainer.gameObject.SetActive(true);
 
-            // Override
-            themeSlider.OverrideFalseColor(theme.GetCurrentColorScheme().backgroundHighlight);
+            // Overrides
+            themeSlider.OverrideFalseColor(theme.light.backgroundHighlight);
+            themeSlider.OverrideTrueColor(new Color(0.33f, 0f, 0.89f));
             menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
             menuToggle.OverrideTrueColor(Color.clear);
 

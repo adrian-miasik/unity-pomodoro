@@ -20,9 +20,19 @@ namespace AdrianMiasik.Components
             timer = _timer;
             timer.GetTheme().RegisterColorHook(this);
 
-            themeSlider.OverrideFalseColor(timer.GetTheme().GetCurrentColorScheme().backgroundHighlight);
-
+            themeSlider.OverrideFalseColor(_timer.GetTheme().light.backgroundHighlight);
+            themeSlider.OverrideTrueColor(new Color(0.33f, 0f, 0.89f));
+            
             themeSlider.Initialize(_timer, !timer.GetTheme().isLightModeOn);
+            if (timer.GetTheme().isLightModeOn)
+            {
+                themeSlider.Disable();
+            }
+            else
+            {
+                themeSlider.Enable();
+            }
+            
             digitFormatDropdown.Initialize(timer);
         }
 
