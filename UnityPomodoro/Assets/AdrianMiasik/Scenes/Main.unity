@@ -9507,6 +9507,10 @@ PrefabInstance:
       propertyPath: m_fontSizeMax
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1590220842564846499, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1590220842698828420, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
       propertyPath: m_Name
       value: ChangeDigitFormat-LabelledDropdown
