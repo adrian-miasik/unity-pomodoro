@@ -146,7 +146,7 @@ namespace AdrianMiasik.Components
             return isOpen;
         }
         
-        public void SelectRow(SidebarRow _rowToSelect)
+        public void SelectRow(SidebarRow _rowToSelect, AudioClip _clickSoundClip)
         {
             // Deselect other rows
             foreach (SidebarRow _row in contentRows)
@@ -168,6 +168,12 @@ namespace AdrianMiasik.Components
             {
                 Debug.LogWarning("This sidebar row is already selected!", _rowToSelect.gameObject);
             }
+            
+            // Pass the buck of playing our close sound to the audio mimic,
+            // since closing the sidebar will disable the audio sources we want to play from.
+            // And audio sources can not be played when in a disabled state.
+            // So instead we propagate the sound up to our singleton audio mimic class. 
+            AudioMimic.Instance.PlaySound(_clickSoundClip);
         }
 
         public void ColorUpdate(Theme _theme)
