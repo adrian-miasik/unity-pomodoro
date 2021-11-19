@@ -804,12 +804,29 @@ namespace AdrianMiasik
         public void SetToLightMode()
         {
             theme.SetToLightMode();
+            UpdateBooleanThemeSliders();
         }
 
         // Unity Event
         public void SetToDarkMode()
         {
             theme.SetToDarkMode();
+            UpdateBooleanThemeSliders();
+        }
+
+        private void UpdateBooleanThemeSliders()
+        {
+            // Force activate all our boolean sliders
+            if (theme.isLightModeOn)
+            {
+                themeSlider.Disable();
+                settingsContainer.GetThemeSlider().Disable();
+            }
+            else
+            {
+                themeSlider.Enable();
+                settingsContainer.GetThemeSlider().Enable();
+            }
         }
         
         // Unity Event
