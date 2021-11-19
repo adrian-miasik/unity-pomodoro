@@ -137,6 +137,7 @@ namespace AdrianMiasik
             menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
             menuToggle.OverrideTrueColor(Color.clear);
 
+            // TODO: Re-implement halloween theme?
             // Halloween Theme Toggle
             // Check if it's October...
             if (DateTime.Now.Month == 10)
