@@ -134,7 +134,7 @@ namespace AdrianMiasik
 
             // Overrides
             themeSlider.OverrideFalseColor(theme.light.backgroundHighlight);
-            themeSlider.OverrideTrueColor(new Color(0.33f, 0f, 0.89f));
+            themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
             menuToggle.OverrideFalseColor(theme.GetCurrentColorScheme().foreground);
             menuToggle.OverrideTrueColor(Color.clear);
 

@@ -21,7 +21,7 @@ namespace AdrianMiasik.Components
             timer.GetTheme().RegisterColorHook(this);
 
             themeSlider.OverrideFalseColor(_timer.GetTheme().light.backgroundHighlight);
-            themeSlider.OverrideTrueColor(new Color(0.33f, 0f, 0.89f));
+            themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
             
             themeSlider.Initialize(_timer, !timer.GetTheme().isLightModeOn);
             if (timer.GetTheme().isLightModeOn)
