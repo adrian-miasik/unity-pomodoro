@@ -29,6 +29,7 @@ namespace AdrianMiasik.Components
 
         // Current format
         [SerializeField] private RectTransform self;
+        [SerializeField] private RectTransform digitFormatRect;
         [SerializeField] private ContentSizeFitter sizeFitter;
         [SerializeField] private SupportedFormats format;
 
@@ -85,9 +86,9 @@ namespace AdrianMiasik.Components
             generatedSeparators?.Clear();
 
             // Clear pre-generated digits / transforms
-            foreach (Transform _t in transform.GetComponentsInChildren<Transform>())
+            foreach (Transform _t in digitFormatRect.GetComponentsInChildren<Transform>())
             {
-                if (_t == transform)
+                if (_t == digitFormatRect.transform)
                 {
                     continue;
                 }
@@ -125,19 +126,42 @@ namespace AdrianMiasik.Components
             switch (generatedDigits.Count)
             {
                 case 1:
-                    self.anchorMin = new Vector2(0.38f ,self.anchorMin.y);
-                    self.anchorMax = new Vector2(0.62f ,self.anchorMax.y);
-                    self.anchoredPosition = Vector2.zero;
+                    // Width
+                    digitFormatRect.anchorMin = new Vector2(0.38f, digitFormatRect.anchorMin.y);
+                    digitFormatRect.anchorMax = new Vector2(0.62f, digitFormatRect.anchorMax.y);
+                    digitFormatRect.anchoredPosition = Vector2.zero;
                     break;
+                
                 case 2:
-                    self.anchorMin = new Vector2(0.225f ,self.anchorMin.y);
-                    self.anchorMax = new Vector2(0.775f ,self.anchorMax.y);
+                    // Width
+                    digitFormatRect.anchorMin = new Vector2(0.225f, digitFormatRect.anchorMin.y);
+                    digitFormatRect.anchorMax = new Vector2(0.775f, digitFormatRect.anchorMax.y);
+                    digitFormatRect.anchoredPosition = Vector2.zero;
+                    break;
+                
+                case 4:
+                    // Height
+                    self.anchorMin = new Vector2(self.anchorMin.x, 0.4f);
+                    self.anchorMax = new Vector2(self.anchorMax.x, 0.7f);
                     self.anchoredPosition = Vector2.zero;
                     break;
+                
+                case 5:
+                    // Height
+                    self.anchorMin = new Vector2(self.anchorMin.x, 0.425f);
+                    self.anchorMax = new Vector2(self.anchorMax.x, 0.675f);
+                    self.anchoredPosition = Vector2.zero;
+                    break;
+                
                 default:
-                    // Reset
-                    self.anchorMin = new Vector2(0.05f ,self.anchorMin.y);
-                    self.anchorMax = new Vector2(0.95f ,self.anchorMax.y);
+                    // Reset Width
+                    digitFormatRect.anchorMin = new Vector2(0.05f, digitFormatRect.anchorMin.y);
+                    digitFormatRect.anchorMax = new Vector2(0.95f, digitFormatRect.anchorMax.y);
+                    digitFormatRect.anchoredPosition = Vector2.zero;
+                    
+                    // Reset Height
+                    self.anchorMin = new Vector2(self.anchorMin.x, 0.35f);
+                    self.anchorMax = new Vector2(self.anchorMax.x, 0.75f);
                     self.anchoredPosition = Vector2.zero;
                     break;
             }
@@ -237,7 +261,7 @@ namespace AdrianMiasik.Components
                 KeyValuePair<string, int> _pair = _doubleDigitSetToGenerate[_i];
 
                 // Generate double digit
-                DoubleDigit _dd = Instantiate(digitSource, transform);
+                DoubleDigit _dd = Instantiate(digitSource, digitFormatRect);
                 _dd.Initialize(timer, this, GetDigitType(_pair.Key));
                 generatedDigits.Add(_dd);
                 
@@ -248,7 +272,7 @@ namespace AdrianMiasik.Components
                 }
 
                 // Generate spacer (between each character)
-                DigitSeparator _separator = Instantiate(separatorSource, transform);
+                DigitSeparator _separator = Instantiate(separatorSource, digitFormatRect);
                 generatedSeparators.Add(_separator);
             }
 
