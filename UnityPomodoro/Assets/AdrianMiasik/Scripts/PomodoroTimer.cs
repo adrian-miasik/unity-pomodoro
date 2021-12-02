@@ -520,7 +520,7 @@ namespace AdrianMiasik
             // Show main content
             mainContainer.gameObject.SetActive(true);
             digitFormat.GenerateFormat();
-            leftButtonClick.OnPointerClick(null);
+            //leftButtonClick.OnPointerClick(null);
             
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
