@@ -20,6 +20,14 @@ namespace AdrianMiasik.Components
         {
             timer = _timer;
             timer.GetTheme().RegisterColorHook(this);
+
+            UpdateDropdownValue();
+        }
+
+        public void UpdateDropdownValue()
+        {
+            // Set dropdown value to current digit format
+            dropdown.value = timer.GetDigitFormat();
         }
 
         public void ColorUpdate(Theme _theme)

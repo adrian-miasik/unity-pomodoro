@@ -785,6 +785,11 @@ namespace AdrianMiasik
             digitFormat.SwitchFormat(_desiredFormat);
             digitFormat.GenerateFormat();
             Restart(false);
+            
+            if (settingsContainer.IsPageOpen())
+            {
+                settingsContainer.UpdateDropdown();
+            }
         }
         
         /// <summary>
@@ -794,6 +799,11 @@ namespace AdrianMiasik
         public void ChangeFormat(Int32 _i)
         {
             ChangeFormat((DigitFormat.SupportedFormats)_i);
+        }
+
+        public int GetDigitFormat()
+        {
+            return digitFormat.GetFormat();
         }
         
         // TODO: Create theme manager class?

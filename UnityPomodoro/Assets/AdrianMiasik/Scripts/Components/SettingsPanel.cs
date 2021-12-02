@@ -11,6 +11,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private TMP_Text title;
         [SerializeField] private LabelledDropdown digitFormatDropdown;
 
+        private bool isOpen = false;
         private PomodoroTimer timer;
 
         public void Initialize(PomodoroTimer _timer)
@@ -20,6 +21,12 @@ namespace AdrianMiasik.Components
             
             digitFormatDropdown.Initialize(timer);
         }
+
+        public void UpdateDropdown()
+        {
+            digitFormatDropdown.UpdateDropdownValue();
+        }
+        
         public void ColorUpdate(Theme _theme)
         {
             // TODO: Check if settings page is open
@@ -29,11 +36,19 @@ namespace AdrianMiasik.Components
         public void Show()
         {
             gameObject.SetActive(true);
+            digitFormatDropdown.UpdateDropdownValue();
+            isOpen = true;
         }
 
         public void Hide()
         {
             gameObject.SetActive(false);
+            isOpen = false;
+        }
+
+        public bool IsPageOpen()
+        {
+            return isOpen;
         }
     }
 }

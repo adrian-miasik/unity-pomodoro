@@ -119,6 +119,7 @@ namespace AdrianMiasik.Components
             ColorUpdate(timer.GetTheme());
         }
         
+        // Specific to our anchored layouts
         private void ImproveLayoutVisuals()
         {
             switch (generatedDigits.Count)
@@ -677,6 +678,11 @@ namespace AdrianMiasik.Components
         public void SwitchFormat(SupportedFormats _desiredFormat)
         {
             format = _desiredFormat;
+        }
+
+        public int GetFormat()
+        {
+            return (int) format;
         }
     }
  }
