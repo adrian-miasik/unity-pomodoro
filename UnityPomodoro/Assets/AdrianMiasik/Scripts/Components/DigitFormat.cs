@@ -130,6 +130,10 @@ namespace AdrianMiasik.Components
                     digitFormatRect.anchorMin = new Vector2(0.38f, digitFormatRect.anchorMin.y);
                     digitFormatRect.anchorMax = new Vector2(0.62f, digitFormatRect.anchorMax.y);
                     digitFormatRect.anchoredPosition = Vector2.zero;
+                    
+                    // Height
+                    ResetHeight();
+                    
                     break;
                 
                 case 2:
@@ -137,34 +141,56 @@ namespace AdrianMiasik.Components
                     digitFormatRect.anchorMin = new Vector2(0.225f, digitFormatRect.anchorMin.y);
                     digitFormatRect.anchorMax = new Vector2(0.775f, digitFormatRect.anchorMax.y);
                     digitFormatRect.anchoredPosition = Vector2.zero;
+                    
+                    // Height
+                    ResetHeight();
+                    
                     break;
                 
                 case 4:
+                    // Width
+                    ResetHeight();
+                    
                     // Height
                     self.anchorMin = new Vector2(self.anchorMin.x, 0.4f);
                     self.anchorMax = new Vector2(self.anchorMax.x, 0.7f);
                     self.anchoredPosition = Vector2.zero;
+                    
                     break;
                 
                 case 5:
+                    // Width
+                    ResetWidth();
+                    
                     // Height
                     self.anchorMin = new Vector2(self.anchorMin.x, 0.425f);
                     self.anchorMax = new Vector2(self.anchorMax.x, 0.675f);
                     self.anchoredPosition = Vector2.zero;
+                    
                     break;
                 
                 default:
-                    // Reset Width
-                    digitFormatRect.anchorMin = new Vector2(0.05f, digitFormatRect.anchorMin.y);
-                    digitFormatRect.anchorMax = new Vector2(0.95f, digitFormatRect.anchorMax.y);
-                    digitFormatRect.anchoredPosition = Vector2.zero;
+                    ResetWidth();
+                    ResetHeight();
                     
-                    // Reset Height
-                    self.anchorMin = new Vector2(self.anchorMin.x, 0.35f);
-                    self.anchorMax = new Vector2(self.anchorMax.x, 0.75f);
-                    self.anchoredPosition = Vector2.zero;
                     break;
             }
+        }
+
+        private void ResetWidth()
+        {
+            // Reset Width
+            digitFormatRect.anchorMin = new Vector2(0.05f, digitFormatRect.anchorMin.y);
+            digitFormatRect.anchorMax = new Vector2(0.95f, digitFormatRect.anchorMax.y);
+            digitFormatRect.anchoredPosition = Vector2.zero;
+        }
+
+        private void ResetHeight()
+        {
+            // Reset Height
+            self.anchorMin = new Vector2(self.anchorMin.x, 0.35f);
+            self.anchorMax = new Vector2(self.anchorMax.x, 0.75f);
+            self.anchoredPosition = Vector2.zero;
         }
 
         public void RefreshDigitVisuals()
