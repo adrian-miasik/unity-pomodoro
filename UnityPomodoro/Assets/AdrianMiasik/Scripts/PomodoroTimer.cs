@@ -822,12 +822,10 @@ namespace AdrianMiasik
             if (theme.isLightModeOn)
             {
                 themeSlider.Disable();
-                settingsContainer.GetThemeSlider().Disable();
             }
             else
             {
                 themeSlider.Enable();
-                settingsContainer.GetThemeSlider().Enable();
             }
         }
         
