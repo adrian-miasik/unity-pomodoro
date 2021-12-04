@@ -29,6 +29,7 @@ namespace AdrianMiasik.Components
 
         // Current format
         [SerializeField] private RectTransform self;
+        [SerializeField] private RectTransform digitFormatRect;
         [SerializeField] private ContentSizeFitter sizeFitter;
         [SerializeField] private SupportedFormats format;
 
@@ -85,9 +86,9 @@ namespace AdrianMiasik.Components
             generatedSeparators?.Clear();
 
             // Clear pre-generated digits / transforms
-            foreach (Transform _t in transform.GetComponentsInChildren<Transform>())
+            foreach (Transform _t in digitFormatRect.GetComponentsInChildren<Transform>())
             {
-                if (_t == transform)
+                if (_t == digitFormatRect.transform)
                 {
                     continue;
                 }
@@ -119,27 +120,77 @@ namespace AdrianMiasik.Components
             ColorUpdate(timer.GetTheme());
         }
         
+        // Specific to our anchored layouts
         private void ImproveLayoutVisuals()
         {
             switch (generatedDigits.Count)
             {
                 case 1:
-                    self.anchorMin = new Vector2(0.38f ,self.anchorMin.y);
-                    self.anchorMax = new Vector2(0.62f ,self.anchorMax.y);
-                    self.anchoredPosition = Vector2.zero;
+                    // Width
+                    digitFormatRect.anchorMin = new Vector2(0.38f, digitFormatRect.anchorMin.y);
+                    digitFormatRect.anchorMax = new Vector2(0.62f, digitFormatRect.anchorMax.y);
+                    digitFormatRect.anchoredPosition = Vector2.zero;
+                    
+                    // Height
+                    ResetHeight();
+                    
                     break;
+                
                 case 2:
-                    self.anchorMin = new Vector2(0.25f ,self.anchorMin.y);
-                    self.anchorMax = new Vector2(0.75f ,self.anchorMax.y);
-                    self.anchoredPosition = Vector2.zero;
+                    // Width
+                    digitFormatRect.anchorMin = new Vector2(0.225f, digitFormatRect.anchorMin.y);
+                    digitFormatRect.anchorMax = new Vector2(0.775f, digitFormatRect.anchorMax.y);
+                    digitFormatRect.anchoredPosition = Vector2.zero;
+                    
+                    // Height
+                    ResetHeight();
+                    
                     break;
-                default:
-                    // Reset
-                    self.anchorMin = new Vector2(0.05f ,self.anchorMin.y);
-                    self.anchorMax = new Vector2(0.95f ,self.anchorMax.y);
+                
+                case 4:
+                    // Width
+                    ResetHeight();
+                    
+                    // Height
+                    self.anchorMin = new Vector2(self.anchorMin.x, 0.4f);
+                    self.anchorMax = new Vector2(self.anchorMax.x, 0.7f);
                     self.anchoredPosition = Vector2.zero;
+                    
+                    break;
+                
+                case 5:
+                    // Width
+                    ResetWidth();
+                    
+                    // Height
+                    self.anchorMin = new Vector2(self.anchorMin.x, 0.425f);
+                    self.anchorMax = new Vector2(self.anchorMax.x, 0.675f);
+                    self.anchoredPosition = Vector2.zero;
+                    
+                    break;
+                
+                default:
+                    ResetWidth();
+                    ResetHeight();
+                    
                     break;
             }
+        }
+
+        private void ResetWidth()
+        {
+            // Reset Width
+            digitFormatRect.anchorMin = new Vector2(0.05f, digitFormatRect.anchorMin.y);
+            digitFormatRect.anchorMax = new Vector2(0.95f, digitFormatRect.anchorMax.y);
+            digitFormatRect.anchoredPosition = Vector2.zero;
+        }
+
+        private void ResetHeight()
+        {
+            // Reset Height
+            self.anchorMin = new Vector2(self.anchorMin.x, 0.35f);
+            self.anchorMax = new Vector2(self.anchorMax.x, 0.75f);
+            self.anchoredPosition = Vector2.zero;
         }
 
         public void RefreshDigitVisuals()
@@ -236,7 +287,7 @@ namespace AdrianMiasik.Components
                 KeyValuePair<string, int> _pair = _doubleDigitSetToGenerate[_i];
 
                 // Generate double digit
-                DoubleDigit _dd = Instantiate(digitSource, transform);
+                DoubleDigit _dd = Instantiate(digitSource, digitFormatRect);
                 _dd.Initialize(timer, this, GetDigitType(_pair.Key));
                 generatedDigits.Add(_dd);
                 
@@ -247,7 +298,7 @@ namespace AdrianMiasik.Components
                 }
 
                 // Generate spacer (between each character)
-                DigitSeparator _separator = Instantiate(separatorSource, transform);
+                DigitSeparator _separator = Instantiate(separatorSource, digitFormatRect);
                 generatedSeparators.Add(_separator);
             }
 
@@ -677,6 +728,11 @@ namespace AdrianMiasik.Components
         public void SwitchFormat(SupportedFormats _desiredFormat)
         {
             format = _desiredFormat;
+        }
+
+        public int GetFormat()
+        {
+            return (int) format;
         }
     }
  }

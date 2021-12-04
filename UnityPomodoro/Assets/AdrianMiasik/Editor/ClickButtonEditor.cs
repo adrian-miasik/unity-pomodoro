@@ -33,6 +33,7 @@ namespace AdrianMiasik
             // Draw property fields
             clickButton.containerTarget = (RectTransform) EditorGUILayout.ObjectField("Container Target", clickButton.containerTarget, typeof(RectTransform), true);
             clickButton.visibilityTarget = (Transform) EditorGUILayout.ObjectField("Visibility Target", clickButton.visibilityTarget, typeof(RectTransform), true);
+            clickButton.enableClickSound = EditorGUILayout.Toggle("Enable Click Sound", clickButton.enableClickSound);
             clickButton.clickSound = (AudioSource) EditorGUILayout.ObjectField("Click Sound", clickButton.clickSound, typeof(AudioSource), true);
             string pitchVariationString = clickButton.isPitchVariationOn ? "Disable Pitch Variation" : "Enable Pitch Variation";
             clickButton.isPitchVariationOn = EditorGUILayout.Toggle(pitchVariationString, clickButton.isPitchVariationOn);

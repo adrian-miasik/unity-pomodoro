@@ -10,6 +10,8 @@ namespace AdrianMiasik.Components
 {
     public class SidebarRow : MonoBehaviour, IColorHook
     {
+        [SerializeField] private Animation spawn;
+        [SerializeField] private RectTransform container;
         [SerializeField] private ClickButton button;
         [SerializeField] private Image accent;
         [SerializeField] private RectTransform contentContainer;
@@ -20,16 +22,42 @@ namespace AdrianMiasik.Components
 
         // Cache
         private PomodoroTimer timer;
+        private Sidebar sidebar;
         private bool isSelected;
         
         public void Initialize(PomodoroTimer _timer, Sidebar _sidebar, bool _isSelected = false)
         {
             timer = _timer;
+            sidebar = _sidebar;
             isSelected = _isSelected;
             _timer.GetTheme().RegisterColorHook(this);
             ColorUpdate(_timer.GetTheme());
+            Hide();
         }
 
+        public void Hide()
+        {
+            container.gameObject.SetActive(false);
+        }
+        
+        public void PlaySpawnAnimation()
+        {
+            Show();
+            spawn.Stop();
+            spawn.Play();
+        }
+
+        private void Show()
+        {
+            container.gameObject.SetActive(true);
+        }
+
+        // UnityEvent
+        public void OnClick()
+        {
+            sidebar.SelectRow(this, button.clickSound.clip);
+        }
+        
         [ContextMenu("Select")]
         public void Select()
         {
@@ -74,6 +102,11 @@ namespace AdrianMiasik.Components
             // Foreground
             icon.color = _theme.GetCurrentColorScheme().foreground;
             label.color = _theme.GetCurrentColorScheme().foreground;
+        }
+
+        public bool IsSelected()
+        {
+            return isSelected;
         }
     }
 }

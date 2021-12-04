@@ -24,7 +24,7 @@
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work and break sessions. Quickly swap between the two timers to keep you on track and focused.
 
-**Version**:  1.3.0
+**Version**:  1.4.0
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
@@ -35,15 +35,15 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release - v1.3.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.3.0)
+### [Latest Release - v1.4.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.4.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.4.0/unity-pomodoro-1.4.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.4.0/unity-pomodoro-1.4.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.4.0/unity-pomodoro-1.4.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.3.0/unity-pomodoro-1.3.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.4.0/unity-pomodoro-1.4.0-linux-desktop-64-bit.zip)
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
@@ -64,30 +64,31 @@ Want to help? If you're interested in contributing to the project, please see th
 #### Light
 <p>
 <img src="sources/design/mocks/light-color-scheme.png" width="200">
+<img src="sources/design/mocks/light-menu.png" width="200">
 <img src="sources/design/mocks/light-mode-one.png" width="200">
 <img src="sources/design/mocks/light-running.png" width="200">
 <img src="sources/design/mocks/light-complete.png" width="200">
 <img src="sources/design/mocks/light-mode-two.png" width="200">
-<img src="sources/design/mocks/light-menu.png" width="200">
 <img src="sources/design/mocks/light-edit.png" width="200">
 <img src="sources/design/mocks/light-settings.png" width="200">
 <img src="sources/design/mocks/light-about.png" width="200">
 </p>
+
 #### Dark
 <p>
 <img src="sources/design/mocks/dark-color-scheme.png" width="200">
+<img src="sources/design/mocks/dark-menu.png" width="200">
 <img src="sources/design/mocks/dark-mode-one.png" width="200">
 <img src="sources/design/mocks/dark-running.png" width="200">
 <img src="sources/design/mocks/dark-complete.png" width="200">
 <img src="sources/design/mocks/dark-mode-two.png" width="200">
-<img src="sources/design/mocks/dark-menu.png" width="200">
 <img src="sources/design/mocks/dark-edit.png" width="200">
 <img src="sources/design/mocks/dark-settings.png" width="200">
 <img src="sources/design/mocks/dark-about.png" width="200">
 </p>
 
 ## Author Notes
-- Unity Pomodoro is a pet project I've been developing in my spare time
+- Unity Pomodoro is a pet project I've been developing in my spare time - A labour of love of sorts
 - See [my GitHub profile](https://github.com/adrian-miasik) for more open source work
 - I'm also currently open for work, if you're hiring send me an email at: `hire-me.76240@adrian-miasik.com`
 - The svg assets have been created myself and/or sourced from The Noun Project
