@@ -105,11 +105,20 @@ namespace AdrianMiasik
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+
+        private bool muteSoundWhenOutOfFocus = true;
         
         private void OnApplicationFocus(bool _hasFocus)
         {
-            // Prevent application from making noise when not in focus
-            AudioListener.volume = !_hasFocus ? 0 : 1;
+            if (muteSoundWhenOutOfFocus)
+            {
+                // Prevent application from making noise when not in focus
+                AudioListener.volume = !_hasFocus ? 0 : 1;
+            }
+            else
+            {
+                AudioListener.volume = 1;
+            }
         }
 
         private void Start()
@@ -124,7 +133,6 @@ namespace AdrianMiasik
         private void Initialize()
         {
             // Setup view
-            settingsContainer.Initialize(this);
             aboutContainer.Initialize(this);
             
             settingsContainer.Hide();
@@ -162,7 +170,7 @@ namespace AdrianMiasik
             background.Initialize(this);
             digitFormat.Initialize(this);
             completionLabel.Initialize(this);
-            themeSlider.Initialize(this, false);
+            themeSlider.Initialize(this, !theme.isLightModeOn);
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);
             menuToggle.Initialize(this, false);
@@ -520,6 +528,11 @@ namespace AdrianMiasik
 
         public void ShowSettings()
         {
+            if (!settingsContainer.IsInitialized())
+            {
+                settingsContainer.Initialize(this);
+            }
+
             // Hide other content
             aboutContainer.Hide();
             mainContainer.gameObject.SetActive(false);
@@ -854,6 +867,12 @@ namespace AdrianMiasik
         public void ColorUpdateCreditsBubble()
         {
             creditsBubble.ColorUpdate(theme);
+        }
+
+        // TODO: Create settings class / scriptable object
+        public bool MuteSoundWhenOutOfFocus()
+        {
+            return muteSoundWhenOutOfFocus;
         }
     }
 }
