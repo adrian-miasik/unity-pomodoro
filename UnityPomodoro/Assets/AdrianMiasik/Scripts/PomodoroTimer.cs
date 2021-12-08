@@ -874,5 +874,10 @@ namespace AdrianMiasik
         {
             return muteSoundWhenOutOfFocus;
         }
+
+        public void SetMuteSoundWhenOutOfFocus(bool _state)
+        {
+            muteSoundWhenOutOfFocus = _state;
+        }
     }
 }
