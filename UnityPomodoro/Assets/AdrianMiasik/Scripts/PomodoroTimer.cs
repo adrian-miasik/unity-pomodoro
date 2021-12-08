@@ -106,7 +106,7 @@ namespace AdrianMiasik
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
-        private bool muteSoundWhenOutOfFocus = true;
+        private bool muteSoundWhenOutOfFocus = false; // We want this to be true only for Windows platform due to UWP notifications
         
         private void OnApplicationFocus(bool _hasFocus)
         {
@@ -124,9 +124,25 @@ namespace AdrianMiasik
         private void Start()
         {
             // Single entry point
+            ConfigureSettings();
             Initialize();
         }
-        
+
+        /// <summary>
+        /// Configures our default settings based on Operating System using platform specific define directives
+        /// </summary>
+        private void ConfigureSettings()
+        {
+            // Set mute setting default
+#if UNITY_STANDALONE_OSX
+            SetMuteSoundWhenOutOfFocus();
+#elif UNITY_STANDALONE_LINUX
+            SetMuteSoundWhenOutOfFocus();
+#elif UNITY_STANDALONE_WIN 
+            SetMuteSoundWhenOutOfFocus(true);
+#endif
+        }
+
         /// <summary>
         /// Setup view, calculate time, initialize components, transition in, and animate.
         /// </summary>
@@ -875,7 +891,7 @@ namespace AdrianMiasik
             return muteSoundWhenOutOfFocus;
         }
 
-        public void SetMuteSoundWhenOutOfFocus(bool _state)
+        public void SetMuteSoundWhenOutOfFocus(bool _state = false)
         {
             muteSoundWhenOutOfFocus = _state;
         }
