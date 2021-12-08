@@ -57,10 +57,19 @@ namespace AdrianMiasik.Components.Core
         public void Initialize(PomodoroTimer _timer, bool _state)
         {
             state = _state;
+            if (state)
+            {
+                Enable();
+            }
+            else
+            {
+                Disable();
+            }
+            
             _timer.GetTheme().RegisterColorHook(this);
             ColorUpdate(_timer.GetTheme());
         }
-        
+
         /// <summary>
         /// Changes the visibility of the boolean slider to the ON or OFF position. Position depends on current state.
         /// </summary>
@@ -113,7 +122,7 @@ namespace AdrianMiasik.Components.Core
         /// Changes the visibility of the boolean slider to the OFF position (left).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        public void Disable()
+        private void Disable()
         {
             state = false;
             OnStateChanged();
@@ -123,7 +132,7 @@ namespace AdrianMiasik.Components.Core
         /// Changes the visibility of the boolean slider to the ON position (right).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        public void Enable()
+        private void Enable()
         {
             state = true;
             OnStateChanged();

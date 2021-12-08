@@ -183,15 +183,7 @@ namespace AdrianMiasik
             
             // Setup theme
             theme.RegisterColorHook(this);
-            if (theme.isLightModeOn)
-            {
-                themeSlider.Disable();
-            }
-            else
-            {
-                themeSlider.Enable();
-            }
-            
+
             // Apply theme
             theme.ApplyColorChanges();
         }
@@ -828,15 +820,17 @@ namespace AdrianMiasik
 
         private void UpdateBooleanThemeSliders()
         {
-            // Force activate all our boolean sliders
-            if (theme.isLightModeOn)
-            {
-                themeSlider.Disable();
-            }
-            else
-            {
-                themeSlider.Enable();
-            }
+            // TODO: Force activate all our boolean sliders
+            // themeSlider.Initialize(this, !theme.isLightModeOn);
+            
+            // if (theme.isLightModeOn)
+            // {
+            //     themeSlider.Disable();
+            // }
+            // else
+            // {
+            //     themeSlider.Enable();
+            // }
         }
         
         // Unity Event
