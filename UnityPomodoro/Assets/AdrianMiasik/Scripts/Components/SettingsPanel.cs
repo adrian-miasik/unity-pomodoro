@@ -10,7 +10,10 @@ namespace AdrianMiasik.Components
     {
         [SerializeField] private TMP_Text title;
         [SerializeField] private LabelledDropdown digitFormatDropdown;
+        [SerializeField] private TMP_Text muteSoundOutOfFocusLabel;
+        [SerializeField] private BooleanSlider muteSoundOutOfFocusBoolean;
 
+        private bool isInitialized;
         private bool isOpen = false;
         private PomodoroTimer timer;
 
@@ -19,7 +22,18 @@ namespace AdrianMiasik.Components
             timer = _timer;
             timer.GetTheme().RegisterColorHook(this);
             
+            muteSoundOutOfFocusBoolean.OverrideFalseColor(timer.GetTheme().GetCurrentColorScheme().backgroundHighlight);
+            muteSoundOutOfFocusBoolean.OverrideTrueColor(timer.GetTheme().GetCurrentColorScheme().modeOne);
+            
             digitFormatDropdown.Initialize(timer);
+            muteSoundOutOfFocusBoolean.Initialize(_timer, _timer.MuteSoundWhenOutOfFocus());
+
+            isInitialized = true;
+        }
+        
+        public bool IsInitialized()
+        {
+            return isInitialized;
         }
 
         public void UpdateDropdown()
@@ -31,6 +45,9 @@ namespace AdrianMiasik.Components
         {
             // TODO: Check if settings page is open
             title.color = _theme.GetCurrentColorScheme().foreground;
+
+            muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().foreground;
+            muteSoundOutOfFocusBoolean.ColorUpdate(_theme);
         }
 
         public void Show()

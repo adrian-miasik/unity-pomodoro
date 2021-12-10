@@ -5,6 +5,7 @@ using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using AdrianMiasik.UWP;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -72,6 +73,9 @@ namespace AdrianMiasik
         [Header("Hotkeys")] 
         [SerializeField] private HotkeyDetector hotkeyDetector;
 
+        [Header("Notifications")] 
+        [SerializeField] private NotificationManager notifications;
+
         // Digit Selection
         [SerializeField] private List<DoubleDigit> selectedDigits = new List<DoubleDigit>();
 
@@ -105,26 +109,52 @@ namespace AdrianMiasik
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+
+        private bool muteSoundWhenOutOfFocus = false; // We want this to be true only for Windows platform due to UWP notifications
         
         private void OnApplicationFocus(bool _hasFocus)
         {
-            // Prevent application from making noise when not in focus
-            AudioListener.volume = !_hasFocus ? 0 : 1;
+            if (muteSoundWhenOutOfFocus)
+            {
+                // Prevent application from making noise when not in focus
+                AudioListener.volume = !_hasFocus ? 0 : 1;
+            }
+            else
+            {
+                AudioListener.volume = 1;
+            }
         }
 
         private void Start()
         {
             // Single entry point
+            ConfigureSettings();
             Initialize();
         }
-        
+
+        /// <summary>
+        /// Configures our default settings based on Operating System using platform specific define directives
+        /// </summary>
+        private void ConfigureSettings()
+        {
+            // Set mute setting default
+#if UNITY_STANDALONE_OSX
+            SetMuteSoundWhenOutOfFocus();
+#elif UNITY_STANDALONE_LINUX
+            SetMuteSoundWhenOutOfFocus();
+#elif UNITY_STANDALONE_WIN
+            SetMuteSoundWhenOutOfFocus();
+#elif UNITY_WSA // UWP
+            SetMuteSoundWhenOutOfFocus(true); // Set to true since our UWP Notification will pull focus back to our app
+#endif
+        }
+
         /// <summary>
         /// Setup view, calculate time, initialize components, transition in, and animate.
         /// </summary>
         private void Initialize()
         {
             // Setup view
-            settingsContainer.Initialize(this);
             aboutContainer.Initialize(this);
             
             settingsContainer.Hide();
@@ -159,10 +189,11 @@ namespace AdrianMiasik
 
             // Initialize components
             hotkeyDetector.Initialize(this);
+            notifications.Initialize(this);
             background.Initialize(this);
             digitFormat.Initialize(this);
             completionLabel.Initialize(this);
-            themeSlider.Initialize(this, false);
+            themeSlider.Initialize(this, !theme.isLightModeOn);
             creditsBubble.Initialize(this);
             rightButton.Initialize(this);
             menuToggle.Initialize(this, false);
@@ -183,15 +214,7 @@ namespace AdrianMiasik
             
             // Setup theme
             theme.RegisterColorHook(this);
-            if (theme.isLightModeOn)
-            {
-                themeSlider.Disable();
-            }
-            else
-            {
-                themeSlider.Enable();
-            }
-            
+
             // Apply theme
             theme.ApplyColorChanges();
         }
@@ -528,6 +551,11 @@ namespace AdrianMiasik
 
         public void ShowSettings()
         {
+            if (!settingsContainer.IsInitialized())
+            {
+                settingsContainer.Initialize(this);
+            }
+
             // Hide other content
             aboutContainer.Hide();
             mainContainer.gameObject.SetActive(false);
@@ -816,27 +844,12 @@ namespace AdrianMiasik
         public void SetToLightMode()
         {
             theme.SetToLightMode();
-            UpdateBooleanThemeSliders();
         }
 
         // Unity Event
         public void SetToDarkMode()
         {
             theme.SetToDarkMode();
-            UpdateBooleanThemeSliders();
-        }
-
-        private void UpdateBooleanThemeSliders()
-        {
-            // Force activate all our boolean sliders
-            if (theme.isLightModeOn)
-            {
-                themeSlider.Disable();
-            }
-            else
-            {
-                themeSlider.Enable();
-            }
         }
         
         // Unity Event
@@ -860,6 +873,17 @@ namespace AdrianMiasik
         public void ColorUpdateCreditsBubble()
         {
             creditsBubble.ColorUpdate(theme);
+        }
+
+        // TODO: Create settings class / scriptable object
+        public bool MuteSoundWhenOutOfFocus()
+        {
+            return muteSoundWhenOutOfFocus;
+        }
+
+        public void SetMuteSoundWhenOutOfFocus(bool _state = false)
+        {
+            muteSoundWhenOutOfFocus = _state;
         }
     }
 }
