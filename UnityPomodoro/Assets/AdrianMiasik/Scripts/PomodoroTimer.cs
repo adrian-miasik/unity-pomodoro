@@ -5,6 +5,7 @@ using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using AdrianMiasik.UWP;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -71,6 +72,9 @@ namespace AdrianMiasik
         
         [Header("Hotkeys")] 
         [SerializeField] private HotkeyDetector hotkeyDetector;
+
+        [Header("Notifications")] 
+        [SerializeField] private NotificationManager notifications;
 
         // Digit Selection
         [SerializeField] private List<DoubleDigit> selectedDigits = new List<DoubleDigit>();
@@ -183,6 +187,7 @@ namespace AdrianMiasik
 
             // Initialize components
             hotkeyDetector.Initialize(this);
+            notifications.Initialize(this);
             background.Initialize(this);
             digitFormat.Initialize(this);
             completionLabel.Initialize(this);

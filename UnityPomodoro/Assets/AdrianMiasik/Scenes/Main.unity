@@ -1737,7 +1737,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1601903655}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4837,8 +4837,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1237520527}
-  m_RootOrder: 0
+  m_Father: {fileID: 1601903655}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4857,7 +4857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c79147749344398935349140cc09cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xmlToast: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
+  xmlToastAlarm: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
+  xmlToastNoAlarm: {fileID: 4900000, guid: 0d00427c101d53f41a309c4993e34a7e, type: 3}
 --- !u!114 &948637559 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9055857711681173028, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
@@ -5956,7 +5957,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -132.12978, y: 184.78612}
+  m_AnchoredPosition: {x: -131.86296, y: 184.38385}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!1818360608 &1188204210
@@ -6176,7 +6177,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 943758000}
   - {fileID: 1601903655}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -7147,7 +7147,7 @@ RectTransform:
   - {fileID: 683655078}
   - {fileID: 1617491757}
   m_Father: {fileID: 1601903655}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7201,10 +7201,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 266651280}
+  - {fileID: 943758000}
   - {fileID: 407842492}
   - {fileID: 1532996932}
   m_Father: {fileID: 1237520527}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7318,6 +7319,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   hotkeyDetector: {fileID: 266651281}
+  notifications: {fileID: 943758001}
   selectedDigits: []
   fadeDuration: 0.1
   pauseHoldDuration: 0.75
