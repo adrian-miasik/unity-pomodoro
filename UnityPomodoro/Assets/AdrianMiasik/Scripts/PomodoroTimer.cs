@@ -145,7 +145,7 @@ namespace AdrianMiasik
 #elif UNITY_STANDALONE_WIN
             SetMuteSoundWhenOutOfFocus();
 #elif UNITY_WSA // UWP
-            SetMuteSoundWhenOutOfFocus(true);
+            SetMuteSoundWhenOutOfFocus(true); // Set to true since our UWP Notification will pull focus back to our app
 #endif
         }
 
