@@ -25,7 +25,7 @@ namespace AdrianMiasik.UWP
         {
 #if ENABLE_WINMD_SUPPORT
             // When app is not focused...
-            if (!Application.isFocused)
+            if (!UnityEngine.Application.isFocused)
             {
                 // And the user wants to mute audio when app is out of focus...
                 if (timer.MuteSoundWhenOutOfFocus())
