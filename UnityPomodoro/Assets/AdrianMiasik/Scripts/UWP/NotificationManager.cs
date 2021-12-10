@@ -24,18 +24,21 @@ namespace AdrianMiasik.UWP
         public void ShowToast()
         {
 #if ENABLE_WINMD_SUPPORT
-            // When app is not focused: muted audio, play alarm.
-            if (timer.MuteSoundWhenOutOfFocus())
+            // When app is not focused...
+            if (!Application.isFocused)
             {
-                // Alarm
-                Toast toast = Toast.Create(xmlToastAlarm.text);
-                toast.Show();   
-            }
-            // Otherwise: unmuted audio, no alarm sound.
-            else{
-                // No alarm
-                Toast toast = Toast.Create(xmlToastNoAlarm.text);
-                toast.Show();
+                // And the user wants to mute audio when app is out of focus...
+                if (timer.MuteSoundWhenOutOfFocus())
+                {
+                    // Play Alarm Notification
+                    Toast toast = Toast.Create(xmlToastAlarm.text);
+                    toast.Show();   
+                }
+                // Otherwise,  Play No Alarm Notification 
+                else{
+                    Toast toast = Toast.Create(xmlToastNoAlarm.text);
+                    toast.Show();
+                }
             }
 #endif
         }
