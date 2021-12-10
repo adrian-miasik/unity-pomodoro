@@ -144,6 +144,8 @@ namespace AdrianMiasik
             SetMuteSoundWhenOutOfFocus();
 #elif UNITY_STANDALONE_WIN 
             SetMuteSoundWhenOutOfFocus(true);
+#elif UNITY_WSA
+            SetMuteSoundWhenOutOfFocus(true);
 #endif
         }
 
