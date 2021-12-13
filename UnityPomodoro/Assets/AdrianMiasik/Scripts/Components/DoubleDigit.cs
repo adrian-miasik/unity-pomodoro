@@ -447,19 +447,20 @@ namespace AdrianMiasik.Components
                 SetSquircleColor(_currentColors.background);
             }
             
-            // Up arrow
-            SVGImage _upArrow = upArrow.visibilityTarget.GetComponent<SVGImage>();
-            if (_upArrow != null)
-            {
-                _upArrow.color = _currentColors.foreground;
-            }
-            
-            // Down arrow
-            SVGImage _downArrow = downArrow.visibilityTarget.GetComponent<SVGImage>();
-            if (_downArrow != null)
-            {
-                _downArrow.color = _currentColors.foreground;
-            }
+            // TODO: Fix arrow color update
+            // // Up arrow
+            // SVGImage _upArrow = upArrow.visibilityTarget.GetComponent<SVGImage>();
+            // if (_upArrow != null)
+            // {
+            //     _upArrow.color = _currentColors.foreground;
+            // }
+            //
+            // // Down arrow
+            // SVGImage _downArrow = downArrow.visibilityTarget.GetComponent<SVGImage>();
+            // if (_downArrow != null)
+            // {
+            //     _downArrow.color = _currentColors.foreground;
+            // }
 
             // Digit text
             SetTextColor(_currentColors.foreground);
