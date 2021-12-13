@@ -523,7 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawn: {fileID: 17027662761100008}
   container: {fileID: 6307031392404481614}
-  button: {fileID: 3587232532539044923}
+  button: {fileID: 6124491969408430554}
   accent: {fileID: 5944972576732956022}
   contentContainer: {fileID: 5944972578538473200}
   background: {fileID: 3587232531989105073}
@@ -638,7 +638,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
+  m_fontSize: 11.8
   m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1118,15 +1118,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1830320757997262979, guid: 01ce964053042544a908dbc2b7805528, type: 3}
   m_PrefabInstance: {fileID: 2931548634457362740}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3587232532539044923 stripped
+--- !u!114 &6124491969408430554 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1830320757405263119, guid: 01ce964053042544a908dbc2b7805528, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8957768563050848494, guid: 01ce964053042544a908dbc2b7805528, type: 3}
   m_PrefabInstance: {fileID: 2931548634457362740}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984ef3fea536ce04d8d2611e6164a61d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e1adbacb09a42b1a9f25dff0796ef9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &3587232532539044922 stripped
