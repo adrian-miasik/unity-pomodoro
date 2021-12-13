@@ -36,18 +36,20 @@ namespace AdrianMiasik.Components
             return isInitialized;
         }
 
+        public void ColorUpdate(Theme _theme)
+        {
+            if (isOpen)
+            {
+                title.color = _theme.GetCurrentColorScheme().foreground;
+                digitFormatDropdown.ColorUpdate(timer.GetTheme());
+                muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().foreground;
+                muteSoundOutOfFocusBoolean.ColorUpdate(_theme);
+            }
+        }
+
         public void UpdateDropdown()
         {
             digitFormatDropdown.UpdateDropdownValue();
-        }
-        
-        public void ColorUpdate(Theme _theme)
-        {
-            // TODO: Check if settings page is open
-            title.color = _theme.GetCurrentColorScheme().foreground;
-
-            muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().foreground;
-            muteSoundOutOfFocusBoolean.ColorUpdate(_theme);
         }
 
         public void Show()
@@ -55,6 +57,7 @@ namespace AdrianMiasik.Components
             gameObject.SetActive(true);
             digitFormatDropdown.UpdateDropdownValue();
             isOpen = true;
+            ColorUpdate(timer.GetTheme());
         }
 
         public void Hide()
