@@ -733,14 +733,9 @@ namespace AdrianMiasik
                 _leftContainerTarget.material.SetColor(CircleColor, _theme.GetCurrentColorScheme().backgroundHighlight);
             }
             
-            // TODO: Fix left button color update
-            // // Left Button Icon
-            // SVGImage _leftVisibilityTarget = leftButtonClick.visibilityTarget.GetComponent<SVGImage>();
-            // if (_leftVisibilityTarget != null)
-            // {
-            //     _leftVisibilityTarget.color = _currentColors.foreground;
-            // }
-            
+            // Left Button Icon
+            leftButtonClick.icon.color = _currentColors.foreground;
+
             // Right Button Background
             Image _rightContainerTarget = rightButtonClick.containerTarget.GetComponent<Image>();
             if (_rightContainerTarget != null)
