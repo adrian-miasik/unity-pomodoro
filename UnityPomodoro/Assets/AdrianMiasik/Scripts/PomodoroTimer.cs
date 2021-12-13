@@ -51,8 +51,8 @@ namespace AdrianMiasik
 
         [Header("Buttons")] 
         [SerializeField] private BooleanToggle menuToggle;
-        [SerializeField] private ClickButton leftButtonClick;
-        [SerializeField] private ClickButton rightButtonClick;
+        [SerializeField] private ClickButtonIcon leftButtonClick;
+        [SerializeField] private ClickButtonIcon rightButtonClick;
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         [SerializeField] private CreditsBubble creditsBubble;
