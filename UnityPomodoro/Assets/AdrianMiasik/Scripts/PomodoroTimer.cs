@@ -28,6 +28,9 @@ namespace AdrianMiasik
 
         public States state = States.SETUP;
 
+        [Header("Prefabs")] 
+        [SerializeField] private TwoChoiceDialog confirmationDialogPrefab;
+        
         [Header("Animations")] 
         [SerializeField] private Animation spawnAnimation;
 
@@ -111,6 +114,7 @@ namespace AdrianMiasik
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         private bool muteSoundWhenOutOfFocus = false; // We want this to be true only for Windows platform due to UWP notifications
+        private TwoChoiceDialog currentDialogPopup;
         
         private void OnApplicationFocus(bool _hasFocus)
         {
@@ -591,6 +595,12 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToBreakTimer()
         {
+            if (state == States.RUNNING)
+            {
+                Debug.Log("Spawning confirmation dialog");
+                SpawnConfirmationDialog();
+            }
+            
             digitFormat.isOnBreak = true;
             SwitchState(States.SETUP);
             firstTimePlaying = true;
@@ -602,6 +612,12 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToWorkTimer()
         {
+            if (state == States.RUNNING)
+            {
+                Debug.Log("Spawning confirmation dialog");
+                SpawnConfirmationDialog();
+            }
+            
             digitFormat.isOnBreak = false;
             SwitchState(States.SETUP);
             firstTimePlaying = true;
@@ -880,6 +896,12 @@ namespace AdrianMiasik
         public void SetMuteSoundWhenOutOfFocus(bool _state = false)
         {
             muteSoundWhenOutOfFocus = _state;
+        }
+
+        private void SpawnConfirmationDialog()
+        {
+            currentDialogPopup = Instantiate(confirmationDialogPrefab, ring.transform);
+            confirmationDialogPrefab.Initialize();
         }
     }
 }

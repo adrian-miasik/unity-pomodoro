@@ -12,5 +12,10 @@ namespace AdrianMiasik.Components
         [SerializeField] private TMP_Text botLabel;
         [SerializeField] private ClickButton cancel;
         [SerializeField] private ClickButton submit;
+
+        public void Initialize()
+        {
+            
+        }
     }
 }
