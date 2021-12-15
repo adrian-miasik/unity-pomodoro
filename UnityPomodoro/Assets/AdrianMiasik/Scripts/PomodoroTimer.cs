@@ -7,7 +7,6 @@ using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using TMPro;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -114,6 +113,7 @@ namespace AdrianMiasik
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         private bool muteSoundWhenOutOfFocus = false; // We want this to be true only for Windows platform due to UWP notifications
+        
         private TwoChoiceDialog currentDialogPopup;
         
         private void OnApplicationFocus(bool _hasFocus)
@@ -160,10 +160,10 @@ namespace AdrianMiasik
         {
             // Setup view
             aboutContainer.Initialize(this);
-            
+
             settingsContainer.Hide();
             aboutContainer.Hide();
-            
+
             mainContainer.gameObject.SetActive(true);
 
             // Overrides
@@ -206,16 +206,16 @@ namespace AdrianMiasik
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
-            
+
             // Calculate time
             CalculateTimeValues();
-            
+
             // Transition to setup state
             SwitchState(States.SETUP);
 
             // Animate in
             PlaySpawnAnimation();
-            
+
             // Setup theme
             theme.RegisterColorHook(this);
 
@@ -411,7 +411,16 @@ namespace AdrianMiasik
             else
             {
                 SwitchState(States.COMPLETE);
+                OnTimerComplete();
                 OnTimerCompletion?.Invoke();
+            }
+        }
+
+        private void OnTimerComplete()
+        {
+            if (currentDialogPopup != null)
+            {
+                currentDialogPopup.Close();
             }
         }
 
@@ -589,7 +598,7 @@ namespace AdrianMiasik
         {
             SwitchState(States.PAUSED);
         }
-
+        
         /// <summary>
         /// Transitions timer into States.SETUP mode in break mode
         /// </summary>
@@ -597,11 +606,28 @@ namespace AdrianMiasik
         {
             if (state == States.RUNNING)
             {
-                Debug.Log("Spawning confirmation dialog");
-                SpawnConfirmationDialog();
+                if (!firstTimePlaying)
+                {
+                    SpawnConfirmationDialog(() => 
+                    {
+                        breakSlider.Initialize(this, IsOnBreak()); // Re-init component
+                    }, OnDialogConfirm);
+                }
+            }
+            else
+            {
+                OnDialogConfirm();
             }
             
-            digitFormat.isOnBreak = true;
+            void OnDialogConfirm()
+            {
+                SwitchTimer(true); // TRUE
+            }
+        }
+
+        private void SwitchTimer(bool _isOnBreak)
+        {
+            digitFormat.isOnBreak = _isOnBreak;
             SwitchState(States.SETUP);
             firstTimePlaying = true;
             CalculateTimeValues();
@@ -614,14 +640,25 @@ namespace AdrianMiasik
         {
             if (state == States.RUNNING)
             {
-                Debug.Log("Spawning confirmation dialog");
-                SpawnConfirmationDialog();
+                if (!firstTimePlaying)
+                {
+                    SpawnConfirmationDialog(() =>
+                    {
+                        breakSlider.Initialize(this, IsOnBreak()); // Re-init component
+                    }, OnDialogConfirm);
+                }
+            }
+            else
+            {
+                OnDialogConfirm();
             }
             
-            digitFormat.isOnBreak = false;
-            SwitchState(States.SETUP);
-            firstTimePlaying = true;
-            CalculateTimeValues();
+            void OnDialogConfirm()
+            {
+                // TODO: Prevent other inputs (what about keyboard controls?)
+                // TODO: Switch boolean back
+                SwitchTimer(false); // FALSE
+            }
         }
 
         /// <summary>
@@ -630,17 +667,33 @@ namespace AdrianMiasik
         /// <param name="_isCompleted"></param>
         public void Restart(bool _isCompleted)
         {
-            if (_isCompleted)
+            if (!firstTimePlaying && state != States.COMPLETE)
             {
-                digitFormat.FlipIsOnBreakBool();
+                SpawnConfirmationDialog(() =>
+                {
+                }, OnDialogConfirm);
+            }
+            else
+            {
+                OnDialogConfirm();
             }
 
-            SwitchState(States.SETUP);
-            firstTimePlaying = true;
-            CalculateTimeValues();
+            void OnDialogConfirm()
+            {
+                if (_isCompleted)
+                {
+                    digitFormat.FlipIsOnBreakBool();
+                }
 
-            // Stop digit tick animation
-            digitFormat.ResetTextPositions();
+                SwitchState(States.SETUP);
+                firstTimePlaying = true;
+                CalculateTimeValues();
+
+                // Stop digit tick animation
+                digitFormat.ResetTextPositions();
+                
+                PlaySpawnAnimation();
+            }
         }
         
         /// <summary>
@@ -822,6 +875,7 @@ namespace AdrianMiasik
 
         public void ChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
         {
+            // TODO: Prevent switch format - show confirmation dialog
             digitFormat.SwitchFormat(_desiredFormat);
             digitFormat.GenerateFormat();
             Restart(false);
@@ -898,10 +952,21 @@ namespace AdrianMiasik
             muteSoundWhenOutOfFocus = _state;
         }
 
-        private void SpawnConfirmationDialog()
+        private void SpawnConfirmationDialog(Action onCancel, Action onConfirm)
         {
-            currentDialogPopup = Instantiate(confirmationDialogPrefab, ring.transform);
-            confirmationDialogPrefab.Initialize();
+            currentDialogPopup = Instantiate(confirmationDialogPrefab, transform) as TwoChoiceDialog;
+            
+            // Add window close method to actions
+            onConfirm += () =>
+            {
+                currentDialogPopup.Close();
+            };
+            onCancel += () =>
+            {
+                currentDialogPopup.Close();
+            };
+            
+            currentDialogPopup.Initialize(onCancel, onConfirm);
         }
     }
 }
