@@ -418,7 +418,7 @@ namespace AdrianMiasik
 
         private void OnTimerComplete()
         {
-            if (currentDialogPopup != null)
+            if (currentDialogPopup != null && mainContainer.gameObject.activeSelf)
             {
                 currentDialogPopup.Close();
             }
