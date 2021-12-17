@@ -418,7 +418,7 @@ namespace AdrianMiasik
 
         private void OnTimerComplete()
         {
-            if (currentDialogPopup != null && mainContainer.gameObject.activeSelf)
+            if (currentDialogPopup != null)
             {
                 currentDialogPopup.Close();
             }
@@ -604,24 +604,21 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToBreakTimer()
         {
-            if (state == States.RUNNING)
+            if (!firstTimePlaying && state != States.COMPLETE)
             {
-                if (!firstTimePlaying)
+                SpawnConfirmationDialog(() =>
                 {
-                    SpawnConfirmationDialog(() => 
-                    {
-                        breakSlider.Initialize(this, IsOnBreak()); // Re-init component
-                    }, OnDialogConfirm);
-                }
+                    SwitchTimer(true);
+                }, () =>
+                {
+                    // Switch To Break Timer is triggered by Unity Event via break slider, this simply reset's 
+                    // our bool back to it's original setting prior to interaction.
+                    breakSlider.Initialize(this, IsOnBreak()); // Re-init component
+                });
             }
             else
             {
-                OnDialogConfirm();
-            }
-            
-            void OnDialogConfirm()
-            {
-                SwitchTimer(true); // TRUE
+                SwitchTimer(true);
             }
         }
 
@@ -638,62 +635,61 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToWorkTimer()
         {
-            if (state == States.RUNNING)
-            {
-                if (!firstTimePlaying)
-                {
-                    SpawnConfirmationDialog(() =>
-                    {
-                        breakSlider.Initialize(this, IsOnBreak()); // Re-init component
-                    }, OnDialogConfirm);
-                }
-            }
-            else
-            {
-                OnDialogConfirm();
-            }
-            
-            void OnDialogConfirm()
-            {
-                // TODO: Prevent other inputs (what about keyboard controls?)
-                // TODO: Switch boolean back
-                SwitchTimer(false); // FALSE
-            }
-        }
-
-        /// <summary>
-        /// Toggles the timer mode to it's opposite mode (break/work) and transitions timer into States.SETUP
-        /// </summary>
-        /// <param name="_isCompleted"></param>
-        public void Restart(bool _isCompleted)
-        {
             if (!firstTimePlaying && state != States.COMPLETE)
             {
                 SpawnConfirmationDialog(() =>
                 {
-                }, OnDialogConfirm);
+                    SwitchTimer(false);
+                }, (() =>
+                {
+                    breakSlider.Initialize(this, IsOnBreak()); // Re-init component
+                }));
             }
             else
             {
-                OnDialogConfirm();
+                SwitchTimer(false);
             }
+        }
 
-            void OnDialogConfirm()
+        /// <summary>
+        /// Attempts to restart the timer, will prompt user with confirmation dialog if necessary.
+        /// </summary>
+        public void TryRestart(bool _isComplete)
+        {
+            if (!firstTimePlaying && state != States.COMPLETE)
             {
-                if (_isCompleted)
+                SpawnConfirmationDialog((() =>
                 {
-                    digitFormat.FlipIsOnBreakBool();
-                }
-
-                SwitchState(States.SETUP);
-                firstTimePlaying = true;
-                CalculateTimeValues();
-
-                // Stop digit tick animation
-                digitFormat.ResetTextPositions();
-                
-                PlaySpawnAnimation();
+                    Restart(_isComplete);
+                }));
             }
+            else
+            {
+                Restart(_isComplete);
+            }
+        }
+        
+        /// <summary>
+        /// Directly toggles the timer mode to it's opposite mode (break/work) and transitions timer into States.SETUP.
+        /// Note: If you want to verify this action, <see cref="TryRestart"/>. <see cref="TryRestart"/> will prompt the
+        /// user with a confirmation dialog if necessary.
+        /// </summary>
+        /// <param name="_isCompleted"></param>
+        public void Restart(bool _isCompleted)
+        {
+            if (_isCompleted)
+            {
+                digitFormat.FlipIsOnBreakBool();
+            }
+
+            SwitchState(States.SETUP);
+            firstTimePlaying = true;
+            CalculateTimeValues();
+
+            // Stop digit tick animation
+            digitFormat.ResetTextPositions();
+            
+            PlaySpawnAnimation();
         }
         
         /// <summary>
@@ -873,28 +869,55 @@ namespace AdrianMiasik
             background.SetSelectionNavigation(_backgroundNav);
         }
 
-        public void ChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
+        /// <summary>
+        /// Attempts to change the digit format, will prompt user with confirmation dialog if necessary.
+        /// </summary>
+        /// <param name="_desiredFormat"></param>
+        public void TryChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
         {
-            // TODO: Prevent switch format - show confirmation dialog
+            if (!firstTimePlaying)
+            {
+                SpawnConfirmationDialog(() =>
+                {
+                    ChangeFormat(_desiredFormat);
+                }, () =>
+                {
+                    // TODO: Fix additional OnValueChanged invoke
+                    settingsContainer.RevertDropdownToPreviousSelection();
+                    currentDialogPopup.Close(); // Forced to close our new instance due to addition OnValueChanged call
+                });
+            }
+            else
+            {
+                ChangeFormat(_desiredFormat);
+            }
+        }
+        
+        /// <summary>
+        /// Attempts to change the digit format using enum index, will prompt user with dialog if necessary.
+        /// </summary>
+        /// <param name="_i"></param>
+        public void TryChangeFormat(Int32 _i)
+        {
+            TryChangeFormat((DigitFormat.SupportedFormats)_i);
+        }
+
+        /// <summary>
+        /// Changes the format directly
+        /// </summary>
+        /// <param name="_desiredFormat"></param>
+        private void ChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
+        {
             digitFormat.SwitchFormat(_desiredFormat);
             digitFormat.GenerateFormat();
-            Restart(false);
-            
+            Restart(false); // Restart timer directly, don't verify user intent
+                                       // since we're doing that in this scope.
             if (settingsContainer.IsPageOpen())
             {
                 settingsContainer.UpdateDropdown();
             }
         }
         
-        /// <summary>
-        /// Change to format using enum index
-        /// </summary>
-        /// <param name="_i"></param>
-        public void ChangeFormat(Int32 _i)
-        {
-            ChangeFormat((DigitFormat.SupportedFormats)_i);
-        }
-
         public int GetDigitFormat()
         {
             return digitFormat.GetFormat();
@@ -952,21 +975,11 @@ namespace AdrianMiasik
             muteSoundWhenOutOfFocus = _state;
         }
 
-        private void SpawnConfirmationDialog(Action onCancel, Action onConfirm)
+        private void SpawnConfirmationDialog(Action _onSubmit, Action _onCancel = null)
         {
-            currentDialogPopup = Instantiate(confirmationDialogPrefab, transform) as TwoChoiceDialog;
-            
-            // Add window close method to actions
-            onConfirm += () =>
-            {
-                currentDialogPopup.Close();
-            };
-            onCancel += () =>
-            {
-                currentDialogPopup.Close();
-            };
-            
-            currentDialogPopup.Initialize(onCancel, onConfirm);
+            Debug.Log("Spawning confirmation dialog");
+            currentDialogPopup = Instantiate(confirmationDialogPrefab, transform);
+            currentDialogPopup.Initialize(_onSubmit, _onCancel);
         }
     }
 }

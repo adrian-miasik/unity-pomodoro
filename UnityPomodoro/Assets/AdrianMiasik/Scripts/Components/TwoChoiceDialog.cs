@@ -12,41 +12,44 @@ namespace AdrianMiasik.Components
         [SerializeField] private Image backgroundBox;
         [SerializeField] private TMP_Text topLabel;
         [SerializeField] private TMP_Text botLabel;
-        [SerializeField] private ClickButton cancel;
         [SerializeField] private ClickButton submit;
+        [SerializeField] private ClickButton cancel;
 
+        // Used to trigger Cancel and Submit methods via UnityEvent
         public UnityEvent OnCancel;
         public UnityEvent OnSubmit;
 
+        // Used to combine actions
         private Action onCancel;
-        private Action onSumbit;
-
+        private Action onSubmit;
+        
         public void Initialize(Action _submit)
         {
             Initialize(Close, _submit);
         }
 
-        public void Initialize(Action _cancel, Action _submit)
+        public void Initialize(Action _submit, Action _cancel)
         {
             onCancel = _cancel;
-            onSumbit = _submit;
+            onSubmit = _submit;
         }
 
-        // Invoked by button
+        // UnityEvent - Invoked by no button
         public void Cancel()
         {
             onCancel.Invoke();
+            Close();
         }
 
-        // Invoked by button
+        // UnityEvent - Invoked by yes button
         public void Submit()
         {
-            onSumbit.Invoke();
+            onSubmit.Invoke();
+            Close();
         }
 
         public void Close()
         {
-            Debug.Log("Closing dialog");
             Destroy(gameObject);
         }
     }

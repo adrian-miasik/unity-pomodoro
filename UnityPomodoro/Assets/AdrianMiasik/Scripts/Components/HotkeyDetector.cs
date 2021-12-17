@@ -74,27 +74,27 @@ namespace AdrianMiasik.Components
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.SS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
             }
             
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.MM_SS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
             }
             
             if (Input.GetKeyDown(KeyCode.F3))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
             }
             
             if (Input.GetKeyDown(KeyCode.F4))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
             }
             
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
             }
         }
 
