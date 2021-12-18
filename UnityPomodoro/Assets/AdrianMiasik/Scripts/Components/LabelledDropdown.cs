@@ -21,10 +21,10 @@ namespace AdrianMiasik.Components
             timer = _timer;
             timer.GetTheme().RegisterColorHook(this);
 
-            UpdateDropdownValue(timer.GetDigitFormat());
+            SetDropdownValue(timer.GetDigitFormat());
         }
 
-        public void UpdateDropdownValue(int _selectionValue)
+        public void SetDropdownValue(int _selectionValue)
         {
             // Set dropdown value to current digit format 
             // Note: This will trigger an OnValueChanged invoke

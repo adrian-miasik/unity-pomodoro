@@ -49,7 +49,7 @@ namespace AdrianMiasik.Components
         private Theme theme;
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
-        private TimeSpan cachedTimeSpan;
+        private int previousFormatSelection = -1;
 
         private void OnValidate()
         {
@@ -80,7 +80,7 @@ namespace AdrianMiasik.Components
         }
 
         [ContextMenu("Generate Format")]
-        public void GenerateFormat(bool _useCurrentTime = false)
+        public void GenerateFormat()
         {
             generatedDigits?.Clear();
             generatedSeparators?.Clear();
@@ -111,8 +111,7 @@ namespace AdrianMiasik.Components
             ImproveLayoutVisuals();
             
             // Calculate time
-            cachedTimeSpan = _useCurrentTime ? timer.GetCurrentTime() : GetTime();
-            SetTime(cachedTimeSpan);
+            SetTime(GetTime());
 
             // Apply
             RefreshDigitVisuals();
@@ -327,6 +326,8 @@ namespace AdrianMiasik.Components
                 selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
             };
             timer.SetBackgroundNavigation(_backgroundNav);
+            
+            SwitchFormat(format);
         }
 
         private int Wrap(int _index, int _length)
@@ -727,7 +728,13 @@ namespace AdrianMiasik.Components
 
         public void SwitchFormat(SupportedFormats _desiredFormat)
         {
+            previousFormatSelection = (int) format;
             format = _desiredFormat;
+        }
+
+        public int GetPreviousFormatSelection()
+        {
+            return previousFormatSelection;
         }
 
         public int GetFormat()

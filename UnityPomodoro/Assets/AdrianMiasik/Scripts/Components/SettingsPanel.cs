@@ -16,9 +16,7 @@ namespace AdrianMiasik.Components
         private bool isInitialized;
         private bool isOpen = false;
         private PomodoroTimer timer;
-
-        private int digitFormatPreviousSelection;
-
+        
         public void Initialize(PomodoroTimer _timer)
         {
             timer = _timer;
@@ -30,7 +28,6 @@ namespace AdrianMiasik.Components
             digitFormatDropdown.Initialize(timer);
             muteSoundOutOfFocusBoolean.Initialize(_timer, _timer.MuteSoundWhenOutOfFocus());
 
-            digitFormatPreviousSelection = digitFormatDropdown.GetDropdownValue();
             isInitialized = true;
         }
         
@@ -52,19 +49,18 @@ namespace AdrianMiasik.Components
 
         public void UpdateDropdown()
         {
-            digitFormatPreviousSelection = digitFormatDropdown.GetDropdownValue();
-            digitFormatDropdown.UpdateDropdownValue(timer.GetDigitFormat());
+            digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
         }
 
-        public void RevertDropdownToPreviousSelection()
+        public void SetDropdown(int _value)
         {
-            digitFormatDropdown.UpdateDropdownValue(digitFormatPreviousSelection);
+            digitFormatDropdown.SetDropdownValue(_value);
         }
-
+        
         public void Show()
         {
             gameObject.SetActive(true);
-            digitFormatDropdown.UpdateDropdownValue(timer.GetDigitFormat());
+            digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
             isOpen = true;
             ColorUpdate(timer.GetTheme());
         }

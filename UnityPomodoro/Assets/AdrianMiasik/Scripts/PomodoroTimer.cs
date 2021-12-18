@@ -560,9 +560,8 @@ namespace AdrianMiasik
             
             // Show main content
             mainContainer.gameObject.SetActive(true);
-            digitFormat.GenerateFormat(true);
-            //leftButtonClick.OnPointerClick(null);
-            
+            digitFormat.GenerateFormat();
+
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
         }
@@ -875,6 +874,15 @@ namespace AdrianMiasik
         }
 
         /// <summary>
+        /// Attempts to change the digit format using enum index, will prompt user with dialog if necessary.
+        /// </summary>
+        /// <param name="_i"></param>
+        public void TryChangeFormat(Int32 _i)
+        {
+            TryChangeFormat((DigitFormat.SupportedFormats)_i);
+        }
+
+        /// <summary>
         /// Attempts to change the digit format, will prompt user with confirmation dialog if necessary.
         /// </summary>
         /// <param name="_desiredFormat"></param>
@@ -887,24 +895,13 @@ namespace AdrianMiasik
                     ChangeFormat(_desiredFormat);
                 }, () =>
                 {
-                    // TODO: Fix additional OnValueChanged invoke
-                    settingsContainer.RevertDropdownToPreviousSelection();
-                    currentDialogPopup.Close(); // Forced to close our new instance due to addition OnValueChanged call
+                    settingsContainer.SetDropdown(digitFormat.GetPreviousFormatSelection());
                 });
             }
             else
             {
                 ChangeFormat(_desiredFormat);
             }
-        }
-        
-        /// <summary>
-        /// Attempts to change the digit format using enum index, will prompt user with dialog if necessary.
-        /// </summary>
-        /// <param name="_i"></param>
-        public void TryChangeFormat(Int32 _i)
-        {
-            TryChangeFormat((DigitFormat.SupportedFormats)_i);
         }
 
         /// <summary>
@@ -986,11 +983,10 @@ namespace AdrianMiasik
             {
                 currentDialogPopup = Instantiate(confirmationDialogPrefab, transform);
                 currentDialogPopup.Initialize(this, _onSubmit, _onCancel);
-                Debug.Log("Spawned Confirmation Dialog", currentDialogPopup);
             }
             else
             {
-                Debug.Log("Can't Spawn Confirmation Dialog: One is Already Open!");
+                // Debug.Log("Can't Spawn Confirmation Dialog: One is Already Open!");
             }
         }
 
