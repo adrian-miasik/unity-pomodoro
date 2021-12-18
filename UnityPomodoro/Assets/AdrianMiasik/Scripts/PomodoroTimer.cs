@@ -977,9 +977,9 @@ namespace AdrianMiasik
 
         private void SpawnConfirmationDialog(Action _onSubmit, Action _onCancel = null)
         {
-            Debug.Log("Spawning confirmation dialog");
             currentDialogPopup = Instantiate(confirmationDialogPrefab, transform);
-            currentDialogPopup.Initialize(_onSubmit, _onCancel);
+            currentDialogPopup.Initialize(this, _onSubmit, _onCancel);
+            Debug.Log("Spawned Confirmation Dialog", currentDialogPopup);
         }
     }
 }

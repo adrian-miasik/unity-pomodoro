@@ -294,12 +294,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 14
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 16
+  m_fontSizeMax: 14
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -389,23 +389,15 @@ MonoBehaviour:
   backgroundBox: {fileID: 960648585466945989}
   topLabel: {fileID: 960648584804740604}
   botLabel: {fileID: 960648584094818719}
-  cancel: {fileID: 1264700861405386481}
   submit: {fileID: 1264700862192411034}
+  cancel: {fileID: 1264700861405386481}
+  lineSeparations:
+  - {fileID: 960648584258320138}
+  - {fileID: 960648585126115522}
+  overlay: {fileID: 5642806476266313139}
   OnCancel:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 960648584130589595}
-        m_TargetAssemblyTypeName: AdrianMiasik.Components.TwoChoiceDialog, Assembly-CSharp
-        m_MethodName: Close
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
   OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -441,8 +433,8 @@ RectTransform:
   m_Father: {fileID: 8289170887847099470}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.29989442}
-  m_AnchorMax: {x: 1, y: 0.30773923}
+  m_AnchorMin: {x: 0, y: 0.2976875}
+  m_AnchorMax: {x: 1, y: 0.3118146}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -467,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.90588236, g: 0.90588236, b: 0.90588236, a: 1}
+  m_Color: {r: 0.9058824, g: 0.9058824, b: 0.9058824, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -576,12 +568,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 14
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 16
+  m_fontSizeMax: 14
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -650,8 +642,8 @@ RectTransform:
   m_Father: {fileID: 8289170887847099470}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.498, y: 0}
-  m_AnchorMax: {x: 0.502, y: 0.29989442}
+  m_AnchorMin: {x: 0.4975, y: 0}
+  m_AnchorMax: {x: 0.5025, y: 0.29989442}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -676,7 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.90588236, g: 0.90588236, b: 0.90588236, a: 1}
+  m_Color: {r: 0.9058824, g: 0.9058824, b: 0.9058824, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -778,7 +770,6 @@ GameObject:
   - component: {fileID: 960648585466945988}
   - component: {fileID: 960648585466945990}
   - component: {fileID: 960648585466945989}
-  - component: {fileID: 960648585466945991}
   m_Layer: 5
   m_Name: SquircleBackground
   m_TagString: Untagged
@@ -826,7 +817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -843,21 +834,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.75
---- !u!114 &960648585466945991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960648585466945987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1.5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &2787424745693692345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,11 +1063,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2043641981690893248, guid: 55b1a3a1767679746a0984a5af7a0091, type: 3}
       propertyPath: m_fontSize
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2043641981690893248, guid: 55b1a3a1767679746a0984a5af7a0091, type: 3}
       propertyPath: m_fontSizeMax
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2078963697031093842, guid: 55b1a3a1767679746a0984a5af7a0091, type: 3}
       propertyPath: m_Sprite
@@ -1256,11 +1232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2043641981690893248, guid: 55b1a3a1767679746a0984a5af7a0091, type: 3}
       propertyPath: m_fontSize
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2043641981690893248, guid: 55b1a3a1767679746a0984a5af7a0091, type: 3}
       propertyPath: m_fontSizeMax
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2078963697031093842, guid: 55b1a3a1767679746a0984a5af7a0091, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
