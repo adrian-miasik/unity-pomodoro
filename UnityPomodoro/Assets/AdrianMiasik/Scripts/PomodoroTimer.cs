@@ -982,9 +982,24 @@ namespace AdrianMiasik
 
         private void SpawnConfirmationDialog(Action _onSubmit, Action _onCancel = null)
         {
-            currentDialogPopup = Instantiate(confirmationDialogPrefab, transform);
-            currentDialogPopup.Initialize(this, _onSubmit, _onCancel);
-            Debug.Log("Spawned Confirmation Dialog", currentDialogPopup);
+            if (currentDialogPopup == null)
+            {
+                currentDialogPopup = Instantiate(confirmationDialogPrefab, transform);
+                currentDialogPopup.Initialize(this, _onSubmit, _onCancel);
+                Debug.Log("Spawned Confirmation Dialog", currentDialogPopup);
+            }
+            else
+            {
+                Debug.Log("Can't Spawn Confirmation Dialog: One is Already Open!");
+            }
+        }
+
+        public void ClearDialogPopup(TwoChoiceDialog _dialog)
+        {
+            if (_dialog == currentDialogPopup)
+            {
+                currentDialogPopup = null;
+            }
         }
     }
 }

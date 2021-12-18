@@ -62,6 +62,7 @@ namespace AdrianMiasik.Components
 
         public void Close()
         {
+            timer.ClearDialogPopup(this);
             timer.GetTheme().Deregister(this); // Remove self from themed components
             Destroy(gameObject);
         }
