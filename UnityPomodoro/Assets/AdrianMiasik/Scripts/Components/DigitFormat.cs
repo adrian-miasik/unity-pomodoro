@@ -80,7 +80,7 @@ namespace AdrianMiasik.Components
         }
 
         [ContextMenu("Generate Format")]
-        public void GenerateFormat()
+        public void GenerateFormat(bool _useCurrentTime = false)
         {
             generatedDigits?.Clear();
             generatedSeparators?.Clear();
@@ -111,7 +111,7 @@ namespace AdrianMiasik.Components
             ImproveLayoutVisuals();
             
             // Calculate time
-            cachedTimeSpan = GetTime();
+            cachedTimeSpan = _useCurrentTime ? timer.GetCurrentTime() : GetTime();
             SetTime(cachedTimeSpan);
 
             // Apply

@@ -521,6 +521,11 @@ namespace AdrianMiasik
             digitFormat.SetTime(_ts);
             digitFormat.RefreshDigitVisuals();
         }
+
+        public TimeSpan GetCurrentTime()
+        {
+            return TimeSpan.FromSeconds(currentTime);
+        }
         
         /// <summary>
         /// Shows about content, hides main content, and shows credits bubble
@@ -555,7 +560,7 @@ namespace AdrianMiasik
             
             // Show main content
             mainContainer.gameObject.SetActive(true);
-            digitFormat.GenerateFormat();
+            digitFormat.GenerateFormat(true);
             //leftButtonClick.OnPointerClick(null);
             
             creditsBubble.Unlock();
