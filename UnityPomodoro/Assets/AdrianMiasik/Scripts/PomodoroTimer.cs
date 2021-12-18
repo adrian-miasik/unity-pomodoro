@@ -7,7 +7,6 @@ using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using TMPro;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -28,6 +27,9 @@ namespace AdrianMiasik
 
         public States state = States.SETUP;
 
+        [Header("Prefabs")] 
+        [SerializeField] private TwoChoiceDialog confirmationDialogPrefab;
+        
         [Header("Animations")] 
         [SerializeField] private Animation spawnAnimation;
 
@@ -51,8 +53,8 @@ namespace AdrianMiasik
 
         [Header("Buttons")] 
         [SerializeField] private BooleanToggle menuToggle;
-        [SerializeField] private ClickButton leftButtonClick;
-        [SerializeField] private ClickButton rightButtonClick;
+        [SerializeField] private ClickButtonIcon leftButtonClick;
+        [SerializeField] private ClickButtonIcon rightButtonClick;
         [SerializeField] private RightButton rightButton;
         [SerializeField] private BooleanSlider breakSlider;
         [SerializeField] private CreditsBubble creditsBubble;
@@ -112,6 +114,8 @@ namespace AdrianMiasik
 
         private bool muteSoundWhenOutOfFocus = false; // We want this to be true only for Windows platform due to UWP notifications
         
+        private TwoChoiceDialog currentDialogPopup;
+        
         private void OnApplicationFocus(bool _hasFocus)
         {
             if (muteSoundWhenOutOfFocus)
@@ -156,10 +160,10 @@ namespace AdrianMiasik
         {
             // Setup view
             aboutContainer.Initialize(this);
-            
+
             settingsContainer.Hide();
             aboutContainer.Hide();
-            
+
             mainContainer.gameObject.SetActive(true);
 
             // Overrides
@@ -202,16 +206,16 @@ namespace AdrianMiasik
 
             // Register elements that need updating per timer state change
             timerElements.Add(rightButton);
-            
+
             // Calculate time
             CalculateTimeValues();
-            
+
             // Transition to setup state
             SwitchState(States.SETUP);
 
             // Animate in
             PlaySpawnAnimation();
-            
+
             // Setup theme
             theme.RegisterColorHook(this);
 
@@ -407,7 +411,16 @@ namespace AdrianMiasik
             else
             {
                 SwitchState(States.COMPLETE);
+                OnTimerComplete();
                 OnTimerCompletion?.Invoke();
+            }
+        }
+
+        private void OnTimerComplete()
+        {
+            if (currentDialogPopup != null)
+            {
+                currentDialogPopup.Close();
             }
         }
 
@@ -585,13 +598,33 @@ namespace AdrianMiasik
         {
             SwitchState(States.PAUSED);
         }
-
+        
         /// <summary>
         /// Transitions timer into States.SETUP mode in break mode
         /// </summary>
         public void SwitchToBreakTimer()
         {
-            digitFormat.isOnBreak = true;
+            if (!firstTimePlaying && state != States.COMPLETE)
+            {
+                SpawnConfirmationDialog(() =>
+                {
+                    SwitchTimer(true);
+                }, () =>
+                {
+                    // Switch To Break Timer is triggered by Unity Event via break slider, this simply reset's 
+                    // our bool back to it's original setting prior to interaction.
+                    breakSlider.Initialize(this, IsOnBreak()); // Re-init component
+                });
+            }
+            else
+            {
+                SwitchTimer(true);
+            }
+        }
+
+        private void SwitchTimer(bool _isOnBreak)
+        {
+            digitFormat.isOnBreak = _isOnBreak;
             SwitchState(States.SETUP);
             firstTimePlaying = true;
             CalculateTimeValues();
@@ -602,14 +635,44 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToWorkTimer()
         {
-            digitFormat.isOnBreak = false;
-            SwitchState(States.SETUP);
-            firstTimePlaying = true;
-            CalculateTimeValues();
+            if (!firstTimePlaying && state != States.COMPLETE)
+            {
+                SpawnConfirmationDialog(() =>
+                {
+                    SwitchTimer(false);
+                }, (() =>
+                {
+                    breakSlider.Initialize(this, IsOnBreak()); // Re-init component
+                }));
+            }
+            else
+            {
+                SwitchTimer(false);
+            }
         }
 
         /// <summary>
-        /// Toggles the timer mode to it's opposite mode (break/work) and transitions timer into States.SETUP
+        /// Attempts to restart the timer, will prompt user with confirmation dialog if necessary.
+        /// </summary>
+        public void TryRestart(bool _isComplete)
+        {
+            if (!firstTimePlaying && state != States.COMPLETE)
+            {
+                SpawnConfirmationDialog((() =>
+                {
+                    Restart(_isComplete);
+                }));
+            }
+            else
+            {
+                Restart(_isComplete);
+            }
+        }
+        
+        /// <summary>
+        /// Directly toggles the timer mode to it's opposite mode (break/work) and transitions timer into States.SETUP.
+        /// Note: If you want to verify this action, <see cref="TryRestart"/>. <see cref="TryRestart"/> will prompt the
+        /// user with a confirmation dialog if necessary.
         /// </summary>
         /// <param name="_isCompleted"></param>
         public void Restart(bool _isCompleted)
@@ -625,6 +688,8 @@ namespace AdrianMiasik
 
             // Stop digit tick animation
             digitFormat.ResetTextPositions();
+            
+            PlaySpawnAnimation();
         }
         
         /// <summary>
@@ -734,12 +799,8 @@ namespace AdrianMiasik
             }
             
             // Left Button Icon
-            SVGImage _leftVisibilityTarget = leftButtonClick.visibilityTarget.GetComponent<SVGImage>();
-            if (_leftVisibilityTarget != null)
-            {
-                _leftVisibilityTarget.color = _currentColors.foreground;
-            }
-            
+            leftButtonClick.icon.color = _currentColors.foreground;
+
             // Right Button Background
             Image _rightContainerTarget = rightButtonClick.containerTarget.GetComponent<Image>();
             if (_rightContainerTarget != null)
@@ -808,27 +869,55 @@ namespace AdrianMiasik
             background.SetSelectionNavigation(_backgroundNav);
         }
 
-        public void ChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
+        /// <summary>
+        /// Attempts to change the digit format, will prompt user with confirmation dialog if necessary.
+        /// </summary>
+        /// <param name="_desiredFormat"></param>
+        public void TryChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
+        {
+            if (!firstTimePlaying)
+            {
+                SpawnConfirmationDialog(() =>
+                {
+                    ChangeFormat(_desiredFormat);
+                }, () =>
+                {
+                    // TODO: Fix additional OnValueChanged invoke
+                    settingsContainer.RevertDropdownToPreviousSelection();
+                    currentDialogPopup.Close(); // Forced to close our new instance due to addition OnValueChanged call
+                });
+            }
+            else
+            {
+                ChangeFormat(_desiredFormat);
+            }
+        }
+        
+        /// <summary>
+        /// Attempts to change the digit format using enum index, will prompt user with dialog if necessary.
+        /// </summary>
+        /// <param name="_i"></param>
+        public void TryChangeFormat(Int32 _i)
+        {
+            TryChangeFormat((DigitFormat.SupportedFormats)_i);
+        }
+
+        /// <summary>
+        /// Changes the format directly
+        /// </summary>
+        /// <param name="_desiredFormat"></param>
+        private void ChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
         {
             digitFormat.SwitchFormat(_desiredFormat);
             digitFormat.GenerateFormat();
-            Restart(false);
-            
+            Restart(false); // Restart timer directly, don't verify user intent
+                                       // since we're doing that in this scope.
             if (settingsContainer.IsPageOpen())
             {
                 settingsContainer.UpdateDropdown();
             }
         }
         
-        /// <summary>
-        /// Change to format using enum index
-        /// </summary>
-        /// <param name="_i"></param>
-        public void ChangeFormat(Int32 _i)
-        {
-            ChangeFormat((DigitFormat.SupportedFormats)_i);
-        }
-
         public int GetDigitFormat()
         {
             return digitFormat.GetFormat();
@@ -884,6 +973,13 @@ namespace AdrianMiasik
         public void SetMuteSoundWhenOutOfFocus(bool _state = false)
         {
             muteSoundWhenOutOfFocus = _state;
+        }
+
+        private void SpawnConfirmationDialog(Action _onSubmit, Action _onCancel = null)
+        {
+            currentDialogPopup = Instantiate(confirmationDialogPrefab, transform);
+            currentDialogPopup.Initialize(this, _onSubmit, _onCancel);
+            Debug.Log("Spawned Confirmation Dialog", currentDialogPopup);
         }
     }
 }

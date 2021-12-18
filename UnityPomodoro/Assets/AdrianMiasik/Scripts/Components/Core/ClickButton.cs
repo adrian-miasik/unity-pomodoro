@@ -9,7 +9,6 @@ namespace AdrianMiasik.Components.Core
     {
         // Inspector References
         public RectTransform containerTarget; // The rect transform that will scale
-        public Transform visibilityTarget;
         public bool enableClickSound = true;
         public AudioSource clickSound;
         public float clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
@@ -49,18 +48,16 @@ namespace AdrianMiasik.Components.Core
             cachedScale = containerTarget.localScale;
         }
         
-        public void Hide()
+        public virtual void Hide()
         {
             Release();
 
             raycastTarget = false;
-            visibilityTarget.gameObject.SetActive(false);
         }
 
-        public void Show()
+        public virtual void Show()
         {
             raycastTarget = true;
-            visibilityTarget.gameObject.SetActive(true);
         }
 
         public void Hold()

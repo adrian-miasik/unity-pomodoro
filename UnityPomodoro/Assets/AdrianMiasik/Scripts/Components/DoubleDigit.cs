@@ -17,9 +17,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private Selectable selectable;
         [SerializeField] private Image background;
 
-        [SerializeField] private ClickButton upArrow;
+        [SerializeField] private ClickButtonIcon upArrow;
         [SerializeField] private TMP_InputField input;
-        [SerializeField] private ClickButton downArrow;
+        [SerializeField] private ClickButtonIcon downArrow;
 
         [Header("Color")] 
         [SerializeField] private float animationDuration = 0.25f;
@@ -448,19 +448,11 @@ namespace AdrianMiasik.Components
             }
             
             // Up arrow
-            SVGImage _upArrow = upArrow.visibilityTarget.GetComponent<SVGImage>();
-            if (_upArrow != null)
-            {
-                _upArrow.color = _currentColors.foreground;
-            }
+            upArrow.icon.color = _currentColors.foreground;
             
             // Down arrow
-            SVGImage _downArrow = downArrow.visibilityTarget.GetComponent<SVGImage>();
-            if (_downArrow != null)
-            {
-                _downArrow.color = _currentColors.foreground;
-            }
-
+            downArrow.icon.color = _currentColors.foreground;
+            
             // Digit text
             SetTextColor(_currentColors.foreground);
         }

@@ -17,6 +17,8 @@ namespace AdrianMiasik.Components
         private bool isOpen = false;
         private PomodoroTimer timer;
 
+        private int digitFormatPreviousSelection;
+
         public void Initialize(PomodoroTimer _timer)
         {
             timer = _timer;
@@ -28,6 +30,7 @@ namespace AdrianMiasik.Components
             digitFormatDropdown.Initialize(timer);
             muteSoundOutOfFocusBoolean.Initialize(_timer, _timer.MuteSoundWhenOutOfFocus());
 
+            digitFormatPreviousSelection = digitFormatDropdown.GetDropdownValue();
             isInitialized = true;
         }
         
@@ -36,25 +39,34 @@ namespace AdrianMiasik.Components
             return isInitialized;
         }
 
-        public void UpdateDropdown()
-        {
-            digitFormatDropdown.UpdateDropdownValue();
-        }
-        
         public void ColorUpdate(Theme _theme)
         {
-            // TODO: Check if settings page is open
-            title.color = _theme.GetCurrentColorScheme().foreground;
+            if (isOpen)
+            {
+                title.color = _theme.GetCurrentColorScheme().foreground;
+                digitFormatDropdown.ColorUpdate(timer.GetTheme());
+                muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().foreground;
+                muteSoundOutOfFocusBoolean.ColorUpdate(_theme);
+            }
+        }
 
-            muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().foreground;
-            muteSoundOutOfFocusBoolean.ColorUpdate(_theme);
+        public void UpdateDropdown()
+        {
+            digitFormatPreviousSelection = digitFormatDropdown.GetDropdownValue();
+            digitFormatDropdown.UpdateDropdownValue(timer.GetDigitFormat());
+        }
+
+        public void RevertDropdownToPreviousSelection()
+        {
+            digitFormatDropdown.UpdateDropdownValue(digitFormatPreviousSelection);
         }
 
         public void Show()
         {
             gameObject.SetActive(true);
-            digitFormatDropdown.UpdateDropdownValue();
+            digitFormatDropdown.UpdateDropdownValue(timer.GetDigitFormat());
             isOpen = true;
+            ColorUpdate(timer.GetTheme());
         }
 
         public void Hide()
