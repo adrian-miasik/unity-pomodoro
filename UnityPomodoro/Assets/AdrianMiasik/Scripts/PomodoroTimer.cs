@@ -84,7 +84,7 @@ namespace AdrianMiasik
         // Time
         private double currentTime;
         private float totalTime; // In seconds
-        private bool firstTimePlaying = true;
+        private bool isTimerBeingSetup = true;
 
         // Pause Fade Animation
         [Header("Fade Animation")] 
@@ -521,11 +521,6 @@ namespace AdrianMiasik
             digitFormat.SetTime(_ts);
             digitFormat.RefreshDigitVisuals();
         }
-
-        public TimeSpan GetCurrentTime()
-        {
-            return TimeSpan.FromSeconds(currentTime);
-        }
         
         /// <summary>
         /// Shows about content, hides main content, and shows credits bubble
@@ -561,6 +556,13 @@ namespace AdrianMiasik
             // Show main content
             mainContainer.gameObject.SetActive(true);
             digitFormat.GenerateFormat();
+            digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime)); // Update visuals to current time
+            
+            // Reset digit animation timings when opening/re-opening this page
+            if (state == States.PAUSED)
+            {
+                ResetDigitFadeAnim();
+            }
 
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
@@ -586,9 +588,9 @@ namespace AdrianMiasik
         /// </summary>
         public void Play()
         {
-            if (firstTimePlaying)
+            if (isTimerBeingSetup)
             {
-                firstTimePlaying = false;
+                isTimerBeingSetup = false;
                 CalculateTimeValues();
             }
 
@@ -608,7 +610,7 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToBreakTimer()
         {
-            if (!firstTimePlaying && state != States.COMPLETE)
+            if (!isTimerBeingSetup && state != States.COMPLETE)
             {
                 SpawnConfirmationDialog(() =>
                 {
@@ -630,7 +632,7 @@ namespace AdrianMiasik
         {
             digitFormat.isOnBreak = _isOnBreak;
             SwitchState(States.SETUP);
-            firstTimePlaying = true;
+            isTimerBeingSetup = true;
             CalculateTimeValues();
         }
 
@@ -639,7 +641,7 @@ namespace AdrianMiasik
         /// </summary>
         public void SwitchToWorkTimer()
         {
-            if (!firstTimePlaying && state != States.COMPLETE)
+            if (!isTimerBeingSetup && state != States.COMPLETE)
             {
                 SpawnConfirmationDialog(() =>
                 {
@@ -660,7 +662,7 @@ namespace AdrianMiasik
         /// </summary>
         public void TryRestart(bool _isComplete)
         {
-            if (!firstTimePlaying && state != States.COMPLETE)
+            if (!isTimerBeingSetup && state != States.COMPLETE)
             {
                 SpawnConfirmationDialog((() =>
                 {
@@ -687,7 +689,7 @@ namespace AdrianMiasik
             }
 
             SwitchState(States.SETUP);
-            firstTimePlaying = true;
+            isTimerBeingSetup = true;
             CalculateTimeValues();
 
             // Stop digit tick animation
@@ -888,11 +890,12 @@ namespace AdrianMiasik
         /// <param name="_desiredFormat"></param>
         public void TryChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
         {
-            if (!firstTimePlaying)
+            if (!isTimerBeingSetup)
             {
+                digitFormat.SwitchFormat(_desiredFormat);
                 SpawnConfirmationDialog(() =>
                 {
-                    ChangeFormat(_desiredFormat);
+                    GenerateFormat(_desiredFormat);
                 }, () =>
                 {
                     settingsContainer.SetDropdown(digitFormat.GetPreviousFormatSelection());
@@ -900,7 +903,8 @@ namespace AdrianMiasik
             }
             else
             {
-                ChangeFormat(_desiredFormat);
+                digitFormat.SwitchFormat(_desiredFormat);
+                GenerateFormat(_desiredFormat);
             }
         }
 
@@ -908,12 +912,12 @@ namespace AdrianMiasik
         /// Changes the format directly
         /// </summary>
         /// <param name="_desiredFormat"></param>
-        private void ChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
+        private void GenerateFormat(DigitFormat.SupportedFormats _desiredFormat)
         {
-            digitFormat.SwitchFormat(_desiredFormat);
             digitFormat.GenerateFormat();
             Restart(false); // Restart timer directly, don't verify user intent
                                        // since we're doing that in this scope.
+            
             if (settingsContainer.IsPageOpen())
             {
                 settingsContainer.UpdateDropdown();

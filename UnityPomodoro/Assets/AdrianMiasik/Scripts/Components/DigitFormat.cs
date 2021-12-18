@@ -75,7 +75,8 @@ namespace AdrianMiasik.Components
             timer = _timer;
             theme = _timer.GetTheme();
             theme.RegisterColorHook(this);
-
+             
+            SwitchFormat(format);
             GenerateFormat();
         }
 
@@ -85,7 +86,7 @@ namespace AdrianMiasik.Components
             generatedDigits?.Clear();
             generatedSeparators?.Clear();
 
-            // Clear pre-generated digits / transforms
+            // Clear pre-generated digits / transforms from pre-built scene
             foreach (Transform _t in digitFormatRect.GetComponentsInChildren<Transform>())
             {
                 if (_t == digitFormatRect.transform)
@@ -109,14 +110,23 @@ namespace AdrianMiasik.Components
 
             // Improve visuals based on number of generated elements
             ImproveLayoutVisuals();
-            
+
             // Calculate time
             SetTime(GetTime());
-
+                
             // Apply
             RefreshDigitVisuals();
 
             ColorUpdate(timer.GetTheme());
+        }
+
+        public void RefreshDigitVisuals()
+        {
+            foreach (DoubleDigit _digit in generatedDigits)
+            {
+                _digit.UpdateVisuals(GetDigitValue(_digit.digit));
+                _digit.HideArrows();
+            }
         }
         
         // Specific to our anchored layouts
@@ -191,21 +201,16 @@ namespace AdrianMiasik.Components
             self.anchorMax = new Vector2(self.anchorMax.x, 0.75f);
             self.anchoredPosition = Vector2.zero;
         }
-
-        public void RefreshDigitVisuals()
-        {
-            foreach (DoubleDigit _digit in generatedDigits)
-            {
-                _digit.UpdateVisuals(GetDigitValue(_digit.digit));
-                _digit.HideArrows();
-            }
-        }
-
+        
         public void FlipIsOnBreakBool()
         {
             isOnBreak = !isOnBreak;
         }
 
+        /// <summary>
+        /// Returns the users own set time that has been set during timer setup.
+        /// </summary>
+        /// <returns></returns>
         public TimeSpan GetTime()
         {
             TimeSpan _ts;
@@ -326,8 +331,6 @@ namespace AdrianMiasik.Components
                 selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
             };
             timer.SetBackgroundNavigation(_backgroundNav);
-            
-            SwitchFormat(format);
         }
 
         private int Wrap(int _index, int _length)
@@ -628,7 +631,7 @@ namespace AdrianMiasik.Components
         public void SetTimerValue(string _formattedString)
         {
             // Only allow 'Set Timer Value' to work when we are in the setup state
-            if (GetTimer().state != PomodoroTimer.States.SETUP)
+            if (timer.state != PomodoroTimer.States.SETUP)
             {
                 return;
             }
@@ -721,22 +724,45 @@ namespace AdrianMiasik.Components
             return true;
         }
 
-        public PomodoroTimer GetTimer()
+
+        public void ClearTimerSelection()
         {
-            return timer;
+            timer.ClearSelection();
         }
 
+        public PomodoroTimer.States GetTimerState()
+        {
+            return timer.state;
+        }
+
+        public void SetTimerSelection(DoubleDigit _digitToSelect)
+        {
+            timer.SetSelection(_digitToSelect);
+        }
+
+        /// <summary>
+        /// Switches your format to the provided format
+        /// </summary>
+        /// <param name="_desiredFormat"></param>
         public void SwitchFormat(SupportedFormats _desiredFormat)
         {
             previousFormatSelection = (int) format;
             format = _desiredFormat;
         }
 
+        /// <summary>
+        /// Returns the previously selected format index
+        /// </summary>
+        /// <returns></returns>
         public int GetPreviousFormatSelection()
         {
             return previousFormatSelection;
         }
-
+        
+        /// <summary>
+        /// Return the current format index
+        /// </summary>
+        /// <returns></returns>
         public int GetFormat()
         {
             return (int) format;

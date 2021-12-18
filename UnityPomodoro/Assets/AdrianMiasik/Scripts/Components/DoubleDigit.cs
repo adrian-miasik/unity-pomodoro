@@ -165,7 +165,7 @@ namespace AdrianMiasik.Components
                     {
                         accumulatedSelectionTime = 0;
                         DeselectInput();
-                        format.GetTimer().ClearSelection();
+                        format.ClearTimerSelection();
                     }
                 }
             }
@@ -284,7 +284,7 @@ namespace AdrianMiasik.Components
                 // Update the digit
                 input.text = _value.ToString("D2");
 
-                if (format.GetTimer().state == PomodoroTimer.States.RUNNING)
+                if (format.GetTimerState() == PomodoroTimer.States.RUNNING)
                 {
                     OnDigitChange?.Invoke();
                 }
@@ -361,7 +361,7 @@ namespace AdrianMiasik.Components
 
             if (_setSelection)
             {
-                format.GetTimer().SetSelection(this);
+                format.SetTimerSelection(this);
             }
 
             OnSelection.Invoke();
