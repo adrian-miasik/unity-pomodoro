@@ -522,6 +522,7 @@ namespace AdrianMiasik
             digitFormat.RefreshDigitVisuals();
         }
         
+        // TODO: Create a panel/page class
         /// <summary>
         /// Shows about content, hides main content, and shows credits bubble
         /// </summary>
