@@ -3594,7 +3594,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.55
+  m_fontSize: 33.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6127,7 +6127,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 88.952324, y: 293.39175}
+  m_AnchoredPosition: {x: -119.584915, y: 189.07706}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!1818360608 &1188204210
@@ -6961,7 +6961,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.70689654, y: 1}
+  m_AnchorMax: {x: 0.30541104, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
@@ -7394,18 +7394,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fddaf18cac877e4a8c37fa3ac88abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theme: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
   state: 0
-  confirmationDialogPrefab: {fileID: 960648584130589595, guid: 50a42b60f00c28b4bb6e664d99b11d6e, type: 3}
-  spawnAnimation: {fileID: 1601903658}
-  sidebarMenu: {fileID: 673880599}
-  mainContainer: {fileID: 59348933}
-  aboutContainer: {fileID: 2138225466}
-  settingsContainer: {fileID: 2037041485}
-  background: {fileID: 407842496}
-  digitFormat: {fileID: 1015735896}
   text: {fileID: 650676969}
+  ring: {fileID: 361292848}
+  ringBackground: {fileID: 1090976625}
+  background: {fileID: 407842496}
   completionLabel: {fileID: 222858663}
+  digitFormat: {fileID: 1015735896}
   menuToggle: {fileID: 1617491758}
   leftButtonClick: {fileID: 378047032}
   rightButtonClick: {fileID: 1811562797}
@@ -7414,8 +7409,10 @@ MonoBehaviour:
   creditsBubble: {fileID: 929885561}
   themeSlider: {fileID: 1535463480}
   halloweenToggle: {fileID: 933772985}
-  ring: {fileID: 361292848}
-  ringBackground: {fileID: 1090976625}
+  hotkeyDetector: {fileID: 266651281}
+  sidebarMenu: {fileID: 673880599}
+  notifications: {fileID: 943758001}
+  spawnAnimation: {fileID: 1601903658}
   completion: {fileID: 222858664}
   completeRingPulseDiameter:
     serializedVersion: 2
@@ -7459,6 +7456,32 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
+  pauseFadeDuration: 0.1
+  pauseHoldDuration: 0.75
+  ringTickWidth:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9
+      inSlope: 4.892026
+      outSlope: 4.892026
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.022193791
+    - serializedVersion: 3
+      time: 1
+      value: 0.9
+      inSlope: -0.002867563
+      outSlope: -0.002867563
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.20532233
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
   OnRingPulse:
     m_PersistentCalls:
       m_Calls:
@@ -7489,35 +7512,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  hotkeyDetector: {fileID: 266651281}
-  notifications: {fileID: 943758001}
   selectedDigits: []
-  fadeDuration: 0.1
-  pauseHoldDuration: 0.75
-  ringTickWidth:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.9
-      inSlope: 4.892026
-      outSlope: 4.892026
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.022193791
-    - serializedVersion: 3
-      time: 1
-      value: 0.9
-      inSlope: -0.002867563
-      outSlope: -0.002867563
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.20532233
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 1
-    m_RotationOrder: 4
+  mainContainer: {fileID: 59348933}
+  settingsContainer: {fileID: 2037041485}
+  aboutContainer: {fileID: 2138225466}
+  theme: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
+  confirmationDialogPrefab: {fileID: 960648584130589595, guid: 50a42b60f00c28b4bb6e664d99b11d6e, type: 3}
 --- !u!82 &1601903657
 AudioSource:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private ClickButtonText cancel;
         [SerializeField] private List<Image> lineSeparations;
         [SerializeField] private Image overlay;
+        [SerializeField] private Animation spawnAnimation;
 
         // Used to trigger Cancel and Submit methods via UnityEvent
         public UnityEvent OnCancel;
@@ -42,6 +43,9 @@ namespace AdrianMiasik.Components
 
             onCancel = _cancel;
             onSubmit = _submit;
+            
+            spawnAnimation.Stop();
+            spawnAnimation.Play();
             
             ColorUpdate(_timer.GetTheme());
         }
