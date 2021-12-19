@@ -36,6 +36,7 @@ namespace AdrianMiasik
         [SerializeField] private DigitFormat digitFormat; // Responsible class for manipulating our digits and formats
         [SerializeField] private BooleanToggle menuToggle; // Used to toggle our sidebar menu
         [SerializeField] private ClickButtonIcon leftButtonClick; // Used to restart the timer
+        // TODO: Consolidate right buttons to a single class
         [SerializeField] private ClickButtonIcon rightButtonClick; // Used to play/pause the timer
         [SerializeField] private RightButton rightButton; // Additional timer state element 
         [SerializeField] private BooleanSlider breakSlider; // Used for switching timer between mode one and mode two
