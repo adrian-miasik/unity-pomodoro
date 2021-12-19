@@ -15,11 +15,18 @@ namespace AdrianMiasik.Components
 
         private PomodoroTimer timer;
         private bool isInfoPageOpen;
-
+        private bool isInitialized;
+        
         public void Initialize(PomodoroTimer _timer)
         {
             timer = _timer;
             timer.GetTheme().RegisterColorHook(this);
+            isInitialized = true;
+        }
+        
+        public bool IsInitialized()
+        {
+            return isInitialized;
         }
 
         public void ColorUpdate(Theme _theme)

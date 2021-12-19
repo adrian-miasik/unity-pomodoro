@@ -15,8 +15,6 @@ namespace AdrianMiasik
 {
     public class PomodoroTimer : MonoBehaviour, IColorHook
     {
-        [SerializeField] private Theme theme;
-        
         public enum States
         {
             SETUP,
@@ -25,71 +23,64 @@ namespace AdrianMiasik
             COMPLETE
         }
 
-        public States state = States.SETUP;
-
-        [Header("Prefabs")] 
-        [SerializeField] private TwoChoiceDialog confirmationDialogPrefab;
+        public States state = States.SETUP; // The timers current state
+        
+        [Header("Basic - Components")]
+        [SerializeField] private TextMeshProUGUI text; // Text used to display current state
+        [SerializeField] private Image ring; // Ring used to display timer progress
+        [SerializeField] private Image ringBackground; // Theming
+        
+        [Header("Unity Pomodoro - Components")]
+        [SerializeField] private Background background; // Used to pull select focus
+        [SerializeField] private CompletionLabel completionLabel; // Used to prompt the user the timer is finished
+        [SerializeField] private DigitFormat digitFormat; // Responsible class for manipulating our digits and formats
+        [SerializeField] private BooleanToggle menuToggle; // Used to toggle our sidebar menu
+        [SerializeField] private ClickButtonIcon leftButtonClick; // Used to restart the timer
+        [SerializeField] private ClickButtonIcon rightButtonClick; // Used to play/pause the timer
+        [SerializeField] private RightButton rightButton; // Additional timer state element 
+        [SerializeField] private BooleanSlider breakSlider; // Used for switching timer between mode one and mode two
+        [SerializeField] private CreditsBubble creditsBubble; // Used to display project contributors
+        [SerializeField] private BooleanSlider themeSlider; // Used to change between light / dark mode
+        [SerializeField] private BooleanToggle halloweenToggle; // Halloween theme toggle during Halloween week (Disabled by default) // TODO: Re-implement
+        [SerializeField] private HotkeyDetector hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
+        [SerializeField] private Sidebar sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
+        [SerializeField] private NotificationManager notifications; // Responsible class for UWP notifications and toasts
+        private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
         [Header("Animations")] 
-        [SerializeField] private Animation spawnAnimation;
-
-        [Header("Menu")]
-        [SerializeField] private Sidebar sidebarMenu;
-        
-        [Header("Content")]
-        [SerializeField] private GameObject mainContainer;
-        [SerializeField] private AboutPanel aboutContainer; // previously called info container
-        [SerializeField] private SettingsPanel settingsContainer;
-        
-        [Header("Background")] 
-        [SerializeField] private Background background; // Used to pull select focus
-
-        [Header("Digits")] 
-        [SerializeField] private DigitFormat digitFormat;
-
-        [Header("Text")] 
-        [SerializeField] private TextMeshProUGUI text;
-        [SerializeField] private CompletionLabel completionLabel;
-
-        [Header("Buttons")] 
-        [SerializeField] private BooleanToggle menuToggle;
-        [SerializeField] private ClickButtonIcon leftButtonClick;
-        [SerializeField] private ClickButtonIcon rightButtonClick;
-        [SerializeField] private RightButton rightButton;
-        [SerializeField] private BooleanSlider breakSlider;
-        [SerializeField] private CreditsBubble creditsBubble;
-        [SerializeField] private BooleanSlider themeSlider;
-        [SerializeField] private BooleanToggle halloweenToggle; // Disabled by default
-        private readonly List<ITimerState> timerElements = new List<ITimerState>();
-
-        [Header("Ring")] 
-        [SerializeField] private Image ring;
-        [SerializeField] private Image ringBackground;
-
-        [Header("Completion")]
-        [SerializeField] private Animation completion; // Wrap mode doesn't matter
+        [SerializeField] private Animation spawnAnimation; // The timers introduction animation (plays on timer restarts)
+        [SerializeField] private Animation completion; // The animation used to manipulate the completionLabel component (Wrap mode doesn't matter) TODO: Implement into completion label class instead
         [SerializeField] private AnimationCurve completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
-        public UnityEvent OnRingPulse;
-        public UnityEvent OnTimerCompletion;
+        [SerializeField] private float pauseFadeDuration = 0.1f;
+        [SerializeField] private float pauseHoldDuration = 0.75f; // How long to wait between fade completions?
+        [SerializeField] private AnimationCurve ringTickWidth;
         
-        [Header("Hotkeys")] 
-        [SerializeField] private HotkeyDetector hotkeyDetector;
+        [Header("Unity Events")]
+        // TODO: Rename UnityEvents to lowerCamelCase
+        public UnityEvent OnRingPulse; // Invoked when the ring / timer alarm pulses
+        public UnityEvent OnTimerCompletion; // Invoked when the timer finishes
 
-        [Header("Notifications")] 
-        [SerializeField] private NotificationManager notifications;
+        [Header("Cache")]
+        [SerializeField] private List<DoubleDigit> selectedDigits = new List<DoubleDigit>(); // Contains our currently selected digits
+        
+        [Header("Pages / Panels - Deprecated")]
+        // TODO: Create a page / panel solution
+        [SerializeField] private GameObject mainContainer; // Our main body page
+        [SerializeField] private SettingsPanel settingsContainer; // Our settings page
+        [SerializeField] private AboutPanel aboutContainer; // Our about page
 
-        // Digit Selection
-        [SerializeField] private List<DoubleDigit> selectedDigits = new List<DoubleDigit>();
+        [Header("External Extra - Deprecated")]
+        // TODO: Move to theme class
+        [SerializeField] private Theme theme; // Current active theme
+        // TODO: Create dialog manager class
+        [SerializeField] private TwoChoiceDialog confirmationDialogPrefab; // Prefab reference
 
         // Time
-        private double currentTime;
-        private float totalTime; // In seconds
-        private bool isTimerBeingSetup = true;
+        private double currentTime; // Current time left (In seconds)
+        private float totalTime; // Total time left (In seconds)
+        private bool isTimerBeingSetup = true; // First time playing
 
         // Pause Fade Animation
-        [Header("Fade Animation")] 
-        [SerializeField] private float fadeDuration = 0.1f;
-        [SerializeField] private float pauseHoldDuration = 0.75f; // How long to wait between fade completions?
         private bool isFading;
         private float accumulatedFadeTime;
         private float fadeProgress;
@@ -97,25 +88,26 @@ namespace AdrianMiasik
         private Color endingColor;
         private bool isFadeComplete;
 
-        // Pulse Ring Complete Animation
-        private float accumulatedRingPulseTime;
-        private bool hasRingPulseBeenInvoked;
-        
-        // Pulse Tick Ring Animation
-        private bool isRingTickAnimationEnabled = false;
-        private float cachedSeconds;
-        private bool isRingTickAnimating;
-        [SerializeField] private AnimationCurve ringTickWidth;
-        
         // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
-        private bool muteSoundWhenOutOfFocus = false; // We want this to be true only for Windows platform due to UWP notifications
-        
+        // Cache
+        // TODO: Move to settings class
+        private bool muteSoundWhenOutOfFocus; // We want this to be true only for Windows platform due to UWP notifications
+        // TODO: Move to dialog manager class
         private TwoChoiceDialog currentDialogPopup;
         
+        // Pulse Ring Complete Animation
+        private float accumulatedRingPulseTime;
+        private bool hasRingPulseBeenInvoked;
+        
+        // Pulse Tick Ring Animation
+        private readonly bool isRingTickAnimationEnabled = false; // TODO: Re-implement this animation? / Expose in settings?
+        private float cachedSeconds;
+        private bool isRingTickAnimating;
+
         private void OnApplicationFocus(bool _hasFocus)
         {
             if (muteSoundWhenOutOfFocus)
@@ -158,12 +150,9 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
-            // Setup view
-            aboutContainer.Initialize(this);
-
+            // Setup pages and panels
             settingsContainer.Hide();
             aboutContainer.Hide();
-
             mainContainer.gameObject.SetActive(true);
 
             // Overrides
@@ -465,7 +454,7 @@ namespace AdrianMiasik
             }
             else
             {
-                fadeProgress = accumulatedFadeTime / fadeDuration;
+                fadeProgress = accumulatedFadeTime / pauseFadeDuration;
 
                 digitFormat.SetDigitColor(isFading
                     ? Color.Lerp(startingColor, endingColor, fadeProgress)
@@ -528,7 +517,13 @@ namespace AdrianMiasik
         /// </summary>
         public void ShowAbout()
         {
+            if (!aboutContainer.IsInitialized())
+            {
+                aboutContainer.Initialize(this);
+            }
+
             // Prevent tick animations from pausing when switching to info page
+            // TODO: Do this for settings page too?
             digitFormat.CorrectTickAnimVisuals();
             
             // Hide other content
@@ -538,10 +533,11 @@ namespace AdrianMiasik
             // Show about page content
             aboutContainer.Show();
 
+            // Special behaviour that's used to display/open up credits bubble when on this page
             if (!creditsBubble.IsRunning())
             {
                 creditsBubble.Lock();
-                creditsBubble.FadeIn();   
+                creditsBubble.FadeIn();
             }
         }
 
@@ -565,6 +561,7 @@ namespace AdrianMiasik
                 ResetDigitFadeAnim();
             }
 
+            // Hide / close out credits bubble
             creditsBubble.Unlock();
             creditsBubble.FadeOut();
         }
@@ -582,6 +579,10 @@ namespace AdrianMiasik
             
             // Show settings content
             settingsContainer.Show();
+            
+            // Hide / close out credits bubble
+            creditsBubble.Unlock();
+            creditsBubble.FadeOut();
         }
         
         /// <summary>
@@ -698,7 +699,8 @@ namespace AdrianMiasik
             
             PlaySpawnAnimation();
         }
-        
+
+        #region Button/Keyboard OnClick Events
         /// <summary>
         /// Activates the play/pause button to toggle the timer state (States.SETUP, etc...)
         /// </summary>
@@ -730,6 +732,7 @@ namespace AdrianMiasik
         {
             themeSlider.OnPointerClick(null);
         }
+        #endregion
 
         /// <summary>
         /// Selects all the digits
@@ -777,17 +780,95 @@ namespace AdrianMiasik
             return digitFormat.GetTimerString();
         }
         
+        public int GetDigitFormat()
+        {
+            return digitFormat.GetFormat();
+        }
+        
+        public List<Selectable> GetSelections()
+        {
+            return selectedDigits.Select(_doubleDigit => _doubleDigit.GetSelectable()).ToList();
+        }
+        
+        public bool IsOnBreak()
+        {
+            return digitFormat.isOnBreak;
+        }
+
+        public bool IsAboutPageOpen()
+        {
+            return aboutContainer.IsInfoPageOpen();
+        }
+        
+        public bool IsSidebarOpen()
+        {
+            return sidebarMenu.IsOpen();
+        }
+        
         // Setters
         public void SetTimerValue(string _timeString)
         {
             digitFormat.SetTimerValue(_timeString);
+        }
+        
+        public void SetBackgroundNavigation(Navigation _backgroundNav)
+        {
+            background.SetSelectionNavigation(_backgroundNav);
+        }
+
+        /// <summary>
+        /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog if necessary.
+        /// </summary>
+        /// <param name="_i"></param>
+        public void TryChangeFormat(Int32 _i)
+        {
+            TryChangeFormat((DigitFormat.SupportedFormats)_i);
+        }
+
+        /// <summary>
+        /// Attempts to change the digit format, will prompt user with confirmation dialog if necessary.
+        /// </summary>
+        /// <param name="_desiredFormat"></param>
+        public void TryChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
+        {
+            if (!isTimerBeingSetup)
+            {
+                digitFormat.SwitchFormat(_desiredFormat);
+                SpawnConfirmationDialog(() =>
+                {
+                    GenerateFormat(_desiredFormat);
+                }, () =>
+                {
+                    settingsContainer.SetDropdown(digitFormat.GetPreviousFormatSelection());
+                });
+            }
+            else
+            {
+                digitFormat.SwitchFormat(_desiredFormat);
+                GenerateFormat(_desiredFormat);
+            }
+        }
+
+        /// <summary>
+        /// Changes the format directly
+        /// </summary>
+        /// <param name="_desiredFormat"></param>
+        private void GenerateFormat(DigitFormat.SupportedFormats _desiredFormat)
+        {
+            digitFormat.GenerateFormat();
+            Restart(false); // Restart timer directly, don't verify user intent
+                                      // since we're doing that in this scope.
+            
+            if (settingsContainer.IsPageOpen())
+            {
+                settingsContainer.UpdateDropdown();
+            }
         }
 
         /// <summary>
         /// Apply our color updates to relevant components
         /// </summary>
         /// <param name="_theme"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void ColorUpdate(Theme _theme)
         {
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
@@ -856,80 +937,6 @@ namespace AdrianMiasik
             }
         }
 
-        public bool IsOnBreak()
-        {
-            return digitFormat.isOnBreak;
-        }
-
-        public bool IsAboutPageOpen()
-        {
-            return aboutContainer.IsInfoPageOpen();
-        }
-
-        public List<Selectable> GetSelections()
-        {
-            return selectedDigits.Select(_doubleDigit => _doubleDigit.GetSelectable()).ToList();
-        }
-
-        public void SetBackgroundNavigation(Navigation _backgroundNav)
-        {
-            background.SetSelectionNavigation(_backgroundNav);
-        }
-
-        /// <summary>
-        /// Attempts to change the digit format using enum index, will prompt user with dialog if necessary.
-        /// </summary>
-        /// <param name="_i"></param>
-        public void TryChangeFormat(Int32 _i)
-        {
-            TryChangeFormat((DigitFormat.SupportedFormats)_i);
-        }
-
-        /// <summary>
-        /// Attempts to change the digit format, will prompt user with confirmation dialog if necessary.
-        /// </summary>
-        /// <param name="_desiredFormat"></param>
-        public void TryChangeFormat(DigitFormat.SupportedFormats _desiredFormat)
-        {
-            if (!isTimerBeingSetup)
-            {
-                digitFormat.SwitchFormat(_desiredFormat);
-                SpawnConfirmationDialog(() =>
-                {
-                    GenerateFormat(_desiredFormat);
-                }, () =>
-                {
-                    settingsContainer.SetDropdown(digitFormat.GetPreviousFormatSelection());
-                });
-            }
-            else
-            {
-                digitFormat.SwitchFormat(_desiredFormat);
-                GenerateFormat(_desiredFormat);
-            }
-        }
-
-        /// <summary>
-        /// Changes the format directly
-        /// </summary>
-        /// <param name="_desiredFormat"></param>
-        private void GenerateFormat(DigitFormat.SupportedFormats _desiredFormat)
-        {
-            digitFormat.GenerateFormat();
-            Restart(false); // Restart timer directly, don't verify user intent
-                                       // since we're doing that in this scope.
-            
-            if (settingsContainer.IsPageOpen())
-            {
-                settingsContainer.UpdateDropdown();
-            }
-        }
-        
-        public int GetDigitFormat()
-        {
-            return digitFormat.GetFormat();
-        }
-        
         // TODO: Create theme manager class?
         public Theme GetTheme()
         {
@@ -960,12 +967,7 @@ namespace AdrianMiasik
             // Apply our changes
             theme.ApplyColorChanges();
         }
-
-        public bool IsSidebarOpen()
-        {
-            return sidebarMenu.IsOpen();
-        }
-
+        
         public void ColorUpdateCreditsBubble()
         {
             creditsBubble.ColorUpdate(theme);
@@ -988,10 +990,6 @@ namespace AdrianMiasik
             {
                 currentDialogPopup = Instantiate(confirmationDialogPrefab, transform);
                 currentDialogPopup.Initialize(this, _onSubmit, _onCancel);
-            }
-            else
-            {
-                // Debug.Log("Can't Spawn Confirmation Dialog: One is Already Open!");
             }
         }
 
