@@ -40,7 +40,7 @@ namespace AdrianMiasik
         [SerializeField] private RightButton rightButton; // Additional timer state element 
         [SerializeField] private BooleanSlider breakSlider; // Used for switching timer between mode one and mode two
         [SerializeField] private CreditsBubble creditsBubble; // Used to display project contributors
-        [SerializeField] private BooleanSlider themeSlider; // Used to change between light / dark mode
+        [SerializeField] private ThemeSlider themeSlider; // Used to change between light / dark mode
         [SerializeField] private BooleanToggle halloweenToggle; // Halloween theme toggle during Halloween week (Disabled by default) // TODO: Re-implement
         [SerializeField] private HotkeyDetector hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private Sidebar sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
@@ -730,7 +730,7 @@ namespace AdrianMiasik
         /// </summary>
         public void TriggerThemeSwitch()
         {
-            themeSlider.OnPointerClick(null);
+            themeSlider.Interact();
         }
         #endregion
 
