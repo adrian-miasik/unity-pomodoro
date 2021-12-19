@@ -38,9 +38,9 @@ namespace AdrianMiasik.Components.Core
         private bool overrideTrueColor;
         private Color overridenTrueColor;
         
-        // Dot Overrides
-        private bool overrideFalseDotColor;
-        private Color overridenFalseDotColor;
+        // Dot Override
+        private bool overrideDotColor;
+        private Color overridenDotColor;
         
         /// <summary>
         /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
@@ -58,10 +58,10 @@ namespace AdrianMiasik.Components.Core
             overridenTrueColor = _color;
         }
 
-        public void OverrideDotFalseColor(Color _color)
+        public void OverrideDotColor(Color _color)
         {
-            overrideFalseDotColor = true;
-            overridenFalseDotColor = _color;
+            overrideDotColor = true;
+            overridenDotColor = _color;
         }
 
         public void Initialize(PomodoroTimer _timer, bool _state)
@@ -154,7 +154,7 @@ namespace AdrianMiasik.Components.Core
             falseColor = overrideFalseColor ? overridenFalseColor : _currentColors.modeOne;
             trueColor = overrideTrueColor ? overridenTrueColor : _currentColors.modeTwo;
             background.color = state ? trueColor : falseColor;
-            dot.material.SetColor(CircleColor, overrideFalseDotColor ? overridenFalseDotColor : _currentColors.background);
+            dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : _currentColors.background);
         }
     }
 }

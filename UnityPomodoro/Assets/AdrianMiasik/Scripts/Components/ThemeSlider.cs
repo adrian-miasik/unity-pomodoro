@@ -13,7 +13,8 @@ namespace AdrianMiasik.Components
         public void Initialize(PomodoroTimer _timer, bool _state)
         {
             base.Initialize(_timer);
-            toggle.OverrideDotFalseColor(_timer.GetTheme().GetCurrentColorScheme().foreground);
+            
+            toggle.OverrideDotColor(_timer.GetTheme().GetCurrentColorScheme().foreground);
             toggle.Initialize(_timer, _state);
         }
 
