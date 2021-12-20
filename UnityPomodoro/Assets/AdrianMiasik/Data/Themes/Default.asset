@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee629fbb2f164505b3d477919285a6df, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
-  isLightModeOn: 1
-  light: {fileID: 11400000, guid: ef531ebb02fd0cd4baba4c18cdb1f4e0, type: 2}
-  dark: {fileID: 11400000, guid: 6f7a0b1e4e59ed04ea5cb6c9fff95b72, type: 2}
+  m_isLightModeOn: 1
+  m_light: {fileID: 11400000, guid: ef531ebb02fd0cd4baba4c18cdb1f4e0, type: 2}
+  m_dark: {fileID: 11400000, guid: 6f7a0b1e4e59ed04ea5cb6c9fff95b72, type: 2}
