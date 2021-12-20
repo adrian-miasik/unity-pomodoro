@@ -5,7 +5,7 @@ using UnityEngine.WSA;
 
 namespace AdrianMiasik.UWP
 {
-    // TODO: Remove PomodoroTimer dependency
+    // TODO: Replace PomodoroTimer dependency with Setting class dependency
     public class NotificationManager : MonoBehaviour
     {
         // UWP
