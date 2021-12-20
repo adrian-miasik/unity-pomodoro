@@ -5015,8 +5015,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c79147749344398935349140cc09cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xmlToastAlarm: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
-  xmlToastNoAlarm: {fileID: 4900000, guid: 0d00427c101d53f41a309c4993e34a7e, type: 3}
+  m_xmlToastAlarm: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
+  m_xmlToastNoAlarm: {fileID: 4900000, guid: 0d00427c101d53f41a309c4993e34a7e, type: 3}
 --- !u!114 &948637559 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9055857711681173028, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
@@ -7606,31 +7606,67 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.9
-      inSlope: 0
-      outSlope: 0.07500005
+      inSlope: 0.00029980473
+      outSlope: 0.00029980473
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 3
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.93494445
+    - serializedVersion: 3
+      time: 0.37518916
+      value: 1
+      inSlope: 0.025546806
+      outSlope: 0
+      tangentMode: 65
+      weightedMode: 3
+      inWeight: 0.46541142
+      outWeight: 0.42801657
+    - serializedVersion: 3
+      time: 0.62531525
+      value: 1
+      inSlope: -0
+      outSlope: -0.026046522
+      tangentMode: 5
+      weightedMode: 3
+      inWeight: 0.24970806
+      outWeight: 0.47373676
     - serializedVersion: 3
       time: 1
-      value: 0.975
-      inSlope: 0.07500005
-      outSlope: 0
+      value: 0.9
+      inSlope: 0.0000750277
+      outSlope: 0.0000750277
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
+      weightedMode: 3
+      inWeight: 0.93531495
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_PostInfinity: 1
     m_RotationOrder: 4
   m_pauseFadeDuration: 0.1
   m_pauseHoldDuration: 0.75
   m_ringTickWidth:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9
+      inSlope: 4.892026
+      outSlope: 4.892026
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.022193791
+    - serializedVersion: 3
+      time: 1
+      value: 0.9
+      inSlope: -0.002867563
+      outSlope: -0.002867563
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.20532233
+      outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_PostInfinity: 1
     m_RotationOrder: 4
   m_onRingPulse:
     m_PersistentCalls:
