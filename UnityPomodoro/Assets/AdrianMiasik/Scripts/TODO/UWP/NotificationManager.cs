@@ -10,35 +10,38 @@ namespace AdrianMiasik.UWP
     {
         // UWP
         [Header("Toast")]
-        [SerializeField] private TextAsset xmlToastAlarm;
-        [SerializeField] private TextAsset xmlToastNoAlarm;
+        [SerializeField] private TextAsset m_xmlToastAlarm;
+        [SerializeField] private TextAsset m_xmlToastNoAlarm;
 
         // Cache
         private PomodoroTimer timer;
 
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
+            timer = pomodoroTimer;
         }
 
         public void ShowToast()
         {
 #if ENABLE_WINMD_SUPPORT
-            // When app is not focused...
-            if (!UnityEngine.Application.isFocused)
+            // When app is not focused...(we only want to show prompts if the app is not in focus)
+            if (UnityEngine.Application.isFocused)
             {
-                // And the user wants to mute audio when app is out of focus...
-                if (timer.MuteSoundWhenOutOfFocus())
-                {
-                    // Play Alarm Notification
-                    Toast toast = Toast.Create(xmlToastAlarm.text);
-                    toast.Show();   
-                }
-                // Otherwise,  Play No Alarm Notification 
-                else{
-                    Toast toast = Toast.Create(xmlToastNoAlarm.text);
-                    toast.Show();
-                }
+                return;
+            }
+
+            // And the user wants to mute audio when app is out of focus...
+            if (timer.MuteSoundWhenOutOfFocus())
+            {
+                // Play Alarm Notification
+                Toast toast = Toast.Create(m_xmlToastAlarm.text);
+                toast.Show();   
+            }
+            // Otherwise, Play No Alarm Notification 
+            else
+            {
+                Toast toast = Toast.Create(m_xmlToastNoAlarm.text);
+                toast.Show();
             }
 #endif
         }
