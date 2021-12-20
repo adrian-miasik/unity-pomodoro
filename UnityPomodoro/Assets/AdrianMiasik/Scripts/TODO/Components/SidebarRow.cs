@@ -32,7 +32,6 @@ namespace AdrianMiasik.Components
             isSelected = _isSelected;
             _timer.GetTheme().RegisterColorHook(this);
             ColorUpdate(_timer.GetTheme());
-            Hide();
         }
 
         public void Hide()
