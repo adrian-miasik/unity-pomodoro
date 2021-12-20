@@ -31,16 +31,11 @@ namespace AdrianMiasik.Components
             dropdown.value = _selectionValue;
         }
 
-        public int GetDropdownValue()
-        {
-            return dropdown.value;
-        }
-
         public void ColorUpdate(Theme _theme)
         {
             label.color = _theme.GetCurrentColorScheme().m_foreground;
             dropdown.captionText.color = _theme.GetCurrentColorScheme().m_foreground;
-            containerOutline.color = _theme.GetCurrentColorScheme().m_foreground;
+            containerOutline.color = _theme.GetCurrentColorScheme().m_backgroundHighlight;
             arrow.color = _theme.GetCurrentColorScheme().m_foreground;
         }
     }
