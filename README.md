@@ -109,6 +109,7 @@ We will also modify the credits bubble to include contributors if people start c
 Need help?  Found a bug?  
 Send your questions, bug reports, and other support related inquiries to:  
 `unity-pomodoro@adrian-miasik.com`
+Alternatively, you can also report bugs directly to our [issues page](https://github.com/adrian-miasik/unity-pomodoro/issues)
 
 For personal business related inquires / proposals:  
 `business-line-76240@adrian-miasik.com`
