@@ -9,11 +9,12 @@
   <a href="https://github.com/adrian-miasik/unity-pomodoro/wiki/Components-Documentation">Documentation</a> &bull;
   <a href="#downloads">Downloads</a> &bull;
   <a href="#media">Screenshots</a> &bull;
-  <a href="#author-notes">Author Notes</a> &bull;
   <a href="https://github.com/adrian-miasik/unity-pomodoro/wiki">Wiki</a> &bull;
+  <a href="#author-notes">Author Notes</a> &bull;
+  <a href="#donate">Donate</a> &bull;
   <a href="#contribute">Contribute</a> &bull;
-  <a href="#contact--support">Support</a> &bull;
-  <a href="#contact--support">Contact Us</a>
+  <a href="#contact-us--support-line">Support</a> &bull;
+  <a href="#contact-us--support-line">Contact</a>
 </p>
 
 <p align="center">
@@ -96,18 +97,21 @@ Want to help? If you're interested in contributing to the project, please see th
 - Fun fact: This was the first time I tried to do my own foley / audio
 - Special thanks to my microwave
 
+## Donate
+If you'd like to support my work, you can donate to help support this project via [GitHub Sponsors](https://github.com/sponsors/adrian-miasik) ❤️
+
 ## Contribute
 Interested in contributing?  
 Send me an email `unity-pomodoro@adrian-miasik.com` & poke me to make a contributing doc.  
 We will also modify the credits bubble to include contributors if people start contributing.
 
-## Contact / Support
+## Contact Us / Support Line
 Need help?  Found a bug?  
 Send your questions, bug reports, and other support related inquiries to:  
 `unity-pomodoro@adrian-miasik.com`
 
 For personal business related inquires / proposals:  
-`hire-me.76240@adrian-miasik.com` 
+`business-line-76240@adrian-miasik.com`
 
 ## Legal
 Copyrights and trademarks are the property of their respective owners.
