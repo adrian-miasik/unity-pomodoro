@@ -37,7 +37,7 @@ namespace AdrianMiasik.Components
         {
             onClick.Invoke();
             
-            switch (timer.state)
+            switch (timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
                     playOnClick.Invoke();
@@ -91,7 +91,7 @@ namespace AdrianMiasik.Components
 
         public void ColorUpdate(Theme _theme)
         {
-            switch (timer.state)
+            switch (timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
                     icon.color = _theme.GetCurrentColorScheme().running;

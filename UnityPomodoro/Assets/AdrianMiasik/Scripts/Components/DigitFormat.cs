@@ -631,7 +631,7 @@ namespace AdrianMiasik.Components
         public void SetTimerValue(string _formattedString)
         {
             // Only allow 'Set Timer Value' to work when we are in the setup state
-            if (timer.state != PomodoroTimer.States.SETUP)
+            if (timer.m_state != PomodoroTimer.States.SETUP)
             {
                 return;
             }
@@ -732,7 +732,7 @@ namespace AdrianMiasik.Components
 
         public PomodoroTimer.States GetTimerState()
         {
-            return timer.state;
+            return timer.m_state;
         }
 
         public void SetTimerSelection(DoubleDigit _digitToSelect)

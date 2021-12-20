@@ -1304,8 +1304,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 59348934}
-  - {fileID: 2138225465}
   - {fileID: 2037041484}
+  - {fileID: 2138225465}
   m_Father: {fileID: 361292846}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5359,7 +5359,7 @@ GameObject:
   - component: {fileID: 1015735895}
   - component: {fileID: 1015735896}
   m_Layer: 5
-  m_Name: FormatContainer
+  m_Name: DigitFormat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7580,95 +7580,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fddaf18cac877e4a8c37fa3ac88abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
-  text: {fileID: 650676969}
-  ring: {fileID: 361292848}
-  ringBackground: {fileID: 1090976625}
-  background: {fileID: 407842496}
-  completionLabel: {fileID: 222858663}
-  digitFormat: {fileID: 1015735896}
-  menuToggle: {fileID: 1617491758}
-  leftButtonClick: {fileID: 378047032}
-  rightButtonClick: {fileID: 1811562797}
-  rightButton: {fileID: 1430356801}
-  breakSlider: {fileID: 1276951607}
-  creditsBubble: {fileID: 929885561}
-  themeSlider: {fileID: 683655080}
-  halloweenToggle: {fileID: 933772985}
-  hotkeyDetector: {fileID: 266651281}
-  sidebarMenu: {fileID: 673880599}
-  notifications: {fileID: 943758001}
-  spawnAnimation: {fileID: 1601903658}
-  completion: {fileID: 222858664}
-  completeRingPulseDiameter:
+  m_state: 0
+  m_text: {fileID: 650676969}
+  m_ring: {fileID: 361292848}
+  m_ringBackground: {fileID: 1090976625}
+  m_background: {fileID: 407842496}
+  m_completionLabel: {fileID: 222858663}
+  m_digitFormat: {fileID: 1015735896}
+  m_menuToggle: {fileID: 1617491758}
+  m_leftButtonClick: {fileID: 378047032}
+  m_rightButtonClick: {fileID: 1811562797}
+  m_rightButton: {fileID: 1430356801}
+  m_breakSlider: {fileID: 1276951607}
+  m_creditsBubble: {fileID: 929885561}
+  m_themeSlider: {fileID: 683655080}
+  m_halloweenToggle: {fileID: 933772985}
+  m_hotkeyDetector: {fileID: 266651281}
+  m_sidebarMenu: {fileID: 673880599}
+  m_notifications: {fileID: 943758001}
+  m_spawnAnimation: {fileID: 1601903658}
+  m_completion: {fileID: 222858664}
+  m_completeRingPulseDiameter:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0.9
-      inSlope: 0.00029980473
-      outSlope: 0.00029980473
+      inSlope: 0
+      outSlope: 0.07500005
       tangentMode: 0
-      weightedMode: 3
+      weightedMode: 0
       inWeight: 0
-      outWeight: 0.93494445
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.37518916
-      value: 1
-      inSlope: 0.025546806
+      time: 1
+      value: 0.975
+      inSlope: 0.07500005
       outSlope: 0
-      tangentMode: 65
-      weightedMode: 3
-      inWeight: 0.46541142
-      outWeight: 0.42801657
-    - serializedVersion: 3
-      time: 0.62531525
-      value: 1
-      inSlope: -0
-      outSlope: -0.026046522
-      tangentMode: 5
-      weightedMode: 3
-      inWeight: 0.24970806
-      outWeight: 0.47373676
-    - serializedVersion: 3
-      time: 1
-      value: 0.9
-      inSlope: 0.0000750277
-      outSlope: 0.0000750277
       tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.93531495
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 1
-    m_RotationOrder: 4
-  pauseFadeDuration: 0.1
-  pauseHoldDuration: 0.75
-  ringTickWidth:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.9
-      inSlope: 4.892026
-      outSlope: 4.892026
-      tangentMode: 0
-      weightedMode: 3
+      weightedMode: 0
       inWeight: 0
-      outWeight: 0.022193791
-    - serializedVersion: 3
-      time: 1
-      value: 0.9
-      inSlope: -0.002867563
-      outSlope: -0.002867563
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.20532233
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 1
+    m_PostInfinity: 2
     m_RotationOrder: 4
-  OnRingPulse:
+  m_pauseFadeDuration: 0.1
+  m_pauseHoldDuration: 0.75
+  m_ringTickWidth:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_onRingPulse:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1601903657}
@@ -7683,7 +7647,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnTimerCompletion:
+  m_onTimerCompletion:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 943758001}
@@ -7698,12 +7662,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  selectedDigits: []
-  mainContainer: {fileID: 59348933}
-  settingsContainer: {fileID: 2037041485}
-  aboutContainer: {fileID: 2138225466}
-  theme: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
-  confirmationDialogPrefab: {fileID: 960648584130589595, guid: 50a42b60f00c28b4bb6e664d99b11d6e, type: 3}
+  m_selectedDigits: []
+  m_mainContainer: {fileID: 59348933}
+  m_settingsContainer: {fileID: 2037041485}
+  m_aboutContainer: {fileID: 2138225466}
+  m_theme: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
+  m_confirmationDialogPrefab: {fileID: 960648584130589595, guid: 50a42b60f00c28b4bb6e664d99b11d6e, type: 3}
 --- !u!82 &1601903657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8855,7 +8819,7 @@ RectTransform:
   - {fileID: 1916053761}
   - {fileID: 1461732197}
   m_Father: {fileID: 288170239}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9702,7 +9666,7 @@ RectTransform:
   - {fileID: 2085487367}
   - {fileID: 2052387862}
   m_Father: {fileID: 288170239}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11061,7 +11025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6462380844780233067, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: m_Name
-      value: Boolean Slider
+      value: Break Slider
       objectReference: {fileID: 0}
     - target: {fileID: 6462380844780233067, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
       propertyPath: m_IsActive
