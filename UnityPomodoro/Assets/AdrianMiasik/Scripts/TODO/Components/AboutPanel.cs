@@ -37,11 +37,11 @@ namespace AdrianMiasik.Components
             }
             
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
-            title.color = _currentColors.foreground;
-            description.color = _currentColors.foreground;
+            title.color = _currentColors.m_foreground;
+            description.color = _currentColors.m_foreground;
             socials.ColorUpdate(_theme);
-            versionNumber.SetTextColor(_currentColors.foreground);
-            copyrightDisclaimer.color = _currentColors.foreground;
+            versionNumber.SetTextColor(_currentColors.m_foreground);
+            copyrightDisclaimer.color = _currentColors.m_foreground;
         }
 
         public bool IsInfoPageOpen()

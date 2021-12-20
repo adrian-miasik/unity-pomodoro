@@ -74,25 +74,25 @@ namespace AdrianMiasik.Components
         public void ColorUpdate(Theme _theme)
         {
             // Background
-            Color _backgroundColor = _theme.GetCurrentColorScheme().background;
-            _backgroundColor.a = _theme.isLightModeOn ? 0.8f : 0.975f;
+            Color _backgroundColor = _theme.GetCurrentColorScheme().m_background;
+            _backgroundColor.a = _theme.m_isLightModeOn ? 0.8f : 0.975f;
             backgroundBox.color = _backgroundColor;
             
             // Text
-            topLabel.color = _theme.GetCurrentColorScheme().foreground;
-            botLabel.color = _theme.GetCurrentColorScheme().foreground;
-            submit.text.color = _theme.GetCurrentColorScheme().foreground;
-            cancel.text.color = _theme.GetCurrentColorScheme().foreground;
+            topLabel.color = _theme.GetCurrentColorScheme().m_foreground;
+            botLabel.color = _theme.GetCurrentColorScheme().m_foreground;
+            submit.text.color = _theme.GetCurrentColorScheme().m_foreground;
+            cancel.text.color = _theme.GetCurrentColorScheme().m_foreground;
 
             // Lines
             foreach (Image line in lineSeparations)
             {
-                line.color = _theme.GetCurrentColorScheme().backgroundHighlight;
+                line.color = _theme.GetCurrentColorScheme().m_backgroundHighlight;
             }
             
             // Overlay
-            Color _overlayColor = _theme.GetCurrentColorScheme().foreground;
-            _overlayColor.a = _theme.isLightModeOn ? 0.5f : 0.025f;
+            Color _overlayColor = _theme.GetCurrentColorScheme().m_foreground;
+            _overlayColor.a = _theme.m_isLightModeOn ? 0.5f : 0.025f;
             overlay.color = _overlayColor;
         }
     }

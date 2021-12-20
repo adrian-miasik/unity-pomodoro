@@ -157,9 +157,9 @@ namespace AdrianMiasik
             m_mainContainer.gameObject.SetActive(true);
 
             // Overrides
-            m_themeSlider.OverrideFalseColor(m_theme.light.backgroundHighlight);
+            m_themeSlider.OverrideFalseColor(m_theme.m_light.m_backgroundHighlight);
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
-            m_menuToggle.OverrideFalseColor(m_theme.GetCurrentColorScheme().foreground);
+            m_menuToggle.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
             m_menuToggle.OverrideTrueColor(Color.clear);
 
             // TODO: Re-implement halloween theme?
@@ -187,7 +187,7 @@ namespace AdrianMiasik
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
-            m_themeSlider.Initialize(this, !m_theme.isLightModeOn);
+            m_themeSlider.Initialize(this, !m_theme.m_isLightModeOn);
             m_creditsBubble.Initialize(this);
             m_rightButton.Initialize(this);
             m_menuToggle.Initialize(this, false);
@@ -232,7 +232,7 @@ namespace AdrianMiasik
             switch (m_state)
             {
                 case States.SETUP:
-                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().foreground);
+                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
                     
                     // Show state text
                     m_text.gameObject.SetActive(true);
@@ -259,7 +259,7 @@ namespace AdrianMiasik
                     break;
 
                 case States.RUNNING:
-                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().foreground);
+                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
                     
                     m_text.text = "Running";
                     
@@ -871,36 +871,36 @@ namespace AdrianMiasik
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             // State text
-            m_text.color = currentColors.backgroundHighlight;
+            m_text.color = currentColors.m_backgroundHighlight;
             
             // Ring background
-            m_ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().backgroundHighlight);
+            m_ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
 
             // Left Button Background
             Image leftContainerTarget = m_leftButtonClick.containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
-                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().backgroundHighlight);
+                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
             }
             
             // Left Button Icon
-            m_leftButtonClick.icon.color = currentColors.foreground;
+            m_leftButtonClick.icon.color = currentColors.m_foreground;
 
             // Right Button Background
             Image rightContainerTarget = m_rightButtonClick.containerTarget.GetComponent<Image>();
             if (rightContainerTarget != null)
             {
-                rightContainerTarget.material.SetColor(CircleColor, currentColors.backgroundHighlight);
+                rightContainerTarget.material.SetColor(CircleColor, currentColors.m_backgroundHighlight);
             }
             
             // Paused Digits
-            startingColor = m_theme.GetCurrentColorScheme().foreground;
-            endingColor = m_theme.GetCurrentColorScheme().backgroundHighlight;
+            startingColor = m_theme.GetCurrentColorScheme().m_foreground;
+            endingColor = m_theme.GetCurrentColorScheme().m_backgroundHighlight;
 
             // Reset paused digit anim
             ResetDigitFadeAnim();
             
-            m_menuToggle.OverrideFalseColor(m_theme.GetCurrentColorScheme().foreground);
+            m_menuToggle.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
             m_menuToggle.ColorUpdate(m_theme);
 
             switch (m_state)
@@ -908,25 +908,25 @@ namespace AdrianMiasik
                 case States.SETUP:
                     // Ring
                     m_ring.material.SetColor(RingColor,
-                        !m_digitFormat.isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
+                        !m_digitFormat.isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
 
                     break;
                 
                 case States.RUNNING:
                     // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().running);
+                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_running);
 
                     break;
                 
                 case States.PAUSED:
                     // Ring
                     m_ring.material.SetColor(RingColor, 
-                        !m_digitFormat.isOnBreak ? theme.GetCurrentColorScheme().modeOne : theme.GetCurrentColorScheme().modeTwo);
+                        !m_digitFormat.isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
                     break;
                 
                 case States.COMPLETE:
                     // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().complete);
+                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
                     break;
                 
                 default:

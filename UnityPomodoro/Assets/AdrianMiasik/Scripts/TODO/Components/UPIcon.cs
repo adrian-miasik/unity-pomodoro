@@ -13,7 +13,7 @@ namespace AdrianMiasik.Components
 
         public void ColorUpdate(Theme _theme)
         {
-            icon.sprite = _theme.isLightModeOn ? lightSprite : darkSprite;
+            icon.sprite = _theme.m_isLightModeOn ? lightSprite : darkSprite;
         }
     }
 }

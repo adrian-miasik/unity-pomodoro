@@ -38,10 +38,10 @@ namespace AdrianMiasik.Components
 
         public void ColorUpdate(Theme _theme)
         {
-            label.color = _theme.GetCurrentColorScheme().foreground;
-            dropdown.captionText.color = _theme.GetCurrentColorScheme().foreground;
-            containerOutline.color = _theme.GetCurrentColorScheme().foreground;
-            arrow.color = _theme.GetCurrentColorScheme().foreground;
+            label.color = _theme.GetCurrentColorScheme().m_foreground;
+            dropdown.captionText.color = _theme.GetCurrentColorScheme().m_foreground;
+            containerOutline.color = _theme.GetCurrentColorScheme().m_foreground;
+            arrow.color = _theme.GetCurrentColorScheme().m_foreground;
         }
     }
 }

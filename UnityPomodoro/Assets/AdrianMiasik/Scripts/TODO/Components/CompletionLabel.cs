@@ -20,7 +20,7 @@ namespace AdrianMiasik.Components
         {
             foreach (TMP_Text _text in labels)
             {
-                _text.color = _theme.GetCurrentColorScheme().complete;
+                _text.color = _theme.GetCurrentColorScheme().m_complete;
             }
         }
     }

@@ -23,7 +23,7 @@ namespace AdrianMiasik.Components
 
         public void ColorUpdate(Theme _theme)
         {
-            background.color = _theme.GetCurrentColorScheme().background;
+            background.color = _theme.GetCurrentColorScheme().m_background;
         }
 
         public void SetSelectionNavigation(Navigation _backgroundNav)

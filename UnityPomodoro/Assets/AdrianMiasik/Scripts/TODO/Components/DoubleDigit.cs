@@ -179,7 +179,7 @@ namespace AdrianMiasik.Components
                 instanceMaterial = new Material(background.material);
             }
 
-            startingColor = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            startingColor = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             // startingColor = instanceMaterial.GetColor(SquircleColor);
 
             endingColor = _color;
@@ -357,7 +357,7 @@ namespace AdrianMiasik.Components
             accumulatedSelectionTime = 0;
             
             ShowArrows();
-            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().backgroundHighlight);
+            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
 
             if (_setSelection)
             {
@@ -373,7 +373,7 @@ namespace AdrianMiasik.Components
             ignoreFirstClick = true;
             
             HideArrows();
-            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().background);
+            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().m_background);
             
             // Disable caret selection
             caret.raycastTarget = false;
@@ -440,21 +440,21 @@ namespace AdrianMiasik.Components
                 isColorAnimating = false;
                 
                 // Instantly swap color
-                instanceMaterial.SetColor(SquircleColor, _currentColors.backgroundHighlight);
+                instanceMaterial.SetColor(SquircleColor, _currentColors.m_backgroundHighlight);
             }
             else
             {
-                SetSquircleColor(_currentColors.background);
+                SetSquircleColor(_currentColors.m_background);
             }
             
             // Up arrow
-            upArrow.icon.color = _currentColors.foreground;
+            upArrow.icon.color = _currentColors.m_foreground;
             
             // Down arrow
-            downArrow.icon.color = _currentColors.foreground;
+            downArrow.icon.color = _currentColors.m_foreground;
             
             // Digit text
-            SetTextColor(_currentColors.foreground);
+            SetTextColor(_currentColors.m_foreground);
         }
 
         public Selectable GetSelectable()

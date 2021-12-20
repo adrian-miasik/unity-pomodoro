@@ -151,10 +151,10 @@ namespace AdrianMiasik.Components.Core
         public void ColorUpdate(Theme _theme)
         {
             ColorScheme _currentColors = _theme.GetCurrentColorScheme();
-            falseColor = overrideFalseColor ? overridenFalseColor : _currentColors.modeOne;
-            trueColor = overrideTrueColor ? overridenTrueColor : _currentColors.modeTwo;
+            falseColor = overrideFalseColor ? overridenFalseColor : _currentColors.m_modeOne;
+            trueColor = overrideTrueColor ? overridenTrueColor : _currentColors.m_modeTwo;
             background.color = state ? trueColor : falseColor;
-            dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : _currentColors.background);
+            dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : _currentColors.m_background);
         }
     }
 }

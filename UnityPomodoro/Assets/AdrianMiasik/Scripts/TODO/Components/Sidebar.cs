@@ -179,16 +179,16 @@ namespace AdrianMiasik.Components
         public void ColorUpdate(Theme _theme)
         {
             // Overlay
-            overlay = _theme.GetCurrentColorScheme().foreground;
-            overlay.a = _theme.isLightModeOn ? 0.5f : 0.025f;
+            overlay = _theme.GetCurrentColorScheme().m_foreground;
+            overlay.a = _theme.m_isLightModeOn ? 0.5f : 0.025f;
             overlayImage.color = overlay;
 
             // Background
-            fill.color = _theme.GetCurrentColorScheme().background;
-            edge.color = _theme.GetCurrentColorScheme().background;
+            fill.color = _theme.GetCurrentColorScheme().m_background;
+            edge.color = _theme.GetCurrentColorScheme().m_background;
             
             // Text
-            versionNumber.color = _theme.GetCurrentColorScheme().foreground;
+            versionNumber.color = _theme.GetCurrentColorScheme().m_foreground;
         }
     }
 }

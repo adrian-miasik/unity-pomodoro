@@ -109,10 +109,10 @@ namespace AdrianMiasik.Components.Core
             switch (isOn)
             {
                 case true:
-                    icon.color = overrideTrueColor ? overridenTrueColor : _theme.GetCurrentColorScheme().close;
+                    icon.color = overrideTrueColor ? overridenTrueColor : _theme.GetCurrentColorScheme().m_close;
                     break;
                 case false:
-                    icon.color = overrideFalseColor ? overridenFalseColor : _theme.GetCurrentColorScheme().backgroundHighlight;
+                    icon.color = overrideFalseColor ? overridenFalseColor : _theme.GetCurrentColorScheme().m_backgroundHighlight;
                     break;
             }
         }

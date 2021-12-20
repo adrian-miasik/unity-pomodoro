@@ -15,15 +15,15 @@ namespace AdrianMiasik.Components
             // Register theme element
             base.Initialize(_timer);
             
-            toggle.OverrideDotColor(_timer.GetTheme().GetCurrentColorScheme().foreground);
+            toggle.OverrideDotColor(_timer.GetTheme().GetCurrentColorScheme().m_foreground);
             toggle.Initialize(_timer, _state);
         }
 
         public override void ColorUpdate(Theme _theme)
         {
             toggle.ColorUpdate(_theme);
-            label.color = _theme.GetCurrentColorScheme().foreground;
-            label.text = timer.GetTheme().isLightModeOn ? "Dark" : "Light";
+            label.color = _theme.GetCurrentColorScheme().m_foreground;
+            label.text = timer.GetTheme().m_isLightModeOn ? "Dark" : "Light";
             // TODO: Change toggle dot image to a moon for dark mode
         }
 

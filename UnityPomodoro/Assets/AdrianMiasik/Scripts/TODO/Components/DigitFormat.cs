@@ -485,12 +485,12 @@ namespace AdrianMiasik.Components
         public void ColorUpdate(Theme _theme)
         {
             // Digits
-            SetDigitColor(_theme.GetCurrentColorScheme().foreground);
+            SetDigitColor(_theme.GetCurrentColorScheme().m_foreground);
 
             // Separators
             foreach (DigitSeparator _separator in generatedSeparators)
             {
-                _separator.SetSeparatorColor(_theme.GetCurrentColorScheme().foreground);
+                _separator.SetSeparatorColor(_theme.GetCurrentColorScheme().m_foreground);
             }
         }
 

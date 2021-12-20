@@ -94,16 +94,16 @@ namespace AdrianMiasik.Components
             switch (timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
-                    icon.color = _theme.GetCurrentColorScheme().running;
+                    icon.color = _theme.GetCurrentColorScheme().m_running;
                     break;
                 case PomodoroTimer.States.RUNNING:
-                    icon.color = _theme.GetCurrentColorScheme().modeOne;
+                    icon.color = _theme.GetCurrentColorScheme().m_modeOne;
                     break;
                 case PomodoroTimer.States.PAUSED:
-                    icon.color = _theme.GetCurrentColorScheme().running;
+                    icon.color = _theme.GetCurrentColorScheme().m_running;
                     break;
                 case PomodoroTimer.States.COMPLETE:
-                    icon.color = timer.IsOnBreak() ? _theme.GetCurrentColorScheme().modeOne : _theme.GetCurrentColorScheme().modeTwo;
+                    icon.color = timer.IsOnBreak() ? _theme.GetCurrentColorScheme().m_modeOne : _theme.GetCurrentColorScheme().m_modeTwo;
                     break;
             }
         }

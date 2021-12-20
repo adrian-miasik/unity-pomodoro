@@ -46,7 +46,7 @@ namespace AdrianMiasik.Components
             
             // Theme
             timer.GetTheme().RegisterColorHook(this);
-            background.color = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             ColorUpdate(timer.GetTheme());
         }
         
@@ -99,7 +99,7 @@ namespace AdrianMiasik.Components
         {
             foreach (TMP_Text _text in text)
             {
-                _text.color = timer.GetTheme().GetCurrentColorScheme().foreground;
+                _text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
 
             state = FadeState.FADING_OUT;
@@ -109,7 +109,7 @@ namespace AdrianMiasik.Components
         {
             foreach (TMP_Text _text in text)
             {
-                _text.color = timer.GetTheme().GetCurrentColorScheme().foreground;
+                _text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
 
             state = FadeState.FADING_IN;
@@ -152,12 +152,12 @@ namespace AdrianMiasik.Components
         public void ColorUpdate(Theme _theme)
         {
             background.color = timer.IsSidebarOpen() ?
-                _theme.GetCurrentColorScheme().background : 
-                _theme.GetCurrentColorScheme().backgroundHighlight;
+                _theme.GetCurrentColorScheme().m_background : 
+                _theme.GetCurrentColorScheme().m_backgroundHighlight;
 
             foreach (TMP_Text _text in text)
             {
-                _text.color = _theme.GetCurrentColorScheme().foreground;
+                _text.color = _theme.GetCurrentColorScheme().m_foreground;
             }
 
             icon.ColorUpdate(_theme);

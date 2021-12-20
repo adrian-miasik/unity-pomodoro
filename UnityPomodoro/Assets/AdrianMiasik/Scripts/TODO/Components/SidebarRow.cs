@@ -68,7 +68,7 @@ namespace AdrianMiasik.Components
             contentContainer.offsetMin = new Vector2(6, contentContainer.offsetMin.y); // Left
             contentContainer.offsetMax = new Vector2(-6, contentContainer.offsetMax.y); // Right
 
-            background.color = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             
             isSelected = true;
         }
@@ -83,7 +83,7 @@ namespace AdrianMiasik.Components
             contentContainer.offsetMin = Vector2.zero; // Left
             contentContainer.offsetMax = Vector2.zero; // Right
             
-            background.color = timer.GetTheme().GetCurrentColorScheme().background;
+            background.color = timer.GetTheme().GetCurrentColorScheme().m_background;
 
             isSelected = false;
         }
@@ -96,12 +96,12 @@ namespace AdrianMiasik.Components
         public void ColorUpdate(Theme _theme)
         {
             // Backgrounds
-            background.color = isSelected ? _theme.GetCurrentColorScheme().backgroundHighlight : _theme.GetCurrentColorScheme().background;
-            iconBackground.color = _theme.GetCurrentColorScheme().background;
+            background.color = isSelected ? _theme.GetCurrentColorScheme().m_backgroundHighlight : _theme.GetCurrentColorScheme().m_background;
+            iconBackground.color = _theme.GetCurrentColorScheme().m_background;
             
             // Foreground
-            icon.color = _theme.GetCurrentColorScheme().foreground;
-            label.color = _theme.GetCurrentColorScheme().foreground;
+            icon.color = _theme.GetCurrentColorScheme().m_foreground;
+            label.color = _theme.GetCurrentColorScheme().m_foreground;
         }
 
         public bool IsSelected()

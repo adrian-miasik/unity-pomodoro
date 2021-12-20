@@ -22,8 +22,8 @@ namespace AdrianMiasik.Components
             timer = _timer;
             timer.GetTheme().RegisterColorHook(this);
             
-            muteSoundOutOfFocusBoolean.OverrideFalseColor(timer.GetTheme().GetCurrentColorScheme().backgroundHighlight);
-            muteSoundOutOfFocusBoolean.OverrideTrueColor(timer.GetTheme().GetCurrentColorScheme().modeOne);
+            muteSoundOutOfFocusBoolean.OverrideFalseColor(timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            muteSoundOutOfFocusBoolean.OverrideTrueColor(timer.GetTheme().GetCurrentColorScheme().m_modeOne);
             
             digitFormatDropdown.Initialize(timer);
             muteSoundOutOfFocusBoolean.Initialize(_timer, _timer.MuteSoundWhenOutOfFocus());
@@ -40,9 +40,9 @@ namespace AdrianMiasik.Components
         {
             if (isOpen)
             {
-                title.color = _theme.GetCurrentColorScheme().foreground;
+                title.color = _theme.GetCurrentColorScheme().m_foreground;
                 digitFormatDropdown.ColorUpdate(timer.GetTheme());
-                muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().foreground;
+                muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().m_foreground;
                 muteSoundOutOfFocusBoolean.ColorUpdate(_theme);
             }
         }
