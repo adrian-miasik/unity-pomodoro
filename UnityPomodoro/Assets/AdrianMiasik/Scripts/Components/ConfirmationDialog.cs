@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class TwoChoiceDialog : MonoBehaviour, IColorHook
+    public class ConfirmationDialog : MonoBehaviour, IColorHook
     {
         [SerializeField] private Image m_backgroundBox;
         [SerializeField] private TMP_Text m_topLabel;
@@ -20,11 +20,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private List<Image> m_lineSeparations;
         [SerializeField] private Image m_overlay;
         [SerializeField] private Animation m_spawnAnimation;
-
-        // Used to trigger Cancel and Submit methods via UnityEvent
-        public UnityEvent m_onCancel;
-        public UnityEvent m_onSubmit;
-
+        
         // Used to combine actions
         private Action onCancel;
         private Action onSubmit;

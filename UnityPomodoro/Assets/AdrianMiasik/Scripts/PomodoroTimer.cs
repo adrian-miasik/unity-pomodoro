@@ -74,7 +74,7 @@ namespace AdrianMiasik
         // TODO: Move to theme class
         [SerializeField] private Theme m_theme; // Current active theme
         // TODO: Create dialog manager class
-        [SerializeField] private TwoChoiceDialog m_confirmationDialogPrefab; // Prefab reference
+        [SerializeField] private ConfirmationDialog m_confirmationDialogPrefab; // Prefab reference
 
         // Time
         private double currentTime; // Current time left (In seconds)
@@ -98,7 +98,7 @@ namespace AdrianMiasik
         // TODO: Move to settings class
         private bool muteSoundWhenOutOfFocus; // We want this to be true only for Windows platform due to UWP notifications
         // TODO: Move to dialog manager class
-        private TwoChoiceDialog currentDialogPopup;
+        private ConfirmationDialog currentDialogPopup;
         
         // Pulse Ring Complete Animation
         private float accumulatedRingPulseTime;
@@ -990,7 +990,7 @@ namespace AdrianMiasik
             currentDialogPopup.Initialize(this, onSubmit, onCancel);
         }
 
-        public void ClearDialogPopup(TwoChoiceDialog dialog)
+        public void ClearDialogPopup(ConfirmationDialog dialog)
         {
             if (dialog == currentDialogPopup)
             {
