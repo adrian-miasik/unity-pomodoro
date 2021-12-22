@@ -156,7 +156,7 @@ namespace AdrianMiasik.Components
                 
                 case 4:
                     // Width
-                    ResetHeight();
+                    ResetWidth();
                     
                     // Height
                     m_self.anchorMin = new Vector2(m_self.anchorMin.x, 0.4f);
