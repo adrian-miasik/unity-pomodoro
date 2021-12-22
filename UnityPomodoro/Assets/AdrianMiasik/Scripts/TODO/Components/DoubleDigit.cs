@@ -20,22 +20,20 @@ namespace AdrianMiasik.Components
         [SerializeField] private TMP_InputField m_input;
         [SerializeField] private ClickButtonIcon m_downArrow;
         
-        [Header("Color")] 
+        [Header("Animations")] 
         [SerializeField] private float m_animationDuration = 0.25f;
         [SerializeField] private AnimationCurve m_animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        
-        [Header("Animations")] 
         [SerializeField] private Animation m_pulseWobble;
         [SerializeField] private Animation m_tick;
-
+        
         [HideInInspector] public DigitFormat.Digits m_digit;
-        private DigitFormat format;
-        private bool isInteractable = true;
-        private bool isSelected;
         
         // Cache
         private PomodoroTimer timer;
-        
+        private DigitFormat format;
+        private bool isInteractable = true;
+        private bool isSelected;
+
         // Color animation
         private Color startingColor;
         private Color endingColor;
@@ -56,8 +54,8 @@ namespace AdrianMiasik.Components
         private static readonly int SquircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Unity Events
-        public UnityEvent OnSelection;
-        public UnityEvent OnDigitChange; // Invoked only when timer is running
+        public UnityEvent m_onSelection;
+        public UnityEvent m_onDigitChange; // Invoked only when timer is running
 
         public void Initialize(PomodoroTimer pomodoroTimer, DigitFormat digitFormat, DigitFormat.Digits digit)
         {
@@ -284,7 +282,7 @@ namespace AdrianMiasik.Components
 
                 if (format.GetTimerState() == PomodoroTimer.States.RUNNING)
                 {
-                    OnDigitChange?.Invoke();
+                    m_onDigitChange?.Invoke();
                 }
             }
         }
@@ -362,7 +360,7 @@ namespace AdrianMiasik.Components
                 format.SetTimerSelection(this);
             }
 
-            OnSelection.Invoke();
+            m_aOnSelection.Invoke();
         }
 
         public void Deselect()

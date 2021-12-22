@@ -353,13 +353,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b5941e3fae71a49b7a046883792627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectable: {fileID: 9103386490340751771}
-  background: {fileID: 2939933544673941019}
-  upArrow: {fileID: 2211745872566177994}
-  input: {fileID: 2939933545338344003}
-  downArrow: {fileID: 2426884703812558314}
-  animationDuration: 1
-  animationRamp:
+  m_selectable: {fileID: 9103386490340751771}
+  m_background: {fileID: 2939933544673941019}
+  m_upArrow: {fileID: 2211745872566177994}
+  m_input: {fileID: 2939933545338344003}
+  m_downArrow: {fileID: 2426884703812558314}
+  m_animationDuration: 0.25
+  m_animationRamp:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -383,10 +383,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  pulseWobble: {fileID: 4632816809682780623}
-  tick: {fileID: 3356050749571129949}
-  digit: 0
-  color: {r: 1, g: 1, b: 1, a: 1}
+  m_pulseWobble: {fileID: 0}
+  m_tick: {fileID: 0}
+  m_digit: 0
   OnSelection:
     m_PersistentCalls:
       m_Calls:
@@ -750,7 +749,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 58.5
+  m_fontSize: 72
   m_fontSizeBase: 47.9
   m_fontWeight: 400
   m_enableAutoSizing: 1
