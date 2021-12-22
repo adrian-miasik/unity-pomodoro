@@ -10,100 +10,100 @@ namespace AdrianMiasik.Components
     public class RightButton : MonoBehaviour, ITimerState, IColorHook
     {
         [Header("References")] 
-        [SerializeField] private SVGImage icon;
-
+        [SerializeField] private SVGImage m_icon;
+        
         [Header("SVGs")]
-        [SerializeField] private Sprite setup; 
-        [SerializeField] private Sprite running;
-        [SerializeField] private Sprite complete;
-        [SerializeField] private Sprite breakComplete;
+        [SerializeField] private Sprite m_setup; 
+        [SerializeField] private Sprite m_running;
+        [SerializeField] private Sprite m_complete;
+        [SerializeField] private Sprite m_breakComplete;
         
         // Unity Events 
-        public UnityEvent onClick;
-        public UnityEvent playOnClick;
-        public UnityEvent pauseOnClick;
-        public UnityEvent snoozeOnClick;
+        public UnityEvent m_onClick;
+        public UnityEvent m_playOnClick;
+        public UnityEvent m_pauseOnClick;
+        public UnityEvent m_snoozeOnClick;
 
         // Cache
         private PomodoroTimer timer;
 
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
-            _timer.GetTheme().RegisterColorHook(this);
+            timer = pomodoroTimer;
+            pomodoroTimer.GetTheme().RegisterColorHook(this);
         }
         
         public void OnClick()
         {
-            onClick.Invoke();
+            m_onClick.Invoke();
             
             switch (timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
-                    playOnClick.Invoke();
+                    m_playOnClick.Invoke();
                     break;
                 case PomodoroTimer.States.RUNNING:
-                    pauseOnClick.Invoke();
+                    m_pauseOnClick.Invoke();
                     break;
                 case PomodoroTimer.States.PAUSED:
-                    playOnClick.Invoke();
+                    m_playOnClick.Invoke();
                     break;
                 case PomodoroTimer.States.COMPLETE:
-                    snoozeOnClick.Invoke();
+                    m_snoozeOnClick.Invoke();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public void StateUpdate(PomodoroTimer.States _state, Theme _theme)
+        public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
-            icon.transform.localScale = Vector3.one * 0.42f;
-            icon.rectTransform.pivot = new Vector2(0.5f, icon.rectTransform.pivot.y);
-            icon.rectTransform.anchoredPosition = Vector2.zero;
+            m_icon.transform.localScale = Vector3.one * 0.42f;
+            m_icon.rectTransform.pivot = new Vector2(0.5f, m_icon.rectTransform.pivot.y);
+            m_icon.rectTransform.anchoredPosition = Vector2.zero;
             
-            switch (_state)
+            switch (state)
             {
                 case PomodoroTimer.States.SETUP:
-                    icon.sprite = setup;
-                    icon.rectTransform.pivot = new Vector2(0.6f, icon.rectTransform.pivot.y);
-                    icon.rectTransform.anchoredPosition = Vector2.zero;
+                    m_icon.sprite = m_setup;
+                    m_icon.rectTransform.pivot = new Vector2(0.6f, m_icon.rectTransform.pivot.y);
+                    m_icon.rectTransform.anchoredPosition = Vector2.zero;
                     break;
                 
                 case PomodoroTimer.States.RUNNING:
-                    icon.sprite = running;
+                    m_icon.sprite = m_running;
                     break;
                 
                 case PomodoroTimer.States.PAUSED:
-                    icon.sprite = setup;
-                    icon.rectTransform.pivot = new Vector2(0.6f, icon.rectTransform.pivot.y);
-                    icon.rectTransform.anchoredPosition = Vector2.zero;
+                    m_icon.sprite = m_setup;
+                    m_icon.rectTransform.pivot = new Vector2(0.6f, m_icon.rectTransform.pivot.y);
+                    m_icon.rectTransform.anchoredPosition = Vector2.zero;
                     break;
                 
                 case PomodoroTimer.States.COMPLETE:
-                    icon.transform.localScale = Vector3.one * 0.55f;                    
-                    icon.sprite = timer.IsOnBreak() ? breakComplete : complete;
+                    m_icon.transform.localScale = Vector3.one * 0.55f;                    
+                    m_icon.sprite = timer.IsOnBreak() ? m_breakComplete : m_complete;
                     break;
             }
             
-            ColorUpdate(_theme);
+            ColorUpdate(theme);
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
             switch (timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
-                    icon.color = _theme.GetCurrentColorScheme().m_running;
+                    m_icon.color = theme.GetCurrentColorScheme().m_running;
                     break;
                 case PomodoroTimer.States.RUNNING:
-                    icon.color = _theme.GetCurrentColorScheme().m_modeOne;
+                    m_icon.color = theme.GetCurrentColorScheme().m_modeOne;
                     break;
                 case PomodoroTimer.States.PAUSED:
-                    icon.color = _theme.GetCurrentColorScheme().m_running;
+                    m_icon.color = theme.GetCurrentColorScheme().m_running;
                     break;
                 case PomodoroTimer.States.COMPLETE:
-                    icon.color = timer.IsOnBreak() ? _theme.GetCurrentColorScheme().m_modeOne : _theme.GetCurrentColorScheme().m_modeTwo;
+                    m_icon.color = timer.IsOnBreak() ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo;
                     break;
             }
         }
