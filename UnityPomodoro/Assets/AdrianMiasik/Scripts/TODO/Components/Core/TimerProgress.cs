@@ -30,8 +30,8 @@ namespace AdrianMiasik.Components.Core
         /// <summary>
         /// Update loop for timer
         /// </summary>
-        /// <param name="_progress">A progress value between 0 to 1</param>
-        protected abstract void OnUpdate(float _progress);
+        /// <param name="progress">A progress value between 0 to 1</param>
+        protected abstract void OnUpdate(float progress);
         
         /// <summary>
         /// Invoked when the timer has completed
