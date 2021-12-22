@@ -751,9 +751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338b11c843684785acef9174a87f154a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icons:
-  - {fileID: 1160259055}
-  - {fileID: 2093857373}
+  m_icons: []
 --- !u!1 &222858661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,8 +1074,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd673a354d025e48a2f9635a282556f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 263450807}
-  prefixString: v
+  m_text: {fileID: 0}
+  m_prefixString: v
 --- !u!114 &263450807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2810,17 +2808,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6462380844780233066, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
   m_PrefabInstance: {fileID: 511977716}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &511977718 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
-  m_PrefabInstance: {fileID: 511977716}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1010cbf5ccdb2b94f81d8a67398be820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &522603593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3120,9 +3107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8025391089bf14185494c04ea2608f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 561420450}
-  lightSprite: {fileID: 3286163911610860551, guid: 58278e4c25cebf043a69693a5d3e138a, type: 3}
-  darkSprite: {fileID: 3286163911610860551, guid: 07c75dc87df2943499b2740ec0daefd4, type: 3}
+  m_icon: {fileID: 561420450}
+  m_lightSprite: {fileID: 3286163911610860551, guid: 58278e4c25cebf043a69693a5d3e138a, type: 3}
+  m_darkSprite: {fileID: 3286163911610860551, guid: 07c75dc87df2943499b2740ec0daefd4, type: 3}
 --- !u!1001 &611365218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3729,20 +3716,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1142fd17ea1918b4b99bf4069f25c9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuToggle: {fileID: 1617491758}
-  container: {fileID: 265300826}
-  background: {fileID: 1450826707}
-  overlayImage: {fileID: 445534769}
-  overlayGroup: {fileID: 445534772}
-  entryAnimation: {fileID: 265300827}
-  fill: {fileID: 873741100}
-  edge: {fileID: 2092075976}
-  versionNumber: {fileID: 263450807}
-  contentRows:
+  m_menuToggle: {fileID: 1617491758}
+  m_container: {fileID: 265300826}
+  m_background: {fileID: 1450826707}
+  m_overlayImage: {fileID: 445534769}
+  m_overlayGroup: {fileID: 445534772}
+  m_entryAnimation: {fileID: 265300827}
+  m_fill: {fileID: 873741100}
+  m_edge: {fileID: 2092075976}
+  m_versionNumber: {fileID: 263450807}
+  m_contentRows:
   - {fileID: 2107237420}
   - {fileID: 865782926}
   - {fileID: 78221656}
-  rowsToSpawn: []
+  m_rowsToSpawn: []
 --- !u!1 &683655077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3814,8 +3801,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac011966dad4134bb304827184abb72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 1535463480}
-  label: {fileID: 1070908470}
+  m_toggle: {fileID: 1535463480}
+  m_label: {fileID: 1070908470}
 --- !u!1 &684884537
 GameObject:
   m_ObjectHideFlags: 0
@@ -5012,17 +4999,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_xmlToastAlarm: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
   m_xmlToastNoAlarm: {fileID: 4900000, guid: 0d00427c101d53f41a309c4993e34a7e, type: 3}
---- !u!114 &948637559 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9055857711681173028, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
-  m_PrefabInstance: {fileID: 1590220841586453002}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d58065020da4fd346935aa219b98ece2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &957033424 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1830320759345697965, guid: 01ce964053042544a908dbc2b7805528, type: 3}
@@ -6187,9 +6163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8025391089bf14185494c04ea2608f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 1160259053}
-  lightSprite: {fileID: 3286163911610860551, guid: 58278e4c25cebf043a69693a5d3e138a, type: 3}
-  darkSprite: {fileID: 3286163911610860551, guid: 07c75dc87df2943499b2740ec0daefd4, type: 3}
+  m_icon: {fileID: 1160259053}
+  m_lightSprite: {fileID: 3286163911610860551, guid: 58278e4c25cebf043a69693a5d3e138a, type: 3}
+  m_darkSprite: {fileID: 3286163911610860551, guid: 07c75dc87df2943499b2740ec0daefd4, type: 3}
 --- !u!1 &1171914287
 GameObject:
   m_ObjectHideFlags: 0
@@ -7044,71 +7020,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e537251d25487c9b15c3a87498e389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 1610344933}
-  setup: {fileID: 3286163911610860551, guid: f83fc5dec6004d34bafc729346231d73, type: 3}
-  running: {fileID: 3286163911610860551, guid: f220233a22aab5247948ba702f264a8f, type: 3}
-  complete: {fileID: 3286163911610860551, guid: 9b6490a1d13b02940ab5a9c9b42c162d, type: 3}
-  breakComplete: {fileID: 3286163911610860551, guid: 4f03292b21f6d7f43b9e5abee8983064, type: 3}
-  onClick:
+  m_icon: {fileID: 1610344933}
+  m_setup: {fileID: 0}
+  m_running: {fileID: 0}
+  m_complete: {fileID: 0}
+  m_breakComplete: {fileID: 0}
+  m_onClick:
     m_PersistentCalls:
       m_Calls: []
-  playOnClick:
+  m_playOnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1601903656}
-        m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  pauseOnClick:
+      m_Calls: []
+  m_pauseOnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1601903656}
-        m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
-        m_MethodName: Pause
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  snoozeOnClick:
+      m_Calls: []
+  m_snoozeOnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1601903656}
-        m_TargetAssemblyTypeName: AdrianMiasik.PomodoroTimer, Assembly-CSharp
-        m_MethodName: Restart
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1276951607}
-        m_TargetAssemblyTypeName: AdrianMiasik.BooleanSlider, Assembly-CSharp
-        m_MethodName: Press
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1450826706
 GameObject:
   m_ObjectHideFlags: 0
@@ -7891,12 +7819,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   m_IsOn: 0
-  icon: {fileID: 957033424}
-  falseSprite: {fileID: 3286163911610860551, guid: 804035d99c1580d48bbd7a666e54c876, type: 3}
-  falseZRotation: 0
-  trueSprite: {fileID: 0}
-  trueZRotation: 0
-  onSetToTrueClick:
+  m_icon: {fileID: 957033424}
+  m_falseSprite: {fileID: 3286163911610860551, guid: 804035d99c1580d48bbd7a666e54c876, type: 3}
+  m_falseZRotation: 0
+  m_trueSprite: {fileID: 0}
+  m_trueZRotation: 0
+  m_onSetToTrueClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 673880599}
@@ -7911,37 +7839,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1188204213}
-        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
-        m_MethodName: set_alpha
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  onSetToFalseClick:
+  m_onSetToFalseClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 673880599}
         m_TargetAssemblyTypeName: AdrianMiasik.Components.Sidebar, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1188204213}
-        m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
-        m_MethodName: set_alpha
-        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8868,10 +8772,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0448ee30cfac2934b94d8ae07bbc3e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 1916053762}
-  digitFormatDropdown: {fileID: 948637559}
-  muteSoundOutOfFocusLabel: {fileID: 1616257833873043597}
-  muteSoundOutOfFocusBoolean: {fileID: 511977718}
+  m_title: {fileID: 0}
+  m_digitFormatDropdown: {fileID: 0}
+  m_muteSoundOutOfFocusLabel: {fileID: 0}
+  m_muteSoundOutOfFocusBoolean: {fileID: 0}
 --- !u!1 &2050840244
 GameObject:
   m_ObjectHideFlags: 0
@@ -9441,8 +9345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd673a354d025e48a2f9635a282556f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 2085487368}
-  prefixString: v
+  m_text: {fileID: 0}
+  m_prefixString: v
 --- !u!1 &2092075974
 GameObject:
   m_ObjectHideFlags: 0
@@ -9553,9 +9457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8025391089bf14185494c04ea2608f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 2093857371}
-  lightSprite: {fileID: 3286163911610860551, guid: f2fd26093d2878d4bb6416b6773ba129, type: 3}
-  darkSprite: {fileID: 3286163911610860551, guid: 79f9f19dd98b49b4983273f7b1deb6d5, type: 3}
+  m_icon: {fileID: 2093857371}
+  m_lightSprite: {fileID: 3286163911610860551, guid: f2fd26093d2878d4bb6416b6773ba129, type: 3}
+  m_darkSprite: {fileID: 3286163911610860551, guid: 79f9f19dd98b49b4983273f7b1deb6d5, type: 3}
 --- !u!1 &2098955874
 GameObject:
   m_ObjectHideFlags: 0
