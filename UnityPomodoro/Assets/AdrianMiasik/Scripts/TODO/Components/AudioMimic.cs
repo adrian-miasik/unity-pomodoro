@@ -5,15 +5,14 @@ namespace AdrianMiasik.Components
 {
     public class AudioMimic : MonoBehaviour
     {
-        private static AudioMimic _instance;
-        public static AudioMimic Instance => _instance;
+        public static AudioMimic Instance { get; private set; }
 
         [SerializeField] private AudioSource m_source;
 
         private void Awake()
         {
             // If an instance had already been set and if the instance is not this...
-            if (_instance != null && _instance != this)
+            if (Instance != null && Instance != this)
             {
                 // Remove this instance
                 Destroy(gameObject);
@@ -21,7 +20,7 @@ namespace AdrianMiasik.Components
             }
 
             // Otherwise, treat this as our instance
-            _instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     
