@@ -10,9 +10,9 @@ namespace AdrianMiasik.Components
         private PomodoroTimer timer;
         private bool isInitialized;
 
-        public void Initialize(PomodoroTimer _pomodoroTimer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _pomodoroTimer;
+            timer = pomodoroTimer;
             isInitialized = true;
         }
 
@@ -59,15 +59,15 @@ namespace AdrianMiasik.Components
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                List<Selectable> _selectables = timer.GetSelections();
-                if (_selectables.Count >= 1)
+                List<Selectable> selectables = timer.GetSelections();
+                if (selectables.Count >= 1)
                 {
                     // Get only first selection
-                    Selectable _selection = _selectables[0];
-                    Selectable _rightSelection = _selection.FindSelectableOnRight();
-                    if (_rightSelection != null && _rightSelection.gameObject != null)
+                    Selectable selection = selectables[0];
+                    Selectable rightSelection = selection.FindSelectableOnRight();
+                    if (rightSelection != null && rightSelection.gameObject != null)
                     {
-                        EventSystem.current.SetSelectedGameObject(_rightSelection.gameObject);
+                        EventSystem.current.SetSelectedGameObject(rightSelection.gameObject);
                     }
                 }
             }
