@@ -877,7 +877,7 @@ namespace AdrianMiasik
             m_ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
 
             // Left Button Background
-            Image leftContainerTarget = m_leftButtonClick.containerTarget.GetComponent<Image>();
+            Image leftContainerTarget = m_leftButtonClick.m_containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
                 leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
@@ -887,7 +887,7 @@ namespace AdrianMiasik
             m_leftButtonClick.icon.color = currentColors.m_foreground;
 
             // Right Button Background
-            Image rightContainerTarget = m_rightButtonClick.containerTarget.GetComponent<Image>();
+            Image rightContainerTarget = m_rightButtonClick.m_containerTarget.GetComponent<Image>();
             if (rightContainerTarget != null)
             {
                 rightContainerTarget.material.SetColor(CircleColor, currentColors.m_backgroundHighlight);

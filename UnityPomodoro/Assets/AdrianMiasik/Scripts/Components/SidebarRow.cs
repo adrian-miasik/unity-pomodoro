@@ -54,7 +54,7 @@ namespace AdrianMiasik.Components
         // UnityEvent
         public void OnClick()
         {
-            sidebar.SelectRow(this, m_button.clickSound.clip);
+            sidebar.SelectRow(this, m_button.m_clickSound.clip);
         }
         
         [ContextMenu("Select")]
