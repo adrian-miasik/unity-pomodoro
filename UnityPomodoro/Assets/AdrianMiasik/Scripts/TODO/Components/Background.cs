@@ -7,28 +7,28 @@ namespace AdrianMiasik.Components
 {
     public class Background : MonoBehaviour, IColorHook
     {
-        [SerializeField] private Image background;
-        [SerializeField] private Selectable selectable;
+        [SerializeField] private Image m_background;
+        [SerializeField] private Selectable m_selectable;
 
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            _timer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(_timer.GetTheme());
+            pomodoroTimer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(pomodoroTimer.GetTheme());
         }
         
         public void Select()
         {
-            selectable.Select();
+            m_selectable.Select();
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
-            background.color = _theme.GetCurrentColorScheme().m_background;
+            m_background.color = theme.GetCurrentColorScheme().m_background;
         }
 
-        public void SetSelectionNavigation(Navigation _backgroundNav)
+        public void SetSelectionNavigation(Navigation backgroundNav)
         {
-            selectable.navigation = _backgroundNav;
+            m_selectable.navigation = backgroundNav;
         }
     }
 }
