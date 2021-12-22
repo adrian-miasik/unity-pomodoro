@@ -15,7 +15,7 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private Image m_dot;
 
         // Animation
-        [SerializeField] private new Animation m_animation;
+        [SerializeField] private Animation m_animation;
         [SerializeField] private AnimationClip m_leftToRight;
         [SerializeField] private AnimationClip m_rightToLeft;
 
