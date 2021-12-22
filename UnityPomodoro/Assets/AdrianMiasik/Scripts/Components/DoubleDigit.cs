@@ -443,10 +443,10 @@ namespace AdrianMiasik.Components
             }
             
             // Up arrow
-            m_upArrow.icon.color = currentColors.m_foreground;
+            m_upArrow.m_icon.color = currentColors.m_foreground;
             
             // Down arrow
-            m_downArrow.icon.color = currentColors.m_foreground;
+            m_downArrow.m_icon.color = currentColors.m_foreground;
             
             // Digit text
             SetTextColor(currentColors.m_foreground);

@@ -23,7 +23,7 @@ namespace AdrianMiasik.Components
         {
             m_toggle.ColorUpdate(theme);
             m_label.color = theme.GetCurrentColorScheme().m_foreground;
-            m_label.text = timer.GetTheme().m_isLightModeOn ? "Dark" : "Light";
+            m_label.text = Timer.GetTheme().m_isLightModeOn ? "Dark" : "Light";
             // TODO: Change toggle dot image to a moon for dark mode
         }
 

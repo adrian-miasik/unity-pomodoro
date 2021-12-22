@@ -40,7 +40,7 @@ namespace AdrianMiasik.Components
             timer = pomodoroTimer;
 
             // Setup
-            Initialize(duration);
+            Initialize(m_duration);
             Lock();
             fadeProgress = 1; // Starts at one since bubble is visible
             

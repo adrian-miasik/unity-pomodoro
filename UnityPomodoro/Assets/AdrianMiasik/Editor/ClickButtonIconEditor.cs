@@ -12,7 +12,7 @@ namespace AdrianMiasik
             // Fetch target script
             ClickButtonIcon iconButton = (ClickButtonIcon) target;
             
-            iconButton.icon = (SVGImage) EditorGUILayout.ObjectField("Icon", iconButton.icon, typeof(SVGImage), true);
+            iconButton.m_icon = (SVGImage) EditorGUILayout.ObjectField("Icon", iconButton.m_icon, typeof(SVGImage), true);
         }
     }
 }

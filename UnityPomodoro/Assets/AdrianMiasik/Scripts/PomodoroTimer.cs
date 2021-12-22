@@ -884,7 +884,7 @@ namespace AdrianMiasik
             }
             
             // Left Button Icon
-            m_leftButtonClick.icon.color = currentColors.m_foreground;
+            m_leftButtonClick.m_icon.color = currentColors.m_foreground;
 
             // Right Button Background
             Image rightContainerTarget = m_rightButtonClick.m_containerTarget.GetComponent<Image>();

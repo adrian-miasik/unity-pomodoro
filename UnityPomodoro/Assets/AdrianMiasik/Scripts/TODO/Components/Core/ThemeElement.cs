@@ -7,20 +7,20 @@ namespace AdrianMiasik.Components.Core
     // TODO: Implement into most of our UP components
     public class ThemeElement: MonoBehaviour, IColorHook
     {
-        protected PomodoroTimer timer;
+        protected PomodoroTimer Timer;
         
-        protected void Initialize(PomodoroTimer _timer)
+        protected void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
+            Timer = pomodoroTimer;
 
             // Register element to theme
-            _timer.GetTheme().RegisterColorHook(this);
+            pomodoroTimer.GetTheme().RegisterColorHook(this);
             
             // Update our components
-            ColorUpdate(_timer.GetTheme());
+            ColorUpdate(pomodoroTimer.GetTheme());
         }
         
-        public virtual void ColorUpdate(Theme _theme)
+        public virtual void ColorUpdate(Theme theme)
         {
             // Nothing
         }

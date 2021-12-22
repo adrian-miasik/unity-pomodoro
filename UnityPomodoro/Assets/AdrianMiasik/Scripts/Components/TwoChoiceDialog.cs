@@ -81,8 +81,8 @@ namespace AdrianMiasik.Components
             // Text
             m_topLabel.color = theme.GetCurrentColorScheme().m_foreground;
             m_botLabel.color = theme.GetCurrentColorScheme().m_foreground;
-            m_submit.text.color = theme.GetCurrentColorScheme().m_foreground;
-            m_cancel.text.color = theme.GetCurrentColorScheme().m_foreground;
+            m_submit.m_text.color = theme.GetCurrentColorScheme().m_foreground;
+            m_cancel.m_text.color = theme.GetCurrentColorScheme().m_foreground;
 
             // Lines
             foreach (Image line in m_lineSeparations)

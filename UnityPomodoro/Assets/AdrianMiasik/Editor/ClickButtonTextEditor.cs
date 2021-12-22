@@ -13,7 +13,7 @@ namespace AdrianMiasik
             // Fetch target script
             ClickButtonText textButton = (ClickButtonText) target;
             
-            textButton.text = (TMP_Text) EditorGUILayout.ObjectField("Text", textButton.text, typeof(TMP_Text), true);
+            textButton.m_text = (TMP_Text) EditorGUILayout.ObjectField("Text", textButton.m_text, typeof(TMP_Text), true);
         }
     }
 }
