@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
@@ -9,17 +8,17 @@ namespace AdrianMiasik.Components.Core
     public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IPointerExitHandler
     {
         // Inspector References
-        [FormerlySerializedAs("containerTarget")] public RectTransform m_containerTarget; // The rect transform that will scale
-        [FormerlySerializedAs("enableClickSound")] public bool m_enableClickSound = true;
-        [FormerlySerializedAs("clickSound")] public AudioSource m_clickSound;
-        [FormerlySerializedAs("clickHoldScale")] public float m_clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
-        [FormerlySerializedAs("clickReleaseScale")] public AnimationCurve m_clickReleaseScale; // What scale do you want the target to scale after click
-        [FormerlySerializedAs("holdRamp")] public AnimationCurve m_holdRamp;
+        public RectTransform m_containerTarget; // The rect transform that will scale
+        public bool m_enableClickSound = true;
+        public AudioSource m_clickSound;
+        public float m_clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
+        public AnimationCurve m_clickReleaseScale; // What scale do you want the target to scale after click
+        public AnimationCurve m_holdRamp;
 
         // Unity Events
-        [FormerlySerializedAs("OnDown")] public UnityEvent m_onDown;
-        [FormerlySerializedAs("OnUp")] public UnityEvent m_onUp;
-        [FormerlySerializedAs("OnClick")] public UnityEvent m_onClick;
+        public UnityEvent m_onDown;
+        public UnityEvent m_onUp;
+        public UnityEvent m_onClick;
         
         // Press and Release
         private Vector3 cachedScale;
@@ -33,9 +32,9 @@ namespace AdrianMiasik.Components.Core
         private float accumulatedHoldTime; // How long has the hold logic been running for? Not to be confused with userHoldTime.
         
         // Click sound pitch variation
-        [FormerlySerializedAs("isPitchVariationOn")] public bool m_isPitchVariationOn = true;
-        [FormerlySerializedAs("lowestPitch")] public float m_lowestPitch = 0.9f;
-        [FormerlySerializedAs("highestPitch")] public float m_highestPitch = 1.1f;
+        public bool m_isPitchVariationOn = true;
+        public float m_lowestPitch = 0.9f;
+        public float m_highestPitch = 1.1f;
 
         protected override void Start()
         {
