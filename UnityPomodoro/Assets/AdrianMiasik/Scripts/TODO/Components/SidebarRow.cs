@@ -25,11 +25,11 @@ namespace AdrianMiasik.Components
         private Sidebar sidebar;
         private bool isSelected;
         
-        public void Initialize(PomodoroTimer pomodoroTimer, Sidebar sidebar, bool isSelected = false)
+        public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
             timer = pomodoroTimer;
-            this.sidebar = sidebar;
-            this.isSelected = isSelected;
+            sidebar = parentSidebar;
+            isSelected = selected;
             pomodoroTimer.GetTheme().RegisterColorHook(this);
             ColorUpdate(pomodoroTimer.GetTheme());
         }
