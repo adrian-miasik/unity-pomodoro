@@ -8,19 +8,19 @@ namespace AdrianMiasik.Components
 {
     public class CompletionLabel : MonoBehaviour, IColorHook
     {
-        [SerializeField] private List<TMP_Text> labels = new List<TMP_Text>();
+        [SerializeField] private List<TMP_Text> m_labels = new List<TMP_Text>();
 
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            _timer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(_timer.GetTheme());
+            pomodoroTimer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(pomodoroTimer.GetTheme());
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
-            foreach (TMP_Text _text in labels)
+            foreach (TMP_Text text in m_labels)
             {
-                _text.color = _theme.GetCurrentColorScheme().m_complete;
+                text.color = theme.GetCurrentColorScheme().m_complete;
             }
         }
     }
