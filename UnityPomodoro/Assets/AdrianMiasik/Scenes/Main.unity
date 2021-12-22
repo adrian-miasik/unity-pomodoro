@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84cfa284f67aab24580e0fb80d5b22cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labels:
+  m_labels:
   - {fileID: 1509926446}
   - {fileID: 2140539846}
 --- !u!111 &222858664
@@ -1903,8 +1903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d60d6598a5c4e040a9bac203a836ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 407842494}
-  selectable: {fileID: 407842493}
+  m_background: {fileID: 407842494}
+  m_selectable: {fileID: 407842493}
 --- !u!1001 &421298987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4938,14 +4938,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 5
   loop: 0
-  background: {fileID: 1171914289}
-  backgroundContainer: {fileID: 1171914291}
-  icon: {fileID: 561420452}
-  textContainer: {fileID: 837249550}
-  text:
+  m_background: {fileID: 1171914289}
+  m_backgroundContainer: {fileID: 1171914291}
+  m_icon: {fileID: 561420452}
+  m_textContainer: {fileID: 837249550}
+  m_text:
   - {fileID: 1244785709}
   - {fileID: 696327743}
-  fadeSpeed: 2
+  m_fadeSpeed: 2
 --- !u!224 &932057989 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5944972577375853487, guid: 97decc9ae7167b043a2c9ad2722a8b60, type: 3}
@@ -5392,15 +5392,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4caac76617041798f46b268b7e2ecb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  self: {fileID: 1015735895}
-  digitFormatRect: {fileID: 1348329453}
-  sizeFitter: {fileID: 1348329457}
-  format: 2
-  digitSource: {fileID: 2939933545387467015, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
-  separatorSource: {fileID: 5144564842751071115, guid: 094d9dd4e500d4f4991842ea23943c99, type: 3}
-  workTime: 0000000000000000190000000000000000000000
-  isOnBreak: 0
-  breakTime: 0000000000000000050000000000000000000000
+  m_self: {fileID: 1015735895}
+  m_digitFormatRect: {fileID: 1348329453}
+  m_format: 2
+  m_digitSource: {fileID: 2939933545387467015, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
+  m_separatorSource: {fileID: 5144564842751071115, guid: 094d9dd4e500d4f4991842ea23943c99, type: 3}
+  m_workTime: 0000000000000000190000000000000000000000
+  m_isOnBreak: 0
+  m_breakTime: 0000000000000000050000000000000000000000
 --- !u!1001 &1050340279
 PrefabInstance:
   m_ObjectHideFlags: 0

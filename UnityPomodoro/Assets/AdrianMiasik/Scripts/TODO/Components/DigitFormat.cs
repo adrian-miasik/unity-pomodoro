@@ -122,7 +122,7 @@ namespace AdrianMiasik.Components
         {
             foreach (DoubleDigit digit in generatedDigits)
             {
-                digit.UpdateVisuals(GetDigitValue(digit.digit));
+                digit.UpdateVisuals(GetDigitValue(digit.m_digit));
                 digit.HideArrows();
             }
         }
@@ -340,7 +340,7 @@ namespace AdrianMiasik.Components
         {
             foreach (DoubleDigit doubleDigit in generatedDigits)
             {
-                switch (doubleDigit.digit)
+                switch (doubleDigit.m_digit)
                 {
                     case Digits.DAYS:
                         doubleDigit.SetTextLabel(ts.Days);
@@ -387,7 +387,7 @@ namespace AdrianMiasik.Components
             // Apply time arrays to update only for generated digits (essentially throwing out data that's not used)
             foreach (DoubleDigit doubleDigit in generatedDigits)
             {
-                Digits type = doubleDigit.digit;
+                Digits type = doubleDigit.m_digit;
 
                 switch (type)
                 {
@@ -677,7 +677,7 @@ namespace AdrianMiasik.Components
                 for (int i = 0; i < generatedDigits.Count; i++)
                 {
                     generatedDigits[i].SetValue(int.Parse(sections[i]));
-                    generatedDigits[i].UpdateVisuals(GetDigitValue(generatedDigits[i].digit));
+                    generatedDigits[i].UpdateVisuals(GetDigitValue(generatedDigits[i].m_digit));
                 }
             }
         }
