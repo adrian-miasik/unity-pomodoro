@@ -358,7 +358,7 @@ MonoBehaviour:
   m_upArrow: {fileID: 2211745872566177994}
   m_input: {fileID: 2939933545338344003}
   m_downArrow: {fileID: 2426884703812558314}
-  m_animationDuration: 0.25
+  m_animationDuration: 1
   m_animationRamp:
     serializedVersion: 2
     m_Curve:
@@ -383,10 +383,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_pulseWobble: {fileID: 0}
-  m_tick: {fileID: 0}
+  m_pulseWobble: {fileID: 4632816809682780623}
+  m_tick: {fileID: 3356050749571129949}
   m_digit: 0
-  OnSelection:
+  m_onSelection:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2012381756492514942}
@@ -401,7 +401,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnDigitChange:
+  m_onDigitChange:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2939933545387467015}
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 57.2
   m_fontSizeBase: 47.9
   m_fontWeight: 400
   m_enableAutoSizing: 1

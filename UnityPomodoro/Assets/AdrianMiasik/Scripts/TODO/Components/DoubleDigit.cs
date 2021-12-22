@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
@@ -21,7 +20,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private ClickButtonIcon m_downArrow;
         
         [Header("Animations")] 
-        [SerializeField] private float m_animationDuration = 0.25f;
+        [SerializeField] private float m_animationDuration = 1f;
         [SerializeField] private AnimationCurve m_animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
         [SerializeField] private Animation m_pulseWobble;
         [SerializeField] private Animation m_tick;
@@ -360,7 +359,7 @@ namespace AdrianMiasik.Components
                 format.SetTimerSelection(this);
             }
 
-            m_aOnSelection.Invoke();
+            m_onSelection.Invoke();
         }
 
         public void Deselect()
