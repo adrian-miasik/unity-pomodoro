@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b25e7fe913542e9b8e642169c5af836, type: 3}
   m_Name: Dark
   m_EditorClassIdentifier: 
-  m_includedInTheseThemes: []
+  m_includedInTheseThemes:
+  - {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
   m_background: {r: 0, g: 0, b: 0, a: 1}
   m_backgroundHighlight: {r: 0.36, g: 0.36, b: 0.36, a: 1}
   m_foreground: {r: 1, g: 1, b: 1, a: 1}
