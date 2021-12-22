@@ -9,19 +9,19 @@ namespace AdrianMiasik.Components.Core
 {
     public class BooleanToggle : Toggle, IColorHook
     {
-        public SVGImage icon;
+        public SVGImage m_icon;
         
         // False / Off
-        public Sprite falseSprite;
-        public float falseZRotation;
+        public Sprite m_falseSprite;
+        public float m_falseZRotation;
         
         // True / On
-        public Sprite trueSprite;
-        public float trueZRotation;
+        public Sprite m_trueSprite;
+        public float m_trueZRotation;
         
         // Unity Events
-        public UnityEvent onSetToTrueClick;
-        public UnityEvent onSetToFalseClick;
+        public UnityEvent m_onSetToTrueClick;
+        public UnityEvent m_onSetToFalseClick;
 
         // Cache
         private PomodoroTimer timer;
@@ -36,53 +36,53 @@ namespace AdrianMiasik.Components.Core
         /// <summary>
         /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
         /// </summary>
-        /// <param name="_color"></param>
-        public void OverrideTrueColor(Color _color)
+        /// <param name="color"></param>
+        public void OverrideTrueColor(Color color)
         {
             overrideTrueColor = true;
-            overridenTrueColor = _color;
+            overridenTrueColor = color;
         }
 
         /// <summary>
         /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
         /// </summary>
-        /// <param name="_color"></param>
-        public void OverrideFalseColor(Color _color)
+        /// <param name="color"></param>
+        public void OverrideFalseColor(Color color)
         {
             overrideFalseColor = true;
-            overridenFalseColor = _color;
+            overridenFalseColor = color;
         }
         
-        public void Initialize(PomodoroTimer _timer, bool _isOn, bool _invokeEvents = false)
+        public void Initialize(PomodoroTimer pomodoroTimer, bool state, bool invokeEvents = false)
         {
-            timer = _timer;
-            isOn = _isOn;
+            timer = pomodoroTimer;
+            isOn = state;
             isInitialized = true;
             
-            _timer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(_timer.GetTheme());
-            UpdateToggle(_invokeEvents);
+            pomodoroTimer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(pomodoroTimer.GetTheme());
+            UpdateToggle(invokeEvents);
         }
 
         // Unity Event
-        public void UpdateToggle(bool _invokeEvents)
+        public void UpdateToggle(bool invokeEvents)
         {
             if (isOn)
             {
-                icon.sprite = trueSprite;
-                icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,trueZRotation));
-                if (_invokeEvents)
+                m_icon.sprite = m_trueSprite;
+                m_icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,m_trueZRotation));
+                if (invokeEvents)
                 {
-                    onSetToTrueClick.Invoke();
+                    m_onSetToTrueClick.Invoke();
                 }
             }
             else
             {
-                icon.sprite = falseSprite;
-                icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,falseZRotation));
-                if (_invokeEvents)
+                m_icon.sprite = m_falseSprite;
+                m_icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,m_falseZRotation));
+                if (invokeEvents)
                 {
-                    onSetToFalseClick.Invoke();
+                    m_onSetToFalseClick.Invoke();
                 }
             }
 
@@ -104,15 +104,15 @@ namespace AdrianMiasik.Components.Core
             UpdateToggle(false);
         }
         
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
             switch (isOn)
             {
                 case true:
-                    icon.color = overrideTrueColor ? overridenTrueColor : _theme.GetCurrentColorScheme().m_close;
+                    m_icon.color = overrideTrueColor ? overridenTrueColor : theme.GetCurrentColorScheme().m_close;
                     break;
                 case false:
-                    icon.color = overrideFalseColor ? overridenFalseColor : _theme.GetCurrentColorScheme().m_backgroundHighlight;
+                    m_icon.color = overrideFalseColor ? overridenFalseColor : theme.GetCurrentColorScheme().m_backgroundHighlight;
                     break;
             }
         }
