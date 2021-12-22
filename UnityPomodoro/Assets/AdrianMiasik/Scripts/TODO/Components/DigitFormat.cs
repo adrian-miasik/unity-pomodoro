@@ -28,25 +28,23 @@ namespace AdrianMiasik.Components
         }
 
         // Current format
-        [SerializeField] private RectTransform self;
-        [SerializeField] private RectTransform digitFormatRect;
-        [SerializeField] private ContentSizeFitter sizeFitter;
-        [SerializeField] private SupportedFormats format;
-
+        [SerializeField] private RectTransform m_self;
+        [SerializeField] private RectTransform m_digitFormatRect;
+        [SerializeField] private SupportedFormats m_format;
+        
         [Header("Source Prefabs")]
-        [SerializeField] private DoubleDigit digitSource;
-        [SerializeField] private DigitSeparator separatorSource;
-
+        [SerializeField] private DoubleDigit m_digitSource;
+        [SerializeField] private DigitSeparator m_separatorSource;
+        
         [Header("Work Data")]
-        [SerializeField] private int[] workTime = {0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
+        [SerializeField] private int[] m_workTime = {0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
 
         [Header("Break Data")]
-        public bool isOnBreak;
-        [SerializeField] private int[] breakTime = {0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
+        public bool m_isOnBreak;
+        [SerializeField] private int[] m_breakTime = {0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
 
         // Cache
         private PomodoroTimer timer;
-        private Theme theme;
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
         private int previousFormatSelection = -1;
@@ -54,29 +52,29 @@ namespace AdrianMiasik.Components
         private void OnValidate()
         {
             // Prevent values from going over their limit
-            if (!isOnBreak)
+            if (!m_isOnBreak)
             {
-                for (int _i = 0; _i < workTime.Length; _i++)
+                for (int i = 0; i < m_workTime.Length; i++)
                 {
-                    workTime[_i] = Mathf.Clamp(workTime[_i], GetDigitMin(), GetDigitMax((Digits)_i));
+                    m_workTime[i] = Mathf.Clamp(m_workTime[i], GetDigitMin(), GetDigitMax((Digits)i));
                 }
             }
             else
             {
-                for (int _i = 0; _i < breakTime.Length; _i++)
+                for (int i = 0; i < m_breakTime.Length; i++)
                 {
-                    breakTime[_i] = Mathf.Clamp(breakTime[_i], GetDigitMin(), GetDigitMax((Digits)_i));
+                    m_breakTime[i] = Mathf.Clamp(m_breakTime[i], GetDigitMin(), GetDigitMax((Digits)i));
                 }
             }
         }
 
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
-            theme = _timer.GetTheme();
+            timer = pomodoroTimer;
+            Theme theme = pomodoroTimer.GetTheme();
             theme.RegisterColorHook(this);
              
-            SwitchFormat(format);
+            SwitchFormat(m_format);
             GenerateFormat();
         }
 
@@ -87,26 +85,26 @@ namespace AdrianMiasik.Components
             generatedSeparators?.Clear();
 
             // Clear pre-generated digits / transforms from pre-built scene
-            foreach (Transform _t in digitFormatRect.GetComponentsInChildren<Transform>())
+            foreach (Transform t in m_digitFormatRect.GetComponentsInChildren<Transform>())
             {
-                if (_t == digitFormatRect.transform)
+                if (t == m_digitFormatRect.transform)
                 {
                     continue;
                 }
 
                 // TODO: Improve performance / remove get component call, possibly with a theme manager class?
                 // Deregister color hook
-                foreach (IColorHook _colorHook in _t.GetComponentsInChildren<IColorHook>())
+                foreach (IColorHook colorHook in t.GetComponentsInChildren<IColorHook>())
                 {
-                    timer.GetTheme().Deregister(_colorHook);
+                    timer.GetTheme().Deregister(colorHook);
                 }
                 
-                Destroy(_t.gameObject);
+                Destroy(t.gameObject);
             }
 
             // Generate our digits and separators (format)
-            char[] _separatorChar = { '_' };
-            GenerateFormat(GetDoubleDigitSet(format, _separatorChar[0]));
+            char[] separatorChar = { '_' };
+            GenerateFormat(GetDoubleDigitSet(m_format, separatorChar[0]));
 
             // Improve visuals based on number of generated elements
             ImproveLayoutVisuals();
@@ -122,10 +120,10 @@ namespace AdrianMiasik.Components
 
         public void RefreshDigitVisuals()
         {
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit digit in generatedDigits)
             {
-                _digit.UpdateVisuals(GetDigitValue(_digit.digit));
-                _digit.HideArrows();
+                digit.UpdateVisuals(GetDigitValue(digit.digit));
+                digit.HideArrows();
             }
         }
         
@@ -136,9 +134,9 @@ namespace AdrianMiasik.Components
             {
                 case 1:
                     // Width
-                    digitFormatRect.anchorMin = new Vector2(0.38f, digitFormatRect.anchorMin.y);
-                    digitFormatRect.anchorMax = new Vector2(0.62f, digitFormatRect.anchorMax.y);
-                    digitFormatRect.anchoredPosition = Vector2.zero;
+                    m_digitFormatRect.anchorMin = new Vector2(0.38f, m_digitFormatRect.anchorMin.y);
+                    m_digitFormatRect.anchorMax = new Vector2(0.62f, m_digitFormatRect.anchorMax.y);
+                    m_digitFormatRect.anchoredPosition = Vector2.zero;
                     
                     // Height
                     ResetHeight();
@@ -147,9 +145,9 @@ namespace AdrianMiasik.Components
                 
                 case 2:
                     // Width
-                    digitFormatRect.anchorMin = new Vector2(0.225f, digitFormatRect.anchorMin.y);
-                    digitFormatRect.anchorMax = new Vector2(0.775f, digitFormatRect.anchorMax.y);
-                    digitFormatRect.anchoredPosition = Vector2.zero;
+                    m_digitFormatRect.anchorMin = new Vector2(0.225f, m_digitFormatRect.anchorMin.y);
+                    m_digitFormatRect.anchorMax = new Vector2(0.775f, m_digitFormatRect.anchorMax.y);
+                    m_digitFormatRect.anchoredPosition = Vector2.zero;
                     
                     // Height
                     ResetHeight();
@@ -161,9 +159,9 @@ namespace AdrianMiasik.Components
                     ResetHeight();
                     
                     // Height
-                    self.anchorMin = new Vector2(self.anchorMin.x, 0.4f);
-                    self.anchorMax = new Vector2(self.anchorMax.x, 0.7f);
-                    self.anchoredPosition = Vector2.zero;
+                    m_self.anchorMin = new Vector2(m_self.anchorMin.x, 0.4f);
+                    m_self.anchorMax = new Vector2(m_self.anchorMax.x, 0.7f);
+                    m_self.anchoredPosition = Vector2.zero;
                     
                     break;
                 
@@ -172,9 +170,9 @@ namespace AdrianMiasik.Components
                     ResetWidth();
                     
                     // Height
-                    self.anchorMin = new Vector2(self.anchorMin.x, 0.425f);
-                    self.anchorMax = new Vector2(self.anchorMax.x, 0.675f);
-                    self.anchoredPosition = Vector2.zero;
+                    m_self.anchorMin = new Vector2(m_self.anchorMin.x, 0.425f);
+                    m_self.anchorMax = new Vector2(m_self.anchorMax.x, 0.675f);
+                    m_self.anchoredPosition = Vector2.zero;
                     
                     break;
                 
@@ -189,22 +187,22 @@ namespace AdrianMiasik.Components
         private void ResetWidth()
         {
             // Reset Width
-            digitFormatRect.anchorMin = new Vector2(0.05f, digitFormatRect.anchorMin.y);
-            digitFormatRect.anchorMax = new Vector2(0.95f, digitFormatRect.anchorMax.y);
-            digitFormatRect.anchoredPosition = Vector2.zero;
+            m_digitFormatRect.anchorMin = new Vector2(0.05f, m_digitFormatRect.anchorMin.y);
+            m_digitFormatRect.anchorMax = new Vector2(0.95f, m_digitFormatRect.anchorMax.y);
+            m_digitFormatRect.anchoredPosition = Vector2.zero;
         }
 
         private void ResetHeight()
         {
             // Reset Height
-            self.anchorMin = new Vector2(self.anchorMin.x, 0.35f);
-            self.anchorMax = new Vector2(self.anchorMax.x, 0.75f);
-            self.anchoredPosition = Vector2.zero;
+            m_self.anchorMin = new Vector2(m_self.anchorMin.x, 0.35f);
+            m_self.anchorMax = new Vector2(m_self.anchorMax.x, 0.75f);
+            m_self.anchoredPosition = Vector2.zero;
         }
         
         public void FlipIsOnBreakBool()
         {
-            isOnBreak = !isOnBreak;
+            m_isOnBreak = !m_isOnBreak;
         }
 
         /// <summary>
@@ -213,25 +211,25 @@ namespace AdrianMiasik.Components
         /// <returns></returns>
         public TimeSpan GetTime()
         {
-            TimeSpan _ts;
-            if (!isOnBreak)
+            TimeSpan ts;
+            if (!m_isOnBreak)
             {
-                _ts = TimeSpan.FromDays(workTime[0]) +
-                      TimeSpan.FromHours(workTime[1]) +
-                      TimeSpan.FromMinutes(workTime[2]) +
-                      TimeSpan.FromSeconds(workTime[3]) +
-                      TimeSpan.FromMilliseconds(workTime[4]);
+                ts = TimeSpan.FromDays(m_workTime[0]) +
+                      TimeSpan.FromHours(m_workTime[1]) +
+                      TimeSpan.FromMinutes(m_workTime[2]) +
+                      TimeSpan.FromSeconds(m_workTime[3]) +
+                      TimeSpan.FromMilliseconds(m_workTime[4]);
             }
             else
             {
-                _ts = TimeSpan.FromDays(breakTime[0]) +
-                      TimeSpan.FromHours(breakTime[1]) +
-                      TimeSpan.FromMinutes(breakTime[2]) +
-                      TimeSpan.FromSeconds(breakTime[3]) +
-                      TimeSpan.FromMilliseconds(breakTime[4]);
+                ts = TimeSpan.FromDays(m_breakTime[0]) +
+                      TimeSpan.FromHours(m_breakTime[1]) +
+                      TimeSpan.FromMinutes(m_breakTime[2]) +
+                      TimeSpan.FromSeconds(m_breakTime[3]) +
+                      TimeSpan.FromMilliseconds(m_breakTime[4]);
             }
 
-            return _ts;
+            return ts;
         }
 
         /// <summary>
@@ -239,133 +237,133 @@ namespace AdrianMiasik.Components
         /// Each key string determines it's type (such as hour/minute/second/etc...) and,
         /// each value int determines it's starting value.
         /// </summary>
-        /// <param name="_format"></param>
-        /// <param name="_separator"></param>
+        /// <param name="format"></param>
+        /// <param name="separator"></param>
         /// <returns></returns>
-        private List<KeyValuePair<string, int>> GetDoubleDigitSet(SupportedFormats _format, char _separator)
+        private List<KeyValuePair<string, int>> GetDoubleDigitSet(SupportedFormats format, char separator)
         {
-            string _formatString = _format.ToString();
-            string _currentAbbreviation = String.Empty;
+            string formatString = format.ToString();
+            string currentAbbreviation = String.Empty;
 
-            List<KeyValuePair<string, int>> _result = new List<KeyValuePair<string, int>>();
+            List<KeyValuePair<string, int>> result = new List<KeyValuePair<string, int>>();
 
             // Iterate through each character in enum
-            for (int _i = 0; _i < _formatString.Length; _i++)
+            for (int i = 0; i < formatString.Length; i++)
             {
-                char _currentCharacter = _formatString[_i];
+                char currentCharacter = formatString[i];
 
                 // If we hit our separator...
-                if (_currentCharacter == _separator)
+                if (currentCharacter == separator)
                 {
                     // Cache our abbreviation and value
-                    _result.Add(new KeyValuePair<string, int>(_currentAbbreviation, 0)); // Starting value of zero
-                    _currentAbbreviation = String.Empty;
+                    result.Add(new KeyValuePair<string, int>(currentAbbreviation, 0)); // Starting value of zero
+                    currentAbbreviation = String.Empty;
                 }
                 else
                 {
-                    _currentAbbreviation += _currentCharacter;
+                    currentAbbreviation += currentCharacter;
 
                     // If we reached the end of our list...
-                    if (_i == _formatString.Length - 1)
+                    if (i == formatString.Length - 1)
                     {
-                        _result.Add(new KeyValuePair<string, int>(_currentAbbreviation, 0)); // Starting value of zero
+                        result.Add(new KeyValuePair<string, int>(currentAbbreviation, 0)); // Starting value of zero
                     }
                 }
             }
 
             // Return abbreviation and value set
-            return _result;
+            return result;
         }
 
         /// <summary>
         /// Generates the appropriate amount of digits and separators based on the provided data set
         /// </summary>
-        /// <param name="_doubleDigitSetToGenerate">String represents abbreviation, and int represents value</param>
-        private void GenerateFormat(List<KeyValuePair<string, int>> _doubleDigitSetToGenerate)
+        /// <param name="doubleDigitSetToGenerate">String represents abbreviation, and int represents value</param>
+        private void GenerateFormat(List<KeyValuePair<string, int>> doubleDigitSetToGenerate)
         {
             generatedDigits = new List<DoubleDigit>();
             generatedSeparators = new List<DigitSeparator>();
 
-            for (int _i = 0; _i < _doubleDigitSetToGenerate.Count; _i++)
+            for (int i = 0; i < doubleDigitSetToGenerate.Count; i++)
             {
-                KeyValuePair<string, int> _pair = _doubleDigitSetToGenerate[_i];
+                KeyValuePair<string, int> pair = doubleDigitSetToGenerate[i];
 
                 // Generate double digit
-                DoubleDigit _dd = Instantiate(digitSource, digitFormatRect);
-                _dd.Initialize(timer, this, GetDigitType(_pair.Key));
-                generatedDigits.Add(_dd);
+                DoubleDigit dd = Instantiate(m_digitSource, m_digitFormatRect);
+                dd.Initialize(timer, this, GetDigitType(pair.Key));
+                generatedDigits.Add(dd);
                 
                 // Skip last iteration to avoid spacer generation
-                if (_i == _doubleDigitSetToGenerate.Count - 1)
+                if (i == doubleDigitSetToGenerate.Count - 1)
                 {
                     break;
                 }
 
                 // Generate spacer (between each character)
-                DigitSeparator _separator = Instantiate(separatorSource, digitFormatRect);
-                generatedSeparators.Add(_separator);
+                DigitSeparator separator = Instantiate(m_separatorSource, m_digitFormatRect);
+                generatedSeparators.Add(separator);
             }
 
-            // Hook up selectable navigations
-            for (int _i = 0; _i < generatedDigits.Count; _i++)
+            // Hook up selectable navigation's
+            for (int i = 0; i < generatedDigits.Count; i++)
             {
-                DoubleDigit _digit = generatedDigits[_i];
+                DoubleDigit digit = generatedDigits[i];
 
                 // Create navigation
-                Navigation _digitNav = new Navigation
+                Navigation digitNav = new Navigation
                 {
                     mode = Navigation.Mode.Explicit,
-                    selectOnLeft = generatedDigits[Wrap(_i - 1, generatedDigits.Count)].GetSelectable(),
-                    selectOnRight = generatedDigits[Wrap(_i + 1, generatedDigits.Count)].GetSelectable()
+                    selectOnLeft = generatedDigits[Wrap(i - 1, generatedDigits.Count)].GetSelectable(),
+                    selectOnRight = generatedDigits[Wrap(i + 1, generatedDigits.Count)].GetSelectable()
                 };
 
                 // Apply navigation
-                _digit.GetSelectable().navigation = _digitNav;
+                digit.GetSelectable().navigation = digitNav;
             }
 
             // Fix background navigation
-            Navigation _backgroundNav = new Navigation
+            Navigation backgroundNav = new Navigation
             {
                 mode = Navigation.Mode.Explicit,
                 selectOnRight = generatedDigits[0].GetSelectable(),
                 selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
             };
-            timer.SetBackgroundNavigation(_backgroundNav);
+            timer.SetBackgroundNavigation(backgroundNav);
         }
 
-        private int Wrap(int _index, int _length)
+        private int Wrap(int index, int length)
         {
-            return (_index % _length + _length) % _length;
+            return (index % length + length) % length;
         }
 
-        public void ShowTime(TimeSpan _ts)
+        public void ShowTime(TimeSpan ts)
         {
-            foreach (DoubleDigit _doubleDigit in generatedDigits)
+            foreach (DoubleDigit doubleDigit in generatedDigits)
             {
-                switch (_doubleDigit.digit)
+                switch (doubleDigit.digit)
                 {
                     case Digits.DAYS:
-                        _doubleDigit.SetTextLabel(_ts.Days);
+                        doubleDigit.SetTextLabel(ts.Days);
                         break;
                     case Digits.HOURS:
-                        _doubleDigit.SetTextLabel(_ts.Hours);
+                        doubleDigit.SetTextLabel(ts.Hours);
                         break;
                     case Digits.MINUTES:
-                        _doubleDigit.SetTextLabel(_ts.Minutes);
+                        doubleDigit.SetTextLabel(ts.Minutes);
                         break;
                     case Digits.SECONDS:
-                        _doubleDigit.SetTextLabel(_ts.Seconds);
+                        doubleDigit.SetTextLabel(ts.Seconds);
                         break;
                     case Digits.MILLISECONDS:
-                        string _millisecondsString = Mathf.Abs(_ts.Milliseconds).ToString();
-                        if (_millisecondsString.Length >= 2)
+                        string millisecondsString = Mathf.Abs(ts.Milliseconds).ToString();
+                        if (millisecondsString.Length >= 2)
                         {
-                            _doubleDigit.SetTextLabel(
-                                    int.Parse(_millisecondsString.Remove(_millisecondsString.Length - 1, 1)));
+                            doubleDigit.SetTextLabel(
+                                    int.Parse(millisecondsString.Remove(millisecondsString.Length - 1, 1)));
                         }
                         else
                         {
-                            _doubleDigit.SetTextLabel(_ts.Milliseconds);
+                            doubleDigit.SetTextLabel(ts.Milliseconds);
                         }
                         break;
                     default:
@@ -374,39 +372,39 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public void SetTime(TimeSpan _ts)
+        public void SetTime(TimeSpan ts)
         {
             // Clear out time arrays
-            if (!isOnBreak)
+            if (!m_isOnBreak)
             {
-                Array.Clear(workTime, 0, workTime.Length);
+                Array.Clear(m_workTime, 0, m_workTime.Length);
             }
             else
             {
-                Array.Clear(breakTime, 0, breakTime.Length);
+                Array.Clear(m_breakTime, 0, m_breakTime.Length);
             }
 
             // Apply time arrays to update only for generated digits (essentially throwing out data that's not used)
-            foreach (DoubleDigit _doubleDigit in generatedDigits)
+            foreach (DoubleDigit doubleDigit in generatedDigits)
             {
-                Digits _type = _doubleDigit.digit;
+                Digits type = doubleDigit.digit;
 
-                switch (_type)
+                switch (type)
                 {
                     case Digits.DAYS:
-                        _doubleDigit.SetValue(_ts.Days);
+                        doubleDigit.SetValue(ts.Days);
                         break;
                     case Digits.HOURS:
-                        _doubleDigit.SetValue(_ts.Hours);
+                        doubleDigit.SetValue(ts.Hours);
                         break;
                     case Digits.MINUTES:
-                        _doubleDigit.SetValue(_ts.Minutes);
+                        doubleDigit.SetValue(ts.Minutes);
                         break;
                     case Digits.SECONDS:
-                        _doubleDigit.SetValue(_ts.Seconds);
+                        doubleDigit.SetValue(ts.Seconds);
                         break;
                     case Digits.MILLISECONDS:
-                        _doubleDigit.SetValue(_ts.Milliseconds);
+                        doubleDigit.SetValue(ts.Milliseconds);
                         break;
                 }
             }
@@ -415,12 +413,12 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Returns the digit type using the provided abbreviation string
         /// </summary>
-        /// <param name="_abbreviation"></param>
+        /// <param name="abbreviation"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static Digits GetDigitType(string _abbreviation)
+        private static Digits GetDigitType(string abbreviation)
         {
-            switch (_abbreviation)
+            switch (abbreviation)
             {
                 case "DD":
                     return Digits.DAYS;
@@ -442,10 +440,10 @@ namespace AdrianMiasik.Components
             return 0;
         }
 
-        private int GetDigitMax(Digits _digits)
+        private int GetDigitMax(Digits digits)
         {
             // TODO: You'll need to change our max values depending on the current format we have
-            switch (_digits)
+            switch (digits)
             {
                 case Digits.DAYS:
                     return 99;
@@ -481,28 +479,28 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Applies our theme changes to our components when necessary
         /// </summary>
-        /// <param name="_theme"></param>
-        public void ColorUpdate(Theme _theme)
+        /// <param name="theme"></param>
+        public void ColorUpdate(Theme theme)
         {
             // Digits
-            SetDigitColor(_theme.GetCurrentColorScheme().m_foreground);
+            SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
 
             // Separators
-            foreach (DigitSeparator _separator in generatedSeparators)
+            foreach (DigitSeparator separator in generatedSeparators)
             {
-                _separator.SetSeparatorColor(_theme.GetCurrentColorScheme().m_foreground);
+                separator.SetSeparatorColor(theme.GetCurrentColorScheme().m_foreground);
             }
         }
 
         /// <summary>
-        /// Sets the color of our digits to the provided color. <see cref="_newColor"/>
+        /// Sets the color of our digits to the provided color. <see cref="newColor"/>
         /// </summary>
-        /// <param name="_newColor"></param>
-        public void SetDigitColor(Color _newColor)
+        /// <param name="newColor"></param>
+        public void SetDigitColor(Color newColor)
         {
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit digit in generatedDigits)
             {
-                _digit.SetTextColor(_newColor);
+                digit.SetTextColor(newColor);
             }
         }
 
@@ -511,9 +509,9 @@ namespace AdrianMiasik.Components
         /// </summary>
         public void Unlock()
         {
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit digit in generatedDigits)
             {
-                _digit.Unlock();
+                digit.Unlock();
             }
         }
 
@@ -522,9 +520,9 @@ namespace AdrianMiasik.Components
         /// </summary>
         public void Lock()
         {
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit digit in generatedDigits)
             {
-                _digit.Lock();
+                digit.Lock();
             }
         }
 
@@ -533,9 +531,9 @@ namespace AdrianMiasik.Components
         /// </summary>
         public void ResetTextPositions()
         {
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit digit in generatedDigits)
             {
-                _digit.ResetTextPosition();
+                digit.ResetTextPosition();
             }
         }
 
@@ -554,23 +552,23 @@ namespace AdrianMiasik.Components
         /// <returns></returns>
         public string GetTimerString()
         {
-            string _result = String.Empty;
+            string result = String.Empty;
 
-            for (int _i = 0; _i < generatedDigits.Count; _i++)
+            for (int i = 0; i < generatedDigits.Count; i++)
             {
-                DoubleDigit _digit = generatedDigits[_i];
-                _result += _digit.GetDigitsLabel();
+                DoubleDigit digit = generatedDigits[i];
+                result += digit.GetDigitsLabel();
 
                 // Skip last iteration
-                if (_i == generatedDigits.Count - 1)
+                if (i == generatedDigits.Count - 1)
                 {
                     break;
                 }
 
-                _result += ":";
+                result += ":";
             }
 
-            return _result;
+            return result;
         }
 
         /// <summary>
@@ -578,11 +576,11 @@ namespace AdrianMiasik.Components
         /// </summary>
         public void CorrectTickAnimVisuals()
         {
-            foreach (DoubleDigit _digit in generatedDigits)
+            foreach (DoubleDigit digit in generatedDigits)
             {
-                if (_digit.IsTickAnimationPlaying())
+                if (digit.IsTickAnimationPlaying())
                 {
-                    _digit.ResetTextPosition();
+                    digit.ResetTextPosition();
                 }
             }
         }
@@ -590,35 +588,35 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Increments the provided digit by one. (+1)
         /// </summary>
-        /// <param name="_digits"></param>
-        public void IncrementOne(Digits _digits)
+        /// <param name="digits"></param>
+        public void IncrementOne(Digits digits)
         {
-            SetDigit(_digits, GetDigitValue(_digits) + 1);
+            SetDigit(digits, GetDigitValue(digits) + 1);
         }
 
         /// <summary>
         /// Decrements the provided digit by one. (-1)
         /// </summary>
-        /// <param name="_digits"></param>
-        public void DecrementOne(Digits _digits)
+        /// <param name="digits"></param>
+        public void DecrementOne(Digits digits)
         {
-            SetDigit(_digits, GetDigitValue(_digits) - 1);
+            SetDigit(digits, GetDigitValue(digits) - 1);
         }
 
         /// <summary>
         /// Sets the provided digit to it's provided value
         /// </summary>
-        /// <param name="_digit"></param>
-        /// <param name="_newValue"></param>
-        public void SetDigit(Digits _digit, int _newValue)
+        /// <param name="digit"></param>
+        /// <param name="newValue"></param>
+        public void SetDigit(Digits digit, int newValue)
         {
-            if (!isOnBreak)
+            if (!m_isOnBreak)
             {
-                workTime[(int)_digit] = _newValue;
+                m_workTime[(int)digit] = newValue;
             }
             else
             {
-                breakTime[(int)_digit] = _newValue;
+                m_breakTime[(int)digit] = newValue;
             }
 
             OnValidate();
@@ -627,8 +625,8 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Sets the value of the timer using the provided formatted string.
         /// </summary>
-        /// <param name="_formattedString">Expected format of ("00:25:00")</param>
-        public void SetTimerValue(string _formattedString)
+        /// <param name="formattedString">Expected format of ("00:25:00")</param>
+        public void SetTimerValue(string formattedString)
         {
             // Only allow 'Set Timer Value' to work when we are in the setup state
             if (timer.m_state != PomodoroTimer.States.SETUP)
@@ -636,36 +634,36 @@ namespace AdrianMiasik.Components
                 return;
             }
 
-            List<string> _sections = new List<string>();
-            string _value = String.Empty;
+            List<string> sections = new List<string>();
+            string value = String.Empty;
 
             // ReSharper disable once InconsistentNaming
             // ReSharper disable once ForCanBeConvertedToForeach
             // Iterate through each character to determine how many sections there are...
-            for (int i = 0; i < _formattedString.Length; i++)
+            for (int i = 0; i < formattedString.Length; i++)
             {
                 // If this character is a separator...
-                if (_formattedString[i].ToString() == ":") // TODO: Allow the use of other separators like '-'?
+                if (formattedString[i].ToString() == ":") // TODO: Allow the use of other separators like '-'?
                 {
                     // Save section
-                    if (_value != String.Empty)
+                    if (value != String.Empty)
                     {
-                        _sections.Add(_value);
-                        _value = string.Empty;
+                        sections.Add(value);
+                        value = string.Empty;
                     }
 
                     continue;
                 }
 
                 // Add to section
-                _value += _formattedString[i].ToString();
+                value += formattedString[i].ToString();
             }
 
             // Last digit in string won't have a separator so we add the section in once the loop is complete
-            _sections.Add(_value);
+            sections.Add(value);
 
             // Compare sections with timer format
-            if (_sections.Count != generatedDigits.Count)
+            if (sections.Count != generatedDigits.Count)
             {
                 Debug.LogWarning("The provided string does not match the pomodoro timer layout exactly. " +
                                  "Truncation may occur.");
@@ -674,34 +672,34 @@ namespace AdrianMiasik.Components
             // Set timer sections
             // Check if we have enough generated digits...(We will allow users to paste longer values, but only
             // carry over the values that can fit within the number of generated digits we have)
-            if (_sections.Count >= generatedDigits.Count)
+            if (sections.Count >= generatedDigits.Count)
             {
-                for (int _i = 0; _i < generatedDigits.Count; _i++)
+                for (int i = 0; i < generatedDigits.Count; i++)
                 {
-                    generatedDigits[_i].SetValue(int.Parse(_sections[_i]));
-                    generatedDigits[_i].UpdateVisuals(GetDigitValue(generatedDigits[_i].digit));
+                    generatedDigits[i].SetValue(int.Parse(sections[i]));
+                    generatedDigits[i].UpdateVisuals(GetDigitValue(generatedDigits[i].digit));
                 }
             }
         }
 
-        public int GetDigitValue(Digits _digits)
+        public int GetDigitValue(Digits digits)
         {
-            if (!isOnBreak)
+            if (!m_isOnBreak)
             {
-                return workTime[(int)_digits];
+                return m_workTime[(int)digits];
             }
 
-            return breakTime[(int)_digits];
+            return m_breakTime[(int)digits];
         }
 
         /// <summary>
         /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
         /// </summary>
-        /// <param name="_digits"></param>
+        /// <param name="digits"></param>
         /// <returns></returns>
-        public bool CanIncrementOne(Digits _digits)
+        public bool CanIncrementOne(Digits digits)
         {
-            if (GetDigitValue(_digits) + 1 > GetDigitMax(_digits))
+            if (GetDigitValue(digits) + 1 > GetDigitMax(digits))
             {
                 return false;
             }
@@ -712,11 +710,11 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Returns True if you can subtract one to this digit without hitting it's floor, otherwise returns False.
         /// </summary>
-        /// <param name="_digits"></param>
+        /// <param name="digits"></param>
         /// <returns></returns>
-        public bool CanDecrementOne(Digits _digits)
+        public bool CanDecrementOne(Digits digits)
         {
-            if (GetDigitValue(_digits) - 1 < GetDigitMin())
+            if (GetDigitValue(digits) - 1 < GetDigitMin())
             {
                 return false;
             }
@@ -735,19 +733,19 @@ namespace AdrianMiasik.Components
             return timer.m_state;
         }
 
-        public void SetTimerSelection(DoubleDigit _digitToSelect)
+        public void SetTimerSelection(DoubleDigit digitToSelect)
         {
-            timer.SetSelection(_digitToSelect);
+            timer.SetSelection(digitToSelect);
         }
 
         /// <summary>
         /// Switches your format to the provided format
         /// </summary>
-        /// <param name="_desiredFormat"></param>
-        public void SwitchFormat(SupportedFormats _desiredFormat)
+        /// <param name="desiredFormat"></param>
+        public void SwitchFormat(SupportedFormats desiredFormat)
         {
-            previousFormatSelection = (int) format;
-            format = _desiredFormat;
+            previousFormatSelection = (int) m_format;
+            m_format = desiredFormat;
         }
 
         /// <summary>
@@ -765,7 +763,7 @@ namespace AdrianMiasik.Components
         /// <returns></returns>
         public int GetFormat()
         {
-            return (int) format;
+            return (int) m_format;
         }
     }
  }

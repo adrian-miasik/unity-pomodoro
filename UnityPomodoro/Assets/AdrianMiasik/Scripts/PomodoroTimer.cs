@@ -240,7 +240,7 @@ namespace AdrianMiasik
                     // Complete ring
                     m_ring.fillAmount = 1f;
                     m_ring.material.SetFloat(RingDiameter, 0.9f);
-                    m_text.text = !m_digitFormat.isOnBreak ? "Set a work time" : "Set a break time";
+                    m_text.text = !m_digitFormat.m_isOnBreak ? "Set a work time" : "Set a break time";
 
                     // Show digits and hide completion label
                     m_digitFormat.Show();
@@ -633,7 +633,7 @@ namespace AdrianMiasik
 
         private void SwitchTimer(bool isOnBreak)
         {
-            m_digitFormat.isOnBreak = isOnBreak;
+            m_digitFormat.m_isOnBreak = isOnBreak;
             SwitchState(States.SETUP);
             isTimerBeingSetup = true;
             CalculateTimeValues();
@@ -793,7 +793,7 @@ namespace AdrianMiasik
         
         public bool IsOnBreak()
         {
-            return m_digitFormat.isOnBreak;
+            return m_digitFormat.m_isOnBreak;
         }
 
         public bool IsAboutPageOpen()
@@ -908,7 +908,7 @@ namespace AdrianMiasik
                 case States.SETUP:
                     // Ring
                     m_ring.material.SetColor(RingColor,
-                        !m_digitFormat.isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
 
                     break;
                 
@@ -921,7 +921,7 @@ namespace AdrianMiasik
                 case States.PAUSED:
                     // Ring
                     m_ring.material.SetColor(RingColor, 
-                        !m_digitFormat.isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
                     break;
                 
                 case States.COMPLETE:
