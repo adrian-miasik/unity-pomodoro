@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace AdrianMiasik.Components.Core 
 { 
     public abstract class TimerProgress : MonoBehaviour
     {
-        [FormerlySerializedAs("duration")] [SerializeField] protected float m_duration = 3f;
-        [FormerlySerializedAs("loop")] [SerializeField] private bool m_loop;
+        [SerializeField] protected float m_duration = 3f;
+        [SerializeField] private bool m_loop;
 
         private bool isRunning;
         private bool isInit; // Set this to true to run timer

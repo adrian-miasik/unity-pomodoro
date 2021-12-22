@@ -1,12 +1,10 @@
 ﻿using TMPro;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace AdrianMiasik.Components.Core
 {
     public class ClickButtonText: ClickButton
     {
-        [FormerlySerializedAs("text")] public TMP_Text m_text;
+        public TMP_Text m_text;
         
         public override void Show()
         {
