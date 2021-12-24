@@ -207,7 +207,7 @@ namespace AdrianMiasik.Components.Core
 #if ENABLE_WINMD_SUPPORT
             UnityEngine.WSA.Launcher.LaunchUri(url, true);
 #else
-            Application.OpenURL(_url);
+            Application.OpenURL(url);
 #endif
         }
 
