@@ -101,7 +101,8 @@ namespace AdrianMiasik.Components
         public void Open()
         {
             m_rowsToSpawn = new List<SidebarRow>(m_contentRows);
-            foreach (SidebarRow row in m_contentRows)
+
+            foreach (SidebarRow row in m_rowsToSpawn)
             {
                 row.Hide();
             }

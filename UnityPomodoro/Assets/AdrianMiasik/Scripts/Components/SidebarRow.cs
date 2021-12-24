@@ -42,7 +42,6 @@ namespace AdrianMiasik.Components
         public void PlaySpawnAnimation()
         {
             Show();
-            m_spawn.Stop();
             m_spawn.Play();
         }
 
