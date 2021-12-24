@@ -101,12 +101,12 @@ namespace AdrianMiasik.Components
         public void Open()
         {
             m_rowsToSpawn = new List<SidebarRow>(m_contentRows);
-            rowStaggerTime = rowStaggerDelay; // First stagger has no delay
             foreach (SidebarRow row in m_contentRows)
             {
                 row.Hide();
             }
-
+            
+            rowStaggerTime = rowStaggerDelay; // First stagger has no delay
             isOpen = true;
             
             m_container.gameObject.SetActive(true);
