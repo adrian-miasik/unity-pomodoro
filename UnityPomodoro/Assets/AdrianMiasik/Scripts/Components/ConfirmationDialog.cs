@@ -71,7 +71,7 @@ namespace AdrianMiasik.Components
         {
             // Background
             Color backgroundColor = theme.GetCurrentColorScheme().m_background;
-            backgroundColor.a = theme.m_isLightModeOn ? 0.8f : 0.975f;
+            backgroundColor.a = theme.m_darkMode ? 0.975f : 0.8f;
             m_backgroundBox.color = backgroundColor;
             
             // Text
@@ -88,7 +88,7 @@ namespace AdrianMiasik.Components
             
             // Overlay
             Color overlayColor = theme.GetCurrentColorScheme().m_foreground;
-            overlayColor.a = theme.m_isLightModeOn ? 0.5f : 0.025f;
+            overlayColor.a = theme.m_darkMode ? 0.025f : 0.5f;
             m_overlay.color = overlayColor;
         }
     }

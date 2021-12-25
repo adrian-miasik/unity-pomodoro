@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components.Core
     {
         protected PomodoroTimer Timer;
         
-        protected void Initialize(PomodoroTimer pomodoroTimer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
             Timer = pomodoroTimer;
 

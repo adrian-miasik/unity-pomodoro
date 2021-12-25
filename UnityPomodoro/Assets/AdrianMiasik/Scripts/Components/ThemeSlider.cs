@@ -10,20 +10,14 @@ namespace AdrianMiasik.Components
         [SerializeField] private BooleanSlider m_toggle;
         [SerializeField] private TMP_Text m_label;
         
-        public void Initialize(PomodoroTimer pomodoroTimer, bool state)
-        {
-            // Register theme element
-            base.Initialize(pomodoroTimer);
-            
-            m_toggle.OverrideDotColor(pomodoroTimer.GetTheme().GetCurrentColorScheme().m_foreground);
-            m_toggle.Initialize(pomodoroTimer, state);
-        }
-
         public override void ColorUpdate(Theme theme)
         {
+            m_toggle.OverrideDotColor(theme.GetCurrentColorScheme().m_foreground);
+            m_toggle.Initialize(Timer, theme.m_darkMode);
+
             m_toggle.ColorUpdate(theme);
             m_label.color = theme.GetCurrentColorScheme().m_foreground;
-            m_label.text = Timer.GetTheme().m_isLightModeOn ? "Dark" : "Light";
+            m_label.text = Timer.GetTheme().m_darkMode ? "Light" : "Dark";
             // TODO: Change toggle dot image to a moon for dark mode
         }
 

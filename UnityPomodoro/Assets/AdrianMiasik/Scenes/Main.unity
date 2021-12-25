@@ -2973,10 +2973,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2098955875}
     m_Modifications:
-    - target: {fileID: 1906344701781451801, guid: 97decc9ae7167b043a2c9ad2722a8b60, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -180
-      objectReference: {fileID: 0}
     - target: {fileID: 3587232530636342686, guid: 97decc9ae7167b043a2c9ad2722a8b60, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3189,14 +3185,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 3286163911610860551, guid: 7de1a4e3d83fb4648851976bab3755c4, type: 3}
-    - target: {fileID: 5944972578538473200, guid: 97decc9ae7167b043a2c9ad2722a8b60, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5944972578538473200, guid: 97decc9ae7167b043a2c9ad2722a8b60, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6124491969408430554, guid: 97decc9ae7167b043a2c9ad2722a8b60, type: 3}
       propertyPath: enableClickSound
       value: 0

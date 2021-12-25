@@ -187,7 +187,7 @@ namespace AdrianMiasik
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
-            m_themeSlider.Initialize(this, !m_theme.m_isLightModeOn);
+            m_themeSlider.Initialize(this);
             m_creditsBubble.Initialize(this);
             m_rightButton.Initialize(this);
             m_menuToggle.Initialize(this, false);
@@ -206,10 +206,9 @@ namespace AdrianMiasik
             // Animate in
             PlaySpawnAnimation();
 
-            // Setup theme
+            // Setup & apply theme
+            // m_themeSlider.ColorUpdate(m_theme); // Force update toggle visual
             m_theme.RegisterColorHook(this);
-
-            // Apply theme
             m_theme.ApplyColorChanges();
         }
         
@@ -294,9 +293,6 @@ namespace AdrianMiasik
                     m_onRingPulse.Invoke();
                     break;
             }
-            
-            // TODO: Redundant?
-            ColorUpdate(m_theme);
         }
 
         private void ResetDigitFadeAnim()

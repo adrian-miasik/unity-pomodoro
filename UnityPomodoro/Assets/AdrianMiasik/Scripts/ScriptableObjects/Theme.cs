@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
@@ -8,11 +9,16 @@ namespace AdrianMiasik.ScriptableObjects
     [CreateAssetMenu(fileName = "New Theme", menuName = "Adrian Miasik/Create New Theme")]
     public class Theme : ScriptableObject
     {
-        public bool m_isLightModeOn = true;
+        [FormerlySerializedAs("m_isLightModeOn")] public bool m_darkMode = true;
         public ColorScheme m_light;
         public ColorScheme m_dark;
 
         private List<IColorHook> colorElements = new List<IColorHook>();
+
+        private void OnValidate()
+        {
+            ApplyColorChanges();
+        }
 
         private void OnEnable()
         {
@@ -50,7 +56,7 @@ namespace AdrianMiasik.ScriptableObjects
 
         public ColorScheme GetCurrentColorScheme()
         {
-            return m_isLightModeOn ? m_light : m_dark;
+            return m_darkMode ? m_dark : m_light;
         }
 
         private List<IColorHook> GetColorElements()
@@ -71,7 +77,7 @@ namespace AdrianMiasik.ScriptableObjects
         public void TransferColorElements(Theme sourceTheme, Theme destinationTheme)
         {
             destinationTheme.SetColorElements(sourceTheme.GetColorElements());
-            destinationTheme.m_isLightModeOn = sourceTheme.m_isLightModeOn;
+            destinationTheme.m_darkMode = sourceTheme.m_darkMode;
         }
         
         public void ApplyColorChanges()
@@ -84,13 +90,13 @@ namespace AdrianMiasik.ScriptableObjects
 
         public void SetToDarkMode()
         {
-            m_isLightModeOn = false;
+            m_darkMode = true;
             ApplyColorChanges();
         }
 
         public void SetToLightMode()
         {
-            m_isLightModeOn = true;
+            m_darkMode = false;
             ApplyColorChanges();
         }
     }
