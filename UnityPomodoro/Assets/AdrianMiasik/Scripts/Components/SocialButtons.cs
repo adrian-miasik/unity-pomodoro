@@ -6,13 +6,13 @@ namespace AdrianMiasik.Components
 {
     public class SocialButtons : MonoBehaviour
     {
-        [SerializeField] private List<UPIcon> icons = new List<UPIcon>();
+        [SerializeField] private List<UPIcon> m_icons = new List<UPIcon>();
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
-            foreach (UPIcon _icon in icons)
+            foreach (UPIcon icon in m_icons)
             {
-                _icon.ColorUpdate(_theme);
+                icon.ColorUpdate(theme);
             }
         }
     }

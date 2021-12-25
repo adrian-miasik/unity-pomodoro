@@ -33,17 +33,17 @@ namespace AdrianMiasik
             EditorGUILayout.LabelField("Information Button", _style);
 
             // Draw property fields
-            _booleanToggle.icon = (SVGImage) EditorGUILayout.ObjectField("Icon", _booleanToggle.icon, typeof(SVGImage), true);
-            _booleanToggle.falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", _booleanToggle.falseSprite, typeof(Sprite), true);
-            _booleanToggle.falseZRotation = EditorGUILayout.FloatField("False Z Rotation", _booleanToggle.falseZRotation);
-            _booleanToggle.trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", _booleanToggle.trueSprite, typeof(Sprite), true);
-            _booleanToggle.trueZRotation = EditorGUILayout.FloatField("True Z Rotation", _booleanToggle.trueZRotation);
+            _booleanToggle.m_icon = (SVGImage) EditorGUILayout.ObjectField("Icon", _booleanToggle.m_icon, typeof(SVGImage), true);
+            _booleanToggle.m_falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", _booleanToggle.m_falseSprite, typeof(Sprite), true);
+            _booleanToggle.m_falseZRotation = EditorGUILayout.FloatField("False Z Rotation", _booleanToggle.m_falseZRotation);
+            _booleanToggle.m_trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", _booleanToggle.m_trueSprite, typeof(Sprite), true);
+            _booleanToggle.m_trueZRotation = EditorGUILayout.FloatField("True Z Rotation", _booleanToggle.m_trueZRotation);
             
             // Draw UnityEvents
-            SerializedProperty _onFalseClick = serializedObject.FindProperty("onSetToFalseClick");
+            SerializedProperty _onFalseClick = serializedObject.FindProperty("m_onSetToFalseClick");
             EditorGUILayout.PropertyField(_onFalseClick);
             
-            SerializedProperty _onTrueClick = serializedObject.FindProperty("onSetToTrueClick");
+            SerializedProperty _onTrueClick = serializedObject.FindProperty("m_onSetToTrueClick");
             EditorGUILayout.PropertyField(_onTrueClick);
             
             serializedObject.ApplyModifiedProperties();

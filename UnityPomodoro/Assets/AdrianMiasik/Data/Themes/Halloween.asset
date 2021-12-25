@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee629fbb2f164505b3d477919285a6df, type: 3}
   m_Name: Halloween
   m_EditorClassIdentifier: 
-  isLightModeOn: 1
-  light: {fileID: 11400000, guid: 70410f57ca216bd4da5833228c095997, type: 2}
-  dark: {fileID: 11400000, guid: b3c44af2ec589ff48b184c0e79fea44f, type: 2}
+  m_darkMode: 0
+  m_light: {fileID: 11400000, guid: 70410f57ca216bd4da5833228c095997, type: 2}
+  m_dark: {fileID: 11400000, guid: b3c44af2ec589ff48b184c0e79fea44f, type: 2}

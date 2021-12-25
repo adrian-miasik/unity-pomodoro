@@ -7,19 +7,19 @@ namespace AdrianMiasik.Components
 {
     public class AboutPanel : MonoBehaviour, IColorHook
     {
-        [SerializeField] private TMP_Text title;
-        [SerializeField] private TMP_Text description;
-        [SerializeField] private SocialButtons socials;
-        [SerializeField] private WriteVersionNumber versionNumber;
-        [SerializeField] private TMP_Text copyrightDisclaimer;
+        [SerializeField] private TMP_Text m_title;
+        [SerializeField] private TMP_Text m_description;
+        [SerializeField] private SocialButtons m_socials;
+        [SerializeField] private WriteVersionNumber m_versionNumber;
+        [SerializeField] private TMP_Text m_copyrightDisclaimer;
 
         private PomodoroTimer timer;
         private bool isInfoPageOpen;
         private bool isInitialized;
         
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
+            timer = pomodoroTimer;
             timer.GetTheme().RegisterColorHook(this);
             isInitialized = true;
         }
@@ -29,19 +29,19 @@ namespace AdrianMiasik.Components
             return isInitialized;
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
             if (!isInfoPageOpen)
             {
                 return;
             }
             
-            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
-            title.color = _currentColors.foreground;
-            description.color = _currentColors.foreground;
-            socials.ColorUpdate(_theme);
-            versionNumber.SetTextColor(_currentColors.foreground);
-            copyrightDisclaimer.color = _currentColors.foreground;
+            ColorScheme currentColors = theme.GetCurrentColorScheme();
+            m_title.color = currentColors.m_foreground;
+            m_description.color = currentColors.m_foreground;
+            m_socials.ColorUpdate(theme);
+            m_versionNumber.SetTextColor(currentColors.m_foreground);
+            m_copyrightDisclaimer.color = currentColors.m_foreground;
         }
 
         public bool IsInfoPageOpen()

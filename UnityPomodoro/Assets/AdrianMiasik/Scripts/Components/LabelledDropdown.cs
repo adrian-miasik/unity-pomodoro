@@ -9,39 +9,34 @@ namespace AdrianMiasik.Components
 {
     public class LabelledDropdown : MonoBehaviour, IColorHook
     {
-        [SerializeField] private TMP_Text label;
-        [SerializeField] private TMP_Dropdown dropdown;
-        [SerializeField] private Image containerOutline;
-        [SerializeField] private SVGImage arrow;
+        [SerializeField] private TMP_Text m_label;
+        [SerializeField] private TMP_Dropdown m_dropdown;
+        [SerializeField] private Image m_containerOutline;
+        [SerializeField] private SVGImage m_arrow;
 
         private PomodoroTimer timer;
     
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
+            timer = pomodoroTimer;
             timer.GetTheme().RegisterColorHook(this);
 
             SetDropdownValue(timer.GetDigitFormat());
         }
 
-        public void SetDropdownValue(int _selectionValue)
+        public void SetDropdownValue(int selectionValue)
         {
             // Set dropdown value to current digit format 
             // Note: This will trigger an OnValueChanged invoke
-            dropdown.value = _selectionValue;
+            m_dropdown.value = selectionValue;
         }
 
-        public int GetDropdownValue()
+        public void ColorUpdate(Theme theme)
         {
-            return dropdown.value;
-        }
-
-        public void ColorUpdate(Theme _theme)
-        {
-            label.color = _theme.GetCurrentColorScheme().foreground;
-            dropdown.captionText.color = _theme.GetCurrentColorScheme().foreground;
-            containerOutline.color = _theme.GetCurrentColorScheme().foreground;
-            arrow.color = _theme.GetCurrentColorScheme().foreground;
+            m_label.color = theme.GetCurrentColorScheme().m_foreground;
+            m_dropdown.captionText.color = theme.GetCurrentColorScheme().m_foreground;
+            m_containerOutline.color = theme.GetCurrentColorScheme().m_backgroundHighlight;
+            m_arrow.color = theme.GetCurrentColorScheme().m_foreground;
         }
     }
 }
