@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b25e7fe913542e9b8e642169c5af836, type: 3}
   m_Name: DarkHalloween
   m_EditorClassIdentifier: 
-  includedInTheseThemes:
-  - {fileID: 11400000, guid: aa574f8d6259f814ca7db509c8d1c167, type: 2}
-  background: {r: 0, g: 0, b: 0, a: 1}
-  backgroundHighlight: {r: 0.25590873, g: 0.1501869, b: 0.4245283, a: 1}
-  foreground: {r: 1, g: 1, b: 1, a: 1}
-  close: {r: 1, g: 0, b: 0, a: 1}
-  modeOne: {r: 1, g: 0.5921569, b: 0, a: 1}
-  modeTwo: {r: 0.5058824, g: 0.19607843, b: 1, a: 1}
-  running: {r: 0.972549, g: 0.482, b: 0, a: 1}
-  complete: {r: 1, g: 0.5921569, b: 0, a: 1}
+  m_includedInTheseThemes: []
+  m_background: {r: 0, g: 0, b: 0, a: 1}
+  m_backgroundHighlight: {r: 0.25590873, g: 0.1501869, b: 0.4245283, a: 1}
+  m_foreground: {r: 1, g: 1, b: 1, a: 1}
+  m_modeOne: {r: 1, g: 0.5921569, b: 0, a: 1}
+  m_running: {r: 0.972549, g: 0.482, b: 0, a: 1}
+  m_complete: {r: 1, g: 0.5921569, b: 0, a: 1}
+  m_modeTwo: {r: 0.5058824, g: 0.19607843, b: 1, a: 1}
+  m_close: {r: 1, g: 0, b: 0, a: 1}

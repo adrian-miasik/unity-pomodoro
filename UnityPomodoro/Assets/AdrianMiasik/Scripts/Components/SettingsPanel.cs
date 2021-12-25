@@ -8,36 +8,61 @@ namespace AdrianMiasik.Components
 {
     public class SettingsPanel : MonoBehaviour, IColorHook
     {
-        [SerializeField] private TMP_Text title;
-        [SerializeField] private LabelledDropdown digitFormatDropdown;
+        [SerializeField] private TMP_Text m_title;
+        [SerializeField] private LabelledDropdown m_digitFormatDropdown;
+        [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
+        [SerializeField] private BooleanSlider m_muteSoundOutOfFocusBoolean;
 
-        private bool isOpen = false;
+        private bool isInitialized;
+        private bool isOpen;
         private PomodoroTimer timer;
-
-        public void Initialize(PomodoroTimer _timer)
+        
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
+            timer = pomodoroTimer;
             timer.GetTheme().RegisterColorHook(this);
             
-            digitFormatDropdown.Initialize(timer);
+            m_muteSoundOutOfFocusBoolean.OverrideFalseColor(timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_muteSoundOutOfFocusBoolean.OverrideTrueColor(timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            
+            m_digitFormatDropdown.Initialize(timer);
+            m_muteSoundOutOfFocusBoolean.Initialize(pomodoroTimer, pomodoroTimer.MuteSoundWhenOutOfFocus());
+
+            isInitialized = true;
+        }
+        
+        public bool IsInitialized()
+        {
+            return isInitialized;
+        }
+
+        public void ColorUpdate(Theme theme)
+        {
+            if (isOpen)
+            {
+                m_title.color = theme.GetCurrentColorScheme().m_foreground;
+                m_digitFormatDropdown.ColorUpdate(timer.GetTheme());
+                m_muteSoundOutOfFocusLabel.color = theme.GetCurrentColorScheme().m_foreground;
+                m_muteSoundOutOfFocusBoolean.ColorUpdate(theme);
+            }
         }
 
         public void UpdateDropdown()
         {
-            digitFormatDropdown.UpdateDropdownValue();
-        }
-        
-        public void ColorUpdate(Theme _theme)
-        {
-            // TODO: Check if settings page is open
-            title.color = _theme.GetCurrentColorScheme().foreground;
+            m_digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
         }
 
+        public void SetDropdown(int value)
+        {
+            m_digitFormatDropdown.SetDropdownValue(value);
+        }
+        
         public void Show()
         {
             gameObject.SetActive(true);
-            digitFormatDropdown.UpdateDropdownValue();
+            m_digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
             isOpen = true;
+            ColorUpdate(timer.GetTheme());
         }
 
         public void Hide()

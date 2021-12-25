@@ -11,18 +11,18 @@ namespace AdrianMiasik.Components.Core
     public class BooleanSlider : MonoBehaviour, IPointerClickHandler, IColorHook
     {
         // General
-        [SerializeField] public SVGImage background;
-        [SerializeField] private Image dot;
+        [SerializeField] public SVGImage m_background;
+        [SerializeField] private Image m_dot;
 
         // Animation
-        [SerializeField] private new Animation animation;
-        [SerializeField] private AnimationClip leftToRight;
-        [SerializeField] private AnimationClip rightToLeft;
+        [SerializeField] private Animation m_animation;
+        [SerializeField] private AnimationClip m_leftToRight;
+        [SerializeField] private AnimationClip m_rightToLeft;
 
         // Unity Events
-        public UnityEvent onSetToTrueClick; // clicking a disabled boolean
-        public UnityEvent onSetToFalseClick; // clicking on an enabled boolean
-        public UnityEvent onClick;
+        public UnityEvent m_onSetToTrueClick; // clicking a disabled boolean
+        public UnityEvent m_onSetToFalseClick; // clicking on an enabled boolean
+        public UnityEvent m_onClick;
         
         // Shader Property
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
@@ -38,29 +38,48 @@ namespace AdrianMiasik.Components.Core
         private bool overrideTrueColor;
         private Color overridenTrueColor;
         
+        // Dot Override
+        private bool overrideDotColor;
+        private Color overridenDotColor;
+        
         /// <summary>
         /// Note: Needs to be invoked before initialize.<see cref="Initialize"/>
         /// </summary>
-        /// <param name="_color"></param>
-        public void OverrideFalseColor(Color _color)
+        /// <param name="color"></param>
+        public void OverrideFalseColor(Color color)
         {
             overrideFalseColor = true;
-            overridenFalseColor = _color;
+            overridenFalseColor = color;
         }
         
-        public void OverrideTrueColor(Color _color)
+        public void OverrideTrueColor(Color color)
         {
             overrideTrueColor = true;
-            overridenTrueColor = _color;
+            overridenTrueColor = color;
         }
 
-        public void Initialize(PomodoroTimer _timer, bool _state)
+        public void OverrideDotColor(Color color)
         {
-            state = _state;
-            _timer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(_timer.GetTheme());
+            overrideDotColor = true;
+            overridenDotColor = color;
         }
-        
+
+        public void Initialize(PomodoroTimer timer, bool isOn)
+        {
+            state = isOn;
+            if (state)
+            {
+                Enable();
+            }
+            else
+            {
+                Disable();
+            }
+            
+            timer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(timer.GetTheme());
+        }
+
         /// <summary>
         /// Changes the visibility of the boolean slider to the ON or OFF position. Position depends on current state.
         /// </summary>
@@ -72,48 +91,48 @@ namespace AdrianMiasik.Components.Core
             OnPointerClick(null);
         }
 
-        public void OnPointerClick(PointerEventData _eventData)
+        public void OnPointerClick(PointerEventData eventData)
         {
             // Flip state
             state = !state;
             OnStateChanged(true); // User interacted with this, we treating this as a click
             
-            onClick.Invoke();
+            m_onClick.Invoke();
         }
         
-        private void OnStateChanged(bool _invokeEvents = false)
+        private void OnStateChanged(bool invokeEvents = false)
         {
             if (state)
             {
                 // Set to on position
-                animation.clip = leftToRight;
-                background.color = trueColor;
+                m_animation.clip = m_leftToRight;
+                m_background.color = trueColor;
 
-                if (_invokeEvents)
+                if (invokeEvents)
                 {
-                    onSetToTrueClick.Invoke();
+                    m_onSetToTrueClick.Invoke();
                 }
             }
             else
             {
                 // Set to off position
-                animation.clip = rightToLeft;
-                background.color = falseColor;
+                m_animation.clip = m_rightToLeft;
+                m_background.color = falseColor;
 
-                if (_invokeEvents)
+                if (invokeEvents)
                 {
-                    onSetToFalseClick.Invoke();
+                    m_onSetToFalseClick.Invoke();
                 }
             }
 
-            animation.Play();
+            m_animation.Play();
         }
 
         /// <summary>
         /// Changes the visibility of the boolean slider to the OFF position (left).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        public void Disable()
+        private void Disable()
         {
             state = false;
             OnStateChanged();
@@ -123,19 +142,19 @@ namespace AdrianMiasik.Components.Core
         /// Changes the visibility of the boolean slider to the ON position (right).
         /// Note: OnClick Unity Events won't be triggered.
         /// </summary>
-        public void Enable()
+        private void Enable()
         {
             state = true;
             OnStateChanged();
         }
         
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
-            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
-            falseColor = overrideFalseColor ? overridenFalseColor : _currentColors.modeOne;
-            trueColor = overrideTrueColor ? overridenTrueColor : _currentColors.modeTwo;
-            background.color = state ? trueColor : falseColor;
-            dot.material.SetColor(CircleColor, _currentColors.background);
+            ColorScheme currentColors = theme.GetCurrentColorScheme();
+            falseColor = overrideFalseColor ? overridenFalseColor : currentColors.m_modeOne;
+            trueColor = overrideTrueColor ? overridenTrueColor : currentColors.m_modeTwo;
+            m_background.color = state ? trueColor : falseColor;
+            m_dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
         }
     }
 }

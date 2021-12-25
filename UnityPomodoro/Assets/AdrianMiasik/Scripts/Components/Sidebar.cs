@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
@@ -14,20 +13,20 @@ namespace AdrianMiasik.Components
     public class Sidebar : MonoBehaviour, IColorHook
     {
         [Header("Components")]
-        [SerializeField] private BooleanToggle menuToggle;
-        [SerializeField] private RectTransform container;
-        [SerializeField] private RectTransform background;
-        [SerializeField] private Image overlayImage;
-        [SerializeField] private CanvasGroup overlayGroup;
-        [SerializeField] private Animation entryAnimation;
-        [SerializeField] private SVGImage fill;
-        [SerializeField] private SVGImage edge;
-        [SerializeField] private TMP_Text versionNumber;
+        [SerializeField] private BooleanToggle m_menuToggle;
+        [SerializeField] private RectTransform m_container;
+        [SerializeField] private RectTransform m_background;
+        [SerializeField] private Image m_overlayImage;
+        [SerializeField] private CanvasGroup m_overlayGroup;
+        [SerializeField] private Animation m_entryAnimation;
+        [SerializeField] private SVGImage m_fill;
+        [SerializeField] private SVGImage m_edge;
+        [SerializeField] private TMP_Text m_versionNumber;
         
         // Components
         [Header("Sidebar Rows (Content)")]
-        [SerializeField] private List<SidebarRow> contentRows = new List<SidebarRow>();
-        [SerializeField] private List<SidebarRow> rowsToSpawn;
+        [SerializeField] private List<SidebarRow> m_contentRows = new List<SidebarRow>(); 
+        [SerializeField] private List<SidebarRow> m_rowsToSpawn;
 
         // Cache
         private PomodoroTimer timer;
@@ -40,25 +39,25 @@ namespace AdrianMiasik.Components
         private float rowStaggerDelay = 0.15f;
         private float rowStaggerTime;
 
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
-            _timer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(_timer.GetTheme());
+            timer = pomodoroTimer;
+            pomodoroTimer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(pomodoroTimer.GetTheme());
             
             // Initialize row components
-            for (int _i = 0; _i < contentRows.Count; _i++)
+            for (int i = 0; i < m_contentRows.Count; i++)
             {
-                SidebarRow _row = contentRows[_i];
+                SidebarRow row = m_contentRows[i];
 
                 // Only select first item
-                if (_i == 0)
+                if (i == 0)
                 {
-                    _row.Initialize(_timer, this, true);
+                    row.Initialize(pomodoroTimer, this, true);
                 }
                 else
                 {
-                    _row.Initialize(_timer, this);
+                    row.Initialize(pomodoroTimer, this);
                 }
             }
 
@@ -79,15 +78,15 @@ namespace AdrianMiasik.Components
 
             if (isOpen)
             {
-                if (rowsToSpawn.Count > 0)
+                if (m_rowsToSpawn.Count > 0)
                 {
                     rowStaggerTime += Time.deltaTime;
                     
                     if (rowStaggerTime >= rowStaggerDelay)
                     {
                         rowStaggerTime = 0;
-                        rowsToSpawn[0].PlaySpawnAnimation();
-                        rowsToSpawn.RemoveAt(0);
+                        m_rowsToSpawn[0].PlaySpawnAnimation();
+                        m_rowsToSpawn.RemoveAt(0);
                     }
                 }
             }
@@ -95,26 +94,27 @@ namespace AdrianMiasik.Components
         
         private void CalculateSidebarWidth()
         {
-            float _scalar = (float)Screen.height / Screen.width;
-            background.anchorMax = new Vector2(Mathf.Clamp(0.5f * _scalar,0,0.75f), background.anchorMax.y);
+            float scalar = (float)Screen.height / Screen.width;
+            m_background.anchorMax = new Vector2(Mathf.Clamp(0.5f * scalar,0,0.75f), m_background.anchorMax.y);
         }
         
         public void Open()
         {
-            rowsToSpawn = new List<SidebarRow>(contentRows);
-            rowStaggerTime = rowStaggerDelay; // First stagger has no delay
-            foreach (SidebarRow _row in contentRows)
-            {
-                _row.Hide();
-            }
+            m_rowsToSpawn = new List<SidebarRow>(m_contentRows);
 
+            foreach (SidebarRow row in m_rowsToSpawn)
+            {
+                row.Hide();
+            }
+            
+            rowStaggerTime = rowStaggerDelay; // First stagger has no delay
             isOpen = true;
             
-            container.gameObject.SetActive(true);
+            m_container.gameObject.SetActive(true);
             gameObject.SetActive(true);
-            entryAnimation.Play();
-            overlayImage.enabled = true;
-            overlayGroup.alpha = 1;
+            m_entryAnimation.Play();
+            m_overlayImage.enabled = true;
+            m_overlayGroup.alpha = 1;
             
             ColorUpdate(timer.GetTheme());
             timer.ColorUpdateCreditsBubble();
@@ -125,18 +125,18 @@ namespace AdrianMiasik.Components
             isOpen = false;
 
             // Cancel holds in-case user holds button down and closes our menu prematurely
-            foreach (SidebarRow _row in contentRows)
+            foreach (SidebarRow row in m_contentRows)
             {
-                _row.CancelHold();
+                row.CancelHold();
             }
 
-            menuToggle.SetToFalse();
+            m_menuToggle.SetToFalse();
             
-            container.gameObject.SetActive(false);
-            entryAnimation.Stop();
+            m_container.gameObject.SetActive(false);
+            m_entryAnimation.Stop();
             gameObject.SetActive(false);
-            overlayImage.enabled = false;
-            overlayGroup.alpha = 0;
+            m_overlayImage.enabled = false;
+            m_overlayGroup.alpha = 0;
             
             timer.ColorUpdateCreditsBubble();
         }
@@ -146,49 +146,49 @@ namespace AdrianMiasik.Components
             return isOpen;
         }
         
-        public void SelectRow(SidebarRow _rowToSelect, AudioClip _clickSoundClip)
+        public void SelectRow(SidebarRow rowToSelect, AudioClip clickSoundClip)
         {
             // Deselect other rows
-            foreach (SidebarRow _row in contentRows)
+            foreach (SidebarRow row in m_contentRows)
             {
-                if (_row == _rowToSelect)
+                if (row == rowToSelect)
                     continue;
                 
-                _row.Deselect();
+                row.Deselect();
             }
 
-            if (!_rowToSelect.IsSelected())
+            if (!rowToSelect.IsSelected())
             {
-                _rowToSelect.Select();
+                rowToSelect.Select();
                 
                 // Close sidebar after selection
                 Close();
             }
             else
             {
-                Debug.LogWarning("This sidebar row is already selected!", _rowToSelect.gameObject);
+                Debug.LogWarning("This sidebar row is already selected!", rowToSelect.gameObject);
             }
             
             // Pass the buck of playing our close sound to the audio mimic,
             // since closing the sidebar will disable the audio sources we want to play from.
             // And audio sources can not be played when in a disabled state.
             // So instead we propagate the sound up to our singleton audio mimic class. 
-            AudioMimic.Instance.PlaySound(_clickSoundClip);
+            AudioMimic.Instance.PlaySound(clickSoundClip);
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
             // Overlay
-            overlay = _theme.GetCurrentColorScheme().foreground;
-            overlay.a = _theme.isLightModeOn ? 0.5f : 0.025f;
-            overlayImage.color = overlay;
+            overlay = theme.GetCurrentColorScheme().m_foreground;
+            overlay.a = theme.m_darkMode ? 0.025f : 0.5f;
+            m_overlayImage.color = overlay;
 
             // Background
-            fill.color = _theme.GetCurrentColorScheme().background;
-            edge.color = _theme.GetCurrentColorScheme().background;
+            m_fill.color = theme.GetCurrentColorScheme().m_background;
+            m_edge.color = theme.GetCurrentColorScheme().m_background;
             
             // Text
-            versionNumber.color = _theme.GetCurrentColorScheme().foreground;
+            m_versionNumber.color = theme.GetCurrentColorScheme().m_foreground;
         }
     }
 }

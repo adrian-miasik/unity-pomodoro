@@ -10,65 +10,63 @@ namespace AdrianMiasik.Components
 {
     public class SidebarRow : MonoBehaviour, IColorHook
     {
-        [SerializeField] private Animation spawn;
-        [SerializeField] private RectTransform container;
-        [SerializeField] private ClickButton button;
-        [SerializeField] private Image accent;
-        [SerializeField] private RectTransform contentContainer;
-        [SerializeField] private Image background;
-        [SerializeField] private SVGImage icon;
-        [SerializeField] private SVGImage iconBackground;
-        [SerializeField] private TMP_Text label;
+        [SerializeField] private Animation m_spawn;
+        [SerializeField] private RectTransform m_container;
+        [SerializeField] private ClickButton m_button;
+        [SerializeField] private Image m_accent;
+        [SerializeField] private RectTransform m_contentContainer;
+        [SerializeField] private Image m_background;
+        [SerializeField] private SVGImage m_icon;
+        [SerializeField] private SVGImage m_iconBackground;
+        [SerializeField] private TMP_Text m_label;
 
         // Cache
         private PomodoroTimer timer;
         private Sidebar sidebar;
         private bool isSelected;
         
-        public void Initialize(PomodoroTimer _timer, Sidebar _sidebar, bool _isSelected = false)
+        public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
-            timer = _timer;
-            sidebar = _sidebar;
-            isSelected = _isSelected;
-            _timer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(_timer.GetTheme());
-            Hide();
+            timer = pomodoroTimer;
+            sidebar = parentSidebar;
+            isSelected = selected;
+            pomodoroTimer.GetTheme().RegisterColorHook(this);
+            ColorUpdate(pomodoroTimer.GetTheme());
         }
 
         public void Hide()
         {
-            container.gameObject.SetActive(false);
+            m_container.gameObject.SetActive(false);
         }
         
         public void PlaySpawnAnimation()
         {
             Show();
-            spawn.Stop();
-            spawn.Play();
+            m_spawn.Play();
         }
 
-        private void Show()
+        public void Show()
         {
-            container.gameObject.SetActive(true);
+            m_container.gameObject.SetActive(true);
         }
 
         // UnityEvent
         public void OnClick()
         {
-            sidebar.SelectRow(this, button.clickSound.clip);
+            sidebar.SelectRow(this, m_button.m_clickSound.clip);
         }
         
         [ContextMenu("Select")]
         public void Select()
         {
             // Set width of accent
-            accent.rectTransform.sizeDelta = new Vector2(6f, accent.rectTransform.sizeDelta.y);
+            m_accent.rectTransform.sizeDelta = new Vector2(6f, m_accent.rectTransform.sizeDelta.y);
             
             // Move content aside
-            contentContainer.offsetMin = new Vector2(6, contentContainer.offsetMin.y); // Left
-            contentContainer.offsetMax = new Vector2(-6, contentContainer.offsetMax.y); // Right
+            m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
+            m_contentContainer.offsetMax = new Vector2(-6, m_contentContainer.offsetMax.y); // Right
 
-            background.color = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            m_background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             
             isSelected = true;
         }
@@ -77,31 +75,31 @@ namespace AdrianMiasik.Components
         public void Deselect()
         {
             // Remove accent
-            accent.rectTransform.sizeDelta = new Vector2(0, accent.rectTransform.sizeDelta.y);
+            m_accent.rectTransform.sizeDelta = new Vector2(0, m_accent.rectTransform.sizeDelta.y);
             
             // Move content back to original location
-            contentContainer.offsetMin = Vector2.zero; // Left
-            contentContainer.offsetMax = Vector2.zero; // Right
+            m_contentContainer.offsetMin = Vector2.zero; // Left
+            m_contentContainer.offsetMax = Vector2.zero; // Right
             
-            background.color = timer.GetTheme().GetCurrentColorScheme().background;
+            m_background.color = timer.GetTheme().GetCurrentColorScheme().m_background;
 
             isSelected = false;
         }
 
         public void CancelHold()
         {
-            button.CancelHold();
+            m_button.CancelHold();
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
             // Backgrounds
-            background.color = isSelected ? _theme.GetCurrentColorScheme().backgroundHighlight : _theme.GetCurrentColorScheme().background;
-            iconBackground.color = _theme.GetCurrentColorScheme().background;
+            m_background.color = isSelected ? theme.GetCurrentColorScheme().m_backgroundHighlight : theme.GetCurrentColorScheme().m_background;
+            m_iconBackground.color = theme.GetCurrentColorScheme().m_background;
             
             // Foreground
-            icon.color = _theme.GetCurrentColorScheme().foreground;
-            label.color = _theme.GetCurrentColorScheme().foreground;
+            m_icon.color = theme.GetCurrentColorScheme().m_foreground;
+            m_label.color = theme.GetCurrentColorScheme().m_foreground;
         }
 
         public bool IsSelected()

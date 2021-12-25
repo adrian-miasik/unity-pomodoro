@@ -2,17 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AdrianMiasik.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Theme", menuName = "Adrian Miasik/Create New Theme")]
     public class Theme : ScriptableObject
     {
-        public bool isLightModeOn = true;
-        public ColorScheme light;
-        public ColorScheme dark;
+        [FormerlySerializedAs("m_isLightModeOn")] public bool m_darkMode = true;
+        public ColorScheme m_light;
+        public ColorScheme m_dark;
 
         private List<IColorHook> colorElements = new List<IColorHook>();
+
+        private void OnValidate()
+        {
+            ApplyColorChanges();
+        }
 
         private void OnEnable()
         {
@@ -22,35 +28,35 @@ namespace AdrianMiasik.ScriptableObjects
         [ContextMenu("List Interfaces")]
         public void ListInterfaces()
         {
-            foreach (IColorHook _colorHook in colorElements)
+            foreach (IColorHook colorHook in colorElements)
             {
-                Debug.Log(_colorHook.ToString(), _colorHook.gameObject);    
+                Debug.Log(colorHook.ToString(), colorHook.gameObject);    
             }
         }
 
-        public void RegisterColorHook(IColorHook _hook)
+        public void RegisterColorHook(IColorHook hook)
         {
-            if (colorElements.Contains(_hook))
+            if (colorElements.Contains(hook))
             {
                 Debug.LogWarning("This interface has already been registered.");
             }
             else
             {
-                colorElements.Add(_hook);
+                colorElements.Add(hook);
             }
         }
 
-        public void Deregister(IColorHook _colorHook)
+        public void Deregister(IColorHook colorHook)
         {
-            if (colorElements.Contains(_colorHook))
+            if (colorElements.Contains(colorHook))
             {
-                colorElements.Remove(_colorHook);
+                colorElements.Remove(colorHook);
             }
         }
 
         public ColorScheme GetCurrentColorScheme()
         {
-            return isLightModeOn ? light : dark;
+            return m_darkMode ? m_dark : m_light;
         }
 
         private List<IColorHook> GetColorElements()
@@ -58,39 +64,39 @@ namespace AdrianMiasik.ScriptableObjects
             return colorElements;
         }
 
-        private void SetColorElements(List<IColorHook> _colorElements)
+        private void SetColorElements(List<IColorHook> hooks)
         {
-            colorElements = _colorElements;
+            this.colorElements = hooks;
         }
 
         /// <summary>
         /// Transfers color elements from one theme to another
         /// </summary>
-        /// <param name="_sourceTheme">The theme you want to pull color elements from</param>
-        /// <param name="_destinationTheme">The theme you want to transfer your color elements to</param>
-        public void TransferColorElements(Theme _sourceTheme, Theme _destinationTheme)
+        /// <param name="sourceTheme">The theme you want to pull color elements from</param>
+        /// <param name="destinationTheme">The theme you want to transfer your color elements to</param>
+        public void TransferColorElements(Theme sourceTheme, Theme destinationTheme)
         {
-            _destinationTheme.SetColorElements(_sourceTheme.GetColorElements());
-            _destinationTheme.isLightModeOn = _sourceTheme.isLightModeOn;
+            destinationTheme.SetColorElements(sourceTheme.GetColorElements());
+            destinationTheme.m_darkMode = sourceTheme.m_darkMode;
         }
         
         public void ApplyColorChanges()
         {
-            foreach (IColorHook _hook in colorElements)
+            foreach (IColorHook hook in colorElements)
             {
-                _hook.ColorUpdate(this);
+                hook.ColorUpdate(this);
             }
         }
 
         public void SetToDarkMode()
         {
-            isLightModeOn = false;
+            m_darkMode = true;
             ApplyColorChanges();
         }
 
         public void SetToLightMode()
         {
-            isLightModeOn = true;
+            m_darkMode = false;
             ApplyColorChanges();
         }
     }

@@ -10,9 +10,9 @@ namespace AdrianMiasik.Components
         private PomodoroTimer timer;
         private bool isInitialized;
 
-        public void Initialize(PomodoroTimer _pomodoroTimer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _pomodoroTimer;
+            timer = pomodoroTimer;
             isInitialized = true;
         }
 
@@ -59,42 +59,42 @@ namespace AdrianMiasik.Components
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                List<Selectable> _selectables = timer.GetSelections();
-                if (_selectables.Count >= 1)
+                List<Selectable> selectables = timer.GetSelections();
+                if (selectables.Count >= 1)
                 {
                     // Get only first selection
-                    Selectable _selection = _selectables[0];
-                    Selectable _rightSelection = _selection.FindSelectableOnRight();
-                    if (_rightSelection != null && _rightSelection.gameObject != null)
+                    Selectable selection = selectables[0];
+                    Selectable rightSelection = selection.FindSelectableOnRight();
+                    if (rightSelection != null && rightSelection.gameObject != null)
                     {
-                        EventSystem.current.SetSelectedGameObject(_rightSelection.gameObject);
+                        EventSystem.current.SetSelectedGameObject(rightSelection.gameObject);
                     }
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.SS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
             }
             
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.MM_SS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
             }
             
             if (Input.GetKeyDown(KeyCode.F3))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
             }
             
             if (Input.GetKeyDown(KeyCode.F4))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
             }
             
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                timer.ChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
             }
         }
 

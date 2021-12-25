@@ -5,7 +5,11 @@ namespace AdrianMiasik.Interfaces
 {
     public interface IColorHook
     {
-        public void ColorUpdate(Theme _theme);
+        /// <summary>
+        /// This method is invoked when switching between themes / modifying active themes
+        /// </summary>
+        /// <param name="theme"></param>
+        public void ColorUpdate(Theme theme);
         // ReSharper disable once InconsistentNaming
         GameObject gameObject { get; }
     }

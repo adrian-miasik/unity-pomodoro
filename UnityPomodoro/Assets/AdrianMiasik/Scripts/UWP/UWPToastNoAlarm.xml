@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<toast launch='app-defined-string'>
+    <visual>
+        <binding template='ToastGeneric'>
+            <text hint-maxLines='1'>Timer Complete!</text>
+        </binding>
+    </visual>
+
+    <actions>
+        <action arguments="switch" content="Switch to App" />
+    </actions>
+</toast>
