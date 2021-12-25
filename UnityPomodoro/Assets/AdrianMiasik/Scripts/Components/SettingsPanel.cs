@@ -8,25 +8,25 @@ namespace AdrianMiasik.Components
 {
     public class SettingsPanel : MonoBehaviour, IColorHook
     {
-        [SerializeField] private TMP_Text title;
-        [SerializeField] private LabelledDropdown digitFormatDropdown;
-        [SerializeField] private TMP_Text muteSoundOutOfFocusLabel;
-        [SerializeField] private BooleanSlider muteSoundOutOfFocusBoolean;
+        [SerializeField] private TMP_Text m_title;
+        [SerializeField] private LabelledDropdown m_digitFormatDropdown;
+        [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
+        [SerializeField] private BooleanSlider m_muteSoundOutOfFocusBoolean;
 
         private bool isInitialized;
-        private bool isOpen = false;
+        private bool isOpen;
         private PomodoroTimer timer;
         
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
+            timer = pomodoroTimer;
             timer.GetTheme().RegisterColorHook(this);
             
-            muteSoundOutOfFocusBoolean.OverrideFalseColor(timer.GetTheme().GetCurrentColorScheme().backgroundHighlight);
-            muteSoundOutOfFocusBoolean.OverrideTrueColor(timer.GetTheme().GetCurrentColorScheme().modeOne);
+            m_muteSoundOutOfFocusBoolean.OverrideFalseColor(timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_muteSoundOutOfFocusBoolean.OverrideTrueColor(timer.GetTheme().GetCurrentColorScheme().m_modeOne);
             
-            digitFormatDropdown.Initialize(timer);
-            muteSoundOutOfFocusBoolean.Initialize(_timer, _timer.MuteSoundWhenOutOfFocus());
+            m_digitFormatDropdown.Initialize(timer);
+            m_muteSoundOutOfFocusBoolean.Initialize(pomodoroTimer, pomodoroTimer.MuteSoundWhenOutOfFocus());
 
             isInitialized = true;
         }
@@ -36,31 +36,31 @@ namespace AdrianMiasik.Components
             return isInitialized;
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
             if (isOpen)
             {
-                title.color = _theme.GetCurrentColorScheme().foreground;
-                digitFormatDropdown.ColorUpdate(timer.GetTheme());
-                muteSoundOutOfFocusLabel.color = _theme.GetCurrentColorScheme().foreground;
-                muteSoundOutOfFocusBoolean.ColorUpdate(_theme);
+                m_title.color = theme.GetCurrentColorScheme().m_foreground;
+                m_digitFormatDropdown.ColorUpdate(timer.GetTheme());
+                m_muteSoundOutOfFocusLabel.color = theme.GetCurrentColorScheme().m_foreground;
+                m_muteSoundOutOfFocusBoolean.ColorUpdate(theme);
             }
         }
 
         public void UpdateDropdown()
         {
-            digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
+            m_digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
         }
 
-        public void SetDropdown(int _value)
+        public void SetDropdown(int value)
         {
-            digitFormatDropdown.SetDropdownValue(_value);
+            m_digitFormatDropdown.SetDropdownValue(value);
         }
         
         public void Show()
         {
             gameObject.SetActive(true);
-            digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
+            m_digitFormatDropdown.SetDropdownValue(timer.GetDigitFormat());
             isOpen = true;
             ColorUpdate(timer.GetTheme());
         }

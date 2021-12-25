@@ -8,8 +8,8 @@ namespace AdrianMiasik.Interfaces
         /// <summary>
         /// This method is invoked when switching between themes / modifying active themes
         /// </summary>
-        /// <param name="_theme"></param>
-        public void ColorUpdate(Theme _theme);
+        /// <param name="theme"></param>
+        public void ColorUpdate(Theme theme);
         // ReSharper disable once InconsistentNaming
         GameObject gameObject { get; }
     }

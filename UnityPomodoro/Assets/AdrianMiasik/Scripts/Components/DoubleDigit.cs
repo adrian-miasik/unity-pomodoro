@@ -1,9 +1,7 @@
-using System;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -14,31 +12,28 @@ namespace AdrianMiasik.Components
     public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler, ISubmitHandler, IColorHook
     {
         [Header("References")] 
-        [SerializeField] private Selectable selectable;
-        [SerializeField] private Image background;
+        [SerializeField] private Selectable m_selectable;
+        [SerializeField] private Image m_background;
 
-        [SerializeField] private ClickButtonIcon upArrow;
-        [SerializeField] private TMP_InputField input;
-        [SerializeField] private ClickButtonIcon downArrow;
-
-        [Header("Color")] 
-        [SerializeField] private float animationDuration = 0.25f;
-        [SerializeField] private AnimationCurve animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
+        [SerializeField] private ClickButtonIcon m_upArrow;
+        [SerializeField] private TMP_InputField m_input;
+        [SerializeField] private ClickButtonIcon m_downArrow;
+        
         [Header("Animations")] 
-        [SerializeField] private Animation pulseWobble;
-        [SerializeField] private Animation tick;
-
-        [HideInInspector] public DigitFormat.Digits digit;
-        private DigitFormat format;
-        private bool isInteractable = true;
-        private bool isSelected;
+        [SerializeField] private float m_animationDuration = 1f;
+        [SerializeField] private AnimationCurve m_animationRamp = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        [SerializeField] private Animation m_pulseWobble;
+        [SerializeField] private Animation m_tick;
+        
+        [HideInInspector] public DigitFormat.Digits m_digit;
         
         // Cache
         private PomodoroTimer timer;
-        
+        private DigitFormat format;
+        private bool isInteractable = true;
+        private bool isSelected;
+
         // Color animation
-        [SerializeField] private Color color = Color.white;
         private Color startingColor;
         private Color endingColor;
         private bool isColorAnimating;
@@ -58,18 +53,18 @@ namespace AdrianMiasik.Components
         private static readonly int SquircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Unity Events
-        public UnityEvent OnSelection;
-        public UnityEvent OnDigitChange; // Invoked only when timer is running
+        public UnityEvent m_onSelection;
+        public UnityEvent m_onDigitChange; // Invoked only when timer is running
 
-        public void Initialize(PomodoroTimer _timer, DigitFormat _format, DigitFormat.Digits _digit)
+        public void Initialize(PomodoroTimer pomodoroTimer, DigitFormat digitFormat, DigitFormat.Digits digit)
         {
-            format = _format;
-            digit = _digit;
-            timer = _timer;
+            format = digitFormat;
+            m_digit = digit;
+            timer = pomodoroTimer;
             timer.GetTheme().RegisterColorHook(this);
             
             // Disable run time caret interactions - We want to run input through this classes input events
-            caret = input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
+            caret = m_input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
             if (caret)
             {
                 // Prevent input field from getting selection focus
@@ -80,11 +75,11 @@ namespace AdrianMiasik.Components
             ColorUpdate(timer.GetTheme());
         }
 
-        public void UpdateVisuals(int _value)
+        public void UpdateVisuals(int value)
         {
-            SetTextLabel(_value);
+            SetTextLabel(value);
             UpdateArrows();
-            pulseWobble.Stop();
+            m_pulseWobble.Stop();
         }
         
         private void Update()
@@ -92,72 +87,72 @@ namespace AdrianMiasik.Components
             if (isColorAnimating)
             {
                 accumulatedColorTime += Time.deltaTime;
-                progress = accumulatedColorTime / animationDuration;
+                progress = accumulatedColorTime / m_animationDuration;
                 if (progress >= 1)
                 {
                     isColorAnimating = false;
                 }
 
-                float _evaluatedTime = animationRamp.Evaluate(progress);
+                float evaluatedTime = m_animationRamp.Evaluate(progress);
 
                 // Animate and modify
-                instanceMaterial.SetColor(SquircleColor, Color.Lerp(startingColor, endingColor, _evaluatedTime));
+                instanceMaterial.SetColor(SquircleColor, Color.Lerp(startingColor, endingColor, evaluatedTime));
 
                 // Apply
-                background.material = instanceMaterial;
+                m_background.material = instanceMaterial;
             }
 
             if (isSelected)
             {
                 if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
                 {
-                    if (!input.isFocused)
+                    if (!m_input.isFocused)
                     {
                         SetValue(0);
-                        UpdateVisuals(format.GetDigitValue(digit));
+                        UpdateVisuals(format.GetDigitValue(m_digit));
                     }
                 }
                 
                 // Scroll input
                 if (Input.mouseScrollDelta.y > 0)
                 {
-                    if (format.CanIncrementOne(digit))
+                    if (format.CanIncrementOne(m_digit))
                     {
-                        upArrow.OnPointerClick(null);
+                        m_upArrow.OnPointerClick(null);
                     }
                 }
                 else if (Input.mouseScrollDelta.y < 0)
                 {
-                    if (format.CanDecrementOne(digit))
+                    if (format.CanDecrementOne(m_digit))
                     {
-                        downArrow.OnPointerClick(null);
+                        m_downArrow.OnPointerClick(null);
                     }
                 }
 
                 // Arrow keys : Up arrow
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    upArrow.OnPointerClick(null);
-                    upArrow.Hold();
+                    m_upArrow.OnPointerClick(null);
+                    m_upArrow.Hold();
                 }
                 else if (Input.GetKeyUp(KeyCode.UpArrow))
                 {
-                    upArrow.Release();
+                    m_upArrow.Release();
                 }
 
                 // Arrow keys : Down arrow
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    downArrow.OnPointerClick(null);
-                    downArrow.Hold();
+                    m_downArrow.OnPointerClick(null);
+                    m_downArrow.Hold();
                 }
                 else if (Input.GetKeyUp(KeyCode.DownArrow))
                 {
-                    downArrow.Release();
+                    m_downArrow.Release();
                 }
 
                 // Automatic digit deselection on mobile
-                if (Input.touchSupported && !input.isFocused)
+                if (Input.touchSupported && !m_input.isFocused)
                 {
                     accumulatedSelectionTime += Time.deltaTime;
 
@@ -171,18 +166,18 @@ namespace AdrianMiasik.Components
             }
         }
 
-        private void SetSquircleColor(Color _color)
+        private void SetSquircleColor(Color color)
         {
             // Create instance material
             if (instanceMaterial == null)
             {
-                instanceMaterial = new Material(background.material);
+                instanceMaterial = new Material(m_background.material);
             }
 
-            startingColor = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            startingColor = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             // startingColor = instanceMaterial.GetColor(SquircleColor);
 
-            endingColor = _color;
+            endingColor = color;
             accumulatedColorTime = 0;
             isColorAnimating = true;
         }
@@ -191,49 +186,49 @@ namespace AdrianMiasik.Components
         public void PlayTickAnimation()
         {
             // Prevent milliseconds from animating on tick (due to how fast it ticks)
-            if (digit == DigitFormat.Digits.MILLISECONDS)
+            if (m_digit == DigitFormat.Digits.MILLISECONDS)
             {
                 return;
             }
             
-            tick.Stop();
-            tick.Play();
+            m_tick.Stop();
+            m_tick.Play();
         }
 
         public bool IsTickAnimationPlaying()
         {
-            return tick.isPlaying;
+            return m_tick.isPlaying;
         }
 
         public void ResetTextPosition()
         {
-            input.textComponent.rectTransform.anchorMin = Vector2.zero;
-            input.textComponent.rectTransform.anchorMax = Vector2.one;
+            m_input.textComponent.rectTransform.anchorMin = Vector2.zero;
+            m_input.textComponent.rectTransform.anchorMax = Vector2.one;
         }
         
         public string GetDigitsLabel()
         {
-            return input.text;
+            return m_input.text;
         }
         
         public void HideArrows()
         {
-            upArrow.Hide();
-            downArrow.Hide();
+            m_upArrow.Hide();
+            m_downArrow.Hide();
         }
 
         private void ShowArrows()
         {
             if (format != null)
             {
-                if (format.CanIncrementOne(digit))
+                if (format.CanIncrementOne(m_digit))
                 {
-                    upArrow.Show();
+                    m_upArrow.Show();
                 }
 
-                if (format.CanDecrementOne(digit))
+                if (format.CanDecrementOne(m_digit))
                 {
-                    downArrow.Show();        
+                    m_downArrow.Show();        
                 }
             }
         }
@@ -241,18 +236,18 @@ namespace AdrianMiasik.Components
         public void Lock()
         {
             isInteractable = false;
-            input.interactable = false;
+            m_input.interactable = false;
         }
 
         public void Unlock()
         {
             isInteractable = true;
-            input.interactable = true;
+            m_input.interactable = true;
         }
         
-        public void SetTextColor(Color _newColor)
+        public void SetTextColor(Color newColor)
         {
-            input.textComponent.color = _newColor;
+            m_input.textComponent.color = newColor;
         }
         
         /// <summary>
@@ -260,13 +255,13 @@ namespace AdrianMiasik.Components
         /// This is different from the current visuals of this digit.
         /// If you are looking to modify the digit visual value <see cref="SetTextLabel"/>
         /// </summary>
-        /// <param name="_value"></param>
-        public void SetValue(int _value)
+        /// <param name="value"></param>
+        public void SetValue(int value)
         {
             if (format == null)
                 return;
             
-            format.SetDigit(digit, _value);
+            format.SetDigit(m_digit, value);
         }
         
         /// <summary>
@@ -275,18 +270,18 @@ namespace AdrianMiasik.Components
         /// If you are looking to modify the users set/edited time <see cref="SetValue"/>.
         /// Also if you are looking to update arrows as well as the label <seealso cref="UpdateVisuals"/>
         /// </summary>
-        /// <param name="_value"></param>
-        public void SetTextLabel(int _value)
+        /// <param name="value"></param>
+        public void SetTextLabel(int value)
         {
             // If this digit value is actually different...
-            if (_value.ToString("D2") != input.text)
+            if (value.ToString("D2") != m_input.text)
             {
                 // Update the digit
-                input.text = _value.ToString("D2");
+                m_input.text = value.ToString("D2");
 
                 if (format.GetTimerState() == PomodoroTimer.States.RUNNING)
                 {
-                    OnDigitChange?.Invoke();
+                    m_onDigitChange?.Invoke();
                 }
             }
         }
@@ -296,9 +291,9 @@ namespace AdrianMiasik.Components
             if (format == null) 
                 return;
             
-            format.IncrementOne(digit);
-            UpdateVisuals(format.GetDigitValue(digit));
-            pulseWobble.Play();
+            format.IncrementOne(m_digit);
+            UpdateVisuals(format.GetDigitValue(m_digit));
+            m_pulseWobble.Play();
             accumulatedSelectionTime = 0;
         }
 
@@ -307,46 +302,46 @@ namespace AdrianMiasik.Components
             if (format == null) 
                 return;
             
-            format.DecrementOne(digit);
-            UpdateVisuals(format.GetDigitValue(digit));
-            pulseWobble.Play();
+            format.DecrementOne(m_digit);
+            UpdateVisuals(format.GetDigitValue(m_digit));
+            m_pulseWobble.Play();
             accumulatedSelectionTime = 0;
         }
 
         private void UpdateArrows()
         {
             // Up Arrow
-            if (format.CanIncrementOne(digit))
+            if (format.CanIncrementOne(m_digit))
             {
-                upArrow.Show();
+                m_upArrow.Show();
             }
             else
             {
-                upArrow.Hide();
+                m_upArrow.Hide();
             }
             
             // Down Arrow
-            if (format.CanDecrementOne(digit))
+            if (format.CanDecrementOne(m_digit))
             {
-                downArrow.Show();
+                m_downArrow.Show();
             }
             else
             {
-                downArrow.Hide();
+                m_downArrow.Hide();
             }
         }
 
         public void Highlight()
         {
-            OnSelect(null, false);
+            OnSelect(false);
         }
         
-        public void OnSelect(BaseEventData _eventData)
+        public void OnSelect(BaseEventData eventData)
         {
-            OnSelect(_eventData, true);
+            OnSelect(true);
         }
 
-        private void OnSelect(BaseEventData _eventData, bool _setSelection)
+        private void OnSelect(bool setSelection)
         {
             if (!isInteractable)
             {
@@ -357,14 +352,14 @@ namespace AdrianMiasik.Components
             accumulatedSelectionTime = 0;
             
             ShowArrows();
-            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().backgroundHighlight);
+            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
 
-            if (_setSelection)
+            if (setSelection)
             {
                 format.SetTimerSelection(this);
             }
 
-            OnSelection.Invoke();
+            m_onSelection.Invoke();
         }
 
         public void Deselect()
@@ -373,34 +368,34 @@ namespace AdrianMiasik.Components
             ignoreFirstClick = true;
             
             HideArrows();
-            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().background);
+            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().m_background);
             
             // Disable caret selection
             caret.raycastTarget = false;
-            input.DeactivateInputField();
+            m_input.DeactivateInputField();
         }
 
         // Unity Event
         public void SetValueEndEdit()
         {
-            input.text = string.IsNullOrEmpty(input.text) ? "00" : input.text;
-            SetValue(int.Parse(input.text));
-            UpdateVisuals(format.GetDigitValue(digit));
+            m_input.text = string.IsNullOrEmpty(m_input.text) ? "00" : m_input.text;
+            SetValue(int.Parse(m_input.text));
+            UpdateVisuals(format.GetDigitValue(m_digit));
         }
 
         public void DeselectInput()
         {
             // Disable caret selection
             caret.raycastTarget = false;
-            input.DeactivateInputField();
+            m_input.DeactivateInputField();
 
             accumulatedSelectionTime = 0;
             
             // Select self (Deselect input field)
-            selectable.Select();
+            m_selectable.Select();
         }
 
-        public void OnPointerClick(PointerEventData _eventData)
+        public void OnPointerClick(PointerEventData eventData)
         {
             // First click is reserved for digit selection, second click is for editing the input field
             if (ignoreFirstClick)
@@ -412,27 +407,27 @@ namespace AdrianMiasik.Components
             if (isSelected)
             {
                 caret.raycastTarget = true;
-                input.ActivateInputField();
+                m_input.ActivateInputField();
             }
         }
 
-        public void OnSubmit(BaseEventData _eventData)
+        public void OnSubmit(BaseEventData eventData)
         {
             if (!caret.raycastTarget)
             {
                 caret.raycastTarget = true;
-                input.ActivateInputField();
+                m_input.ActivateInputField();
             }
             else
             {
                 caret.raycastTarget = false;
-                input.DeactivateInputField(true);
+                m_input.DeactivateInputField(true);
             }
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
-            ColorScheme _currentColors = _theme.GetCurrentColorScheme();
+            ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             if (isSelected)
             {
@@ -440,32 +435,32 @@ namespace AdrianMiasik.Components
                 isColorAnimating = false;
                 
                 // Instantly swap color
-                instanceMaterial.SetColor(SquircleColor, _currentColors.backgroundHighlight);
+                instanceMaterial.SetColor(SquircleColor, currentColors.m_backgroundHighlight);
             }
             else
             {
-                SetSquircleColor(_currentColors.background);
+                SetSquircleColor(currentColors.m_background);
             }
             
             // Up arrow
-            upArrow.icon.color = _currentColors.foreground;
+            m_upArrow.m_icon.color = currentColors.m_foreground;
             
             // Down arrow
-            downArrow.icon.color = _currentColors.foreground;
+            m_downArrow.m_icon.color = currentColors.m_foreground;
             
             // Digit text
-            SetTextColor(_currentColors.foreground);
+            SetTextColor(currentColors.m_foreground);
         }
 
         public Selectable GetSelectable()
         {
-            return selectable;
+            return m_selectable;
         }
 
-        public void SetTextScale(float _scale = 1.55f)
+        public void SetTextScale(float scale = 1.55f)
         {
-            input.textComponent.gameObject.transform.localScale = Vector3.one * _scale;
-            caret.gameObject.transform.localScale = Vector3.one * _scale;
+            m_input.textComponent.gameObject.transform.localScale = Vector3.one * scale;
+            caret.gameObject.transform.localScale = Vector3.one * scale;
         }
     }
 }

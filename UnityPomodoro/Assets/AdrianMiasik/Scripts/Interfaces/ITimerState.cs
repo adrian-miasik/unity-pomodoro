@@ -4,6 +4,6 @@ namespace AdrianMiasik.Interfaces
 {
     public interface ITimerState
     {
-        public void StateUpdate(PomodoroTimer.States _state, Theme _theme);
+        public void StateUpdate(PomodoroTimer.States state, Theme theme);
     }
 }

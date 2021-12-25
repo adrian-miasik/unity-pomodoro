@@ -5,17 +5,17 @@ namespace AdrianMiasik.Components
 {
     public class WriteVersionNumber : MonoBehaviour
     {
-        [SerializeField] private TMP_Text text;
-        [SerializeField] private string prefixString = "v";
+        [SerializeField] private TMP_Text m_text;
+        [SerializeField] private string m_prefixString = "v";
 
         private void Start()
         {
-            text.text = prefixString + Application.version;
+            m_text.text = m_prefixString + Application.version;
         }
 
-        public void SetTextColor(Color _newColor)
+        public void SetTextColor(Color newColor)
         {
-            text.color = _newColor;
+            m_text.color = newColor;
         }
     }
 }

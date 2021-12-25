@@ -831,10 +831,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58065020da4fd346935aa219b98ece2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: {fileID: 1590220842347335447}
-  dropdown: {fileID: 1590220841810703682}
-  containerOutline: {fileID: 6802217036602986947}
-  arrow: {fileID: 1806952378}
+  m_label: {fileID: 1590220842347335447}
+  m_dropdown: {fileID: 1590220841810703682}
+  m_containerOutline: {fileID: 6802217036602986947}
+  m_arrow: {fileID: 1806952378}
 --- !u!1 &1590220842821662670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.45
+  m_fontSize: 72
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1296,8 +1296,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 1.2499846, y: 0}
-  m_SizeDelta: {x: -2.5000308, y: 28}
+  m_AnchoredPosition: {x: -0.000015258789, y: 0}
+  m_SizeDelta: {x: -0.000030755997, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590220842928168134
 MonoBehaviour:

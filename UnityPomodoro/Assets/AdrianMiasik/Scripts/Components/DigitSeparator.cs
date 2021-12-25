@@ -5,11 +5,11 @@ namespace AdrianMiasik.Components
 {
     public class DigitSeparator : MonoBehaviour
     {
-        [SerializeField] private TMP_Text separator;
+        [SerializeField] private TMP_Text m_separator;
 
-        public void SetSeparatorColor(Color _newColor)
+        public void SetSeparatorColor(Color newColor)
         {
-            separator.color = _newColor;
+            m_separator.color = newColor;
         }
     }
 }

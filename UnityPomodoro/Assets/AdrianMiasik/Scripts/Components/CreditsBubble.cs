@@ -11,13 +11,13 @@ namespace AdrianMiasik.Components
 {
     public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler, IColorHook
     {
-        [SerializeField] private SVGImage background;
-        [SerializeField] private CanvasGroup backgroundContainer;
-        [SerializeField] private UPIcon icon;
-        [SerializeField] private CanvasGroup textContainer;
-        [SerializeField] private List<TMP_Text> text = new List<TMP_Text>();
+        [SerializeField] private SVGImage m_background;
+        [SerializeField] private CanvasGroup m_backgroundContainer;
+        [SerializeField] private UPIcon m_icon;
+        [SerializeField] private CanvasGroup m_textContainer;
+        [SerializeField] private List<TMP_Text> m_text = new List<TMP_Text>();
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")]
-        [SerializeField] private float fadeSpeed = 2f;
+        [SerializeField] private float m_fadeSpeed = 2f;
         
         private float fadeProgress = 1;
 
@@ -35,22 +35,22 @@ namespace AdrianMiasik.Components
 
         private FadeState state;
 
-        public void Initialize(PomodoroTimer _timer)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = _timer;
+            timer = pomodoroTimer;
 
             // Setup
-            Initialize(duration);
+            Initialize(m_duration);
             Lock();
             fadeProgress = 1; // Starts at one since bubble is visible
             
             // Theme
             timer.GetTheme().RegisterColorHook(this);
-            background.color = timer.GetTheme().GetCurrentColorScheme().backgroundHighlight;
+            m_background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             ColorUpdate(timer.GetTheme());
         }
         
-        protected override void OnUpdate(float _progress)
+        protected override void OnUpdate(float progress)
         {
             // Nothing
         }
@@ -74,16 +74,16 @@ namespace AdrianMiasik.Components
             {
                 if (state == FadeState.FADING_IN)
                 {
-                    fadeProgress += Time.deltaTime * fadeSpeed;
+                    fadeProgress += Time.deltaTime * m_fadeSpeed;
                 }
                 else if (state == FadeState.FADING_OUT)
                 {
-                    fadeProgress -= Time.deltaTime * fadeSpeed;
+                    fadeProgress -= Time.deltaTime * m_fadeSpeed;
                 }
                 
                 fadeProgress = Mathf.Clamp01(fadeProgress);
-                textContainer.alpha = fadeProgress;
-                backgroundContainer.alpha = fadeProgress;
+                m_textContainer.alpha = fadeProgress;
+                m_backgroundContainer.alpha = fadeProgress;
                 
                 // If fade is completed...
                 if (fadeProgress <= 0 || fadeProgress >= 1)
@@ -97,9 +97,9 @@ namespace AdrianMiasik.Components
 
         public void FadeOut()
         {
-            foreach (TMP_Text _text in text)
+            foreach (TMP_Text text in m_text)
             {
-                _text.color = timer.GetTheme().GetCurrentColorScheme().foreground;
+                text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
 
             state = FadeState.FADING_OUT;
@@ -107,9 +107,9 @@ namespace AdrianMiasik.Components
 
         public void FadeIn()
         {
-            foreach (TMP_Text _text in text)
+            foreach (TMP_Text text in m_text)
             {
-                _text.color = timer.GetTheme().GetCurrentColorScheme().foreground;
+                text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
 
             state = FadeState.FADING_IN;
@@ -125,7 +125,7 @@ namespace AdrianMiasik.Components
             lockInteraction = false;
         }
 
-        public void OnPointerEnter(PointerEventData _eventData)
+        public void OnPointerEnter(PointerEventData eventData)
         {
             isPointerHovering = true;
             
@@ -137,7 +137,7 @@ namespace AdrianMiasik.Components
             FadeIn();
         }
 
-        public void OnPointerExit(PointerEventData _eventData)
+        public void OnPointerExit(PointerEventData eventData)
         {
             isPointerHovering = false;
             
@@ -149,18 +149,18 @@ namespace AdrianMiasik.Components
             FadeOut();
         }
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
-            background.color = timer.IsSidebarOpen() ?
-                _theme.GetCurrentColorScheme().background : 
-                _theme.GetCurrentColorScheme().backgroundHighlight;
+            m_background.color = timer.IsSidebarOpen() ?
+                theme.GetCurrentColorScheme().m_background : 
+                theme.GetCurrentColorScheme().m_backgroundHighlight;
 
-            foreach (TMP_Text _text in text)
+            foreach (TMP_Text text in m_text)
             {
-                _text.color = _theme.GetCurrentColorScheme().foreground;
+                text.color = theme.GetCurrentColorScheme().m_foreground;
             }
 
-            icon.ColorUpdate(_theme);
+            m_icon.ColorUpdate(theme);
         }
     }
 }

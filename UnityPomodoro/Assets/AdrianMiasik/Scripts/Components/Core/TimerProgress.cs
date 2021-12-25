@@ -4,8 +4,8 @@ namespace AdrianMiasik.Components.Core
 { 
     public abstract class TimerProgress : MonoBehaviour
     {
-        [SerializeField] protected float duration = 3f;
-        [SerializeField] private bool loop;
+        [SerializeField] protected float m_duration = 3f;
+        [SerializeField] private bool m_loop;
 
         private bool isRunning;
         private bool isInit; // Set this to true to run timer
@@ -13,9 +13,9 @@ namespace AdrianMiasik.Components.Core
         private float elapsedTime;
         private bool hasCompleted;
 
-        protected void Initialize(float _timerDuration)
+        protected void Initialize(float timerDuration)
         {
-            duration = _timerDuration;
+            m_duration = timerDuration;
             isInit = true;
             hasCompleted = false;
             isRunning = true;
@@ -23,15 +23,15 @@ namespace AdrianMiasik.Components.Core
 
         protected void Restart()
         {
-            Initialize(duration);
+            Initialize(m_duration);
             elapsedTime = 0;
         }
         
         /// <summary>
         /// Update loop for timer
         /// </summary>
-        /// <param name="_progress">A progress value between 0 to 1</param>
-        protected abstract void OnUpdate(float _progress);
+        /// <param name="progress">A progress value between 0 to 1</param>
+        protected abstract void OnUpdate(float progress);
         
         /// <summary>
         /// Invoked when the timer has completed
@@ -40,16 +40,16 @@ namespace AdrianMiasik.Components.Core
         
         protected virtual void Update()
         {
-            if (!isInit || hasCompleted && !loop)
+            if (!isInit || hasCompleted && !m_loop)
             {
                 return;
             }
         
             elapsedTime += Time.deltaTime;
-            progress = elapsedTime / duration;
+            progress = elapsedTime / m_duration;
             OnUpdate(progress);
 
-            if (elapsedTime >= duration)
+            if (elapsedTime >= m_duration)
             {
                 OnComplete();
                 elapsedTime = 0;

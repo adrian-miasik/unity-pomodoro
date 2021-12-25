@@ -6,14 +6,14 @@ namespace AdrianMiasik.Components
 {
     public class UPIcon : MonoBehaviour
     {
-        [SerializeField] private SVGImage icon;
+        [SerializeField] private SVGImage m_icon;
 
-        [SerializeField] private Sprite lightSprite;
-        [SerializeField] private Sprite darkSprite;
+        [SerializeField] private Sprite m_lightSprite;
+        [SerializeField] private Sprite m_darkSprite;
 
-        public void ColorUpdate(Theme _theme)
+        public void ColorUpdate(Theme theme)
         {
-            icon.sprite = _theme.isLightModeOn ? lightSprite : darkSprite;
+            m_icon.sprite = theme.m_darkMode ? m_darkSprite : m_lightSprite;
         }
     }
 }
