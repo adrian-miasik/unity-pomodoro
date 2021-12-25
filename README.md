@@ -25,7 +25,7 @@
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work and break sessions. Quickly swap between the two timers to keep you on track and focused.
 
-**Version**:  1.5.0
+**Version**:  1.6.0
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
@@ -36,20 +36,21 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release - v1.5.0 - Settings Panel & Sidebar Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.5.0)
+### [Latest Release - v1.6.0 - Confirmation Dialogs & 'Mute Audio When Out Of Focus' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.5.0/unity-pomodoro-1.5.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.5.0/unity-pomodoro-1.5.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.5.0/unity-pomodoro-1.5.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.5.0/unity-pomodoro-1.5.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-linux-desktop-64-bit.zip)
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v1.5.0 - Settings Panel & Sidebar Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.5.0)
 - [v1.4.0 - Sidebar Navigation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.4.0)
 - [v1.3.0 - 🎃 Halloween Theme & Digit Format Support](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.3.0)
 - [v1.2.1 - Dark Mode, Tick Animation, and Architectural Improvements](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.2.1)
@@ -61,6 +62,7 @@ Want to help? If you're interested in contributing to the project, please see th
 ## Media
 <img src="promotional/release-banner.png" width="720">
 <img src="promotional/release-showcase.gif" width="720">
+<img width="640" alt="unity-pomodoro-release-banner-1.6.0" src="https://user-images.githubusercontent.com/12757380/147377998-ea19460b-5ea7-48cb-85bf-a3eabcda0975.gif">
 
 ### Screenshots & Mocks
 #### Light
