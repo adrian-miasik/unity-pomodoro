@@ -207,7 +207,6 @@ namespace AdrianMiasik
             PlaySpawnAnimation();
 
             // Setup & apply theme
-            // m_themeSlider.ColorUpdate(m_theme); // Force update toggle visual
             m_theme.RegisterColorHook(this);
             m_theme.ApplyColorChanges();
         }
