@@ -21,7 +21,7 @@ namespace AdrianMiasik.Components.Core
         public UnityEvent m_onClick;
         
         // Press and Release
-        private Vector3 cachedScale;
+        private Vector3 cachedScale = Vector3.one; // Default
         private bool isAnimatingRelease;
         private float accumulatedReleaseTime;
         
