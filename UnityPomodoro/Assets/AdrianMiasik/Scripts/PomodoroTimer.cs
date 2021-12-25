@@ -225,6 +225,8 @@ namespace AdrianMiasik
             {
                 element.StateUpdate(m_state, m_theme);
             }
+            
+            UpdateRingColor(m_theme);
 
             // Do transition logic
             switch (m_state)
@@ -898,6 +900,11 @@ namespace AdrianMiasik
             m_menuToggle.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
             m_menuToggle.ColorUpdate(m_theme);
 
+            UpdateRingColor(m_theme);
+        }
+
+        private void UpdateRingColor(Theme theme)
+        {
             switch (m_state)
             {
                 case States.SETUP:
