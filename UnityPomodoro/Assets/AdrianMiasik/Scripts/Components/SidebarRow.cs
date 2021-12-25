@@ -45,7 +45,7 @@ namespace AdrianMiasik.Components
             m_spawn.Play();
         }
 
-        private void Show()
+        public void Show()
         {
             m_container.gameObject.SetActive(true);
         }

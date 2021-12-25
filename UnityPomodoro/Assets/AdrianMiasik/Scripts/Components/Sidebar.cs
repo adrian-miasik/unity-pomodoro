@@ -78,17 +78,25 @@ namespace AdrianMiasik.Components
 
             if (isOpen)
             {
-                if (m_rowsToSpawn.Count > 0)
+                foreach (SidebarRow row in m_rowsToSpawn)
                 {
-                    rowStaggerTime += Time.deltaTime;
-                    
-                    if (rowStaggerTime >= rowStaggerDelay)
-                    {
-                        rowStaggerTime = 0;
-                        m_rowsToSpawn[0].PlaySpawnAnimation();
-                        m_rowsToSpawn.RemoveAt(0);
-                    }
+                    row.PlaySpawnAnimation();
                 }
+                m_rowsToSpawn.Clear();
+                
+                // TODO: Fix staggering spawn animation.
+                // if (m_rowsToSpawn.Count > 0)
+                // {
+                //     rowStaggerTime += Time.deltaTime;
+                //     
+                //     if (rowStaggerTime >= rowStaggerDelay)
+                //     {
+                //         rowStaggerTime = 0;
+                //         m_rowsToSpawn[0].Show();
+                //         // m_rowsToSpawn[0].PlaySpawnAnimation();
+                //         m_rowsToSpawn.RemoveAt(0);
+                //     }
+                // }
             }
         }
         
