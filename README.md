@@ -36,7 +36,7 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release - v1.6.0 - Confirmation Dialogs & 'Mute Audio When Out Of Focus' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
+### [Latest Release - v1.6.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
 #### Direct
 - Windows
   - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-windows-desktop-64-bit.zip)
