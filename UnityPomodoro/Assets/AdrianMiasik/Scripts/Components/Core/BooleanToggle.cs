@@ -1,3 +1,4 @@
+using AdrianMiasik.Components.Wrappers;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;

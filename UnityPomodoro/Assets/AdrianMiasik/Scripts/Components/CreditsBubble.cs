@@ -44,12 +44,12 @@ namespace AdrianMiasik.Components
             Lock();
             fadeProgress = 1; // Starts at one since bubble is visible
             
-            // Theme
+            // Theme Element
             timer.GetTheme().RegisterColorHook(this);
             m_background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             ColorUpdate(timer.GetTheme());
         }
-        
+
         protected override void OnUpdate(float progress)
         {
             // Nothing

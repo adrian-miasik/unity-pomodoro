@@ -1,4 +1,5 @@
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Wrappers;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;

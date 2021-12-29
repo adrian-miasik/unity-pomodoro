@@ -1,4 +1,5 @@
 ﻿using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Wrappers;
 using Unity.VectorGraphics;
 using UnityEditor;
 
