@@ -1,4 +1,3 @@
-using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
-    public class BooleanSlider : MonoBehaviour, IPointerClickHandler, IColorHook
+    public class BooleanSlider : ThemeElement, IPointerClickHandler
     {
         // General
         [SerializeField] public SVGImage m_background;
@@ -66,6 +65,8 @@ namespace AdrianMiasik.Components.Core
 
         public void Initialize(PomodoroTimer timer, bool isOn)
         {
+            base.Initialize(timer);
+            
             state = isOn;
             if (state)
             {
@@ -75,9 +76,6 @@ namespace AdrianMiasik.Components.Core
             {
                 Disable();
             }
-            
-            timer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(timer.GetTheme());
         }
 
         /// <summary>
@@ -148,7 +146,7 @@ namespace AdrianMiasik.Components.Core
             OnStateChanged();
         }
         
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             falseColor = overrideFalseColor ? overridenFalseColor : currentColors.m_modeOne;
