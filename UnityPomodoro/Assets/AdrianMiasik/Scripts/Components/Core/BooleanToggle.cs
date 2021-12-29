@@ -1,13 +1,11 @@
-using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
-    public class BooleanToggle : Toggle, IColorHook
+    public class BooleanToggle : ThemeElementToggle
     {
         public SVGImage m_icon;
         
@@ -24,7 +22,6 @@ namespace AdrianMiasik.Components.Core
         public UnityEvent m_onSetToFalseClick;
 
         // Cache
-        private PomodoroTimer timer;
         private bool isInitialized;
 
         // Override
@@ -55,19 +52,18 @@ namespace AdrianMiasik.Components.Core
         
         public void Initialize(PomodoroTimer pomodoroTimer, bool state, bool invokeEvents = false)
         {
-            timer = pomodoroTimer;
-            isOn = state;
+            base.Initialize(pomodoroTimer);
+            
+            m_toggle.isOn = state;
             isInitialized = true;
             
-            pomodoroTimer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(pomodoroTimer.GetTheme());
             UpdateToggle(invokeEvents);
         }
 
         // Unity Event
         public void UpdateToggle(bool invokeEvents)
         {
-            if (isOn)
+            if (m_toggle.isOn)
             {
                 m_icon.sprite = m_trueSprite;
                 m_icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,m_trueZRotation));
@@ -88,25 +84,25 @@ namespace AdrianMiasik.Components.Core
 
             if (isInitialized)
             {
-                ColorUpdate(timer.GetTheme());
+                ColorUpdate(Timer.GetTheme());
             }
         }
 
         public void SetToTrue()
         {
-            isOn = true;
+            m_toggle.isOn = true;
             UpdateToggle(false);
         }
 
         public void SetToFalse()
         {
-            isOn = false;
+            m_toggle.isOn = false;
             UpdateToggle(false);
         }
         
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
-            switch (isOn)
+            switch (m_toggle.isOn)
             {
                 case true:
                     m_icon.color = overrideTrueColor ? overridenTrueColor : theme.GetCurrentColorScheme().m_close;
