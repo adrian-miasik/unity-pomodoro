@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
-using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class ConfirmationDialog : MonoBehaviour, IColorHook
+    public class ConfirmationDialog : ThemeElement
     {
         [SerializeField] private Image m_backgroundBox;
         [SerializeField] private TMP_Text m_topLabel;
@@ -25,25 +23,15 @@ namespace AdrianMiasik.Components
         private Action onCancel;
         private Action onSubmit;
         
-        private PomodoroTimer timer;
-        
-        public void Initialize(PomodoroTimer pomodoroTimer, Action submit)
-        {
-            Initialize(pomodoroTimer, Close, submit);
-        }
-
         public void Initialize(PomodoroTimer pomodoroTimer, Action submit, Action cancel)
         {
-            timer = pomodoroTimer;
-            timer.GetTheme().RegisterColorHook(this);
-
+            base.Initialize(pomodoroTimer);
+            
             onCancel = cancel;
             onSubmit = submit;
             
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
-            
-            ColorUpdate(pomodoroTimer.GetTheme());
         }
 
         // UnityEvent - Invoked by no button
@@ -62,12 +50,12 @@ namespace AdrianMiasik.Components
 
         public void Close()
         {
-            timer.ClearDialogPopup(this);
-            timer.GetTheme().Deregister(this); // Remove self from themed components
+            Timer.ClearDialogPopup(this);
+            Timer.GetTheme().Deregister(this); // Remove self from themed components
             Destroy(gameObject);
         }
 
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             // Background
             Color backgroundColor = theme.GetCurrentColorScheme().m_background;
