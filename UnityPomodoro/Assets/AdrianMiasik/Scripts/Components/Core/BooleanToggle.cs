@@ -3,6 +3,7 @@ using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
@@ -55,7 +56,7 @@ namespace AdrianMiasik.Components.Core
         {
             base.Initialize(pomodoroTimer);
             
-            Toggle.isOn = state;
+            isOn = state;
             isInitialized = true;
             
             UpdateToggle(invokeEvents);
@@ -64,7 +65,7 @@ namespace AdrianMiasik.Components.Core
         // Unity Event
         public void UpdateToggle(bool invokeEvents)
         {
-            if (Toggle.isOn)
+            if (isOn)
             {
                 m_icon.sprite = m_trueSprite;
                 m_icon.transform.rotation = Quaternion.Euler(new Vector3(0,0,m_trueZRotation));
@@ -91,19 +92,19 @@ namespace AdrianMiasik.Components.Core
 
         public void SetToTrue()
         {
-            Toggle.isOn = true;
+            isOn = true;
             UpdateToggle(false);
         }
 
         public void SetToFalse()
         {
-            Toggle.isOn = false;
+            isOn = false;
             UpdateToggle(false);
         }
         
         public override void ColorUpdate(Theme theme)
         {
-            switch (Toggle.isOn)
+            switch (isOn)
             {
                 case true:
                     m_icon.color = overrideTrueColor ? overridenTrueColor : theme.GetCurrentColorScheme().m_close;
