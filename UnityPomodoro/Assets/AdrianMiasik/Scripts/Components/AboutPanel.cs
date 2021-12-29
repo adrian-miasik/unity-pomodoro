@@ -1,26 +1,24 @@
-using AdrianMiasik.Interfaces;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
 namespace AdrianMiasik.Components
 {
-    public class AboutPanel : MonoBehaviour, IColorHook
+    public class AboutPanel : ThemeElement
     {
         [SerializeField] private TMP_Text m_title;
         [SerializeField] private TMP_Text m_description;
         [SerializeField] private SocialButtons m_socials;
         [SerializeField] private WriteVersionNumber m_versionNumber;
         [SerializeField] private TMP_Text m_copyrightDisclaimer;
-
-        private PomodoroTimer timer;
+        
         private bool isInfoPageOpen;
         private bool isInitialized;
         
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        public override void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = pomodoroTimer;
-            timer.GetTheme().RegisterColorHook(this);
+            base.Initialize(pomodoroTimer);
             isInitialized = true;
         }
         
@@ -29,7 +27,7 @@ namespace AdrianMiasik.Components
             return isInitialized;
         }
 
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             if (!isInfoPageOpen)
             {
@@ -54,7 +52,7 @@ namespace AdrianMiasik.Components
             gameObject.SetActive(true);
             isInfoPageOpen = true;
             
-            ColorUpdate(timer.GetTheme());
+            ColorUpdate(Timer.GetTheme());
         }
 
         public void Hide()
