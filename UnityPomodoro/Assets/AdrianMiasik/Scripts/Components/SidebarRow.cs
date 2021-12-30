@@ -1,5 +1,4 @@
 using AdrianMiasik.Components.Core;
-using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class SidebarRow : MonoBehaviour, IColorHook
+    public class SidebarRow : ThemeElement
     {
         [SerializeField] private Animation m_spawn;
         [SerializeField] private RectTransform m_container;
@@ -21,17 +20,14 @@ namespace AdrianMiasik.Components
         [SerializeField] private TMP_Text m_label;
 
         // Cache
-        private PomodoroTimer timer;
         private Sidebar sidebar;
         private bool isSelected;
         
         public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
-            timer = pomodoroTimer;
+            base.Initialize(pomodoroTimer);
             sidebar = parentSidebar;
             isSelected = selected;
-            pomodoroTimer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(pomodoroTimer.GetTheme());
         }
 
         public void Hide()
@@ -66,7 +62,7 @@ namespace AdrianMiasik.Components
             m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
             m_contentContainer.offsetMax = new Vector2(-6, m_contentContainer.offsetMax.y); // Right
 
-            m_background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
+            m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             
             isSelected = true;
         }
@@ -81,7 +77,7 @@ namespace AdrianMiasik.Components
             m_contentContainer.offsetMin = Vector2.zero; // Left
             m_contentContainer.offsetMax = Vector2.zero; // Right
             
-            m_background.color = timer.GetTheme().GetCurrentColorScheme().m_background;
+            m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
 
             isSelected = false;
         }
@@ -91,7 +87,7 @@ namespace AdrianMiasik.Components
             m_button.CancelHold();
         }
 
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             // Backgrounds
             m_background.color = isSelected ? theme.GetCurrentColorScheme().m_backgroundHighlight : theme.GetCurrentColorScheme().m_background;
