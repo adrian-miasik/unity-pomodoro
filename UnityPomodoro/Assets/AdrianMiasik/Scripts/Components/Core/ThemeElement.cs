@@ -18,9 +18,9 @@ namespace AdrianMiasik.Components.Core
             // Register element to theme
             pomodoroTimer.GetTheme().RegisterColorHook(this);
             
-            // Update our component
             if (updateColors)
             {
+                // Update our component
                 ColorUpdate(pomodoroTimer.GetTheme());
             }
         }
