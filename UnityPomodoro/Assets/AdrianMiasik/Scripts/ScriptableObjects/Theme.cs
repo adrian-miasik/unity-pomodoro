@@ -38,7 +38,7 @@ namespace AdrianMiasik.ScriptableObjects
         {
             if (colorElements.Contains(hook))
             {
-                Debug.LogWarning("This interface has already been registered.");
+                Debug.LogWarning("This interface has already been registered.", hook.gameObject);
             }
             else
             {
