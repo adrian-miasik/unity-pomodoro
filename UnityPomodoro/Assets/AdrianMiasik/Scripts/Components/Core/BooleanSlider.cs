@@ -63,7 +63,7 @@ namespace AdrianMiasik.Components.Core
             overridenDotColor = color;
         }
 
-        public void Initialize(PomodoroTimer timer, bool isOn)
+        public override void Initialize(PomodoroTimer timer, bool isOn)
         {
             base.Initialize(timer);
             

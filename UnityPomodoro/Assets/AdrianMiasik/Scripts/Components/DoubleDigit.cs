@@ -1,6 +1,5 @@
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Wrappers;
-using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -10,7 +9,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class DoubleDigit : MonoBehaviour, ISelectHandler, IPointerClickHandler, ISubmitHandler, IColorHook
+    public class DoubleDigit : ThemeElement, ISelectHandler, IPointerClickHandler, ISubmitHandler
     {
         [Header("References")] 
         [SerializeField] private Selectable m_selectable;
@@ -29,7 +28,6 @@ namespace AdrianMiasik.Components
         [HideInInspector] public DigitFormat.Digits m_digit;
         
         // Cache
-        private PomodoroTimer timer;
         private DigitFormat format;
         private bool isInteractable = true;
         private bool isSelected;
@@ -59,11 +57,10 @@ namespace AdrianMiasik.Components
 
         public void Initialize(PomodoroTimer pomodoroTimer, DigitFormat digitFormat, DigitFormat.Digits digit)
         {
+            base.Initialize(pomodoroTimer);
             format = digitFormat;
             m_digit = digit;
-            timer = pomodoroTimer;
-            timer.GetTheme().RegisterColorHook(this);
-            
+
             // Disable run time caret interactions - We want to run input through this classes input events
             caret = m_input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
             if (caret)
@@ -73,7 +70,6 @@ namespace AdrianMiasik.Components
             }
             
             HideArrows();
-            ColorUpdate(timer.GetTheme());
         }
 
         public void UpdateVisuals(int value)
@@ -175,7 +171,7 @@ namespace AdrianMiasik.Components
                 instanceMaterial = new Material(m_background.material);
             }
 
-            startingColor = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
+            startingColor = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             // startingColor = instanceMaterial.GetColor(SquircleColor);
 
             endingColor = color;
@@ -353,7 +349,7 @@ namespace AdrianMiasik.Components
             accumulatedSelectionTime = 0;
             
             ShowArrows();
-            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            SetSquircleColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
 
             if (setSelection)
             {
@@ -369,7 +365,7 @@ namespace AdrianMiasik.Components
             ignoreFirstClick = true;
             
             HideArrows();
-            SetSquircleColor(timer.GetTheme().GetCurrentColorScheme().m_background);
+            SetSquircleColor(Timer.GetTheme().GetCurrentColorScheme().m_background);
             
             // Disable caret selection
             caret.raycastTarget = false;
@@ -426,7 +422,7 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             
