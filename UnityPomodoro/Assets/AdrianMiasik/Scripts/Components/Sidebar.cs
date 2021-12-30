@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
-using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
@@ -10,7 +9,7 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components
 { 
     [ExecuteInEditMode]
-    public class Sidebar : MonoBehaviour, IColorHook
+    public class Sidebar : ThemeElement
     {
         [Header("Components")]
         [SerializeField] private BooleanToggle m_menuToggle;
@@ -29,7 +28,6 @@ namespace AdrianMiasik.Components
         [SerializeField] private List<SidebarRow> m_rowsToSpawn;
 
         // Cache
-        private PomodoroTimer timer;
         private bool isOpen;
         private Color overlay;
         
@@ -41,9 +39,7 @@ namespace AdrianMiasik.Components
 
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = pomodoroTimer;
-            pomodoroTimer.GetTheme().RegisterColorHook(this);
-            ColorUpdate(pomodoroTimer.GetTheme());
+            base.Initialize(pomodoroTimer);
             
             // Initialize row components
             for (int i = 0; i < m_contentRows.Count; i++)
@@ -116,8 +112,8 @@ namespace AdrianMiasik.Components
             m_overlayImage.enabled = true;
             m_overlayGroup.alpha = 1;
             
-            ColorUpdate(timer.GetTheme());
-            timer.ColorUpdateCreditsBubble();
+            ColorUpdate(Timer.GetTheme());
+            Timer.ColorUpdateCreditsBubble();
         }
 
         public void Close()
@@ -138,7 +134,7 @@ namespace AdrianMiasik.Components
             m_overlayImage.enabled = false;
             m_overlayGroup.alpha = 0;
             
-            timer.ColorUpdateCreditsBubble();
+            Timer.ColorUpdateCreditsBubble();
         }
 
         public bool IsOpen()
@@ -176,7 +172,7 @@ namespace AdrianMiasik.Components
             AudioMimic.Instance.PlaySound(clickSoundClip);
         }
 
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             // Overlay
             overlay = theme.GetCurrentColorScheme().m_foreground;
