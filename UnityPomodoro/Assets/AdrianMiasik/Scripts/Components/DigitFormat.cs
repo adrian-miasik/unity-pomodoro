@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class DigitFormat : MonoBehaviour, IColorHook
+    public class DigitFormat : ThemeElement
     {
         public enum Digits
         {
@@ -44,7 +45,6 @@ namespace AdrianMiasik.Components
         [SerializeField] private int[] m_breakTime = {0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
 
         // Cache
-        private PomodoroTimer timer;
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
         private int previousFormatSelection = -1;
@@ -68,14 +68,14 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            timer = pomodoroTimer;
-            Theme theme = pomodoroTimer.GetTheme();
-            theme.RegisterColorHook(this);
+            base.Initialize(pomodoroTimer, false);
              
             SwitchFormat(m_format);
             GenerateFormat();
+            
+            ColorUpdate(Timer.GetTheme());
         }
 
         [ContextMenu("Generate Format")]
@@ -96,7 +96,7 @@ namespace AdrianMiasik.Components
                 // Deregister color hook
                 foreach (IColorHook colorHook in t.GetComponentsInChildren<IColorHook>())
                 {
-                    timer.GetTheme().Deregister(colorHook);
+                    Timer.GetTheme().Deregister(colorHook);
                 }
                 
                 Destroy(t.gameObject);
@@ -115,7 +115,7 @@ namespace AdrianMiasik.Components
             // Apply
             RefreshDigitVisuals();
 
-            ColorUpdate(timer.GetTheme());
+            ColorUpdate(Timer.GetTheme());
         }
 
         public void RefreshDigitVisuals()
@@ -290,7 +290,7 @@ namespace AdrianMiasik.Components
 
                 // Generate double digit
                 DoubleDigit dd = Instantiate(m_digitSource, m_digitFormatRect);
-                dd.Initialize(timer, this, GetDigitType(pair.Key));
+                dd.Initialize(Timer, this, GetDigitType(pair.Key));
                 generatedDigits.Add(dd);
                 
                 // Skip last iteration to avoid spacer generation
@@ -328,7 +328,7 @@ namespace AdrianMiasik.Components
                 selectOnRight = generatedDigits[0].GetSelectable(),
                 selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
             };
-            timer.SetBackgroundNavigation(backgroundNav);
+            Timer.SetBackgroundNavigation(backgroundNav);
         }
 
         private int Wrap(int index, int length)
@@ -480,7 +480,7 @@ namespace AdrianMiasik.Components
         /// Applies our theme changes to our components when necessary
         /// </summary>
         /// <param name="theme"></param>
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             // Digits
             SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
@@ -629,7 +629,7 @@ namespace AdrianMiasik.Components
         public void SetTimerValue(string formattedString)
         {
             // Only allow 'Set Timer Value' to work when we are in the setup state
-            if (timer.m_state != PomodoroTimer.States.SETUP)
+            if (Timer.m_state != PomodoroTimer.States.SETUP)
             {
                 return;
             }
@@ -725,17 +725,17 @@ namespace AdrianMiasik.Components
 
         public void ClearTimerSelection()
         {
-            timer.ClearSelection();
+            Timer.ClearSelection();
         }
 
         public PomodoroTimer.States GetTimerState()
         {
-            return timer.m_state;
+            return Timer.m_state;
         }
 
         public void SetTimerSelection(DoubleDigit digitToSelect)
         {
-            timer.SetSelection(digitToSelect);
+            Timer.SetSelection(digitToSelect);
         }
 
         /// <summary>

@@ -16,9 +16,9 @@ namespace AdrianMiasik.Components
         private bool isInfoPageOpen;
         private bool isInitialized;
         
-        public override void Initialize(PomodoroTimer pomodoroTimer)
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            base.Initialize(pomodoroTimer);
+            base.Initialize(pomodoroTimer, updateColors);
             isInitialized = true;
         }
         
