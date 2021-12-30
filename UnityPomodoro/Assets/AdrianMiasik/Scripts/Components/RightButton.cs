@@ -1,4 +1,5 @@
 using System;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
@@ -7,7 +8,7 @@ using UnityEngine.Events;
 
 namespace AdrianMiasik.Components
 {
-    public class RightButton : MonoBehaviour, ITimerState, IColorHook
+    public class RightButton : ThemeElement, ITimerState
     {
         [Header("References")] 
         [SerializeField] private SVGImage m_icon;
@@ -24,20 +25,16 @@ namespace AdrianMiasik.Components
         public UnityEvent m_pauseOnClick;
         public UnityEvent m_snoozeOnClick;
 
-        // Cache
-        private PomodoroTimer timer;
-
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = pomodoroTimer;
-            pomodoroTimer.GetTheme().RegisterColorHook(this);
+            base.Initialize(pomodoroTimer, false);
         }
         
         public void OnClick()
         {
             m_onClick.Invoke();
             
-            switch (timer.m_state)
+            switch (Timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
                     m_playOnClick.Invoke();
@@ -82,16 +79,16 @@ namespace AdrianMiasik.Components
                 
                 case PomodoroTimer.States.COMPLETE:
                     m_icon.transform.localScale = Vector3.one * 0.55f;                    
-                    m_icon.sprite = timer.IsOnBreak() ? m_breakComplete : m_complete;
+                    m_icon.sprite = Timer.IsOnBreak() ? m_breakComplete : m_complete;
                     break;
             }
             
             ColorUpdate(theme);
         }
 
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
-            switch (timer.m_state)
+            switch (Timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
                     m_icon.color = theme.GetCurrentColorScheme().m_running;
@@ -103,7 +100,7 @@ namespace AdrianMiasik.Components
                     m_icon.color = theme.GetCurrentColorScheme().m_running;
                     break;
                 case PomodoroTimer.States.COMPLETE:
-                    m_icon.color = timer.IsOnBreak() ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo;
+                    m_icon.color = Timer.IsOnBreak() ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo;
                     break;
             }
         }
