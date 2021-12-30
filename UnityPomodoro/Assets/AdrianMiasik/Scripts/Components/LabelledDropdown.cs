@@ -1,4 +1,4 @@
-using AdrianMiasik.Interfaces;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
@@ -7,21 +7,18 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
-    public class LabelledDropdown : MonoBehaviour, IColorHook
+    public class LabelledDropdown : ThemeElement
     {
         [SerializeField] private TMP_Text m_label;
         [SerializeField] private TMP_Dropdown m_dropdown;
         [SerializeField] private Image m_containerOutline;
         [SerializeField] private SVGImage m_arrow;
 
-        private PomodoroTimer timer;
-    
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
-            timer = pomodoroTimer;
-            timer.GetTheme().RegisterColorHook(this);
+            base.Initialize(pomodoroTimer);
 
-            SetDropdownValue(timer.GetDigitFormat());
+            SetDropdownValue(Timer.GetDigitFormat());
         }
 
         public void SetDropdownValue(int selectionValue)
@@ -31,7 +28,7 @@ namespace AdrianMiasik.Components
             m_dropdown.value = selectionValue;
         }
 
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             m_label.color = theme.GetCurrentColorScheme().m_foreground;
             m_dropdown.captionText.color = theme.GetCurrentColorScheme().m_foreground;
