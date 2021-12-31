@@ -72,5 +72,17 @@ namespace AdrianMiasik.Components
         {
             return isOpen;
         }
+        
+        public void ShowMuteSoundOutOfFocusOption()
+        {
+            m_muteSoundOutOfFocusLabel.gameObject.SetActive(true);
+            m_muteSoundOutOfFocusBoolean.gameObject.SetActive(true);
+        }
+        
+        public void HideMuteSoundOutOfFocusOption()
+        {
+            m_muteSoundOutOfFocusLabel.gameObject.SetActive(false);
+            m_muteSoundOutOfFocusBoolean.gameObject.SetActive(false);
+        }
     }
 }

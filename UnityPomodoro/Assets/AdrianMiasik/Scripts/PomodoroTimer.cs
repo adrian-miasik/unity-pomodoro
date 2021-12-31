@@ -144,6 +144,12 @@ namespace AdrianMiasik
             SetMuteSoundWhenOutOfFocus();
 #elif UNITY_WSA // UWP
             SetMuteSoundWhenOutOfFocus(true); // Set to true since our UWP Notification will pull focus back to our app
+#elif UNITY_ANDROID
+            SetMuteSoundWhenOutOfFocus(); // Doesn't quite matter for mobile
+            m_settingsContainer.HideMuteSoundOutOfFocusOption();
+#elif UNITY_IOS
+            SetMuteSoundWhenOutOfFocus(); // Doesn't quite matter for mobile.
+            m_settingsContainer.HideMuteSoundOutOfFocusOption();
 #endif
         }
 
