@@ -47,6 +47,7 @@ namespace AdrianMiasik
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
+        [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
         [Header("Animations")] 
