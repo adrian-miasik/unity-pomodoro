@@ -29,8 +29,8 @@ namespace AdrianMiasik.Components
         }
 
         // Current format
-        [SerializeField] private RectTransform m_self;
-        [SerializeField] private RectTransform m_digitFormatRect;
+        [SerializeField] private RectTransform m_self; // Height modifier
+        [SerializeField] private RectTransform m_digitFormatRect; // Width modifier
         [SerializeField] private SupportedFormats m_format;
         
         [Header("Source Prefabs")]
