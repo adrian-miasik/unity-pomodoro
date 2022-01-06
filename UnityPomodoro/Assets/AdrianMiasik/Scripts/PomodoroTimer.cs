@@ -252,8 +252,7 @@ namespace AdrianMiasik
                     
                     // Show timer context
                     m_text.gameObject.SetActive(true);
-                    m_tomatoCounter.gameObject.SetActive(true);
-
+                    
                     // Complete ring
                     m_ring.fillAmount = 1f;
                     m_ring.material.SetFloat(RingDiameter, 0.9f);
@@ -297,14 +296,14 @@ namespace AdrianMiasik
                     break;
 
                 case States.COMPLETE:
-                    // Hide timer context
+
+                    // Hide state text
                     m_text.gameObject.SetActive(false);
-                    m_tomatoCounter.gameObject.SetActive(false);
-                    
+
                     // Complete ring
                     m_ring.fillAmount = 1f;
 
-                    // Hide digits and reveal completion label
+                    // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
                     m_digitFormat.Hide();
                     m_completion.gameObject.SetActive(true);
@@ -417,7 +416,6 @@ namespace AdrianMiasik
             }
             else
             {
-                SwitchState(States.COMPLETE);
                 OnTimerComplete();
                 m_onTimerCompletion?.Invoke();
             }
@@ -425,9 +423,22 @@ namespace AdrianMiasik
 
         private void OnTimerComplete()
         {
+            SwitchState(States.COMPLETE);
+            
             if (currentDialogPopup != null)
             {
                 currentDialogPopup.Close();
+            }
+            
+            // If timer completion was based on work/mode one timer
+            // (We don't add tomatoes for breaks)
+            if (!IsOnBreak())
+            {
+                if (m_tomatoCounter.AddTomato())
+                {
+                    // ...if ready for long break
+                    Debug.Log("TODO: tomato completion animation");
+                }
             }
         }
 
@@ -501,6 +512,9 @@ namespace AdrianMiasik
             // Set diameter
             m_ring.material.SetFloat(RingDiameter, ringDiameter);
             m_completion.gameObject.transform.localScale = Vector3.one * ringDiameter;
+            
+            // Scale tomatoes too
+            m_tomatoCounter.SetHorizontalScale(Vector3.one * ringDiameter);
 
             if (!hasRingPulseBeenInvoked)
             {
