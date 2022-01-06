@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,55 +12,64 @@ namespace AdrianMiasik.Components
         [SerializeField] private Tomato m_tomatoPrefab;
 
         [SerializeField] private List<Tomato> m_tomatoes = new List<Tomato>();
-
+        private int lastFilledTomatoIndex;
+        
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
+            // TODO: (4) Setting property for what defines a long break
+            //CreateTomato(pomodoroTimer, 4);
+            
+            lastFilledTomatoIndex = 0;
+
             base.Initialize(pomodoroTimer, updateColors);
         }
-        
-        /// <summary>
-        /// Create, init, cache, and return a tomato
-        /// </summary>
-        /// <param name="timer"></param>
-        /// <returns></returns>
-        private Tomato CreateTomato(PomodoroTimer timer)
-        {
-            Tomato tomato = Instantiate(m_tomatoPrefab, m_horizontal.transform);
-            tomato.Initialize(timer);
-            m_tomatoes.Add(tomato);
 
-            return tomato;
+        /// <summary>
+        /// Create, init, cache our tomatoes.
+        /// </summary>
+        /// <param name="timer">Main class reference</param>
+        /// <param name="count">How many tomatoes do you want to create?</param>
+        /// <returns></returns>
+        private void CreateTomato(PomodoroTimer timer, int count = 1)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Tomato tomato = Instantiate(m_tomatoPrefab, m_horizontal.transform);
+                tomato.Initialize(timer);
+                m_tomatoes.Add(tomato);
+            }
         }
 
         /// <summary>
-        /// Creates a tomato for us and returns the tomato counter completion state
+        /// Fills in the latest tomato
         /// </summary>
         /// <returns>Are we ready for a long break?</returns>
-        public bool AddTomato()
+        public void FillTomato()
         {
-            Tomato tomato = CreateTomato(Timer);
+            m_tomatoes[lastFilledTomatoIndex].Complete();
+
+            // Increment / wrap new tomato index
+            lastFilledTomatoIndex++;
+            lastFilledTomatoIndex = ListHelper.Wrap(lastFilledTomatoIndex, m_tomatoes.Count);
             
-            if (m_tomatoes.Count > 3)
+            // Check for completion
+            if (lastFilledTomatoIndex == 0)
             {
-                Debug.Log("TODO: Modify for long break");
-                
-                foreach (Tomato t in m_tomatoes)
-                {
-                    // TODO: Remove from theme elements
-                    Destroy(t.gameObject);
-                }
-                
-                m_tomatoes.Clear();
-
-                return true;
+                Timer.ReadyForLongBreak();
             }
-
-            return false;
         }
 
         public void SetHorizontalScale(Vector3 newScale)
         {
             m_horizontal.transform.localScale = newScale;
+        }
+        
+        public void ConsumeTomatoes()
+        {
+            foreach (Tomato tomato in m_tomatoes)
+            {
+                tomato.Reset();
+            }
         }
     }
 }

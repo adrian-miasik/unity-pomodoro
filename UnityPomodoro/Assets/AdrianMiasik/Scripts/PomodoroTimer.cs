@@ -256,7 +256,14 @@ namespace AdrianMiasik
                     // Complete ring
                     m_ring.fillAmount = 1f;
                     m_ring.material.SetFloat(RingDiameter, 0.9f);
-                    m_text.text = !m_digitFormat.m_isOnBreak ? "Set a work time" : "Set a break time";
+                    if (!m_digitFormat.m_isOnBreak)
+                    {
+                        m_text.text = "Set a work time";
+                    }
+                    else
+                    {
+                        m_text.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
+                    }
 
                     // Show digits and hide completion label
                     m_digitFormat.Show();
@@ -434,11 +441,7 @@ namespace AdrianMiasik
             // (We don't add tomatoes for breaks)
             if (!IsOnBreak())
             {
-                if (m_tomatoCounter.AddTomato())
-                {
-                    // ...if ready for long break
-                    Debug.Log("TODO: tomato completion animation");
-                }
+                m_tomatoCounter.FillTomato();
             }
         }
 
@@ -626,6 +629,13 @@ namespace AdrianMiasik
             {
                 isTimerBeingSetup = false;
                 CalculateTimeValues();
+            }
+            
+            // Remove long break once user has started it via Play
+            if (IsOnBreak() && IsOnLongBreak())
+            {
+                m_tomatoCounter.ConsumeTomatoes();
+                m_digitFormat.ConsumeLongBreak();
             }
 
             SwitchState(States.RUNNING);
@@ -825,6 +835,11 @@ namespace AdrianMiasik
         public bool IsOnBreak()
         {
             return m_digitFormat.m_isOnBreak;
+        }
+
+        private bool IsOnLongBreak()
+        {
+            return m_digitFormat.m_isOnLongBreak;
         }
 
         public bool IsAboutPageOpen()
@@ -1032,6 +1047,11 @@ namespace AdrianMiasik
             {
                 currentDialogPopup = null;
             }
+        }
+
+        public void ReadyForLongBreak()
+        {
+            m_digitFormat.ReadyForLongBreak();
         }
     }
 }

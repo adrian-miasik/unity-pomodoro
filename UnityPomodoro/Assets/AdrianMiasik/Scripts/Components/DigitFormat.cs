@@ -38,13 +38,18 @@ namespace AdrianMiasik.Components
         [SerializeField] private DoubleDigit m_digitSource;
         [SerializeField] private DigitSeparator m_separatorSource;
         
-        [Header("Work Data")]
+        // Work data / Mode one
         [SerializeField] private int[] m_workTime = {0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
 
-        [Header("Break Data")]
+        // Break data / Mode two
         public bool m_isOnBreak;
-        [SerializeField] private int[] m_breakTime = {0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
+        // TODO: rename to short break time
+        [SerializeField] private int[] m_breakTime = {0, 0, 5, 0, 0}; // Represents data for DD_HH_MM_SS_MS
 
+        // Long break data / potentially mode three?
+        public bool m_isOnLongBreak;
+        [SerializeField] private int[] m_longBreakTime = {0, 0, 20, 0, 0}; // Represents data for DD_HH_MM_SS_MS
+        
         // Cache
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
@@ -207,7 +212,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Returns the users own set time that has been set during timer setup.
+        /// Returns the users own set times (depending on the state, you could get one of three datasets)
         /// </summary>
         /// <returns></returns>
         public TimeSpan GetTime()
@@ -216,18 +221,29 @@ namespace AdrianMiasik.Components
             if (!m_isOnBreak)
             {
                 ts = TimeSpan.FromDays(m_workTime[0]) +
-                      TimeSpan.FromHours(m_workTime[1]) +
-                      TimeSpan.FromMinutes(m_workTime[2]) +
-                      TimeSpan.FromSeconds(m_workTime[3]) +
-                      TimeSpan.FromMilliseconds(m_workTime[4]);
+                     TimeSpan.FromHours(m_workTime[1]) +
+                     TimeSpan.FromMinutes(m_workTime[2]) +
+                     TimeSpan.FromSeconds(m_workTime[3]) +
+                     TimeSpan.FromMilliseconds(m_workTime[4]);
             }
             else
             {
-                ts = TimeSpan.FromDays(m_breakTime[0]) +
-                      TimeSpan.FromHours(m_breakTime[1]) +
-                      TimeSpan.FromMinutes(m_breakTime[2]) +
-                      TimeSpan.FromSeconds(m_breakTime[3]) +
-                      TimeSpan.FromMilliseconds(m_breakTime[4]);
+                if (m_isOnLongBreak)
+                {
+                    ts = TimeSpan.FromDays(m_longBreakTime[0]) + 
+                         TimeSpan.FromHours(m_longBreakTime[1]) + 
+                         TimeSpan.FromMinutes(m_longBreakTime[2]) + 
+                         TimeSpan.FromSeconds(m_longBreakTime[3]) + 
+                         TimeSpan.FromMilliseconds(m_longBreakTime[4]);   
+                }
+                else
+                {
+                    ts = TimeSpan.FromDays(m_breakTime[0]) + 
+                         TimeSpan.FromHours(m_breakTime[1]) + 
+                         TimeSpan.FromMinutes(m_breakTime[2]) + 
+                         TimeSpan.FromSeconds(m_breakTime[3]) + 
+                         TimeSpan.FromMilliseconds(m_breakTime[4]);
+                }
             }
 
             return ts;
@@ -369,17 +385,7 @@ namespace AdrianMiasik.Components
         }
 
         public void SetTime(TimeSpan ts)
-        {
-            // Clear out time arrays
-            if (!m_isOnBreak)
-            {
-                Array.Clear(m_workTime, 0, m_workTime.Length);
-            }
-            else
-            {
-                Array.Clear(m_breakTime, 0, m_breakTime.Length);
-            }
-
+        {   
             // Apply time arrays to update only for generated digits (essentially throwing out data that's not used)
             foreach (DoubleDigit doubleDigit in generatedDigits)
             {
@@ -612,7 +618,14 @@ namespace AdrianMiasik.Components
             }
             else
             {
-                m_breakTime[(int)digit] = newValue;
+                if (!m_isOnLongBreak)
+                {
+                    m_breakTime[(int)digit] = newValue;
+                }
+                else
+                {
+                    m_longBreakTime[(int) digit] = newValue;
+                }
             }
 
             OnValidate();
@@ -684,8 +697,17 @@ namespace AdrianMiasik.Components
             {
                 return m_workTime[(int)digits];
             }
-
-            return m_breakTime[(int)digits];
+            else
+            {
+                if (!m_isOnLongBreak)
+                {
+                    return m_breakTime[(int)digits];
+                }
+                else
+                {
+                    return m_longBreakTime[(int) digits];
+                }
+            }
         }
 
         /// <summary>
@@ -760,6 +782,16 @@ namespace AdrianMiasik.Components
         public int GetFormat()
         {
             return (int) m_format;
+        }
+
+        public void ReadyForLongBreak()
+        {
+            m_isOnLongBreak = true;
+        }
+
+        public void ConsumeLongBreak()
+        {
+            m_isOnLongBreak = false;
         }
     }
  }
