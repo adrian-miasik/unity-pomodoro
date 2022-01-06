@@ -194,6 +194,7 @@ namespace AdrianMiasik
             m_notifications.Initialize(this);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
+            m_tomatoCounter.Initialize(this);
             m_completionLabel.Initialize(this);
             m_themeSlider.Initialize(this);
             m_creditsBubble.Initialize(this);
@@ -242,8 +243,9 @@ namespace AdrianMiasik
                 case States.SETUP:
                     m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
                     
-                    // Show state text
+                    // Show timer context
                     m_text.gameObject.SetActive(true);
+                    m_tomatoCounter.gameObject.SetActive(true);
 
                     // Complete ring
                     m_ring.fillAmount = 1f;
@@ -288,9 +290,10 @@ namespace AdrianMiasik
                     break;
 
                 case States.COMPLETE:
-                    // Hide state text
+                    // Hide timer context
                     m_text.gameObject.SetActive(false);
-
+                    m_tomatoCounter.gameObject.SetActive(false);
+                    
                     // Complete ring
                     m_ring.fillAmount = 1f;
 
@@ -350,25 +353,27 @@ namespace AdrianMiasik
                 m_selectedDigits.Add(currentDigit);
             }
             
-            CalculateTextState();
+            CalculateContextVisibility();
         }
         
         /// <summary>
-        /// Determines state text visibility depending on the selected digits and timer state.
+        /// Determines timer context visibility depending on the selected digits and timer state.
         /// </summary>
-        private void CalculateTextState()
+        private void CalculateContextVisibility()
         {
-            // Hide/show state text
+            // Hide/show timer context
             if (m_selectedDigits.Count <= 0)
             {
                 if (m_state != States.COMPLETE)
                 {
                     m_text.gameObject.SetActive(true);
+                    m_tomatoCounter.gameObject.SetActive(true);
                 }
             }
             else
             {
                 m_text.gameObject.SetActive(false);
+                m_tomatoCounter.gameObject.SetActive(false);
             }
         }
 
@@ -765,7 +770,7 @@ namespace AdrianMiasik
             
             // Since we are highlighting (instead of selecting), we bypass the text state logic hence we 
             // invoke it again here.
-            CalculateTextState();
+            CalculateContextVisibility();
         }
 
         /// <summary>
