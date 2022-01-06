@@ -8,6 +8,7 @@ namespace AdrianMiasik.Components.Core
     public class ThemeElement: MonoBehaviour, IColorHook
     {
         protected PomodoroTimer Timer;
+        private bool isInitialized;
 
         /// <param name="pomodoroTimer">Main class</param>
         /// <param name="updateColors">Do you want to update or invoke the ColorUpdate method on initialization?</param>
@@ -23,6 +24,8 @@ namespace AdrianMiasik.Components.Core
                 // Update our component
                 ColorUpdate(pomodoroTimer.GetTheme());
             }
+
+            isInitialized = true;
         }
         
         /// <summary>
@@ -32,6 +35,15 @@ namespace AdrianMiasik.Components.Core
         public virtual void ColorUpdate(Theme theme)
         {
             // Nothing
+        }
+
+        public void OnDestroy()
+        {
+            if (isInitialized)
+            {
+                Debug.Log("Theme element is being deregistered.");
+                Timer.GetTheme().Deregister(this);
+            }
         }
     }
 }

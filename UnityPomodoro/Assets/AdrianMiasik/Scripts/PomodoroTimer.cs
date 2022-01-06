@@ -220,6 +220,13 @@ namespace AdrianMiasik
             m_theme.ApplyColorChanges();
         }
         
+        // Unity - MonoBehaviour.OnDestroy
+        public void OnDestroy()
+        {
+            // Make sure to deregister this when and if we do destroy the timer
+            GetTheme().Deregister(this);
+        }
+        
         /// <summary>
         /// Switches the timer to the provided state and handles all visual changes.
         /// Basically handles our transitions between timer states. <see cref="PomodoroTimer.States"/>
