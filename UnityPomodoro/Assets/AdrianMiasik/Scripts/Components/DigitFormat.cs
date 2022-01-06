@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Helpers;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
@@ -313,8 +314,8 @@ namespace AdrianMiasik.Components
                 Navigation digitNav = new Navigation
                 {
                     mode = Navigation.Mode.Explicit,
-                    selectOnLeft = generatedDigits[Wrap(i - 1, generatedDigits.Count)].GetSelectable(),
-                    selectOnRight = generatedDigits[Wrap(i + 1, generatedDigits.Count)].GetSelectable()
+                    selectOnLeft = generatedDigits[ListHelper.Wrap(i - 1, generatedDigits.Count)].GetSelectable(),
+                    selectOnRight = generatedDigits[ListHelper.Wrap(i + 1, generatedDigits.Count)].GetSelectable()
                 };
 
                 // Apply navigation
@@ -329,11 +330,6 @@ namespace AdrianMiasik.Components
                 selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
             };
             Timer.SetBackgroundNavigation(backgroundNav);
-        }
-
-        private int Wrap(int index, int length)
-        {
-            return (index % length + length) % length;
         }
 
         public void ShowTime(TimeSpan ts)
