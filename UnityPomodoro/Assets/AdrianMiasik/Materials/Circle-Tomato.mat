@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Circle-Tomato
-  m_Shader: {fileID: -6465566751694194690, guid: bf62f522454b7d247aa12edbfc5e086b, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 2265ad10ede2aee49a96f14bac3f9a93, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -104,7 +104,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_297012532bf444df807f8743bdb7e4fd: {r: 0.96862745, g: 0.14509805, b: 0.14509805, a: 1}
+    - Color_297012532bf444df807f8743bdb7e4fd: {r: 1, g: 0.262, b: 0.234, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.25, g: 0.25, b: 0.25, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
