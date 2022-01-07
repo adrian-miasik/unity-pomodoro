@@ -14,18 +14,6 @@ namespace AdrianMiasik.Components
         [SerializeField] private TMP_Text m_copyrightDisclaimer;
         
         private bool isInfoPageOpen;
-        private bool isInitialized;
-        
-        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
-        {
-            base.Initialize(pomodoroTimer, updateColors);
-            isInitialized = true;
-        }
-        
-        public bool IsInitialized()
-        {
-            return isInitialized;
-        }
 
         public override void ColorUpdate(Theme theme)
         {

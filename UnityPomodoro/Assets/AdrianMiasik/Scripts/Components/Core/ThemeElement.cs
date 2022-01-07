@@ -27,6 +27,11 @@ namespace AdrianMiasik.Components.Core
 
             isInitialized = true;
         }
+
+        public bool IsInitialized()
+        {
+            return isInitialized;
+        }
         
         /// <summary>
         /// Applies our theme changes to our components when necessary

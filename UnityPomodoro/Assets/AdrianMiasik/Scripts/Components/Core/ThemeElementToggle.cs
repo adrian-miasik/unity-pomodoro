@@ -7,7 +7,7 @@ namespace AdrianMiasik.Components.Core
     public class ThemeElementToggle: Toggle, IColorHook
     {
         protected PomodoroTimer Timer;
-        private bool isInitialized;
+        protected bool IsInitialized;
 
         protected virtual void Initialize(PomodoroTimer pomodoroTimer)
         {
@@ -19,7 +19,7 @@ namespace AdrianMiasik.Components.Core
             // Update our components
             ColorUpdate(pomodoroTimer.GetTheme());
 
-            isInitialized = true;
+            IsInitialized = true;
         }
         
         public virtual void ColorUpdate(Theme theme)
@@ -29,7 +29,7 @@ namespace AdrianMiasik.Components.Core
 
         public new void OnDestroy()
         {
-            if (isInitialized)
+            if (IsInitialized)
             {
                 Timer.GetTheme().Deregister(this);
             }
