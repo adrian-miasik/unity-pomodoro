@@ -784,12 +784,12 @@ namespace AdrianMiasik.Components
             return (int) m_format;
         }
 
-        public void ReadyForLongBreak()
+        public void ActivateLongBreak()
         {
             m_isOnLongBreak = true;
         }
 
-        public void ConsumeLongBreak()
+        public void DeactivateLongBreak()
         {
             m_isOnLongBreak = false;
         }

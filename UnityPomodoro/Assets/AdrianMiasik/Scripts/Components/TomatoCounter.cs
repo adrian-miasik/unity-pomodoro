@@ -61,7 +61,7 @@ namespace AdrianMiasik.Components
             // Check for completion
             if (nextFilledTomatoIndex == 0)
             {
-                Timer.ReadyForLongBreak();
+                Timer.ActivateLongBreak();
             }
         }
 
@@ -76,6 +76,17 @@ namespace AdrianMiasik.Components
             {
                 tomato.Reset();
             }
+        }
+
+        // Unity Event - Trashcan
+        public void TrashTomatoes()
+        {
+            Debug.Log("Ignore text, are you sure you want to clear your pomodoro progress?");
+            Timer.SpawnConfirmationDialog(() =>
+            {
+                Timer.DeactivateLongBreak();
+                ConsumeTomatoes();
+            });
         }
     }
 }

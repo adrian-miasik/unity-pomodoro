@@ -635,7 +635,7 @@ namespace AdrianMiasik
             if (IsOnBreak() && IsOnLongBreak())
             {
                 m_tomatoCounter.ConsumeTomatoes();
-                m_digitFormat.ConsumeLongBreak();
+                m_digitFormat.DeactivateLongBreak();
             }
 
             SwitchState(States.RUNNING);
@@ -1032,7 +1032,7 @@ namespace AdrianMiasik
             muteSoundWhenOutOfFocus = state;
         }
 
-        private void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null)
+        public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null)
         {
             if (currentDialogPopup != null) 
                 return;
@@ -1049,9 +1049,14 @@ namespace AdrianMiasik
             }
         }
 
-        public void ReadyForLongBreak()
+        public void ActivateLongBreak()
         {
-            m_digitFormat.ReadyForLongBreak();
+            m_digitFormat.ActivateLongBreak();
+        }
+
+        public void DeactivateLongBreak()
+        {
+            m_digitFormat.DeactivateLongBreak();
         }
     }
 }
