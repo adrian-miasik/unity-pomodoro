@@ -9,37 +9,31 @@ namespace AdrianMiasik.Components
     public class TomatoCounter : ThemeElement
     {
         [SerializeField] private HorizontalLayoutGroup m_horizontal;
-        [SerializeField] private Tomato m_tomatoPrefab;
-
+        [SerializeField] private GameObject m_trashcan;
+            
         [SerializeField] private List<Tomato> m_tomatoes = new List<Tomato>();
         private int nextFilledTomatoIndex;
         
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             // TODO: (4) Setting property for what defines a long break
-            //CreateTomato(pomodoroTimer, 4);
+            foreach (Tomato tomato in m_tomatoes)
+            {
+                tomato.Initialize(pomodoroTimer);
+            }
+            
+            base.Initialize(pomodoroTimer, updateColors);
             
             nextFilledTomatoIndex = 0;
-
-            base.Initialize(pomodoroTimer, updateColors);
+            DetermineTrashcanVisibility();
         }
-
-        /// <summary>
-        /// Create, init, cache our tomatoes.
-        /// </summary>
-        /// <param name="timer">Main class reference</param>
-        /// <param name="count">How many tomatoes do you want to create?</param>
-        /// <returns></returns>
-        private void CreateTomato(PomodoroTimer timer, int count = 1)
+        
+        private void DetermineTrashcanVisibility()
         {
-            for (int i = 0; i < count; i++)
-            {
-                Tomato tomato = Instantiate(m_tomatoPrefab, m_horizontal.transform);
-                tomato.Initialize(timer);
-                m_tomatoes.Add(tomato);
-            }
+            // Only show if user has more than one tomato or has unlocked long break
+            m_trashcan.gameObject.SetActive(nextFilledTomatoIndex > 0 || Timer.IsOnLongBreak());
         }
-
+        
         /// <summary>
         /// Fills in the latest tomato
         /// </summary>
@@ -63,6 +57,8 @@ namespace AdrianMiasik.Components
             {
                 Timer.ActivateLongBreak();
             }
+            
+            DetermineTrashcanVisibility();
         }
 
         public void SetHorizontalScale(Vector3 newScale)
@@ -76,17 +72,29 @@ namespace AdrianMiasik.Components
             {
                 tomato.Reset();
             }
+
+            nextFilledTomatoIndex = 0;
+            DetermineTrashcanVisibility();
         }
 
         // Unity Event - Trashcan
         public void TrashTomatoes()
         {
-            Debug.Log("Ignore text, are you sure you want to clear your pomodoro progress?");
             Timer.SpawnConfirmationDialog(() =>
             {
-                Timer.DeactivateLongBreak();
+                if (Timer.IsOnLongBreak())
+                {
+                    // Reset view to regular break
+                    Timer.DeactivateLongBreak();
+                    Timer.SwitchToBreakTimer();
+                }
+                else
+                {
+                    Timer.DeactivateLongBreak();
+                }
+
                 ConsumeTomatoes();
-            });
+            }, null, "This action will delete your pomodoro/tomato progress.");
         }
     }
 }

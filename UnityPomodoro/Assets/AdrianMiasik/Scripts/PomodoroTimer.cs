@@ -1032,13 +1032,14 @@ namespace AdrianMiasik
             muteSoundWhenOutOfFocus = state;
         }
 
-        public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null)
+        public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null, 
+            string topText = null, string bottomText = null)
         {
-            if (currentDialogPopup != null) 
+            if (currentDialogPopup != null)
                 return;
             
             currentDialogPopup = Instantiate(m_confirmationDialogPrefab, transform);
-            currentDialogPopup.Initialize(this, onSubmit, onCancel);
+            currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
         }
 
         public void ClearDialogPopup(ConfirmationDialog dialog)

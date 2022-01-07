@@ -37,7 +37,7 @@ namespace AdrianMiasik.Components
         }
 
         [ContextMenu("Reset")]
-        public new void Reset()
+        public void Reset()
         {
             m_body.sprite = m_hollowCroppedBody;
         }
