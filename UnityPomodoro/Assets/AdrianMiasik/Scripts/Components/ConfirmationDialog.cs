@@ -24,6 +24,7 @@ namespace AdrianMiasik.Components
         private Action onCancel;
         private Action onSubmit;
         
+        // TODO: Add text arguments
         public void Initialize(PomodoroTimer pomodoroTimer, Action submit, Action cancel)
         {
             base.Initialize(pomodoroTimer);
