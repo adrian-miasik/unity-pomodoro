@@ -12,14 +12,14 @@ namespace AdrianMiasik.Components
         [SerializeField] private Tomato m_tomatoPrefab;
 
         [SerializeField] private List<Tomato> m_tomatoes = new List<Tomato>();
-        private int lastFilledTomatoIndex;
+        private int nextFilledTomatoIndex;
         
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             // TODO: (4) Setting property for what defines a long break
             //CreateTomato(pomodoroTimer, 4);
             
-            lastFilledTomatoIndex = 0;
+            nextFilledTomatoIndex = 0;
 
             base.Initialize(pomodoroTimer, updateColors);
         }
@@ -46,14 +46,20 @@ namespace AdrianMiasik.Components
         /// <returns>Are we ready for a long break?</returns>
         public void FillTomato()
         {
-            m_tomatoes[lastFilledTomatoIndex].Complete();
+            // If the user has already unlocked the long break...
+            if (Timer.IsOnLongBreak())
+            {
+                return;
+            }
+            
+            m_tomatoes[nextFilledTomatoIndex].Complete();
 
             // Increment / wrap new tomato index
-            lastFilledTomatoIndex++;
-            lastFilledTomatoIndex = ListHelper.Wrap(lastFilledTomatoIndex, m_tomatoes.Count);
+            nextFilledTomatoIndex++;
+            nextFilledTomatoIndex = ListHelper.Wrap(nextFilledTomatoIndex, m_tomatoes.Count);
             
             // Check for completion
-            if (lastFilledTomatoIndex == 0)
+            if (nextFilledTomatoIndex == 0)
             {
                 Timer.ReadyForLongBreak();
             }

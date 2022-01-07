@@ -837,7 +837,7 @@ namespace AdrianMiasik
             return m_digitFormat.m_isOnBreak;
         }
 
-        private bool IsOnLongBreak()
+        public bool IsOnLongBreak()
         {
             return m_digitFormat.m_isOnLongBreak;
         }
