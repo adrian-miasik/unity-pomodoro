@@ -34,14 +34,12 @@ namespace AdrianMiasik.Components
         public void Complete()
         {
             m_body.sprite = m_croppedBody;
-            Debug.Log("Tomato completed!");
         }
 
         [ContextMenu("Reset")]
         public new void Reset()
         {
             m_body.sprite = m_hollowCroppedBody;
-            Debug.Log("Tomato reset!");
         }
     }
 }
