@@ -539,7 +539,7 @@ namespace AdrianMiasik
         /// </summary>
         private void CalculateTimeValues()
         {
-            TimeSpan ts = m_digitFormat.GetTime();
+            TimeSpan ts = m_digitFormat.GetTime(m_digitFormat.GetFormat());
             currentTime = ts.TotalSeconds;
             totalTime = (float)ts.TotalSeconds;
             m_digitFormat.SetTime(ts);
@@ -824,7 +824,7 @@ namespace AdrianMiasik
         
         public int GetDigitFormat()
         {
-            return m_digitFormat.GetFormat();
+            return m_digitFormat.GetFormatIndex();
         }
         
         public List<Selectable> GetSelections()
@@ -899,8 +899,7 @@ namespace AdrianMiasik
         private void GenerateFormat()
         {
             m_digitFormat.GenerateFormat();
-            Restart(false); // Restart timer directly, don't verify user intent
-                                      // since we're doing that in this scope.
+            Restart(false); 
             
             if (m_settingsContainer.IsPageOpen())
             {

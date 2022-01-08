@@ -77,7 +77,7 @@ namespace AdrianMiasik.Components
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, false);
-             
+            
             SwitchFormat(m_format);
             GenerateFormat();
             
@@ -116,7 +116,8 @@ namespace AdrianMiasik.Components
             ImproveLayoutVisuals();
 
             // Calculate time
-            SetTime(GetTime());
+            TimeSpan ts = GetTime(m_format);
+            SetTime(ts);
                 
             // Apply
             RefreshDigitVisuals();
@@ -215,7 +216,7 @@ namespace AdrianMiasik.Components
         /// Returns the users own set times (depending on the state, you could get one of three datasets)
         /// </summary>
         /// <returns></returns>
-        public TimeSpan GetTime()
+        public TimeSpan GetTime(SupportedFormats format)
         {
             TimeSpan ts;
             if (!m_isOnBreak)
@@ -245,7 +246,48 @@ namespace AdrianMiasik.Components
                          TimeSpan.FromMilliseconds(m_breakTime[4]);
                 }
             }
+            
+            Debug.Log("Before truncations: " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
 
+            // TODO: Instead of removing after adding, lets try to not add the values in the first place.
+            switch (format)
+            {
+                case SupportedFormats.DD_HH_MM_SS_MS:
+                    // Nothing, provide full format
+                    break;
+                case SupportedFormats.HH_MM_SS_MS:
+                    // Truncate days
+                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
+                    break;
+                case SupportedFormats.HH_MM_SS:
+                    // Truncate days
+                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
+                    // Truncate milliseconds
+                    ts = ts.Subtract(TimeSpan.FromMilliseconds(ts.Milliseconds));
+                    break;
+                case SupportedFormats.MM_SS:
+                    // Truncate days
+                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
+                    // Truncate hours
+                    ts = ts.Subtract(TimeSpan.FromHours(ts.Hours));
+                    // Truncate milliseconds
+                    ts = ts.Subtract(TimeSpan.FromMilliseconds(ts.Milliseconds));
+                    break;
+                case SupportedFormats.SS:
+                    // Truncate days
+                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
+                    // Truncate hours
+                    ts = ts.Subtract(TimeSpan.FromHours(ts.Hours));
+                    // Truncate minutes
+                    ts = ts.Subtract(TimeSpan.FromMinutes(ts.Minutes));
+                    // Truncate milliseconds
+                    ts = ts.Subtract(TimeSpan.FromMilliseconds(ts.Milliseconds));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(format), format, null);
+            }
+
+            Debug.Log("After truncations: " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
             return ts;
         }
 
@@ -779,9 +821,14 @@ namespace AdrianMiasik.Components
         /// Return the current format index
         /// </summary>
         /// <returns></returns>
-        public int GetFormat()
+        public int GetFormatIndex()
         {
             return (int) m_format;
+        }
+
+        public SupportedFormats GetFormat()
+        {
+            return m_format;
         }
 
         public void ActivateLongBreak()
