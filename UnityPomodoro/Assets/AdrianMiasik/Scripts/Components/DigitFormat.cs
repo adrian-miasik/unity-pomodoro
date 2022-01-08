@@ -278,8 +278,8 @@ namespace AdrianMiasik.Components
                     break;
             }
 
-            Debug.Log("Returning value for format " + m_format + ": " 
-                      + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
+            // Debug.Log("Returning value for format " + m_format + ": " 
+                      // + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
             
             return ts;
         }
