@@ -539,7 +539,7 @@ namespace AdrianMiasik
         /// </summary>
         private void CalculateTimeValues()
         {
-            TimeSpan ts = m_digitFormat.GetTime(m_digitFormat.GetFormat());
+            TimeSpan ts = m_digitFormat.GetTime();
             currentTime = ts.TotalSeconds;
             totalTime = (float)ts.TotalSeconds;
             m_digitFormat.SetTime(ts);

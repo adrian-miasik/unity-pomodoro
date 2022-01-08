@@ -116,8 +116,7 @@ namespace AdrianMiasik.Components
             ImproveLayoutVisuals();
 
             // Calculate time
-            TimeSpan ts = GetTime(m_format);
-            SetTime(ts);
+            SetTime(GetTime());
                 
             // Apply
             RefreshDigitVisuals();
@@ -216,78 +215,72 @@ namespace AdrianMiasik.Components
         /// Returns the users own set times (depending on the state, you could get one of three datasets)
         /// </summary>
         /// <returns></returns>
-        public TimeSpan GetTime(SupportedFormats format)
+        public TimeSpan GetTime()
         {
-            TimeSpan ts;
+            // Mode one / work time
             if (!m_isOnBreak)
             {
-                ts = TimeSpan.FromDays(m_workTime[0]) +
-                     TimeSpan.FromHours(m_workTime[1]) +
-                     TimeSpan.FromMinutes(m_workTime[2]) +
-                     TimeSpan.FromSeconds(m_workTime[3]) +
-                     TimeSpan.FromMilliseconds(m_workTime[4]);
+                return GetTimeFromFormat(m_workTime);
             }
-            else
-            {
-                if (m_isOnLongBreak)
-                {
-                    ts = TimeSpan.FromDays(m_longBreakTime[0]) + 
-                         TimeSpan.FromHours(m_longBreakTime[1]) + 
-                         TimeSpan.FromMinutes(m_longBreakTime[2]) + 
-                         TimeSpan.FromSeconds(m_longBreakTime[3]) + 
-                         TimeSpan.FromMilliseconds(m_longBreakTime[4]);   
-                }
-                else
-                {
-                    ts = TimeSpan.FromDays(m_breakTime[0]) + 
-                         TimeSpan.FromHours(m_breakTime[1]) + 
-                         TimeSpan.FromMinutes(m_breakTime[2]) + 
-                         TimeSpan.FromSeconds(m_breakTime[3]) + 
-                         TimeSpan.FromMilliseconds(m_breakTime[4]);
-                }
-            }
-            
-            Debug.Log("Before truncations: " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
 
-            // TODO: Instead of removing after adding, lets try to not add the values in the first place.
-            switch (format)
+            // Mode two / break time
+            if (!m_isOnLongBreak)
+            {
+                return GetTimeFromFormat(m_breakTime);
+            }
+
+            return GetTimeFromFormat(m_longBreakTime);
+        }
+        
+        /// <summary>
+        /// Returns a single TimeSpan using the current digit format, while pulling from the provided time list array
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        private TimeSpan GetTimeFromFormat(IReadOnlyList<int> time)
+        {
+            TimeSpan ts;
+            
+            switch (m_format)
             {
                 case SupportedFormats.DD_HH_MM_SS_MS:
-                    // Nothing, provide full format
+                    ts = ts.Add(TimeSpan.FromDays(time[0]));
+                    ts = ts.Add(TimeSpan.FromHours(time[1]));
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
+                    ts = ts.Add(TimeSpan.FromMilliseconds(time[4]));
                     break;
+
                 case SupportedFormats.HH_MM_SS_MS:
-                    // Truncate days
-                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
+                    ts = ts.Add(TimeSpan.FromHours(time[1]));
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
+                    ts = ts.Add(TimeSpan.FromMilliseconds(time[4]));
                     break;
+
                 case SupportedFormats.HH_MM_SS:
-                    // Truncate days
-                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
-                    // Truncate milliseconds
-                    ts = ts.Subtract(TimeSpan.FromMilliseconds(ts.Milliseconds));
+                    ts = ts.Add(TimeSpan.FromHours(time[1]));
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
                     break;
+
                 case SupportedFormats.MM_SS:
-                    // Truncate days
-                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
-                    // Truncate hours
-                    ts = ts.Subtract(TimeSpan.FromHours(ts.Hours));
-                    // Truncate milliseconds
-                    ts = ts.Subtract(TimeSpan.FromMilliseconds(ts.Milliseconds));
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
                     break;
+
                 case SupportedFormats.SS:
-                    // Truncate days
-                    ts = ts.Subtract(TimeSpan.FromDays(ts.Days));
-                    // Truncate hours
-                    ts = ts.Subtract(TimeSpan.FromHours(ts.Hours));
-                    // Truncate minutes
-                    ts = ts.Subtract(TimeSpan.FromMinutes(ts.Minutes));
-                    // Truncate milliseconds
-                    ts = ts.Subtract(TimeSpan.FromMilliseconds(ts.Milliseconds));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
                     break;
+
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(format), format, null);
+                    Debug.LogWarning("This digit format is not supported. Returning empty TimeSpan.");
+                    break;
             }
 
-            Debug.Log("After truncations: " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
+            Debug.Log("Returning value for format " + m_format + ": " 
+                      + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
+            
             return ts;
         }
 
@@ -825,12 +818,7 @@ namespace AdrianMiasik.Components
         {
             return (int) m_format;
         }
-
-        public SupportedFormats GetFormat()
-        {
-            return m_format;
-        }
-
+        
         public void ActivateLongBreak()
         {
             m_isOnLongBreak = true;
