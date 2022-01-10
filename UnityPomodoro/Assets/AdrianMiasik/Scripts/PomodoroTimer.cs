@@ -136,6 +136,9 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
+            // Set theme to light
+            GetTheme().m_darkMode = false;
+            
             // Set mute setting default
 #if UNITY_STANDALONE_OSX
             SetMuteSoundWhenOutOfFocus();
@@ -216,7 +219,7 @@ namespace AdrianMiasik
             PlaySpawnAnimation();
 
             // Setup & apply theme
-            m_theme.RegisterColorHook(this);
+            m_theme.Register(this);
             m_theme.ApplyColorChanges();
         }
         

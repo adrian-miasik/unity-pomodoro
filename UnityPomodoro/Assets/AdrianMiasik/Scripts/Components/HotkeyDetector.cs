@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
@@ -56,6 +57,13 @@ namespace AdrianMiasik.Components
                 timer.ClearSelection();
             }
             
+            // Restart application
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                timer.GetTheme().DeregisterAllElements();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
             // Tab between digits
             if (Input.GetKeyDown(KeyCode.Tab))
             {

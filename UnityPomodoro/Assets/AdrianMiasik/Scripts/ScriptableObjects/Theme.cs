@@ -34,7 +34,7 @@ namespace AdrianMiasik.ScriptableObjects
             }
         }
 
-        public void RegisterColorHook(IColorHook hook)
+        public void Register(IColorHook hook)
         {
             if (colorElements.Contains(hook))
             {
@@ -52,6 +52,11 @@ namespace AdrianMiasik.ScriptableObjects
             {
                 colorElements.Remove(colorHook);
             }
+        }
+
+        public void DeregisterAllElements()
+        {
+            colorElements.Clear();
         }
 
         public ColorScheme GetCurrentColorScheme()
