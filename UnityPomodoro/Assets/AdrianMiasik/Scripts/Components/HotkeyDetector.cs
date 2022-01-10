@@ -45,7 +45,7 @@ namespace AdrianMiasik.Components
             }
             
             // Theme switch
-            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 timer.TriggerThemeSwitch();
             }
@@ -113,6 +113,15 @@ namespace AdrianMiasik.Components
                 else
                 {
                     timer.TriggerTimerRestart();
+                }
+            }
+            
+            // Theme switch
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                {
+                    timer.TriggerThemeSwitch();
                 }
             }
             
