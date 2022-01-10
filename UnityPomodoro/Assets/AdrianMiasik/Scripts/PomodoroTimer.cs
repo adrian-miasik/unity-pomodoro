@@ -590,6 +590,11 @@ namespace AdrianMiasik
             m_digitFormat.GenerateFormat();
             m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime)); // Update visuals to current time
             
+            if (m_state != States.SETUP)
+            {
+                m_digitFormat.Lock();
+            }
+            
             // Reset digit animation timings when opening/re-opening this page
             if (m_state == States.PAUSED)
             {
