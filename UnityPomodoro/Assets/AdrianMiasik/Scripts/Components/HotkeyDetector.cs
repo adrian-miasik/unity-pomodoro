@@ -71,31 +71,6 @@ namespace AdrianMiasik.Components
                     }
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.F3))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.F4))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.F5))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
-            }
         }
 
         /// <summary>
@@ -103,28 +78,55 @@ namespace AdrianMiasik.Components
         /// </summary>
         private void ProcessKeybinds()
         {
-            // Restart timer
+            // Restart timer / Switch timer mode
             if (Input.GetKeyDown(KeyCode.R))
             {
-                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-                {
-                    timer.TriggerTimerSwitch();
-                }
-                else
+                if (!IsUserHoldingControl())
                 {
                     timer.TriggerTimerRestart();
                 }
-            }
-            
-            // Theme switch
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                else
                 {
-                    timer.TriggerThemeSwitch();
+                    timer.TriggerTimerSwitch();
                 }
             }
             
+            // Control modifier
+            if (IsUserHoldingControl())
+            {
+                // Switch theme
+                if (Input.GetKeyDown(KeyCode.U))
+                {
+                    timer.TriggerThemeSwitch();
+                }
+                
+                // Switch digit layouts
+                if (Input.GetKeyDown(KeyCode.F1))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
+                }
+
+                if (Input.GetKeyDown(KeyCode.F2))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
+                }
+
+                if (Input.GetKeyDown(KeyCode.F3))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
+                }
+
+                if (Input.GetKeyDown(KeyCode.F4))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
+                }
+
+                if (Input.GetKeyDown(KeyCode.F5))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
+                }
+            }
+
             // Select All
             if (IsUserSelectingAll())
             {
@@ -142,6 +144,11 @@ namespace AdrianMiasik.Components
             {
                 timer.SetTimerValue(GUIUtility.systemCopyBuffer);
             }
+        }
+
+        private bool IsUserHoldingControl()
+        {
+            return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
         }
 
         private bool IsUserSelectingAll()
