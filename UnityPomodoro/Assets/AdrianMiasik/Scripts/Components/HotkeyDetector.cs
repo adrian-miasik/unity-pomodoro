@@ -60,8 +60,12 @@ namespace AdrianMiasik.Components
             // Restart application
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                timer.GetTheme().DeregisterAllElements();
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                timer.SpawnConfirmationDialog(() =>
+                {
+                    timer.GetTheme().DeregisterAllElements();
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }, null, 
+                    "This action will <color=red>reset all settings to their factory defaults.</color>");
             }
 
             // Tab between digits
