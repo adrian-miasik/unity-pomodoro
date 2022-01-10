@@ -24,13 +24,32 @@ namespace AdrianMiasik.Components
         private Action onCancel;
         private Action onSubmit;
         
-        public void Initialize(PomodoroTimer pomodoroTimer, Action submit, Action cancel)
+        /// <summary>
+        /// Setup our confirmation dialog with custom actions and even custom text
+        /// </summary>
+        /// <param name="pomodoroTimer">Main class reference</param>
+        /// <param name="submit">The action you want to take when the user presses yes</param>
+        /// <param name="cancel">The action you want to take when the user presses no</param>
+        /// <param name="topText">Optional: The top text label you want to override</param>
+        /// <param name="bottomText">Optional: The bottom text label you want to override</param>
+        public void Initialize(PomodoroTimer pomodoroTimer, Action submit, Action cancel, 
+            string topText = null, string bottomText = null)
         {
             base.Initialize(pomodoroTimer);
             
             onCancel = cancel;
             onSubmit = submit;
-            
+
+            if (!String.IsNullOrEmpty(topText))
+            {
+                m_topLabel.text = topText;
+            }
+
+            if (!String.IsNullOrEmpty(bottomText))
+            {
+                m_botLabel.text = bottomText;
+            }
+
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
         }

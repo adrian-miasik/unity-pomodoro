@@ -22,10 +22,7 @@ namespace AdrianMiasik.Components.Core
         // Unity Events
         public UnityEvent m_onSetToTrueClick;
         public UnityEvent m_onSetToFalseClick;
-
-        // Cache
-        private bool isInitialized;
-
+        
         // Override
         private bool overrideTrueColor;
         private Color overridenTrueColor;
@@ -57,8 +54,7 @@ namespace AdrianMiasik.Components.Core
             base.Initialize(pomodoroTimer);
             
             isOn = state;
-            isInitialized = true;
-            
+
             UpdateToggle(invokeEvents);
         }
 
@@ -84,7 +80,7 @@ namespace AdrianMiasik.Components.Core
                 }
             }
 
-            if (isInitialized)
+            if (IsInitialized)
             {
                 ColorUpdate(Timer.GetTheme());
             }

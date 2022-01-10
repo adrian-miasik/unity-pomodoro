@@ -11,8 +11,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private LabelledDropdown m_digitFormatDropdown;
         [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
         [SerializeField] private BooleanSlider m_muteSoundOutOfFocusBoolean;
-
-        private bool isInitialized;
+        
         private bool isOpen;
 
         public void Initialize(PomodoroTimer pomodoroTimer)
@@ -24,15 +23,8 @@ namespace AdrianMiasik.Components
             
             m_digitFormatDropdown.Initialize(Timer);
             m_muteSoundOutOfFocusBoolean.Initialize(pomodoroTimer, pomodoroTimer.MuteSoundWhenOutOfFocus());
-
-            isInitialized = true;
         }
         
-        public bool IsInitialized()
-        {
-            return isInitialized;
-        }
-
         public override void ColorUpdate(Theme theme)
         {
             if (isOpen)

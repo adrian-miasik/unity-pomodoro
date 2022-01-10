@@ -162,5 +162,10 @@ namespace AdrianMiasik.Components
 
             m_icon.ColorUpdate(theme);
         }
+
+        public void OnDestroy()
+        {
+            timer.GetTheme().Deregister(this);
+        }
     }
 }

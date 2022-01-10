@@ -47,6 +47,7 @@ namespace AdrianMiasik
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
+        [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
         [Header("Animations")] 
@@ -193,6 +194,7 @@ namespace AdrianMiasik
             m_notifications.Initialize(this);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
+            m_tomatoCounter.Initialize(this);
             m_completionLabel.Initialize(this);
             m_themeSlider.Initialize(this);
             m_creditsBubble.Initialize(this);
@@ -218,6 +220,13 @@ namespace AdrianMiasik
             m_theme.ApplyColorChanges();
         }
         
+        // Unity - MonoBehaviour.OnDestroy
+        public void OnDestroy()
+        {
+            // Make sure to deregister this when and if we do destroy the timer
+            GetTheme().Deregister(this);
+        }
+        
         /// <summary>
         /// Switches the timer to the provided state and handles all visual changes.
         /// Basically handles our transitions between timer states. <see cref="PomodoroTimer.States"/>
@@ -241,13 +250,20 @@ namespace AdrianMiasik
                 case States.SETUP:
                     m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
                     
-                    // Show state text
+                    // Show timer context
                     m_text.gameObject.SetActive(true);
-
+                    
                     // Complete ring
                     m_ring.fillAmount = 1f;
                     m_ring.material.SetFloat(RingDiameter, 0.9f);
-                    m_text.text = !m_digitFormat.m_isOnBreak ? "Set a work time" : "Set a break time";
+                    if (!m_digitFormat.m_isOnBreak)
+                    {
+                        m_text.text = "Set a work time";
+                    }
+                    else
+                    {
+                        m_text.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
+                    }
 
                     // Show digits and hide completion label
                     m_digitFormat.Show();
@@ -287,13 +303,14 @@ namespace AdrianMiasik
                     break;
 
                 case States.COMPLETE:
+
                     // Hide state text
                     m_text.gameObject.SetActive(false);
 
                     // Complete ring
                     m_ring.fillAmount = 1f;
 
-                    // Hide digits and reveal completion label
+                    // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
                     m_digitFormat.Hide();
                     m_completion.gameObject.SetActive(true);
@@ -349,25 +366,27 @@ namespace AdrianMiasik
                 m_selectedDigits.Add(currentDigit);
             }
             
-            CalculateTextState();
+            CalculateContextVisibility();
         }
         
         /// <summary>
-        /// Determines state text visibility depending on the selected digits and timer state.
+        /// Determines timer context visibility depending on the selected digits and timer state.
         /// </summary>
-        private void CalculateTextState()
+        private void CalculateContextVisibility()
         {
-            // Hide/show state text
+            // Hide/show timer context
             if (m_selectedDigits.Count <= 0)
             {
                 if (m_state != States.COMPLETE)
                 {
                     m_text.gameObject.SetActive(true);
+                    m_tomatoCounter.gameObject.SetActive(true);
                 }
             }
             else
             {
                 m_text.gameObject.SetActive(false);
+                m_tomatoCounter.gameObject.SetActive(false);
             }
         }
 
@@ -404,7 +423,6 @@ namespace AdrianMiasik
             }
             else
             {
-                SwitchState(States.COMPLETE);
                 OnTimerComplete();
                 m_onTimerCompletion?.Invoke();
             }
@@ -412,9 +430,18 @@ namespace AdrianMiasik
 
         private void OnTimerComplete()
         {
+            SwitchState(States.COMPLETE);
+            
             if (currentDialogPopup != null)
             {
                 currentDialogPopup.Close();
+            }
+            
+            // If timer completion was based on work/mode one timer
+            // (We don't add tomatoes for breaks)
+            if (!IsOnBreak())
+            {
+                m_tomatoCounter.FillTomato();
             }
         }
 
@@ -488,6 +515,9 @@ namespace AdrianMiasik
             // Set diameter
             m_ring.material.SetFloat(RingDiameter, ringDiameter);
             m_completion.gameObject.transform.localScale = Vector3.one * ringDiameter;
+            
+            // Scale tomatoes too
+            m_tomatoCounter.SetHorizontalScale(Vector3.one * ringDiameter);
 
             if (!hasRingPulseBeenInvoked)
             {
@@ -599,6 +629,13 @@ namespace AdrianMiasik
             {
                 isTimerBeingSetup = false;
                 CalculateTimeValues();
+            }
+            
+            // Remove long break once user has started it via Play
+            if (IsOnBreak() && IsOnLongBreak())
+            {
+                m_tomatoCounter.ConsumeTomatoes();
+                m_digitFormat.DeactivateLongBreak();
             }
 
             SwitchState(States.RUNNING);
@@ -764,7 +801,7 @@ namespace AdrianMiasik
             
             // Since we are highlighting (instead of selecting), we bypass the text state logic hence we 
             // invoke it again here.
-            CalculateTextState();
+            CalculateContextVisibility();
         }
 
         /// <summary>
@@ -787,7 +824,7 @@ namespace AdrianMiasik
         
         public int GetDigitFormat()
         {
-            return m_digitFormat.GetFormat();
+            return m_digitFormat.GetFormatIndex();
         }
         
         public List<Selectable> GetSelections()
@@ -798,6 +835,11 @@ namespace AdrianMiasik
         public bool IsOnBreak()
         {
             return m_digitFormat.m_isOnBreak;
+        }
+
+        public bool IsOnLongBreak()
+        {
+            return m_digitFormat.m_isOnLongBreak;
         }
 
         public bool IsAboutPageOpen()
@@ -857,8 +899,7 @@ namespace AdrianMiasik
         private void GenerateFormat()
         {
             m_digitFormat.GenerateFormat();
-            Restart(false); // Restart timer directly, don't verify user intent
-                                      // since we're doing that in this scope.
+            Restart(false); 
             
             if (m_settingsContainer.IsPageOpen())
             {
@@ -990,13 +1031,14 @@ namespace AdrianMiasik
             muteSoundWhenOutOfFocus = state;
         }
 
-        private void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null)
+        public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null, 
+            string topText = null, string bottomText = null)
         {
-            if (currentDialogPopup != null) 
+            if (currentDialogPopup != null)
                 return;
             
             currentDialogPopup = Instantiate(m_confirmationDialogPrefab, transform);
-            currentDialogPopup.Initialize(this, onSubmit, onCancel);
+            currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
         }
 
         public void ClearDialogPopup(ConfirmationDialog dialog)
@@ -1005,6 +1047,16 @@ namespace AdrianMiasik
             {
                 currentDialogPopup = null;
             }
+        }
+
+        public void ActivateLongBreak()
+        {
+            m_digitFormat.ActivateLongBreak();
+        }
+
+        public void DeactivateLongBreak()
+        {
+            m_digitFormat.DeactivateLongBreak();
         }
     }
 }

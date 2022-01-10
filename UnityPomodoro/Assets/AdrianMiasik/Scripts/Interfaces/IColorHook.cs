@@ -12,5 +12,6 @@ namespace AdrianMiasik.Interfaces
         public void ColorUpdate(Theme theme);
         // ReSharper disable once InconsistentNaming
         GameObject gameObject { get; }
+        public void OnDestroy();
     }
 }

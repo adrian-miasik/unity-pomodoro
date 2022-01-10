@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Helpers;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
@@ -29,21 +30,26 @@ namespace AdrianMiasik.Components
         }
 
         // Current format
-        [SerializeField] private RectTransform m_self;
-        [SerializeField] private RectTransform m_digitFormatRect;
+        [SerializeField] private RectTransform m_self; // Height modifier
+        [SerializeField] private RectTransform m_digitFormatRect; // Width modifier
         [SerializeField] private SupportedFormats m_format;
         
         [Header("Source Prefabs")]
         [SerializeField] private DoubleDigit m_digitSource;
         [SerializeField] private DigitSeparator m_separatorSource;
         
-        [Header("Work Data")]
+        // Work data / Mode one
         [SerializeField] private int[] m_workTime = {0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
 
-        [Header("Break Data")]
+        // Break data / Mode two
         public bool m_isOnBreak;
-        [SerializeField] private int[] m_breakTime = {0,0,5,0,0}; // Represents data for DD_HH_MM_SS_MS
+        // TODO: rename to short break time
+        [SerializeField] private int[] m_breakTime = {0, 0, 5, 0, 0}; // Represents data for DD_HH_MM_SS_MS
 
+        // Long break data / potentially mode three?
+        public bool m_isOnLongBreak;
+        [SerializeField] private int[] m_longBreakTime = {0, 0, 20, 0, 0}; // Represents data for DD_HH_MM_SS_MS
+        
         // Cache
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
@@ -71,7 +77,7 @@ namespace AdrianMiasik.Components
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, false);
-             
+            
             SwitchFormat(m_format);
             GenerateFormat();
             
@@ -206,29 +212,75 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Returns the users own set time that has been set during timer setup.
+        /// Returns the users own set times (depending on the state, you could get one of three datasets)
         /// </summary>
         /// <returns></returns>
         public TimeSpan GetTime()
         {
-            TimeSpan ts;
+            // Mode one / work time
             if (!m_isOnBreak)
             {
-                ts = TimeSpan.FromDays(m_workTime[0]) +
-                      TimeSpan.FromHours(m_workTime[1]) +
-                      TimeSpan.FromMinutes(m_workTime[2]) +
-                      TimeSpan.FromSeconds(m_workTime[3]) +
-                      TimeSpan.FromMilliseconds(m_workTime[4]);
-            }
-            else
-            {
-                ts = TimeSpan.FromDays(m_breakTime[0]) +
-                      TimeSpan.FromHours(m_breakTime[1]) +
-                      TimeSpan.FromMinutes(m_breakTime[2]) +
-                      TimeSpan.FromSeconds(m_breakTime[3]) +
-                      TimeSpan.FromMilliseconds(m_breakTime[4]);
+                return GetTimeFromFormat(m_workTime);
             }
 
+            // Mode two / break time
+            if (!m_isOnLongBreak)
+            {
+                return GetTimeFromFormat(m_breakTime);
+            }
+
+            return GetTimeFromFormat(m_longBreakTime);
+        }
+        
+        /// <summary>
+        /// Returns a single TimeSpan using the current digit format, while pulling from the provided time list array
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        private TimeSpan GetTimeFromFormat(IReadOnlyList<int> time)
+        {
+            TimeSpan ts;
+            
+            switch (m_format)
+            {
+                case SupportedFormats.DD_HH_MM_SS_MS:
+                    ts = ts.Add(TimeSpan.FromDays(time[0]));
+                    ts = ts.Add(TimeSpan.FromHours(time[1]));
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
+                    ts = ts.Add(TimeSpan.FromMilliseconds(time[4]));
+                    break;
+
+                case SupportedFormats.HH_MM_SS_MS:
+                    ts = ts.Add(TimeSpan.FromHours(time[1]));
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
+                    ts = ts.Add(TimeSpan.FromMilliseconds(time[4]));
+                    break;
+
+                case SupportedFormats.HH_MM_SS:
+                    ts = ts.Add(TimeSpan.FromHours(time[1]));
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
+                    break;
+
+                case SupportedFormats.MM_SS:
+                    ts = ts.Add(TimeSpan.FromMinutes(time[2]));
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
+                    break;
+
+                case SupportedFormats.SS:
+                    ts = ts.Add(TimeSpan.FromSeconds(time[3]));
+                    break;
+
+                default:
+                    Debug.LogWarning("This digit format is not supported. Returning empty TimeSpan.");
+                    break;
+            }
+
+            // Debug.Log("Returning value for format " + m_format + ": " 
+                      // + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + ":" + ts.Milliseconds);
+            
             return ts;
         }
 
@@ -313,8 +365,8 @@ namespace AdrianMiasik.Components
                 Navigation digitNav = new Navigation
                 {
                     mode = Navigation.Mode.Explicit,
-                    selectOnLeft = generatedDigits[Wrap(i - 1, generatedDigits.Count)].GetSelectable(),
-                    selectOnRight = generatedDigits[Wrap(i + 1, generatedDigits.Count)].GetSelectable()
+                    selectOnLeft = generatedDigits[ListHelper.Wrap(i - 1, generatedDigits.Count)].GetSelectable(),
+                    selectOnRight = generatedDigits[ListHelper.Wrap(i + 1, generatedDigits.Count)].GetSelectable()
                 };
 
                 // Apply navigation
@@ -329,11 +381,6 @@ namespace AdrianMiasik.Components
                 selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
             };
             Timer.SetBackgroundNavigation(backgroundNav);
-        }
-
-        private int Wrap(int index, int length)
-        {
-            return (index % length + length) % length;
         }
 
         public void ShowTime(TimeSpan ts)
@@ -373,17 +420,7 @@ namespace AdrianMiasik.Components
         }
 
         public void SetTime(TimeSpan ts)
-        {
-            // Clear out time arrays
-            if (!m_isOnBreak)
-            {
-                Array.Clear(m_workTime, 0, m_workTime.Length);
-            }
-            else
-            {
-                Array.Clear(m_breakTime, 0, m_breakTime.Length);
-            }
-
+        {   
             // Apply time arrays to update only for generated digits (essentially throwing out data that's not used)
             foreach (DoubleDigit doubleDigit in generatedDigits)
             {
@@ -616,7 +653,14 @@ namespace AdrianMiasik.Components
             }
             else
             {
-                m_breakTime[(int)digit] = newValue;
+                if (!m_isOnLongBreak)
+                {
+                    m_breakTime[(int)digit] = newValue;
+                }
+                else
+                {
+                    m_longBreakTime[(int) digit] = newValue;
+                }
             }
 
             OnValidate();
@@ -688,8 +732,17 @@ namespace AdrianMiasik.Components
             {
                 return m_workTime[(int)digits];
             }
-
-            return m_breakTime[(int)digits];
+            else
+            {
+                if (!m_isOnLongBreak)
+                {
+                    return m_breakTime[(int)digits];
+                }
+                else
+                {
+                    return m_longBreakTime[(int) digits];
+                }
+            }
         }
 
         /// <summary>
@@ -761,9 +814,19 @@ namespace AdrianMiasik.Components
         /// Return the current format index
         /// </summary>
         /// <returns></returns>
-        public int GetFormat()
+        public int GetFormatIndex()
         {
             return (int) m_format;
+        }
+        
+        public void ActivateLongBreak()
+        {
+            m_isOnLongBreak = true;
+        }
+
+        public void DeactivateLongBreak()
+        {
+            m_isOnLongBreak = false;
         }
     }
  }
