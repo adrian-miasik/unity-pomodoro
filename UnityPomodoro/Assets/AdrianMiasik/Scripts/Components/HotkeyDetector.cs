@@ -65,7 +65,9 @@ namespace AdrianMiasik.Components
                     timer.GetTheme().DeregisterAllElements();
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }, null, 
-                    "This action will <color=red>reset all settings to their factory defaults.</color>");
+                    "This action will <color=red>reset all settings to their factory defaults.</color>", 
+                    null, 
+                    false);
             }
 
             // Tab between digits
