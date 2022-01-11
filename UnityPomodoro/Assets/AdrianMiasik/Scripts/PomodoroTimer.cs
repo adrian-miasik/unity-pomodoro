@@ -101,6 +101,7 @@ namespace AdrianMiasik
         private bool muteSoundWhenOutOfFocus; // We want this to be true only for Windows platform due to UWP notifications
         // TODO: Move to dialog manager class
         private ConfirmationDialog currentDialogPopup;
+        private bool isCurrentDialogInterruptible = true;
         
         // Pulse Ring Complete Animation
         private float accumulatedRingPulseTime;
@@ -136,6 +137,9 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
+            // Set theme to light
+            GetTheme().m_darkMode = false;
+            
             // Set mute setting default
 #if UNITY_STANDALONE_OSX
             SetMuteSoundWhenOutOfFocus();
@@ -216,7 +220,7 @@ namespace AdrianMiasik
             PlaySpawnAnimation();
 
             // Setup & apply theme
-            m_theme.RegisterColorHook(this);
+            m_theme.Register(this);
             m_theme.ApplyColorChanges();
         }
         
@@ -432,9 +436,9 @@ namespace AdrianMiasik
         {
             SwitchState(States.COMPLETE);
             
-            if (currentDialogPopup != null)
+            if (currentDialogPopup != null && isCurrentDialogInterruptible)
             {
-                currentDialogPopup.Close();
+                currentDialogPopup.Close(true);
             }
             
             // If timer completion was based on work/mode one timer
@@ -1037,13 +1041,19 @@ namespace AdrianMiasik
         }
 
         public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null, 
-            string topText = null, string bottomText = null)
+            string topText = null, string bottomText = null, bool interruptible = true)
         {
             if (currentDialogPopup != null)
                 return;
             
             currentDialogPopup = Instantiate(m_confirmationDialogPrefab, transform);
+            isCurrentDialogInterruptible = interruptible;
             currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
+        }
+
+        public bool IsConfirmationDialogInterruptible()
+        {
+            return isCurrentDialogInterruptible;
         }
 
         public void ClearDialogPopup(ConfirmationDialog dialog)

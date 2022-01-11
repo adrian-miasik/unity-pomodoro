@@ -45,7 +45,7 @@ namespace AdrianMiasik.Components
             fadeProgress = 1; // Starts at one since bubble is visible
             
             // Theme Element
-            timer.GetTheme().RegisterColorHook(this);
+            timer.GetTheme().Register(this);
             m_background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             ColorUpdate(timer.GetTheme());
         }

@@ -68,7 +68,26 @@ namespace AdrianMiasik.Components
             Close();
         }
 
-        public void Close()
+        public void Close(bool checkInterruptibility = false)
+        {
+            if (checkInterruptibility)
+            {
+                if (Timer.IsConfirmationDialogInterruptible())
+                {
+                    DestroyDialog();
+                }
+                else
+                {
+                    Debug.LogWarning("This confirmation dialog is not interruptible.");
+                }
+            }
+            else
+            {
+                DestroyDialog();
+            }
+        }
+
+        private void DestroyDialog()
         {
             Timer.ClearDialogPopup(this);
             Timer.GetTheme().Deregister(this); // Remove self from themed components
