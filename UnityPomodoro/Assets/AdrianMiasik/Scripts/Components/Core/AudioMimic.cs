@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Singleton
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core
 {
     public class AudioMimic : MonoBehaviour
     {
