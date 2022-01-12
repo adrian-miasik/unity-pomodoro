@@ -18,13 +18,28 @@ namespace AdrianMiasik
     {
         public enum States
         {
+            /// <summary>
+            /// Digits are editable by the user, time does not progress.
+            /// </summary>
             SETUP,
+            /// <summary>
+            /// Digits are not allowed to be interacted with, and the time left is decreasing over time.
+            /// </summary>
             RUNNING,
+            /// <summary>
+            /// Digits are not allowed to be interacted with, time does not progress.
+            /// </summary>
             PAUSED,
+            /// <summary>
+            /// Digits are no longer visible, completion label is visible.
+            /// </summary>
             COMPLETE
         }
-
-        public States m_state = States.SETUP; // The timers current state
+        
+        /// <summary>
+        /// The timer's current state. See enum <see cref="States"/>
+        /// </summary>
+        public States m_state = States.SETUP;
         
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
