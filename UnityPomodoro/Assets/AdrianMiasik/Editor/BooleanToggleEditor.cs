@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditor.UI;
 using UnityEngine;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Editor
 {
     [CustomEditor(typeof(BooleanToggle))]
     public class BooleanToggleEditor : ToggleEditor 

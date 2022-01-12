@@ -3,7 +3,7 @@ using AdrianMiasik.Components.Wrappers;
 using Unity.VectorGraphics;
 using UnityEditor;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Editor
 {
     [CustomEditor(typeof(ClickButtonIcon))]
     public class ClickButtonIconEditor: ClickButtonEditor
