@@ -14,6 +14,10 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
+    /// <summary>
+    /// Our main class / component. Responsible for controlling the main timer logic, configuring settings, and
+    /// initializing our related components.
+    /// </summary>
     public class PomodoroTimer : MonoBehaviour, IColorHook
     {
         public enum States
