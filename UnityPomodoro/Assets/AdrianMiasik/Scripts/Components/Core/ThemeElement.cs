@@ -51,7 +51,8 @@ namespace AdrianMiasik.Components.Core
         }
         
         /// <summary>
-        /// De-register itself from the theme on destruction to avoid invoking ColorUpdate on a null reference.
+        /// De-register itself from the theme on destruction to avoid invoking <see cref="IColorHook"/>
+        /// ColorUpdate() on a null reference.
         /// </summary>
         public void OnDestroy()
         {
