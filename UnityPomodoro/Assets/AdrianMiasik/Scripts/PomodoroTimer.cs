@@ -48,9 +48,6 @@ namespace AdrianMiasik
         /// </summary>
         public States m_state = States.SETUP;
         
-        /// <summary>
-        /// The flavor text used to display the current timer's state. (<see cref="m_state"/>)
-        /// </summary>
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -83,9 +80,15 @@ namespace AdrianMiasik
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
         [SerializeField] private AnimationCurve m_ringTickWidth;
         
+        /// <summary>
+        /// A <see cref="UnityEvent{T0}"/> that gets invoked when the ring / timer alarm pulses.
+        /// </summary>
         [Header("Unity Events")]
-        // TODO: Rename UnityEvents to lowerCamelCase
-        public UnityEvent m_onRingPulse; // Invoked when the ring / timer alarm pulses
+        public UnityEvent m_onRingPulse;
+        
+        /// <summary>
+        /// A <see cref="UnityEvent{T0}"/> that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>
+        /// </summary>
         public UnityEvent m_onTimerCompletion; // Invoked when the timer finishes
 
         [Header("Cache")]
@@ -249,7 +252,9 @@ namespace AdrianMiasik
             m_theme.ApplyColorChanges();
         }
         
-        // Unity - MonoBehaviour.OnDestroy
+        /// <summary>
+        /// Unity's On Destroy Method - Deregister self from <see cref="Theme"/> on destruction
+        /// </summary>
         public void OnDestroy()
         {
             // Make sure to deregister this when and if we do destroy the timer
@@ -357,7 +362,10 @@ namespace AdrianMiasik
             accumulatedFadeTime = 0f;
         }
         
-        // Unity Event
+        /// <summary>
+        /// Plays our timer spawning animation.
+        /// <remarks>Used as a UnityEvent</remarks>
+        /// </summary>
         public void PlaySpawnAnimation()
         {
             m_spawnAnimation.Stop();
@@ -365,7 +373,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Removes any digit selection, and selects the background by default.
+        /// Removes any digit selection, and selects the background (our default selection).
         /// </summary>
         public void ClearSelection()
         {
@@ -374,8 +382,8 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Sets the selection to a single double digit and calculates text visibility based on new selection data.
-        /// If you'd like to select multiple digits, See AddSelection()
+        /// Sets the selection to a single <see cref="DoubleDigit"/> and calculates text visibility based on new
+        /// selection data. If you'd like to select multiple digits: See <see cref="AddSelection"/>.
         /// </summary>
         /// <param name="currentDigit"></param>
         public void SetSelection(DoubleDigit currentDigit)
@@ -577,7 +585,7 @@ namespace AdrianMiasik
         
         // TODO: Create a panel/page class
         /// <summary>
-        /// Shows about content, hides main content, and shows credits bubble
+        /// Shows about content, hides main content, and shows credits bubble.
         /// </summary>
         public void ShowAbout()
         {
@@ -684,7 +692,8 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Transitions timer into States.SETUP mode in break mode
+        /// Attempts to transition timer into States.SETUP and sets to break mode, will prompt user with
+        /// confirmation dialog if necessary. 
         /// </summary>
         public void TrySwitchToBreakTimer()
         {
@@ -715,7 +724,9 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Transitions timer into States.SETUP mode in work mode
+        /// Attempts to transition timer into States.SETUP and sets to work mode, will prompt user with
+        /// confirmation dialog if necessary.
+        /// <remarks>Used as a UnityEvent on our timer switch.</remarks>
         /// </summary>
         public void TrySwitchToWorkTimer()
         {
@@ -778,7 +789,7 @@ namespace AdrianMiasik
 
         #region Button/Keyboard OnClick Events
         /// <summary>
-        /// Activates the play/pause button to toggle the timer state (States.SETUP, etc...)
+        /// Presses the play/pause button
         /// </summary>
         public void TriggerPlayPause()
         {
@@ -786,7 +797,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Activates the boolean slider to toggle between work/break
+        /// Presses the boolean slider to toggle between work/break mode
         /// </summary>
         public void TriggerTimerSwitch()
         {
@@ -794,7 +805,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Activates the restart button to trigger a restart
+        /// Presses the restart button
         /// </summary>
         public void TriggerTimerRestart()
         {
@@ -802,7 +813,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Activates the boolean slider to toggle between light/dark themes
+        /// Presses the boolean slider to toggle between light/dark themes
         /// </summary>
         public void TriggerThemeSwitch()
         {
@@ -839,9 +850,10 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Adds the provided digit to our selection list
+        /// Adds the provided <see cref="DoubleDigit"/> to our selection list.
         /// </summary>
-        /// <param name="digitToAddToSelection"></param>
+        /// <param name="digitToAddToSelection">What <see cref="DoubleDigit"/> do you want to add to our selection?
+        /// </param>
         private void AddSelection(DoubleDigit digitToAddToSelection)
         {
             if (!m_selectedDigits.Contains(digitToAddToSelection))
@@ -850,45 +862,86 @@ namespace AdrianMiasik
             }
         }
         
-        // Getters
+        /// <summary>
+        /// Returns our current timer values in a <see cref="String"/>.
+        /// <example>Such as "00:24:35" (without the quotation marks)</example>
+        /// </summary>
+        /// <returns>Our current timer value in <see cref="String"/> format.</returns>
         public string GetTimerString()
         {
             return m_digitFormat.GetTimerString();
         }
         
+        /// <summary>
+        /// Returns our currently selected <see cref="DigitFormat.SupportedFormats"/>'s index value.
+        /// </summary>
+        /// <returns>A number representing our enum index. See <see cref="DigitFormat.SupportedFormats"/></returns>
         public int GetDigitFormat()
         {
             return m_digitFormat.GetFormatIndex();
         }
         
+        /// <summary>
+        /// Returns a list of our current selected element.
+        /// <remarks>Will return a list of <see cref="Selectable"/>'s, not specifically <see cref="DoubleDigit"/>'s.
+        /// </remarks>
+        /// </summary>
+        /// <returns></returns>
         public List<Selectable> GetSelections()
         {
             return m_selectedDigits.Select(doubleDigit => doubleDigit.GetSelectable()).ToList();
         }
         
+        /// <summary>
+        /// Is our <see cref="DigitFormat"/> in break mode?
+        /// </summary>
+        /// <returns></returns>
         public bool IsOnBreak()
         {
             return m_digitFormat.m_isOnBreak;
         }
 
+        /// <summary>
+        /// Is our <see cref="DigitFormat"/> in long break mode?
+        /// </summary>
+        /// <returns></returns>
         public bool IsOnLongBreak()
         {
             return m_digitFormat.m_isOnLongBreak;
         }
 
+        /// <summary>
+        /// Is our <see cref="AboutPanel"/> currently open and visible?
+        /// </summary>
+        /// <returns></returns>
         public bool IsAboutPageOpen()
         {
             return m_aboutContainer.IsInfoPageOpen();
         }
         
+        /// <summary>
+        /// Is our <see cref="Sidebar"/> currently open and visible?
+        /// </summary>
+        /// <returns></returns>
         public bool IsSidebarOpen()
         {
             return m_sidebarMenu.IsOpen();
         }
         
-        // Setters
+        /// <summary>
+        /// Sets our <see cref="DigitFormat"/> timer to the provided string. Intended to be used when pasting
+        /// values in from our clipboard.
+        /// <remarks>This will only work if the timer is in <see cref="States.SETUP"/> mode.</remarks>
+        /// </summary>
+        /// <param name="timeString"></param>
         public void SetTimerValue(string timeString)
         {
+            // Only allow 'Set Timer Value' to work when we are in the setup state
+            if (m_state != States.SETUP)
+            {
+                return;
+            }
+            
             m_digitFormat.SetTimerValue(timeString);
         }
         
@@ -898,7 +951,8 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog if necessary.
+        /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog
+        /// if necessary. See <see cref="DigitFormat.SupportedFormats"/>.
         /// </summary>
         /// <param name="i"></param>
         public void TryChangeFormat(Int32 i)
@@ -907,7 +961,8 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Attempts to change the digit format, will prompt user with confirmation dialog if necessary.
+        /// Attempts to change our <see cref="DigitFormat"/> to the provided <see cref="DigitFormat.SupportedFormats"/>,
+        /// will prompt user with confirmation dialog if necessary.
         /// </summary>
         /// <param name="desiredFormat"></param>
         public void TryChangeFormat(DigitFormat.SupportedFormats desiredFormat)
@@ -940,11 +995,7 @@ namespace AdrianMiasik
                 m_settingsContainer.UpdateDropdown();
             }
         }
-
-        /// <summary>
-        /// Apply our color updates to relevant components
-        /// </summary>
-        /// <param name="theme"></param>
+        
         public void ColorUpdate(Theme theme)
         {
             ColorScheme currentColors = theme.GetCurrentColorScheme();
@@ -1019,24 +1070,38 @@ namespace AdrianMiasik
         }
 
         // TODO: Create theme manager class?
+        /// <summary>
+        /// Returns our current active <see cref="Theme"/>
+        /// </summary>
+        /// <returns></returns>
         public Theme GetTheme()
         {
             return m_theme;
         }
         
-        // Unity Event
+        /// <summary>
+        /// Sets our <see cref="Theme"/> preference to light mode, and update's all our necessary components.
+        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
+        /// </summary>
         public void SetToLightMode()
         {
             m_theme.SetToLightMode();
         }
 
-        // Unity Event
+        /// <summary>
+        /// Sets our <see cref="Theme"/> preference to dark mode, and update's all our necessary components.
+        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
+        /// </summary>
         public void SetToDarkMode()
         {
             m_theme.SetToDarkMode();
         }
         
-        // Unity Event
+        /// <summary>
+        /// Sets our current active <see cref="Theme"/> to the provided <see cref="Theme"/>. This will transfer
+        /// all our <see cref="IColorHook"/> element's to the new <see cref="Theme"/> as well.
+        /// </summary>
+        /// <param name="desiredTheme"></param>
         public void SwitchTheme(Theme desiredTheme)
         {
             // Transfer elements to new theme (So theme knows which elements to color update)
@@ -1049,22 +1114,43 @@ namespace AdrianMiasik
             m_theme.ApplyColorChanges();
         }
         
+        /// <summary>
+        /// Trigger a <see cref="IColorHook"/> ColorUpdate on our <see cref="CreditsBubble"/>.
+        /// </summary>
         public void ColorUpdateCreditsBubble()
         {
             m_creditsBubble.ColorUpdate(m_theme);
         }
 
         // TODO: Create settings class / scriptable object
+        /// <summary>
+        /// Does the user want to mute the application when it's not currently in focus?
+        /// </summary>
+        /// <returns>The users settings preference for muting the application when out of focus.</returns>
         public bool MuteSoundWhenOutOfFocus()
         {
             return muteSoundWhenOutOfFocus;
         }
 
+        /// <summary>
+        /// Sets the users setting preference to mute the application when out of focus using the provided
+        /// <see cref="bool"/>.
+        /// </summary>
+        /// <param name="state">Do you want to mute this application when it's out of focus?</param>
         public void SetMuteSoundWhenOutOfFocus(bool state = false)
         {
             muteSoundWhenOutOfFocus = state;
         }
 
+        /// <summary>
+        /// Creates a custom <see cref="ConfirmationDialog"/> if one is currently not present/visible.
+        /// <remarks>Either the submit/close buttons will trigger the dialog to close.</remarks>
+        /// </summary>
+        /// <param name="onSubmit">What do you want to do when the user presses yes?</param>
+        /// <param name="onCancel">What do you want to do when the user presses no?</param>
+        /// <param name="topText">What main string do you want to display to the user?</param>
+        /// <param name="bottomText">What secondary string do you want to display to the user?</param>
+        /// <param name="interruptible">Can this popup be closed by our timer?</param>
         public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null, 
             string topText = null, string bottomText = null, bool interruptible = true)
         {
@@ -1075,12 +1161,17 @@ namespace AdrianMiasik
             isCurrentDialogInterruptible = interruptible;
             currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
         }
-
+        
         public bool IsConfirmationDialogInterruptible()
         {
             return isCurrentDialogInterruptible;
         }
 
+        /// <summary>
+        /// Clear our current timer popup reference.
+        /// <remarks>Should be done when destroying our popup dialogs.</remarks>
+        /// </summary>
+        /// <param name="dialog"></param>
         public void ClearDialogPopup(ConfirmationDialog dialog)
         {
             if (dialog == currentDialogPopup)
@@ -1089,11 +1180,18 @@ namespace AdrianMiasik
             }
         }
 
+        /// <summary>
+        /// Sets our <see cref="DigitFormat"/> to long break mode. See <see cref="DigitFormat.m_longBreakTime"/>
+        /// </summary>
         public void ActivateLongBreak()
         {
             m_digitFormat.ActivateLongBreak();
         }
 
+        /// <summary>
+        /// Sets our <see cref="DigitFormat"/> to not use long break mode. (<see cref="DigitFormat"/> could still be
+        /// in a work / break mode)
+        /// </summary>
         public void DeactivateLongBreak()
         {
             m_digitFormat.DeactivateLongBreak();

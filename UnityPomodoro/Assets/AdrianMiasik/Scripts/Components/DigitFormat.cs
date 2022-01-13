@@ -672,22 +672,14 @@ namespace AdrianMiasik.Components
         /// <param name="formattedString">Expected format of ("00:25:00")</param>
         public void SetTimerValue(string formattedString)
         {
-            // Only allow 'Set Timer Value' to work when we are in the setup state
-            if (Timer.m_state != PomodoroTimer.States.SETUP)
-            {
-                return;
-            }
-
             List<string> sections = new List<string>();
             string value = String.Empty;
-
-            // ReSharper disable once InconsistentNaming
-            // ReSharper disable once ForCanBeConvertedToForeach
+            
             // Iterate through each character to determine how many sections there are...
-            for (int i = 0; i < formattedString.Length; i++)
+            foreach (char c in formattedString)
             {
                 // If this character is a separator...
-                if (formattedString[i].ToString() == ":") // TODO: Allow the use of other separators like '-'?
+                if (c.ToString() == ":") // TODO: Allow the use of other separators like '-'?
                 {
                     // Save section
                     if (value != String.Empty)
@@ -700,7 +692,7 @@ namespace AdrianMiasik.Components
                 }
 
                 // Add to section
-                value += formattedString[i].ToString();
+                value += c.ToString();
             }
 
             // Last digit in string won't have a separator so we add the section in once the loop is complete
