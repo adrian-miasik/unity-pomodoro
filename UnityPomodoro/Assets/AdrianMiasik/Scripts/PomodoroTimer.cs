@@ -20,6 +20,9 @@ namespace AdrianMiasik
     /// </summary>
     public class PomodoroTimer : MonoBehaviour, IColorHook
     {
+        /// <summary>
+        /// The different modes the timer could be currently using.
+        /// </summary>
         public enum States
         {
             /// <summary>
