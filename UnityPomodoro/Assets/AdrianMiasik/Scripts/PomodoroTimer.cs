@@ -15,13 +15,13 @@ using UnityEngine.UI;
 namespace AdrianMiasik
 {
     /// <summary>
-    /// Our main class / component. Responsible for controlling the main timer logic, configuring settings, and
-    /// initializing our related components.
+    /// Our main class / component. Responsible for controlling the main timer logic, configuring settings,
+    /// initializing, and manipulating our components.
     /// </summary>
     public class PomodoroTimer : MonoBehaviour, IColorHook
     {
         /// <summary>
-        /// The different modes the timer could be currently using.
+        /// The different modes the timer could be using.
         /// </summary>
         public enum States
         {
@@ -48,6 +48,9 @@ namespace AdrianMiasik
         /// </summary>
         public States m_state = States.SETUP;
         
+        /// <summary>
+        /// The flavor text used to display the current timer's state. (<see cref="m_state"/>)
+        /// </summary>
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
