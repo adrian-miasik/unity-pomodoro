@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
@@ -6,6 +5,10 @@ using UnityEngine.Serialization;
 
 namespace AdrianMiasik.ScriptableObjects
 {
+    /// <summary>
+    /// Responsible for switching and applying color changes using the referenced <see cref="ColorScheme"/>'s.
+    /// Two <see cref="ColorScheme"/>'s necessary: One for light mode, and one for dark mode.
+    /// </summary>
     [CreateAssetMenu(fileName = "New Theme", menuName = "Adrian Miasik/Create New Theme")]
     public class Theme : ScriptableObject
     {
@@ -25,6 +28,10 @@ namespace AdrianMiasik.ScriptableObjects
             colorElements.Clear();
         }
 
+        /// <summary>
+        /// Displays into the console all the color elements (<see cref="IColorHook"/>) gameobjects that have been
+        /// registered to this theme.
+        /// </summary>
         [ContextMenu("List Interfaces")]
         public void ListInterfaces()
         {
@@ -34,6 +41,13 @@ namespace AdrianMiasik.ScriptableObjects
             }
         }
 
+        /// <summary>
+        /// Registers the provided (<see cref="IColorHook"/>) color element to this theme. This is used
+        /// for updating our elements when we are validating editor colors, or switching between different
+        /// <see cref="ColorScheme"/>'s.
+        /// See <see cref="SetToDarkMode"/> & <see cref="SetToLightMode"/>
+        /// </summary>
+        /// <param name="hook"></param>
         public void Register(IColorHook hook)
         {
             if (colorElements.Contains(hook))
@@ -46,6 +60,12 @@ namespace AdrianMiasik.ScriptableObjects
             }
         }
 
+        /// <summary>
+        /// Un-Registers the provided (<see cref="IColorHook"/>) color element from this theme (If they exist).
+        /// <remarks>This is usually invoked before gameobject deletion or if you no longer want to update
+        /// color elements between <see cref="ColorScheme"/>'s changes.</remarks>
+        /// </summary>
+        /// <param name="colorHook"></param>
         public void Deregister(IColorHook colorHook)
         {
             if (colorElements.Contains(colorHook))
@@ -54,11 +74,19 @@ namespace AdrianMiasik.ScriptableObjects
             }
         }
 
+        /// <summary>
+        /// Un-Registers all our color hook elements from this theme.
+        /// </summary>
         public void DeregisterAllElements()
         {
             colorElements.Clear();
         }
 
+        /// <summary>
+        /// Fetches the appropriate ColorScheme depending on the user's preference. Depending if they prefer
+        /// light / dark mode. 
+        /// </summary>
+        /// <returns></returns>
         public ColorScheme GetCurrentColorScheme()
         {
             return m_darkMode ? m_dark : m_light;
@@ -75,16 +103,19 @@ namespace AdrianMiasik.ScriptableObjects
         }
 
         /// <summary>
-        /// Transfers color elements from one theme to another
+        /// Transfers all our (<see cref="IColorHook"/>) color elements from one theme to another.
         /// </summary>
-        /// <param name="sourceTheme">The theme you want to pull color elements from</param>
-        /// <param name="destinationTheme">The theme you want to transfer your color elements to</param>
+        /// <param name="sourceTheme">The theme you want to pull color elements from.</param>
+        /// <param name="destinationTheme">The theme you want to transfer your color elements to.</param>
         public void TransferColorElements(Theme sourceTheme, Theme destinationTheme)
         {
             destinationTheme.SetColorElements(sourceTheme.GetColorElements());
             destinationTheme.m_darkMode = sourceTheme.m_darkMode;
         }
         
+        /// <summary>
+        /// Updates (and invokes ColorUpdate to) all our registered (<see cref="IColorHook"/>) color elements.
+        /// </summary>
         public void ApplyColorChanges()
         {
             foreach (IColorHook hook in colorElements)
@@ -93,12 +124,18 @@ namespace AdrianMiasik.ScriptableObjects
             }
         }
 
+        /// <summary>
+        /// Set's the current ColorScheme to the dark variation and updates all registered elements.
+        /// </summary>
         public void SetToDarkMode()
         {
             m_darkMode = true;
             ApplyColorChanges();
         }
 
+        /// <summary>
+        /// Set's the current ColorScheme to the light variation and updates all registered elements.
+        /// </summary>
         public void SetToLightMode()
         {
             m_darkMode = false;
