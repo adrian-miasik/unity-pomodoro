@@ -686,7 +686,7 @@ namespace AdrianMiasik
         /// <summary>
         /// Transitions timer into States.SETUP mode in break mode
         /// </summary>
-        public void SwitchToBreakTimer()
+        public void TrySwitchToBreakTimer()
         {
             if (!isTimerBeingSetup && m_state != States.COMPLETE)
             {
@@ -717,7 +717,7 @@ namespace AdrianMiasik
         /// <summary>
         /// Transitions timer into States.SETUP mode in work mode
         /// </summary>
-        public void SwitchToWorkTimer()
+        public void TrySwitchToWorkTimer()
         {
             if (!isTimerBeingSetup && m_state != States.COMPLETE)
             {

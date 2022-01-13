@@ -86,7 +86,7 @@ namespace AdrianMiasik.Components
                 {
                     // Reset view to regular break
                     Timer.DeactivateLongBreak();
-                    Timer.SwitchToBreakTimer();
+                    Timer.TrySwitchToBreakTimer();
                 }
                 else
                 {
