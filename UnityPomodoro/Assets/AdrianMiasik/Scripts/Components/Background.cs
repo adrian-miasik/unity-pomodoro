@@ -6,8 +6,8 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> <see cref="Image"/> used to pull focus off selected elements.
-    /// The background is our default selection for the Unity <see cref="UnityEngine.EventSystems"/>.
+    /// A <see cref="ThemeElement"/> image used to pull focus off selected elements.
+    /// The background is our default selection for Unity's EventSystem.
     /// </summary>
     public class Background : ThemeElement
     {
@@ -23,7 +23,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Applies our theme changes to our referenced components when necessary.
+        /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
