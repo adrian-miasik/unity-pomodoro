@@ -99,7 +99,7 @@ namespace AdrianMiasik.ScriptableObjects
 
         private void SetColorElements(List<IColorHook> hooks)
         {
-            this.colorElements = hooks;
+            colorElements = hooks;
         }
 
         /// <summary>
