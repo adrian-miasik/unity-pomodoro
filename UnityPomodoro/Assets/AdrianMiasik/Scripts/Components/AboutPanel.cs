@@ -7,7 +7,7 @@ namespace AdrianMiasik.Components
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> page used to display information about our application.
-    /// Includes a description, social buttons <seealso cref="SocialButtons"/>, version number, and a
+    /// Includes a description, social buttons (<seealso cref="SocialButtons"/>), version number, and a
     /// copyright disclaimer.
     /// </summary>
     public class AboutPanel : ThemeElement
