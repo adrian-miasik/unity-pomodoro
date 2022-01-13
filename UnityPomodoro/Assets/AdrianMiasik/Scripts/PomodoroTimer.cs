@@ -946,6 +946,12 @@ namespace AdrianMiasik
             m_digitFormat.SetTimerValue(timeString);
         }
         
+        /// <summary>
+        /// Sets our background's selection navigation to the provided <see cref="Navigation"/>.
+        /// <remarks>Intended to change focus to our digits when attempting to select left / right
+        /// from the background.</remarks>
+        /// </summary>
+        /// <param name="backgroundNav"></param>
         public void SetBackgroundNavigation(Navigation backgroundNav)
         {
             m_background.SetSelectionNavigation(backgroundNav);
@@ -998,7 +1004,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Applies our theme changes to our referenced components when necessary.
+        /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public void ColorUpdate(Theme theme)
