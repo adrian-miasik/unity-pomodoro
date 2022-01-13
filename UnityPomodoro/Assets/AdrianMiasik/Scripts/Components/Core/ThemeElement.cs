@@ -4,14 +4,18 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components.Core
 {
-    // TODO: Implement into most of our UP components
+    /// <summary>
+    /// A base class that is intended to be used on any component/class that needs theming
+    /// (that's automatically updated), and needs reference to our main class: <see cref="PomodoroTimer"/>.
+    /// </summary>
     public class ThemeElement: MonoBehaviour, IColorHook
     {
         protected PomodoroTimer Timer;
         private bool isInitialized;
 
-        /// <param name="pomodoroTimer">Main class</param>
-        /// <param name="updateColors">Do you want to update or invoke the ColorUpdate method on initialization?</param>
+        /// <param name="pomodoroTimer">Our main class</param>
+        /// <param name="updateColors">Do you want to update or invoke this elements ColorUpdate method
+        /// on initialization?</param>
         public virtual void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             Timer = pomodoroTimer;
@@ -28,20 +32,27 @@ namespace AdrianMiasik.Components.Core
             isInitialized = true;
         }
 
+        /// <summary>
+        /// Fetches this components initialization state.
+        /// </summary>
+        /// <returns>Has this component been initialized yet?</returns>
         public bool IsInitialized()
         {
             return isInitialized;
         }
         
         /// <summary>
-        /// Applies our theme changes to our components when necessary
+        /// Applies our theme changes to our referenced components when necessary.
         /// </summary>
         /// <param name="theme"></param>
         public virtual void ColorUpdate(Theme theme)
         {
-            // Nothing
+            
         }
-
+        
+        /// <summary>
+        /// De-register itself from the theme on destruction to avoid invoking ColorUpdate on a null reference.
+        /// </summary>
         public void OnDestroy()
         {
             if (isInitialized)
