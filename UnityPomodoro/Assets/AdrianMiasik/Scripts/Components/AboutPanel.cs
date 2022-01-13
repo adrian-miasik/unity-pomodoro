@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// Used to display information about our application, which includes:
+    /// A <see cref="m_description"/>, our <see cref="m_socials"/> (<seealso cref="SocialButtons"/>),
+    /// a <see cref="m_versionNumber"/>, and a <see cref="m_copyrightDisclaimer"/>.
+    /// </summary>
     public class AboutPanel : ThemeElement
     {
         [SerializeField] private TMP_Text m_title;
