@@ -20,6 +20,10 @@ namespace AdrianMiasik.Components
         
         private bool isInfoPageOpen;
 
+        /// <summary>
+        /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
+        /// </summary>
+        /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
             if (!isInfoPageOpen)
@@ -35,11 +39,18 @@ namespace AdrianMiasik.Components
             m_copyrightDisclaimer.color = currentColors.m_foreground;
         }
 
+        /// <summary>
+        /// Is this <see cref="AboutPanel"/> currently open and visible?
+        /// </summary>
+        /// <returns></returns>
         public bool IsInfoPageOpen()
         {
             return isInfoPageOpen;
         }
 
+        /// <summary>
+        /// Displays this panel to the user.
+        /// </summary>
         public void Show()
         {
             gameObject.SetActive(true);
@@ -48,6 +59,9 @@ namespace AdrianMiasik.Components
             ColorUpdate(Timer.GetTheme());
         }
 
+        /// <summary>
+        /// Hides this panel from the user.
+        /// </summary>
         public void Hide()
         {
             gameObject.SetActive(false);
