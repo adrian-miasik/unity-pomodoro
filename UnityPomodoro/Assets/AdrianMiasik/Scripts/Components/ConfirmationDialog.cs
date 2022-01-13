@@ -9,6 +9,11 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> associated with a prefab. Used to prompt the user with yes/no questions.
+    /// Such as confirming their action that can interrupt the active running timer. You can set the text displayed
+    /// in this prompt.
+    /// </summary>
     public class ConfirmationDialog : ThemeElement
     {
         [SerializeField] private Image m_backgroundBox;
@@ -25,7 +30,7 @@ namespace AdrianMiasik.Components
         private Action onSubmit;
         
         /// <summary>
-        /// Setup our confirmation dialog with custom actions and even custom text
+        /// Setup our confirmation dialog with custom actions and overrideable text.
         /// </summary>
         /// <param name="pomodoroTimer">Main class reference</param>
         /// <param name="submit">The action you want to take when the user presses yes</param>
@@ -53,21 +58,34 @@ namespace AdrianMiasik.Components
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
         }
-
-        // UnityEvent - Invoked by no button
+        
+        /// <summary>
+        /// Invokes our <see cref="onCancel"/> action and <see cref="Close"/>s this panel.
+        /// <remarks>UnityEvent - Invoked by 'No' button.</remarks>
+        /// </summary>
         public void Cancel()
         {
             onCancel?.Invoke();
             Close();
         }
 
-        // UnityEvent - Invoked by yes button
+        /// <summary>
+        /// Invokes our <see cref="onSubmit"/> action and <see cref="Close"/>s this panel.
+        /// <remarks>UnityEvent - Invoked by 'Yes' button.</remarks>
+        /// </summary>
         public void Submit()
         {
             onSubmit?.Invoke();
             Close();
         }
 
+        /// <summary>
+        /// Properly disposes/destroys this <see cref="ConfirmationDialog"/>.
+        /// </summary>
+        /// <param name="checkInterruptibility">Do you want to check if our timer allows for this popup to be
+        /// interrupted? If no, we will destroy the popup regardless of the <see cref="PomodoroTimer"/>'s preference.
+        /// Otherwise, we'll check in with <see cref="PomodoroTimer"/> to see if this popup is interruptible before
+        /// attempting destruction.</param>
         public void Close(bool checkInterruptibility = false)
         {
             if (checkInterruptibility)
@@ -86,7 +104,7 @@ namespace AdrianMiasik.Components
                 DestroyDialog();
             }
         }
-
+        
         private void DestroyDialog()
         {
             Timer.ClearDialogPopup(this);
@@ -94,6 +112,10 @@ namespace AdrianMiasik.Components
             Destroy(gameObject);
         }
 
+        /// <summary>
+        /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
+        /// </summary>
+        /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
             // Background
