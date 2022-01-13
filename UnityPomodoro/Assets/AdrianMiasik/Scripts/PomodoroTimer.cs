@@ -81,13 +81,13 @@ namespace AdrianMiasik
         [SerializeField] private AnimationCurve m_ringTickWidth;
         
         /// <summary>
-        /// A <see cref="UnityEvent{T0}"/> that gets invoked when the ring / timer alarm pulses.
+        /// A <see cref="UnityEvent"/> that gets invoked when the ring / timer alarm pulses.
         /// </summary>
         [Header("Unity Events")]
         public UnityEvent m_onRingPulse;
         
         /// <summary>
-        /// A <see cref="UnityEvent{T0}"/> that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>
+        /// A <see cref="UnityEvent"/> that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>)
         /// </summary>
         public UnityEvent m_onTimerCompletion; // Invoked when the timer finishes
 
@@ -253,7 +253,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Unity's On Destroy Method - Deregister self from <see cref="Theme"/> on destruction
+        /// Unity's OnDestroy() - Deregister self from <see cref="Theme"/> on destruction.
         /// </summary>
         public void OnDestroy()
         {
@@ -692,8 +692,9 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Attempts to transition timer into States.SETUP and sets to break mode, will prompt user with
-        /// confirmation dialog if necessary. 
+        /// Attempts to transition timer into <see cref="States.SETUP"/> and sets our <see cref="DigitFormat"/> to break
+        /// mode, will prompt user with confirmation dialog if necessary.
+        /// <remarks>Used as a <see cref="UnityEvent"/> on our timer switch.</remarks>
         /// </summary>
         public void TrySwitchToBreakTimer()
         {
@@ -724,9 +725,9 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Attempts to transition timer into States.SETUP and sets to work mode, will prompt user with
-        /// confirmation dialog if necessary.
-        /// <remarks>Used as a UnityEvent on our timer switch.</remarks>
+        /// Attempts to transition timer into <see cref="States.SETUP"/> and sets our <see cref="DigitFormat"/> to work
+        /// mode, will prompt user with confirmation dialog if necessary.
+        /// <remarks>Used as a <see cref="UnityEvent"/> on our timer switch.</remarks>
         /// </summary>
         public void TrySwitchToWorkTimer()
         {
@@ -789,7 +790,7 @@ namespace AdrianMiasik
 
         #region Button/Keyboard OnClick Events
         /// <summary>
-        /// Presses the play/pause button
+        /// Presses the play/pause button.
         /// </summary>
         public void TriggerPlayPause()
         {
@@ -797,7 +798,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Presses the boolean slider to toggle between work/break mode
+        /// Presses the boolean slider to toggle between our <see cref="DigitFormat"/> to work/break mode.
         /// </summary>
         public void TriggerTimerSwitch()
         {
@@ -805,7 +806,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Presses the restart button
+        /// Presses the restart button.
         /// </summary>
         public void TriggerTimerRestart()
         {
@@ -813,7 +814,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Presses the boolean slider to toggle between light/dark themes
+        /// Presses the boolean slider to toggle between light/dark themes.
         /// </summary>
         public void TriggerThemeSwitch()
         {
@@ -822,7 +823,7 @@ namespace AdrianMiasik
         #endregion
 
         /// <summary>
-        /// Selects all the digits
+        /// Selects all the digits in our <see cref="DigitFormat"/>.
         /// </summary>
         public void SelectAll()
         {
@@ -996,6 +997,10 @@ namespace AdrianMiasik
             }
         }
         
+        /// <summary>
+        /// Applies our theme changes to our referenced components when necessary.
+        /// </summary>
+        /// <param name="theme">The theme to apply on our referenced components.</param>
         public void ColorUpdate(Theme theme)
         {
             ColorScheme currentColors = theme.GetCurrentColorScheme();
@@ -1115,7 +1120,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Trigger a <see cref="IColorHook"/> ColorUpdate on our <see cref="CreditsBubble"/>.
+        /// Triggers a <see cref="IColorHook"/> ColorUpdate() on our <see cref="CreditsBubble"/>.
         /// </summary>
         public void ColorUpdateCreditsBubble()
         {
@@ -1162,6 +1167,10 @@ namespace AdrianMiasik
             currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
         }
         
+        /// <summary>
+        /// Is our current <see cref="ConfirmationDialog"/> interruptible by our timer?
+        /// </summary>
+        /// <returns></returns>
         public bool IsConfirmationDialogInterruptible()
         {
             return isCurrentDialogInterruptible;
@@ -1169,7 +1178,7 @@ namespace AdrianMiasik
 
         /// <summary>
         /// Clear our current timer popup reference.
-        /// <remarks>Should be done when destroying our popup dialogs.</remarks>
+        /// <remarks>Should be done when destroying our popup dialog.</remarks>
         /// </summary>
         /// <param name="dialog"></param>
         public void ClearDialogPopup(ConfirmationDialog dialog)
@@ -1181,7 +1190,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Sets our <see cref="DigitFormat"/> to long break mode. See <see cref="DigitFormat.m_longBreakTime"/>
+        /// Sets our <see cref="DigitFormat"/> to long break mode.
         /// </summary>
         public void ActivateLongBreak()
         {
