@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Components
 {
     /// <summary>
     /// Our main class / component. Responsible for controlling the main timer logic, configuring settings,

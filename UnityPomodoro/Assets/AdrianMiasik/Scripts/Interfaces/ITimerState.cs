@@ -1,3 +1,4 @@
+using AdrianMiasik.Components;
 using AdrianMiasik.ScriptableObjects;
 
 namespace AdrianMiasik.Interfaces
