@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// A generic button that is used to interact with the software and trigger events based on user input.
+    /// Supports animations, click hold curves, unity events, and sound FX (with pitch variation).
+    /// <remarks>Intended to be used on all our application buttons.</remarks>
+    /// </summary>
     public class ClickButton : Image, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IPointerExitHandler
     {
         // Inspector References
