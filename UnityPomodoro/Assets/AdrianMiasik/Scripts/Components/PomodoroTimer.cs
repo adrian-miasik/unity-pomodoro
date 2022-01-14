@@ -64,7 +64,7 @@ namespace AdrianMiasik.Components
         // TODO: Consolidate right buttons to a single class
         [SerializeField] private ClickButtonIcon m_rightButtonClick; // Used to play/pause the timer
         [SerializeField] private RightButton m_rightButton; // Additional timer state element 
-        [SerializeField] private BooleanSlider m_breakSlider; // Used for switching timer between mode one and mode two
+        [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
         [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
         [SerializeField] private ThemeSlider m_themeSlider; // Used to change between light / dark mode
         [SerializeField] private ToggleSprite m_halloweenToggleSprite; // Halloween theme toggle during Halloween week (Disabled by default) // TODO: Re-implement

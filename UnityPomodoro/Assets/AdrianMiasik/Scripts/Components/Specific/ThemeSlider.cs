@@ -11,7 +11,7 @@ namespace AdrianMiasik.Components.Specific
     /// </summary>
     public class ThemeSlider : ThemeElement
     {
-        [SerializeField] private BooleanSlider m_toggle;
+        [SerializeField] private ToggleSlider m_toggle;
         [SerializeField] private TMP_Text m_label;
         
         /// <summary>

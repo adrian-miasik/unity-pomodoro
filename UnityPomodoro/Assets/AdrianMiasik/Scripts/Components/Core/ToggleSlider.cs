@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
-    //  TODO: Refactor to inherit from Toggle, rename to ToggleSlider
+    //  TODO: Refactor to inherit from Toggle
     /// <summary>
-    /// A <see cref="ThemeElement"/> toggle in the form of a boolean slider.
+    /// A <see cref="ThemeElement"/> <see cref="Base.Toggle"/> in the form of a boolean slider.
     /// </summary>
-    public class BooleanSlider : ThemeElement, IPointerClickHandler
+    public class ToggleSlider : ThemeElement, IPointerClickHandler
     {
         // General
         [SerializeField] public SVGImage m_background;

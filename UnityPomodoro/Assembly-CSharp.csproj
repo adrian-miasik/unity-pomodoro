@@ -71,7 +71,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DigitSeparator.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonText.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Toggle.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\BooleanSlider.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ToggleSlider.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\ColorScheme.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\PomodoroTimer.cs" />

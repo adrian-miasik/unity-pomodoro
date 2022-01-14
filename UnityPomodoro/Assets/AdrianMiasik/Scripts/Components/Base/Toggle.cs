@@ -6,7 +6,7 @@ namespace AdrianMiasik.Components.Base
 {
     /// <summary>
     /// A **base** (blank) toggle that implements <see cref="IColorHook"/> (See <see cref="ToggleSprite"/> logic).
-    /// <remarks>Intended to be used by <see cref="BooleanSlider"/> and <see cref="ThemeElement"/></remarks>
+    /// <remarks>Intended to be used by <see cref="ToggleSlider"/> and <see cref="ThemeElement"/></remarks>
     /// </summary>
     public class Toggle: UnityEngine.UI.Toggle, IColorHook
     {
