@@ -1,16 +1,13 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Specific;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Core.Containers
 {
-    // TODO: Rename to ThemeIconContainer
     /// <summary>
     /// Holds a list of <see cref="ThemeIcon"/>'s and updates their color's based on the current <see cref="Theme"/>.
-    /// Intended to be used in the <see cref="AboutPanel"/>.
     /// </summary>
-    public class SocialButtons : MonoBehaviour
+    public class ThemeIconContainer : MonoBehaviour
     {
         [SerializeField] private List<ThemeIcon> m_icons = new List<ThemeIcon>();
 

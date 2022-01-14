@@ -9,14 +9,14 @@ namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> page used to display information about our application.
-    /// Includes a description, social buttons (<seealso cref="SocialButtons"/>), version number, and a
+    /// Includes a description, social buttons (<seealso cref="ThemeIconContainer"/>), version number, and a
     /// copyright disclaimer.
     /// </summary>
     public class AboutPanel : ThemeElement
     {
         [SerializeField] private TMP_Text m_title;
         [SerializeField] private TMP_Text m_description;
-        [SerializeField] private SocialButtons m_socials;
+        [SerializeField] private ThemeIconContainer m_socials;
         [SerializeField] private WriteVersionNumber m_versionNumber;
         [SerializeField] private TMP_Text m_copyrightDisclaimer;
         

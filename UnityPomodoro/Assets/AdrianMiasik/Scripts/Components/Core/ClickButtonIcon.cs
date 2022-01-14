@@ -3,6 +3,9 @@ using Unity.VectorGraphics;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// A <see cref="ClickButton"/> with an SVG Image.
+    /// </summary>
     public class ClickButtonIcon: ClickButton
     {
         public SVGImage m_icon;
