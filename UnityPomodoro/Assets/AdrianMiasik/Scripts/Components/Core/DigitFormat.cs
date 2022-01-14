@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Helpers;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> used primarily for generating and managing our <see cref="DoubleDigit"/>'s and

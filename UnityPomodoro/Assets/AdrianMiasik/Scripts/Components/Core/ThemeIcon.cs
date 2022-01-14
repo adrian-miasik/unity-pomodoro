@@ -2,7 +2,7 @@ using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core
 {
     /// <summary>
     /// An SVG image component that flips between two sprites. One for each theme (light / dark).
