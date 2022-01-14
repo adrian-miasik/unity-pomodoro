@@ -3,7 +3,7 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Base 
 { 
     /// <summary>
-    /// An abstract base timer class that is intended to be used on any component/class that needs something to
+    /// An abstract **base** timer class that is intended to be used on any component/class that needs something to
     /// happen after `X` couple seconds. Supports duration, and the ability to loop.
     /// </summary>
     public abstract class TimerProgress : MonoBehaviour

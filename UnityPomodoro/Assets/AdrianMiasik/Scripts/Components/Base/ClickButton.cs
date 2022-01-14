@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Base
 {
     /// <summary>
-    /// A generic button that is used to interact with the software and trigger events based on user input.
+    /// A **generic** button that is used to interact with the software and trigger events based on user input.
     /// Supports animations, click hold curves, unity events, and sound FX (with pitch variation).
     /// <remarks>Intended to be used on all our application buttons.</remarks>
     /// </summary>

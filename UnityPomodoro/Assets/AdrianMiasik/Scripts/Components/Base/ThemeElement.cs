@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Base
 {
     /// <summary>
-    /// A base class that is intended to be used on any component/class that needs theming
+    /// A **base** class that is intended to be used on any component/class that needs theming
     /// (that's automatically updated), and needs reference to our main class: <see cref="PomodoroTimer"/>.
     /// </summary>
     public class ThemeElement: MonoBehaviour, IColorHook
