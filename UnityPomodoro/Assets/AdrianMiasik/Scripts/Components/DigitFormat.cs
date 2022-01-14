@@ -9,6 +9,11 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> used primarily for generating and managing our <see cref="DoubleDigit"/>'s and
+    /// <see cref="DigitSeparator"/>'s components. Includes support for multiple layouts:
+    /// See <see cref="SupportedFormats"/> using our <see cref="Digits"/>.
+    /// </summary>
     public class DigitFormat : ThemeElement
     {
         public enum Digits
@@ -41,12 +46,17 @@ namespace AdrianMiasik.Components
         // Work data / Mode one
         [SerializeField] private int[] m_workTime = {0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
 
-        // Break data / Mode two
+        /// <summary>
+        /// Is this digit format on break?
+        /// <remarks>If `False` then this digit format is in work mode. If `True` this digit format is either
+        /// on break / or on a long break.</remarks>
+        /// </summary>
         public bool m_isOnBreak;
-        // TODO: rename to short break time
         [SerializeField] private int[] m_breakTime = {0, 0, 5, 0, 0}; // Represents data for DD_HH_MM_SS_MS
 
-        // Long break data / potentially mode three?
+        /// <summary>
+        /// Is this digit format on a long break?
+        /// </summary>
         public bool m_isOnLongBreak;
         [SerializeField] private int[] m_longBreakTime = {0, 0, 20, 0, 0}; // Represents data for DD_HH_MM_SS_MS
         
@@ -74,6 +84,12 @@ namespace AdrianMiasik.Components
             }
         }
 
+        /// <summary>
+        /// Switches then generates our preferred digit format and updating the relevant components using the
+        /// current active <see cref="Theme"/>.
+        /// </summary>
+        /// <param name="pomodoroTimer"></param>
+        /// <param name="updateColors"></param>
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, false);
@@ -84,6 +100,11 @@ namespace AdrianMiasik.Components
             ColorUpdate(Timer.GetTheme());
         }
 
+        /// <summary>
+        /// Generates/creates our digit format using <see cref="DoubleDigit"/>'s and <see cref="DigitSeparator"/>'s.
+        /// See <see cref="SwitchFormat"/> if you'd like to change your preferred <see cref="SupportedFormats"/>, then
+        /// invoke this function again to generate your new preferred format.
+        /// </summary>
         [ContextMenu("Generate Format")]
         public void GenerateFormat()
         {
@@ -124,6 +145,10 @@ namespace AdrianMiasik.Components
             ColorUpdate(Timer.GetTheme());
         }
 
+        /// <summary>
+        /// Updates our generated <see cref="DoubleDigit"/>'s using our cached values and hides our increment and
+        /// decrement arrows.
+        /// </summary>
         public void RefreshDigitVisuals()
         {
             foreach (DoubleDigit digit in generatedDigits)
@@ -206,13 +231,17 @@ namespace AdrianMiasik.Components
             m_self.anchoredPosition = Vector2.zero;
         }
         
+        /// <summary>
+        /// Presses our break boolean.
+        /// </summary>
         public void FlipIsOnBreakBool()
         {
             m_isOnBreak = !m_isOnBreak;
         }
 
         /// <summary>
-        /// Returns the users own set times (depending on the state, you could get one of three datasets)
+        /// Returns the users own set times (depending on the state, you could get one of three datasets: work /
+        /// break / long break)
         /// </summary>
         /// <returns></returns>
         public TimeSpan GetTime()
@@ -383,6 +412,11 @@ namespace AdrianMiasik.Components
             Timer.SetBackgroundNavigation(backgroundNav);
         }
 
+        /// <summary>
+        /// Sets the generated <see cref="DoubleDigit"/>'s text label to the provided <see cref="TimeSpan"/>.
+        /// </summary>
+        /// <param name="ts">The <see cref="TimeSpan"/> you want to display to the user.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void ShowTime(TimeSpan ts)
         {
             foreach (DoubleDigit doubleDigit in generatedDigits)
@@ -419,6 +453,10 @@ namespace AdrianMiasik.Components
             }
         }
 
+        /// <summary>
+        /// Sets the generated <see cref="DoubleDigit"/>'s to the provided <see cref="TimeSpan"/>.
+        /// </summary>
+        /// <param name="ts"></param>
         public void SetTime(TimeSpan ts)
         {   
             // Apply time arrays to update only for generated digits (essentially throwing out data that's not used)
@@ -498,7 +536,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Shows this gameobject
+        /// Enables this gameobject.
         /// </summary>
         public void Show()
         {
@@ -506,7 +544,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Hides this gameobject
+        /// Disables this gameobject.
         /// </summary>
         public void Hide()
         {
@@ -514,7 +552,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Applies our theme changes to our components when necessary
+        /// Applies our <see cref="Theme"/> changes to our components when necessary.
         /// </summary>
         /// <param name="theme"></param>
         public override void ColorUpdate(Theme theme)
@@ -530,9 +568,9 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Sets the color of our digits to the provided color. <see cref="newColor"/>
+        /// Sets the color of our generated <see cref="DoubleDigit"/>'s to the provided color.
         /// </summary>
-        /// <param name="newColor"></param>
+        /// <param name="newColor">The color you want to set all our <see cref="DoubleDigit"/>'s to.</param>
         public void SetDigitColor(Color newColor)
         {
             foreach (DoubleDigit digit in generatedDigits)
@@ -542,7 +580,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Allows our generated digits to be interacted with
+        /// Allows our generated <see cref="DoubleDigit"/>'s to be interacted with.
         /// </summary>
         public void Unlock()
         {
@@ -553,7 +591,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Prevents / disallows our generated digits to be interacted with
+        /// Prevents our generated <see cref="DoubleDigit"/>'s to be interacted with.
         /// </summary>
         public void Lock()
         {
@@ -564,7 +602,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Moves all our generated digits into their default viewport positions & anchors
+        /// Moves all our generated <see cref="DoubleDigit"/>'s into their default viewport positions & anchors.
         /// </summary>
         public void ResetTextPositions()
         {
@@ -575,7 +613,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Returns our list of generated digits
+        /// Returns our list of generated <see cref="DoubleDigit"/>'s
         /// </summary>
         /// <returns></returns>
         public List<DoubleDigit> GetDigits()
@@ -584,9 +622,10 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Returns our timer in string format
+        /// Returns our current timer values in a <see cref="String"/>.
+        /// <example>Such as "00:24:35" (without the quotation marks)</example>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Our current timer value.</returns>
         public string GetTimerString()
         {
             string result = String.Empty;
@@ -609,7 +648,8 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Prevents tick animation from holding
+        /// Prevents all our digits tick animation from holding, especially useful for when the gameobjects are no
+        /// longer active and need to be re-enabled (Such as switching between pages).
         /// </summary>
         public void CorrectTickAnimVisuals()
         {
@@ -641,7 +681,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Sets the provided digit to it's provided value
+        /// Sets the provided digit to it's provided new value.
         /// </summary>
         /// <param name="digit"></param>
         /// <param name="newValue"></param>
@@ -669,7 +709,7 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Sets the value of the timer using the provided formatted string.
         /// </summary>
-        /// <param name="formattedString">Expected format of ("00:25:00")</param>
+        /// <param name="formattedString">Expected format of "00:25:00" (Without the quotation marks).</param>
         public void SetTimerValue(string formattedString)
         {
             List<string> sections = new List<string>();
@@ -718,33 +758,34 @@ namespace AdrianMiasik.Components
             }
         }
 
-        public int GetDigitValue(Digits digits)
+        /// <summary>
+        /// Returns the provided <see cref="Digits"/> value.
+        /// </summary>
+        /// <param name="digit"></param>
+        /// <returns></returns>
+        public int GetDigitValue(Digits digit)
         {
             if (!m_isOnBreak)
             {
-                return m_workTime[(int)digits];
+                return m_workTime[(int)digit];
             }
-            else
+
+            if (!m_isOnLongBreak)
             {
-                if (!m_isOnLongBreak)
-                {
-                    return m_breakTime[(int)digits];
-                }
-                else
-                {
-                    return m_longBreakTime[(int) digits];
-                }
+                return m_breakTime[(int)digit];
             }
+
+            return m_longBreakTime[(int) digit];
         }
 
         /// <summary>
-        /// Returns True if you can add one to this digit without hitting it's ceiling, otherwise returns False.
+        /// Returns `True` if you can add one to this digit without hitting it's ceiling, otherwise returns `False`.
         /// </summary>
-        /// <param name="digits"></param>
+        /// <param name="digit">The <see cref="Digits"/> you want to check if it can be decremented by one.</param>
         /// <returns></returns>
-        public bool CanIncrementOne(Digits digits)
+        public bool CanIncrementOne(Digits digit)
         {
-            if (GetDigitValue(digits) + 1 > GetDigitMax(digits))
+            if (GetDigitValue(digit) + 1 > GetDigitMax(digit))
             {
                 return false;
             }
@@ -753,13 +794,14 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Returns True if you can subtract one to this digit without hitting it's floor, otherwise returns False.
+        /// Returns `True` if you can subtract one from this digit without hitting it's floor, otherwise returns
+        /// `False`.
         /// </summary>
-        /// <param name="digits"></param>
+        /// <param name="digit">The <see cref="Digits"/> you want to check if it can be decremented by one.</param>
         /// <returns></returns>
-        public bool CanDecrementOne(Digits digits)
+        public bool CanDecrementOne(Digits digit)
         {
-            if (GetDigitValue(digits) - 1 < GetDigitMin())
+            if (GetDigitValue(digit) - 1 < GetDigitMin())
             {
                 return false;
             }
@@ -767,24 +809,35 @@ namespace AdrianMiasik.Components
             return true;
         }
 
-
+        
+        /// <summary>
+        /// Clears our digit selection and sets the selection to the <see cref="Background"/> (our default).
+        /// </summary>
         public void ClearTimerSelection()
         {
             Timer.ClearSelection();
         }
 
+        /// <summary>
+        /// Returns <see cref="PomodoroTimer"/>'s current state. (See: <seealso cref="PomodoroTimer.States"/>)
+        /// </summary>
+        /// <returns></returns>
         public PomodoroTimer.States GetTimerState()
         {
             return Timer.m_state;
         }
 
+        /// <summary>
+        /// Sets the <see cref="PomodoroTimer"/>'s selection to the provided <see cref="DoubleDigit"/>.
+        /// </summary>
+        /// <param name="digitToSelect"></param>
         public void SetTimerSelection(DoubleDigit digitToSelect)
         {
             Timer.SetSelection(digitToSelect);
         }
 
         /// <summary>
-        /// Switches your format to the provided format
+        /// Switches your format to the provided format.
         /// </summary>
         /// <param name="desiredFormat"></param>
         public void SwitchFormat(SupportedFormats desiredFormat)
@@ -811,11 +864,17 @@ namespace AdrianMiasik.Components
             return (int) m_format;
         }
         
+        /// <summary>
+        /// Sets this digit format to be using the long break dataset. (work / break / long break)
+        /// </summary>
         public void ActivateLongBreak()
         {
             m_isOnLongBreak = true;
         }
 
+        /// <summary>
+        /// Sets this digit to be using the break dataset. (work / break / long break)
+        /// </summary>
         public void DeactivateLongBreak()
         {
             m_isOnLongBreak = false;
