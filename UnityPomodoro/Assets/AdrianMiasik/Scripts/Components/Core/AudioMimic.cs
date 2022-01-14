@@ -1,8 +1,11 @@
 using UnityEngine;
 
-// Singleton
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// A Singleton class that allows us to transfer one <see cref="AudioClip"/> from an about to be hidden/destroyed
+    /// gameobject and play it here instead. Limited to only 1 sound mimic at the moment.
+    /// </summary>
     public class AudioMimic : MonoBehaviour
     {
         public static AudioMimic Instance { get; private set; }
