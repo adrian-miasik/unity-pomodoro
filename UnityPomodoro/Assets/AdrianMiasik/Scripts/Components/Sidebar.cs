@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 { 
+    /// <summary>
+    /// A <see cref="ThemeElement"/> page that holds <see cref="SidebarRow"/>'s and deals with group selections and
+    /// animations.
+    /// </summary>
     [ExecuteInEditMode]
     public class Sidebar : ThemeElement
     {
@@ -37,6 +41,11 @@ namespace AdrianMiasik.Components
         private float rowStaggerDelay = 0.15f;
         private float rowStaggerTime;
 
+        /// <summary>
+        /// Sets up our <see cref="SidebarRow"/>'s and selects the first one, also calculates and determines
+        /// the sidebar width based on screen values.
+        /// </summary>
+        /// <param name="pomodoroTimer"></param>
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             base.Initialize(pomodoroTimer);
@@ -94,6 +103,10 @@ namespace AdrianMiasik.Components
             m_background.anchorMax = new Vector2(Mathf.Clamp(0.5f * scalar,0,0.75f), m_background.anchorMax.y);
         }
         
+        /// <summary>
+        /// Animate sidebar open and animate our <see cref="SidebarRow"/>'s in with a stagger,
+        /// create overlay, and updates <see cref="CreditsBubble"/> colors.
+        /// </summary>
         public void Open()
         {
             m_rowsToSpawn = new List<SidebarRow>(m_contentRows);
@@ -116,6 +129,10 @@ namespace AdrianMiasik.Components
             Timer.ColorUpdateCreditsBubble();
         }
 
+        /// <summary>
+        /// Instantly closes our sidebar so it can no longer be seen by the user, hides overlay,
+        /// updates <see cref="CreditsBubble"/>'s colors.
+        /// </summary>
         public void Close()
         {
             isOpen = false;
@@ -137,11 +154,20 @@ namespace AdrianMiasik.Components
             Timer.ColorUpdateCreditsBubble();
         }
 
+        /// <summary>
+        /// Is this <see cref="Sidebar"/> currently open and visible to the user?
+        /// </summary>
+        /// <returns></returns>
         public bool IsOpen()
         {
             return isOpen;
         }
         
+        /// <summary>
+        /// Deselects all other <see cref="SidebarRow"/>'s and highlights the provided sidebar row.
+        /// </summary>
+        /// <param name="rowToSelect"></param>
+        /// <param name="clickSoundClip"></param>
         public void SelectRow(SidebarRow rowToSelect, AudioClip clickSoundClip)
         {
             // Deselect other rows
@@ -172,6 +198,10 @@ namespace AdrianMiasik.Components
             AudioMimic.Instance.PlaySound(clickSoundClip);
         }
 
+        /// <summary>
+        /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
+        /// </summary>
+        /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
             // Overlay
