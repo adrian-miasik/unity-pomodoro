@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> image used to represent a tomato in two states: incomplete / complete.
+    /// (hollow / filled-in)
+    /// </summary>
     public class Tomato : ThemeElement
     {
         [Header("References")]
@@ -30,12 +34,18 @@ namespace AdrianMiasik.Components
             base.ColorUpdate(theme);
         }
 
+        /// <summary>
+        /// Completes this tomato by filling it in.
+        /// </summary>
         [ContextMenu("Complete")]
         public void Complete()
         {
             m_body.sprite = m_croppedBody;
         }
 
+        /// <summary>
+        /// In-completes this tomato by hollowing it out.
+        /// </summary>
         [ContextMenu("Reset")]
         public void Reset()
         {
