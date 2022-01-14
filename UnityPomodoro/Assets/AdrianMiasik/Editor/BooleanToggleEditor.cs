@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AdrianMiasik.Editor
 {
-    [CustomEditor(typeof(BooleanToggle))]
+    [CustomEditor(typeof(ToggleSprite))]
     public class BooleanToggleEditor : ToggleEditor 
     {
         public override void OnInspectorGUI()
@@ -23,7 +23,7 @@ namespace AdrianMiasik.Editor
             base.OnInspectorGUI();
             
             // Fetch target script
-            BooleanToggle _booleanToggle = (BooleanToggle) target;
+            ToggleSprite toggleSprite = (ToggleSprite) target;
 
             #region Vertical Group
             EditorGUILayout.BeginVertical();
@@ -33,11 +33,11 @@ namespace AdrianMiasik.Editor
             EditorGUILayout.LabelField("Information Button", _style);
 
             // Draw property fields
-            _booleanToggle.m_icon = (SVGImage) EditorGUILayout.ObjectField("Icon", _booleanToggle.m_icon, typeof(SVGImage), true);
-            _booleanToggle.m_falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", _booleanToggle.m_falseSprite, typeof(Sprite), true);
-            _booleanToggle.m_falseZRotation = EditorGUILayout.FloatField("False Z Rotation", _booleanToggle.m_falseZRotation);
-            _booleanToggle.m_trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", _booleanToggle.m_trueSprite, typeof(Sprite), true);
-            _booleanToggle.m_trueZRotation = EditorGUILayout.FloatField("True Z Rotation", _booleanToggle.m_trueZRotation);
+            toggleSprite.m_icon = (SVGImage) EditorGUILayout.ObjectField("Icon", toggleSprite.m_icon, typeof(SVGImage), true);
+            toggleSprite.m_falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", toggleSprite.m_falseSprite, typeof(Sprite), true);
+            toggleSprite.m_falseZRotation = EditorGUILayout.FloatField("False Z Rotation", toggleSprite.m_falseZRotation);
+            toggleSprite.m_trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", toggleSprite.m_trueSprite, typeof(Sprite), true);
+            toggleSprite.m_trueZRotation = EditorGUILayout.FloatField("True Z Rotation", toggleSprite.m_trueZRotation);
             
             // Draw UnityEvents
             SerializedProperty _onFalseClick = serializedObject.FindProperty("m_onSetToFalseClick");

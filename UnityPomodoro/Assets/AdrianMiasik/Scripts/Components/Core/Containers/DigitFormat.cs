@@ -14,7 +14,7 @@ namespace AdrianMiasik.Components.Core.Containers
     /// <summary>
     /// A <see cref="ThemeElement"/> used primarily for generating and managing our <see cref="DoubleDigit"/>'s and
     /// <see cref="DigitSeparator"/>'s components. Includes support for multiple layouts:
-    /// See <see cref="SupportedFormats"/> using our <see cref="Digits"/>.
+    /// See <see cref="SupportedFormats"/>.
     /// </summary>
     public class DigitFormat : ThemeElement
     {

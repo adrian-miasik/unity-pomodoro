@@ -5,7 +5,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core.Containers
 {
     /// <summary>
-    /// Holds a list of <see cref="ThemeIcon"/>'s and updates their color's based on the current <see cref="Theme"/>.
+    /// A container that manages a list of <see cref="ThemeIcon"/>'s and updates their color's based on the
+    /// current <see cref="Theme"/>.
     /// </summary>
     public class ThemeIconContainer : MonoBehaviour
     {

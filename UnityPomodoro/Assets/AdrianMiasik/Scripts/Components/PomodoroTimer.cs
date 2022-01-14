@@ -11,6 +11,7 @@ using AdrianMiasik.UWP;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
@@ -58,7 +59,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private Background m_background; // Used to pull select focus
         [SerializeField] private CompletionLabel m_completionLabel; // Used to prompt the user the timer is finished
         [SerializeField] private DigitFormat m_digitFormat; // Responsible class for manipulating our digits and formats
-        [SerializeField] private BooleanToggle m_menuToggle; // Used to toggle our sidebar menu
+        [FormerlySerializedAs("m_menuToggle")] [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
         [SerializeField] private ClickButtonIcon m_leftButtonClick; // Used to restart the timer
         // TODO: Consolidate right buttons to a single class
         [SerializeField] private ClickButtonIcon m_rightButtonClick; // Used to play/pause the timer
@@ -66,7 +67,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private BooleanSlider m_breakSlider; // Used for switching timer between mode one and mode two
         [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
         [SerializeField] private ThemeSlider m_themeSlider; // Used to change between light / dark mode
-        [SerializeField] private BooleanToggle m_halloweenToggle; // Halloween theme toggle during Halloween week (Disabled by default) // TODO: Re-implement
+        [SerializeField] private ToggleSprite m_halloweenToggleSprite; // Halloween theme toggle during Halloween week (Disabled by default) // TODO: Re-implement
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
@@ -200,8 +201,8 @@ namespace AdrianMiasik.Components
             // Overrides
             m_themeSlider.OverrideFalseColor(m_theme.m_light.m_backgroundHighlight);
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
-            m_menuToggle.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
-            m_menuToggle.OverrideTrueColor(Color.clear);
+            m_menuToggleSprite.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
+            m_menuToggleSprite.OverrideTrueColor(Color.clear);
 
             // TODO: Re-implement halloween theme?
             // Halloween Theme Toggle
@@ -214,9 +215,9 @@ namespace AdrianMiasik.Components
                     // Is today Halloween week...
                     if (DateTime.Now.Day == i)
                     {
-                        m_halloweenToggle.gameObject.SetActive(true);
-                        m_halloweenToggle.OverrideTrueColor(new Color(1f, 0.59f, 0f));
-                        m_halloweenToggle.Initialize(this, false);
+                        m_halloweenToggleSprite.gameObject.SetActive(true);
+                        m_halloweenToggleSprite.OverrideTrueColor(new Color(1f, 0.59f, 0f));
+                        m_halloweenToggleSprite.Initialize(this, false);
                         break;
                     }
                 }
@@ -232,7 +233,7 @@ namespace AdrianMiasik.Components
             m_themeSlider.Initialize(this);
             m_creditsBubble.Initialize(this);
             m_rightButton.Initialize(this);
-            m_menuToggle.Initialize(this, false);
+            m_menuToggleSprite.Initialize(this, false);
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
 
@@ -1042,8 +1043,8 @@ namespace AdrianMiasik.Components
             // Reset paused digit anim
             ResetDigitFadeAnim();
             
-            m_menuToggle.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
-            m_menuToggle.ColorUpdate(m_theme);
+            m_menuToggleSprite.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
+            m_menuToggleSprite.ColorUpdate(m_theme);
 
             UpdateRingColor(m_theme);
         }

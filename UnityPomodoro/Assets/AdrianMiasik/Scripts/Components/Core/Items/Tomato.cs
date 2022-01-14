@@ -5,8 +5,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core.Items
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> image used to represent a tomato in two states: incomplete / complete.
-    /// (hollow / filled-in)
+    /// A <see cref="ThemeElement"/> image used to represent a tomato in two states: **Incomplete** (Hollow) or
+    /// **Complete** (Filled-in).
     /// </summary>
     public class Tomato : ThemeElement
     {

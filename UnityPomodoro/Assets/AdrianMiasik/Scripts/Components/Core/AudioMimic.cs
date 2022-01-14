@@ -3,8 +3,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
-    /// A Singleton class that allows us to transfer one <see cref="AudioClip"/> from an about to be hidden/destroyed
-    /// gameobject and play it here instead. Limited to only 1 sound mimic at the moment.
+    /// A singleton class that allows us to transfer one <see cref="AudioClip"/> from an about to be hidden/destroyed
+    /// gameobject and play it here instead. Limited to only 1 sound mimic at one time.
     /// </summary>
     public class AudioMimic : MonoBehaviour
     {

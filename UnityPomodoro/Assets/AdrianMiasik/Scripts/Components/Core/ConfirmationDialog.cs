@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> associated with a prefab. Used to prompt the user with yes/no questions.
+    /// A <see cref="ThemeElement"/> prefab used to prompt the user with 'Yes' or 'No' questions.
     /// Such as confirming their action that can interrupt the active running timer. Supports custom text.
     /// </summary>
     public class ConfirmationDialog : ThemeElement

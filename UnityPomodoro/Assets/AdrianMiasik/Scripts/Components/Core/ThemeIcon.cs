@@ -5,7 +5,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
-    /// An SVG image component that flips between two sprites. One for each theme (light / dark).
+    /// An SVG image component that switches between two sprites depending on the <see cref="Theme"/> preference:
+    /// Light / Dark.
     /// </summary>
     public class ThemeIcon : MonoBehaviour
     {

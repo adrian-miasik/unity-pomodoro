@@ -11,14 +11,14 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Core.Containers
 { 
     /// <summary>
-    /// A <see cref="ThemeElement"/> page that holds <see cref="SidebarRow"/>'s and deals with group selections and
-    /// animations.
+    /// A <see cref="ThemeElement"/> container page that holds <see cref="SidebarRow"/>'s and deals with group
+    /// selections and animations.
     /// </summary>
     [ExecuteInEditMode]
     public class Sidebar : ThemeElement
     {
         [Header("Components")]
-        [SerializeField] private BooleanToggle m_menuToggle;
+        [SerializeField] private ToggleSprite m_menuToggleSprite;
         [SerializeField] private RectTransform m_container;
         [SerializeField] private RectTransform m_background;
         [SerializeField] private Image m_overlayImage;
@@ -145,7 +145,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.CancelHold();
             }
 
-            m_menuToggle.SetToFalse();
+            m_menuToggleSprite.SetToFalse();
             
             m_container.gameObject.SetActive(false);
             m_entryAnimation.Stop();

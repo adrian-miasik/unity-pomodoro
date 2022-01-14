@@ -10,8 +10,8 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Core.Items
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> used as an interactable/lockable input field that's designed to hold two numerical
-    /// values. Can be interacted by the user via the increment / decrement arrows.
+    /// A <see cref="ThemeElement"/> used as an interactable input field (lockable) that's designed to hold
+    /// two numerical values. Can be interacted by the user via the increment / decrement arrows.
     /// Intended to be used within a <see cref="DigitFormat"/>.
     /// <remarks>Has two layers of selections. One for itself, another for the input field.</remarks>
     /// </summary>

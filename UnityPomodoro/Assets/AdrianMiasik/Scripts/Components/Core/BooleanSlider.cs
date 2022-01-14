@@ -10,7 +10,7 @@ namespace AdrianMiasik.Components.Core
 {
     //  TODO: Refactor to inherit from Toggle, rename to ToggleSlider
     /// <summary>
-    /// A <see cref="ThemeElement"/> toggle in the form of a boolean slider
+    /// A <see cref="ThemeElement"/> toggle in the form of a boolean slider.
     /// </summary>
     public class BooleanSlider : ThemeElement, IPointerClickHandler
     {

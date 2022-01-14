@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
-    /// Writes the current Unity application version (bundleVersion) to the referenced text field.
+    /// Writes the current Unity application version to the referenced text field.
     /// </summary>
     public class WriteVersionNumber : MonoBehaviour
     {
