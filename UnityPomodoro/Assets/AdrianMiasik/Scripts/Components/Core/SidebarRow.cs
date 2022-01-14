@@ -1,11 +1,10 @@
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> used to display an icon, and a text label. Includes <see cref="ClickButton"/>,
