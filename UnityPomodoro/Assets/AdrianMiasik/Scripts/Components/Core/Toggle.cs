@@ -1,14 +1,13 @@
 ﻿using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
-    /// A blank toggle that implements <see cref="IColorHook"/>.
-    /// <remarks>Intended to be used by <see cref="BooleanToggle"/></remarks>
+    /// A blank toggle that implements <see cref="IColorHook"/>. (See <see cref="ThemeElement"/> logic)
+    /// <remarks>Intended to be used by <see cref="BooleanToggle"/> and <see cref="BooleanSlider"/></remarks>
     /// </summary>
-    public class ThemeElementToggle: Toggle, IColorHook
+    public class Toggle: UnityEngine.UI.Toggle, IColorHook
     {
         protected PomodoroTimer Timer;
         protected bool IsInitialized;

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
+    //  TODO: Refactor to inherit from Toggle
     /// <summary>
     /// A <see cref="ThemeElement"/> toggle in the form of a boolean slider
     /// </summary>
