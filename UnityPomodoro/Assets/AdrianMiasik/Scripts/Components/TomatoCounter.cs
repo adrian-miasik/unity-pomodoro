@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components
     /// <summary>
     /// A <see cref="ThemeElement"/> horizontal layout group that holds <see cref="Tomato"/>es (Pomodoros) and
     /// manipulates their state as a group. Such as completing/filling each sequential <see cref="Tomato"/> in.
-    /// Includes a trashcan that is used to wipe tomato progression. Intended to be used to determine when
+    /// Includes a trashcan that is used to wipe tomato/pomodoro progression. Intended to be used to determine when
     /// to take long breaks.
     /// </summary>
     public class TomatoCounter : ThemeElement
