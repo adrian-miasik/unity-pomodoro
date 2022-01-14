@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> used primarily to update the color of the referenced
-    /// "timer completed" labels via <see cref="IColorHook"/> ColorUpdate();
+    /// "TIMER COMPLETE" labels via <see cref="IColorHook"/> ColorUpdate.
     /// </summary>
     public class CompletionLabel : ThemeElement
     {
