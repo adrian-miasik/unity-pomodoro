@@ -67,7 +67,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\DoubleDigit.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\ThemeSlider.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\UWP\NotificationManager.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\SidebarRow.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\SidebarRow.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\DigitSeparator.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Wrappers\ClickButtonText.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeElementToggle.cs" />
@@ -80,7 +80,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\IColorHook.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Tomato.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\SocialButtons.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Sidebar.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Sidebar.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Background.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\BooleanToggle.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\SettingsPanel.cs" />
