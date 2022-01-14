@@ -58,7 +58,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\RightButton.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Theme.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\TomatoCounter.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\TomatoCounter.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\DigitFormat.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\CompletionLabel.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeElement.cs" />
@@ -78,7 +78,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\WriteVersionNumber.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\TimerProgress.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\IColorHook.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Tomato.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Tomato.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\SocialButtons.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Sidebar.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Background.cs" />
