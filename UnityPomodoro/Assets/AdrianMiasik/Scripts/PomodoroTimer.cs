@@ -867,7 +867,7 @@ namespace AdrianMiasik
         /// Returns our current timer values in a <see cref="String"/>.
         /// <example>Such as "00:24:35" (without the quotation marks)</example>
         /// </summary>
-        /// <returns>Our current timer value in <see cref="String"/> format.</returns>
+        /// <returns>Our current timer value.</returns>
         public string GetTimerString()
         {
             return m_digitFormat.GetTimerString();
