@@ -11,8 +11,7 @@ namespace AdrianMiasik.Components
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> associated with a prefab. Used to prompt the user with yes/no questions.
-    /// Such as confirming their action that can interrupt the active running timer. You can set the text displayed
-    /// in this prompt.
+    /// Such as confirming their action that can interrupt the active running timer. Supports custom text.
     /// </summary>
     public class ConfirmationDialog : ThemeElement
     {
