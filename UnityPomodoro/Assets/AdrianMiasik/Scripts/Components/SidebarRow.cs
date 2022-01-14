@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> used to display an icon, and a text label. Includes <see cref="ClickButton"/>,
+    /// and a spawn animation. Intended to be used by <see cref="sidebar"/>.
+    /// </summary>
     public class SidebarRow : ThemeElement
     {
         [SerializeField] private Animation m_spawn;
