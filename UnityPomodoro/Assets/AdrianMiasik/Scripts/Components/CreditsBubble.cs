@@ -9,6 +9,10 @@ using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// A <see cref="TimerProgress"/> inheritor used for displaying the authors name of the app. Intended to minimize
+    /// after a couple seconds via the base class.
+    /// </summary>
     public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler, IColorHook
     {
         [SerializeField] private SVGImage m_background;
@@ -35,6 +39,10 @@ namespace AdrianMiasik.Components
 
         private FadeState state;
 
+        /// <summary>
+        /// Sets up our component, and registers the <see cref="IColorHook"/> to the active <see cref="Theme"/>.
+        /// </summary>
+        /// <param name="pomodoroTimer"></param>
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
@@ -50,11 +58,16 @@ namespace AdrianMiasik.Components
             ColorUpdate(timer.GetTheme());
         }
 
-        protected override void OnUpdate(float progress)
+        protected override void OnStart()
         {
-            // Nothing
+            
         }
 
+        protected override void OnUpdate(float progress)
+        {
+            
+        }
+        
         protected override void OnComplete()
         {
             if (!isPointerHovering && !timer.IsAboutPageOpen())
