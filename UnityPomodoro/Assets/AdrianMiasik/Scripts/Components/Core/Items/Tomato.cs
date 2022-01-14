@@ -1,4 +1,5 @@
 using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Containers;
 using Unity.VectorGraphics;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace AdrianMiasik.Components.Core.Items
     /// <summary>
     /// A <see cref="ThemeElement"/> image used to represent a tomato in two states: **Incomplete** (Hollow) or
     /// **Complete** (Filled-in).
+    /// (Also see <see cref="TomatoCounter"/>)
     /// </summary>
     public class Tomato : ThemeElement
     {

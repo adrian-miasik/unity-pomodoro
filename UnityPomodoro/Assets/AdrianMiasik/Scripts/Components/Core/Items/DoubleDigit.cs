@@ -12,8 +12,8 @@ namespace AdrianMiasik.Components.Core.Items
     /// <summary>
     /// A <see cref="ThemeElement"/> used as an interactable input field (lockable) that's designed to hold
     /// two numerical values. Can be interacted by the user via the increment / decrement arrows.
-    /// Intended to be used within a <see cref="DigitFormat"/>.
-    /// <remarks>Has two layers of selections. One for itself, another for the input field.</remarks>
+    /// <remarks>Has two layers of selections. (Itself -> Input Field)</remarks>
+    /// (Also see <see cref="DigitFormat"/>)
     /// </summary>
     public class DoubleDigit : ThemeElement, ISelectHandler, IPointerClickHandler, ISubmitHandler
     {

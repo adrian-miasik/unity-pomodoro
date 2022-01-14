@@ -9,8 +9,9 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Core.Items
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> used to display an icon, and a text label. Includes <see cref="ClickButton"/>,
-    /// and a spawn animation. Intended to be used by <see cref="Sidebar"/>.
+    /// A <see cref="ThemeElement"/> <see cref="ClickButton"/> used to display a SVG image, and a text label.
+    /// Includes a spawn animation.
+    /// (Also see <see cref="Sidebar"/>)
     /// </summary>
     public class SidebarRow : ThemeElement
     {
