@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    // TODO: Rename to digitformatdropdown
     /// <summary>
     /// A <see cref="ThemeElement"/> dropdown with a label.
     /// Intended to be used for 'switch digit format' settings option.
