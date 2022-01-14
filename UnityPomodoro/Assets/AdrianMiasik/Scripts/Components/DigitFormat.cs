@@ -394,8 +394,8 @@ namespace AdrianMiasik.Components
                 Navigation digitNav = new Navigation
                 {
                     mode = Navigation.Mode.Explicit,
-                    selectOnLeft = generatedDigits[ListHelper.Wrap(i - 1, generatedDigits.Count)].GetSelectable(),
-                    selectOnRight = generatedDigits[ListHelper.Wrap(i + 1, generatedDigits.Count)].GetSelectable()
+                    selectOnLeft = generatedDigits[CollectionHelper.Wrap(i - 1, generatedDigits.Count)].GetSelectable(),
+                    selectOnRight = generatedDigits[CollectionHelper.Wrap(i + 1, generatedDigits.Count)].GetSelectable()
                 };
 
                 // Apply navigation

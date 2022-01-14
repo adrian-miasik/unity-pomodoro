@@ -60,7 +60,7 @@ namespace AdrianMiasik.Components
 
             // Increment / wrap new tomato index
             nextFilledTomatoIndex++;
-            nextFilledTomatoIndex = ListHelper.Wrap(nextFilledTomatoIndex, m_tomatoes.Count);
+            nextFilledTomatoIndex = CollectionHelper.Wrap(nextFilledTomatoIndex, m_tomatoes.Count);
             
             // Check for completion
             if (nextFilledTomatoIndex == 0)
