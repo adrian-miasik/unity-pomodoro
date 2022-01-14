@@ -7,7 +7,7 @@ namespace AdrianMiasik.Components
     /// <summary>
     /// An SVG image component that flips between two sprites. One for each theme (light / dark).
     /// </summary>
-    public class UPIcon : MonoBehaviour
+    public class ThemeIcon : MonoBehaviour
     {
         [SerializeField] private SVGImage m_icon;
 

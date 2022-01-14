@@ -17,7 +17,7 @@ namespace AdrianMiasik.Components
     {
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
-        [SerializeField] private UPIcon m_icon;
+        [SerializeField] private ThemeIcon m_icon;
         [SerializeField] private CanvasGroup m_textContainer;
         [SerializeField] private List<TMP_Text> m_text = new List<TMP_Text>();
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")]
