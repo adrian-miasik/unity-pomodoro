@@ -1,6 +1,9 @@
 ﻿namespace AdrianMiasik.Components.Helpers
 {
-    public static class ListHelper
+    /// <summary>
+    /// Helper methods for lists.
+    /// </summary>
+    public static class CollectionHelper
     {
         public static int Wrap(int index, int length)
         {
