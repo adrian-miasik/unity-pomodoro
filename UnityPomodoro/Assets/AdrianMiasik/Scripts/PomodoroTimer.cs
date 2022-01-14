@@ -1159,7 +1159,7 @@ namespace AdrianMiasik
         /// </summary>
         /// <param name="onSubmit">What do you want to do when the user presses yes?</param>
         /// <param name="onCancel">What do you want to do when the user presses no?</param>
-        /// <param name="topText">What main string do you want to display to the user?</param>
+        /// <param name="topText">What primary string do you want to display to the user?</param>
         /// <param name="bottomText">What secondary string do you want to display to the user?</param>
         /// <param name="interruptible">Can this popup be closed by our timer?</param>
         public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null, 
