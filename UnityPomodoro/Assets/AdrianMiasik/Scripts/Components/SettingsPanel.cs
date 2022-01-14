@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> page used to display a set of interactable user options. Currently supports
+    /// switching between different digit formats and muting our application when it's not in focus.
+    /// See: <see cref="DigitFormat.SupportedFormats"/>.
+    /// </summary>
     public class SettingsPanel : ThemeElement
     {
         [SerializeField] private TMP_Text m_title;
@@ -25,6 +30,10 @@ namespace AdrianMiasik.Components
             m_muteSoundOutOfFocusBoolean.Initialize(pomodoroTimer, pomodoroTimer.MuteSoundWhenOutOfFocus());
         }
         
+        /// <summary>
+        /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
+        /// </summary>
+        /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
             if (isOpen)
@@ -36,16 +45,27 @@ namespace AdrianMiasik.Components
             }
         }
 
+        /// <summary>
+        /// Updates the switch digit layout dropdown to use the current timer's digit format.
+        /// </summary>
         public void UpdateDropdown()
         {
             m_digitFormatDropdown.SetDropdownValue(Timer.GetDigitFormat());
         }
 
+        /// <summary>
+        /// Sets the switch digit layout dropdown to the provided digit format index.
+        /// (See: <see cref="DigitFormat.SupportedFormats"/>)
+        /// </summary>
+        /// <param name="value">The index value you want the dropdown to be set at.</param>
         public void SetDropdown(int value)
         {
             m_digitFormatDropdown.SetDropdownValue(value);
         }
         
+        /// <summary>
+        /// Displays this panel to the user.
+        /// </summary>
         public void Show()
         {
             gameObject.SetActive(true);
@@ -54,23 +74,38 @@ namespace AdrianMiasik.Components
             ColorUpdate(Timer.GetTheme());
         }
 
+        /// <summary>
+        /// Hides this panel away from the user.
+        /// </summary>
         public void Hide()
         {
             gameObject.SetActive(false);
             isOpen = false;
         }
 
+        /// <summary>
+        /// Is this <see cref="SettingsPanel"/> currently open and visible?
+        /// </summary>
+        /// <returns></returns>
         public bool IsPageOpen()
         {
             return isOpen;
         }
         
+        /// <summary>
+        /// Shows the 'sound mute when application is out of focus' option to the user.
+        /// <remarks>Intended to be shown for desktop users, not mobile.</remarks>
+        /// </summary>
         public void ShowMuteSoundOutOfFocusOption()
         {
             m_muteSoundOutOfFocusLabel.gameObject.SetActive(true);
             m_muteSoundOutOfFocusBoolean.gameObject.SetActive(true);
         }
         
+        /// <summary>
+        /// Hides the 'sound mute when application is out of focus' option from the user.
+        /// <remarks>Intended to be hidden for mobile users, not desktop.</remarks>
+        /// </summary>
         public void HideMuteSoundOutOfFocusOption()
         {
             m_muteSoundOutOfFocusLabel.gameObject.SetActive(false);
