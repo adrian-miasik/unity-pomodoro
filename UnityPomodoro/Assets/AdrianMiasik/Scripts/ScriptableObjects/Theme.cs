@@ -42,12 +42,11 @@ namespace AdrianMiasik.ScriptableObjects
         }
 
         /// <summary>
-        /// Registers the provided (<see cref="IColorHook"/>) color element to this theme. This is used
+        /// Associates the provided (<see cref="IColorHook"/>) color element to this theme. This is used
         /// for updating our elements when we are validating editor colors, or switching between different
-        /// <see cref="ColorScheme"/>'s.
-        /// See <see cref="SetToDarkMode"/> & <see cref="SetToLightMode"/>
+        /// <see cref="ColorScheme"/>'s. See <see cref="SetToDarkMode"/> & <see cref="SetToLightMode"/>.
         /// </summary>
-        /// <param name="hook"></param>
+        /// <param name="hook">The color element you want to register/associate with this theme.</param>
         public void Register(IColorHook hook)
         {
             if (colorElements.Contains(hook))
@@ -61,11 +60,11 @@ namespace AdrianMiasik.ScriptableObjects
         }
 
         /// <summary>
-        /// Un-Registers the provided (<see cref="IColorHook"/>) color element from this theme (If they exist).
+        /// Disassociates the provided (<see cref="IColorHook"/>) color element from this theme (If they exist).
         /// <remarks>This is usually invoked before gameobject deletion or if you no longer want to update
         /// color elements between <see cref="ColorScheme"/>'s changes.</remarks>
         /// </summary>
-        /// <param name="colorHook"></param>
+        /// <param name="colorHook">The color element you want to deregister/disassociate with this theme.</param>
         public void Deregister(IColorHook colorHook)
         {
             if (colorElements.Contains(colorHook))
@@ -75,7 +74,7 @@ namespace AdrianMiasik.ScriptableObjects
         }
 
         /// <summary>
-        /// Un-Registers all our color hook elements from this theme.
+        /// Disassociates all our color hook elements from this <see cref="Theme"/>.
         /// </summary>
         public void DeregisterAllElements()
         {
@@ -86,7 +85,7 @@ namespace AdrianMiasik.ScriptableObjects
         /// Fetches the appropriate ColorScheme depending on the user's preference. Depending if they prefer
         /// light / dark mode. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The user's preferred <see cref="ColorScheme"/></returns>
         public ColorScheme GetCurrentColorScheme()
         {
             return m_darkMode ? m_dark : m_light;
