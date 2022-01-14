@@ -8,8 +8,8 @@ namespace AdrianMiasik.Components
 {
     /// <summary>
     /// Responsible for our detecting and executing our keyboard shortcut actions.
-    /// Single keys are processed in <see cref="ProcessKeys"/>,
-    /// and multi-keys are processed in <see cref="ProcessKeybinds"/>.
+    /// Single keys are processed in `ProcessKeys()`,
+    /// and multi-keys are processed in `ProcessKeybinds()`.
     /// </summary>
     public class HotkeyDetector : MonoBehaviour
     {
