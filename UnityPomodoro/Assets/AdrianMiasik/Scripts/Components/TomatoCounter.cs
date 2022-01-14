@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> horizontal layout group that holds <see cref="Tomato"/>es (Pomodoros) and
+    /// manipulates their state as a group. Such as completing/filling each sequential <see cref="Tomato"/> in.
+    /// Includes a trashcan that is used to wipe tomato progression. Intended to be used to determine when
+    /// to take long breaks.
+    /// </summary>
     public class TomatoCounter : ThemeElement
     {
         [SerializeField] private HorizontalLayoutGroup m_horizontal;
@@ -14,6 +20,11 @@ namespace AdrianMiasik.Components
         [SerializeField] private List<Tomato> m_tomatoes = new List<Tomato>();
         private int nextFilledTomatoIndex;
         
+        /// <summary>
+        /// Setups up our tomatoes and determines trashcan visibility (based on progression).
+        /// </summary>
+        /// <param name="pomodoroTimer"></param>
+        /// <param name="updateColors"></param>
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             // TODO: (4) Setting property for what defines a long break
@@ -35,9 +46,8 @@ namespace AdrianMiasik.Components
         }
         
         /// <summary>
-        /// Fills in the latest tomato
+        /// Completes / Fills in the latest <see cref="Tomato"/>. (from left to right)
         /// </summary>
-        /// <returns>Are we ready for a long break?</returns>
         public void FillTomato()
         {
             // If the user has already unlocked the long break...
@@ -61,11 +71,19 @@ namespace AdrianMiasik.Components
             DetermineTrashcanVisibility();
         }
 
+        /// <summary>
+        /// Sets the scale of this horizontal layout group.
+        /// Intended for animations.
+        /// </summary>
+        /// <param name="newScale"></param>
         public void SetHorizontalScale(Vector3 newScale)
         {
             m_horizontal.transform.localScale = newScale;
         }
         
+        /// <summary>
+        /// Wipe / Clears your completed <see cref="Tomato"/>/pomodoro progression back to zero.
+        /// </summary>
         public void ConsumeTomatoes()
         {
             foreach (Tomato tomato in m_tomatoes)
@@ -77,7 +95,12 @@ namespace AdrianMiasik.Components
             DetermineTrashcanVisibility();
         }
 
-        // Unity Event - Trashcan
+        /// <summary>
+        /// Attempts to destroy our <see cref="Tomato"/>/pomodoro progression. Accounts for long break mode.
+        /// Will prompt user with a <see cref="ConfirmationDialog"/> to confirm their action to prevent accidental
+        /// wipes / clears.
+        /// <remarks>UnityEvent - Attached to trashcan gameobject.</remarks>
+        /// </summary>
         public void TrashTomatoes()
         {
             Timer.SpawnConfirmationDialog(() =>
