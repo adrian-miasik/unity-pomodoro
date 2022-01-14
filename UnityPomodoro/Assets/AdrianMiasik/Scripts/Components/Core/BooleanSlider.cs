@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> toggle in the form of a boolean slider
+    /// </summary>
     public class BooleanSlider : ThemeElement, IPointerClickHandler
     {
         // General
