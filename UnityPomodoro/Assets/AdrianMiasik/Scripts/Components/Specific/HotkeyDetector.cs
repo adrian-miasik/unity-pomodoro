@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Containers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// Responsible for our detecting and executing our keyboard shortcut actions.

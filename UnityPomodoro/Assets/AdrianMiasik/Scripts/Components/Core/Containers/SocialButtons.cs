@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Specific;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core.Containers
 {
+    // TODO: Rename to ThemeIconContainer
     /// <summary>
     /// Holds a list of <see cref="ThemeIcon"/>'s and updates their color's based on the current <see cref="Theme"/>.
     /// Intended to be used in the <see cref="AboutPanel"/>.

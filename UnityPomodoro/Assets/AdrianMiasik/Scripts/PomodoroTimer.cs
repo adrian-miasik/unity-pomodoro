@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdrianMiasik.Components;
 using AdrianMiasik.Components.Core;
-using AdrianMiasik.Components.Wrappers;
+using AdrianMiasik.Components.Core.Containers;
+using AdrianMiasik.Components.Core.Items;
+using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;

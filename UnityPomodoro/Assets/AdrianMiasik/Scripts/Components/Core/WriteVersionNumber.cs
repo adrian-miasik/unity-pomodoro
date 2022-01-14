@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core
 {
     /// <summary>
     /// Writes the current Unity application version (bundleVersion) to the referenced text field.

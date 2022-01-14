@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Base
 {
     /// <summary>
     /// A generic button that is used to interact with the software and trigger events based on user input.

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> used primarily to update the color of the referenced

@@ -1,9 +1,11 @@
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> page used to display information about our application.

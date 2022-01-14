@@ -1,9 +1,11 @@
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> page used to display a set of interactable user options. Currently supports
@@ -13,7 +15,7 @@ namespace AdrianMiasik.Components
     public class SettingsPanel : ThemeElement
     {
         [SerializeField] private TMP_Text m_title;
-        [SerializeField] private LabelledDropdown m_digitFormatDropdown;
+        [SerializeField] private DigitFormatDropdown m_digitFormatDropdown;
         [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
         [SerializeField] private BooleanSlider m_muteSoundOutOfFocusBoolean;
         

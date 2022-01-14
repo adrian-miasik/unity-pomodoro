@@ -1,4 +1,4 @@
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Base;
 using UnityEditor;
 using UnityEditor.UI;
 using UnityEngine;

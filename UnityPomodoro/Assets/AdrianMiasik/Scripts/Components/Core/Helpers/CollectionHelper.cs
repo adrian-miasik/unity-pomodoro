@@ -1,7 +1,7 @@
-﻿namespace AdrianMiasik.Components.Helpers
+﻿namespace AdrianMiasik.Components.Core.Helpers
 {
     /// <summary>
-    /// Helper methods for lists.
+    /// Helper methods for collections.
     /// </summary>
     public static class CollectionHelper
     {

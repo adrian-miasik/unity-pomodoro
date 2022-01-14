@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
@@ -7,7 +8,7 @@ using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="TimerProgress"/> inheritor used for displaying the authors name of the app. Intended to minimize

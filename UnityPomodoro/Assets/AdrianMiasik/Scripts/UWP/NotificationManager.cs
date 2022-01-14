@@ -1,4 +1,4 @@
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 #if ENABLE_WINMD_SUPPORT

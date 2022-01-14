@@ -1,9 +1,9 @@
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> image used to pull focus off selected elements.

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Core 
+namespace AdrianMiasik.Components.Base 
 { 
     /// <summary>
     /// An abstract base timer class that is intended to be used on any component/class that needs something to

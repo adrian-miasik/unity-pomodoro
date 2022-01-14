@@ -1,3 +1,4 @@
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
-    //  TODO: Refactor to inherit from Toggle
+    //  TODO: Refactor to inherit from Toggle, rename to ToggleSlider
     /// <summary>
     /// A <see cref="ThemeElement"/> toggle in the form of a boolean slider
     /// </summary>

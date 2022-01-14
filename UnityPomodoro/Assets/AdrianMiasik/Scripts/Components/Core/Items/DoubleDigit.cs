@@ -1,4 +1,5 @@
-using AdrianMiasik.Components.Wrappers;
+using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Core.Items
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> used as an interactable/lockable input field that's designed to hold two numerical

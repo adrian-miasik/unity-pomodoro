@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using AdrianMiasik.Components.Wrappers;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;

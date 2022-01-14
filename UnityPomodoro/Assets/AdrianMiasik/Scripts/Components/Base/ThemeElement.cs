@@ -2,7 +2,7 @@
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Base
 {
     /// <summary>
     /// A base class that is intended to be used on any component/class that needs theming

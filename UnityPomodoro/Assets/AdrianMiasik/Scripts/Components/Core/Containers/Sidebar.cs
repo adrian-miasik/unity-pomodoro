@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Items;
+using AdrianMiasik.Components.Specific;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Core.Containers
 { 
     /// <summary>
     /// A <see cref="ThemeElement"/> page that holds <see cref="SidebarRow"/>'s and deals with group selections and

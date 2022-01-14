@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
-using AdrianMiasik.Components.Helpers;
+using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Helpers;
+using AdrianMiasik.Components.Core.Items;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core.Containers
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> horizontal layout group that holds <see cref="Tomato"/>es (Pomodoros) and

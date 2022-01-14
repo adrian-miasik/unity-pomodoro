@@ -52,42 +52,42 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButton.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\HotkeyDetector.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\ClickButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\ThemeElement.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\TimerProgress.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Toggle.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\DigitFormat.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\Sidebar.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\SocialButtons.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\TomatoCounter.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DigitSeparator.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DoubleDigit.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\SidebarRow.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\Tomato.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\HotkeyDetector.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialog.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\RightButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\RightButton.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Theme.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\TomatoCounter.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\DigitFormat.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\CompletionLabel.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeElement.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CompletionLabel.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\AudioMimic.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\AboutPanel.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\DoubleDigit.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\ThemeSlider.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\AboutPanel.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\ThemeSlider.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\UWP\NotificationManager.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\SidebarRow.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\DigitSeparator.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Wrappers\ClickButtonText.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Toggle.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonText.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\BooleanSlider.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Wrappers\ClickButtonIcon.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\ColorScheme.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\PomodoroTimer.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\WriteVersionNumber.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\TimerProgress.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\IColorHook.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Tomato.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\SocialButtons.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Sidebar.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Background.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Background.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\BooleanToggle.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\SettingsPanel.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\LabelledDropdown.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\CreditsBubble.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\SettingsPanel.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\DigitFormatDropdown.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CreditsBubble.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\ITimerState.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Helpers\CollectionHelper.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -775,8 +775,6 @@
  <Reference Include="Unity.Recorder">
  <HintPath>C:/Users/User/Documents/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

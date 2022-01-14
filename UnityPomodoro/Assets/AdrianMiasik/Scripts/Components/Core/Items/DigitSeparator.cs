@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Core.Items
 {
     /// <summary>
     /// A single text component used to hold reference and set it's color.

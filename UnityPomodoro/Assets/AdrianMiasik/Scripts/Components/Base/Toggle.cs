@@ -1,11 +1,12 @@
-﻿using AdrianMiasik.Interfaces;
+﻿using AdrianMiasik.Components.Core;
+using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Base
 {
     /// <summary>
-    /// A blank toggle that implements <see cref="IColorHook"/>. (See <see cref="ThemeElement"/> logic)
-    /// <remarks>Intended to be used by <see cref="BooleanToggle"/> and <see cref="BooleanSlider"/></remarks>
+    /// A blank toggle that implements <see cref="IColorHook"/>. (See <see cref="BooleanToggle"/> logic)
+    /// <remarks>Intended to be used by <see cref="BooleanSlider"/> and <see cref="ThemeElement"/></remarks>
     /// </summary>
     public class Toggle: UnityEngine.UI.Toggle, IColorHook
     {

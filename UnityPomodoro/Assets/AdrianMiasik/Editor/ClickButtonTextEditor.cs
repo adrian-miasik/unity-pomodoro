@@ -1,5 +1,5 @@
-﻿using AdrianMiasik.Components.Core;
-using AdrianMiasik.Components.Wrappers;
+﻿using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core;
 using TMPro;
 using UnityEditor;
 

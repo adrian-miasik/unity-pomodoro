@@ -1,9 +1,10 @@
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> boolean slider with a label. Intended for the theme toggle (light / dark).

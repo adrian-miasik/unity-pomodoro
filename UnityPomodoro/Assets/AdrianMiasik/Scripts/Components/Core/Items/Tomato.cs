@@ -1,9 +1,8 @@
-using AdrianMiasik.Components.Core;
-using AdrianMiasik.ScriptableObjects;
+using AdrianMiasik.Components.Base;
 using Unity.VectorGraphics;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core.Items
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> image used to represent a tomato in two states: incomplete / complete.
@@ -23,16 +22,6 @@ namespace AdrianMiasik.Components
         [Header("Complete")]
         [SerializeField] private Sprite m_croppedBody;
         [SerializeField] private Sprite m_fullBody;
-        
-        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
-        {
-            base.Initialize(pomodoroTimer, updateColors);
-        }
-
-        public override void ColorUpdate(Theme theme)
-        {
-            base.ColorUpdate(theme);
-        }
 
         /// <summary>
         /// Completes this tomato by filling it in.

@@ -1,7 +1,7 @@
-﻿using AdrianMiasik.Components.Core;
+﻿using AdrianMiasik.Components.Base;
 using TMPro;
 
-namespace AdrianMiasik.Components.Wrappers
+namespace AdrianMiasik.Components.Core
 {
     public class ClickButtonText: ClickButton
     {

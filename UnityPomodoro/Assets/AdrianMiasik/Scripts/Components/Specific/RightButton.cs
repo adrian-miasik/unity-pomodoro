@@ -1,12 +1,12 @@
 using System;
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> button used to play/pause the timer. Implements <see cref="ITimerState"/>

@@ -1,7 +1,7 @@
-﻿using AdrianMiasik.Components.Core;
+﻿using AdrianMiasik.Components.Base;
 using Unity.VectorGraphics;
 
-namespace AdrianMiasik.Components.Wrappers
+namespace AdrianMiasik.Components.Core
 {
     public class ClickButtonIcon: ClickButton
     {

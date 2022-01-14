@@ -1,3 +1,4 @@
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.Events;
 
 namespace AdrianMiasik.Components.Core
 {
+    // TODO: Rename to ToggleSprite
     /// <summary>
     /// A <see cref="ThemeElement"/> <see cref="Toggle"/> in the form of a two-state sprite switch. (e.g. checkbox, icon / invisible)
     /// </summary>

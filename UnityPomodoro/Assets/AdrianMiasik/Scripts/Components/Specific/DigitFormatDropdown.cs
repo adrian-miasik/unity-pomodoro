@@ -1,18 +1,17 @@
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Specific
 {
-    // TODO: Rename to digitformatdropdown
     /// <summary>
     /// A <see cref="ThemeElement"/> dropdown with a label.
     /// Intended to be used for 'switch digit format' settings option.
     /// </summary>
-    public class LabelledDropdown : ThemeElement
+    public class DigitFormatDropdown : ThemeElement
     {
         [SerializeField] private TMP_Text m_label;
         [SerializeField] private TMP_Dropdown m_dropdown;
