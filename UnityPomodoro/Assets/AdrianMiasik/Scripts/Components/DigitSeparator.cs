@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AdrianMiasik.Components
 {
     /// <summary>
-    /// A single <see cref="TMP_Text"/> component used to hold reference and set it's color.
+    /// A single text component used to hold reference and set it's color.
     /// </summary>
     public class DigitSeparator : MonoBehaviour
     {

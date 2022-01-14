@@ -60,7 +60,7 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Hides this panel from the user.
+        /// Hides this panel away from the user.
         /// </summary>
         public void Hide()
         {
