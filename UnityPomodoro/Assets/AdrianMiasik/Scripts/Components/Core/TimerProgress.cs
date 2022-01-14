@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components.Core
     public abstract class TimerProgress : MonoBehaviour
     {
         /// <summary>
-        /// In seconds
+        /// How long should this timer run for? (In seconds)
         /// </summary>
         [SerializeField] protected float m_duration = 3f;
         
