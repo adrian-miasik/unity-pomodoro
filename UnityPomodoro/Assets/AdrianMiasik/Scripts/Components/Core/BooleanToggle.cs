@@ -1,12 +1,13 @@
-using AdrianMiasik.Components.Wrappers;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> toggle in the form of a two state sprite switch. (e.g. checkbox, icon / invisible)
+    /// </summary>
     public class BooleanToggle : ThemeElementToggle
     {
         public SVGImage m_icon;
