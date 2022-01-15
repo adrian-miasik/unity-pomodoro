@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <img src="promotional/release-showcase.gif" width="720">
+  <img src="promotional/unity-pomodoro-showcase-longbreak.gif">
 </p>
 
 ## About
