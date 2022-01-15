@@ -270,7 +270,7 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <returns></returns>
         private TimeSpan GetTimeFromFormat(IReadOnlyList<int> time)
         {
-            TimeSpan ts;
+            TimeSpan ts = new TimeSpan();
             
             switch (m_format)
             {
