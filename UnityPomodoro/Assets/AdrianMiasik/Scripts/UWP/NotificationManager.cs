@@ -1,3 +1,6 @@
+using AdrianMiasik.Components;
+using AdrianMiasik.Components.Base;
+using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 #if ENABLE_WINMD_SUPPORT
 using UnityEngine.WSA;
@@ -6,6 +9,10 @@ using UnityEngine.WSA;
 namespace AdrianMiasik.UWP
 {
     // TODO: Replace PomodoroTimer dependency with Setting class dependency
+    /// <summary>
+    /// Used to serve Windows OS level notification/toasts to the user. (using the referenced components)
+    /// Intended to be invoked via UnityEvent <see cref="PomodoroTimer.m_onTimerCompletion"/>.
+    /// </summary>
     public class NotificationManager : MonoBehaviour
     {
         // UWP
@@ -16,11 +23,20 @@ namespace AdrianMiasik.UWP
         // Cache
         private PomodoroTimer timer;
 
+        /// <summary>
+        /// Sets up the timer reference. Not a <see cref="ThemeElement"/> since this doesn't have visuals
+        /// and thus doesn't need a <see cref="Theme"/>.
+        /// </summary>
+        /// <param name="pomodoroTimer"></param>
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
         }
 
+        /// <summary>
+        /// Serves a windows notification toast to the user.
+        /// <remarks>UnityEvent used by <see cref="PomodoroTimer.m_onTimerCompletion"/>.</remarks>
+        /// </summary>
         public void ShowToast()
         {
 #if ENABLE_WINMD_SUPPORT

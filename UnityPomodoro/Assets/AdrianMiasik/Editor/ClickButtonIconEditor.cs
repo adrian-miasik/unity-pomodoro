@@ -1,9 +1,9 @@
-﻿using AdrianMiasik.Components.Core;
-using AdrianMiasik.Components.Wrappers;
+﻿using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core;
 using Unity.VectorGraphics;
 using UnityEditor;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Editor
 {
     [CustomEditor(typeof(ClickButtonIcon))]
     public class ClickButtonIconEditor: ClickButtonEditor
