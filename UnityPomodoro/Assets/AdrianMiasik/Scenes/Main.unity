@@ -1388,7 +1388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 23.549547
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1864,7 +1864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 23.549547
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4155,7 +4155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1142fd17ea1918b4b99bf4069f25c9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_menuToggle: {fileID: 1617491758}
+  m_menuToggleSprite: {fileID: 1617491758}
   m_container: {fileID: 265300826}
   m_background: {fileID: 1450826707}
   m_overlayImage: {fileID: 445534769}
@@ -4569,7 +4569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 23.549547
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -7372,7 +7372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 23.549547
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -8330,14 +8330,14 @@ MonoBehaviour:
   m_background: {fileID: 407842496}
   m_completionLabel: {fileID: 222858663}
   m_digitFormat: {fileID: 1015735896}
-  m_menuToggle: {fileID: 1617491758}
+  m_menuToggleSprite: {fileID: 1617491758}
   m_leftButtonClick: {fileID: 378047032}
   m_rightButtonClick: {fileID: 1811562797}
   m_rightButton: {fileID: 1430356801}
   m_breakSlider: {fileID: 1276951607}
   m_creditsBubble: {fileID: 929885561}
   m_themeSlider: {fileID: 683655080}
-  m_halloweenToggle: {fileID: 933772985}
+  m_halloweenToggleSprite: {fileID: 933772985}
   m_hotkeyDetector: {fileID: 266651281}
   m_sidebarMenu: {fileID: 673880599}
   m_notifications: {fileID: 943758001}
@@ -9645,7 +9645,7 @@ MonoBehaviour:
   m_title: {fileID: 1916053762}
   m_digitFormatDropdown: {fileID: 2127893485}
   m_muteSoundOutOfFocusLabel: {fileID: 1616257833873043597}
-  m_muteSoundOutOfFocusBoolean: {fileID: 1865855775}
+  m_muteSoundOutOfFocusToggle: {fileID: 1865855775}
 --- !u!1 &2050840244
 GameObject:
   m_ObjectHideFlags: 0
