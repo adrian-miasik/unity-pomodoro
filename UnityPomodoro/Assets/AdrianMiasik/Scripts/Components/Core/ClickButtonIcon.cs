@@ -1,7 +1,11 @@
-﻿using Unity.VectorGraphics;
+﻿using AdrianMiasik.Components.Base;
+using Unity.VectorGraphics;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// A <see cref="ClickButton"/> with a SVG image.
+    /// </summary>
     public class ClickButtonIcon: ClickButton
     {
         public SVGImage m_icon;

@@ -1,7 +1,11 @@
-﻿using TMPro;
+﻿using AdrianMiasik.Components.Base;
+using TMPro;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// A <see cref="ClickButton"/> with a text label.
+    /// </summary>
     public class ClickButtonText: ClickButton
     {
         public TMP_Text m_text;

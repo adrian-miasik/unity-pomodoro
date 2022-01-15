@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace AdrianMiasik.ScriptableObjects
 {
+    /// <summary>
+    /// Dataset that contains our desired application colors. <see cref="Theme"/>
+    /// </summary>
     [CreateAssetMenu(fileName = "New Color Scheme", menuName = "Adrian Miasik/Create New Color Scheme")]
     public class ColorScheme : ScriptableObject
     {

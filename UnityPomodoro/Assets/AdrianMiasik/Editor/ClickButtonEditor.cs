@@ -1,9 +1,9 @@
-using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Base;
 using UnityEditor;
 using UnityEditor.UI;
 using UnityEngine;
 
-namespace AdrianMiasik
+namespace AdrianMiasik.Editor
 {
     [CustomEditor(typeof(ClickButton))]
     public class ClickButtonEditor : ImageEditor
