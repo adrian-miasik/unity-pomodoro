@@ -66,6 +66,7 @@ namespace AdrianMiasik.Components.Specific
             // Restart application
             if (Input.GetKeyDown(KeyCode.F5))
             {
+                timer.ClearCurrentDialogPopup();
                 timer.SpawnConfirmationDialog(() =>
                 {
                     timer.GetTheme().DeregisterAllElements();

@@ -1198,6 +1198,18 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
+        /// Clears and destroys the current timer popup so it's no longer visible to the user.
+        /// </summary>
+        public void ClearCurrentDialogPopup()
+        {
+            if (currentDialogPopup != null)
+            {
+                currentDialogPopup.Close();
+                ClearDialogPopup(currentDialogPopup);
+            }
+        }
+
+        /// <summary>
         /// Sets our <see cref="DigitFormat"/> to long break mode.
         /// </summary>
         public void ActivateLongBreak()
