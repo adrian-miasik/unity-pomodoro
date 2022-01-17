@@ -16,6 +16,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    // TODO: Provide users with the ability to disable the long timers in the settings panel.
     /// <summary>
     /// Our main class / component. Responsible for controlling the main timer logic, configuring settings,
     /// initializing, and manipulating our components.
