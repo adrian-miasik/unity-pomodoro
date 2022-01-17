@@ -27,7 +27,7 @@ Unity Pomodoro is an open source countdown timer app created in Unity designed p
 
 **Platforms**: Windows, Mac, & Linux
 
-**Version**:  1.6.0
+**Version**:  1.7.1
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
@@ -38,20 +38,21 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release - v1.6.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
+### [Latest Release - v1.7.1](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.7.1)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.7.1/unity-pomodoro-1.7.1-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.7.1/unity-pomodoro-1.7.1-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.7.1/unity-pomodoro-1.7.1-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.6.0/unity-pomodoro-1.6.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.7.1/unity-pomodoro-1.7.1-linux-desktop-64-bit.zip)
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v1.6.0 - Confirmation Dialogs & 'Mute Audio When Out Of Focus' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
 - [v1.5.0 - Settings Panel & Sidebar Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.5.0)
 - [v1.4.0 - Sidebar Navigation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.4.0)
 - [v1.3.0 - 🎃 Halloween Theme & Digit Format Support](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.3.0)
