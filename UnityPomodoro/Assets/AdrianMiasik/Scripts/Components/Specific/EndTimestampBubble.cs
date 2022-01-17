@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
-using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
@@ -10,12 +10,12 @@ using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Specific
 {
-    // TODO: Create a wrapper class for the (To be created) Bubble base class which inherits TimerProgress?
+    // TODO: Create Bubble base class? 
     /// <summary>
-    /// A <see cref="TimerProgress"/> inheritor used for displaying the authors name of the app. Intended to minimize
-    /// after a couple seconds via the base class.
+    /// Used to display the end local time for the current running timer.
+    /// (E.g. It's 3:02pm with 3 minutes left on the timer. Thus this will display: "3:05pm".)
     /// </summary>
-    public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler, IColorHook
+    public class EndTimestampBubble : ThemeElement, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
@@ -24,66 +24,35 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private List<TMP_Text> m_text = new List<TMP_Text>();
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")]
         [SerializeField] private float m_fadeSpeed = 2f;
-        
-        private float fadeProgress = 1;
 
+        private float fadeProgress = 0;
+        
         private bool isPointerHovering;
         private bool lockInteraction;
-
-        private PomodoroTimer timer;
-
+        
         private enum FadeState
         {
             IDLE,
             FADING_OUT,
             FADING_IN
         }
-
+        
         private FadeState state;
 
-        /// <summary>
-        /// Sets up our component, and registers the <see cref="IColorHook"/> to the active <see cref="Theme"/>.
-        /// </summary>
-        /// <param name="pomodoroTimer"></param>
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            timer = pomodoroTimer;
-
-            // Setup
-            Initialize(m_duration);
-            Lock();
+            base.Initialize(pomodoroTimer, updateColors);
             
-            // Theme Element
-            timer.GetTheme().Register(this);
-            m_background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
-            ColorUpdate(timer.GetTheme());
+            //Lock();
         }
 
-        protected override void OnStart()
+        private void Update()
         {
-            
-        }
-
-        protected override void OnUpdate(float progress)
-        {
-            
-        }
-        
-        protected override void OnComplete()
-        {
-            if (!isPointerHovering && !timer.IsAboutPageOpen())
+            if (!IsInitialized())
             {
-                FadeOut();
+                return;
             }
-
-            if (!timer.IsAboutPageOpen())
-            {
-                Unlock();
-            }
-        }
-
-        protected override void Update()
-        {
+            
             if (state != FadeState.IDLE)
             {
                 if (state == FadeState.FADING_IN)
@@ -105,28 +74,6 @@ namespace AdrianMiasik.Components.Specific
                     state = FadeState.IDLE;
                 }
             }
-
-            base.Update();
-        }
-
-        public void FadeOut()
-        {
-            foreach (TMP_Text text in m_text)
-            {
-                text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
-            }
-
-            state = FadeState.FADING_OUT;
-        }
-
-        public void FadeIn()
-        {
-            foreach (TMP_Text text in m_text)
-            {
-                text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
-            }
-
-            state = FadeState.FADING_IN;
         }
 
         public void Lock()
@@ -138,7 +85,7 @@ namespace AdrianMiasik.Components.Specific
         {
             lockInteraction = false;
         }
-
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
             isPointerHovering = true;
@@ -162,10 +109,30 @@ namespace AdrianMiasik.Components.Specific
             
             FadeOut();
         }
-
-        public void ColorUpdate(Theme theme)
+        
+        public void FadeOut()
         {
-            m_background.color = timer.IsSidebarOpen() ?
+            foreach (TMP_Text text in m_text)
+            {
+                text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
+            }
+
+            state = FadeState.FADING_OUT;
+        }
+
+        public void FadeIn()
+        {
+            foreach (TMP_Text text in m_text)
+            {
+                text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
+            }
+
+            state = FadeState.FADING_IN;
+        }
+
+        public override void ColorUpdate(Theme theme)
+        {
+            m_background.color = Timer.IsSidebarOpen() ?
                 theme.GetCurrentColorScheme().m_background : 
                 theme.GetCurrentColorScheme().m_backgroundHighlight;
 
@@ -175,11 +142,6 @@ namespace AdrianMiasik.Components.Specific
             }
 
             m_icon.ColorUpdate(theme);
-        }
-
-        public void OnDestroy()
-        {
-            timer.GetTheme().Deregister(this);
         }
     }
 }

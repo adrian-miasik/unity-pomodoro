@@ -72,6 +72,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
+        [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
         [Header("Animations")] 
@@ -222,20 +223,9 @@ namespace AdrianMiasik.Components
                     }
                 }
             }
-
+            
             // Initialize components
-            m_hotkeyDetector.Initialize(this);
-            m_notifications.Initialize(this);
-            m_background.Initialize(this);
-            m_digitFormat.Initialize(this);
-            m_tomatoCounter.Initialize(this);
-            m_completionLabel.Initialize(this);
-            m_themeSlider.Initialize(this);
-            m_creditsBubble.Initialize(this);
-            m_rightButton.Initialize(this);
-            m_menuToggleSprite.Initialize(this, false);
-            m_breakSlider.Initialize(this, false);
-            m_sidebarMenu.Initialize(this);
+            InitializeComponents();
 
             // Register elements that need updating per timer state change
             timerElements.Add(m_rightButton);
@@ -252,6 +242,23 @@ namespace AdrianMiasik.Components
             // Setup & apply theme
             m_theme.Register(this);
             m_theme.ApplyColorChanges();
+        }
+
+        private void InitializeComponents()
+        {
+            m_hotkeyDetector.Initialize(this);
+            m_notifications.Initialize(this);
+            m_background.Initialize(this);
+            m_digitFormat.Initialize(this);
+            m_tomatoCounter.Initialize(this);
+            m_completionLabel.Initialize(this);
+            m_themeSlider.Initialize(this);
+            m_creditsBubble.Initialize(this);
+            m_rightButton.Initialize(this);
+            m_menuToggleSprite.Initialize(this, false);
+            m_breakSlider.Initialize(this, false);
+            m_sidebarMenu.Initialize(this);
+            m_endTimestampBubble.Initialize(this);
         }
         
         /// <summary>
