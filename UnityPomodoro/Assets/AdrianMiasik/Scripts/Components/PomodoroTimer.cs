@@ -16,6 +16,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    // TODO: Rename 'break/work' to 'mode one/mode two' everywhere.
     /// <summary>
     /// Our main class / component. Responsible for controlling the main timer logic, configuring settings,
     /// initializing, and manipulating our components.
