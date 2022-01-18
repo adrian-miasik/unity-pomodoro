@@ -626,8 +626,6 @@ namespace AdrianMiasik.Components
                 m_creditsBubble.Lock();
                 m_creditsBubble.FadeIn();
             }
-            
-            m_endTimestampBubble.FadeOut();
         }
 
         /// <summary>
@@ -658,11 +656,6 @@ namespace AdrianMiasik.Components
             // Hide / close out credits bubble
             m_creditsBubble.Unlock();
             m_creditsBubble.FadeOut();
-            
-            if(m_state == States.RUNNING)
-            {
-                m_endTimestampBubble.FadeIn();
-            }
         }
 
         public void ShowSettings()
@@ -682,8 +675,6 @@ namespace AdrianMiasik.Components
             // Hide / close out credits bubble
             m_creditsBubble.Unlock();
             m_creditsBubble.FadeOut();
-            
-            m_endTimestampBubble.FadeOut();
         }
         
         /// <summary>
