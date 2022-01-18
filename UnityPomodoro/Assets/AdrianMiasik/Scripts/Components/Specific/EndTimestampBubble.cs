@@ -156,7 +156,7 @@ namespace AdrianMiasik.Components.Specific
             TimeSpan endTime = systemTimeSpan.Add(currentTimeSpan);
             
             // Display end time
-            m_text.text = new DateTime(endTime.Ticks).ToShortTimeString();
+            m_text.text = new DateTime(endTime.Ticks).ToLongTimeString();
         }
     }
 }
