@@ -1,5 +1,5 @@
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
@@ -20,8 +20,8 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private CanvasGroup m_backgroundContainer;
         [SerializeField] private SVGImage m_icon;
         [SerializeField] private CanvasGroup m_textContainer;
-        [SerializeField] private TMP_Text m_text;
-
+        [Tooltip("The last text in this list should be the end timer text")]
+        [SerializeField] private List<TMP_Text> m_text = new List<TMP_Text>();
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")] [SerializeField]
         private float m_fadeSpeed = 2f;
 
@@ -112,20 +112,31 @@ namespace AdrianMiasik.Components.Specific
 
         public void FadeOut()
         {
-            m_text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
+            foreach (TMP_Text text in m_text)
+            {
+                text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
+            }
             state = FadeState.FADING_OUT;
         }
 
         public void FadeIn()
         {
-            m_text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
+            foreach (TMP_Text text in m_text)
+            {
+                text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
+            }
             state = FadeState.FADING_IN;
         }
 
         public override void ColorUpdate(Theme theme)
         {
             m_background.color = theme.GetCurrentColorScheme().m_backgroundHighlight;
-            m_text.color = theme.GetCurrentColorScheme().m_foreground;
+            
+            foreach (TMP_Text text in m_text)
+            {
+                text.color = theme.GetCurrentColorScheme().m_foreground;
+            }
+            
             m_icon.color = theme.GetCurrentColorScheme().m_foreground;
         }
 
@@ -154,7 +165,7 @@ namespace AdrianMiasik.Components.Specific
             TimeSpan endTime = systemTimeSpan.Add(currentTimeSpan);
             
             // Display end time
-            m_text.text = new DateTime(endTime.Ticks).ToLongTimeString();
+            m_text[m_text.Count - 1].text = new DateTime(endTime.Ticks).ToLongTimeString();
         }
     }
 }

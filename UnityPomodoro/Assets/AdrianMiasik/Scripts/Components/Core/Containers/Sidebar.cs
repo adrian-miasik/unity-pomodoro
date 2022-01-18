@@ -71,7 +71,6 @@ namespace AdrianMiasik.Components.Core.Containers
             // Calculate screen dimensions
             screenWidth = Screen.width;
             screenHeight = Screen.height;
-            CalculateSidebarWidth();
         }
 
         private void Update()
@@ -80,7 +79,9 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 screenWidth = Screen.width;
                 screenHeight = Screen.height;
-                CalculateSidebarWidth();
+                
+                // Set widths (credits bubble and sidebar)
+                Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
             }
 
             if (isOpen)
@@ -99,10 +100,14 @@ namespace AdrianMiasik.Components.Core.Containers
             }
         }
         
-        private void CalculateSidebarWidth()
+        private float CalculateSidebarWidth()
         {
             float scalar = (float)Screen.height / Screen.width;
-            m_background.anchorMax = new Vector2(Mathf.Clamp(0.5f * scalar,0,0.75f), m_background.anchorMax.y);
+            float desiredWidth = Mathf.Clamp(0.5f * scalar, 0, 0.75f);
+            
+            m_background.anchorMax = new Vector2(desiredWidth, m_background.anchorMax.y);
+
+            return desiredWidth;
         }
         
         /// <summary>
@@ -111,6 +116,9 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void Open()
         {
+            Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
+            Timer.FadeCreditsBubble(true);
+            
             m_rowsToSpawn = new List<SidebarRow>(m_contentRows);
 
             foreach (SidebarRow row in m_rowsToSpawn)
@@ -126,7 +134,8 @@ namespace AdrianMiasik.Components.Core.Containers
             m_entryAnimation.Play();
             m_overlayImage.enabled = true;
             m_overlayGroup.alpha = 1;
-            
+
+            // Theming
             ColorUpdate(Timer.GetTheme());
             Timer.ColorUpdateCreditsBubble();
         }
@@ -137,6 +146,9 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void Close()
         {
+            Timer.ResetCreditsBubbleSidebarConformity();
+            Timer.FadeCreditsBubble(false);
+            
             isOpen = false;
 
             // Cancel holds in-case user holds button down and closes our menu prematurely
@@ -146,13 +158,14 @@ namespace AdrianMiasik.Components.Core.Containers
             }
 
             m_menuToggleSprite.SetToFalse();
-            
+
             m_container.gameObject.SetActive(false);
             m_entryAnimation.Stop();
             gameObject.SetActive(false);
             m_overlayImage.enabled = false;
             m_overlayGroup.alpha = 0;
-            
+
+            // Theming
             Timer.ColorUpdateCreditsBubble();
         }
 

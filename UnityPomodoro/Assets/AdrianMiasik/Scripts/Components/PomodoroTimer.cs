@@ -1256,5 +1256,39 @@ namespace AdrianMiasik.Components
         {
             m_digitFormat.DeactivateLongBreak();
         }
+
+        /// <summary>
+        /// Fades in/out our credits bubble.
+        /// </summary>
+        /// <param name="fadeIn">Do you want the credits bubble to fade in? (Providing `False` will make
+        /// the credit's bubble fade out.)</param>
+        public void FadeCreditsBubble(bool fadeIn)
+        {
+            if (fadeIn)
+            {
+                m_creditsBubble.FadeIn();
+                m_creditsBubble.Lock();
+            }
+            else
+            {
+                if (!IsAboutPageOpen())
+                {
+                    m_creditsBubble.FadeOut();
+                    m_creditsBubble.Unlock();
+                }
+            }
+        }
+
+        public void ConformCreditsBubbleToSidebar(float desiredWidthPercentage, float rightOffsetInPixels = -10)
+        {
+            m_creditsBubble.SetWidth(desiredWidthPercentage);
+            m_creditsBubble.SetRightOffset(rightOffsetInPixels);
+        }
+
+        public void ResetCreditsBubbleSidebarConformity()
+        {
+            m_creditsBubble.ResetWidth();
+            m_creditsBubble.ResetRightOffset();
+        }
     }
 }
