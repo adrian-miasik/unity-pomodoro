@@ -19,6 +19,7 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
         [SerializeField] private SVGImage m_icon;
+        [SerializeField] private CanvasGroup m_textContainer;
         [SerializeField] private TMP_Text m_text;
 
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")] [SerializeField]
@@ -64,6 +65,7 @@ namespace AdrianMiasik.Components.Specific
                 }
 
                 fadeProgress = Mathf.Clamp01(fadeProgress);
+                m_textContainer.alpha = fadeProgress;
                 m_backgroundContainer.alpha = fadeProgress;
 
                 // If fade is completed...
@@ -122,18 +124,14 @@ namespace AdrianMiasik.Components.Specific
 
         public override void ColorUpdate(Theme theme)
         {
-            m_background.color = Timer.IsSidebarOpen()
-                ? theme.GetCurrentColorScheme().m_background
-                : theme.GetCurrentColorScheme().m_backgroundHighlight;
-            
+            m_background.color = theme.GetCurrentColorScheme().m_backgroundHighlight;
             m_text.color = theme.GetCurrentColorScheme().m_foreground;
-
             m_icon.color = theme.GetCurrentColorScheme().m_foreground;
         }
 
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
-            if (state == PomodoroTimer.States.RUNNING)
+            if (state == PomodoroTimer.States.RUNNING && Timer.IsMainContentOpen())
             {
                 FadeIn();
                 CalculateEndTime();

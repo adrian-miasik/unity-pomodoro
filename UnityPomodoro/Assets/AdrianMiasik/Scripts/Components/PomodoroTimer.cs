@@ -626,6 +626,8 @@ namespace AdrianMiasik.Components
                 m_creditsBubble.Lock();
                 m_creditsBubble.FadeIn();
             }
+            
+            m_endTimestampBubble.FadeOut();
         }
 
         /// <summary>
@@ -656,6 +658,11 @@ namespace AdrianMiasik.Components
             // Hide / close out credits bubble
             m_creditsBubble.Unlock();
             m_creditsBubble.FadeOut();
+            
+            if(m_state == States.RUNNING)
+            {
+                m_endTimestampBubble.FadeIn();
+            }
         }
 
         public void ShowSettings()
@@ -675,6 +682,8 @@ namespace AdrianMiasik.Components
             // Hide / close out credits bubble
             m_creditsBubble.Unlock();
             m_creditsBubble.FadeOut();
+            
+            m_endTimestampBubble.FadeOut();
         }
         
         /// <summary>
@@ -942,6 +951,15 @@ namespace AdrianMiasik.Components
         public bool IsSidebarOpen()
         {
             return m_sidebarMenu.IsOpen();
+        }
+
+        /// <summary>
+        /// Is our timer / digit format currently open and visible?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMainContentOpen()
+        {
+            return m_mainContainer.gameObject.activeSelf;
         }
         
         /// <summary>
