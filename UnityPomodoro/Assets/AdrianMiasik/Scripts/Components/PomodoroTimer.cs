@@ -229,6 +229,7 @@ namespace AdrianMiasik.Components
 
             // Register elements that need updating per timer state change
             timerElements.Add(m_rightButton);
+            timerElements.Add(m_endTimestampBubble);
 
             // Calculate time
             CalculateTimeValues();
@@ -590,6 +591,11 @@ namespace AdrianMiasik.Components
             totalTime = (float)ts.TotalSeconds;
             m_digitFormat.SetTime(ts);
             m_digitFormat.RefreshDigitVisuals();
+        }
+
+        public double GetCurrentTime()
+        {
+            return currentTime;
         }
         
         // TODO: Create a panel/page class
