@@ -146,6 +146,11 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void Close()
         {
+            if (!Timer.IsAboutPageOpen())
+            {
+                Timer.CloseOutCreditsBubble();
+            }
+
             Timer.ResetCreditsBubbleSidebarConformity();
             Timer.FadeCreditsBubble(false);
             

@@ -652,7 +652,13 @@ namespace AdrianMiasik.Components
             {
                 ResetDigitFadeAnim();
             }
+        }
 
+        /// <summary>
+        /// Unlocks control and fades out the credits bubble.
+        /// </summary>
+        public void CloseOutCreditsBubble()
+        {
             // Hide / close out credits bubble
             m_creditsBubble.Unlock();
             m_creditsBubble.FadeOut();
@@ -671,10 +677,6 @@ namespace AdrianMiasik.Components
             
             // Show settings content
             m_settingsContainer.Show();
-            
-            // Hide / close out credits bubble
-            m_creditsBubble.Unlock();
-            m_creditsBubble.FadeOut();
         }
         
         /// <summary>
