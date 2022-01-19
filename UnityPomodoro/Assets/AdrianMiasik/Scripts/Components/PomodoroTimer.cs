@@ -72,6 +72,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
+        [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
         [Header("Animations")] 
@@ -222,23 +223,13 @@ namespace AdrianMiasik.Components
                     }
                 }
             }
-
+            
             // Initialize components
-            m_hotkeyDetector.Initialize(this);
-            m_notifications.Initialize(this);
-            m_background.Initialize(this);
-            m_digitFormat.Initialize(this);
-            m_tomatoCounter.Initialize(this);
-            m_completionLabel.Initialize(this);
-            m_themeSlider.Initialize(this);
-            m_creditsBubble.Initialize(this);
-            m_rightButton.Initialize(this);
-            m_menuToggleSprite.Initialize(this, false);
-            m_breakSlider.Initialize(this, false);
-            m_sidebarMenu.Initialize(this);
+            InitializeComponents();
 
             // Register elements that need updating per timer state change
             timerElements.Add(m_rightButton);
+            timerElements.Add(m_endTimestampBubble);
 
             // Calculate time
             CalculateTimeValues();
@@ -252,6 +243,23 @@ namespace AdrianMiasik.Components
             // Setup & apply theme
             m_theme.Register(this);
             m_theme.ApplyColorChanges();
+        }
+
+        private void InitializeComponents()
+        {
+            m_hotkeyDetector.Initialize(this);
+            m_notifications.Initialize(this);
+            m_background.Initialize(this);
+            m_digitFormat.Initialize(this);
+            m_tomatoCounter.Initialize(this);
+            m_completionLabel.Initialize(this);
+            m_themeSlider.Initialize(this);
+            m_creditsBubble.Initialize(this);
+            m_rightButton.Initialize(this);
+            m_menuToggleSprite.Initialize(this, false);
+            m_breakSlider.Initialize(this, false);
+            m_sidebarMenu.Initialize(this);
+            m_endTimestampBubble.Initialize(this);
         }
         
         /// <summary>
@@ -584,6 +592,11 @@ namespace AdrianMiasik.Components
             m_digitFormat.SetTime(ts);
             m_digitFormat.RefreshDigitVisuals();
         }
+
+        public double GetCurrentTime()
+        {
+            return currentTime;
+        }
         
         // TODO: Create a panel/page class
         /// <summary>
@@ -639,7 +652,13 @@ namespace AdrianMiasik.Components
             {
                 ResetDigitFadeAnim();
             }
+        }
 
+        /// <summary>
+        /// Unlocks control and fades out the credits bubble.
+        /// </summary>
+        public void CloseOutCreditsBubble()
+        {
             // Hide / close out credits bubble
             m_creditsBubble.Unlock();
             m_creditsBubble.FadeOut();
@@ -658,10 +677,6 @@ namespace AdrianMiasik.Components
             
             // Show settings content
             m_settingsContainer.Show();
-            
-            // Hide / close out credits bubble
-            m_creditsBubble.Unlock();
-            m_creditsBubble.FadeOut();
         }
         
         /// <summary>
@@ -929,6 +944,15 @@ namespace AdrianMiasik.Components
         public bool IsSidebarOpen()
         {
             return m_sidebarMenu.IsOpen();
+        }
+
+        /// <summary>
+        /// Is our timer / digit format currently open and visible?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMainContentOpen()
+        {
+            return m_mainContainer.gameObject.activeSelf;
         }
         
         /// <summary>
@@ -1224,6 +1248,40 @@ namespace AdrianMiasik.Components
         public void DeactivateLongBreak()
         {
             m_digitFormat.DeactivateLongBreak();
+        }
+
+        /// <summary>
+        /// Fades in/out our credits bubble.
+        /// </summary>
+        /// <param name="fadeIn">Do you want the credits bubble to fade in? (Providing `False` will make
+        /// the credit's bubble fade out.)</param>
+        public void FadeCreditsBubble(bool fadeIn)
+        {
+            if (fadeIn)
+            {
+                m_creditsBubble.FadeIn();
+                m_creditsBubble.Lock();
+            }
+            else
+            {
+                if (!IsAboutPageOpen())
+                {
+                    m_creditsBubble.FadeOut();
+                    m_creditsBubble.Unlock();
+                }
+            }
+        }
+
+        public void ConformCreditsBubbleToSidebar(float desiredWidthPercentage, float rightOffsetInPixels = -10)
+        {
+            m_creditsBubble.SetWidth(desiredWidthPercentage);
+            m_creditsBubble.SetRightOffset(rightOffsetInPixels);
+        }
+
+        public void ResetCreditsBubbleSidebarConformity()
+        {
+            m_creditsBubble.ResetWidth();
+            m_creditsBubble.ResetRightOffset();
         }
     }
 }
