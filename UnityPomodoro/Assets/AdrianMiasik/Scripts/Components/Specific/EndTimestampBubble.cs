@@ -15,7 +15,8 @@ namespace AdrianMiasik.Components.Specific
     /// Used to display the end local time for the current running timer.
     /// (E.g. It's 3:02pm with 3 minutes left on the timer. Thus this will display: "3:05pm".)
     /// </summary>
-    public class EndTimestampBubble : ThemeElement, IPointerEnterHandler, IPointerExitHandler, ITimerState { 
+    public class EndTimestampBubble : ThemeElement, IPointerEnterHandler, IPointerExitHandler, ITimerState
+    { 
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
         [SerializeField] private SVGImage m_icon;
@@ -166,6 +167,16 @@ namespace AdrianMiasik.Components.Specific
             
             // Display end time
             m_text[m_text.Count - 1].text = new DateTime(endTime.Ticks).ToLongTimeString();
+        }
+
+        public void EnableFeature(PomodoroTimer timer)
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void DisableFeature()
+        {
+            throw new NotImplementedException();
         }
     }
 }

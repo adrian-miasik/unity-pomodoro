@@ -16,21 +16,38 @@ namespace AdrianMiasik.Components.Specific
     public class SettingsPanel : ThemeElement
     {
         [SerializeField] private TMP_Text m_title;
+        
         [SerializeField] private DigitFormatDropdown m_digitFormatDropdown;
+        
+        [SerializeField] private TMP_Text m_longBreaksLabel;
+        [SerializeField] private ToggleSlider m_longBreakToggle;
+        
         [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
         [FormerlySerializedAs("m_muteSoundOutOfFocusBoolean")] [SerializeField] private ToggleSlider m_muteSoundOutOfFocusToggle;
         
         private bool isOpen;
 
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        public void Initialize(PomodoroTimer pomodoroTimer, Settings settingsConfig)
         {
             base.Initialize(pomodoroTimer, false);
             
+            // Overrides
             m_muteSoundOutOfFocusToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
             m_muteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            
+            m_longBreakToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_longBreakToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+
+            // Init
             m_digitFormatDropdown.Initialize(Timer);
-            m_muteSoundOutOfFocusToggle.Initialize(pomodoroTimer, pomodoroTimer.MuteSoundWhenOutOfFocus());
+            m_longBreakToggle.Initialize(pomodoroTimer, settingsConfig.m_longBreaks);
+            // Hide mute option based on platform (Shown by default)
+#if UNITY_ANDROID
+            HideMuteSoundOutOfFocusOption();
+#elif UNITY_IOS
+            HideMuteSoundOutOfFocusOption();
+#else
+            m_muteSoundOutOfFocusToggle.Initialize(pomodoroTimer, settingsConfig.m_muteSoundWhenOutOfFocus);
+#endif
         }
         
         /// <summary>
@@ -42,9 +59,14 @@ namespace AdrianMiasik.Components.Specific
             if (isOpen)
             {
                 m_title.color = theme.GetCurrentColorScheme().m_foreground;
+                
                 m_digitFormatDropdown.ColorUpdate(Timer.GetTheme());
+                
                 m_muteSoundOutOfFocusLabel.color = theme.GetCurrentColorScheme().m_foreground;
                 m_muteSoundOutOfFocusToggle.ColorUpdate(theme);
+
+                m_longBreaksLabel.color = theme.GetCurrentColorScheme().m_foreground;
+                m_longBreakToggle.ColorUpdate(theme);
             }
         }
 
