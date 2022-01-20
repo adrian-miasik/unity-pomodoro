@@ -10,12 +10,14 @@ using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Specific
 {
+    // TODO: Create a wrapper class for the (To be created) Bubble base class which inherits TimerProgress?
     /// <summary>
     /// A <see cref="TimerProgress"/> inheritor used for displaying the authors name of the app. Intended to minimize
     /// after a couple seconds via the base class.
     /// </summary>
     public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler, IColorHook
     {
+        [SerializeField] private RectTransform m_self;
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
         [SerializeField] private ThemeIcon m_icon;
@@ -28,6 +30,9 @@ namespace AdrianMiasik.Components.Specific
 
         private bool isPointerHovering;
         private bool lockInteraction;
+
+        private float cachedWidthPercentage;
+        private float cachedRightOffsetPixels;
 
         private PomodoroTimer timer;
 
@@ -46,13 +51,15 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="pomodoroTimer"></param>
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
+            // Cache
             timer = pomodoroTimer;
+            cachedWidthPercentage = m_self.anchorMax.x;
+            cachedRightOffsetPixels = m_self.offsetMax.x;
 
             // Setup
             Initialize(m_duration);
             Lock();
-            fadeProgress = 1; // Starts at one since bubble is visible
-            
+
             // Theme Element
             timer.GetTheme().Register(this);
             m_background.color = timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
@@ -73,7 +80,10 @@ namespace AdrianMiasik.Components.Specific
         {
             if (!isPointerHovering && !timer.IsAboutPageOpen())
             {
-                FadeOut();
+                if (!timer.IsSidebarOpen())
+                {
+                    FadeOut();
+                }
             }
 
             if (!timer.IsAboutPageOpen())
@@ -163,11 +173,29 @@ namespace AdrianMiasik.Components.Specific
             FadeOut();
         }
 
+        public void SetWidth(float desiredWidthPercentage)
+        {
+            m_self.anchorMax = new Vector2(desiredWidthPercentage, m_self.anchorMax.y);
+        }
+
+        public void SetRightOffset(float rightOffsetInPixels)
+        {
+            m_self.offsetMax = new Vector2(rightOffsetInPixels, m_self.offsetMax.y);
+        }
+
+        public void ResetWidth()
+        {
+            m_self.anchorMax = new Vector2(cachedWidthPercentage, m_self.anchorMax.y);
+        }
+
+        public void ResetRightOffset()
+        {
+            m_self.offsetMax = new Vector2(cachedRightOffsetPixels, m_self.offsetMax.y);
+        }
+
         public void ColorUpdate(Theme theme)
         {
-            m_background.color = timer.IsSidebarOpen() ?
-                theme.GetCurrentColorScheme().m_background : 
-                theme.GetCurrentColorScheme().m_backgroundHighlight;
+            m_background.color = theme.GetCurrentColorScheme().m_backgroundHighlight;
 
             foreach (TMP_Text text in m_text)
             {
