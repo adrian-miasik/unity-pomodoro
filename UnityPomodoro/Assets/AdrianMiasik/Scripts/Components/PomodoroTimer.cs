@@ -161,17 +161,17 @@ namespace AdrianMiasik.Components
         private void Start()
         {
             // Single entry point
-            ResetSystemSettings();
+            ConfigureSettings();
             Initialize();
         }
-
-        /// <summary>
-        /// Configures our default settings based on Operating System using platform specific define directives
-        /// </summary>
-        private void ResetSystemSettings()
+        
+        private void ConfigureSettings()
         {
             // Set theme to light
             GetTheme().m_darkMode = false;
+            
+            // Restart settings (Restore back to dev defaults dependent on OS)
+            m_settings.ApplyPlatformDefaults();
         }
 
         /// <summary>
@@ -244,6 +244,7 @@ namespace AdrianMiasik.Components
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
+            m_settingsContainer.Initialize(this, m_settings);
             
             if (m_settings.m_longBreaks)
             {
@@ -670,11 +671,6 @@ namespace AdrianMiasik.Components
 
         public void ShowSettings()
         {
-            if (!m_settingsContainer.IsInitialized())
-            {
-                m_settingsContainer.Initialize(this, m_settings);
-            }
-
             // Hide other content
             m_aboutContainer.Hide();
             m_mainContainer.gameObject.SetActive(false);

@@ -35,11 +35,16 @@ namespace AdrianMiasik.ScriptableObjects
             ApplyPlatformDefaults();
         }
 
-        private void ApplyPlatformDefaults()
+        /// <summary>
+        /// Configures our default settings using platform specific define directives. (I.e. Based on current
+        /// Operating System)
+        /// </summary>
+        public void ApplyPlatformDefaults()
         {
-            // All platforms have long breaks ON by default
+            // All platforms have long breaks on by default
             m_longBreaks = true;
             
+            // Apply mute out of focus
 #if UNITY_STANDALONE_OSX
             m_muteSoundWhenOutOfFocus = false;
 #elif UNITY_STANDALONE_LINUX

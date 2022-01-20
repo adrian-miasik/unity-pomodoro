@@ -26,6 +26,9 @@ namespace AdrianMiasik.Components.Specific
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")] [SerializeField]
         private float m_fadeSpeed = 2f;
 
+        [SerializeField] private Sprite workMode;
+        [SerializeField] private Sprite breakMode;
+
         private float fadeProgress = 0;
 
         private bool isPointerHovering;
@@ -122,6 +125,16 @@ namespace AdrianMiasik.Components.Specific
 
         public void FadeIn()
         {
+            // Set sprite depending what the user will get prompted to do next
+            if (Timer.IsOnBreak() || Timer.IsOnLongBreak())
+            {
+                m_icon.sprite = workMode;
+            }
+            else
+            {
+                m_icon.sprite = breakMode;
+            }
+            
             foreach (TMP_Text text in m_text)
             {
                 text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;

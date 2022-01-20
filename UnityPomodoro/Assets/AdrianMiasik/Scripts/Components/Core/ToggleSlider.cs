@@ -159,5 +159,21 @@ namespace AdrianMiasik.Components.Core
             m_background.color = state ? trueColor : falseColor;
             m_dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
         }
+
+        [ContextMenu("Enable")]
+        public void SetEditorVisualToEnable()
+        {
+            m_background.color = new Color(0.05f, 0.47f, 0.95f);
+            m_dot.rectTransform.anchorMin = new Vector2(0.45f, 0);
+            m_dot.rectTransform.anchorMax = Vector2.one;
+        }
+        
+        [ContextMenu("Disable")]
+        public void SetEditorVisualToDisable()
+        {
+            m_background.color = new Color(0.91f, 0.91f, 0.91f);
+            m_dot.rectTransform.anchorMin = Vector2.zero;
+            m_dot.rectTransform.anchorMax = new Vector2(0.55f, 1); 
+        }
     }
 }
