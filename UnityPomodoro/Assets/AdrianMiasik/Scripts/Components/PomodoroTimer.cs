@@ -1002,7 +1002,7 @@ namespace AdrianMiasik.Components
         /// <param name="desiredFormat"></param>
         public void TryChangeFormat(DigitFormat.SupportedFormats desiredFormat)
         {
-            if (!isTimerBeingSetup)
+            if (!isTimerBeingSetup && m_state == States.RUNNING)
             {
                 m_digitFormat.SwitchFormat(desiredFormat);
                 SpawnConfirmationDialog(GenerateFormat, () =>
