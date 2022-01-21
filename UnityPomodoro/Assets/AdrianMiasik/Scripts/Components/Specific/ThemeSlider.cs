@@ -1,18 +1,16 @@
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
-using TMPro;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> boolean slider with a label. Intended for the theme toggle (light / dark).
+    /// A <see cref="ThemeElement"/> boolean slider with custom icon. Intended for the theme toggle (light / dark).
     /// </summary>
     public class ThemeSlider : ThemeElement
     {
         [SerializeField] private ToggleSlider m_toggle;
-        [SerializeField] private TMP_Text m_label;
 
         [SerializeField] private Sprite m_moonSprite;
         [SerializeField] private Material m_sliderDotCircle;
@@ -35,9 +33,6 @@ namespace AdrianMiasik.Components.Specific
         {
             m_toggle.OverrideDotColor(theme.GetCurrentColorScheme().m_foreground);
             m_toggle.Initialize(Timer, theme.m_darkMode);
-            
-            m_label.color = theme.GetCurrentColorScheme().m_foreground;
-            m_label.text = Timer.GetTheme().m_darkMode ? "Light" : "Dark";
             
             if (theme.m_darkMode)
             {

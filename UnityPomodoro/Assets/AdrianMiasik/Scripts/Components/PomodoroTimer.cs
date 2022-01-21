@@ -1314,5 +1314,10 @@ namespace AdrianMiasik.Components
             m_creditsBubble.ResetWidth();
             m_creditsBubble.ResetRightOffset();
         }
+        
+        public bool HasTomatoProgression()
+        {
+            return m_tomatoCounter.HasProgression();
+        }
     }
 }

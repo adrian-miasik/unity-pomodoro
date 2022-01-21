@@ -18,10 +18,7 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private TMP_Text m_title;
         
         [SerializeField] private DigitFormatDropdown m_digitFormatDropdown;
-        
-        [SerializeField] private TMP_Text m_longBreaksLabel;
-        [SerializeField] private ToggleSlider m_longBreakToggle;
-        
+        [SerializeField] private LongBreakSetting m_longBreakSetting;
         [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
         [FormerlySerializedAs("m_muteSoundOutOfFocusBoolean")] [SerializeField] private ToggleSlider m_muteSoundOutOfFocusToggle;
         
@@ -34,12 +31,12 @@ namespace AdrianMiasik.Components.Specific
             // Overrides
             m_muteSoundOutOfFocusToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
             m_muteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            m_longBreakToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            m_longBreakToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-
+            m_longBreakSetting.m_longBreakToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_longBreakSetting.m_longBreakToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            
             // Init
             m_digitFormatDropdown.Initialize(Timer);
-            m_longBreakToggle.Initialize(pomodoroTimer, settingsConfig.m_longBreaks);
+            m_longBreakSetting.Initialize(pomodoroTimer, settingsConfig);
             // Hide mute option based on platform (Shown by default)
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
@@ -64,9 +61,6 @@ namespace AdrianMiasik.Components.Specific
                 
                 m_muteSoundOutOfFocusLabel.color = theme.GetCurrentColorScheme().m_foreground;
                 m_muteSoundOutOfFocusToggle.ColorUpdate(theme);
-
-                m_longBreaksLabel.color = theme.GetCurrentColorScheme().m_foreground;
-                m_longBreakToggle.ColorUpdate(theme);
             }
         }
 

@@ -121,5 +121,10 @@ namespace AdrianMiasik.Components.Core.Containers
                 ConsumeTomatoes();
             }, null, "This action will delete your pomodoro/tomato progress.");
         }
+
+        public bool HasProgression()
+        {
+            return nextFilledTomatoIndex > 0;
+        }
     }
 }
