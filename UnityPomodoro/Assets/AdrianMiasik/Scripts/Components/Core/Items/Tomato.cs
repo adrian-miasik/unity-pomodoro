@@ -25,6 +25,12 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private Sprite m_croppedBody;
         [SerializeField] private Sprite m_fullBody;
 
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
+        {
+            base.Initialize(pomodoroTimer, updateColors);
+            Reset();
+        }
+
         /// <summary>
         /// Completes this tomato by filling it in.
         /// </summary>
