@@ -4,6 +4,7 @@ using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core.Items
@@ -13,7 +14,7 @@ namespace AdrianMiasik.Components.Core.Items
     /// Includes a spawn animation.
     /// (Also see <see cref="Sidebar"/>)
     /// </summary>
-    public class SidebarRow : ThemeElement
+    public class SidebarRow : ThemeElement, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Animation m_spawn;
         [SerializeField] private RectTransform m_container;
@@ -28,6 +29,7 @@ namespace AdrianMiasik.Components.Core.Items
         // Cache
         private Sidebar sidebar;
         private bool isSelected;
+        private bool isHovering;
         
         public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
@@ -68,9 +70,7 @@ namespace AdrianMiasik.Components.Core.Items
             // Set width of accent
             m_accent.rectTransform.sizeDelta = new Vector2(6f, m_accent.rectTransform.sizeDelta.y);
             
-            // Move content aside
-            m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
-            m_contentContainer.offsetMax = new Vector2(-6, m_contentContainer.offsetMax.y); // Right
+            OffsetContent();
 
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             
@@ -83,13 +83,29 @@ namespace AdrianMiasik.Components.Core.Items
             // Remove accent
             m_accent.rectTransform.sizeDelta = new Vector2(0, m_accent.rectTransform.sizeDelta.y);
             
-            // Move content back to original location
-            m_contentContainer.offsetMin = Vector2.zero; // Left
-            m_contentContainer.offsetMax = Vector2.zero; // Right
+            ResetContentOffset();
             
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
 
             isSelected = false;
+        }
+
+        /// <summary>
+        /// Move content aside
+        /// </summary>
+        private void OffsetContent()
+        {
+            m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
+            m_contentContainer.offsetMax = new Vector2(-6, m_contentContainer.offsetMax.y); // Right
+        }
+
+        /// <summary>
+        /// Move content back to original location
+        /// </summary>
+        private void ResetContentOffset()
+        {
+            m_contentContainer.offsetMin = Vector2.zero; // Left
+            m_contentContainer.offsetMax = Vector2.zero; // Right
         }
 
         public void CancelHold()
@@ -112,6 +128,25 @@ namespace AdrianMiasik.Components.Core.Items
         public bool IsSelected()
         {
             return isSelected;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            isHovering = true;
+
+            m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
+            OffsetContent();
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            isHovering = false;
+            
+            if (!IsSelected())
+            {
+                m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
+                ResetContentOffset();
+            }
         }
     }
 }
