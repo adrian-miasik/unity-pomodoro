@@ -91,6 +91,7 @@ namespace AdrianMiasik.Components.Core.Items
         private void OffsetContent()
         {
             m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
+            m_contentContainer.offsetMax = new Vector2(6, m_contentContainer.offsetMax.y); // Right
         }
 
         /// <summary>
@@ -99,6 +100,7 @@ namespace AdrianMiasik.Components.Core.Items
         private void ResetContentOffset()
         {
             m_contentContainer.offsetMin = Vector2.zero; // Left
+            m_contentContainer.offsetMax = Vector2.zero; // Right
         }
 
         public void CancelHold()
