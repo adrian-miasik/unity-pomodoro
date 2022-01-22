@@ -15,7 +15,8 @@ namespace AdrianMiasik.Components.Specific
     /// Used to display the end local time for the current running timer.
     /// (E.g. It's 3:02pm with 3 minutes left on the timer. Thus this will display: "3:05pm".)
     /// </summary>
-    public class EndTimestampBubble : ThemeElement, IPointerEnterHandler, IPointerExitHandler, ITimerState { 
+    public class EndTimestampBubble : ThemeElement, IPointerEnterHandler, IPointerExitHandler, ITimerState
+    { 
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
         [SerializeField] private SVGImage m_icon;
@@ -24,6 +25,9 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private List<TMP_Text> m_text = new List<TMP_Text>();
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")] [SerializeField]
         private float m_fadeSpeed = 2f;
+
+        [SerializeField] private Sprite workMode;
+        [SerializeField] private Sprite breakMode;
 
         private float fadeProgress = 0;
 
@@ -121,6 +125,16 @@ namespace AdrianMiasik.Components.Specific
 
         public void FadeIn()
         {
+            // Set sprite depending what the user will get prompted to do next
+            if (Timer.IsOnBreak() || Timer.IsOnLongBreak())
+            {
+                m_icon.sprite = workMode;
+            }
+            else
+            {
+                m_icon.sprite = breakMode;
+            }
+            
             foreach (TMP_Text text in m_text)
             {
                 text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
@@ -166,6 +180,16 @@ namespace AdrianMiasik.Components.Specific
             
             // Display end time
             m_text[m_text.Count - 1].text = new DateTime(endTime.Ticks).ToLongTimeString();
+        }
+
+        public void EnableFeature(PomodoroTimer timer)
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void DisableFeature()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Helpers;
 using AdrianMiasik.Components.Core.Items;
+using AdrianMiasik.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ namespace AdrianMiasik.Components.Core.Containers
             // TODO: (4) Setting property for what defines a long break
             foreach (Tomato tomato in m_tomatoes)
             {
-                tomato.Initialize(pomodoroTimer);
+                tomato.Initialize(pomodoroTimer, updateColors);
             }
             
             base.Initialize(pomodoroTimer, updateColors);
@@ -119,6 +120,11 @@ namespace AdrianMiasik.Components.Core.Containers
 
                 ConsumeTomatoes();
             }, null, "This action will delete your pomodoro/tomato progress.");
+        }
+
+        public bool HasProgression()
+        {
+            return nextFilledTomatoIndex > 0;
         }
     }
 }

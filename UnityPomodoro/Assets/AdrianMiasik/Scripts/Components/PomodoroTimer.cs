@@ -16,6 +16,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components
 {
+    // TODO: Provide users with the ability to disable the long timers in the settings panel.
     /// <summary>
     /// Our main class / component. Responsible for controlling the main timer logic, configuring settings,
     /// initializing, and manipulating our components.
@@ -49,7 +50,10 @@ namespace AdrianMiasik.Components
         /// The timer's current state. See enum <see cref="States"/>
         /// </summary>
         public States m_state = States.SETUP;
-        
+
+        [Header("Settings (for this specific timer)")] 
+        [SerializeField] private Settings m_settings;
+
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -128,8 +132,6 @@ namespace AdrianMiasik.Components
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Cache
-        // TODO: Move to settings class
-        private bool muteSoundWhenOutOfFocus; // We want this to be true only for Windows platform due to UWP notifications
         // TODO: Move to dialog manager class
         private ConfirmationDialog currentDialogPopup;
         private bool isCurrentDialogInterruptible = true;
@@ -145,7 +147,7 @@ namespace AdrianMiasik.Components
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (muteSoundWhenOutOfFocus)
+            if (m_settings.m_muteSoundWhenOutOfFocus)
             {
                 // Prevent application from making noise when not in focus
                 AudioListener.volume = !hasFocus ? 0 : 1;
@@ -162,31 +164,14 @@ namespace AdrianMiasik.Components
             ConfigureSettings();
             Initialize();
         }
-
-        /// <summary>
-        /// Configures our default settings based on Operating System using platform specific define directives
-        /// </summary>
+        
         private void ConfigureSettings()
         {
             // Set theme to light
             GetTheme().m_darkMode = false;
             
-            // Set mute setting default
-#if UNITY_STANDALONE_OSX
-            SetMuteSoundWhenOutOfFocus();
-#elif UNITY_STANDALONE_LINUX
-            SetMuteSoundWhenOutOfFocus();
-#elif UNITY_STANDALONE_WIN
-            SetMuteSoundWhenOutOfFocus();
-#elif UNITY_WSA // UWP
-            SetMuteSoundWhenOutOfFocus(true); // Set to true since our UWP Notification will pull focus back to our app
-#elif UNITY_ANDROID
-            SetMuteSoundWhenOutOfFocus(); // Doesn't quite matter for mobile
-            m_settingsContainer.HideMuteSoundOutOfFocusOption();
-#elif UNITY_IOS
-            SetMuteSoundWhenOutOfFocus(); // Doesn't quite matter for mobile.
-            m_settingsContainer.HideMuteSoundOutOfFocusOption();
-#endif
+            // Restart settings (Restore back to dev defaults dependent on OS)
+            m_settings.ApplyPlatformDefaults();
         }
 
         /// <summary>
@@ -251,7 +236,6 @@ namespace AdrianMiasik.Components
             m_notifications.Initialize(this);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
-            m_tomatoCounter.Initialize(this);
             m_completionLabel.Initialize(this);
             m_themeSlider.Initialize(this);
             m_creditsBubble.Initialize(this);
@@ -260,6 +244,18 @@ namespace AdrianMiasik.Components
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
+            m_settingsContainer.Initialize(this, m_settings);
+            
+            if (m_settings.m_longBreaks)
+            {
+                m_tomatoCounter.Initialize(this);
+                m_completionLabel.MoveAnchors(true);
+            }
+            else
+            {
+                m_tomatoCounter.gameObject.SetActive(false);
+                m_completionLabel.MoveAnchors(false);
+            }
         }
         
         /// <summary>
@@ -427,13 +423,19 @@ namespace AdrianMiasik.Components
                 if (m_state != States.COMPLETE)
                 {
                     m_text.gameObject.SetActive(true);
-                    m_tomatoCounter.gameObject.SetActive(true);
+                    if (m_settings.m_longBreaks)
+                    {
+                        m_tomatoCounter.gameObject.SetActive(true);
+                    }
                 }
             }
             else
             {
                 m_text.gameObject.SetActive(false);
-                m_tomatoCounter.gameObject.SetActive(false);
+                if (m_settings.m_longBreaks)
+                {
+                    m_tomatoCounter.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -488,7 +490,10 @@ namespace AdrianMiasik.Components
             // (We don't add tomatoes for breaks)
             if (!IsOnBreak())
             {
-                m_tomatoCounter.FillTomato();
+                if (m_settings.m_longBreaks)
+                {
+                    m_tomatoCounter.FillTomato();
+                }
             }
         }
 
@@ -666,11 +671,6 @@ namespace AdrianMiasik.Components
 
         public void ShowSettings()
         {
-            if (!m_settingsContainer.IsInitialized())
-            {
-                m_settingsContainer.Initialize(this);
-            }
-
             // Hide other content
             m_aboutContainer.Hide();
             m_mainContainer.gameObject.SetActive(false);
@@ -689,12 +689,15 @@ namespace AdrianMiasik.Components
                 isTimerBeingSetup = false;
                 CalculateTimeValues();
             }
-            
-            // Remove long break once user has started it via Play
-            if (IsOnBreak() && IsOnLongBreak())
+
+            if (m_settings.m_longBreaks)
             {
-                m_tomatoCounter.ConsumeTomatoes();
-                m_digitFormat.DeactivateLongBreak();
+                // Remove long break once user has started it via Play
+                if (IsOnBreak() && IsOnLongBreak())
+                {
+                    m_tomatoCounter.ConsumeTomatoes();
+                    m_digitFormat.DeactivateLongBreak();
+                }
             }
 
             SwitchState(States.RUNNING);
@@ -922,7 +925,6 @@ namespace AdrianMiasik.Components
         /// <summary>
         /// Is our <see cref="DigitFormat"/> in long break mode?
         /// </summary>
-        /// <returns></returns>
         public bool IsOnLongBreak()
         {
             return m_digitFormat.m_isOnLongBreak;
@@ -1000,7 +1002,7 @@ namespace AdrianMiasik.Components
         /// <param name="desiredFormat"></param>
         public void TryChangeFormat(DigitFormat.SupportedFormats desiredFormat)
         {
-            if (!isTimerBeingSetup)
+            if (!isTimerBeingSetup && m_state == States.RUNNING)
             {
                 m_digitFormat.SwitchFormat(desiredFormat);
                 SpawnConfirmationDialog(GenerateFormat, () =>
@@ -1158,25 +1160,54 @@ namespace AdrianMiasik.Components
         {
             m_creditsBubble.ColorUpdate(m_theme);
         }
-
-        // TODO: Create settings class / scriptable object
-        /// <summary>
-        /// Does the user want to mute the application when it's not currently in focus?
-        /// </summary>
-        /// <returns>The users settings preference for muting the application when out of focus.</returns>
-        public bool MuteSoundWhenOutOfFocus()
-        {
-            return muteSoundWhenOutOfFocus;
-        }
-
+        
         /// <summary>
         /// Sets the users setting preference to mute the application when out of focus using the provided
         /// <see cref="bool"/>.
+        /// <remarks>Intended to be used as a UnityEvent. Otherwise you can directly do this
+        /// on the public property in the settings object.</remarks>
         /// </summary>
         /// <param name="state">Do you want to mute this application when it's out of focus?</param>
-        public void SetMuteSoundWhenOutOfFocus(bool state = false)
+        public void SetSettingMuteSoundWhenOutOfFocus(bool state = false)
         {
-            muteSoundWhenOutOfFocus = state;
+            // Change setting
+            m_settings.m_muteSoundWhenOutOfFocus = state;
+        }
+
+        /// <summary>
+        /// Sets the users setting preference to enable/disable long breaks.
+        /// </summary>
+        /// <remarks>Intended to be used as a UnityEvent. Otherwise you can directly do this
+        /// on the public property in the settings object.</remarks>
+        /// <param name="state">Do you want the user to be able to collect tomatoes/pomodoros and unlock the
+        /// long break mode?</param>
+        public void SetSettingLongBreaks(bool state = true)
+        {
+            // Change setting
+            m_settings.m_longBreaks = state;
+            
+            // Apply component swap
+            if (state)
+            {
+                m_tomatoCounter.Initialize(this);
+                m_tomatoCounter.gameObject.SetActive(true);
+            }
+            else
+            {
+                m_tomatoCounter.gameObject.SetActive(false);
+                DeactivateLongBreak();
+            }
+            m_completionLabel.MoveAnchors(state);
+        }
+
+        // TODO
+        /// <summary>
+        /// Sets the users setting preference to enable/disable the EndTimestampBubble (located at the bottom right).
+        /// </summary>
+        /// <param name="state"></param>
+        private void SetSettingEndTimestampBubble(bool state)
+        {
+            // TODO: Feature setting
         }
 
         /// <summary>
@@ -1282,6 +1313,11 @@ namespace AdrianMiasik.Components
         {
             m_creditsBubble.ResetWidth();
             m_creditsBubble.ResetRightOffset();
+        }
+        
+        public bool HasTomatoProgression()
+        {
+            return m_tomatoCounter.HasProgression();
         }
     }
 }
