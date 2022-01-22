@@ -69,8 +69,6 @@ namespace AdrianMiasik.Components.Core.Items
             // Set width of accent
             m_accent.rectTransform.sizeDelta = new Vector2(6f, m_accent.rectTransform.sizeDelta.y);
             
-            OffsetContent();
-
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             
             isSelected = true;
@@ -81,8 +79,6 @@ namespace AdrianMiasik.Components.Core.Items
         {
             // Remove accent
             m_accent.rectTransform.sizeDelta = new Vector2(0, m_accent.rectTransform.sizeDelta.y);
-            
-            ResetContentOffset();
             
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
 
@@ -95,7 +91,6 @@ namespace AdrianMiasik.Components.Core.Items
         private void OffsetContent()
         {
             m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
-            m_contentContainer.offsetMax = new Vector2(-6, m_contentContainer.offsetMax.y); // Right
         }
 
         /// <summary>
@@ -104,7 +99,6 @@ namespace AdrianMiasik.Components.Core.Items
         private void ResetContentOffset()
         {
             m_contentContainer.offsetMin = Vector2.zero; // Left
-            m_contentContainer.offsetMax = Vector2.zero; // Right
         }
 
         public void CancelHold()
@@ -137,10 +131,11 @@ namespace AdrianMiasik.Components.Core.Items
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            ResetContentOffset();
+            
             if (!IsSelected())
             {
                 m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
-                ResetContentOffset();
             }
         }
     }
