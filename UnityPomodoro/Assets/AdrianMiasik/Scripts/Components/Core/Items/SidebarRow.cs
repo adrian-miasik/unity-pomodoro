@@ -96,7 +96,8 @@ namespace AdrianMiasik.Components.Core.Items
         public override void ColorUpdate(Theme theme)
         {
             // Backgrounds
-            m_background.color = isSelected ? theme.GetCurrentColorScheme().m_backgroundHighlight : theme.GetCurrentColorScheme().m_background;
+            m_background.color = isSelected ? theme.GetCurrentColorScheme().m_backgroundHighlight : 
+                theme.GetCurrentColorScheme().m_background;
             m_iconBackground.color = theme.GetCurrentColorScheme().m_background;
             
             // Foreground
