@@ -4,7 +4,6 @@ using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {

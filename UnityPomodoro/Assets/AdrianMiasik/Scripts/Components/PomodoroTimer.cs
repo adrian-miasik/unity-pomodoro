@@ -1200,7 +1200,7 @@ namespace AdrianMiasik.Components
             m_completionLabel.MoveAnchors(state);
         }
 
-        // TODO
+        // TODO: System wide setting
         /// <summary>
         /// Sets the users setting preference to enable/disable the EndTimestampBubble (located at the bottom right).
         /// </summary>
