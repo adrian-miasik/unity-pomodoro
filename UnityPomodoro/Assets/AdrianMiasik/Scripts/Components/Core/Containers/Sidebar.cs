@@ -199,6 +199,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.Deselect();
             }
 
+            // Select self, if not selected.
             if (!rowToSelect.IsSelected())
             {
                 rowToSelect.Select();

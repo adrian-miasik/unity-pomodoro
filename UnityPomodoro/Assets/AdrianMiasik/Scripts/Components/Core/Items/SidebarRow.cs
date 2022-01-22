@@ -34,6 +34,10 @@ namespace AdrianMiasik.Components.Core.Items
             base.Initialize(pomodoroTimer);
             sidebar = parentSidebar;
             isSelected = selected;
+            if (isSelected)
+            {
+                Select();
+            }
         }
 
         public void Hide()
