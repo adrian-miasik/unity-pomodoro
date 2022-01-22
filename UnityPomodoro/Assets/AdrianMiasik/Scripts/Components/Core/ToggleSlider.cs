@@ -16,7 +16,7 @@ namespace AdrianMiasik.Components.Core
     {
         // General
         [SerializeField] public SVGImage m_background;
-        [SerializeField] private SVGImage m_dot;
+        [SerializeField] public SVGImage m_dot;
 
         // Animation
         [SerializeField] private Animation m_animation;
@@ -174,38 +174,6 @@ namespace AdrianMiasik.Components.Core
             m_background.color = new Color(0.91f, 0.91f, 0.91f);
             m_dot.rectTransform.anchorMin = Vector2.zero;
             m_dot.rectTransform.anchorMax = new Vector2(0.55f, 1); 
-        }
-
-        // Getters
-        public Vector2 GetDotOffsetMin()
-        {
-            return m_dot.rectTransform.offsetMin;
-        }
-        
-        public Vector2 GetDotOffsetMax()
-        {
-            return m_dot.rectTransform.offsetMax;
-        }
-        
-        // Setters
-        public void SetDotSprite(Sprite dotSprite)
-        {
-            m_dot.sprite = dotSprite;
-        }
-
-        public void SetDotMaterial(Material circleShader)
-        {
-            m_dot.material = circleShader;
-        }
-
-        public void SetDotOffsetMin(Vector2 offsetMin)
-        {
-            m_dot.rectTransform.offsetMin = offsetMin;
-        }
-        
-        public void SetDotOffsetMax(Vector2 offsetMax)
-        {
-            m_dot.rectTransform.offsetMax = offsetMax;
         }
     }
 }

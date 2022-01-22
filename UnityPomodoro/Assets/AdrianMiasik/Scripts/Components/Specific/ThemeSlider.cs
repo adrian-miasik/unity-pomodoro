@@ -20,8 +20,8 @@ namespace AdrianMiasik.Components.Specific
 
         private void Start()
         {
-            cachedOffsetMin = m_toggle.GetDotOffsetMin();
-            cachedOffsetMax = m_toggle.GetDotOffsetMax();
+            cachedOffsetMin = m_toggle.m_dot.rectTransform.offsetMin;
+            cachedOffsetMax = m_toggle.m_dot.rectTransform.offsetMax;
         }
 
         /// <summary>
@@ -34,20 +34,23 @@ namespace AdrianMiasik.Components.Specific
             m_toggle.OverrideDotColor(theme.GetCurrentColorScheme().m_foreground);
             m_toggle.Initialize(Timer, theme.m_darkMode);
             
+            // Regular boolean
             if (theme.m_darkMode)
             {
-                m_toggle.SetDotSprite(null);
-                m_toggle.SetDotMaterial(m_sliderDotCircle);
-                m_toggle.SetDotOffsetMin(Vector2.zero);
-                m_toggle.SetDotOffsetMax(Vector2.zero);
+                m_toggle.m_dot.rectTransform.pivot = new Vector2(0.5f, m_toggle.m_dot.rectTransform.pivot.y);
+                m_toggle.m_dot.sprite = null;
+                m_toggle.m_dot.material = m_sliderDotCircle;
+                m_toggle.m_dot.rectTransform.offsetMin = Vector2.zero;
+                m_toggle.m_dot.rectTransform.offsetMax = Vector2.zero;
             }
+            // Moon dark boolean
             else
             {
-                // m_toggle.SetDotColor(theme.GetCurrentColorScheme().bac)
-                m_toggle.SetDotSprite(m_moonSprite);
-                m_toggle.SetDotMaterial(null);
-                m_toggle.SetDotOffsetMin(cachedOffsetMin);
-                m_toggle.SetDotOffsetMax(cachedOffsetMax);
+                m_toggle.m_dot.rectTransform.pivot = new Vector2(0f, m_toggle.m_dot.rectTransform.pivot.y);
+                m_toggle.m_dot.sprite = m_moonSprite;
+                m_toggle.m_dot.material = null;
+                m_toggle.m_dot.rectTransform.offsetMin = cachedOffsetMin;
+                m_toggle.m_dot.rectTransform.offsetMax = cachedOffsetMax;
             }
 
             m_toggle.ColorUpdate(theme);
