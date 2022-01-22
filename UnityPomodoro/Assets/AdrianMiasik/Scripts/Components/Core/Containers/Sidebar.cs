@@ -80,8 +80,15 @@ namespace AdrianMiasik.Components.Core.Containers
                 screenWidth = Screen.width;
                 screenHeight = Screen.height;
                 
+                // Prevent editor null ref error (Since this script is running in editor and doesn't have reference
+                // to the Timer until this component is initialized. We still want to preview our
+                // scaling changes in Editor prior to initializing.)
+#if !UNITY_EDITOR 
                 // Set widths (credits bubble and sidebar)
                 Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
+#else
+                CalculateSidebarWidth();                
+#endif
             }
 
             if (isOpen)

@@ -29,8 +29,7 @@ namespace AdrianMiasik.Components.Core.Items
         // Cache
         private Sidebar sidebar;
         private bool isSelected;
-        private bool isHovering;
-        
+
         public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
             base.Initialize(pomodoroTimer);
@@ -132,16 +131,12 @@ namespace AdrianMiasik.Components.Core.Items
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            isHovering = true;
-
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
             OffsetContent();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            isHovering = false;
-            
             if (!IsSelected())
             {
                 m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
