@@ -4,6 +4,7 @@ using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core.Items
@@ -13,7 +14,7 @@ namespace AdrianMiasik.Components.Core.Items
     /// Includes a spawn animation.
     /// (Also see <see cref="Sidebar"/>)
     /// </summary>
-    public class SidebarRow : ThemeElement
+    public class SidebarRow : ThemeElement, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Animation m_spawn;
         [SerializeField] private RectTransform m_container;
@@ -24,16 +25,21 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private SVGImage m_icon;
         [SerializeField] private SVGImage m_iconBackground;
         [SerializeField] private TMP_Text m_label;
-
+        [SerializeField] private bool m_isSelectable = true;
+        
         // Cache
         private Sidebar sidebar;
         private bool isSelected;
-        
+
         public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
             base.Initialize(pomodoroTimer);
             sidebar = parentSidebar;
             isSelected = selected;
+            if (isSelected)
+            {
+                Select();
+            }
         }
 
         public void Hide()
@@ -61,31 +67,45 @@ namespace AdrianMiasik.Components.Core.Items
         [ContextMenu("Select")]
         public void Select()
         {
+            ResetContentOffset();            
+            
             // Set width of accent
             m_accent.rectTransform.sizeDelta = new Vector2(6f, m_accent.rectTransform.sizeDelta.y);
             
-            // Move content aside
-            m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
-            m_contentContainer.offsetMax = new Vector2(-6, m_contentContainer.offsetMax.y); // Right
-
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
-            
+
             isSelected = true;
         }
 
         [ContextMenu("Deselect")]
         public void Deselect()
         {
+            ResetContentOffset();
+            
             // Remove accent
             m_accent.rectTransform.sizeDelta = new Vector2(0, m_accent.rectTransform.sizeDelta.y);
-            
-            // Move content back to original location
-            m_contentContainer.offsetMin = Vector2.zero; // Left
-            m_contentContainer.offsetMax = Vector2.zero; // Right
             
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
 
             isSelected = false;
+        }
+
+        /// <summary>
+        /// Move content aside
+        /// </summary>
+        private void OffsetContent()
+        {
+            m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
+            m_contentContainer.offsetMax = new Vector2(6, m_contentContainer.offsetMax.y); // Right
+        }
+
+        /// <summary>
+        /// Move content back to original location
+        /// </summary>
+        private void ResetContentOffset()
+        {
+            m_contentContainer.offsetMin = Vector2.zero; // Left
+            m_contentContainer.offsetMax = Vector2.zero; // Right
         }
 
         public void CancelHold()
@@ -96,7 +116,8 @@ namespace AdrianMiasik.Components.Core.Items
         public override void ColorUpdate(Theme theme)
         {
             // Backgrounds
-            m_background.color = isSelected ? theme.GetCurrentColorScheme().m_backgroundHighlight : theme.GetCurrentColorScheme().m_background;
+            m_background.color = isSelected ? theme.GetCurrentColorScheme().m_backgroundHighlight : 
+                theme.GetCurrentColorScheme().m_background;
             m_iconBackground.color = theme.GetCurrentColorScheme().m_background;
             
             // Foreground
@@ -107,6 +128,27 @@ namespace AdrianMiasik.Components.Core.Items
         public bool IsSelected()
         {
             return isSelected;
+        }
+
+        public bool IsSelectable()
+        {
+            return m_isSelectable;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
+            OffsetContent();
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            ResetContentOffset();
+            
+            if (!IsSelected())
+            {
+                m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
+            }
         }
     }
 }

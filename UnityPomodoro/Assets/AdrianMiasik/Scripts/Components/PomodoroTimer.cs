@@ -233,7 +233,7 @@ namespace AdrianMiasik.Components
         private void InitializeComponents()
         {
             m_hotkeyDetector.Initialize(this);
-            m_notifications.Initialize(this);
+            m_notifications.Initialize(m_settings);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
@@ -1200,7 +1200,7 @@ namespace AdrianMiasik.Components
             m_completionLabel.MoveAnchors(state);
         }
 
-        // TODO
+        // TODO: System wide setting
         /// <summary>
         /// Sets the users setting preference to enable/disable the EndTimestampBubble (located at the bottom right).
         /// </summary>

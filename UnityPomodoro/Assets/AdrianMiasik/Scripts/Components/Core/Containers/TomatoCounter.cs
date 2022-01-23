@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Helpers;
 using AdrianMiasik.Components.Core.Items;
-using AdrianMiasik.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +28,6 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="updateColors"></param>
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            // TODO: (4) Setting property for what defines a long break
             foreach (Tomato tomato in m_tomatoes)
             {
                 tomato.Initialize(pomodoroTimer, updateColors);
