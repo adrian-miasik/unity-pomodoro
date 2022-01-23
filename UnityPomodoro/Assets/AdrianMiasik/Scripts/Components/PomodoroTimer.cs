@@ -78,8 +78,11 @@ namespace AdrianMiasik.Components
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
         [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
-        
+
         [Header("Animations")] 
+        [SerializeField] private AnimationCurve m_spawnRingProgress;
+        private bool m_animateRingProgress;
+        private float m_accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
         [SerializeField] private Animation m_completion; // The animation used to manipulate the completionLabel component (Wrap mode doesn't matter) TODO: Implement into completion label class instead
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
@@ -322,6 +325,8 @@ namespace AdrianMiasik.Components
                     break;
 
                 case States.RUNNING:
+                    m_animateRingProgress = false;
+
                     m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
                     
                     m_text.text = "Running";
@@ -376,6 +381,9 @@ namespace AdrianMiasik.Components
         {
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
+
+            m_accumulatedRingAnimationTime = 0;
+            m_animateRingProgress = true;
         }
         
         /// <summary>
@@ -441,6 +449,19 @@ namespace AdrianMiasik.Components
 
         private void Update()
         {
+            if (m_animateRingProgress)
+            {
+                m_ring.fillAmount = m_spawnRingProgress.Evaluate(m_accumulatedRingAnimationTime);
+                m_accumulatedRingAnimationTime += Time.deltaTime;
+
+                // If completed...
+                if (m_accumulatedRingAnimationTime > m_spawnRingProgress.keys[m_spawnRingProgress.length-1].time)
+                {
+                    m_ring.fillAmount = 1;
+                    m_animateRingProgress = false;
+                }
+            }
+            
             switch (m_state)
             {
                 case States.PAUSED:
