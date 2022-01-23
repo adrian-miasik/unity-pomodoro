@@ -25,7 +25,8 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private SVGImage m_icon;
         [SerializeField] private SVGImage m_iconBackground;
         [SerializeField] private TMP_Text m_label;
-
+        [SerializeField] private bool m_isSelectable = true;
+        
         // Cache
         private Sidebar sidebar;
         private bool isSelected;
@@ -66,17 +67,21 @@ namespace AdrianMiasik.Components.Core.Items
         [ContextMenu("Select")]
         public void Select()
         {
+            ResetContentOffset();            
+            
             // Set width of accent
             m_accent.rectTransform.sizeDelta = new Vector2(6f, m_accent.rectTransform.sizeDelta.y);
             
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
-            
+
             isSelected = true;
         }
 
         [ContextMenu("Deselect")]
         public void Deselect()
         {
+            ResetContentOffset();
+            
             // Remove accent
             m_accent.rectTransform.sizeDelta = new Vector2(0, m_accent.rectTransform.sizeDelta.y);
             
@@ -123,6 +128,11 @@ namespace AdrianMiasik.Components.Core.Items
         public bool IsSelected()
         {
             return isSelected;
+        }
+
+        public bool IsSelectable()
+        {
+            return m_isSelectable;
         }
 
         public void OnPointerEnter(PointerEventData eventData)

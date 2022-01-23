@@ -28,7 +28,8 @@ namespace AdrianMiasik.Components.Core.Containers
         [SerializeField] private SVGImage m_fill;
         [SerializeField] private SVGImage m_edge;
         [SerializeField] private TMP_Text m_versionNumber;
-        
+        [SerializeField] private List<SVGImage> m_externals;
+
         // Components
         [Header("Sidebar Rows (Content)")]
         [SerializeField] private List<SidebarRow> m_contentRows = new List<SidebarRow>(); 
@@ -81,15 +82,8 @@ namespace AdrianMiasik.Components.Core.Containers
                 screenWidth = Screen.width;
                 screenHeight = Screen.height;
                 
-                // Prevent editor null ref error (Since this script is running in editor and doesn't have reference
-                // to the Timer until this component is initialized. We still want to preview our
-                // scaling changes in Editor prior to initializing.)
-#if !UNITY_EDITOR 
                 // Set widths (credits bubble and sidebar)
                 Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
-#else
-                CalculateSidebarWidth();                
-#endif
             }
 
             if (isOpen)
@@ -199,6 +193,11 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="clickSoundClip"></param>
         public void SelectRow(SidebarRow rowToSelect, AudioClip clickSoundClip)
         {
+            if (!rowToSelect.IsSelectable())
+            {
+                return;
+            }
+            
             // Deselect other rows
             foreach (SidebarRow row in m_contentRows)
             {
@@ -245,6 +244,12 @@ namespace AdrianMiasik.Components.Core.Containers
             
             // Text
             m_versionNumber.color = theme.GetCurrentColorScheme().m_foreground;
+            
+            // External icons
+            foreach (SVGImage external in m_externals)
+            {
+                external.color = theme.GetCurrentColorScheme().m_foreground;
+            }
         }
     }
 }
