@@ -905,6 +905,30 @@ MonoBehaviour:
   m_button: {fileID: 6124491969408430554}
   m_accent: {fileID: 5944972576732956022}
   m_contentContainer: {fileID: 5944972578538473200}
+  m_contentContainerOffsetCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 17.159601
+      outSlope: 17.159601
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.33333334
+      outWeight: 0.055860806
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.010635408
+      outSlope: 0.010635408
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.7307692
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_background: {fileID: 3587232531989105073}
   m_icon: {fileID: 5388988551540935122}
   m_iconBackground: {fileID: 6712143668281190774}

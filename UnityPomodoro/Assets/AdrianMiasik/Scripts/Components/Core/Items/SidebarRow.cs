@@ -21,6 +21,8 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private ClickButton m_button;
         [SerializeField] private Image m_accent;
         [SerializeField] private RectTransform m_contentContainer;
+        [SerializeField] private AnimationCurve m_contentContainerOffsetCurve = 
+            AnimationCurve.Linear(0, 0, 1, 1);
         [SerializeField] private Image m_background;
         [SerializeField] private SVGImage m_icon;
         [SerializeField] private SVGImage m_iconBackground;
@@ -30,6 +32,10 @@ namespace AdrianMiasik.Components.Core.Items
         // Cache
         private Sidebar sidebar;
         private bool isSelected;
+        private bool isAnimating;
+        private float accumulatedAnimationTime;
+        private float startingOffsetInPixels;
+        private float targetOffsetInPixels;
 
         public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
@@ -40,6 +46,62 @@ namespace AdrianMiasik.Components.Core.Items
             {
                 Select();
             }
+        }
+
+        private void Update()
+        {
+            if (!IsInitialized())
+            {
+                return; // Early exit
+            }
+
+            if (isAnimating)
+            {
+                // Calculate time and offset
+                accumulatedAnimationTime += Time.deltaTime;
+                float currentOffset = Mathf.Lerp(startingOffsetInPixels, targetOffsetInPixels,
+                    m_contentContainerOffsetCurve.Evaluate(accumulatedAnimationTime));
+
+                // Apply offset
+                m_contentContainer.offsetMin = new Vector2(currentOffset, m_contentContainer.offsetMin.y); // Left
+                m_contentContainer.offsetMax = new Vector2(currentOffset, m_contentContainer.offsetMax.y); // Right
+                
+                // If completed...
+                if (accumulatedAnimationTime >= 
+                    m_contentContainerOffsetCurve.keys[m_contentContainerOffsetCurve.length - 1].time)
+                {
+                    // Move to final position
+                    m_contentContainer.offsetMin = new Vector2(targetOffsetInPixels, m_contentContainer.offsetMin.y);
+                    m_contentContainer.offsetMax = new Vector2(targetOffsetInPixels, m_contentContainer.offsetMax.y);
+                    
+                    // Stop animating
+                    isAnimating = false;
+                    
+                    Debug.Log("Animation Completed!");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Move content aside
+        /// </summary>
+        private void OffsetContent()
+        {
+            startingOffsetInPixels = m_contentContainer.offsetMin.x;
+            targetOffsetInPixels = 6;
+            accumulatedAnimationTime = 0;
+            isAnimating = true;
+        }
+
+        /// <summary>
+        /// Move content back to original location
+        /// </summary>
+        private void ResetContentOffset()
+        {
+            startingOffsetInPixels = m_contentContainer.offsetMin.x;
+            targetOffsetInPixels = 0;
+            accumulatedAnimationTime = 0;
+            isAnimating = true;
         }
 
         public void Hide()
@@ -88,24 +150,6 @@ namespace AdrianMiasik.Components.Core.Items
             m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
 
             isSelected = false;
-        }
-
-        /// <summary>
-        /// Move content aside
-        /// </summary>
-        private void OffsetContent()
-        {
-            m_contentContainer.offsetMin = new Vector2(6, m_contentContainer.offsetMin.y); // Left
-            m_contentContainer.offsetMax = new Vector2(6, m_contentContainer.offsetMax.y); // Right
-        }
-
-        /// <summary>
-        /// Move content back to original location
-        /// </summary>
-        private void ResetContentOffset()
-        {
-            m_contentContainer.offsetMin = Vector2.zero; // Left
-            m_contentContainer.offsetMax = Vector2.zero; // Right
         }
 
         public void CancelHold()
