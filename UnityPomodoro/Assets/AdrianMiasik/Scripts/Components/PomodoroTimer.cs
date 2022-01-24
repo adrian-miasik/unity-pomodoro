@@ -493,9 +493,14 @@ namespace AdrianMiasik.Components
             }
             else
             {
-                OnTimerComplete();
-                m_onTimerCompletion?.Invoke();
+                CompleteTimer();
             }
+        }
+        
+        private void CompleteTimer()
+        {
+            OnTimerComplete();
+            m_onTimerCompletion?.Invoke();
         }
 
         private void OnTimerComplete()
@@ -730,6 +735,15 @@ namespace AdrianMiasik.Components
         public void Pause()
         {
             SwitchState(States.PAUSED);
+        }
+        
+        /// <summary>
+        /// Completes the current running timer so the user can move on to the next one.
+        /// <remarks>Intended to be used as a UnityEvent on the Skip button.</remarks>
+        /// </summary>
+        public void Skip()
+        {
+            CompleteTimer();
         }
         
         /// <summary>
