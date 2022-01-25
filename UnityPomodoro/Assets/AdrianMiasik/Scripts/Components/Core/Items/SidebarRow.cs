@@ -76,8 +76,6 @@ namespace AdrianMiasik.Components.Core.Items
                     
                     // Stop animating
                     isAnimating = false;
-                    
-                    Debug.Log("Animation Completed!");
                 }
             }
         }
