@@ -142,7 +142,6 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.Hide();
             }
             
-            rowStaggerTime = m_rowStaggerDelay; // First stagger has no delay
             isOpen = true;
             
             m_container.gameObject.SetActive(true);
