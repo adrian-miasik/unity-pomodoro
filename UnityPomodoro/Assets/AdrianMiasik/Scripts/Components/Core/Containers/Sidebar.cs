@@ -46,7 +46,7 @@ namespace AdrianMiasik.Components.Core.Containers
         private int screenWidth;
         private int screenHeight;
         
-        private float rowStaggerDelay = 0.0725f;
+        [SerializeField] private float m_rowStaggerDelay = 0.0725f;
         private float rowStaggerTime;
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 {
                     rowStaggerTime += Time.deltaTime;
                     
-                    if (rowStaggerTime >= rowStaggerDelay)
+                    if (rowStaggerTime >= m_rowStaggerDelay)
                     {
                         rowStaggerTime = 0;
                         m_rowsToSpawn[0].PlaySpawnAnimation();
@@ -142,7 +142,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.Hide();
             }
             
-            rowStaggerTime = rowStaggerDelay; // First stagger has no delay
+            rowStaggerTime = m_rowStaggerDelay; // First stagger has no delay
             isOpen = true;
             
             m_container.gameObject.SetActive(true);
