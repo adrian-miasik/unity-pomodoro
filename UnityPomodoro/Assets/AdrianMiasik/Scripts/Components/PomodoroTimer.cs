@@ -85,7 +85,6 @@ namespace AdrianMiasik.Components
         private bool m_animateRingProgress;
         private float m_accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
-        [SerializeField] private Animation m_completion; // The animation used to manipulate the completionLabel component (Wrap mode doesn't matter) TODO: Implement into completion label class instead
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
@@ -136,7 +135,6 @@ namespace AdrianMiasik.Components
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Cache
-        // TODO: Move to dialog manager class
         private ConfirmationDialog currentDialogPopup;
         private bool isCurrentDialogInterruptible = true;
         
@@ -260,6 +258,7 @@ namespace AdrianMiasik.Components
             
             // Register elements that need updating per timer state change
             timerElements.Add(m_rightButton);
+            timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampBubble);
             timerElements.Add(m_skipButton);
         }
@@ -313,11 +312,7 @@ namespace AdrianMiasik.Components
 
                     // Show digits and hide completion label
                     m_digitFormat.Show();
-                    GameObject completionGo;
-                    (completionGo = m_completion.gameObject).SetActive(false);
 
-                    // Reset
-                    completionGo.transform.localScale = Vector3.one;
                     isFading = false;
                     accumulatedRingPulseTime = 0;
 
@@ -361,7 +356,6 @@ namespace AdrianMiasik.Components
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
                     m_digitFormat.Hide();
-                    m_completion.gameObject.SetActive(true);
 
                     m_onRingPulse.Invoke();
                     break;
@@ -595,7 +589,7 @@ namespace AdrianMiasik.Components
 
             // Set diameter
             m_ring.material.SetFloat(RingDiameter, ringDiameter);
-            m_completion.gameObject.transform.localScale = Vector3.one * ringDiameter;
+            m_completionLabel.SetScale(ringDiameter);
             
             // Scale tomatoes too
             m_tomatoCounter.SetHorizontalScale(Vector3.one * ringDiameter);
