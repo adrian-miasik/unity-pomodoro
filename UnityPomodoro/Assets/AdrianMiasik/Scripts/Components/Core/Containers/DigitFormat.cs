@@ -730,7 +730,7 @@ namespace AdrianMiasik.Components.Core.Containers
             foreach (char c in formattedString)
             {
                 // If this character is a separator...
-                if (c.ToString() == ":") // TODO: Allow the use of other separators like '-'?
+                if (c.ToString() == ":")
                 {
                     // Save section
                     if (value != String.Empty)
