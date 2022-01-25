@@ -1,0 +1,47 @@
+using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core;
+using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
+using UnityEngine;
+
+namespace AdrianMiasik.Components.Specific
+{
+    public class SkipButton : ThemeElement, ITimerState
+    {
+        [SerializeField] private ClickButtonIcon m_button;
+
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
+        {
+            base.Initialize(pomodoroTimer, updateColors);
+            Hide();
+        }
+
+        public void StateUpdate(PomodoroTimer.States state, Theme theme)
+        {
+            if (state == PomodoroTimer.States.RUNNING || state == PomodoroTimer.States.PAUSED)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+        }
+
+        public override void ColorUpdate(Theme theme)
+        {
+            base.ColorUpdate(theme);
+            m_button.m_icon.color = theme.GetCurrentColorScheme().m_foreground;
+        }
+
+        private void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+    }
+}

@@ -77,6 +77,7 @@ namespace AdrianMiasik.Components
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
         [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
+        [SerializeField] private SkipButton m_skipButton;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
 
         [Header("Animations")] 
@@ -215,10 +216,6 @@ namespace AdrianMiasik.Components
             // Initialize components
             InitializeComponents();
 
-            // Register elements that need updating per timer state change
-            timerElements.Add(m_rightButton);
-            timerElements.Add(m_endTimestampBubble);
-
             // Calculate time
             CalculateTimeValues();
 
@@ -248,6 +245,7 @@ namespace AdrianMiasik.Components
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
             m_settingsContainer.Initialize(this, m_settings);
+            m_skipButton.Initialize(this);
             
             if (m_settings.m_longBreaks)
             {
@@ -259,6 +257,11 @@ namespace AdrianMiasik.Components
                 m_tomatoCounter.gameObject.SetActive(false);
                 m_completionLabel.MoveAnchors(false);
             }
+            
+            // Register elements that need updating per timer state change
+            timerElements.Add(m_rightButton);
+            timerElements.Add(m_endTimestampBubble);
+            timerElements.Add(m_skipButton);
         }
         
         /// <summary>
@@ -493,9 +496,14 @@ namespace AdrianMiasik.Components
             }
             else
             {
-                OnTimerComplete();
-                m_onTimerCompletion?.Invoke();
+                CompleteTimer();
             }
+        }
+        
+        private void CompleteTimer()
+        {
+            OnTimerComplete();
+            m_onTimerCompletion?.Invoke();
         }
 
         private void OnTimerComplete()
@@ -730,6 +738,16 @@ namespace AdrianMiasik.Components
         public void Pause()
         {
             SwitchState(States.PAUSED);
+        }
+        
+        /// <summary>
+        /// Completes the current running timer so the user can move on to the next one.
+        /// <remarks>Intended to be used as a UnityEvent on the Skip button.</remarks>
+        /// </summary>
+        public void Skip()
+        {
+            CompleteTimer();
+            m_digitFormat.CorrectTickAnimVisuals();
         }
         
         /// <summary>
