@@ -649,11 +649,11 @@ namespace AdrianMiasik.Components.Core.Containers
             return result;
         }
 
-        [ContextMenu("Correct Tick Animation")]
         /// <summary>
         /// Prevents all our digits tick animation from holding, especially useful for when the gameobjects are no
         /// longer active and need to be re-enabled (Such as switching between pages).
         /// </summary>
+        [ContextMenu("Correct Tick Animation")]
         public void CorrectTickAnimVisuals()
         {
             foreach (DoubleDigit digit in generatedDigits)
