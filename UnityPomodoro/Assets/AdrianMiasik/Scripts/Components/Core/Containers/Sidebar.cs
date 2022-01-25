@@ -46,7 +46,7 @@ namespace AdrianMiasik.Components.Core.Containers
         private int screenWidth;
         private int screenHeight;
         
-        private float rowStaggerDelay = 0.15f;
+        private float rowStaggerDelay = 0.0725f;
         private float rowStaggerTime;
 
         /// <summary>
