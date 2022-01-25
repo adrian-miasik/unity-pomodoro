@@ -60,6 +60,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\TomatoCounter.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\DigitFormat.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\LongBreakSetting.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CompletionLabel.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\ThemeElement.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\AudioMimic.cs" />
@@ -90,7 +91,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CreditsBubble.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\ITimerState.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\LongBreakSetting.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\SkipButton.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

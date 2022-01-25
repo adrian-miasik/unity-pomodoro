@@ -1,4 +1,3 @@
-using System;
 using AdrianMiasik.UWP;
 using UnityEngine;
 

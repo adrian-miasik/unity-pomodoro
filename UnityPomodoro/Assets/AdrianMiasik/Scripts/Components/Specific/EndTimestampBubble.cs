@@ -6,7 +6,6 @@ using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -15,7 +14,7 @@ namespace AdrianMiasik.Components.Specific
     /// Used to display the end local time for the current running timer.
     /// (E.g. It's 3:02pm with 3 minutes left on the timer. Thus this will display: "3:05pm".)
     /// </summary>
-    public class EndTimestampBubble : ThemeElement, IPointerEnterHandler, IPointerExitHandler, ITimerState
+    public class EndTimestampBubble : ThemeElement, ITimerState
     { 
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
@@ -23,16 +22,13 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private CanvasGroup m_textContainer;
         [Tooltip("The last text in this list should be the end timer text")]
         [SerializeField] private List<TMP_Text> m_text = new List<TMP_Text>();
-        [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")] [SerializeField]
-        private float m_fadeSpeed = 2f;
-
-        [SerializeField] private Sprite workMode;
-        [SerializeField] private Sprite breakMode;
-
-        private float fadeProgress = 0;
-
-        private bool isPointerHovering;
-        private bool lockInteraction;
+        [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")] 
+        [SerializeField] private float m_fadeSpeed = 2f;
+        [SerializeField] private Sprite m_workMode;
+        [SerializeField] private Sprite m_breakMode;
+        
+        // Cache
+        private float fadeProgress;
 
         private enum FadeState
         {
@@ -42,13 +38,6 @@ namespace AdrianMiasik.Components.Specific
         }
 
         private FadeState state;
-
-        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
-        {
-            base.Initialize(pomodoroTimer, updateColors);
-
-            //Lock();
-        }
 
         private void Update()
         {
@@ -79,41 +68,7 @@ namespace AdrianMiasik.Components.Specific
                 }
             }
         }
-
-        public void Lock()
-        {
-            lockInteraction = true;
-        }
-
-        public void Unlock()
-        {
-            lockInteraction = false;
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            isPointerHovering = true;
-
-            if (lockInteraction)
-            {
-                return;
-            }
-
-            // FadeIn();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            isPointerHovering = false;
-
-            if (lockInteraction)
-            {
-                return;
-            }
-
-            // FadeOut();
-        }
-
+        
         public void FadeOut()
         {
             foreach (TMP_Text text in m_text)
@@ -128,11 +83,11 @@ namespace AdrianMiasik.Components.Specific
             // Set sprite depending what the user will get prompted to do next
             if (Timer.IsOnBreak() || Timer.IsOnLongBreak())
             {
-                m_icon.sprite = workMode;
+                m_icon.sprite = m_workMode;
             }
             else
             {
-                m_icon.sprite = breakMode;
+                m_icon.sprite = m_breakMode;
             }
             
             foreach (TMP_Text text in m_text)
@@ -180,16 +135,6 @@ namespace AdrianMiasik.Components.Specific
             
             // Display end time
             m_text[m_text.Count - 1].text = new DateTime(endTime.Ticks).ToLongTimeString();
-        }
-
-        public void EnableFeature(PomodoroTimer timer)
-        {
-            gameObject.SetActive(true);
-        }
-
-        public void DisableFeature()
-        {
-            throw new NotImplementedException();
         }
     }
 }

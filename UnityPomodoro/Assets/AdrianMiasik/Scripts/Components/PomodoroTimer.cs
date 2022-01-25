@@ -78,9 +78,13 @@ namespace AdrianMiasik.Components
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
         [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
+        [SerializeField] private SkipButton m_skipButton;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
-        
+
         [Header("Animations")] 
+        [SerializeField] private AnimationCurve m_spawnRingProgress;
+        private bool m_animateRingProgress;
+        private float m_accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
         [SerializeField] private Animation m_completion; // The animation used to manipulate the completionLabel component (Wrap mode doesn't matter) TODO: Implement into completion label class instead
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
@@ -213,10 +217,6 @@ namespace AdrianMiasik.Components
             // Initialize components
             InitializeComponents();
 
-            // Register elements that need updating per timer state change
-            timerElements.Add(m_rightButton);
-            timerElements.Add(m_endTimestampBubble);
-
             // Calculate time
             CalculateTimeValues();
 
@@ -234,7 +234,7 @@ namespace AdrianMiasik.Components
         private void InitializeComponents()
         {
             m_hotkeyDetector.Initialize(this);
-            m_notifications.Initialize(this);
+            m_notifications.Initialize(m_settings);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
@@ -246,6 +246,7 @@ namespace AdrianMiasik.Components
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
             m_settingsContainer.Initialize(this, m_settings);
+            m_skipButton.Initialize(this);
             
             if (m_settings.m_longBreaks)
             {
@@ -257,6 +258,11 @@ namespace AdrianMiasik.Components
                 m_tomatoCounter.gameObject.SetActive(false);
                 m_completionLabel.MoveAnchors(false);
             }
+            
+            // Register elements that need updating per timer state change
+            timerElements.Add(m_rightButton);
+            timerElements.Add(m_endTimestampBubble);
+            timerElements.Add(m_skipButton);
         }
         
         /// <summary>
@@ -323,6 +329,8 @@ namespace AdrianMiasik.Components
                     break;
 
                 case States.RUNNING:
+                    m_animateRingProgress = false;
+
                     m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
                     
                     m_text.text = "Running";
@@ -377,6 +385,9 @@ namespace AdrianMiasik.Components
         {
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
+
+            m_accumulatedRingAnimationTime = 0;
+            m_animateRingProgress = true;
         }
         
         /// <summary>
@@ -442,6 +453,19 @@ namespace AdrianMiasik.Components
 
         private void Update()
         {
+            if (m_animateRingProgress)
+            {
+                m_ring.fillAmount = m_spawnRingProgress.Evaluate(m_accumulatedRingAnimationTime);
+                m_accumulatedRingAnimationTime += Time.deltaTime;
+
+                // If completed...
+                if (m_accumulatedRingAnimationTime > m_spawnRingProgress.keys[m_spawnRingProgress.length-1].time)
+                {
+                    m_ring.fillAmount = 1;
+                    m_animateRingProgress = false;
+                }
+            }
+            
             switch (m_state)
             {
                 case States.PAUSED:
@@ -473,9 +497,14 @@ namespace AdrianMiasik.Components
             }
             else
             {
-                OnTimerComplete();
-                m_onTimerCompletion?.Invoke();
+                CompleteTimer();
             }
+        }
+        
+        private void CompleteTimer()
+        {
+            OnTimerComplete();
+            m_onTimerCompletion?.Invoke();
         }
 
         private void OnTimerComplete()
@@ -710,6 +739,16 @@ namespace AdrianMiasik.Components
         public void Pause()
         {
             SwitchState(States.PAUSED);
+        }
+        
+        /// <summary>
+        /// Completes the current running timer so the user can move on to the next one.
+        /// <remarks>Intended to be used as a UnityEvent on the Skip button.</remarks>
+        /// </summary>
+        public void Skip()
+        {
+            CompleteTimer();
+            m_digitFormat.CorrectTickAnimVisuals();
         }
         
         /// <summary>
@@ -1201,7 +1240,7 @@ namespace AdrianMiasik.Components
             m_completionLabel.MoveAnchors(state);
         }
 
-        // TODO
+        // TODO: System wide setting
         /// <summary>
         /// Sets the users setting preference to enable/disable the EndTimestampBubble (located at the bottom right).
         /// </summary>

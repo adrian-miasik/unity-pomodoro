@@ -58,7 +58,7 @@ namespace AdrianMiasik.Components.Specific
             else
             {
                 // Set immediately
-                Timer.SetSettingLongBreaks(true);
+                Timer.SetSettingLongBreaks();
             }
         }
     }

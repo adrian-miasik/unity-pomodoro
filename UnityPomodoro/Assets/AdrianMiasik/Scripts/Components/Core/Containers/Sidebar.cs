@@ -19,15 +19,21 @@ namespace AdrianMiasik.Components.Core.Containers
     {
         [Header("Components")]
         [SerializeField] private ToggleSprite m_menuToggleSprite;
+        [SerializeField] private ClickButtonIcon m_logo;
         [SerializeField] private RectTransform m_container;
         [SerializeField] private RectTransform m_background;
         [SerializeField] private Image m_overlayImage;
         [SerializeField] private CanvasGroup m_overlayGroup;
-        [SerializeField] private Animation m_entryAnimation;
         [SerializeField] private SVGImage m_fill;
         [SerializeField] private SVGImage m_edge;
         [SerializeField] private TMP_Text m_versionNumber;
-        
+        [SerializeField] private List<SVGImage> m_externals;
+
+        [Header("Animations")] 
+        [SerializeField] private Animation m_animation;
+        [SerializeField] private AnimationClip m_entryAnimation;
+        [SerializeField] private AnimationClip m_exitAnimation;
+
         // Components
         [Header("Sidebar Rows (Content)")]
         [SerializeField] private List<SidebarRow> m_contentRows = new List<SidebarRow>(); 
@@ -98,6 +104,16 @@ namespace AdrianMiasik.Components.Core.Containers
                     }
                 }
             }
+
+            if (m_animation.clip == m_exitAnimation)
+            {
+                if (!m_animation.isPlaying)
+                {
+                    // Exit animation complete
+                    m_animation.clip = null;
+                    gameObject.SetActive(false);
+                }
+            }
         }
         
         private float CalculateSidebarWidth()
@@ -131,7 +147,9 @@ namespace AdrianMiasik.Components.Core.Containers
             
             m_container.gameObject.SetActive(true);
             gameObject.SetActive(true);
-            m_entryAnimation.Play();
+
+            PlayAnimation(m_entryAnimation);
+            
             m_overlayImage.enabled = true;
             m_overlayGroup.alpha = 1;
 
@@ -161,17 +179,24 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 row.CancelHold();
             }
+            m_logo.CancelHold();
 
             m_menuToggleSprite.SetToFalse();
-
-            m_container.gameObject.SetActive(false);
-            m_entryAnimation.Stop();
-            gameObject.SetActive(false);
+            
+            PlayAnimation(m_exitAnimation);
+            
             m_overlayImage.enabled = false;
             m_overlayGroup.alpha = 0;
 
             // Theming
             Timer.ColorUpdateCreditsBubble();
+        }
+        
+        private void PlayAnimation(AnimationClip animationToPlay)
+        {
+            m_animation.Stop();
+            m_animation.clip = animationToPlay;
+            m_animation.Play();
         }
 
         /// <summary>
@@ -190,6 +215,11 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="clickSoundClip"></param>
         public void SelectRow(SidebarRow rowToSelect, AudioClip clickSoundClip)
         {
+            if (!rowToSelect.IsSelectable())
+            {
+                return;
+            }
+            
             // Deselect other rows
             foreach (SidebarRow row in m_contentRows)
             {
@@ -199,6 +229,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.Deselect();
             }
 
+            // Select self, if not selected.
             if (!rowToSelect.IsSelected())
             {
                 rowToSelect.Select();
@@ -235,6 +266,12 @@ namespace AdrianMiasik.Components.Core.Containers
             
             // Text
             m_versionNumber.color = theme.GetCurrentColorScheme().m_foreground;
+            
+            // External icons
+            foreach (SVGImage external in m_externals)
+            {
+                external.color = theme.GetCurrentColorScheme().m_foreground;
+            }
         }
     }
 }
