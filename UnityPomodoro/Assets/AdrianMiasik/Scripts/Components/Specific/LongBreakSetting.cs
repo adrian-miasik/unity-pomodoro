@@ -23,6 +23,7 @@ namespace AdrianMiasik.Components.Specific
                 m_longBreakToggle.Initialize(pomodoroTimer, settingsConfig.m_longBreaks);
             }
         }
+        
         public override void ColorUpdate(Theme theme)
         {
             m_longBreaksLabel.color = theme.GetCurrentColorScheme().m_foreground;

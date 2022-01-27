@@ -8,7 +8,7 @@ namespace AdrianMiasik.Components.Specific
 {
     public class SkipButton : ThemeElement, ITimerState
     {
-        [SerializeField] private ClickButtonIcon m_button;
+        [SerializeField] private ClickButtonSVGIcon m_buttonSvg;
 
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
@@ -31,7 +31,7 @@ namespace AdrianMiasik.Components.Specific
         public override void ColorUpdate(Theme theme)
         {
             base.ColorUpdate(theme);
-            m_button.m_icon.color = theme.GetCurrentColorScheme().m_foreground;
+            m_buttonSvg.m_icon.color = theme.GetCurrentColorScheme().m_foreground;
         }
 
         private void Show()

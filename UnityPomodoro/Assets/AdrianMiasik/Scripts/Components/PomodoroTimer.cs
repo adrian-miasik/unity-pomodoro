@@ -64,9 +64,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private CompletionLabel m_completionLabel; // Used to prompt the user the timer is finished
         [SerializeField] private DigitFormat m_digitFormat; // Responsible class for manipulating our digits and formats
         [FormerlySerializedAs("m_menuToggle")] [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
-        [SerializeField] private ClickButtonIcon m_leftButtonClick; // Used to restart the timer
+        [SerializeField] private ClickButtonSVGIcon m_leftButtonSVGClick; // Used to restart the timer
         // TODO: Consolidate right buttons to a single class
-        [SerializeField] private ClickButtonIcon m_rightButtonClick; // Used to play/pause the timer
+        [SerializeField] private ClickButtonSVGIcon m_rightButtonSVGClick; // Used to play/pause the timer
         [SerializeField] private RightButton m_rightButton; // Additional timer state element 
         [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
         [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
@@ -847,7 +847,7 @@ namespace AdrianMiasik.Components
         /// </summary>
         public void TriggerPlayPause()
         {
-            m_rightButtonClick.OnPointerClick(null);
+            m_rightButtonSVGClick.OnPointerClick(null);
         }
 
         /// <summary>
@@ -863,7 +863,7 @@ namespace AdrianMiasik.Components
         /// </summary>
         public void TriggerTimerRestart()
         {
-            m_leftButtonClick.OnPointerClick(null);
+            m_leftButtonSVGClick.OnPointerClick(null);
         }
 
         /// <summary>
@@ -1079,17 +1079,17 @@ namespace AdrianMiasik.Components
             m_ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
 
             // Left Button Background
-            Image leftContainerTarget = m_leftButtonClick.m_containerTarget.GetComponent<Image>();
+            Image leftContainerTarget = m_leftButtonSVGClick.m_containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
                 leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
             }
             
             // Left Button Icon
-            m_leftButtonClick.m_icon.color = currentColors.m_foreground;
+            m_leftButtonSVGClick.m_icon.color = currentColors.m_foreground;
 
             // Right Button Background
-            Image rightContainerTarget = m_rightButtonClick.m_containerTarget.GetComponent<Image>();
+            Image rightContainerTarget = m_rightButtonSVGClick.m_containerTarget.GetComponent<Image>();
             if (rightContainerTarget != null)
             {
                 rightContainerTarget.material.SetColor(CircleColor, currentColors.m_backgroundHighlight);

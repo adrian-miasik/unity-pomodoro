@@ -1,14 +1,14 @@
-﻿using AdrianMiasik.Components.Base;
-using Unity.VectorGraphics;
+using AdrianMiasik.Components.Base;
+using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
-    /// A <see cref="ClickButton"/> with a SVG image.
+    /// A <see cref="ClickButton"/> with an image.
     /// </summary>
-    public class ClickButtonIcon: ClickButton
+    public class ClickButtonImageIcon: ClickButton
     {
-        public SVGImage m_icon;
+        public Image m_icon;
 
         public override void Show()
         {

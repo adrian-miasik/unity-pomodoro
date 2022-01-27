@@ -19,7 +19,7 @@ namespace AdrianMiasik.Components.Core.Containers
     {
         [Header("Components")]
         [SerializeField] private ToggleSprite m_menuToggleSprite;
-        [SerializeField] private ClickButtonIcon m_logo;
+        [SerializeField] private ClickButtonImageIcon m_logo;
         [SerializeField] private RectTransform m_container;
         [SerializeField] private RectTransform m_background;
         [SerializeField] private Image m_overlayImage;
