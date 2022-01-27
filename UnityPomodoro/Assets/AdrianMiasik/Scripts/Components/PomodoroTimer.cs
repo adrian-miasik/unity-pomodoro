@@ -1229,6 +1229,12 @@ namespace AdrianMiasik.Components
             {
                 m_tomatoCounter.gameObject.SetActive(false);
                 DeactivateLongBreak();
+                
+                // Rebuild timer in case user is in long break mode.
+                if (m_state == States.SETUP)
+                {
+                    SwitchTimer(m_digitFormat.m_isOnBreak);
+                }
             }
             m_completionLabel.MoveAnchors(state);
         }
@@ -1350,7 +1356,7 @@ namespace AdrianMiasik.Components
         
         public bool HasTomatoProgression()
         {
-            return m_tomatoCounter.HasProgression();
+            return m_tomatoCounter.HasProgression() || m_digitFormat.m_isOnLongBreak;
         }
     }
 }
