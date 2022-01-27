@@ -768,7 +768,7 @@ namespace AdrianMiasik.Components
                 SwitchTimer(true);
             }
         }
-
+        
         private void SwitchTimer(bool isOnBreak)
         {
             m_digitFormat.m_isOnBreak = isOnBreak;
@@ -1230,13 +1230,21 @@ namespace AdrianMiasik.Components
                 m_tomatoCounter.gameObject.SetActive(false);
                 DeactivateLongBreak();
                 
-                // Rebuild timer in case user is in long break mode.
-                if (m_state == States.SETUP)
-                {
-                    SwitchTimer(m_digitFormat.m_isOnBreak);
-                }
+                IfSetupTriggerRebuild();
             }
             m_completionLabel.MoveAnchors(state);
+        }
+
+        /// <summary>
+        /// Triggers a rebuild of our timer if we are in SETUP mode.
+        /// <remarks>Intended when in long break mode and you wipe tomato progress.</remarks>
+        /// </summary>
+        public void IfSetupTriggerRebuild()
+        {
+            if (m_state == States.SETUP)
+            {
+                SwitchTimer(m_digitFormat.m_isOnBreak);
+            }
         }
 
         // TODO: System wide setting

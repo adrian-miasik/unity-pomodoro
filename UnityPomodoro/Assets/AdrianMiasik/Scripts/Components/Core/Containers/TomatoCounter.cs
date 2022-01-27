@@ -105,17 +105,8 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             Timer.SpawnConfirmationDialog(() =>
             {
-                if (Timer.IsOnLongBreak())
-                {
-                    // Reset view to regular break
-                    Timer.DeactivateLongBreak();
-                    Timer.TrySwitchToBreakTimer();
-                }
-                else
-                {
-                    Timer.DeactivateLongBreak();
-                }
-
+                Timer.DeactivateLongBreak();
+                Timer.IfSetupTriggerRebuild();
                 ConsumeTomatoes();
             }, null, "This action will delete your pomodoro/tomato progress.");
         }
