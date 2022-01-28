@@ -1,5 +1,4 @@
 using AdrianMiasik.Components;
-using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 #if ENABLE_WINMD_SUPPORT
@@ -8,7 +7,6 @@ using UnityEngine.WSA;
 
 namespace AdrianMiasik.UWP
 {
-    // TODO: Replace PomodoroTimer dependency with Setting class dependency
     /// <summary>
     /// Used to serve Windows OS level notification/toasts to the user. (using the referenced components)
     /// Intended to be invoked via UnityEvent <see cref="PomodoroTimer.m_onTimerCompletion"/>.
@@ -19,18 +17,13 @@ namespace AdrianMiasik.UWP
         [Header("Toast")]
         [SerializeField] private TextAsset m_xmlToastAlarm;
         [SerializeField] private TextAsset m_xmlToastNoAlarm;
-
+        
         // Cache
-        private PomodoroTimer timer;
-
-        /// <summary>
-        /// Sets up the timer reference. Not a <see cref="ThemeElement"/> since this doesn't have visuals
-        /// and thus doesn't need a <see cref="Theme"/>.
-        /// </summary>
-        /// <param name="pomodoroTimer"></param>
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        private Settings settings;
+        
+        public void Initialize(Settings settingsConfiguration)
         {
-            timer = pomodoroTimer;
+            settings = settingsConfiguration;
         }
 
         /// <summary>
@@ -47,7 +40,7 @@ namespace AdrianMiasik.UWP
             }
 
             // And the user wants to mute audio when app is out of focus...
-            if (timer.MuteSoundWhenOutOfFocus())
+            if (settings.m_muteSoundWhenOutOfFocus)
             {
                 // Play Alarm Notification
                 Toast toast = Toast.Create(m_xmlToastAlarm.text);

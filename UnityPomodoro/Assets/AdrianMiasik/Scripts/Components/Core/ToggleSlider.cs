@@ -4,7 +4,6 @@ using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
@@ -16,7 +15,7 @@ namespace AdrianMiasik.Components.Core
     {
         // General
         [SerializeField] public SVGImage m_background;
-        [SerializeField] private Image m_dot;
+        [SerializeField] public SVGImage m_dot;
 
         // Animation
         [SerializeField] private Animation m_animation;
@@ -158,6 +157,22 @@ namespace AdrianMiasik.Components.Core
             trueColor = overrideTrueColor ? overridenTrueColor : currentColors.m_modeTwo;
             m_background.color = state ? trueColor : falseColor;
             m_dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
+        }
+
+        [ContextMenu("Enable")]
+        public void SetEditorVisualToEnable()
+        {
+            m_background.color = new Color(0.05f, 0.47f, 0.95f);
+            m_dot.rectTransform.anchorMin = new Vector2(0.45f, 0);
+            m_dot.rectTransform.anchorMax = Vector2.one;
+        }
+        
+        [ContextMenu("Disable")]
+        public void SetEditorVisualToDisable()
+        {
+            m_background.color = new Color(0.91f, 0.91f, 0.91f);
+            m_dot.rectTransform.anchorMin = Vector2.zero;
+            m_dot.rectTransform.anchorMax = new Vector2(0.55f, 1); 
         }
     }
 }

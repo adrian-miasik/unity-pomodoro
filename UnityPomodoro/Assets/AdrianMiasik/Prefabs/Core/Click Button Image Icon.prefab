@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1830320757405263118}
   - component: {fileID: 1830320757405263152}
-  - component: {fileID: 8957768563050848494}
+  - component: {fileID: 2031633789868339943}
   - component: {fileID: 6595299227246729144}
   m_Layer: 5
-  m_Name: Click Button Icon
+  m_Name: Click Button Image Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830320757405263117}
   m_CullTransparentMesh: 1
---- !u!114 &8957768563050848494
+--- !u!114 &2031633789868339943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1830320757405263117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e1adbacb09a42b1a9f25dff0796ef9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 19de6b58dd5e48c0af22d1a80cd4e083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_isPitchVariationOn: 1
   m_lowestPitch: 0.9
   m_highestPitch: 1.1
-  m_icon: {fileID: 1830320759345697965}
+  m_icon: {fileID: 7190582310917090625}
 --- !u!82 &6595299227246729144
 AudioSource:
   m_ObjectHideFlags: 0
@@ -421,7 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1830320759345697963}
   - component: {fileID: 1830320759345697966}
-  - component: {fileID: 1830320759345697965}
+  - component: {fileID: 7190582310917090625}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -456,7 +456,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830320759345697962}
   m_CullTransparentMesh: 1
---- !u!114 &1830320759345697965
+--- !u!114 &7190582310917090625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1830320759345697962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -476,5 +476,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: 5c2add1b45c5568489bf7a32ccba8296, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c3eb5ae4913a249479d6d431c66cf498, type: 3}
+  m_Type: 0
   m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

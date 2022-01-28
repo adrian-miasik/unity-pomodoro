@@ -45,23 +45,33 @@ namespace AdrianMiasik.Components.Core.Containers
         [SerializeField] private DoubleDigit m_digitSource;
         [SerializeField] private DigitSeparator m_separatorSource;
         
-        // Work data / Mode one
-        [SerializeField] private int[] m_workTime = {0,0,25,0,0}; // Represents data for DD_HH_MM_SS_MS
-
+        /// <summary>
+        /// Represents data for DD_HH_MM_SS_MS
+        /// </summary>
+        [SerializeField] private int[] m_workTime = {0,0,25,0,0};
+        
+        /// <summary>
+        /// Represents data for DD_HH_MM_SS_MS
+        /// </summary>
+        [SerializeField] private int[] m_breakTime = {0, 0, 5, 0, 0};
+        
+        /// <summary>
+        /// Represents data for DD_HH_MM_SS_MS
+        /// </summary>
+        [SerializeField] private int[] m_longBreakTime = {0, 0, 20, 0, 0};
+        
         /// <summary>
         /// Is this digit format on break?
         /// <remarks>If `False` then this digit format is in work mode. If `True` this digit format is either
         /// on break / or on a long break.</remarks>
         /// </summary>
         public bool m_isOnBreak;
-        [SerializeField] private int[] m_breakTime = {0, 0, 5, 0, 0}; // Represents data for DD_HH_MM_SS_MS
 
         /// <summary>
         /// Is this digit format on a long break?
         /// </summary>
         public bool m_isOnLongBreak;
-        [SerializeField] private int[] m_longBreakTime = {0, 0, 20, 0, 0}; // Represents data for DD_HH_MM_SS_MS
-        
+
         // Cache
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
@@ -248,18 +258,19 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <returns></returns>
         public TimeSpan GetTime()
         {
-            // Mode one / work time
+            // Work time
             if (!m_isOnBreak)
             {
                 return GetTimeFromFormat(m_workTime);
             }
 
-            // Mode two / break time
+            // Break time
             if (!m_isOnLongBreak)
             {
                 return GetTimeFromFormat(m_breakTime);
             }
 
+            // Long break time
             return GetTimeFromFormat(m_longBreakTime);
         }
         
@@ -653,14 +664,12 @@ namespace AdrianMiasik.Components.Core.Containers
         /// Prevents all our digits tick animation from holding, especially useful for when the gameobjects are no
         /// longer active and need to be re-enabled (Such as switching between pages).
         /// </summary>
+        [ContextMenu("Correct Tick Animation")]
         public void CorrectTickAnimVisuals()
         {
             foreach (DoubleDigit digit in generatedDigits)
             {
-                if (digit.IsTickAnimationPlaying())
-                {
-                    digit.ResetTextPosition();
-                }
+                digit.ResetTextPosition();
             }
         }
 
@@ -721,7 +730,7 @@ namespace AdrianMiasik.Components.Core.Containers
             foreach (char c in formattedString)
             {
                 // If this character is a separator...
-                if (c.ToString() == ":") // TODO: Allow the use of other separators like '-'?
+                if (c.ToString() == ":")
                 {
                     // Save section
                     if (value != String.Empty)

@@ -19,15 +19,21 @@ namespace AdrianMiasik.Components.Core.Containers
     {
         [Header("Components")]
         [SerializeField] private ToggleSprite m_menuToggleSprite;
+        [SerializeField] private ClickButtonImageIcon m_logo;
         [SerializeField] private RectTransform m_container;
         [SerializeField] private RectTransform m_background;
         [SerializeField] private Image m_overlayImage;
         [SerializeField] private CanvasGroup m_overlayGroup;
-        [SerializeField] private Animation m_entryAnimation;
         [SerializeField] private SVGImage m_fill;
         [SerializeField] private SVGImage m_edge;
         [SerializeField] private TMP_Text m_versionNumber;
-        
+        [SerializeField] private List<SVGImage> m_externals;
+
+        [Header("Animations")] 
+        [SerializeField] private Animation m_animation;
+        [SerializeField] private AnimationClip m_entryAnimation;
+        [SerializeField] private AnimationClip m_exitAnimation;
+
         // Components
         [Header("Sidebar Rows (Content)")]
         [SerializeField] private List<SidebarRow> m_contentRows = new List<SidebarRow>(); 
@@ -40,7 +46,7 @@ namespace AdrianMiasik.Components.Core.Containers
         private int screenWidth;
         private int screenHeight;
         
-        private float rowStaggerDelay = 0.15f;
+        [SerializeField] private float m_rowStaggerDelay = 0.0725f;
         private float rowStaggerTime;
 
         /// <summary>
@@ -71,7 +77,6 @@ namespace AdrianMiasik.Components.Core.Containers
             // Calculate screen dimensions
             screenWidth = Screen.width;
             screenHeight = Screen.height;
-            CalculateSidebarWidth();
         }
 
         private void Update()
@@ -80,7 +85,9 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 screenWidth = Screen.width;
                 screenHeight = Screen.height;
-                CalculateSidebarWidth();
+                
+                // Set widths (credits bubble and sidebar)
+                Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
             }
 
             if (isOpen)
@@ -89,7 +96,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 {
                     rowStaggerTime += Time.deltaTime;
                     
-                    if (rowStaggerTime >= rowStaggerDelay)
+                    if (rowStaggerTime >= m_rowStaggerDelay)
                     {
                         rowStaggerTime = 0;
                         m_rowsToSpawn[0].PlaySpawnAnimation();
@@ -97,12 +104,26 @@ namespace AdrianMiasik.Components.Core.Containers
                     }
                 }
             }
+
+            if (m_animation.clip == m_exitAnimation)
+            {
+                if (!m_animation.isPlaying)
+                {
+                    // Exit animation complete
+                    m_animation.clip = null;
+                    gameObject.SetActive(false);
+                }
+            }
         }
         
-        private void CalculateSidebarWidth()
+        private float CalculateSidebarWidth()
         {
             float scalar = (float)Screen.height / Screen.width;
-            m_background.anchorMax = new Vector2(Mathf.Clamp(0.5f * scalar,0,0.75f), m_background.anchorMax.y);
+            float desiredWidth = Mathf.Clamp(0.5f * scalar, 0, 0.75f);
+            
+            m_background.anchorMax = new Vector2(desiredWidth, m_background.anchorMax.y);
+
+            return desiredWidth;
         }
         
         /// <summary>
@@ -111,6 +132,9 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void Open()
         {
+            Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
+            Timer.FadeCreditsBubble(true);
+            
             m_rowsToSpawn = new List<SidebarRow>(m_contentRows);
 
             foreach (SidebarRow row in m_rowsToSpawn)
@@ -118,15 +142,17 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.Hide();
             }
             
-            rowStaggerTime = rowStaggerDelay; // First stagger has no delay
             isOpen = true;
             
             m_container.gameObject.SetActive(true);
             gameObject.SetActive(true);
-            m_entryAnimation.Play();
+
+            PlayAnimation(m_entryAnimation);
+            
             m_overlayImage.enabled = true;
             m_overlayGroup.alpha = 1;
-            
+
+            // Theming
             ColorUpdate(Timer.GetTheme());
             Timer.ColorUpdateCreditsBubble();
         }
@@ -137,6 +163,14 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void Close()
         {
+            if (!Timer.IsAboutPageOpen())
+            {
+                Timer.CloseOutCreditsBubble();
+            }
+
+            Timer.ResetCreditsBubbleSidebarConformity();
+            Timer.FadeCreditsBubble(false);
+            
             isOpen = false;
 
             // Cancel holds in-case user holds button down and closes our menu prematurely
@@ -144,16 +178,24 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 row.CancelHold();
             }
+            m_logo.CancelHold();
 
             m_menuToggleSprite.SetToFalse();
             
-            m_container.gameObject.SetActive(false);
-            m_entryAnimation.Stop();
-            gameObject.SetActive(false);
+            PlayAnimation(m_exitAnimation);
+            
             m_overlayImage.enabled = false;
             m_overlayGroup.alpha = 0;
-            
+
+            // Theming
             Timer.ColorUpdateCreditsBubble();
+        }
+        
+        private void PlayAnimation(AnimationClip animationToPlay)
+        {
+            m_animation.Stop();
+            m_animation.clip = animationToPlay;
+            m_animation.Play();
         }
 
         /// <summary>
@@ -172,6 +214,11 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="clickSoundClip"></param>
         public void SelectRow(SidebarRow rowToSelect, AudioClip clickSoundClip)
         {
+            if (!rowToSelect.IsSelectable())
+            {
+                return;
+            }
+            
             // Deselect other rows
             foreach (SidebarRow row in m_contentRows)
             {
@@ -181,6 +228,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.Deselect();
             }
 
+            // Select self, if not selected.
             if (!rowToSelect.IsSelected())
             {
                 rowToSelect.Select();
@@ -217,6 +265,12 @@ namespace AdrianMiasik.Components.Core.Containers
             
             // Text
             m_versionNumber.color = theme.GetCurrentColorScheme().m_foreground;
+            
+            // External icons
+            foreach (SVGImage external in m_externals)
+            {
+                external.color = theme.GetCurrentColorScheme().m_foreground;
+            }
         }
     }
 }

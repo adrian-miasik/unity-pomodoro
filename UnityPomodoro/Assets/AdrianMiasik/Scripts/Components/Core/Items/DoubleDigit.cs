@@ -21,9 +21,9 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private Selectable m_selectable;
         [SerializeField] private Image m_background;
 
-        [SerializeField] private ClickButtonIcon m_upArrow;
+        [SerializeField] private ClickButtonSVGIcon m_upArrow;
         [SerializeField] private TMP_InputField m_input;
-        [SerializeField] private ClickButtonIcon m_downArrow;
+        [SerializeField] private ClickButtonSVGIcon m_downArrow;
         
         [Header("Animations")] 
         [SerializeField] private float m_animationDuration = 1f;
