@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> dropdown with a label.
-    /// Intended to be used for 'switch digit format' settings option.
+    /// Intended to be used for 'Set digit format' settings option. (See <see cref="SettingsPanel"/>)
     /// </summary>
     public class DigitFormatDropdown : ThemeElement
     {

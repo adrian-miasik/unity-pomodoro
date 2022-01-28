@@ -28,10 +28,9 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="updateColors"></param>
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            // TODO: (4) Setting property for what defines a long break
             foreach (Tomato tomato in m_tomatoes)
             {
-                tomato.Initialize(pomodoroTimer);
+                tomato.Initialize(pomodoroTimer, updateColors);
             }
             
             base.Initialize(pomodoroTimer, updateColors);
@@ -106,19 +105,15 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             Timer.SpawnConfirmationDialog(() =>
             {
-                if (Timer.IsOnLongBreak())
-                {
-                    // Reset view to regular break
-                    Timer.DeactivateLongBreak();
-                    Timer.TrySwitchToBreakTimer();
-                }
-                else
-                {
-                    Timer.DeactivateLongBreak();
-                }
-
+                Timer.DeactivateLongBreak();
+                Timer.IfSetupTriggerRebuild();
                 ConsumeTomatoes();
             }, null, "This action will delete your pomodoro/tomato progress.");
+        }
+
+        public bool HasProgression()
+        {
+            return nextFilledTomatoIndex > 0;
         }
     }
 }
