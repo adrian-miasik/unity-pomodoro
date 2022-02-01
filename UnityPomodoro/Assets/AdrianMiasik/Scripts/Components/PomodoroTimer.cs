@@ -1288,6 +1288,11 @@ namespace AdrianMiasik.Components
             isCurrentDialogInterruptible = interruptible;
             currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
         }
+
+        public ConfirmationDialog GetCurrentConfirmationDialog()
+        {
+            return currentDialogPopup;
+        }
         
         /// <summary>
         /// Is our current <see cref="ConfirmationDialog"/> interruptible by our timer?
@@ -1416,13 +1421,18 @@ namespace AdrianMiasik.Components
         {
             m_sidebarMenu.gameObject.SetActive(true);
             ConformCreditsBubbleToSidebar(m_sidebarMenu.CalculateSidebarWidth());
-            ShowCreditsBubble();
             m_sidebarMenu.ShowOverlay();
         }
 
         public void DisableBreakSlider()
         {
             m_breakSlider.SetVisualToDisable();
+        }
+
+        public void HideSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(false);
+            m_sidebarMenu.HideOverlay();
         }
     }
 }

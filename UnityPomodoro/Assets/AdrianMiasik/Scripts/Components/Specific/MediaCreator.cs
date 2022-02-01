@@ -17,6 +17,7 @@ namespace AdrianMiasik.Components.Specific
             MediaCapture mediaCapture = new GameObject("MediaCapture").AddComponent<MediaCapture>();
             
             // Chain screenshot queue
+            // TODO: Create a queue system
             TakeSetupScreenshot(timer, mediaCapture, () =>
             {
                 TakeRunningScreenshot(timer, mediaCapture, () =>
@@ -25,13 +26,30 @@ namespace AdrianMiasik.Components.Specific
                     {
                         TakeBreakScreenshot(timer, mediaCapture, () =>
                         {
-                            TakeSidebarScreenshot(timer, mediaCapture);
+                            TakeSidebarScreenshot(timer, mediaCapture, () =>
+                            {
+                                TakeSelectionSetupScreenshot(timer, mediaCapture, () =>
+                                {
+                                    TakeSettingScreenshot(timer, mediaCapture, () =>
+                                    {
+                                        TakeAboutScreenshot(timer, mediaCapture, () =>
+                                        {
+                                            TakeRunningPopupScreenshot(timer, mediaCapture, MediaCleanup);
+                                        });
+                                    });
+                                });
+                            });
                         });
                     }));
                 });
             });
         }
-
+        
+        private static void MediaCleanup()
+        {
+            
+        }
+        
         private static void TakeSetupScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
         {
             mediaCapture.CaptureScreenshot("../promotional/screenshot_0.png", nextAction);
@@ -67,14 +85,59 @@ namespace AdrianMiasik.Components.Specific
             mediaCapture.CaptureScreenshot("../promotional/screenshot_3.png", nextAction);
         }
 
-        private static void TakeSidebarScreenshot(PomodoroTimer timer, MediaCapture mediaCapture)
+        private static void TakeSidebarScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
         {
             timer.SwitchTimer(false);
             timer.DisableBreakSlider();
             timer.SwitchState(PomodoroTimer.States.SETUP);
+            timer.ShowCreditsBubble();
             timer.ShowSidebar();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_4.png", null);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_4.png", nextAction);
+        }
+
+        private static void TakeSelectionSetupScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, 
+            Action nextAction)
+        {
+            timer.HideCreditsBubble();
+            timer.HideSidebar();
+            timer.SelectAll();
+            
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_5.png", nextAction);
+        }
+
+        private static void TakeSettingScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
+        {
+            timer.SetSelection(null); // Clear selection
+            timer.ShowSettings();
+            
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_6.png", nextAction);
+        }
+
+        private static void TakeAboutScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
+        {
+            timer.ShowAbout();
+            timer.ShowCreditsBubble();
+            
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_7.png", nextAction);
+        }
+
+        private static void TakeRunningPopupScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, 
+            Action nextAction)
+        {
+            timer.ShowMainContent();
+            
+            timer.HideCreditsBubble();
+            timer.SwitchState(PomodoroTimer.States.RUNNING);
+            timer.ShowEndTimestampBubble();
+            TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
+            TimeSpan subSpan = new TimeSpan(0,0,3,12,0);
+            timeSpan = timeSpan.Subtract(subSpan);
+            timer.SetCurrentTime((float)timeSpan.TotalSeconds);
+            timer.SpawnConfirmationDialog(null);
+            timer.GetCurrentConfirmationDialog().Show();
+            
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_8.png", nextAction);
         }
     }
 }

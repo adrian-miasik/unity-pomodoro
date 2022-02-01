@@ -279,5 +279,11 @@ namespace AdrianMiasik.Components.Core.Containers
             m_overlayGroup.alpha = 1;
             ColorUpdate(Timer.GetTheme());
         }
+
+        public void HideOverlay()
+        {
+            m_overlayImage.enabled = false;
+            m_overlayGroup.alpha = 0;
+        }
     }
 }

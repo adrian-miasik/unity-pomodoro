@@ -138,5 +138,11 @@ namespace AdrianMiasik.Components.Core
             overlayColor.a = theme.m_darkMode ? 0.025f : 0.5f;
             m_overlay.color = overlayColor;
         }
+
+        public void Show()
+        {
+            m_spawnAnimation.Stop();
+            m_spawnAnimation.gameObject.transform.localScale = Vector3.one;
+        }
     }
 }
