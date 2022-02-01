@@ -89,17 +89,22 @@ namespace AdrianMiasik.Components
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
         [SerializeField] private AnimationCurve m_ringTickWidth;
+
+        /// <summary>
+        /// A <see cref="UnityEvent"/> that gets invoked when the spawn animation is complete.
+        /// </summary>
+        [Header("Unity Events")]
+        public UnityEvent m_onSpawnCompletion;
         
         /// <summary>
         /// A <see cref="UnityEvent"/> that gets invoked when the ring / timer alarm pulses.
         /// </summary>
-        [Header("Unity Events")]
         public UnityEvent m_onRingPulse;
         
         /// <summary>
         /// A <see cref="UnityEvent"/> that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>)
         /// </summary>
-        public UnityEvent m_onTimerCompletion; // Invoked when the timer finishes
+        public UnityEvent m_onTimerCompletion;
 
         [Header("Cache")]
         [SerializeField] private List<DoubleDigit> m_selectedDigits = new List<DoubleDigit>(); // Contains our currently selected digits
@@ -139,6 +144,7 @@ namespace AdrianMiasik.Components
         private bool isCurrentDialogInterruptible = true;
         
         // Pulse Ring Complete Animation
+        private bool disableCompletionAnimation;
         private float accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
         
@@ -456,6 +462,8 @@ namespace AdrianMiasik.Components
                 {
                     m_ring.fillAmount = 1;
                     m_animateRingProgress = false;
+                    
+                    m_onSpawnCompletion?.Invoke();
                 }
             }
             
@@ -470,6 +478,10 @@ namespace AdrianMiasik.Components
                     break;
 
                 case States.COMPLETE:
+                    if (disableCompletionAnimation)
+                    {
+                        return;
+                    }
                     AnimateRingPulse();
                     break;
             }
@@ -1367,14 +1379,27 @@ namespace AdrianMiasik.Components
             return m_tomatoCounter.HasProgression() || m_digitFormat.m_isOnLongBreak;
         }
 
-        public void HideDigitArrows()
+        public void SetCurrentTime(float currentTimeInSeconds)
         {
-            m_digitFormat.HideArrows();
+            currentTime = currentTimeInSeconds;
+            m_digitFormat.CorrectTickAnimVisuals();
+            Tick();
+        }
+        
+        public void HideCreditsBubble()
+        {
+            m_creditsBubble.FadeOut(true);
         }
 
-        public void ShowCreditsBubble()
+        public void ShowEndTimestampBubble()
         {
-            m_creditsBubble.FadeIn(true);
+            m_endTimestampBubble.FadeIn(true);
+        }
+
+        public void DisableCompletionAnimation()
+        {
+            m_completionLabel.HideCompletionAnimation();
+            disableCompletionAnimation = true;
         }
     }
 }

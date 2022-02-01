@@ -72,5 +72,14 @@ namespace AdrianMiasik.Components.Specific
         {
             gameObject.transform.localScale = Vector3.one * desiredScale;
         }
+
+        public void HideCompletionAnimation()
+        {
+            m_completion.enabled = false;
+            foreach (TMP_Text text in m_labels)
+            {
+                text.gameObject.transform.localScale = Vector3.one;
+            }
+        }
     }
 }

@@ -669,6 +669,7 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             foreach (DoubleDigit digit in generatedDigits)
             {
+                digit.HideTickAnimation();
                 digit.ResetTextPosition();
             }
         }
