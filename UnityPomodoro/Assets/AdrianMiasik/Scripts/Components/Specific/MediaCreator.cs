@@ -30,7 +30,7 @@ namespace AdrianMiasik.Components.Specific
 
         private static void TakeSetupScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
         {
-            mediaCapture.CaptureScreenshot("screenshot_0.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_0.png", nextAction);
         }
 
         private static void TakeRunningScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
@@ -47,7 +47,7 @@ namespace AdrianMiasik.Components.Specific
             timeSpan = timeSpan.Subtract(subSpan);
             timer.SetCurrentTime((float)timeSpan.TotalSeconds);
 
-            mediaCapture.CaptureScreenshot("screenshot_1.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_1.png", nextAction);
         }
 
         private static void TakeCompletedScreenshot(PomodoroTimer timer, MediaCapture mediaCapture)
@@ -55,7 +55,7 @@ namespace AdrianMiasik.Components.Specific
             timer.SwitchState(PomodoroTimer.States.COMPLETE);
             timer.DisableCompletionAnimation();
             
-            mediaCapture.CaptureScreenshot("screenshot_2.png", null);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_2.png", null);
         }
     }
 }
