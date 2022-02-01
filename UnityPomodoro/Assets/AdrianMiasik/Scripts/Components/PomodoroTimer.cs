@@ -277,7 +277,7 @@ namespace AdrianMiasik.Components
         /// Basically handles our transitions between timer states. <see cref="PomodoroTimer.States"/>
         /// </summary>
         /// <param name="desiredState">The state you want to transition to</param>
-        private void SwitchState(States desiredState)
+        public void SwitchState(States desiredState)
         {
             m_state = desiredState;
 
@@ -1006,7 +1006,7 @@ namespace AdrianMiasik.Components
             
             m_digitFormat.SetTimerValue(timeString);
         }
-        
+
         /// <summary>
         /// Sets our background's selection navigation to the provided <see cref="Navigation"/>.
         /// <remarks>Intended to change focus to our digits when attempting to select left / right
@@ -1365,6 +1365,16 @@ namespace AdrianMiasik.Components
         public bool HasTomatoProgression()
         {
             return m_tomatoCounter.HasProgression() || m_digitFormat.m_isOnLongBreak;
+        }
+
+        public void HideDigitArrows()
+        {
+            m_digitFormat.HideArrows();
+        }
+
+        public void ShowCreditsBubble()
+        {
+            m_creditsBubble.FadeIn(true);
         }
     }
 }

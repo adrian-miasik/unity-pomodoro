@@ -890,5 +890,13 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             m_isOnLongBreak = false;
         }
+
+        public void HideArrows()
+        {
+            foreach (DoubleDigit digit in generatedDigits)
+            {
+                digit.HideArrows();
+            }
+        }
     }
  }

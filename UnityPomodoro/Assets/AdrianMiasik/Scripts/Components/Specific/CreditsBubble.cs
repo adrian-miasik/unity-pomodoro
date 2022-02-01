@@ -119,24 +119,42 @@ namespace AdrianMiasik.Components.Specific
             base.Update();
         }
 
-        public void FadeOut()
+        public void FadeOut(bool instantly = false)
         {
             foreach (TMP_Text text in m_text)
             {
                 text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
 
-            state = FadeState.FADING_OUT;
+            if (instantly)
+            {
+                state = FadeState.IDLE;
+                m_textContainer.alpha = 1;
+                m_backgroundContainer.alpha = 1;
+            }
+            else
+            {
+                state = FadeState.FADING_OUT;
+            }
         }
 
-        public void FadeIn()
+        public void FadeIn(bool instantly = false)
         {
             foreach (TMP_Text text in m_text)
             {
                 text.color = timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
 
-            state = FadeState.FADING_IN;
+            if (instantly)
+            {
+                state = FadeState.IDLE;
+                m_textContainer.alpha = 1;
+                m_backgroundContainer.alpha = 1;
+            }
+            else
+            {
+                state = FadeState.FADING_IN;
+            }
         }
 
         public void Lock()
