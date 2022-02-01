@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using AdrianMiasik.Components.Base;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -23,7 +21,10 @@ namespace AdrianMiasik.Components.Specific
             {
                 TakeRunningScreenshot(timer, mediaCapture, () =>
                 {
-                    TakeCompletedScreenshot(timer, mediaCapture);
+                    TakeCompletedScreenshot(timer, mediaCapture, (() =>
+                    {
+                        TakeBreakScreenshot(timer, mediaCapture);
+                    }));
                 });
             });
         }
@@ -50,12 +51,21 @@ namespace AdrianMiasik.Components.Specific
             mediaCapture.CaptureScreenshot("../promotional/screenshot_1.png", nextAction);
         }
 
-        private static void TakeCompletedScreenshot(PomodoroTimer timer, MediaCapture mediaCapture)
+        private static void TakeCompletedScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
         {
             timer.SwitchState(PomodoroTimer.States.COMPLETE);
             timer.DisableCompletionAnimation();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_2.png", null);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_2.png", nextAction);
+        }
+
+        private static void TakeBreakScreenshot(PomodoroTimer timer, MediaCapture mediaCapture)
+        {
+            timer.SwitchTimer(true);
+            timer.EnableBreakSlider();
+            timer.SwitchState(PomodoroTimer.States.SETUP);
+            
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_3.png", null);
         }
     }
 }

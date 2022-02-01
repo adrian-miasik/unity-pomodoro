@@ -781,7 +781,7 @@ namespace AdrianMiasik.Components
             }
         }
         
-        private void SwitchTimer(bool isOnBreak)
+        public void SwitchTimer(bool isOnBreak)
         {
             m_digitFormat.m_isOnBreak = isOnBreak;
             SwitchState(States.SETUP);
@@ -1400,6 +1400,11 @@ namespace AdrianMiasik.Components
         {
             m_completionLabel.HideCompletionAnimation();
             disableCompletionAnimation = true;
+        }
+
+        public void EnableBreakSlider()
+        {
+            m_breakSlider.SetVisualToEnable();
         }
     }
 }

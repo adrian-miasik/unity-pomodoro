@@ -159,7 +159,27 @@ namespace AdrianMiasik.Components.Core
             m_dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
         }
 
-        [ContextMenu("Enable")]
+        [ContextMenu("Enable (Run-time)")]
+        public void SetVisualToEnable()
+        {
+            m_animation.enabled = false;
+            Enable();
+            ColorUpdate(Timer.GetTheme());
+            m_dot.rectTransform.anchorMin = new Vector2(0.45f, 0);
+            m_dot.rectTransform.anchorMax = Vector2.one;
+        }
+        
+        [ContextMenu("Disable (Run-time)")]
+        public void SetVisualToDisable()
+        {
+            m_animation.enabled = false;
+            Disable();
+            ColorUpdate(Timer.GetTheme());
+            m_dot.rectTransform.anchorMin = Vector2.zero;
+            m_dot.rectTransform.anchorMax = new Vector2(0.55f, 1); 
+        }
+        
+        [ContextMenu("Enable (Editor)")]
         public void SetEditorVisualToEnable()
         {
             m_background.color = new Color(0.05f, 0.47f, 0.95f);
@@ -167,7 +187,7 @@ namespace AdrianMiasik.Components.Core
             m_dot.rectTransform.anchorMax = Vector2.one;
         }
         
-        [ContextMenu("Disable")]
+        [ContextMenu("Disable (Editor)")]
         public void SetEditorVisualToDisable()
         {
             m_background.color = new Color(0.91f, 0.91f, 0.91f);
