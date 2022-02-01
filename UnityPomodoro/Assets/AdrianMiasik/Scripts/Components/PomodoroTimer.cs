@@ -1385,10 +1385,15 @@ namespace AdrianMiasik.Components
             m_digitFormat.CorrectTickAnimVisuals();
             Tick();
         }
-        
+
         public void HideCreditsBubble()
         {
             m_creditsBubble.FadeOut(true);
+        }
+
+        public void ShowCreditsBubble()
+        {
+            m_creditsBubble.FadeIn(true);
         }
 
         public void ShowEndTimestampBubble()
@@ -1405,6 +1410,19 @@ namespace AdrianMiasik.Components
         public void EnableBreakSlider()
         {
             m_breakSlider.SetVisualToEnable();
+        }
+        
+        public void ShowSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(true);
+            ConformCreditsBubbleToSidebar(m_sidebarMenu.CalculateSidebarWidth());
+            ShowCreditsBubble();
+            m_sidebarMenu.ShowOverlay();
+        }
+
+        public void DisableBreakSlider()
+        {
+            m_breakSlider.SetVisualToDisable();
         }
     }
 }

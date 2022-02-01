@@ -23,7 +23,10 @@ namespace AdrianMiasik.Components.Specific
                 {
                     TakeCompletedScreenshot(timer, mediaCapture, (() =>
                     {
-                        TakeBreakScreenshot(timer, mediaCapture);
+                        TakeBreakScreenshot(timer, mediaCapture, () =>
+                        {
+                            TakeSidebarScreenshot(timer, mediaCapture);
+                        });
                     }));
                 });
             });
@@ -36,13 +39,9 @@ namespace AdrianMiasik.Components.Specific
 
         private static void TakeRunningScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
         {
-            // Clean up
             timer.HideCreditsBubble();
-            
-            // Setup second screenshot
             timer.SwitchState(PomodoroTimer.States.RUNNING);
             timer.ShowEndTimestampBubble();
-            
             TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
             TimeSpan subSpan = new TimeSpan(0,0,3,12,0);
             timeSpan = timeSpan.Subtract(subSpan);
@@ -59,13 +58,23 @@ namespace AdrianMiasik.Components.Specific
             mediaCapture.CaptureScreenshot("../promotional/screenshot_2.png", nextAction);
         }
 
-        private static void TakeBreakScreenshot(PomodoroTimer timer, MediaCapture mediaCapture)
+        private static void TakeBreakScreenshot(PomodoroTimer timer, MediaCapture mediaCapture, Action nextAction)
         {
             timer.SwitchTimer(true);
             timer.EnableBreakSlider();
             timer.SwitchState(PomodoroTimer.States.SETUP);
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_3.png", null);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_3.png", nextAction);
+        }
+
+        private static void TakeSidebarScreenshot(PomodoroTimer timer, MediaCapture mediaCapture)
+        {
+            timer.SwitchTimer(false);
+            timer.DisableBreakSlider();
+            timer.SwitchState(PomodoroTimer.States.SETUP);
+            timer.ShowSidebar();
+            
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_4.png", null);
         }
     }
 }
