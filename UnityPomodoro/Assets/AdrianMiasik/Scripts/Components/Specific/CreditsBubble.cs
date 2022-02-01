@@ -129,8 +129,8 @@ namespace AdrianMiasik.Components.Specific
             if (instantly)
             {
                 state = FadeState.IDLE;
-                m_textContainer.alpha = 1;
-                m_backgroundContainer.alpha = 1;
+                m_textContainer.alpha = 0;
+                m_backgroundContainer.alpha = 0;
             }
             else
             {
