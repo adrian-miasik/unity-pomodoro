@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using UnityEditor;
 using UnityEngine;
@@ -7,139 +8,142 @@ namespace AdrianMiasik.Components.Specific
 {
     public class MediaCreator: MonoBehaviour
     {
-        private static PomodoroTimer m_timer;
-        
+        private static PomodoroTimer _timer;
+        private static readonly Queue<Action> ScreenshotScenarios = new Queue<Action>();
+
         [MenuItem("CONTEXT/PomodoroTimer/Create Media")]
         private static void CreateMedia(MenuCommand command)
         {
+            // Early Exit
+            if (!Application.isPlaying)
+            {
+                Debug.LogWarning("Please make sure Unity is in play mode and this timer is initialized to" +
+                                 "create your media.");
+                Debug.Log("No media has been created.");
+                return;
+            }
+            
             // Get reference
-            m_timer = (PomodoroTimer) command.context;
+            _timer = (PomodoroTimer) command.context;
             
             // Create media capture object
             MediaCapture mediaCapture = new GameObject("MediaCapture").AddComponent<MediaCapture>();
             
-            // Chain screenshot queue
-            // TODO: Create a queue system
-            TakeSetupScreenshot(mediaCapture, () =>
+            // Chain screenshot scenarios
+            ScreenshotScenarios.Enqueue(() => TakeSetupScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeRunningScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeCompletedScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeBreakScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeSidebarScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeSelectionSetupScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeSettingScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeAboutScreenshot(mediaCapture));
+            ScreenshotScenarios.Enqueue(() => TakeRunningPopupScreenshot(mediaCapture));
+
+            // Begin media capture
+            MoveToNextScreenshotScenario();
+        }
+
+        private static void MoveToNextScreenshotScenario()
+        {
+            if (ScreenshotScenarios.Count > 0)
             {
-                TakeRunningScreenshot(mediaCapture, () =>
-                {
-                    TakeCompletedScreenshot(mediaCapture, (() =>
-                    {
-                        TakeBreakScreenshot(mediaCapture, () =>
-                        {
-                            TakeSidebarScreenshot(mediaCapture, () =>
-                            {
-                                TakeSelectionSetupScreenshot(mediaCapture, () =>
-                                {
-                                    TakeSettingScreenshot(mediaCapture, () =>
-                                    {
-                                        TakeAboutScreenshot(mediaCapture, () =>
-                                        {
-                                            TakeRunningPopupScreenshot(mediaCapture, MediaCleanup);
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    }));
-                });
-            });
-        }
-        
-        private static void MediaCleanup()
-        {
-            
-        }
-        
-        private static void TakeSetupScreenshot(MediaCapture mediaCapture, Action nextAction)
-        {
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_0.png", nextAction);
+                ScreenshotScenarios.Dequeue().Invoke();
+            }
+            else
+            {
+                Debug.Log("Media Creation Complete");
+                _timer.Restart(false);
+                _timer.GetCurrentConfirmationDialog().Close();
+            }
         }
 
-        private static void TakeRunningScreenshot(MediaCapture mediaCapture, Action nextAction)
+        private static void TakeSetupScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.HideCreditsBubble();
-            m_timer.SwitchState(PomodoroTimer.States.RUNNING);
-            m_timer.ShowEndTimestampBubble();
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_0.png", MoveToNextScreenshotScenario);
+        }
+
+        private static void TakeRunningScreenshot(MediaCapture mediaCapture)
+        {
+            _timer.HideCreditsBubble();
+            _timer.SwitchState(PomodoroTimer.States.RUNNING);
+            _timer.ShowEndTimestampBubble();
             TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
             TimeSpan subSpan = new TimeSpan(0,0,3,12,0);
             timeSpan = timeSpan.Subtract(subSpan);
-            m_timer.SetCurrentTime((float)timeSpan.TotalSeconds);
+            _timer.SetCurrentTime((float)timeSpan.TotalSeconds);
 
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_1.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_1.png", MoveToNextScreenshotScenario);
         }
 
-        private static void TakeCompletedScreenshot(MediaCapture mediaCapture, Action nextAction)
+        private static void TakeCompletedScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.SwitchState(PomodoroTimer.States.COMPLETE);
-            m_timer.DisableCompletionAnimation();
+            _timer.SwitchState(PomodoroTimer.States.COMPLETE);
+            _timer.DisableCompletionAnimation();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_2.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_2.png", MoveToNextScreenshotScenario);
         }
 
-        private static void TakeBreakScreenshot(MediaCapture mediaCapture, Action nextAction)
+        private static void TakeBreakScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.SwitchTimer(true);
-            m_timer.EnableBreakSlider();
-            m_timer.SwitchState(PomodoroTimer.States.SETUP);
+            _timer.SwitchTimer(true);
+            _timer.EnableBreakSlider();
+            _timer.SwitchState(PomodoroTimer.States.SETUP);
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_3.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_3.png", MoveToNextScreenshotScenario);
         }
 
-        private static void TakeSidebarScreenshot(MediaCapture mediaCapture, Action nextAction)
+        private static void TakeSidebarScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.SwitchTimer(false);
-            m_timer.DisableBreakSlider();
-            m_timer.SwitchState(PomodoroTimer.States.SETUP);
-            m_timer.ShowCreditsBubble();
-            m_timer.ShowSidebar();
+            _timer.SwitchTimer(false);
+            _timer.DisableBreakSlider();
+            _timer.SwitchState(PomodoroTimer.States.SETUP);
+            _timer.ShowCreditsBubble();
+            _timer.ShowSidebar();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_4.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_4.png", MoveToNextScreenshotScenario);
         }
 
-        private static void TakeSelectionSetupScreenshot(MediaCapture mediaCapture, 
-            Action nextAction)
+        private static void TakeSelectionSetupScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.HideCreditsBubble();
-            m_timer.HideSidebar();
-            m_timer.SelectAll();
+            _timer.HideCreditsBubble();
+            _timer.HideSidebar();
+            _timer.SelectAll();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_5.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_5.png", MoveToNextScreenshotScenario);
         }
 
-        private static void TakeSettingScreenshot(MediaCapture mediaCapture, Action nextAction)
+        private static void TakeSettingScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.SetSelection(null); // Clear selection
-            m_timer.ShowSettings();
+            _timer.SetSelection(null); // Clear selection
+            _timer.ShowSettings();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_6.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_6.png", MoveToNextScreenshotScenario);
         }
 
-        private static void TakeAboutScreenshot(MediaCapture mediaCapture, Action nextAction)
+        private static void TakeAboutScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.ShowAbout();
-            m_timer.ShowCreditsBubble();
+            _timer.ShowAbout();
+            _timer.ShowCreditsBubble();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_7.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_7.png", MoveToNextScreenshotScenario);
         }
 
-        private static void TakeRunningPopupScreenshot(MediaCapture mediaCapture, 
-            Action nextAction)
+        private static void TakeRunningPopupScreenshot(MediaCapture mediaCapture)
         {
-            m_timer.ShowMainContent();
+            _timer.ShowMainContent();
             
-            m_timer.HideCreditsBubble();
-            m_timer.SwitchState(PomodoroTimer.States.RUNNING);
-            m_timer.ShowEndTimestampBubble();
+            _timer.HideCreditsBubble();
+            _timer.SwitchState(PomodoroTimer.States.RUNNING);
+            _timer.ShowEndTimestampBubble();
             TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
             TimeSpan subSpan = new TimeSpan(0,0,3,12,0);
             timeSpan = timeSpan.Subtract(subSpan);
-            m_timer.SetCurrentTime((float)timeSpan.TotalSeconds);
-            m_timer.SpawnConfirmationDialog(null);
-            m_timer.GetCurrentConfirmationDialog().Show();
+            _timer.SetCurrentTime((float)timeSpan.TotalSeconds);
+            _timer.SpawnConfirmationDialog(null);
+            _timer.GetCurrentConfirmationDialog().Show();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_8.png", nextAction);
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_8.png", MoveToNextScreenshotScenario);
         }
     }
 }
