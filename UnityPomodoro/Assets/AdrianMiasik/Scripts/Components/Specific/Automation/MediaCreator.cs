@@ -5,6 +5,14 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Automation
 {
+    /// <summary>
+    /// Generates and creates our promotional screenshots automatically (Previously this was done manually).
+    /// <remarks>Intended to be run for any new release so we can get the most up-to-date app media.</remarks>
+    /// <remarks>To use this tool: Make sure your editor game view window matches your desired screenshot resolution.
+    /// Then enter play mode. Once the timer spawn animation completes, right click the PomodoroTimer script in the
+    /// Inspector, and press "Create Media". This will start the screenshot scenarios and generate
+    /// screenshots for our release. See console log for output details.</remarks>
+    /// </summary>
     public class MediaCreator: MonoBehaviour
     {
         private static PomodoroTimer _timer;
