@@ -16,7 +16,9 @@ namespace AdrianMiasik.Components.Specific.Automation
     public class MediaCreator: MonoBehaviour
     {
         private static PomodoroTimer _timer;
-        private static readonly Queue<Action> ScreenshotScenarios = new Queue<Action>();
+        private static Queue<Action> _screenshotScenarios = new Queue<Action>();
+        private static Queue<Action> _ssCopy = new Queue<Action>(); // Intended to be used for dark mode capture
+        private static bool _hasDarkModeBeenCaptured;
 
         [MenuItem("CONTEXT/PomodoroTimer/Create Media")]
         private static void CreateMedia(MenuCommand command)
@@ -40,15 +42,18 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.SetToLightMode();
             
             // Chain screenshot scenarios
-            ScreenshotScenarios.Enqueue(() => TakeSetupScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeRunningScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeCompletedScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeBreakScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeSidebarScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeSelectionSetupScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeSettingScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeAboutScreenshot(mediaCapture));
-            ScreenshotScenarios.Enqueue(() => TakeRunningPopupScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeSetupScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeRunningScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeCompletedScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeBreakScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeSidebarScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeSelectionSetupScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeSettingScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeAboutScreenshot(mediaCapture));
+            _screenshotScenarios.Enqueue(() => TakeRunningPopupScreenshot(mediaCapture));
+            
+            // Cache queue for 2nd pass intended for dark mode screenshots
+            _ssCopy = new Queue<Action>(_screenshotScenarios);
 
             // Begin media capture
             MoveToNextScreenshotScenario();
@@ -56,15 +61,36 @@ namespace AdrianMiasik.Components.Specific.Automation
 
         private static void MoveToNextScreenshotScenario()
         {
-            if (ScreenshotScenarios.Count > 0)
+            if (_screenshotScenarios.Count > 0)
             {
-                ScreenshotScenarios.Dequeue().Invoke();
+                _screenshotScenarios.Dequeue().Invoke();
             }
             else
             {
-                _timer.Restart(false);
-                _timer.GetCurrentConfirmationDialog().Close();
-                Debug.Log("Media Creation Complete!");
+                if (!_hasDarkModeBeenCaptured)
+                {
+                    // Dirty flag
+                    _hasDarkModeBeenCaptured = true;
+
+                    // Clean up
+                    _timer.SwitchState(PomodoroTimer.States.SETUP);
+                    _timer.GetCurrentConfirmationDialog().Close();
+                    
+                    // Moved cached copy back into our scenarios
+                    _screenshotScenarios = _ssCopy;
+                    
+                    // Swap theme
+                    _timer.SetToDarkMode();
+                    
+                    // Begin media capture for dark mode
+                    _screenshotScenarios.Dequeue().Invoke();
+                }
+                else
+                {
+                    _timer.Restart(false);
+                    _timer.GetCurrentConfirmationDialog().Close();
+                    Debug.Log("Media Creation Complete!");
+                }
             }
         }
 
