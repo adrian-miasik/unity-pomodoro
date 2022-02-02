@@ -1388,7 +1388,7 @@ namespace AdrianMiasik.Components
         {
             currentTime = currentTimeInSeconds;
             m_digitFormat.CorrectTickAnimVisuals();
-            Tick();
+            m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime));
         }
 
         public void HideCreditsBubble()
@@ -1433,6 +1433,16 @@ namespace AdrianMiasik.Components
         {
             m_sidebarMenu.gameObject.SetActive(false);
             m_sidebarMenu.HideOverlay();
+        }
+
+        public void EnableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToEnable();
+        }
+
+        public void DisableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToDisable();
         }
     }
 }

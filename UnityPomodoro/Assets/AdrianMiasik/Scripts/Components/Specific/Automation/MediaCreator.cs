@@ -19,6 +19,7 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static Queue<Action> _screenshotScenarios = new Queue<Action>();
         private static Queue<Action> _ssCopy = new Queue<Action>(); // Intended to be used for dark mode capture
         private static bool _hasDarkModeBeenCaptured;
+        private static int screenshotIndex;
 
         [MenuItem("CONTEXT/PomodoroTimer/Create Media")]
         private static void CreateMedia(MenuCommand command)
@@ -32,15 +33,20 @@ namespace AdrianMiasik.Components.Specific.Automation
                 return;
             }
             
+            // Clear
+            screenshotIndex = 0;
+            _hasDarkModeBeenCaptured = false;
+            
             // Get reference
             _timer = (PomodoroTimer) command.context;
             
             // Create media capture object
             MediaCapture mediaCapture = new GameObject("MediaCapture").AddComponent<MediaCapture>();
-            
+
             // Setup theme
             _timer.SetToLightMode();
-            
+            _timer.DisableDarkModeToggle();
+
             // Chain screenshot scenarios
             _screenshotScenarios.Enqueue(() => TakeSetupScreenshot(mediaCapture));
             _screenshotScenarios.Enqueue(() => TakeRunningScreenshot(mediaCapture));
@@ -64,6 +70,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             if (_screenshotScenarios.Count > 0)
             {
                 _screenshotScenarios.Dequeue().Invoke();
+                screenshotIndex++;
             }
             else
             {
@@ -74,6 +81,8 @@ namespace AdrianMiasik.Components.Specific.Automation
 
                     // Clean up
                     _timer.SwitchState(PomodoroTimer.States.SETUP);
+                    TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
+                    _timer.SetCurrentTime((float)timeSpan.TotalSeconds);
                     _timer.GetCurrentConfirmationDialog().Close();
                     
                     // Moved cached copy back into our scenarios
@@ -81,9 +90,10 @@ namespace AdrianMiasik.Components.Specific.Automation
                     
                     // Swap theme
                     _timer.SetToDarkMode();
+                    _timer.EnableDarkModeToggle();
                     
                     // Begin media capture for dark mode
-                    _screenshotScenarios.Dequeue().Invoke();
+                    MoveToNextScreenshotScenario();
                 }
                 else
                 {
@@ -94,9 +104,15 @@ namespace AdrianMiasik.Components.Specific.Automation
             }
         }
 
+        private static void CaptureScreenshot(MediaCapture mediaCapture)
+        {
+            mediaCapture.CaptureScreenshot("../promotional/screenshot_" + screenshotIndex + ".png", 
+                MoveToNextScreenshotScenario);
+        }
+        
         private static void TakeSetupScreenshot(MediaCapture mediaCapture)
         {
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_0.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeRunningScreenshot(MediaCapture mediaCapture)
@@ -109,7 +125,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             timeSpan = timeSpan.Subtract(subSpan);
             _timer.SetCurrentTime((float)timeSpan.TotalSeconds);
 
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_1.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeCompletedScreenshot(MediaCapture mediaCapture)
@@ -117,7 +133,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.SwitchState(PomodoroTimer.States.COMPLETE);
             _timer.DisableCompletionAnimation();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_2.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeBreakScreenshot(MediaCapture mediaCapture)
@@ -126,7 +142,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.EnableBreakSlider();
             _timer.SwitchState(PomodoroTimer.States.SETUP);
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_3.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeSidebarScreenshot(MediaCapture mediaCapture)
@@ -137,7 +153,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.ShowCreditsBubble();
             _timer.ShowSidebar();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_4.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeSelectionSetupScreenshot(MediaCapture mediaCapture)
@@ -146,7 +162,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.HideSidebar();
             _timer.SelectAll();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_5.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeSettingScreenshot(MediaCapture mediaCapture)
@@ -154,7 +170,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.SetSelection(null); // Clear selection
             _timer.ShowSettings();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_6.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeAboutScreenshot(MediaCapture mediaCapture)
@@ -162,7 +178,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.ShowAbout();
             _timer.ShowCreditsBubble();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_7.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeRunningPopupScreenshot(MediaCapture mediaCapture)
@@ -179,7 +195,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             _timer.SpawnConfirmationDialog(null);
             _timer.GetCurrentConfirmationDialog().Show();
             
-            mediaCapture.CaptureScreenshot("../promotional/screenshot_8.png", MoveToNextScreenshotScenario);
+            CaptureScreenshot(mediaCapture);
         }
     }
 }
