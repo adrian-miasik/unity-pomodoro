@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using AdrianMiasik.Components.Base;
 using UnityEditor;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Specific
+namespace AdrianMiasik.Components.Specific.Automation
 {
     public class MediaCreator: MonoBehaviour
     {
@@ -52,9 +51,9 @@ namespace AdrianMiasik.Components.Specific
             }
             else
             {
-                Debug.Log("Media Creation Complete");
                 _timer.Restart(false);
                 _timer.GetCurrentConfirmationDialog().Close();
+                Debug.Log("Media Creation Complete!");
             }
         }
 

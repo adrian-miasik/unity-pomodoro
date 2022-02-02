@@ -1,17 +1,20 @@
 using System;
 using System.Collections;
-using AdrianMiasik.Components.Specific;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Base
+namespace AdrianMiasik.Components.Specific.Automation
 {
+    /// <summary>
+    /// A MonoBehaviour script that allows us to use coroutines from a static context.
+    /// Intended to be used with <see cref="MediaCreator"/>
+    /// </summary>
     public class MediaCapture : MonoBehaviour
     {
-        public static MediaCapture Instance;
+        private static MediaCapture _instance;
         
         private void Awake()
         {
-            Instance = this;
+            _instance = this;
         }
         
         IEnumerator TakeScreenshot(string filename, Action nextAction = null)
@@ -25,7 +28,7 @@ namespace AdrianMiasik.Components.Base
 
         public void CaptureScreenshot(string filename, Action nextAction)
         {
-            Instance.StartCoroutine(TakeScreenshot(filename, nextAction));
+            _instance.StartCoroutine(TakeScreenshot(filename, nextAction));
         }
     }
 }
