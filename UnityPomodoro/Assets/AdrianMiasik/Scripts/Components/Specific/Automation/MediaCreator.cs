@@ -36,6 +36,9 @@ namespace AdrianMiasik.Components.Specific.Automation
             // Create media capture object
             MediaCapture mediaCapture = new GameObject("MediaCapture").AddComponent<MediaCapture>();
             
+            // Setup theme
+            _timer.SetToLightMode();
+            
             // Chain screenshot scenarios
             ScreenshotScenarios.Enqueue(() => TakeSetupScreenshot(mediaCapture));
             ScreenshotScenarios.Enqueue(() => TakeRunningScreenshot(mediaCapture));
