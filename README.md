@@ -122,6 +122,7 @@ For personal business related inquires / proposals:
 `business-line-76240@adrian-miasik.com`
 
 ## Legal
+This project is not sponsored by, authorized by, or affiliated with Unity Technologies or its affiliates.
 Copyrights and trademarks are the property of their respective owners.
 - Adrian Miasik Logo
 - Github Logo
