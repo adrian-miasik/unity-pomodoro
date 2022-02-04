@@ -69,16 +69,26 @@ namespace AdrianMiasik.Components.Specific
             }
         }
         
-        public void FadeOut()
+        public void FadeOut(bool instantly = false)
         {
             foreach (TMP_Text text in m_text)
             {
                 text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
-            state = FadeState.FADING_OUT;
+            
+            if (instantly)
+            {
+                state = FadeState.IDLE;
+                m_textContainer.alpha = 0;
+                m_backgroundContainer.alpha = 0;
+            }
+            else
+            {
+                state = FadeState.FADING_OUT;
+            }
         }
 
-        public void FadeIn()
+        public void FadeIn(bool instantly = false)
         {
             // Set sprite depending what the user will get prompted to do next
             if (Timer.IsOnBreak() || Timer.IsOnLongBreak())
@@ -94,7 +104,17 @@ namespace AdrianMiasik.Components.Specific
             {
                 text.color = Timer.GetTheme().GetCurrentColorScheme().m_foreground;
             }
-            state = FadeState.FADING_IN;
+
+            if (instantly)
+            {
+                state = FadeState.IDLE;
+                m_textContainer.alpha = 1;
+                m_backgroundContainer.alpha = 1;
+            }
+            else
+            {
+                state = FadeState.FADING_IN;
+            }
         }
 
         public override void ColorUpdate(Theme theme)

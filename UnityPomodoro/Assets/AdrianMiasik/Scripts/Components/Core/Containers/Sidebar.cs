@@ -115,8 +115,8 @@ namespace AdrianMiasik.Components.Core.Containers
                 }
             }
         }
-        
-        private float CalculateSidebarWidth()
+
+        public float CalculateSidebarWidth()
         {
             float scalar = (float)Screen.height / Screen.width;
             float desiredWidth = Mathf.Clamp(0.5f * scalar, 0, 0.75f);
@@ -271,6 +271,19 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 external.color = theme.GetCurrentColorScheme().m_foreground;
             }
+        }
+
+        public void ShowOverlay()
+        {
+            m_overlayImage.enabled = true;
+            m_overlayGroup.alpha = 1;
+            ColorUpdate(Timer.GetTheme());
+        }
+
+        public void HideOverlay()
+        {
+            m_overlayImage.enabled = false;
+            m_overlayGroup.alpha = 0;
         }
     }
 }

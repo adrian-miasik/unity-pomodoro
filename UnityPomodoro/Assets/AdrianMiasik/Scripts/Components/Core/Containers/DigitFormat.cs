@@ -669,6 +669,7 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             foreach (DoubleDigit digit in generatedDigits)
             {
+                digit.HideTickAnimation();
                 digit.ResetTextPosition();
             }
         }
@@ -889,6 +890,14 @@ namespace AdrianMiasik.Components.Core.Containers
         public void DeactivateLongBreak()
         {
             m_isOnLongBreak = false;
+        }
+
+        public void HideArrows()
+        {
+            foreach (DoubleDigit digit in generatedDigits)
+            {
+                digit.HideArrows();
+            }
         }
     }
  }

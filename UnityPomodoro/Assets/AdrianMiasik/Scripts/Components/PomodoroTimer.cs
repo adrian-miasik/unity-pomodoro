@@ -89,17 +89,22 @@ namespace AdrianMiasik.Components
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
         [SerializeField] private AnimationCurve m_ringTickWidth;
+
+        /// <summary>
+        /// A <see cref="UnityEvent"/> that gets invoked when the spawn animation is complete.
+        /// </summary>
+        [Header("Unity Events")]
+        public UnityEvent m_onSpawnCompletion;
         
         /// <summary>
         /// A <see cref="UnityEvent"/> that gets invoked when the ring / timer alarm pulses.
         /// </summary>
-        [Header("Unity Events")]
         public UnityEvent m_onRingPulse;
         
         /// <summary>
         /// A <see cref="UnityEvent"/> that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>)
         /// </summary>
-        public UnityEvent m_onTimerCompletion; // Invoked when the timer finishes
+        public UnityEvent m_onTimerCompletion;
 
         [Header("Cache")]
         [SerializeField] private List<DoubleDigit> m_selectedDigits = new List<DoubleDigit>(); // Contains our currently selected digits
@@ -139,6 +144,7 @@ namespace AdrianMiasik.Components
         private bool isCurrentDialogInterruptible = true;
         
         // Pulse Ring Complete Animation
+        private bool disableCompletionAnimation;
         private float accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
         
@@ -277,7 +283,7 @@ namespace AdrianMiasik.Components
         /// Basically handles our transitions between timer states. <see cref="PomodoroTimer.States"/>
         /// </summary>
         /// <param name="desiredState">The state you want to transition to</param>
-        private void SwitchState(States desiredState)
+        public void SwitchState(States desiredState)
         {
             m_state = desiredState;
 
@@ -456,6 +462,8 @@ namespace AdrianMiasik.Components
                 {
                     m_ring.fillAmount = 1;
                     m_animateRingProgress = false;
+                    
+                    m_onSpawnCompletion?.Invoke();
                 }
             }
             
@@ -470,6 +478,10 @@ namespace AdrianMiasik.Components
                     break;
 
                 case States.COMPLETE:
+                    if (disableCompletionAnimation)
+                    {
+                        return;
+                    }
                     AnimateRingPulse();
                     break;
             }
@@ -769,7 +781,7 @@ namespace AdrianMiasik.Components
             }
         }
         
-        private void SwitchTimer(bool isOnBreak)
+        public void SwitchTimer(bool isOnBreak)
         {
             m_digitFormat.m_isOnBreak = isOnBreak;
             SwitchState(States.SETUP);
@@ -1006,7 +1018,7 @@ namespace AdrianMiasik.Components
             
             m_digitFormat.SetTimerValue(timeString);
         }
-        
+
         /// <summary>
         /// Sets our background's selection navigation to the provided <see cref="Navigation"/>.
         /// <remarks>Intended to change focus to our digits when attempting to select left / right
@@ -1276,6 +1288,11 @@ namespace AdrianMiasik.Components
             isCurrentDialogInterruptible = interruptible;
             currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
         }
+
+        public ConfirmationDialog GetCurrentConfirmationDialog()
+        {
+            return currentDialogPopup;
+        }
         
         /// <summary>
         /// Is our current <see cref="ConfirmationDialog"/> interruptible by our timer?
@@ -1365,6 +1382,67 @@ namespace AdrianMiasik.Components
         public bool HasTomatoProgression()
         {
             return m_tomatoCounter.HasProgression() || m_digitFormat.m_isOnLongBreak;
+        }
+
+        public void SetCurrentTime(float currentTimeInSeconds)
+        {
+            currentTime = currentTimeInSeconds;
+            m_digitFormat.CorrectTickAnimVisuals();
+            m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime));
+        }
+
+        public void HideCreditsBubble()
+        {
+            m_creditsBubble.FadeOut(true);
+        }
+
+        public void ShowCreditsBubble()
+        {
+            m_creditsBubble.FadeIn(true);
+        }
+
+        public void ShowEndTimestampBubble()
+        {
+            m_endTimestampBubble.FadeIn(true);
+        }
+
+        public void DisableCompletionAnimation()
+        {
+            m_completionLabel.HideCompletionAnimation();
+            disableCompletionAnimation = true;
+        }
+
+        public void EnableBreakSlider()
+        {
+            m_breakSlider.SetVisualToEnable();
+        }
+        
+        public void ShowSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(true);
+            ConformCreditsBubbleToSidebar(m_sidebarMenu.CalculateSidebarWidth());
+            m_sidebarMenu.ShowOverlay();
+        }
+
+        public void DisableBreakSlider()
+        {
+            m_breakSlider.SetVisualToDisable();
+        }
+
+        public void HideSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(false);
+            m_sidebarMenu.HideOverlay();
+        }
+
+        public void EnableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToEnable();
+        }
+
+        public void DisableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToDisable();
         }
     }
 }

@@ -58,7 +58,6 @@ namespace AdrianMiasik.Components.Base
         {
             if (Initialized)
             {
-                Debug.Log("Theme element is being deregistered.");
                 Timer.GetTheme().Deregister(this);
             }
         }

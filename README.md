@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <img src="promotional/unity-pomodoro-showcase-longbreak.gif">
+  <img src="promotional/release-showcase.gif" width="720">
 </p>
 
 ## About
@@ -64,35 +64,36 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Media
-<img src="promotional/release-banner.png" width="720">
-<img src="promotional/release-showcase.gif" width="720">
+<img src="promotional/release-banner.png" width="640">
 <img width="640" alt="unity-pomodoro-release-banner-1.6.0" src="https://user-images.githubusercontent.com/12757380/147377998-ea19460b-5ea7-48cb-85bf-a3eabcda0975.gif">
 
-### Screenshots & Mocks
+### Screenshots
 #### Light
 <p>
 <img src="sources/design/mocks/light-color-scheme.png" width="200">
-<img src="sources/design/mocks/light-menu.png" width="200">
-<img src="sources/design/mocks/light-mode-one.png" width="200">
-<img src="sources/design/mocks/light-running.png" width="200">
-<img src="sources/design/mocks/light-complete.png" width="200">
-<img src="sources/design/mocks/light-mode-two.png" width="200">
-<img src="sources/design/mocks/light-edit.png" width="200">
-<img src="sources/design/mocks/light-settings.png" width="200">
-<img src="sources/design/mocks/light-about.png" width="200">
+<img src="promotional/screenshot-0.png" width="200">
+<img src="promotional/screenshot-1.png" width="200">
+<img src="promotional/screenshot-2.png" width="200">
+<img src="promotional/screenshot-3.png" width="200">
+<img src="promotional/screenshot-4.png" width="200">
+<img src="promotional/screenshot-5.png" width="200">
+<img src="promotional/screenshot-6.png" width="200">
+<img src="promotional/screenshot-7.png" width="200">
+<img src="promotional/screenshot-8.png" width="200">
 </p>
 
 #### Dark
 <p>
 <img src="sources/design/mocks/dark-color-scheme.png" width="200">
-<img src="sources/design/mocks/dark-menu.png" width="200">
-<img src="sources/design/mocks/dark-mode-one.png" width="200">
-<img src="sources/design/mocks/dark-running.png" width="200">
-<img src="sources/design/mocks/dark-complete.png" width="200">
-<img src="sources/design/mocks/dark-mode-two.png" width="200">
-<img src="sources/design/mocks/dark-edit.png" width="200">
-<img src="sources/design/mocks/dark-settings.png" width="200">
-<img src="sources/design/mocks/dark-about.png" width="200">
+<img src="promotional/screenshot-9.png" width="200">
+<img src="promotional/screenshot-10.png" width="200">
+<img src="promotional/screenshot-11.png" width="200">
+<img src="promotional/screenshot-12.png" width="200">
+<img src="promotional/screenshot-13.png" width="200">
+<img src="promotional/screenshot-14.png" width="200">
+<img src="promotional/screenshot-15.png" width="200">
+<img src="promotional/screenshot-16.png" width="200">
+<img src="promotional/screenshot-17.png" width="200">
 </p>
 
 ## Author Notes
@@ -121,6 +122,8 @@ For personal business related inquires / proposals:
 `business-line-76240@adrian-miasik.com`
 
 ## Legal
+This project is not sponsored by, authorized by, or affiliated with Unity Technologies or its affiliates.
+
 Copyrights and trademarks are the property of their respective owners.
 - Adrian Miasik Logo
 - Github Logo

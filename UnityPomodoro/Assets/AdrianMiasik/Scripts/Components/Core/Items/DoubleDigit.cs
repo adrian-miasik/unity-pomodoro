@@ -222,13 +222,9 @@ namespace AdrianMiasik.Components.Core.Items
             m_tick.Play();
         }
 
-        /// <summary>
-        /// Is our tick animation currently being played?
-        /// </summary>
-        /// <returns></returns>
-        public bool IsTickAnimationPlaying()
+        public void HideTickAnimation()
         {
-            return m_tick.isPlaying;
+            m_tick.enabled = false;
         }
 
         /// <summary>
