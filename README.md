@@ -70,7 +70,7 @@ Want to help? If you're interested in contributing to the project, please see th
 ### Screenshots
 #### Light
 <p>
-<img src="sources/design/mocks/light-color-scheme.png" width="200">
+<img src="sources/design/light-color-scheme.png" width="200">
 <img src="promotional/screenshot-0.png" width="200">
 <img src="promotional/screenshot-1.png" width="200">
 <img src="promotional/screenshot-2.png" width="200">
@@ -84,7 +84,7 @@ Want to help? If you're interested in contributing to the project, please see th
 
 #### Dark
 <p>
-<img src="sources/design/mocks/dark-color-scheme.png" width="200">
+<img src="sources/design/dark-color-scheme.png" width="200">
 <img src="promotional/screenshot-9.png" width="200">
 <img src="promotional/screenshot-10.png" width="200">
 <img src="promotional/screenshot-11.png" width="200">
