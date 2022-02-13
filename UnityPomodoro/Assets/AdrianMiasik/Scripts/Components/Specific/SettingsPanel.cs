@@ -19,8 +19,8 @@ namespace AdrianMiasik.Components.Specific
         
         [SerializeField] private DigitFormatDropdown m_digitFormatDropdown;
         [SerializeField] private LongBreakSetting m_longBreakSetting;
-        [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
         [FormerlySerializedAs("m_muteSoundOutOfFocusBoolean")] [SerializeField] private ToggleSlider m_muteSoundOutOfFocusToggle;
+        [SerializeField] private SetPomodoroCountDropdown m_pomodoroDropdown;
         
         private bool isOpen;
 
@@ -36,15 +36,16 @@ namespace AdrianMiasik.Components.Specific
             
             // Init
             m_digitFormatDropdown.Initialize(Timer);
-            m_longBreakSetting.Initialize(pomodoroTimer, settingsConfig);
+            m_longBreakSetting.Initialize(Timer, settingsConfig);
             // Hide mute option based on platform (Shown by default)
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
 #elif UNITY_IOS
             HideMuteSoundOutOfFocusOption();
 #else
-            m_muteSoundOutOfFocusToggle.Initialize(pomodoroTimer, settingsConfig.m_muteSoundWhenOutOfFocus);
+            m_muteSoundOutOfFocusToggle.Initialize(Timer, settingsConfig.m_muteSoundWhenOutOfFocus);
 #endif
+            m_pomodoroDropdown.Initialize(Timer);
         }
         
         /// <summary>
@@ -59,7 +60,6 @@ namespace AdrianMiasik.Components.Specific
                 
                 m_digitFormatDropdown.ColorUpdate(Timer.GetTheme());
                 
-                m_muteSoundOutOfFocusLabel.color = theme.GetCurrentColorScheme().m_foreground;
                 m_muteSoundOutOfFocusToggle.ColorUpdate(theme);
             }
         }
@@ -117,7 +117,6 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         public void ShowMuteSoundOutOfFocusOption()
         {
-            m_muteSoundOutOfFocusLabel.gameObject.SetActive(true);
             m_muteSoundOutOfFocusToggle.gameObject.SetActive(true);
         }
         
@@ -127,7 +126,6 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         public void HideMuteSoundOutOfFocusOption()
         {
-            m_muteSoundOutOfFocusLabel.gameObject.SetActive(false);
             m_muteSoundOutOfFocusToggle.gameObject.SetActive(false);
         }
     }

@@ -17,10 +17,10 @@ namespace AdrianMiasik.Components.Core.Containers
     {
         [SerializeField] private HorizontalLayoutGroup m_horizontal;
         [SerializeField] private GameObject m_trashcan;
-            
         [SerializeField] private List<Tomato> m_tomatoes = new List<Tomato>();
+        [SerializeField] private Tomato m_tomatoPrefab;
         private int nextFilledTomatoIndex;
-        
+
         /// <summary>
         /// Setups up our tomatoes and determines trashcan visibility (based on progression).
         /// </summary>
@@ -114,6 +114,34 @@ namespace AdrianMiasik.Components.Core.Containers
         public bool HasProgression()
         {
             return nextFilledTomatoIndex > 0;
+        }
+
+        public void SetPomodoroCount(int desiredPomodoroCount)
+        {
+            // Preserve trashcan, it lives on the last tomato.
+            m_trashcan.transform.SetParent(m_horizontal.transform);
+            m_trashcan.gameObject.SetActive(false);
+
+            // Dispose of tomatoes
+            foreach (Tomato t in m_tomatoes)
+            {
+                Destroy(t.gameObject);
+            }
+
+            m_tomatoes.Clear();
+
+            // Create new tomatoes
+            for (int i = 0; i < desiredPomodoroCount; i++)
+            {
+                m_tomatoes.Add(Instantiate(m_tomatoPrefab, m_horizontal.transform));
+            }
+
+            // Re-attach trashcan
+            m_trashcan.transform.SetParent(m_tomatoes[m_tomatoes.Count - 1].transform);
+            m_trashcan.gameObject.SetActive(true);
+
+            // Re-init to calculate
+            Initialize(Timer);
         }
     }
 }

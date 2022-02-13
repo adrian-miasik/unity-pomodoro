@@ -1030,6 +1030,7 @@ namespace AdrianMiasik.Components
             m_background.SetSelectionNavigation(backgroundNav);
         }
 
+        // TODO: move to DigitFormatDropdown.cs
         /// <summary>
         /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog
         /// if necessary. See <see cref="DigitFormat.SupportedFormats"/>.
@@ -1443,6 +1444,11 @@ namespace AdrianMiasik.Components
         public void DisableDarkModeToggle()
         {
             m_themeSlider.SetVisualToDisable();
+        }
+
+        public void SetPomodoroCount(int i)
+        {
+            m_tomatoCounter.SetPomodoroCount(i);
         }
     }
 }
