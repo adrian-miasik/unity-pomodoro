@@ -40,8 +40,30 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="i"></param>
         public void SetPomodoroCount(Int32 i)
         {
-            Debug.Log(i + 1); // Dependant on our dropdown options.
-            Timer.SetPomodoroCount(i + 1);
+            int desiredCount = i + 1; // Dependant on our dropdown options.
+
+            if (Timer.HasTomatoProgression())
+            {
+                Debug.Log("Progress: " + Timer.GetTomatoProgress() + " and Desired Value: " + desiredCount);
+                
+                // If the new count removes/truncates potential progress...
+                if (Timer.GetTomatoProgress() > desiredCount)
+                {
+                    Debug.Log("TODO: Prompt for pomodoro progress loss");
+                    // Set to new count and remove additional progress
+                    Timer.SetPomodoroCount(desiredCount, desiredCount);
+                }
+                else
+                {
+                    // New count number is higher than our progress
+                    Timer.SetPomodoroCount(desiredCount, Timer.GetTomatoProgress());
+                }
+            }
+            else
+            {
+                // No progress
+                Timer.SetPomodoroCount(desiredCount, 0);
+            }
         }
     }
 }

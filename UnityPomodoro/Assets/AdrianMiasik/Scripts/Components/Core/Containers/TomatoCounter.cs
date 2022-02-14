@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core.Helpers;
 using AdrianMiasik.Components.Core.Items;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,10 +16,11 @@ namespace AdrianMiasik.Components.Core.Containers
     {
         [SerializeField] private HorizontalLayoutGroup m_horizontal;
         [SerializeField] private GameObject m_trashcan;
-        [SerializeField] private List<Tomato> m_tomatoes = new List<Tomato>();
+        [SerializeField] private List<Tomato> m_uncompletedTomatoes = new List<Tomato>();
         [SerializeField] private Tomato m_tomatoPrefab;
-        private int nextFilledTomatoIndex;
 
+        private List<Tomato> completedTomatoes = new List<Tomato>();
+ 
         /// <summary>
         /// Setups up our tomatoes and determines trashcan visibility (based on progression).
         /// </summary>
@@ -28,21 +28,21 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="updateColors"></param>
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            foreach (Tomato tomato in m_tomatoes)
+            foreach (Tomato tomato in m_uncompletedTomatoes)
             {
                 tomato.Initialize(pomodoroTimer, updateColors);
             }
             
             base.Initialize(pomodoroTimer, updateColors);
             
-            nextFilledTomatoIndex = 0;
+            completedTomatoes.Clear();
             DetermineTrashcanVisibility();
         }
         
         private void DetermineTrashcanVisibility()
         {
-            // Only show if user has more than one tomato or has unlocked long break
-            m_trashcan.gameObject.SetActive(nextFilledTomatoIndex > 0 || Timer.IsOnLongBreak());
+            // Only show if user has more than one tomato
+            m_trashcan.gameObject.SetActive(completedTomatoes.Count > 0);
         }
         
         /// <summary>
@@ -50,20 +50,13 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void FillTomato()
         {
-            // If the user has already unlocked the long break...
-            if (Timer.IsOnLongBreak())
-            {
-                return;
-            }
-            
-            m_tomatoes[nextFilledTomatoIndex].Complete();
-
-            // Increment / wrap new tomato index
-            nextFilledTomatoIndex++;
-            nextFilledTomatoIndex = CollectionHelper.Wrap(nextFilledTomatoIndex, m_tomatoes.Count);
+            Tomato tomatoToFill = m_uncompletedTomatoes[0];
+            m_uncompletedTomatoes.RemoveAt(0);
+            completedTomatoes.Add(tomatoToFill);
+            tomatoToFill.Complete();
             
             // Check for completion
-            if (nextFilledTomatoIndex == 0)
+            if (m_uncompletedTomatoes.Count == 0)
             {
                 Timer.ActivateLongBreak();
             }
@@ -86,12 +79,18 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void ConsumeTomatoes()
         {
-            foreach (Tomato tomato in m_tomatoes)
+            // Move completed tomatoes back into the uncompleted tomatoes list in the correct order
+            for (int i = completedTomatoes.Count; i > 0; i--)
+            {
+                m_uncompletedTomatoes.Insert(0, completedTomatoes[i - 1]);
+            }
+            
+            foreach (Tomato tomato in m_uncompletedTomatoes)
             {
                 tomato.Reset();
             }
-
-            nextFilledTomatoIndex = 0;
+            
+            completedTomatoes.Clear();
             DetermineTrashcanVisibility();
         }
 
@@ -113,35 +112,47 @@ namespace AdrianMiasik.Components.Core.Containers
 
         public bool HasProgression()
         {
-            return nextFilledTomatoIndex > 0;
+            return completedTomatoes.Count > 0;
         }
 
-        public void SetPomodoroCount(int desiredPomodoroCount)
+        public void SetPomodoroCount(int desiredPomodoroCount, int pomodoroProgress)
         {
             // Preserve trashcan, it lives on the last tomato.
             m_trashcan.transform.SetParent(m_horizontal.transform);
-            m_trashcan.gameObject.SetActive(false);
 
             // Dispose of tomatoes
-            foreach (Tomato t in m_tomatoes)
+            foreach (Tomato t in m_uncompletedTomatoes)
             {
                 Destroy(t.gameObject);
             }
-
-            m_tomatoes.Clear();
+            m_uncompletedTomatoes.Clear();
+            foreach (Tomato t in completedTomatoes)
+            {
+                Destroy(t.gameObject);
+            }
+            completedTomatoes.Clear();
 
             // Create new tomatoes
             for (int i = 0; i < desiredPomodoroCount; i++)
             {
-                m_tomatoes.Add(Instantiate(m_tomatoPrefab, m_horizontal.transform));
+                m_uncompletedTomatoes.Add(Instantiate(m_tomatoPrefab, m_horizontal.transform));
             }
-
+            
             // Re-attach trashcan
-            m_trashcan.transform.SetParent(m_tomatoes[m_tomatoes.Count - 1].transform);
-            m_trashcan.gameObject.SetActive(true);
+            m_trashcan.transform.SetParent(m_uncompletedTomatoes[m_uncompletedTomatoes.Count - 1].transform);
 
-            // Re-init to calculate
+            // Re-init
             Initialize(Timer);
+
+            for (int i = 0; i < pomodoroProgress; i++)
+            {
+                FillTomato();
+            }
+        }
+
+        public int GetTomatoCount()
+        {
+            return completedTomatoes.Count;
         }
     }
 }

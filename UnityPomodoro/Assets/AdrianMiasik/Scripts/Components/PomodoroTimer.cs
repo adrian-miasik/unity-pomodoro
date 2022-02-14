@@ -523,7 +523,7 @@ namespace AdrianMiasik.Components
             
             // If timer completion was based on work/mode one timer
             // (We don't add tomatoes for breaks)
-            if (!IsOnBreak())
+            if (!IsOnBreak() && !IsOnLongBreak())
             {
                 if (m_settings.m_longBreaks)
                 {
@@ -1446,9 +1446,14 @@ namespace AdrianMiasik.Components
             m_themeSlider.SetVisualToDisable();
         }
 
-        public void SetPomodoroCount(int i)
+        public void SetPomodoroCount(int desiredPomodoroCount, int pomodoroProgress)
         {
-            m_tomatoCounter.SetPomodoroCount(i);
+            m_tomatoCounter.SetPomodoroCount(desiredPomodoroCount, pomodoroProgress);
+        }
+
+        public int GetTomatoProgress()
+        {
+            return m_tomatoCounter.GetTomatoCount();
         }
     }
 }
