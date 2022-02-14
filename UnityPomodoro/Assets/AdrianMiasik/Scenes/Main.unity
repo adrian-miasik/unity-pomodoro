@@ -2287,7 +2287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 19.067461
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3141,7 +3141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 19.067461
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6084,7 +6084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 19.067461
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -9477,7 +9477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 19.067461
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -12490,10 +12490,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: {fileID: 1916053762}
-  m_digitFormatDropdown: {fileID: 2127893485}
-  m_pomodoroDropdown: {fileID: 6456144761252582934}
-  m_longBreakSettingsOption: {fileID: 227557847}
-  m_muteSoundOutOfFocusToggle: {fileID: 1616257834193032480}
+  m_setDigitFormat: {fileID: 2127893485}
+  m_pomodoro: {fileID: 6456144761252582934}
+  m_setLongBreakSettingsOption: {fileID: 227557847}
+  m_setMuteSoundOutOfFocusToggle: {fileID: 1616257834193032480}
 --- !u!1 &2050840244
 GameObject:
   m_ObjectHideFlags: 0
@@ -14859,7 +14859,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.2400016, y: 0}
+  m_AnchoredPosition: {x: 1.2400017, y: 0}
   m_SizeDelta: {x: 2.479997, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6456144760229616190
@@ -15025,9 +15025,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6456144761252582934}
-        m_TargetAssemblyTypeName: AdrianMiasik.Components.Specific.SetPomodoroCountDropdown,
+        m_TargetAssemblyTypeName: AdrianMiasik.Components.Specific.Settings.SetPomodoroCount,
           Assembly-CSharp
-        m_MethodName: SetPomodoroCount
+        m_MethodName: SetPomodoroLongBreakCount
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16494,7 +16494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 2, y: 1}
-  m_AnchoredPosition: {x: 8.000006, y: 0}
+  m_AnchoredPosition: {x: 8.000007, y: 0}
   m_SizeDelta: {x: 0, y: -4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &7149234586048015815

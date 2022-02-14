@@ -2,7 +2,7 @@
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
-    public class MuteAudioOutOfFocus : SettingsOptionToggleSlider
+    public class SetMuteAudioOutOfFocus : SettingsOptionToggleSlider
     {
         /// <summary>
         /// Sets the users setting preference to mute the application when out of focus using the provided
