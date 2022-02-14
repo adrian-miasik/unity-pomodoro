@@ -150,9 +150,14 @@ namespace AdrianMiasik.Components.Core.Containers
             }
         }
 
-        public int GetTomatoCount()
+        public int GetTomatoProgress()
         {
             return completedTomatoes.Count;
+        }
+
+        public int GetTomatoCount()
+        {
+            return completedTomatoes.Count + m_uncompletedTomatoes.Count;
         }
     }
 }

@@ -22,6 +22,17 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private SVGImage m_arrow;
 
         /// <summary>
+        /// Set the dropdown selection to the provided index value.
+        /// </summary>
+        /// <param name="selectionValue"></param>
+        public void SetDropdownValue(int selectionValue)
+        {
+            // Set dropdown value to current digit format 
+            // Note: This will trigger an OnValueChanged invoke
+            m_dropdown.value = selectionValue;
+        }
+        
+        /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>
         /// <param name="theme">The theme to apply on our referenced components.</param>
@@ -44,14 +55,17 @@ namespace AdrianMiasik.Components.Specific
 
             if (Timer.HasTomatoProgression())
             {
-                Debug.Log("Progress: " + Timer.GetTomatoProgress() + " and Desired Value: " + desiredCount);
-                
                 // If the new count removes/truncates potential progress...
                 if (Timer.GetTomatoProgress() > desiredCount)
                 {
-                    Debug.Log("TODO: Prompt for pomodoro progress loss");
-                    // Set to new count and remove additional progress
-                    Timer.SetPomodoroCount(desiredCount, desiredCount);
+                    Timer.SpawnConfirmationDialog(() =>
+                    {
+                        // Set to new count and remove additional progress
+                        Timer.SetPomodoroCount(desiredCount, desiredCount);
+                    }, () =>
+                    {
+                        SetDropdownValue(Timer.GetTomatoCount() - 1);
+                    }, "This action will delete some of your pomodoro/tomato progress.");
                 }
                 else
                 {
