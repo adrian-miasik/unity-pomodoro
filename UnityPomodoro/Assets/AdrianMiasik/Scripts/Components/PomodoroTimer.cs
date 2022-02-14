@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Specific;
+using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
@@ -89,17 +91,22 @@ namespace AdrianMiasik.Components
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
         [SerializeField] private AnimationCurve m_ringTickWidth;
+
+        /// <summary>
+        /// A <see cref="UnityEvent"/> that gets invoked when the spawn animation is complete.
+        /// </summary>
+        [Header("Unity Events")]
+        public UnityEvent m_onSpawnCompletion;
         
         /// <summary>
         /// A <see cref="UnityEvent"/> that gets invoked when the ring / timer alarm pulses.
         /// </summary>
-        [Header("Unity Events")]
         public UnityEvent m_onRingPulse;
         
         /// <summary>
         /// A <see cref="UnityEvent"/> that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>)
         /// </summary>
-        public UnityEvent m_onTimerCompletion; // Invoked when the timer finishes
+        public UnityEvent m_onTimerCompletion;
 
         [Header("Cache")]
         [SerializeField] private List<DoubleDigit> m_selectedDigits = new List<DoubleDigit>(); // Contains our currently selected digits
@@ -139,6 +146,7 @@ namespace AdrianMiasik.Components
         private bool isCurrentDialogInterruptible = true;
         
         // Pulse Ring Complete Animation
+        private bool disableCompletionAnimation;
         private float accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
         
@@ -277,7 +285,7 @@ namespace AdrianMiasik.Components
         /// Basically handles our transitions between timer states. <see cref="PomodoroTimer.States"/>
         /// </summary>
         /// <param name="desiredState">The state you want to transition to</param>
-        private void SwitchState(States desiredState)
+        public void SwitchState(States desiredState)
         {
             m_state = desiredState;
 
@@ -456,6 +464,8 @@ namespace AdrianMiasik.Components
                 {
                     m_ring.fillAmount = 1;
                     m_animateRingProgress = false;
+                    
+                    m_onSpawnCompletion?.Invoke();
                 }
             }
             
@@ -470,6 +480,10 @@ namespace AdrianMiasik.Components
                     break;
 
                 case States.COMPLETE:
+                    if (disableCompletionAnimation)
+                    {
+                        return;
+                    }
                     AnimateRingPulse();
                     break;
             }
@@ -511,7 +525,7 @@ namespace AdrianMiasik.Components
             
             // If timer completion was based on work/mode one timer
             // (We don't add tomatoes for breaks)
-            if (!IsOnBreak())
+            if (!IsOnBreak() && !IsOnLongBreak() && m_state != States.SETUP)
             {
                 if (m_settings.m_longBreaks)
                 {
@@ -769,7 +783,7 @@ namespace AdrianMiasik.Components
             }
         }
         
-        private void SwitchTimer(bool isOnBreak)
+        public void SwitchTimer(bool isOnBreak)
         {
             m_digitFormat.m_isOnBreak = isOnBreak;
             SwitchState(States.SETUP);
@@ -1006,7 +1020,7 @@ namespace AdrianMiasik.Components
             
             m_digitFormat.SetTimerValue(timeString);
         }
-        
+
         /// <summary>
         /// Sets our background's selection navigation to the provided <see cref="Navigation"/>.
         /// <remarks>Intended to change focus to our digits when attempting to select left / right
@@ -1018,6 +1032,7 @@ namespace AdrianMiasik.Components
             m_background.SetSelectionNavigation(backgroundNav);
         }
 
+        // TODO: move to DigitFormatDropdown.cs
         /// <summary>
         /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog
         /// if necessary. See <see cref="DigitFormat.SupportedFormats"/>.
@@ -1195,19 +1210,6 @@ namespace AdrianMiasik.Components
         }
         
         /// <summary>
-        /// Sets the users setting preference to mute the application when out of focus using the provided
-        /// <see cref="bool"/>.
-        /// <remarks>Intended to be used as a UnityEvent. Otherwise you can directly do this
-        /// on the public property in the settings object.</remarks>
-        /// </summary>
-        /// <param name="state">Do you want to mute this application when it's out of focus?</param>
-        public void SetSettingMuteSoundWhenOutOfFocus(bool state = false)
-        {
-            // Change setting
-            m_settings.m_muteSoundWhenOutOfFocus = state;
-        }
-
-        /// <summary>
         /// Sets the users setting preference to enable/disable long breaks.
         /// </summary>
         /// <remarks>Intended to be used as a UnityEvent. Otherwise you can directly do this
@@ -1275,6 +1277,11 @@ namespace AdrianMiasik.Components
             currentDialogPopup = Instantiate(m_confirmationDialogPrefab, transform);
             isCurrentDialogInterruptible = interruptible;
             currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
+        }
+
+        public ConfirmationDialog GetCurrentConfirmationDialog()
+        {
+            return currentDialogPopup;
         }
         
         /// <summary>
@@ -1365,6 +1372,98 @@ namespace AdrianMiasik.Components
         public bool HasTomatoProgression()
         {
             return m_tomatoCounter.HasProgression() || m_digitFormat.m_isOnLongBreak;
+        }
+
+        public void SetCurrentTime(float currentTimeInSeconds)
+        {
+            currentTime = currentTimeInSeconds;
+            m_digitFormat.CorrectTickAnimVisuals();
+            m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime));
+        }
+
+        public void HideCreditsBubble()
+        {
+            m_creditsBubble.FadeOut(true);
+        }
+
+        public void ShowCreditsBubble()
+        {
+            m_creditsBubble.FadeIn(true);
+        }
+
+        public void ShowEndTimestampBubble()
+        {
+            m_endTimestampBubble.FadeIn(true);
+        }
+
+        public void DisableCompletionAnimation()
+        {
+            m_completionLabel.HideCompletionAnimation();
+            disableCompletionAnimation = true;
+        }
+
+        public void EnableBreakSlider()
+        {
+            m_breakSlider.SetVisualToEnable();
+        }
+        
+        public void ShowSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(true);
+            ConformCreditsBubbleToSidebar(m_sidebarMenu.CalculateSidebarWidth());
+            m_sidebarMenu.ShowOverlay();
+        }
+
+        public void DisableBreakSlider()
+        {
+            m_breakSlider.SetVisualToDisable();
+        }
+
+        public void HideSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(false);
+            m_sidebarMenu.HideOverlay();
+        }
+
+        public void EnableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToEnable();
+        }
+
+        public void DisableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToDisable();
+        }
+
+        public void SetPomodoroCount(int desiredPomodoroCount, int pomodoroProgress)
+        {
+            m_tomatoCounter.SetPomodoroCount(desiredPomodoroCount, pomodoroProgress);
+            
+            // Check if user achieved long break with new settings...
+            if (pomodoroProgress == desiredPomodoroCount)
+            {
+                // Trigger long break and rebuild.
+                ActivateLongBreak();
+                IfSetupTriggerRebuild();
+            }
+            // It's also possible our user is already in the long break state screen, and their new 
+            // numbers might not be valid. Check for this too...
+            else if (IsOnLongBreak() && m_state == States.SETUP)
+            {
+                // De-activate their long break since their pomodoro count changed / is no longer valid.
+                DeactivateLongBreak();
+                IfSetupTriggerRebuild();
+            }            
+        }
+
+        public int GetTomatoProgress()
+        {
+            return m_tomatoCounter.GetTomatoProgress();
+        }
+
+        public int GetTomatoCount()
+        {
+            return m_tomatoCounter.GetTomatoCount();
         }
     }
 }

@@ -82,5 +82,15 @@ namespace AdrianMiasik.Components.Specific
         {
             m_toggle.OnPointerClick(null);
         }
+
+        public void SetVisualToEnable()
+        {
+            m_toggle.SetVisualToEnable();
+        }
+
+        public void SetVisualToDisable()
+        {
+            m_toggle.SetVisualToDisable();
+        }
     }
 }
