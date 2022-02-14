@@ -5,15 +5,16 @@ using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components.Specific
+namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> dropdown with a label.
     /// Intended to be used for 'Set digit format' settings option. (See <see cref="SettingsPanel"/>)
     /// </summary>
-    public class DigitFormatDropdown : ThemeElement
+    public class SetDigitFormat : ThemeElement
     {
         [SerializeField] private TMP_Text m_label;
+        [SerializeField] private TMP_Text m_dropdownText;
         [SerializeField] private TMP_Dropdown m_dropdown;
         [SerializeField] private Image m_containerOutline;
         [SerializeField] private SVGImage m_arrow;
@@ -47,6 +48,7 @@ namespace AdrianMiasik.Components.Specific
         public override void ColorUpdate(Theme theme)
         {
             m_label.color = theme.GetCurrentColorScheme().m_foreground;
+            m_dropdownText.color = theme.GetCurrentColorScheme().m_foreground;
             m_dropdown.captionText.color = theme.GetCurrentColorScheme().m_foreground;
             m_containerOutline.color = theme.GetCurrentColorScheme().m_backgroundHighlight;
             m_arrow.color = theme.GetCurrentColorScheme().m_foreground;

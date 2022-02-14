@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -19,7 +20,7 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static Queue<Action> _screenshotScenarios = new Queue<Action>();
         private static Queue<Action> _ssCopy = new Queue<Action>(); // Intended to be used for dark mode capture
         private static bool _hasDarkModeBeenCaptured;
-        private static int screenshotIndex;
+        private static int _screenshotIndex;
 
         [MenuItem("CONTEXT/PomodoroTimer/Create Media")]
         private static void CreateMedia(MenuCommand command)
@@ -34,7 +35,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             }
             
             // Clear
-            screenshotIndex = 0;
+            _screenshotIndex = 0;
             _hasDarkModeBeenCaptured = false;
             
             // Get reference
@@ -70,7 +71,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             if (_screenshotScenarios.Count > 0)
             {
                 _screenshotScenarios.Dequeue().Invoke();
-                screenshotIndex++;
+                _screenshotIndex++;
             }
             else
             {
@@ -106,7 +107,7 @@ namespace AdrianMiasik.Components.Specific.Automation
 
         private static void CaptureScreenshot(MediaCapture mediaCapture)
         {
-            mediaCapture.CaptureScreenshot("../promotional/screenshot-" + screenshotIndex + ".png", 
+            mediaCapture.CaptureScreenshot("../promotional/screenshot-" + _screenshotIndex + ".png", 
                 MoveToNextScreenshotScenario);
         }
         
@@ -199,3 +200,4 @@ namespace AdrianMiasik.Components.Specific.Automation
         }
     }
 }
+#endif

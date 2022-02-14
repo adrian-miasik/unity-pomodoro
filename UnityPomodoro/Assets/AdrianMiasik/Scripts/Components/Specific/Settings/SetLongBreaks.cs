@@ -1,35 +1,21 @@
-using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
-using AdrianMiasik.ScriptableObjects;
-using TMPro;
-using UnityEngine;
+﻿using AdrianMiasik.Components.Core;
 
-namespace AdrianMiasik.Components.Specific
+namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
-    /// A label with a boolean.
-    /// Intended to be used for 'Enable long break' settings option. (See <see cref="SettingsPanel"/>)
+    /// A settings option intended be used for 'Enable long break' settings option. (See <see cref="SettingsPanel"/>)
     /// </summary>
-    public class LongBreakSetting : ThemeElement
+    public class SetLongBreaks : SettingsOptionToggleSlider
     {
-        [SerializeField] private TMP_Text m_longBreaksLabel;
-        [SerializeField] public ToggleSlider m_longBreakToggle;
-
-        public void Initialize(PomodoroTimer pomodoroTimer, Settings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
         {
-            base.Initialize(pomodoroTimer);
-            if (settingsConfig.m_longBreaks)
+            base.Initialize(pomodoroTimer, settingsConfig);
+            if (Settings.m_longBreaks)
             {
-                m_longBreakToggle.Initialize(pomodoroTimer, settingsConfig.m_longBreaks);
+                m_toggleSlider.Initialize(pomodoroTimer, Settings.m_longBreaks);
             }
         }
-        
-        public override void ColorUpdate(Theme theme)
-        {
-            m_longBreaksLabel.color = theme.GetCurrentColorScheme().m_foreground;
-            m_longBreakToggle.ColorUpdate(theme);
-        }
-    
+
         /// <summary>
         /// <remarks>Used as a UnityEvent by toggle.</remarks>
         /// </summary>
@@ -47,7 +33,7 @@ namespace AdrianMiasik.Components.Specific
                     }, (() =>
                     {
                         // Cancel visuals if they don't agree, similar how we do the work/break slider
-                        m_longBreakToggle.Initialize(Timer, true);
+                        m_toggleSlider.Initialize(Timer, true);
                     }), "This action will delete your current pomodoro/tomato progress.");
                 }
                 else

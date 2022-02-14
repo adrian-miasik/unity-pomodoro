@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Specific;
+using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
@@ -523,7 +525,7 @@ namespace AdrianMiasik.Components
             
             // If timer completion was based on work/mode one timer
             // (We don't add tomatoes for breaks)
-            if (!IsOnBreak())
+            if (!IsOnBreak() && !IsOnLongBreak() && m_state != States.SETUP)
             {
                 if (m_settings.m_longBreaks)
                 {
@@ -1030,6 +1032,7 @@ namespace AdrianMiasik.Components
             m_background.SetSelectionNavigation(backgroundNav);
         }
 
+        // TODO: move to DigitFormatDropdown.cs
         /// <summary>
         /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog
         /// if necessary. See <see cref="DigitFormat.SupportedFormats"/>.
@@ -1206,19 +1209,6 @@ namespace AdrianMiasik.Components
             m_creditsBubble.ColorUpdate(m_theme);
         }
         
-        /// <summary>
-        /// Sets the users setting preference to mute the application when out of focus using the provided
-        /// <see cref="bool"/>.
-        /// <remarks>Intended to be used as a UnityEvent. Otherwise you can directly do this
-        /// on the public property in the settings object.</remarks>
-        /// </summary>
-        /// <param name="state">Do you want to mute this application when it's out of focus?</param>
-        public void SetSettingMuteSoundWhenOutOfFocus(bool state = false)
-        {
-            // Change setting
-            m_settings.m_muteSoundWhenOutOfFocus = state;
-        }
-
         /// <summary>
         /// Sets the users setting preference to enable/disable long breaks.
         /// </summary>
@@ -1443,6 +1433,37 @@ namespace AdrianMiasik.Components
         public void DisableDarkModeToggle()
         {
             m_themeSlider.SetVisualToDisable();
+        }
+
+        public void SetPomodoroCount(int desiredPomodoroCount, int pomodoroProgress)
+        {
+            m_tomatoCounter.SetPomodoroCount(desiredPomodoroCount, pomodoroProgress);
+            
+            // Check if user achieved long break with new settings...
+            if (pomodoroProgress == desiredPomodoroCount)
+            {
+                // Trigger long break and rebuild.
+                ActivateLongBreak();
+                IfSetupTriggerRebuild();
+            }
+            // It's also possible our user is already in the long break state screen, and their new 
+            // numbers might not be valid. Check for this too...
+            else if (IsOnLongBreak() && m_state == States.SETUP)
+            {
+                // De-activate their long break since their pomodoro count changed / is no longer valid.
+                DeactivateLongBreak();
+                IfSetupTriggerRebuild();
+            }            
+        }
+
+        public int GetTomatoProgress()
+        {
+            return m_tomatoCounter.GetTomatoProgress();
+        }
+
+        public int GetTomatoCount()
+        {
+            return m_tomatoCounter.GetTomatoCount();
         }
     }
 }

@@ -1,12 +1,10 @@
 using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace AdrianMiasik.Components.Specific
+namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> page used to display a set of interactable user options. Currently supports
@@ -17,33 +15,37 @@ namespace AdrianMiasik.Components.Specific
     {
         [SerializeField] private TMP_Text m_title;
         
-        [SerializeField] private DigitFormatDropdown m_digitFormatDropdown;
-        [SerializeField] private LongBreakSetting m_longBreakSetting;
-        [SerializeField] private TMP_Text m_muteSoundOutOfFocusLabel;
-        [FormerlySerializedAs("m_muteSoundOutOfFocusBoolean")] [SerializeField] private ToggleSlider m_muteSoundOutOfFocusToggle;
+        // Dropdowns
+        [SerializeField] private SetDigitFormat m_setDigitFormat;
+        [SerializeField] private SetPomodoroCount m_pomodoro;
         
+        // Toggle Sliders
+        [SerializeField] private SetLongBreaks m_setLongBreakSettingsOption;
+        [SerializeField] private SetMuteAudioOutOfFocus m_setMuteSoundOutOfFocusToggle;
+
         private bool isOpen;
 
-        public void Initialize(PomodoroTimer pomodoroTimer, Settings settingsConfig)
+        public void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
         {
             base.Initialize(pomodoroTimer, false);
             
             // Overrides
-            m_muteSoundOutOfFocusToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            m_muteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            m_longBreakSetting.m_longBreakToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            m_longBreakSetting.m_longBreakToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            m_setMuteSoundOutOfFocusToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_setMuteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            m_setLongBreakSettingsOption.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_setLongBreakSettingsOption.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
             
             // Init
-            m_digitFormatDropdown.Initialize(Timer);
-            m_longBreakSetting.Initialize(pomodoroTimer, settingsConfig);
+            m_setDigitFormat.Initialize(Timer);
+            m_pomodoro.Initialize(Timer);
+            m_setLongBreakSettingsOption.Initialize(Timer, settingsConfig);
             // Hide mute option based on platform (Shown by default)
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
 #elif UNITY_IOS
             HideMuteSoundOutOfFocusOption();
 #else
-            m_muteSoundOutOfFocusToggle.Initialize(pomodoroTimer, settingsConfig.m_muteSoundWhenOutOfFocus);
+            m_setMuteSoundOutOfFocusToggle.Initialize(Timer, settingsConfig);
 #endif
         }
         
@@ -57,10 +59,9 @@ namespace AdrianMiasik.Components.Specific
             {
                 m_title.color = theme.GetCurrentColorScheme().m_foreground;
                 
-                m_digitFormatDropdown.ColorUpdate(Timer.GetTheme());
+                m_setDigitFormat.ColorUpdate(Timer.GetTheme());
                 
-                m_muteSoundOutOfFocusLabel.color = theme.GetCurrentColorScheme().m_foreground;
-                m_muteSoundOutOfFocusToggle.ColorUpdate(theme);
+                m_setMuteSoundOutOfFocusToggle.ColorUpdate(theme);
             }
         }
 
@@ -69,7 +70,7 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         public void UpdateDropdown()
         {
-            m_digitFormatDropdown.SetDropdownValue(Timer.GetDigitFormat());
+            m_setDigitFormat.SetDropdownValue(Timer.GetDigitFormat());
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="value">The index value you want the dropdown to be set at.</param>
         public void SetDropdown(int value)
         {
-            m_digitFormatDropdown.SetDropdownValue(value);
+            m_setDigitFormat.SetDropdownValue(value);
         }
         
         /// <summary>
@@ -88,7 +89,7 @@ namespace AdrianMiasik.Components.Specific
         public void Show()
         {
             gameObject.SetActive(true);
-            m_digitFormatDropdown.SetDropdownValue(Timer.GetDigitFormat());
+            m_setDigitFormat.SetDropdownValue(Timer.GetDigitFormat());
             isOpen = true;
             ColorUpdate(Timer.GetTheme());
         }
@@ -117,8 +118,7 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         public void ShowMuteSoundOutOfFocusOption()
         {
-            m_muteSoundOutOfFocusLabel.gameObject.SetActive(true);
-            m_muteSoundOutOfFocusToggle.gameObject.SetActive(true);
+            m_setMuteSoundOutOfFocusToggle.gameObject.SetActive(true);
         }
         
         /// <summary>
@@ -127,8 +127,7 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         public void HideMuteSoundOutOfFocusOption()
         {
-            m_muteSoundOutOfFocusLabel.gameObject.SetActive(false);
-            m_muteSoundOutOfFocusToggle.gameObject.SetActive(false);
+            m_setMuteSoundOutOfFocusToggle.gameObject.SetActive(false);
         }
     }
 }
