@@ -6,7 +6,7 @@ using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components.Specific
+namespace AdrianMiasik.Components.Specific.Settings
 {
     // TODO: Create Dropdown base class and implement here and in DigitFormatDropdown.cs
     /// <summary>

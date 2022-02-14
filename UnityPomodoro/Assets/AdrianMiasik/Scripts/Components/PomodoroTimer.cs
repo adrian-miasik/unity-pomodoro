@@ -6,6 +6,7 @@ using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Specific;
+using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
@@ -1208,19 +1209,6 @@ namespace AdrianMiasik.Components
             m_creditsBubble.ColorUpdate(m_theme);
         }
         
-        /// <summary>
-        /// Sets the users setting preference to mute the application when out of focus using the provided
-        /// <see cref="bool"/>.
-        /// <remarks>Intended to be used as a UnityEvent. Otherwise you can directly do this
-        /// on the public property in the settings object.</remarks>
-        /// </summary>
-        /// <param name="state">Do you want to mute this application when it's out of focus?</param>
-        public void SetSettingMuteSoundWhenOutOfFocus(bool state = false)
-        {
-            // Change setting
-            m_settings.m_muteSoundWhenOutOfFocus = state;
-        }
-
         /// <summary>
         /// Sets the users setting preference to enable/disable long breaks.
         /// </summary>

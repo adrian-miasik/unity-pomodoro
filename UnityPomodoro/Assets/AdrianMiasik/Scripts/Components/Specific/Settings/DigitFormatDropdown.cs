@@ -5,7 +5,7 @@ using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components.Specific
+namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> dropdown with a label.
