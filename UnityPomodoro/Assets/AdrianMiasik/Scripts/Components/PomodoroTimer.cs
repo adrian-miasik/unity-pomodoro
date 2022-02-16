@@ -242,6 +242,7 @@ namespace AdrianMiasik.Components
 
         private void InitializeComponents()
         {
+            // Hook up right button
             m_rightButton.m_playOnClick.AddListener(Play);
             m_rightButton.m_pauseOnClick.AddListener(Pause);
             m_rightButton.m_snoozeOnClick.AddListener(() =>
@@ -249,8 +250,14 @@ namespace AdrianMiasik.Components
                 Restart(true);
                 m_breakSlider.Press();
             });
+            
+            // Hook up left button
+            m_leftButtonSVGClick.m_onClick.AddListener(() =>
+            {
+                TryRestart(false);
+            });
 
-        m_hotkeyDetector.Initialize(this);
+            m_hotkeyDetector.Initialize(this);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
