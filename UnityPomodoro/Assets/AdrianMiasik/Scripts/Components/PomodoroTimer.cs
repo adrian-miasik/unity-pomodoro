@@ -242,7 +242,7 @@ namespace AdrianMiasik.Components
 
         private void InitializeComponents()
         {
-            // Hook up right button
+            // Play / Pause Button
             m_rightButton.m_playOnClick.AddListener(Play);
             m_rightButton.m_pauseOnClick.AddListener(Pause);
             m_rightButton.m_snoozeOnClick.AddListener(() =>
@@ -251,11 +251,14 @@ namespace AdrianMiasik.Components
                 m_breakSlider.Press();
             });
             
-            // Hook up left button
+            // Restart Button
             m_leftButtonSVGClick.m_onClick.AddListener(() =>
             {
                 TryRestart(false);
             });
+            
+            // Skip Button
+            m_skipButton.GetClickButtonIcon().m_onClick.AddListener(Skip);
 
             m_hotkeyDetector.Initialize(this);
             m_background.Initialize(this);
