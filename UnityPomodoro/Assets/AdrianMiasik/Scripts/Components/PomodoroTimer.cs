@@ -10,6 +10,7 @@ using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
+using LeTai.Asset.TranslucentImage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -122,7 +123,9 @@ namespace AdrianMiasik.Components
         [SerializeField] private Theme m_theme; // Current active theme
         // TODO: Create dialog manager class
         [SerializeField] private ConfirmationDialog m_confirmationDialogPrefab; // Prefab reference
-
+        [SerializeField] private Transform m_overlayCanvas; // Translucent Image Overlay Canvas
+        [SerializeField] private TranslucentImageSource m_translucentImageSource;
+        
         // Time
         private double currentTime; // Current time left (In seconds)
         private float totalTime; // Total time left (In seconds)
@@ -1274,7 +1277,7 @@ namespace AdrianMiasik.Components
             if (currentDialogPopup != null)
                 return;
             
-            currentDialogPopup = Instantiate(m_confirmationDialogPrefab, transform);
+            currentDialogPopup = Instantiate(m_confirmationDialogPrefab, m_overlayCanvas.transform);
             isCurrentDialogInterruptible = interruptible;
             currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
         }
@@ -1464,6 +1467,11 @@ namespace AdrianMiasik.Components
         public int GetTomatoCount()
         {
             return m_tomatoCounter.GetTomatoCount();
+        }
+
+        public TranslucentImageSource GetTranslucentImageSource()
+        {
+            return m_translucentImageSource;
         }
     }
 }

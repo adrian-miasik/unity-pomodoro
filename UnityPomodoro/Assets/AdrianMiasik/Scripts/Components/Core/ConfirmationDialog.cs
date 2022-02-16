@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
+using LeTai.Asset.TranslucentImage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private ClickButtonText m_submit;
         [SerializeField] private ClickButtonText m_cancel;
         [SerializeField] private List<Image> m_lineSeparations;
-        [SerializeField] private Image m_overlay;
+        [SerializeField] private TranslucentImage m_overlay;
         [SerializeField] private Animation m_spawnAnimation;
         
         // Used to combine actions
@@ -52,6 +53,8 @@ namespace AdrianMiasik.Components.Core
             {
                 m_botLabel.text = bottomText;
             }
+
+            m_overlay.source = pomodoroTimer.GetTranslucentImageSource();
 
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
@@ -134,9 +137,9 @@ namespace AdrianMiasik.Components.Core
             }
             
             // Overlay
-            Color overlayColor = theme.GetCurrentColorScheme().m_foreground;
-            overlayColor.a = theme.m_darkMode ? 0.025f : 0.5f;
-            m_overlay.color = overlayColor;
+            // Color overlayColor = theme.GetCurrentColorScheme().m_foreground;
+            // overlayColor.a = theme.m_darkMode ? 0.025f : 0.5f;
+            // m_overlay.color = overlayColor;
         }
 
         public void Show()
