@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{8c9570ef-365a-8084-951d-1ff6d0841621}</ProjectGuid>
+    <ProjectGuid>{8dd3cfc6-1299-156c-8b44-79d09a054f34}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+    <AssemblyName>LeTai.TranslucentImage</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,11 +52,31 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonSVGIconEditor.cs" />
-     <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonEditor.cs" />
-     <Compile Include="Assets\AdrianMiasik\Editor\BooleanToggleEditor.cs" />
-     <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonImageIconEditor.cs" />
-     <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonTextEditor.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImage.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ResizableScreenRect.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageEditorEnhancement.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlur.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageSource.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\IBlurAlgorithm.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ShaderId.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\Extensions.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageMeshEffect.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\BlurConfig.cs" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\lib.hlsl" />
+     <None Include="Assets\LeTai\TranslucentImage\Demo\Shader\MobileVertexLitColor.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\TranslucentImage.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\UniversalRP README.txt" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\EfficientBlur.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Online Documentation (recommended).txt" />
+     <None Include="Assets\LeTai\TranslucentImage\Demo\Textures\Example Photo\PHOTO LICENSE.txt" />
+     <None Include="Assets\LeTai\TranslucentImage\CHANGELOG.txt" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\lib.cginc" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\FillCrop.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\EfficientBlur_UniversalRP.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Demo\Fonts\FONT LICENSE.txt" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\FillCrop_UniversalRP.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\LeTai.TranslucentImage.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -83,12 +103,6 @@
  </Reference>
  <Reference Include="UnityEngine.ClothModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ClusterInputModule">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ClusterRendererModule">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
@@ -305,9 +319,6 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
- <Reference Include="nunit.framework">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -663,124 +674,14 @@
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.TestRunner">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.TestRunner">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.InternalAPIEditorBridge.003">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.003.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Universal.Shaders">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder.Base">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Universal.Runtime">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Sysroot.Linux_x86_64">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VectorGraphics">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.VectorGraphics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Timeline">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="Unity.InternalAPIEngineBridge.003">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.003.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Searcher.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.Runtime">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Rider.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Mathematics">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ShaderGraph.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Universal.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Toolchain.Win-x86_64-Linux-x86_64">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Timeline.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VectorGraphics.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.VectorGraphics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.SysrootPackage.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
- </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{859ce4d1-b7d8-25a5-b2ec-a0e60e025d4f}</Project>
-      <Name>Assembly-CSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="LeTai.TranslucentImage.Demo.csproj">
-      <Project>{9fd055c6-6ca3-1330-7cf5-bfdcb5488e79}</Project>
-      <Name>LeTai.TranslucentImage.Demo</Name>
-    </ProjectReference>
-    <ProjectReference Include="LeTai.TranslucentImage.csproj">
-      <Project>{8dd3cfc6-1299-156c-8b44-79d09a054f34}</Project>
-      <Name>LeTai.TranslucentImage</Name>
-    </ProjectReference>
-    <ProjectReference Include="LeTai.TranslucentImage.Editor.csproj">
-      <Project>{2fcf79b6-f632-a61b-c376-f027cb89cda8}</Project>
-      <Name>LeTai.TranslucentImage.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="LeTai.TranslucentImage.UniversalRP.csproj">
-      <Project>{6eee82e8-590d-a914-aacd-18c5f4242353}</Project>
-      <Name>LeTai.TranslucentImage.UniversalRP</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
