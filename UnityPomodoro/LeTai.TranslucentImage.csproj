@@ -52,29 +52,23 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlurConfig.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImage.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ResizableScreenRect.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageEditorEnhancement.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlur.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\BlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\Extensions.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImage.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ShaderId.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageSource.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\IBlurAlgorithm.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ShaderId.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\Extensions.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageMeshEffect.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\BlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ResizableScreenRect.cs" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\lib.hlsl" />
-     <None Include="Assets\LeTai\TranslucentImage\Demo\Shader\MobileVertexLitColor.shader" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\TranslucentImage.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\UniversalRP README.txt" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\EfficientBlur.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\Online Documentation (recommended).txt" />
-     <None Include="Assets\LeTai\TranslucentImage\Demo\Textures\Example Photo\PHOTO LICENSE.txt" />
-     <None Include="Assets\LeTai\TranslucentImage\CHANGELOG.txt" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\lib.cginc" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\FillCrop.shader" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\EfficientBlur_UniversalRP.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\Demo\Fonts\FONT LICENSE.txt" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\FillCrop_UniversalRP.shader" />
      <None Include="Assets\LeTai\TranslucentImage\LeTai.TranslucentImage.asmdef" />
  <Reference Include="UnityEngine">

@@ -52,12 +52,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\MenuIntegration.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\TranslucentImageEditor.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\TranslucentImageSourceEditor.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\ScalableBlurConfigEditor.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\Unity2019ShaderCompilerBugWorkaround.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\TranslucentImageEditor.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\ScenceGizmoAutoDisable.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\MenuIntegration.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\Unity2019ShaderCompilerBugWorkaround.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\ScalableBlurConfigEditor.cs" />
      <None Include="Assets\LeTai\TranslucentImage\Script\Editor\LeTai.TranslucentImage.Editor.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

@@ -52,13 +52,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\ShaderId.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\ScalableBlur.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Render Pass\TranslucentImageBlurRenderPass.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Utilities.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\IBlurAlgorithm.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Extensions.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\ScalableBlur.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Render Pass\TranslucentImageBlurSource.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\IBlurAlgorithm.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\ShaderId.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Extensions.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Utilities.cs" />
      <None Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\LeTai.TranslucentImage.UniversalRP.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
