@@ -15,7 +15,7 @@ namespace AdrianMiasik.Components.Core.Containers
     public class TomatoCounter : ThemeElement
     {
         [SerializeField] private HorizontalLayoutGroup m_horizontal;
-        [SerializeField] private GameObject m_trashcan;
+        [SerializeField] private ClickButton m_trashcan;
         [SerializeField] private List<Tomato> m_uncompletedTomatoes = new List<Tomato>();
         [SerializeField] private Tomato m_tomatoPrefab;
 
@@ -34,6 +34,8 @@ namespace AdrianMiasik.Components.Core.Containers
             }
             
             base.Initialize(pomodoroTimer, updateColors);
+            
+            m_trashcan.m_onClick.AddListener(TrashTomatoes);
             
             completedTomatoes.Clear();
             DetermineTrashcanVisibility();
