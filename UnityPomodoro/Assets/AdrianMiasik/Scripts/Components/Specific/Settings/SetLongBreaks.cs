@@ -27,7 +27,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                 if (Timer.HasTomatoProgression())
                 {
                     // Prompt for user permission first
-                    Timer.SpawnConfirmationDialog(() =>
+                    Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                     {
                         Timer.SetSettingLongBreaks(false);
                     }, (() =>

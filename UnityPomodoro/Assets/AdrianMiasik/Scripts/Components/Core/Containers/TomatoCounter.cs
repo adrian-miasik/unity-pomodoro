@@ -102,7 +102,7 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void TrashTomatoes()
         {
-            Timer.SpawnConfirmationDialog(() =>
+            Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
             {
                 Timer.DeactivateLongBreak();
                 Timer.IfSetupTriggerRebuild();

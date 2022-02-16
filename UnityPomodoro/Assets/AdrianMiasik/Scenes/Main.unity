@@ -3360,7 +3360,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1601903655}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5719,7 +5719,7 @@ RectTransform:
   m_Children:
   - {fileID: 265300826}
   m_Father: {fileID: 1601903655}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7347,7 +7347,7 @@ RectTransform:
   m_Children:
   - {fileID: 464905116}
   m_Father: {fileID: 1601903655}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.4, y: 0.125}
@@ -7460,7 +7460,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1601903655}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10541,7 +10541,7 @@ RectTransform:
   - {fileID: 445534768}
   - {fileID: 683655078}
   m_Father: {fileID: 1601903655}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10595,6 +10595,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 266651280}
+  - {fileID: 2016785226}
   - {fileID: 943758000}
   - {fileID: 407842492}
   - {fileID: 1532996932}
@@ -10636,12 +10637,13 @@ MonoBehaviour:
   m_creditsBubble: {fileID: 929885561}
   m_themeSlider: {fileID: 683655080}
   m_halloweenToggleSprite: {fileID: 933772985}
-  m_hotkeyDetector: {fileID: 266651281}
   m_sidebarMenu: {fileID: 673880599}
-  m_notifications: {fileID: 943758001}
   m_tomatoCounter: {fileID: 1060367269}
   m_endTimestampBubble: {fileID: 1710532963}
   m_skipButton: {fileID: 453060186}
+  m_hotkeyDetector: {fileID: 266651281}
+  m_confirmationDialogManager: {fileID: 2016785227}
+  m_notifications: {fileID: 943758001}
   m_spawnRingProgress:
     serializedVersion: 2
     m_Curve:
@@ -10782,9 +10784,6 @@ MonoBehaviour:
   m_settingsContainer: {fileID: 2037041485}
   m_aboutContainer: {fileID: 2138225466}
   m_theme: {fileID: 11400000, guid: 65dfb8468efc2294c8bf0c297856135c, type: 2}
-  m_confirmationDialogPrefab: {fileID: 960648584130589595, guid: 50a42b60f00c28b4bb6e664d99b11d6e, type: 3}
-  m_overlayCanvas: {fileID: 1510152347}
-  m_translucentImageSource: {fileID: 248574412}
 --- !u!82 &1601903657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12543,6 +12542,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2016785225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2016785226}
+  - component: {fileID: 2016785227}
+  m_Layer: 5
+  m_Name: Confirmation Dialog Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2016785226
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016785225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1601903655}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2016785227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016785225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67647b26bdc4238afe0ebb2285a4f53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_confirmationDialogPrefab: {fileID: 960648584130589595, guid: 50a42b60f00c28b4bb6e664d99b11d6e, type: 3}
+  m_overlayCanvas: {fileID: 1510152347}
+  m_translucentImageSource: {fileID: 248574412}
 --- !u!1 &2017546959
 GameObject:
   m_ObjectHideFlags: 0

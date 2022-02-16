@@ -84,7 +84,7 @@ namespace AdrianMiasik.Components.Specific.Automation
                     _timer.SwitchState(PomodoroTimer.States.SETUP);
                     TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
                     _timer.SetCurrentTime((float)timeSpan.TotalSeconds);
-                    _timer.GetCurrentConfirmationDialog().Close();
+                    _timer.GetConfirmDialogManager().GetCurrentConfirmationDialog().Close();
                     
                     // Moved cached copy back into our scenarios
                     _screenshotScenarios = _ssCopy;
@@ -99,7 +99,7 @@ namespace AdrianMiasik.Components.Specific.Automation
                 else
                 {
                     _timer.Restart(false);
-                    _timer.GetCurrentConfirmationDialog().Close();
+                    _timer.GetConfirmDialogManager().GetCurrentConfirmationDialog().Close();
                     Debug.Log("Media Creation Complete!");
                 }
             }
@@ -193,8 +193,8 @@ namespace AdrianMiasik.Components.Specific.Automation
             TimeSpan subSpan = new TimeSpan(0,0,3,12,0);
             timeSpan = timeSpan.Subtract(subSpan);
             _timer.SetCurrentTime((float)timeSpan.TotalSeconds);
-            _timer.SpawnConfirmationDialog(null);
-            _timer.GetCurrentConfirmationDialog().Show();
+            _timer.GetConfirmDialogManager().SpawnConfirmationDialog(null);
+            _timer.GetConfirmDialogManager().GetCurrentConfirmationDialog().Show();
             
             CaptureScreenshot(mediaCapture);
         }

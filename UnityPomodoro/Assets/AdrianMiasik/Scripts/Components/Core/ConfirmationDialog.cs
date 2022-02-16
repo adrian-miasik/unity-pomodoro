@@ -24,22 +24,28 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private TranslucentImage m_overlay;
         [SerializeField] private Animation m_spawnAnimation;
         
+        // Cache
+        private ConfirmationDialogManager confirmationDialogManager;
+        
         // Used to combine actions
         private Action onCancel;
         private Action onSubmit;
-        
+
         /// <summary>
         /// Setup our confirmation dialog with custom actions and overrideable text.
         /// </summary>
         /// <param name="pomodoroTimer">Main class reference</param>
+        /// <param name="translucentImageSource">The current cameras translucent image source reference</param>
         /// <param name="submit">The action you want to take when the user presses yes</param>
         /// <param name="cancel">The action you want to take when the user presses no</param>
         /// <param name="topText">Optional: The top text label you want to override</param>
         /// <param name="bottomText">Optional: The bottom text label you want to override</param>
-        public void Initialize(PomodoroTimer pomodoroTimer, Action submit, Action cancel, 
+        public void Initialize(PomodoroTimer pomodoroTimer, ConfirmationDialogManager manager,
+            TranslucentImageSource translucentImageSource, Action submit, Action cancel, 
             string topText = null, string bottomText = null)
         {
             base.Initialize(pomodoroTimer);
+            confirmationDialogManager = manager;
             
             onCancel = cancel;
             onSubmit = submit;
@@ -54,7 +60,7 @@ namespace AdrianMiasik.Components.Core
                 m_botLabel.text = bottomText;
             }
 
-            m_overlay.source = pomodoroTimer.GetTranslucentImageSource();
+            m_overlay.source = translucentImageSource;
 
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
@@ -91,7 +97,7 @@ namespace AdrianMiasik.Components.Core
         {
             if (checkInterruptibility)
             {
-                if (Timer.IsConfirmationDialogInterruptible())
+                if (confirmationDialogManager.IsConfirmationDialogInterruptible())
                 {
                     DestroyDialog();
                 }
@@ -108,7 +114,7 @@ namespace AdrianMiasik.Components.Core
         
         private void DestroyDialog()
         {
-            Timer.ClearDialogPopup(this);
+            confirmationDialogManager.ClearDialogPopup(this);
             Timer.GetTheme().Deregister(this); // Remove self from themed components
             Destroy(gameObject);
         }

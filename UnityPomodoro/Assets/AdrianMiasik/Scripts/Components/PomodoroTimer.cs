@@ -75,13 +75,16 @@ namespace AdrianMiasik.Components
         [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
         [SerializeField] private ThemeSlider m_themeSlider; // Used to change between light / dark mode
         [SerializeField] private ToggleSprite m_halloweenToggleSprite; // Halloween theme toggle during Halloween week (Disabled by default) // TODO: Re-implement
-        [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
-        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
         [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
         [SerializeField] private SkipButton m_skipButton;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
+        
+        [Header("Unity Pomodoro - Managers")]
+        [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
+        [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
+        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
 
         [Header("Animations")] 
         [SerializeField] private AnimationCurve m_spawnRingProgress;
@@ -121,11 +124,7 @@ namespace AdrianMiasik.Components
         [Header("External Extra - Deprecated")]
         // TODO: Move to theme class
         [SerializeField] private Theme m_theme; // Current active theme
-        // TODO: Create dialog manager class
-        [SerializeField] private ConfirmationDialog m_confirmationDialogPrefab; // Prefab reference
-        [SerializeField] private Transform m_overlayCanvas; // Translucent Image Overlay Canvas
-        [SerializeField] private TranslucentImageSource m_translucentImageSource;
-        
+
         // Time
         private double currentTime; // Current time left (In seconds)
         private float totalTime; // Total time left (In seconds)
@@ -144,10 +143,6 @@ namespace AdrianMiasik.Components
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
-        // Cache
-        private ConfirmationDialog currentDialogPopup;
-        private bool isCurrentDialogInterruptible = true;
-        
         // Pulse Ring Complete Animation
         private bool disableCompletionAnimation;
         private float accumulatedRingPulseTime;
@@ -221,8 +216,8 @@ namespace AdrianMiasik.Components
                     }
                 }
             }
-            
-            // Initialize components
+
+            InitializeManagers();
             InitializeComponents();
 
             // Calculate time
@@ -239,10 +234,15 @@ namespace AdrianMiasik.Components
             m_theme.ApplyColorChanges();
         }
 
+        private void InitializeManagers()
+        {
+            m_confirmationDialogManager.Initialize(this);
+            m_notifications.Initialize(m_settings);
+        }
+
         private void InitializeComponents()
         {
             m_hotkeyDetector.Initialize(this);
-            m_notifications.Initialize(m_settings);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
@@ -521,10 +521,7 @@ namespace AdrianMiasik.Components
         {
             SwitchState(States.COMPLETE);
             
-            if (currentDialogPopup != null && isCurrentDialogInterruptible)
-            {
-                currentDialogPopup.Close(true);
-            }
+            m_confirmationDialogManager.TryClearCurrentDialogPopup();
             
             // If timer completion was based on work/mode one timer
             // (We don't add tomatoes for breaks)
@@ -770,7 +767,7 @@ namespace AdrianMiasik.Components
         {
             if (!isTimerBeingSetup && m_state != States.COMPLETE)
             {
-                SpawnConfirmationDialog(() =>
+                m_confirmationDialogManager.SpawnConfirmationDialog(() =>
                 {
                     SwitchTimer(true);
                 }, () =>
@@ -803,7 +800,7 @@ namespace AdrianMiasik.Components
         {
             if (!isTimerBeingSetup && m_state != States.COMPLETE)
             {
-                SpawnConfirmationDialog(() =>
+                m_confirmationDialogManager.SpawnConfirmationDialog(() =>
                 {
                     SwitchTimer(false);
                 }, (() =>
@@ -824,7 +821,7 @@ namespace AdrianMiasik.Components
         {
             if (!isTimerBeingSetup && m_state != States.COMPLETE)
             {
-                SpawnConfirmationDialog((() =>
+                m_confirmationDialogManager.SpawnConfirmationDialog((() =>
                 {
                     Restart(isComplete);
                 }));
@@ -1056,7 +1053,7 @@ namespace AdrianMiasik.Components
             if (!isTimerBeingSetup && m_state == States.RUNNING)
             {
                 m_digitFormat.SwitchFormat(desiredFormat);
-                SpawnConfirmationDialog(GenerateFormat, () =>
+                m_confirmationDialogManager.SpawnConfirmationDialog(GenerateFormat, () =>
                 {
                     m_settingsContainer.SetDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
@@ -1263,65 +1260,6 @@ namespace AdrianMiasik.Components
         }
 
         /// <summary>
-        /// Creates a custom <see cref="ConfirmationDialog"/> if one is currently not present/visible.
-        /// <remarks>Either the submit/close buttons will trigger the dialog to close.</remarks>
-        /// </summary>
-        /// <param name="onSubmit">What do you want to do when the user presses yes?</param>
-        /// <param name="onCancel">What do you want to do when the user presses no?</param>
-        /// <param name="topText">What primary string do you want to display to the user?</param>
-        /// <param name="bottomText">What secondary string do you want to display to the user?</param>
-        /// <param name="interruptible">Can this popup be closed by our timer?</param>
-        public void SpawnConfirmationDialog(Action onSubmit, Action onCancel = null, 
-            string topText = null, string bottomText = null, bool interruptible = true)
-        {
-            if (currentDialogPopup != null)
-                return;
-            
-            currentDialogPopup = Instantiate(m_confirmationDialogPrefab, m_overlayCanvas.transform);
-            isCurrentDialogInterruptible = interruptible;
-            currentDialogPopup.Initialize(this, onSubmit, onCancel, topText, bottomText);
-        }
-
-        public ConfirmationDialog GetCurrentConfirmationDialog()
-        {
-            return currentDialogPopup;
-        }
-        
-        /// <summary>
-        /// Is our current <see cref="ConfirmationDialog"/> interruptible by our timer?
-        /// </summary>
-        /// <returns></returns>
-        public bool IsConfirmationDialogInterruptible()
-        {
-            return isCurrentDialogInterruptible;
-        }
-
-        /// <summary>
-        /// Clear our current timer popup reference.
-        /// <remarks>Should be done when destroying our popup dialog.</remarks>
-        /// </summary>
-        /// <param name="dialog"></param>
-        public void ClearDialogPopup(ConfirmationDialog dialog)
-        {
-            if (dialog == currentDialogPopup)
-            {
-                currentDialogPopup = null;
-            }
-        }
-
-        /// <summary>
-        /// Clears and destroys the current timer popup so it's no longer visible to the user.
-        /// </summary>
-        public void ClearCurrentDialogPopup()
-        {
-            if (currentDialogPopup != null)
-            {
-                currentDialogPopup.Close();
-                ClearDialogPopup(currentDialogPopup);
-            }
-        }
-
-        /// <summary>
         /// Sets our <see cref="DigitFormat"/> to long break mode.
         /// </summary>
         public void ActivateLongBreak()
@@ -1469,9 +1407,11 @@ namespace AdrianMiasik.Components
             return m_tomatoCounter.GetTomatoCount();
         }
 
-        public TranslucentImageSource GetTranslucentImageSource()
+        // TODO: Remove piper method
+        [Obsolete]
+        public ConfirmationDialogManager GetConfirmDialogManager()
         {
-            return m_translucentImageSource;
+            return m_confirmationDialogManager;
         }
     }
 }
