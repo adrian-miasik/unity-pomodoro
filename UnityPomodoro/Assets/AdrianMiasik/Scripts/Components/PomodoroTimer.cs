@@ -176,7 +176,7 @@ namespace AdrianMiasik.Components
         private void ConfigureSettings()
         {
             // Set theme to light
-            GetTheme().m_darkMode = false;
+            // GetTheme().m_darkMode = false;
             
             // Restart settings (Restore back to dev defaults dependent on OS)
             m_settings.ApplyPlatformDefaults();

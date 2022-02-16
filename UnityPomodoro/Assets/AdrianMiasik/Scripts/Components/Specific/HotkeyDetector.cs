@@ -70,6 +70,7 @@ namespace AdrianMiasik.Components.Specific
                 timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                 {
                     timer.GetTheme().DeregisterAllElements();
+                    timer.GetTheme().m_darkMode = false;
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }, null, 
                     "This action will <color=red>reset all settings to their factory defaults.</color>", 
