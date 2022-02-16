@@ -92,5 +92,10 @@ namespace AdrianMiasik.Components.Specific
         {
             m_toggle.SetVisualToDisable();
         }
+
+        public ToggleSlider GetToggleSlider()
+        {
+            return m_toggle;
+        }
     }
 }
