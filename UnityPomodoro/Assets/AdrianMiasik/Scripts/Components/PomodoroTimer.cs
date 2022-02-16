@@ -1244,6 +1244,7 @@ namespace AdrianMiasik.Components
         /// long break mode?</param>
         public void SetSettingLongBreaks(bool state = true)
         {
+            // TODO: Fix double theme element registration on this setting change
             // Change setting
             m_settings.m_longBreaks = state;
             
