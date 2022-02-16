@@ -218,6 +218,7 @@ namespace AdrianMiasik.Components.Core.Items
                 return;
             }
             
+            m_tick.enabled = true;
             m_tick.Stop();
             m_tick.Play();
         }
