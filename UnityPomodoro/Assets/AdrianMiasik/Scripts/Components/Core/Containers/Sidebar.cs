@@ -35,10 +35,16 @@ namespace AdrianMiasik.Components.Core.Containers
         [SerializeField] private AnimationClip m_entryAnimation;
         [SerializeField] private AnimationClip m_exitAnimation;
 
+        [Header("Sidebar Rows - Content")] 
+        [SerializeField] private SidebarRow m_pomodoroTimerRow;
+        [SerializeField] private SidebarRow m_settingsRow;
+        [SerializeField] private SidebarRow m_documentationRow;
+        [SerializeField] private SidebarRow m_aboutRow;
+        
         // Components
-        [Header("Sidebar Rows (Content)")]
-        [SerializeField] private List<SidebarRow> m_contentRows = new List<SidebarRow>(); 
-        [SerializeField] private List<SidebarRow> m_rowsToSpawn;
+        [Header("Sidebar Rows (Content)")] 
+        private List<SidebarRow> contentRows;
+        private List<SidebarRow> rowsToSpawn;
 
         // Cache
         private bool isOpen;
@@ -58,11 +64,20 @@ namespace AdrianMiasik.Components.Core.Containers
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             base.Initialize(pomodoroTimer);
+
+            // Fill content rows
+            contentRows = new List<SidebarRow>
+            {
+                m_pomodoroTimerRow,
+                m_settingsRow,
+                m_documentationRow,
+                m_aboutRow
+            };
             
             // Initialize row components
-            for (int i = 0; i < m_contentRows.Count; i++)
+            for (int i = 0; i < contentRows.Count; i++)
             {
-                SidebarRow row = m_contentRows[i];
+                SidebarRow row = contentRows[i];
 
                 // Only select first item
                 if (i == 0)
@@ -74,6 +89,15 @@ namespace AdrianMiasik.Components.Core.Containers
                     row.Initialize(pomodoroTimer, this);
                 }
             }
+            
+            m_pomodoroTimerRow.GetClickButton().m_onClick.AddListener(Timer.ShowMainContent);
+            m_settingsRow.GetClickButton().m_onClick.AddListener(Timer.ShowSettings);
+            m_documentationRow.GetClickButton().m_onClick.AddListener(() =>
+            {
+                // TODO: Store URL's as a scriptable object?
+                m_documentationRow.GetClickButton().OpenURL("https://adrian-miasik.github.io/unity-pomodoro-docs/");
+            });
+            m_aboutRow.GetClickButton().m_onClick.AddListener(Timer.ShowAbout);
 
             // Calculate screen dimensions
             screenWidth = Screen.width;
@@ -93,15 +117,15 @@ namespace AdrianMiasik.Components.Core.Containers
 
             if (isOpen)
             {
-                if (m_rowsToSpawn.Count > 0)
+                if (rowsToSpawn.Count > 0)
                 {
                     rowStaggerTime += Time.deltaTime;
                     
                     if (rowStaggerTime >= m_rowStaggerDelay)
                     {
                         rowStaggerTime = 0;
-                        m_rowsToSpawn[0].PlaySpawnAnimation();
-                        m_rowsToSpawn.RemoveAt(0);
+                        rowsToSpawn[0].PlaySpawnAnimation();
+                        rowsToSpawn.RemoveAt(0);
                     }
                 }
             }
@@ -136,9 +160,9 @@ namespace AdrianMiasik.Components.Core.Containers
             Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
             Timer.FadeCreditsBubble(true);
             
-            m_rowsToSpawn = new List<SidebarRow>(m_contentRows);
+            rowsToSpawn = new List<SidebarRow>(contentRows);
 
-            foreach (SidebarRow row in m_rowsToSpawn)
+            foreach (SidebarRow row in rowsToSpawn)
             {
                 row.Hide();
             }
@@ -175,7 +199,7 @@ namespace AdrianMiasik.Components.Core.Containers
             isOpen = false;
 
             // Cancel holds in-case user holds button down and closes our menu prematurely
-            foreach (SidebarRow row in m_contentRows)
+            foreach (SidebarRow row in contentRows)
             {
                 row.CancelHold();
             }
@@ -221,7 +245,7 @@ namespace AdrianMiasik.Components.Core.Containers
             }
             
             // Deselect other rows
-            foreach (SidebarRow row in m_contentRows)
+            foreach (SidebarRow row in contentRows)
             {
                 if (row == rowToSelect)
                     continue;
