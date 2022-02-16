@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510c61cdec524e86b647525bb5947f82, type: 3}
   m_Name: Particle Blur Config
   m_EditorClassIdentifier: 
-  radius: 6.25
-  iteration: 4
+  radius: 1.25
+  iteration: 3
   maxDepth: 6
-  strength: 100
+  strength: 10
