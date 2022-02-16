@@ -259,6 +259,10 @@ namespace AdrianMiasik.Components
             
             // Skip Button
             m_skipButton.GetClickButtonIcon().m_onClick.AddListener(Skip);
+            
+            // Switch Timer / Mode Slider
+            m_breakSlider.m_onSetToTrueClick.AddListener(TrySwitchToBreakTimer);
+            m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
 
             m_hotkeyDetector.Initialize(this);
             m_background.Initialize(this);

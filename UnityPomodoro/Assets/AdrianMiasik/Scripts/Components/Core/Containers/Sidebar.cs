@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core.Containers
 { 
+    // TODO: Combine Confirmation Dialog and this overlay into one component 
     /// <summary>
     /// A <see cref="ThemeElement"/> container page that holds <see cref="SidebarRow"/>'s and deals with group
     /// selections and animations.
