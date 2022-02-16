@@ -30,11 +30,11 @@ namespace AdrianMiasik.Components.Specific.Settings
                     Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                     {
                         Timer.SetSettingLongBreaks(false);
-                    }, (() =>
+                    }, () =>
                     {
                         // Cancel visuals if they don't agree, similar how we do the work/break slider
                         m_toggleSlider.Initialize(Timer, true);
-                    }), "This action will delete your current pomodoro/tomato progress.");
+                    }, "This action will delete your current pomodoro/tomato progress.");
                 }
                 else
                 {
