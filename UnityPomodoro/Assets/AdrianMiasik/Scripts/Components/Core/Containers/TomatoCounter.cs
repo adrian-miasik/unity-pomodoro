@@ -28,14 +28,19 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="updateColors"></param>
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            foreach (Tomato tomato in m_uncompletedTomatoes)
-            {
-                tomato.Initialize(pomodoroTimer, updateColors);
-            }
-            
             base.Initialize(pomodoroTimer, updateColors);
             
             m_trashcan.m_onClick.AddListener(TrashTomatoes);
+            
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            foreach (Tomato tomato in m_uncompletedTomatoes)
+            {
+                tomato.Initialize(Timer);
+            }
             
             completedTomatoes.Clear();
             DetermineTrashcanVisibility();
@@ -144,7 +149,7 @@ namespace AdrianMiasik.Components.Core.Containers
             m_trashcan.transform.SetParent(m_uncompletedTomatoes[m_uncompletedTomatoes.Count - 1].transform);
 
             // Re-init
-            Initialize(Timer);
+            Initialize();
 
             for (int i = 0; i < pomodoroProgress; i++)
             {
