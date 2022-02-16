@@ -6109,6 +6109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggle: {fileID: 1535463480}
+  m_dotRT: {fileID: 1359404815}
   m_moonSprite: {fileID: 3286163911610860551, guid: 704910c21a0005d4abdd642b501f37fa, type: 3}
   m_sliderDotCircle: {fileID: 2100000, guid: f149d978d193cb7479ccfefaa65fb175, type: 2}
 --- !u!1 &684884537
@@ -10213,6 +10214,11 @@ CanvasRenderer:
 --- !u!1 &1359404814 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6462380846313843328, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
+  m_PrefabInstance: {fileID: 611365218}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1359404815 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6462380846313843391, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
   m_PrefabInstance: {fileID: 611365218}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1359404816 stripped

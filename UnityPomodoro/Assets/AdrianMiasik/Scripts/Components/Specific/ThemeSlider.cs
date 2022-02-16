@@ -15,8 +15,8 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private Sprite m_moonSprite;
         [SerializeField] private Material m_sliderDotCircle;
 
-        private Vector2 cachedOffsetMin = new Vector2(3, 0); 
-        private Vector2 cachedOffsetMax = new Vector2(1.5f, 1.5f); 
+        private Vector2 cachedOffsetMin = new Vector2(3, 1.5f); 
+        private Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f); 
 
         private void Start()
         {
