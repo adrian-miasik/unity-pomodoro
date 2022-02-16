@@ -56,6 +56,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\HotkeyDetector.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialog.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\RightButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialogManager.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Theme.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\TomatoCounter.cs" />
@@ -99,7 +100,6 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Automation\MediaCapture.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\ITimerState.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialogManager.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
