@@ -242,7 +242,15 @@ namespace AdrianMiasik.Components
 
         private void InitializeComponents()
         {
-            m_hotkeyDetector.Initialize(this);
+            m_rightButton.m_playOnClick.AddListener(Play);
+            m_rightButton.m_pauseOnClick.AddListener(Pause);
+            m_rightButton.m_snoozeOnClick.AddListener(() =>
+            {
+                Restart(true);
+                m_breakSlider.Press();
+            });
+
+        m_hotkeyDetector.Initialize(this);
             m_background.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
