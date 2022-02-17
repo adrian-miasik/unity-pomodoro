@@ -6184,6 +6184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_image: {fileID: 697938273}
+  m_mainCanvasRaycaster: {fileID: 1237520524}
 --- !u!114 &697938273
 MonoBehaviour:
   m_ObjectHideFlags: 0
