@@ -11,7 +11,7 @@ namespace AdrianMiasik.Components.Core
     {
         [SerializeField] private TMP_Text m_label;
         [SerializeField] private TMP_Text m_dropdownText;
-        [SerializeField] private TMP_Dropdown m_dropdown;
+        [SerializeField] protected Dropdown m_dropdown;
         [SerializeField] private Image m_containerOutline;
         [SerializeField] private SVGImage m_arrow;
         
@@ -19,7 +19,7 @@ namespace AdrianMiasik.Components.Core
         /// Set the dropdown selection to the provided index value.
         /// </summary>
         /// <param name="selectionValue"></param>
-        protected void SetDropdownValue(int selectionValue)
+        public void SetDropdownValue(int selectionValue)
         {
             // Set dropdown value to current digit format 
             // Note: This will trigger an OnValueChanged invoke
