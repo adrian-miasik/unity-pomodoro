@@ -1,5 +1,4 @@
 using AdrianMiasik.Components.Core;
-using UnityEditor.CrashReporting;
 using UnityEngine;
 using UnityEngine.Analytics;
 
@@ -32,7 +31,6 @@ namespace AdrianMiasik.Components.Specific.Settings
             Analytics.enabled = state;
             Analytics.deviceStatsEnabled = state;
             PerformanceReporting.enabled = state;
-            CrashReportingSettings.enabled = state;
             Settings.m_enableUnityAnalytics = state;
 
             Debug.Log("ua: " + Analytics.enabled);

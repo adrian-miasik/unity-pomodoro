@@ -1,5 +1,4 @@
 using AdrianMiasik.UWP;
-using UnityEditor.CrashReporting;
 using UnityEngine;
 using UnityEngine.Analytics;
 
@@ -71,7 +70,6 @@ namespace AdrianMiasik.ScriptableObjects
             Analytics.enabled = true;
             Analytics.deviceStatsEnabled = true;
             PerformanceReporting.enabled = true;
-            CrashReportingSettings.enabled = false;
             Analytics.ResumeInitialization();
             m_enableUnityAnalytics = true;
         }
