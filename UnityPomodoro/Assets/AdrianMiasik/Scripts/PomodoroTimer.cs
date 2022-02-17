@@ -16,7 +16,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik
 {
     // TODO: Fix credit bubble fade - Not always fading out
     // TODO: Provide users with the ability to disable the long timers in the settings panel.
