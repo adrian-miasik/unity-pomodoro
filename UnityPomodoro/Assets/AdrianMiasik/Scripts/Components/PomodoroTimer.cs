@@ -1013,7 +1013,7 @@ namespace AdrianMiasik.Components
         /// <returns></returns>
         public bool IsAboutPageOpen()
         {
-            return m_aboutContainer.IsInfoPageOpen();
+            return m_aboutContainer.IsAboutPageOpen();
         }
         
         /// <summary>
