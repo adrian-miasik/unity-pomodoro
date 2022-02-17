@@ -975,7 +975,7 @@ namespace AdrianMiasik
         /// Returns our currently selected <see cref="DigitFormat.SupportedFormats"/>'s index value.
         /// </summary>
         /// <returns>A number representing our enum index. See <see cref="DigitFormat.SupportedFormats"/></returns>
-        public int GetDigitFormat()
+        public int GetDigitFormatIndex()
         {
             return m_digitFormat.GetFormatIndex();
         }

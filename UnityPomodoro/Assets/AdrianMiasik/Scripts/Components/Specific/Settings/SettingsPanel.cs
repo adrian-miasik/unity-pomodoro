@@ -70,7 +70,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// </summary>
         public void UpdateDropdown()
         {
-            m_setDigitFormat.SetDropdownValue(Timer.GetDigitFormat());
+            m_setDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         public void Show()
         {
             gameObject.SetActive(true);
-            m_setDigitFormat.SetDropdownValue(Timer.GetDigitFormat());
+            m_setDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
             isOpen = true;
             ColorUpdate(Timer.GetTheme());
         }
