@@ -22,7 +22,8 @@ namespace AdrianMiasik.Components.Specific.Settings
         // Toggle Sliders
         [SerializeField] private SetLongBreaks m_setLongBreakSettingsOption;
         [SerializeField] private SetMuteAudioOutOfFocus m_setMuteSoundOutOfFocusToggle;
-
+        [SerializeField] private UnityAnalyticsSettingsOption m_unityAnalyticsSettingsOption;
+        
         private bool isOpen;
 
         public void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
@@ -34,11 +35,14 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_setMuteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
             m_setLongBreakSettingsOption.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
             m_setLongBreakSettingsOption.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            m_unityAnalyticsSettingsOption.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_unityAnalyticsSettingsOption.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
             
             // Init
             m_setDigitFormat.Initialize(Timer);
             m_pomodoro.Initialize(Timer);
             m_setLongBreakSettingsOption.Initialize(Timer, settingsConfig);
+            m_unityAnalyticsSettingsOption.Initialize(Timer, settingsConfig);
             // Hide mute option based on platform (Shown by default)
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
@@ -62,6 +66,8 @@ namespace AdrianMiasik.Components.Specific.Settings
                 m_setDigitFormat.ColorUpdate(Timer.GetTheme());
                 
                 m_setMuteSoundOutOfFocusToggle.ColorUpdate(theme);
+                
+                // m_unityAnalyticsSettingsOption.ColorUpdate(theme);
             }
         }
 

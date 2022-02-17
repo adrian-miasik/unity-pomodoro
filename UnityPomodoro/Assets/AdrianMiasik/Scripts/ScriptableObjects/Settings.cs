@@ -1,5 +1,7 @@
 using AdrianMiasik.UWP;
+using UnityEditor.CrashReporting;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace AdrianMiasik.ScriptableObjects
 {
@@ -29,6 +31,13 @@ namespace AdrianMiasik.ScriptableObjects
         /// </summary>
         public bool m_longBreaks;
 
+        /// <summary>
+        /// Do you want to enable the Unity Analytics service?
+        /// If `True`, the Unity Analytics service will track user data.
+        /// If `False`, the Unity Analytics service will no longer run and track user data.
+        /// </summary>
+        public bool m_enableUnityAnalytics;
+
         private void Awake()
         {
             ApplyPlatformDefaults();
@@ -57,6 +66,14 @@ namespace AdrianMiasik.ScriptableObjects
 #elif UNITY_IOS
             m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
+            // Enable Unity Analytics by default, user can opt-out:
+            // See Settings Panel and UnityAnalyticsSettingsOption.cs
+            Analytics.enabled = true;
+            Analytics.deviceStatsEnabled = true;
+            PerformanceReporting.enabled = true;
+            CrashReportingSettings.enabled = false;
+            Analytics.ResumeInitialization();
+            m_enableUnityAnalytics = true;
         }
     }
 }
