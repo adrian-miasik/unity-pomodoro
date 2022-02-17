@@ -1,16 +1,13 @@
 ﻿using System;
 using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
-using LeTai.Asset.TranslucentImage;
 using UnityEngine;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik.Components.Core
 {
     public class ConfirmationDialogManager : ThemeElement
     {
         [SerializeField] private ConfirmationDialog m_confirmationDialogPrefab; // Prefab reference
         [SerializeField] private Transform m_overlayCanvas; // Translucent Image Overlay Canvas
-        [SerializeField] private TranslucentImageSource m_translucentImageSource;
         
         // Cache
         private ConfirmationDialog currentDialogPopup;
@@ -33,7 +30,7 @@ namespace AdrianMiasik.Components
             
             currentDialogPopup = Instantiate(m_confirmationDialogPrefab, m_overlayCanvas.transform);
             isCurrentDialogInterruptible = interruptible;
-            currentDialogPopup.Initialize(Timer, this, m_translucentImageSource, onSubmit, onCancel, topText, bottomText);
+            currentDialogPopup.Initialize(Timer, this, onSubmit, onCancel, topText, bottomText);
         }
 
         public ConfirmationDialog GetCurrentConfirmationDialog()

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Timers;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -64,6 +63,8 @@ namespace AdrianMiasik.Components
         
         [Header("Unity Pomodoro - Components")]
         [SerializeField] private Background m_background; // Used to pull select focus
+        [SerializeField] private BlurOverlay m_overlay; // Used to blur background on sidebar focus and confirmation dialog pop-ups.
+        [SerializeField] private TranslucentImageSource m_translucentImageSource; // Necessary reference for blur
         [SerializeField] private CompletionLabel m_completionLabel; // Used to prompt the user the timer is finished
         [SerializeField] private DigitFormat m_digitFormat; // Responsible class for manipulating our digits and formats
         [FormerlySerializedAs("m_menuToggle")] [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
@@ -236,6 +237,7 @@ namespace AdrianMiasik.Components
 
         private void InitializeManagers()
         {
+            m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
             m_notifications.Initialize(m_settings);
         }
@@ -267,9 +269,11 @@ namespace AdrianMiasik.Components
             // Theme Slider
             m_themeSlider.GetToggleSlider().m_onSetToTrueClick.AddListener(SetToDarkMode);
             m_themeSlider.GetToggleSlider().m_onSetToFalseClick.AddListener(SetToLightMode);
-
-            m_hotkeyDetector.Initialize(this);
+            
+            // TODO: Menu toggle UE listener
+            
             m_background.Initialize(this);
+            m_overlay.Initialize(this);
             m_digitFormat.Initialize(this);
             m_completionLabel.Initialize(this);
             m_themeSlider.Initialize(this);
@@ -1348,61 +1352,7 @@ namespace AdrianMiasik.Components
             m_digitFormat.CorrectTickAnimVisuals();
             m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime));
         }
-
-        public void HideCreditsBubble()
-        {
-            m_creditsBubble.FadeOut(true);
-        }
-
-        public void ShowCreditsBubble()
-        {
-            m_creditsBubble.FadeIn(true);
-        }
-
-        public void ShowEndTimestampBubble()
-        {
-            m_endTimestampBubble.FadeIn(true);
-        }
-
-        public void DisableCompletionAnimation()
-        {
-            m_completionLabel.HideCompletionAnimation();
-            disableCompletionAnimation = true;
-        }
-
-        public void EnableBreakSlider()
-        {
-            m_breakSlider.SetVisualToEnable();
-        }
         
-        public void ShowSidebar()
-        {
-            m_sidebarMenu.gameObject.SetActive(true);
-            ConformCreditsBubbleToSidebar(m_sidebarMenu.CalculateSidebarWidth());
-            m_sidebarMenu.ShowOverlay();
-        }
-
-        public void DisableBreakSlider()
-        {
-            m_breakSlider.SetVisualToDisable();
-        }
-
-        public void HideSidebar()
-        {
-            m_sidebarMenu.gameObject.SetActive(false);
-            m_sidebarMenu.HideOverlay();
-        }
-
-        public void EnableDarkModeToggle()
-        {
-            m_themeSlider.SetVisualToEnable();
-        }
-
-        public void DisableDarkModeToggle()
-        {
-            m_themeSlider.SetVisualToDisable();
-        }
-
         public void SetPomodoroCount(int desiredPomodoroCount, int pomodoroProgress)
         {
             m_tomatoCounter.SetPomodoroCount(desiredPomodoroCount, pomodoroProgress);
@@ -1439,6 +1389,76 @@ namespace AdrianMiasik.Components
         public ConfirmationDialogManager GetConfirmDialogManager()
         {
             return m_confirmationDialogManager;
+        }
+
+        public TranslucentImageSource GetTranslucentImageSource()
+        {
+            return m_translucentImageSource;
+        }
+
+        public void ShowOverlay()
+        {
+            m_overlay.Show();
+        }
+
+        public void HideOverlay()
+        {
+            m_overlay.Hide();
+        }
+
+        // Creator Media Methods: Only intended for instant visual changes
+        public void HideCreditsBubble()
+        {
+            m_creditsBubble.FadeOut(true);
+        }
+
+        public void ShowCreditsBubble()
+        {
+            m_creditsBubble.FadeIn(true);
+        }
+
+        public void ShowEndTimestampBubble()
+        {
+            m_endTimestampBubble.FadeIn(true);
+        }
+
+        public void DisableCompletionAnimation()
+        {
+            m_completionLabel.HideCompletionAnimation();
+            disableCompletionAnimation = true;
+        }
+
+        public void EnableBreakSlider()
+        {
+            m_breakSlider.SetVisualToEnable();
+        }
+        
+        public void ShowSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(true);
+            ConformCreditsBubbleToSidebar(m_sidebarMenu.CalculateSidebarWidth());
+            ShowOverlay();
+        }
+
+        public void DisableBreakSlider()
+        {
+            m_breakSlider.SetVisualToDisable();
+        }
+
+        public void HideSidebar()
+        {
+            m_sidebarMenu.gameObject.SetActive(false); 
+            HideOverlay();
+        }
+
+        public void EnableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToEnable();
+        }
+
+        public void DisableDarkModeToggle()
+        {
+            m_themeSlider.SetVisualToDisable();
         }
     }
 }

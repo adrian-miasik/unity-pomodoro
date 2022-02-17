@@ -23,8 +23,6 @@ namespace AdrianMiasik.Components.Core.Containers
         [SerializeField] private ClickButtonImageIcon m_logo;
         [SerializeField] private RectTransform m_container;
         [SerializeField] private RectTransform m_background;
-        [SerializeField] private Image m_overlayImage;
-        [SerializeField] private CanvasGroup m_overlayGroup;
         [SerializeField] private SVGImage m_fill;
         [SerializeField] private SVGImage m_edge;
         [SerializeField] private TMP_Text m_versionNumber;
@@ -174,8 +172,7 @@ namespace AdrianMiasik.Components.Core.Containers
 
             PlayAnimation(m_entryAnimation);
             
-            m_overlayImage.enabled = true;
-            m_overlayGroup.alpha = 1;
+            Timer.ShowOverlay();
 
             // Theming
             ColorUpdate(Timer.GetTheme());
@@ -209,8 +206,7 @@ namespace AdrianMiasik.Components.Core.Containers
             
             PlayAnimation(m_exitAnimation);
             
-            m_overlayImage.enabled = false;
-            m_overlayGroup.alpha = 0;
+            Timer.HideOverlay();
 
             // Theming
             Timer.ColorUpdateCreditsBubble();
@@ -279,11 +275,6 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
-            // Overlay
-            overlay = theme.GetCurrentColorScheme().m_foreground;
-            overlay.a = theme.m_darkMode ? 0.025f : 0.5f;
-            m_overlayImage.color = overlay;
-
             // Background
             m_fill.color = theme.GetCurrentColorScheme().m_background;
             m_edge.color = theme.GetCurrentColorScheme().m_background;
@@ -296,19 +287,6 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 external.color = theme.GetCurrentColorScheme().m_foreground;
             }
-        }
-
-        public void ShowOverlay()
-        {
-            m_overlayImage.enabled = true;
-            m_overlayGroup.alpha = 1;
-            ColorUpdate(Timer.GetTheme());
-        }
-
-        public void HideOverlay()
-        {
-            m_overlayImage.enabled = false;
-            m_overlayGroup.alpha = 0;
         }
     }
 }
