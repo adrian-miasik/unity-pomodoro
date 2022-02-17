@@ -2,6 +2,7 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using LeTai.Asset.TranslucentImage;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
@@ -10,7 +11,7 @@ namespace AdrianMiasik.Components.Core
     /// An overlay that will blur the UI elements behind.
     /// <remarks>Two Canvas' are required for this Asset.</remarks>
     /// </summary>
-    public class BlurOverlay : ThemeElement
+    public class BlurOverlay : ThemeElement, IPointerClickHandler
     {
         [SerializeField] private TranslucentImage m_image;
         [SerializeField] private GraphicRaycaster m_mainCanvasRaycaster; // Intended to prevent clicking on blurred elements
@@ -39,6 +40,15 @@ namespace AdrianMiasik.Components.Core
             base.ColorUpdate(theme);
             
             m_image.color = theme.m_dark ? new Color(0.2f, 0.2f, 0.2f) : Color.grey;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (Timer.IsSidebarOpen())
+            {
+                Timer.CloseSidebar();
+                Hide();
+            }
         }
     }
 }

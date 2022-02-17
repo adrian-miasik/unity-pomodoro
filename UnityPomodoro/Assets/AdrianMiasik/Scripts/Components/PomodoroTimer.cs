@@ -1405,6 +1405,11 @@ namespace AdrianMiasik.Components
         {
             m_overlay.Hide();
         }
+        
+        public void CloseSidebar()
+        {
+            m_sidebarMenu.Close();
+        }
 
         // Creator Media Methods: Only intended for instant visual changes
         public void HideCreditsBubble()
