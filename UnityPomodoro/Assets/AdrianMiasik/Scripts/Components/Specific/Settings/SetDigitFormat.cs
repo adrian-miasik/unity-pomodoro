@@ -27,6 +27,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             base.Initialize(pomodoroTimer);
 
+            m_dropdown.onValueChanged.AddListener(pomodoroTimer.TryChangeFormat);
             SetDropdownValue(Timer.GetDigitFormat());
         }
 

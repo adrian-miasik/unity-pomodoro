@@ -46,6 +46,8 @@ namespace AdrianMiasik.Components.Core.Items
             {
                 Select();
             }
+             
+            m_button.m_onClick.AddListener(OnClick);
         }
 
         private void Update()
@@ -191,6 +193,11 @@ namespace AdrianMiasik.Components.Core.Items
             {
                 m_background.color = Timer.GetTheme().GetCurrentColorScheme().m_background;
             }
+        }
+
+        public ClickButton GetClickButton()
+        {
+            return m_button;
         }
     }
 }

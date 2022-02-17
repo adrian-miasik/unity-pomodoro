@@ -56,7 +56,9 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\HotkeyDetector.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialog.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\RightButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialogManager.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Theme.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\BlurOverlay.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\TomatoCounter.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\DigitFormat.cs" />
@@ -80,7 +82,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonSVGIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\SetPomodoroCount.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\ColorScheme.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\PomodoroTimer.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\PomodoroTimer.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\WriteVersionNumber.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\TimerProgress.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\IColorHook.cs" />
@@ -89,6 +91,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\ThemeIconContainer.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonImageIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\Sidebar.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ImageHoverColorChange.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Background.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ToggleSprite.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\SetLongBreaks.cs" />
@@ -782,6 +785,18 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="LeTai.TranslucentImage.UniversalRP.csproj">
+      <Project>{6eee82e8-590d-a914-aacd-18c5f4242353}</Project>
+      <Name>LeTai.TranslucentImage.UniversalRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TranslucentImage.Editor.csproj">
+      <Project>{2fcf79b6-f632-a61b-c376-f027cb89cda8}</Project>
+      <Name>LeTai.TranslucentImage.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TranslucentImage.csproj">
+      <Project>{8dd3cfc6-1299-156c-8b44-79d09a054f34}</Project>
+      <Name>LeTai.TranslucentImage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

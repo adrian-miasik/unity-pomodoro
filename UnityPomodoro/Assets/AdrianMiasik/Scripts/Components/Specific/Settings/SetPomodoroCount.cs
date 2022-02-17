@@ -23,7 +23,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                 // If the new count removes/truncates potential progress...
                 if (Timer.GetTomatoProgress() > desiredCount)
                 {
-                    Timer.SpawnConfirmationDialog(() =>
+                    Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                     {
                         // Set to new count and remove additional progress
                         Timer.SetPomodoroCount(desiredCount, desiredCount);

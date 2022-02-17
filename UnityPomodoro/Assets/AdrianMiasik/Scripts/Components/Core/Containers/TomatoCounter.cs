@@ -15,7 +15,7 @@ namespace AdrianMiasik.Components.Core.Containers
     public class TomatoCounter : ThemeElement
     {
         [SerializeField] private HorizontalLayoutGroup m_horizontal;
-        [SerializeField] private GameObject m_trashcan;
+        [SerializeField] private ClickButton m_trashcan;
         [SerializeField] private List<Tomato> m_uncompletedTomatoes = new List<Tomato>();
         [SerializeField] private Tomato m_tomatoPrefab;
 
@@ -28,12 +28,19 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="updateColors"></param>
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
+            base.Initialize(pomodoroTimer, updateColors);
+            
+            m_trashcan.m_onClick.AddListener(TrashTomatoes);
+            
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             foreach (Tomato tomato in m_uncompletedTomatoes)
             {
-                tomato.Initialize(pomodoroTimer, updateColors);
+                tomato.Initialize(Timer);
             }
-            
-            base.Initialize(pomodoroTimer, updateColors);
             
             completedTomatoes.Clear();
             DetermineTrashcanVisibility();
@@ -102,7 +109,7 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void TrashTomatoes()
         {
-            Timer.SpawnConfirmationDialog(() =>
+            Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
             {
                 Timer.DeactivateLongBreak();
                 Timer.IfSetupTriggerRebuild();
@@ -142,7 +149,7 @@ namespace AdrianMiasik.Components.Core.Containers
             m_trashcan.transform.SetParent(m_uncompletedTomatoes[m_uncompletedTomatoes.Count - 1].transform);
 
             // Re-init
-            Initialize(Timer);
+            Initialize();
 
             for (int i = 0; i < pomodoroProgress; i++)
             {
