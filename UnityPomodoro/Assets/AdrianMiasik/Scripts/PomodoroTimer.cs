@@ -979,6 +979,11 @@ namespace AdrianMiasik
         {
             return m_digitFormat.GetFormatIndex();
         }
+
+        public DigitFormat GetDigitFormat()
+        {
+            return m_digitFormat;
+        }
         
         /// <summary>
         /// Returns a list of our current selected element.
@@ -1062,18 +1067,7 @@ namespace AdrianMiasik
         {
             m_background.SetSelectionNavigation(backgroundNav);
         }
-
-        // TODO: move to DigitFormatDropdown.cs
-        /// <summary>
-        /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog
-        /// if necessary. See <see cref="DigitFormat.SupportedFormats"/>.
-        /// </summary>
-        /// <param name="i"></param>
-        public void TryChangeFormat(Int32 i)
-        {
-            TryChangeFormat((DigitFormat.SupportedFormats)i);
-        }
-
+        
         /// <summary>
         /// Attempts to change our <see cref="DigitFormat"/> to the provided <see cref="DigitFormat.SupportedFormats"/>,
         /// will prompt user with confirmation dialog if necessary.
