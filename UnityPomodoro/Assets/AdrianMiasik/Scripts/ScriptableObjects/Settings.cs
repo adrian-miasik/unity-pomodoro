@@ -65,13 +65,6 @@ namespace AdrianMiasik.ScriptableObjects
 #elif UNITY_IOS
             m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
-            // Enable Unity Analytics by default, user can opt-out:
-            // See Settings Panel and UnityAnalyticsSettingsOption.cs
-            Analytics.enabled = true;
-            Analytics.deviceStatsEnabled = true;
-            PerformanceReporting.enabled = true;
-            Analytics.ResumeInitialization();
-            m_enableUnityAnalytics = true;
         }
     }
 }

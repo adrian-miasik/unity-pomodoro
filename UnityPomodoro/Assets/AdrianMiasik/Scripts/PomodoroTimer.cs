@@ -13,6 +13,7 @@ using LeTai.Asset.TranslucentImage;
 using TMPro;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -169,13 +170,16 @@ namespace AdrianMiasik
             }
         }
 
-        async void Start()
+        void Start()
         {
-            await UnityServices.InitializeAsync();
-            
             // Single entry point
             ConfigureSettings();
             Initialize();
+        }
+
+        public async void StartServices()
+        {
+            await UnityServices.InitializeAsync();
         }
 
         private void ConfigureSettings()
@@ -183,6 +187,23 @@ namespace AdrianMiasik
             // Set theme to light
             // GetTheme().m_darkMode = false;
             
+            // m_settings.m_muteSoundWhenOutOfFocus = true;
+            
+            if (m_settings.m_enableUnityAnalytics)
+            {
+                StartServices();
+                Analytics.ResumeInitialization();
+            }
+            else
+            {
+                Analytics.FlushEvents(); // Upload current recorded events
+            }
+            
+            // Enable / Disable based on setting
+            Analytics.enabled = m_settings.m_enableUnityAnalytics;
+            Analytics.deviceStatsEnabled = m_settings.m_enableUnityAnalytics;
+            PerformanceReporting.enabled = m_settings.m_enableUnityAnalytics;
+
             // Restart settings (Restore back to dev defaults dependent on OS)
             m_settings.ApplyPlatformDefaults();
         }
@@ -1468,6 +1489,12 @@ namespace AdrianMiasik
         public void DisableDarkModeToggle()
         {
             m_themeSlider.SetVisualToDisable();
+        }
+
+        // Analytics
+        public void RestartApplication()
+        {
+            m_hotkeyDetector.RestartApplication();
         }
     }
 }

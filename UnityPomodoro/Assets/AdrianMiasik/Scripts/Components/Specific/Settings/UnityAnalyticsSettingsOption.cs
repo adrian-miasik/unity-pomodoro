@@ -22,27 +22,33 @@ namespace AdrianMiasik.Components.Specific.Settings
             {
                 SetSettingUnityAnalytics(false);
             });
-            SetSettingUnityAnalytics(settingsConfig.m_enableUnityAnalytics);
+            // SetSettingUnityAnalytics(settingsConfig.m_enableUnityAnalytics);
             m_toggleSlider.Initialize(pomodoroTimer, settingsConfig.m_enableUnityAnalytics);
         }
 
         public void SetSettingUnityAnalytics(bool state)
         {
-            Analytics.enabled = state;
-            Analytics.deviceStatsEnabled = state;
-            PerformanceReporting.enabled = state;
             Settings.m_enableUnityAnalytics = state;
             
             if (state)
             {
+                Timer.StartServices();
+                Analytics.ResumeInitialization();
                 Debug.Log("Enabled Unity Analytics");
             }
             else
             {
+                // TODO: Opt out with plugin? https://docs.unity.com/analytics/ComplyingWithGDPRandCCPA.html
+                Analytics.FlushEvents();
+                Timer.RestartApplication();
                 Debug.Log("Disabled Unity Analytics");
             }
             
-            Debug.Log("Analytics Status: " + Analytics.enabled);
+            Analytics.enabled = state;
+            Analytics.deviceStatsEnabled = state;
+            PerformanceReporting.enabled = state;
+            
+            Debug.Log("UA Opt out: " + Analytics.playerOptedOut);
         }
     }
 }
