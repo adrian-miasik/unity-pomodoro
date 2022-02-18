@@ -22,7 +22,6 @@ namespace AdrianMiasik.Components.Specific.Settings
             {
                 SetSettingUnityAnalytics(false);
             });
-            // SetSettingUnityAnalytics(settingsConfig.m_enableUnityAnalytics);
             m_toggleSlider.Initialize(pomodoroTimer, settingsConfig.m_enableUnityAnalytics);
         }
 
@@ -38,7 +37,6 @@ namespace AdrianMiasik.Components.Specific.Settings
             }
             else
             {
-                // TODO: Opt out with plugin? https://docs.unity.com/analytics/ComplyingWithGDPRandCCPA.html
                 Analytics.FlushEvents();
                 Timer.RestartApplication();
                 Debug.Log("Disabled Unity Analytics");
@@ -47,8 +45,6 @@ namespace AdrianMiasik.Components.Specific.Settings
             Analytics.enabled = state;
             Analytics.deviceStatsEnabled = state;
             PerformanceReporting.enabled = state;
-            
-            Debug.Log("UA Opt out: " + Analytics.playerOptedOut);
         }
     }
 }
