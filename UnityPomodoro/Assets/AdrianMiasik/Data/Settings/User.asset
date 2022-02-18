@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f493ba30fd8f4cb69d087e3a08c28f51, type: 3}
   m_Name: User
   m_EditorClassIdentifier: 
-  m_muteSoundWhenOutOfFocus: 1
+  m_muteSoundWhenOutOfFocus: 0
   m_longBreaks: 1
   m_enableUnityAnalytics: 1

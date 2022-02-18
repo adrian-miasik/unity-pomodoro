@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using AdrianMiasik.UWP;
 using UnityEngine;

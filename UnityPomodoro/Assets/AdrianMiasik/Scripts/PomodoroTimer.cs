@@ -128,6 +128,7 @@ namespace AdrianMiasik
         [Header("External Extra - Deprecated")]
         // TODO: Move to theme class
         [SerializeField] private Theme m_theme; // Current active theme
+        [SerializeField] private TMP_Text m_debugAnalyticsStatus;
 
         // Time
         private double currentTime; // Current time left (In seconds)
@@ -208,7 +209,7 @@ namespace AdrianMiasik
             if (enableUnityAnalytics)
             {
                 StartServices();
-                Analytics.ResumeInitialization();
+                //Analytics.ResumeInitialization();
             }
             else
             {
@@ -219,6 +220,8 @@ namespace AdrianMiasik
             Analytics.enabled = enableUnityAnalytics;
             Analytics.deviceStatsEnabled = enableUnityAnalytics;
             PerformanceReporting.enabled = enableUnityAnalytics;
+
+            m_debugAnalyticsStatus.text = Analytics.enabled.ToString();
         }
 
         async void StartServices()
