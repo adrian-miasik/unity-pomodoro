@@ -16,7 +16,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace AdrianMiasik.Components
+namespace AdrianMiasik
 {
     // TODO: Fix credit bubble fade - Not always fading out
     // TODO: Provide users with the ability to disable the long timers in the settings panel.
@@ -975,9 +975,14 @@ namespace AdrianMiasik.Components
         /// Returns our currently selected <see cref="DigitFormat.SupportedFormats"/>'s index value.
         /// </summary>
         /// <returns>A number representing our enum index. See <see cref="DigitFormat.SupportedFormats"/></returns>
-        public int GetDigitFormat()
+        public int GetDigitFormatIndex()
         {
             return m_digitFormat.GetFormatIndex();
+        }
+
+        public DigitFormat GetDigitFormat()
+        {
+            return m_digitFormat;
         }
         
         /// <summary>
@@ -1062,18 +1067,7 @@ namespace AdrianMiasik.Components
         {
             m_background.SetSelectionNavigation(backgroundNav);
         }
-
-        // TODO: move to DigitFormatDropdown.cs
-        /// <summary>
-        /// Attempts to change the digit format using enum index, will prompt user with confirmation dialog
-        /// if necessary. See <see cref="DigitFormat.SupportedFormats"/>.
-        /// </summary>
-        /// <param name="i"></param>
-        public void TryChangeFormat(Int32 i)
-        {
-            TryChangeFormat((DigitFormat.SupportedFormats)i);
-        }
-
+        
         /// <summary>
         /// Attempts to change our <see cref="DigitFormat"/> to the provided <see cref="DigitFormat.SupportedFormats"/>,
         /// will prompt user with confirmation dialog if necessary.
