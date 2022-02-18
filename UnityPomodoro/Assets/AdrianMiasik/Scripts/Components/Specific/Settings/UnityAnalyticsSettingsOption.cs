@@ -32,8 +32,6 @@ namespace AdrianMiasik.Components.Specific.Settings
             Analytics.deviceStatsEnabled = state;
             PerformanceReporting.enabled = state;
             Settings.m_enableUnityAnalytics = state;
-
-            Debug.Log("ua: " + Analytics.enabled);
             
             if (state)
             {
@@ -43,6 +41,8 @@ namespace AdrianMiasik.Components.Specific.Settings
             {
                 Debug.Log("Disabled Unity Analytics");
             }
+            
+            Debug.Log("Analytics Status: " + Analytics.enabled);
         }
     }
 }

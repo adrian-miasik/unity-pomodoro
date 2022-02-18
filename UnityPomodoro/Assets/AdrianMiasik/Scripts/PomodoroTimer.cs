@@ -11,6 +11,7 @@ using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
 using TMPro;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -168,13 +169,15 @@ namespace AdrianMiasik.Components
             }
         }
 
-        private void Start()
+        async void Start()
         {
+            await UnityServices.InitializeAsync();
+            
             // Single entry point
             ConfigureSettings();
             Initialize();
         }
-        
+
         private void ConfigureSettings()
         {
             // Set theme to light
