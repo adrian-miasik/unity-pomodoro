@@ -10,11 +10,18 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// </summary>
     public class SetPomodoroCount : SettingsOptionDropdown
     {
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
+        {
+            base.Initialize(pomodoroTimer, updateColors);
+            
+            m_dropdown.onValueChanged.AddListener(SetPomodoroLongBreakCount);
+        }
+
         /// <summary>
-        /// <remarks>Used as a UnityEvent on the TMP_Dropdown. See <see cref="m_dropdown"/></remarks>
+        /// <remarks>Used as a UnityEvent on the Unity Pomodoro Dropdown. See <see cref="Dropdown"/></remarks>
         /// </summary>
         /// <param name="i"></param>
-        public void SetPomodoroLongBreakCount(Int32 i)
+        private void SetPomodoroLongBreakCount(Int32 i)
         {
             int desiredCount = i + 1; // Dependant on our dropdown options.
 

@@ -210,6 +210,8 @@ namespace AdrianMiasik.Components.Core.Containers
 
             // Theming
             Timer.ColorUpdateCreditsBubble();
+            
+            AudioMimic.Instance.PlaySound(m_logo.m_clickSound.clip);
         }
         
         private void PlayAnimation(AnimationClip animationToPlay)
