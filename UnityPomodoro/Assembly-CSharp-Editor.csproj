@@ -56,8 +56,8 @@
      <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonEditor.cs" />
      <Compile Include="Assets\AdrianMiasik\Editor\BooleanToggleEditor.cs" />
      <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonImageIconEditor.cs" />
-     <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonTextEditor.cs" />
      <Compile Include="Assets\AdrianMiasik\Editor\DropdownEditor.cs" />
+     <Compile Include="Assets\AdrianMiasik\Editor\ClickButtonTextEditor.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -691,6 +691,9 @@
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Services.Analytics.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.VectorGraphics">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.VectorGraphics.dll</HintPath>
  </Reference>
@@ -709,6 +712,9 @@
  <Reference Include="Unity.2D.Sprite.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Services.Analytics">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.RenderPipelines.Core.Runtime">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
  </Reference>
@@ -724,14 +730,23 @@
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Services.Core">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Mathematics">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ShaderGraph.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Services.Core.Analytics">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.RenderPipelines.Universal.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Services.Core.Environments">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Core.Environments.dll</HintPath>
  </Reference>
  <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
@@ -753,21 +768,6 @@
  </Reference>
  <Reference Include="Unity.Recorder">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Services.Core.Analytics">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Services.Core.Environments">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Core.Environments.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Services.Analytics.Editor">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Services.Analytics">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Services.Core">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

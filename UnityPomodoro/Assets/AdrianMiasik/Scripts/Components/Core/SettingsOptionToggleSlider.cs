@@ -14,6 +14,7 @@ namespace AdrianMiasik.Components.Core
     {
         [SerializeField] private TMP_Text m_settingsLabel;
         [SerializeField] public ToggleSlider m_toggleSlider;
+        [SerializeField] public RectTransform m_spacer; // Bottom margin
 
         protected Settings Settings;
         
@@ -31,6 +32,11 @@ namespace AdrianMiasik.Components.Core
         {
             base.Initialize(pomodoroTimer);
             Settings = settingsConfig;
+        }
+
+        public void UpdateToggle(bool state)
+        {
+            m_toggleSlider.Refresh(state);
         }
         
         public override void ColorUpdate(Theme theme)

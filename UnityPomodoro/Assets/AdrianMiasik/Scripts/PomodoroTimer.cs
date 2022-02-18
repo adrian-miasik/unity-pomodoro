@@ -177,19 +177,35 @@ namespace AdrianMiasik
             Initialize();
         }
 
-        public async void StartServices()
-        {
-            await UnityServices.InitializeAsync();
-        }
-
         private void ConfigureSettings()
         {
+            m_settings.RegisterTimer(this);
+            
+            // TODO: Only run this once on first time setup / on F5 refresh.
+            // Restart settings (Restore back to dev defaults dependent on OS)
+            // m_settings.ApplyPlatformDefaults();
+
             // Set theme to light
             // GetTheme().m_darkMode = false;
             
             // m_settings.m_muteSoundWhenOutOfFocus = true;
             
-            if (m_settings.m_enableUnityAnalytics)
+            ToggleUnityAnalytics(m_settings.m_enableUnityAnalytics);
+        }
+        
+        public void UpdateSettings(Settings settings)
+        {
+            if (m_settingsContainer.IsPageOpen())
+            {
+                m_settingsContainer.Refresh(settings);
+            }
+        }
+
+        public void ToggleUnityAnalytics(bool enableUnityAnalytics)
+        {
+            m_settings.m_enableUnityAnalytics = enableUnityAnalytics;
+            
+            if (enableUnityAnalytics)
             {
                 StartServices();
                 Analytics.ResumeInitialization();
@@ -200,12 +216,14 @@ namespace AdrianMiasik
             }
             
             // Enable / Disable based on setting
-            Analytics.enabled = m_settings.m_enableUnityAnalytics;
-            Analytics.deviceStatsEnabled = m_settings.m_enableUnityAnalytics;
-            PerformanceReporting.enabled = m_settings.m_enableUnityAnalytics;
+            Analytics.enabled = enableUnityAnalytics;
+            Analytics.deviceStatsEnabled = enableUnityAnalytics;
+            PerformanceReporting.enabled = enableUnityAnalytics;
+        }
 
-            // Restart settings (Restore back to dev defaults dependent on OS)
-            m_settings.ApplyPlatformDefaults();
+        async void StartServices()
+        {
+            await UnityServices.InitializeAsync();
         }
 
         /// <summary>
@@ -213,7 +231,7 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
-            // Setup pages /s panels
+            // Setup pages/panels
             m_settingsContainer.Hide();
             m_aboutContainer.Hide();
             m_mainContainer.gameObject.SetActive(true);

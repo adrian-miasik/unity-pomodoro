@@ -1,18 +1,29 @@
+using System;
+using System.Collections.Generic;
 using AdrianMiasik.UWP;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 namespace AdrianMiasik.ScriptableObjects
 {
-    // TODO: Add/move set digit format preference to here - SupportedFormats (since it's timer dependent)
+    // TODO: Add set digit format preference to here (since it's timer dependent)
+    // TODO: Add pomodoro count preference to here (since it's timer dependant)
     // TODO: Remove mute sound when out of focus (Since it's a system wide setting similar to dark mode)
     /// <summary>
-    /// Responsible for keeping track of the users timer preferences.
+    /// Responsible for keeping track of the users timer preferences for the current timer.
     /// </summary>
     [CreateAssetMenu(fileName = "New Settings Configuration", 
         menuName = "Adrian Miasik/Create New Settings Configuration")]
     public class Settings : ScriptableObject
     {
+        /// <summary>
+        /// A list of timers that are currently using this settings configuration.
+        /// <remarks>Intended to be used for propagating editor changes down to each timers settings page. (I.e
+        /// when we edit a scriptable object setting via editor / inspector, we want all the timers to update visually
+        /// without having to re-load the settings page for each timer to see their new state. It's a similar
+        /// concept to our <see cref="Theme"/>'s where we force a refresh on editor validate.)</remarks>
+        /// </summary>
+        private List<PomodoroTimer> timers = new List<PomodoroTimer>();
+        
         /// <summary>
         /// Should we mute the sound when the application is not in focus?
         /// If `True`, the application audio will not be played when it's not in focus.
@@ -37,16 +48,30 @@ namespace AdrianMiasik.ScriptableObjects
         /// </summary>
         public bool m_enableUnityAnalytics;
 
+        private void OnValidate()
+        {
+            foreach (PomodoroTimer timer in timers)
+            {
+                timer.UpdateSettings(this);
+            }
+        }
+
+        private void OnEnable()
+        {
+            timers.Clear();
+        }
+        
         private void Awake()
         {
-            ApplyPlatformDefaults();
+            ApplyDefaults();
         }
 
         /// <summary>
         /// Configures our default settings using platform specific define directives. (I.e. Based on current
         /// Operating System)
         /// </summary>
-        public void ApplyPlatformDefaults()
+        [ContextMenu("Reset to Defaults")]
+        private void ApplyDefaults()
         {
             // All platforms have long breaks on by default
             m_longBreaks = true;
@@ -65,6 +90,33 @@ namespace AdrianMiasik.ScriptableObjects
 #elif UNITY_IOS
             m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
+
+            // All platforms have analytics on by default. (User can opt-out though)
+            m_enableUnityAnalytics = true;
+            
+            // Propagate changes down
+            OnValidate();
+        }
+
+        public void RegisterTimer(PomodoroTimer timer)
+        {
+            if (!timers.Contains(timer))
+            {
+                timers.Add(timer);
+            }
+        }
+        
+        /// <summary>
+        /// Displays into the console all the associated PomodoroTimers (<see cref="PomodoroTimer"/>) objects that have
+        /// been registered to this settings config.
+        /// </summary>
+        [ContextMenu("List Timers")]
+        public void ListTimers()
+        {
+            foreach (PomodoroTimer timer in timers)
+            {
+                Debug.Log(timer.ToString(), timer.gameObject);    
+            }
         }
     }
 }
