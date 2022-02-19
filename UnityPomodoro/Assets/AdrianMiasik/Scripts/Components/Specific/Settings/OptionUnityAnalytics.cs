@@ -45,10 +45,16 @@ namespace AdrianMiasik.Components.Specific.Settings
                     
                     // Disable analytics
                     Timer.ToggleUnityAnalytics(false, false);
+#if UNITY_ANALYTICS_EVENT_LOGS
                     Debug.LogWarning("Unity Analytics - Restarting Application with Disabled Analytics.");
+#endif
+                    
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.ExitPlaymode();
+#elif UNITY_ANDROID
+                    RestartAndroidProcess();
 #else
+                    // Windows + (hopefully mac and linux too... TODO: Device testing)
                     System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
                     Application.Quit();
 #endif
@@ -63,5 +69,31 @@ namespace AdrianMiasik.Components.Specific.Settings
                 Timer.ToggleUnityAnalytics(true, false);
             }
         }
+
+#if UNITY_ANDROID
+        /// <summary>
+        /// Restarts our android application and re-opens the process.
+        /// </summary>
+        private static void RestartAndroidProcess()
+        {
+            using AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+
+            const int kIntent_FLAG_ACTIVITY_CLEAR_TASK = 0x00008000;
+            const int kIntent_FLAG_ACTIVITY_NEW_TASK = 0x10000000;
+
+            AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+            AndroidJavaObject packageManager = currentActivity.Call<AndroidJavaObject>("getPackageManager");
+            AndroidJavaObject intent = packageManager.Call<AndroidJavaObject>("getLaunchIntentForPackage",
+                Application.identifier);
+
+            intent.Call<AndroidJavaObject>("setFlags", 
+                kIntent_FLAG_ACTIVITY_NEW_TASK | kIntent_FLAG_ACTIVITY_CLEAR_TASK);
+            currentActivity.Call("startActivity", intent);
+            currentActivity.Call("finish");
+            AndroidJavaClass process = new AndroidJavaClass("android.os.Process");
+            int pid = process.CallStatic<int>("myPid");
+            process.CallStatic("killProcess", pid);
+        }
+#endif
     }
 }

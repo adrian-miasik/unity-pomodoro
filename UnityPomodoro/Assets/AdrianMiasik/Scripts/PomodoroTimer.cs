@@ -207,7 +207,7 @@ namespace AdrianMiasik
                 defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
 
-                // All platforms have analytics on by default. (User can opt-out though)
+                // All platforms have analytics on by default. (User can opt-out though via settings panel)
                 defaultSettings.m_enableUnityAnalytics = true;
                 
                 // Finally save
@@ -215,11 +215,14 @@ namespace AdrianMiasik
             }
             
             settings = loadedSettings;
-            
+        
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
             // Update analytics
             ToggleUnityAnalytics(settings.m_enableUnityAnalytics, true);
+#endif
         }
-        
+
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
         public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
             // Apply and save
@@ -228,7 +231,9 @@ namespace AdrianMiasik
             
             // Set if service needs to start on init...
             Analytics.initializeOnStartup = enableUnityAnalytics;
+#if UNITY_ANALYTICS_EVENT_LOGS
             Debug.LogWarning("Unity Analytics - Initialize on startup: " + Analytics.initializeOnStartup);
+#endif
 
             if (enableUnityAnalytics)
             {
@@ -243,9 +248,11 @@ namespace AdrianMiasik
                 Analytics.limitUserTracking = true;
                 Analytics.deviceStatsEnabled = false;
 
+#if UNITY_ANALYTICS_EVENT_LOGS
                 Debug.LogWarning("Unity Analytics - Stopped Service. " +
                                  "(Service will still cache some events into it's buffer it seems, but won't upload " +
                                  "them.)");
+#endif
             }
         }
         
@@ -258,7 +265,9 @@ namespace AdrianMiasik
                 await UnityServices.InitializeAsync();
                 List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
                 
+#if UNITY_ANALYTICS_EVENT_LOGS
                 Debug.LogWarning("Unity Analytics - Service Started.");
+#endif
                 
                 // Enable analytics
                 Analytics.enabled = true;
@@ -292,6 +301,7 @@ namespace AdrianMiasik
                
             }
         }
+#endif
 
         /// <summary>
         /// Setup view, calculate time, initialize components, transition in, and animate.
