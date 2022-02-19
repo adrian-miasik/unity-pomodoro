@@ -8,7 +8,7 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// A <see cref="ThemeElement"/> dropdown with a label.
     /// Intended to be used for 'Set Pomodoro Count' settings option. (See <see cref="SettingsPanel"/>)
     /// </summary>
-    public class SetPomodoroCount : SettingsOptionDropdown
+    public class OptionPomodoroCount : SettingsOptionDropdown
     {
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {

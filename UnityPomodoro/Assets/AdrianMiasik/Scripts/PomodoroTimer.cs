@@ -11,7 +11,10 @@ using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
 using TMPro;
+using Unity.Services.Analytics;
+using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -53,10 +56,7 @@ namespace AdrianMiasik
         /// The timer's current state. See enum <see cref="States"/>
         /// </summary>
         public States m_state = States.SETUP;
-
-        [Header("Settings (for this specific timer)")] 
-        [SerializeField] private Settings m_settings;
-
+        
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -155,9 +155,11 @@ namespace AdrianMiasik
         private float cachedSeconds;
         private bool isRingTickAnimating;
 
+        private TimerSettings settings;
+
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (m_settings.m_muteSoundWhenOutOfFocus)
+            if (settings.m_muteSoundWhenOutOfFocus)
             {
                 // Prevent application from making noise when not in focus
                 AudioListener.volume = !hasFocus ? 0 : 1;
@@ -167,21 +169,107 @@ namespace AdrianMiasik
                 AudioListener.volume = 1;
             }
         }
-
-        private void Start()
+        
+        void Awake()
         {
             // Single entry point
             ConfigureSettings();
             Initialize();
         }
-        
+
         private void ConfigureSettings()
         {
-            // Set theme to light
-            // GetTheme().m_darkMode = false;
+            TimerSettings loadedSettings = UserSettingsSerializer.Load();
             
-            // Restart settings (Restore back to dev defaults dependent on OS)
-            m_settings.ApplyPlatformDefaults();
+            // If we don't have any saved settings...
+            if (loadedSettings == null)
+            {
+                Debug.LogWarning("Creating new Timer Settings.");
+                
+                // Create new settings
+                TimerSettings defaultSettings = new TimerSettings();
+                
+                // All platforms have long breaks on by default
+                defaultSettings.m_longBreaks = true;
+                
+                // Apply mute out of focus
+#if UNITY_STANDALONE_OSX
+                defaultSettings.m_muteSoundWhenOutOfFocus = false;
+#elif UNITY_STANDALONE_LINUX
+                defaultSettings.m_muteSoundWhenOutOfFocus = false;
+#elif UNITY_STANDALONE_WIN
+                defaultSettings.m_muteSoundWhenOutOfFocus = false;
+#elif UNITY_WSA // UWP
+                defaultSettings.m_muteSoundWhenOutOfFocus = true; // Set to true since our UWP Notification will pull focus back to our app
+#elif UNITY_ANDROID
+                defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile
+#elif UNITY_IOS
+                defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
+#endif
+
+                // All platforms have analytics on by default. (User can opt-out though)
+                defaultSettings.m_enableUnityAnalytics = true;
+                
+                // Finally save
+                loadedSettings = defaultSettings;
+            }
+            
+            settings = loadedSettings;
+            
+            // Update analytics
+            ToggleUnityAnalytics(settings.m_enableUnityAnalytics);
+        }
+        
+        public void ToggleUnityAnalytics(bool enableUnityAnalytics)
+        {
+            // Apply and save
+            settings.m_enableUnityAnalytics = enableUnityAnalytics;
+            UserSettingsSerializer.Save(settings);
+            
+            // Set if service needs to start on init...
+            Analytics.initializeOnStartup = enableUnityAnalytics;
+            Debug.LogWarning("Unity Analytics - Initialize on startup: " + Analytics.initializeOnStartup);
+
+            if (enableUnityAnalytics)
+            {
+                // Enable analytics
+                StartServices();
+            }
+            else
+            {
+                // Disable analytics
+                Analytics.enabled = false;
+                PerformanceReporting.enabled = false;
+                Analytics.limitUserTracking = true;
+                Analytics.deviceStatsEnabled = false;
+
+                Debug.LogWarning("Unity Analytics - Stopped Service. " +
+                                 "(Service will still cache some events into it's buffer it seems, but won't upload " +
+                                 "them.)");
+            }
+        }
+        
+        async void StartServices()
+        {
+            try
+            {
+                // Debug.LogWarning("Unity Analytics - Starting Up Service...");
+                
+                await UnityServices.InitializeAsync();
+                List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
+                
+                Debug.LogWarning("Unity Analytics - Service Started.");
+                
+                // Enable analytics
+                Analytics.enabled = true;
+                PerformanceReporting.enabled = true;
+                Analytics.limitUserTracking = false;
+                Analytics.deviceStatsEnabled = true;
+            }
+            catch (ConsentCheckException e)
+            {
+               
+            }
         }
 
         /// <summary>
@@ -189,7 +277,7 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
-            // Setup pages /s panels
+            // Setup pages/panels
             m_settingsContainer.Hide();
             m_aboutContainer.Hide();
             m_mainContainer.gameObject.SetActive(true);
@@ -240,7 +328,7 @@ namespace AdrianMiasik
         {
             m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
-            m_notifications.Initialize(m_settings);
+            m_notifications.Initialize(settings);
         }
 
         private void InitializeComponents()
@@ -284,10 +372,10 @@ namespace AdrianMiasik
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
-            m_settingsContainer.Initialize(this, m_settings);
+            m_settingsContainer.Initialize(this, settings);
             m_skipButton.Initialize(this);
             
-            if (m_settings.m_longBreaks)
+            if (settings.m_longBreaks)
             {
                 m_tomatoCounter.Initialize(this);
                 m_completionLabel.MoveAnchors(true);
@@ -470,7 +558,7 @@ namespace AdrianMiasik
                 if (m_state != States.COMPLETE)
                 {
                     m_text.gameObject.SetActive(true);
-                    if (m_settings.m_longBreaks)
+                    if (settings.m_longBreaks)
                     {
                         m_tomatoCounter.gameObject.SetActive(true);
                     }
@@ -479,7 +567,7 @@ namespace AdrianMiasik
             else
             {
                 m_text.gameObject.SetActive(false);
-                if (m_settings.m_longBreaks)
+                if (settings.m_longBreaks)
                 {
                     m_tomatoCounter.gameObject.SetActive(false);
                 }
@@ -558,7 +646,7 @@ namespace AdrianMiasik
             // (We don't add tomatoes for breaks)
             if (!IsOnBreak() && !IsOnLongBreak() && m_state != States.SETUP)
             {
-                if (m_settings.m_longBreaks)
+                if (settings.m_longBreaks)
                 {
                     m_tomatoCounter.FillTomato();
                 }
@@ -758,7 +846,7 @@ namespace AdrianMiasik
                 CalculateTimeValues();
             }
 
-            if (m_settings.m_longBreaks)
+            if (settings.m_longBreaks)
             {
                 // Remove long break once user has started it via Play
                 if (IsOnBreak() && IsOnLongBreak())
@@ -1244,8 +1332,10 @@ namespace AdrianMiasik
         public void SetSettingLongBreaks(bool state = true)
         {
             // TODO: Fix double theme element registration on this setting change
-            // Change setting
-            m_settings.m_longBreaks = state;
+            // Apply and save
+            settings.m_longBreaks = state;
+            UserSettingsSerializer.Save(settings);
+            Debug.Log("Timer Settings Saved.");
             
             // Apply component swap
             if (state)

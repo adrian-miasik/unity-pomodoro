@@ -5,9 +5,9 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// <summary>
     /// A settings option intended be used for 'Enable long break' settings option. (See <see cref="SettingsPanel"/>)
     /// </summary>
-    public class SetLongBreaks : SettingsOptionToggleSlider
+    public class OptionEnableLongBreaks : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
         {
             base.Initialize(pomodoroTimer, settingsConfig);
             if (Settings.m_longBreaks)
