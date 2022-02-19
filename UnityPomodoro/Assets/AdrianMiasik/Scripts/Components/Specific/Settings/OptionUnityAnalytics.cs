@@ -60,6 +60,14 @@ namespace AdrianMiasik.Components.Specific.Settings
             }
             else
             {
+                // Send enabled event log
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    { "testingKey", "testingValue123Enabled" },
+                };
+                Events.CustomData("analyticsEnabled", parameters);
+                Events.Flush();
+                
                 Timer.ToggleUnityAnalytics(true);
             }
         }

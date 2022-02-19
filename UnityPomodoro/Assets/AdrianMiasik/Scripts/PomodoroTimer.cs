@@ -265,14 +265,6 @@ namespace AdrianMiasik
                 PerformanceReporting.enabled = true;
                 Analytics.limitUserTracking = false;
                 Analytics.deviceStatsEnabled = true;
-                
-                // Send enabled event log
-                Dictionary<string, object> parameters = new Dictionary<string, object>()
-                {
-                    { "testingKey", "testingValue123Enabled" },
-                };
-                Events.CustomData("analyticsEnabled", parameters);
-                Events.Flush();
             }
             catch (ConsentCheckException e)
             {
