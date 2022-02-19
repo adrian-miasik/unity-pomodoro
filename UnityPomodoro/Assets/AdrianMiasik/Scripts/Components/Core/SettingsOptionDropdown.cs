@@ -14,7 +14,7 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] protected Dropdown m_dropdown;
         [SerializeField] private Image m_containerOutline;
         [SerializeField] private SVGImage m_arrow;
-        
+
         /// <summary>
         /// Set the dropdown selection to the provided index value.
         /// </summary>

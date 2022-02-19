@@ -1,4 +1,5 @@
 using AdrianMiasik.Components;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 #if ENABLE_WINMD_SUPPORT
@@ -19,9 +20,9 @@ namespace AdrianMiasik.UWP
         [SerializeField] private TextAsset m_xmlToastNoAlarm;
         
         // Cache
-        private Settings settings;
+        private TimerSettings settings;
         
-        public void Initialize(Settings settingsConfiguration)
+        public void Initialize(TimerSettings settingsConfiguration)
         {
             settings = settingsConfiguration;
         }

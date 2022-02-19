@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// A <see cref="ThemeElement"/> dropdown with a label.
     /// Intended to be used for 'Set digit format' settings option. (See <see cref="SettingsPanel"/>)
     /// </summary>
-    public class SetDigitFormat : SettingsOptionDropdown
+    public class OptionDigitFormat : SettingsOptionDropdown
     {
         /// <summary>
         /// Sets the dropdown value to the <see cref="PomodoroTimer"/>'s current digit format.
