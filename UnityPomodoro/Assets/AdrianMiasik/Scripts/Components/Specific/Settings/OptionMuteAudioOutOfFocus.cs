@@ -1,4 +1,5 @@
 ﻿using AdrianMiasik.Components.Core;
+using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
@@ -31,6 +32,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             // Apply and save
             Settings.m_muteSoundWhenOutOfFocus = state;
             UserSettingsSerializer.Save(Settings);
+            Debug.Log("Timer Settings Saved.");
         }
     }
 }

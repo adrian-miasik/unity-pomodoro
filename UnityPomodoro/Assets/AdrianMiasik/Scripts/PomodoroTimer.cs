@@ -228,30 +228,24 @@ namespace AdrianMiasik
             
             // Set if service needs to start on init...
             Analytics.initializeOnStartup = enableUnityAnalytics;
-            Debug.LogWarning("Unity Analytics - Init on startup: " + Analytics.initializeOnStartup);
+            Debug.LogWarning("Unity Analytics - Initialize on startup: " + Analytics.initializeOnStartup);
 
             if (enableUnityAnalytics)
             {
+                // Enable analytics
                 StartServices();
             }
             else
             {
-                Dictionary<string, object> parameters = new Dictionary<string, object>()
-                {
-                    { "testingKey", "testingValue123Disabled" },
-                };
-                Events.CustomData("analyticsDisabled", parameters);
-                Events.Flush();
-                
-                // Analytics Service does not initialize on start by our default
+                // Disable analytics
                 Analytics.enabled = false;
                 PerformanceReporting.enabled = false;
                 Analytics.limitUserTracking = true;
                 Analytics.deviceStatsEnabled = false;
 
                 Debug.LogWarning("Unity Analytics - Stopped Service. " +
-                                 "(Service will still record some things into it's buffer it seems, but won't upload " +
-                                 "them, unless you are in using the Unity Editor.)");
+                                 "(Service will still cache some events into it's buffer it seems, but won't upload " +
+                                 "them.)");
             }
         }
         
@@ -259,24 +253,26 @@ namespace AdrianMiasik
         {
             try
             {
-                Debug.LogWarning("Unity Analytics - Starting Up Service...");
+                // Debug.LogWarning("Unity Analytics - Starting Up Service...");
                 
                 await UnityServices.InitializeAsync();
                 List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
                 
                 Debug.LogWarning("Unity Analytics - Service Started.");
                 
+                // Enable analytics
+                Analytics.enabled = true;
+                PerformanceReporting.enabled = true;
+                Analytics.limitUserTracking = false;
+                Analytics.deviceStatsEnabled = true;
+                
+                // Send enabled event log
                 Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     { "testingKey", "testingValue123Enabled" },
                 };
                 Events.CustomData("analyticsEnabled", parameters);
                 Events.Flush();
-                
-                Analytics.enabled = true;
-                PerformanceReporting.enabled = true;
-                Analytics.limitUserTracking = false;
-                Analytics.deviceStatsEnabled = true;
             }
             catch (ConsentCheckException e)
             {
@@ -1347,6 +1343,7 @@ namespace AdrianMiasik
             // Apply and save
             settings.m_longBreaks = state;
             UserSettingsSerializer.Save(settings);
+            Debug.Log("Timer Settings Saved.");
             
             // Apply component swap
             if (state)

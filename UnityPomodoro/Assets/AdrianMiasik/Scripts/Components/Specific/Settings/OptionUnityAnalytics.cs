@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
+using Unity.Services.Analytics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
@@ -30,19 +31,36 @@ namespace AdrianMiasik.Components.Specific.Settings
 
         private void SetSettingUnityAnalytics(bool state)
         {
-            Timer.ToggleUnityAnalytics(state);
-
             if (!state)
             {
-                Debug.LogWarning("Unity Analytics - Restarting Application with Disabled Analytics.");
-                
+                Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
+                {
+                    // Send disabled event log
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        { "testingKey", "testingValue123Disabled" },
+                    };
+                    Events.CustomData("analyticsDisabled", parameters);
+                    Events.Flush();
+                    
+                    // Disable analytics
+                    Timer.ToggleUnityAnalytics(false);
+                    Debug.LogWarning("Unity Analytics - Restarting Application with Disabled Analytics.");
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.ExitPlaymode();
-                // UnityEditor.EditorApplication.EnterPlaymode();
+                    UnityEditor.EditorApplication.ExitPlaymode();
 #else
-                System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
-                Application.Quit();
+                    System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
+                    Application.Quit();
 #endif
+                }, () =>
+                {
+                    // Cancel visuals if they don't agree
+                    m_toggleSlider.Initialize(Timer, true);
+                }, "Disabling 'Unity Analytics' requires a restart.", "");
+            }
+            else
+            {
+                Timer.ToggleUnityAnalytics(true);
             }
         }
     }
