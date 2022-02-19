@@ -207,7 +207,7 @@ namespace AdrianMiasik
                 defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
 
-                // All platforms have analytics on by default. (User can opt-out though)
+                // All platforms have analytics on by default. (User can opt-out though via settings panel)
                 defaultSettings.m_enableUnityAnalytics = true;
                 
                 // Finally save
