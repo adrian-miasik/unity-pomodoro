@@ -236,7 +236,12 @@ namespace AdrianMiasik
             }
             else
             {
-                Events.CustomData("analyticsDisabled", null);
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    { "testingKey", "testingValue123Disabled" },
+                };
+                Events.CustomData("analyticsDisabled", parameters);
+                Events.Flush();
                 
                 // Analytics Service does not initialize on start by our default
                 Analytics.enabled = false;
@@ -260,14 +265,18 @@ namespace AdrianMiasik
                 List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
                 
                 Debug.LogWarning("Unity Analytics - Service Started.");
-                Events.CustomData("analyticsEnabled", null);
-
+                
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    { "testingKey", "testingValue123Enabled" },
+                };
+                Events.CustomData("analyticsEnabled", parameters);
+                Events.Flush();
+                
                 Analytics.enabled = true;
                 PerformanceReporting.enabled = true;
                 Analytics.limitUserTracking = false;
                 Analytics.deviceStatsEnabled = true;
-            
-                Analytics.ResumeInitialization(); // Initialize is set to false by our default
             }
             catch (ConsentCheckException e)
             {
