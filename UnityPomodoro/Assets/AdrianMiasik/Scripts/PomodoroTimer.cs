@@ -217,10 +217,10 @@ namespace AdrianMiasik
             settings = loadedSettings;
             
             // Update analytics
-            ToggleUnityAnalytics(settings.m_enableUnityAnalytics);
+            ToggleUnityAnalytics(settings.m_enableUnityAnalytics, true);
         }
         
-        public void ToggleUnityAnalytics(bool enableUnityAnalytics)
+        public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
             // Apply and save
             settings.m_enableUnityAnalytics = enableUnityAnalytics;
@@ -233,7 +233,7 @@ namespace AdrianMiasik
             if (enableUnityAnalytics)
             {
                 // Enable analytics
-                StartServices();
+                StartServices(isBootingUp);
             }
             else
             {
@@ -249,7 +249,7 @@ namespace AdrianMiasik
             }
         }
         
-        async void StartServices()
+        async void StartServices(bool isBootingUp)
         {
             try
             {
@@ -265,6 +265,27 @@ namespace AdrianMiasik
                 PerformanceReporting.enabled = true;
                 Analytics.limitUserTracking = false;
                 Analytics.deviceStatsEnabled = true;
+
+                if (isBootingUp)
+                {
+                    // Send enabled event log
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        { "testingKey", "testingValue123Init" },
+                    };
+                    Events.CustomData("analyticsInitialized", parameters);
+                    Events.Flush();
+                }
+                else
+                {
+                    // Send enabled event log
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        { "testingKey", "testingValue123Enabled" },
+                    };
+                    Events.CustomData("analyticsEnabled", parameters);
+                    Events.Flush();
+                }
             }
             catch (ConsentCheckException e)
             {

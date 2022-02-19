@@ -44,7 +44,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                     Events.Flush();
                     
                     // Disable analytics
-                    Timer.ToggleUnityAnalytics(false);
+                    Timer.ToggleUnityAnalytics(false, false);
                     Debug.LogWarning("Unity Analytics - Restarting Application with Disabled Analytics.");
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.ExitPlaymode();
@@ -60,15 +60,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             }
             else
             {
-                // Send enabled event log
-                Dictionary<string, object> parameters = new Dictionary<string, object>()
-                {
-                    { "testingKey", "testingValue123Enabled" },
-                };
-                Events.CustomData("analyticsEnabled", parameters);
-                Events.Flush();
-                
-                Timer.ToggleUnityAnalytics(true);
+                Timer.ToggleUnityAnalytics(true, false);
             }
         }
     }
