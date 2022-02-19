@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace AdrianMiasik.ScriptableObjects
 {
@@ -12,7 +11,7 @@ namespace AdrianMiasik.ScriptableObjects
     [CreateAssetMenu(fileName = "New Theme", menuName = "Adrian Miasik/Create New Theme")]
     public class Theme : ScriptableObject
     {
-        [FormerlySerializedAs("m_isLightModeOn")] public bool m_darkMode = true;
+        public bool m_darkMode = true;
         public ColorScheme m_light;
         public ColorScheme m_dark;
 

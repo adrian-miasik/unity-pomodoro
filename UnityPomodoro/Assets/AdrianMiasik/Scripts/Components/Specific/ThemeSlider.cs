@@ -15,13 +15,15 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private Sprite m_moonSprite;
         [SerializeField] private Material m_sliderDotCircle;
 
-        private Vector2 cachedOffsetMin = new Vector2(3, 0); 
-        private Vector2 cachedOffsetMax = new Vector2(1.5f, 1.5f); 
-
-        private void Start()
+        private readonly Vector2 cachedOffsetMin = new Vector2(3, 1.5f); 
+        private readonly Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f); 
+        
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            cachedOffsetMin = m_toggle.m_dot.rectTransform.offsetMin;
-            cachedOffsetMax = m_toggle.m_dot.rectTransform.offsetMax;
+            base.Initialize(pomodoroTimer, updateColors);
+            
+            m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
+            m_toggle.Initialize(Timer, Timer.GetTheme().m_darkMode);
         }
 
         /// <summary>
@@ -31,9 +33,6 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
-            m_toggle.OverrideDotColor(theme.GetCurrentColorScheme().m_foreground);
-            m_toggle.Initialize(Timer, theme.m_darkMode);
-            
             // Regular boolean
             if (theme.m_darkMode)
             {
@@ -91,6 +90,11 @@ namespace AdrianMiasik.Components.Specific
         public void SetVisualToDisable()
         {
             m_toggle.SetVisualToDisable();
+        }
+
+        public ToggleSlider GetToggleSlider()
+        {
+            return m_toggle;
         }
     }
 }

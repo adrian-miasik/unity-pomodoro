@@ -12,14 +12,22 @@ namespace AdrianMiasik.Components.Specific
     public class Background : ThemeElement
     {
         [SerializeField] private Image m_background;
+        [SerializeField] private Button m_button;
         [SerializeField] private Selectable m_selectable;
-        
+
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
+        {
+            base.Initialize(pomodoroTimer, updateColors);
+            
+            m_button.onClick.AddListener(Timer.ClearSelection);
+        }
+
         /// <summary>
         /// Sets the <see cref="UnityEngine.EventSystems"/> current selection to this background.
         /// </summary>
         public void Select()
         {
-            m_selectable.Select();
+            m_button.Select();
         }
 
         /// <summary>
@@ -38,7 +46,7 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         /// <param name="backgroundNav"></param>
         public void SetSelectionNavigation(Navigation backgroundNav)
-        {
+        { 
             m_selectable.navigation = backgroundNav;
         }
     }

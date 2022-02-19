@@ -20,7 +20,7 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private WriteVersionNumber m_versionNumber;
         [SerializeField] private TMP_Text m_copyrightDisclaimer;
         
-        private bool isInfoPageOpen;
+        private bool isAboutPageOpen;
 
         /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
@@ -28,7 +28,7 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
-            if (!isInfoPageOpen)
+            if (!isAboutPageOpen)
             {
                 return;
             }
@@ -45,9 +45,9 @@ namespace AdrianMiasik.Components.Specific
         /// Is this <see cref="AboutPanel"/> currently open and visible?
         /// </summary>
         /// <returns></returns>
-        public bool IsInfoPageOpen()
+        public bool IsAboutPageOpen()
         {
-            return isInfoPageOpen;
+            return isAboutPageOpen;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace AdrianMiasik.Components.Specific
         public void Show()
         {
             gameObject.SetActive(true);
-            isInfoPageOpen = true;
+            isAboutPageOpen = true;
             
             ColorUpdate(Timer.GetTheme());
         }
@@ -67,7 +67,7 @@ namespace AdrianMiasik.Components.Specific
         public void Hide()
         {
             gameObject.SetActive(false);
-            isInfoPageOpen = false;
+            isAboutPageOpen = false;
         }
     }
 }

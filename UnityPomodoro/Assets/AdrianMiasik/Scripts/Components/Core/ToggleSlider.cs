@@ -82,6 +82,25 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
+        public void Refresh(bool isOn)
+        {
+            // Early exit if there are no changes to our property
+            if (isOn == state)
+            {
+                return;
+            }
+            
+            state = isOn;
+            if (state)
+            {
+                Enable();
+            }
+            else
+            {
+                Disable();
+            }
+        }
+
         /// <summary>
         /// Changes the visibility of the boolean slider to the ON or OFF position. Position depends on current state.
         /// </summary>

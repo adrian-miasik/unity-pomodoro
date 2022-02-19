@@ -43,5 +43,10 @@ namespace AdrianMiasik.Components.Specific
         {
             gameObject.SetActive(false);
         }
+
+        public ClickButtonSVGIcon GetClickButtonIcon()
+        {
+            return m_buttonSvg;
+        }
     }
 }

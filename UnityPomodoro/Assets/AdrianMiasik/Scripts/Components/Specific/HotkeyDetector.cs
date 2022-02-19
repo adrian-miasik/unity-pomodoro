@@ -66,12 +66,11 @@ namespace AdrianMiasik.Components.Specific
             // Restart application
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                timer.ClearCurrentDialogPopup();
-                timer.SpawnConfirmationDialog(() =>
-                {
-                    timer.GetTheme().DeregisterAllElements();
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                }, null, 
+                timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
+                timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
+                    {
+                        RestartApplication();
+                    }, null, 
                     "This action will <color=red>reset all settings to their factory defaults.</color>", 
                     null, 
                     false);
@@ -92,6 +91,13 @@ namespace AdrianMiasik.Components.Specific
                     }
                 }
             }
+        }
+
+        public void RestartApplication()
+        {
+            timer.GetTheme().DeregisterAllElements();
+            timer.GetTheme().m_darkMode = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         /// <summary>
