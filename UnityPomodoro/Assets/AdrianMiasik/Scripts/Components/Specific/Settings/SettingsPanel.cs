@@ -50,21 +50,16 @@ namespace AdrianMiasik.Components.Specific.Settings
 #else
             m_optionMuteSoundOutOfFocusToggle.Initialize(Timer, settingsConfig);
 #endif
+            
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
             m_optionUnityAnalytics.Initialize(Timer, settingsConfig);
+#else
+            // Hide settings option if Unity Analytics not enabled on this platform.
+            m_optionUnityAnalytics.gameObject.SetActive(false);
+            m_optionUnityAnalytics.m_spacer.gameObject.SetActive(false);
+#endif
         }
 
-        public void Refresh(TimerSettings updatedSettingsToShow)
-        {
-            // TODO: Update our dropdown settings? Currently we are only saving booleans into the settings class.
-            // TODO: We'll have to see what properties are going to save system wide and which one will save per timer.
-            // m_setDigitFormat
-            // m_pomodoro
-            
-            m_optionEnableLongBreak.UpdateToggle(updatedSettingsToShow.m_longBreaks);
-            m_optionMuteSoundOutOfFocusToggle.UpdateToggle(updatedSettingsToShow.m_muteSoundWhenOutOfFocus);
-            m_optionUnityAnalytics.UpdateToggle(updatedSettingsToShow.m_enableUnityAnalytics);
-        }
-        
         /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>

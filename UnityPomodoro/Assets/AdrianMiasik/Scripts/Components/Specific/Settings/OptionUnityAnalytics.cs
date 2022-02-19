@@ -45,13 +45,16 @@ namespace AdrianMiasik.Components.Specific.Settings
                     
                     // Disable analytics
                     Timer.ToggleUnityAnalytics(false, false);
+#if UNITY_ANALYTICS_EVENT_LOGS
                     Debug.LogWarning("Unity Analytics - Restarting Application with Disabled Analytics.");
+#endif
+                    
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.ExitPlaymode();
 #elif UNITY_ANDROID
                     RestartAndroidProcess();
 #else
-                    // Windows
+                    // Windows + (hopefully mac and linux too... TODO: Device testing)
                     System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
                     Application.Quit();
 #endif
@@ -69,7 +72,7 @@ namespace AdrianMiasik.Components.Specific.Settings
 
 #if UNITY_ANDROID
         /// <summary>
-        /// Restarts our android application and re-opens the process
+        /// Restarts our android application and re-opens the process.
         /// </summary>
         private static void RestartAndroidProcess()
         {
