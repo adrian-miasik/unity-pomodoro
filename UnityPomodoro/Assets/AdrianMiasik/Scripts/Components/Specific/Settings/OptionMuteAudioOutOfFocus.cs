@@ -4,7 +4,7 @@ namespace AdrianMiasik.Components.Specific.Settings
 {
     public class OptionMuteAudioOutOfFocus : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
         {
             base.Initialize(pomodoroTimer, settingsConfig);
             
@@ -28,8 +28,9 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <param name="state">Do you want to mute this application when it's out of focus?</param>
         private void SetSettingMuteSoundWhenOutOfFocus(bool state = false)
         {
-            // Change setting
+            // Apply and save
             Settings.m_muteSoundWhenOutOfFocus = state;
+            UserSettingsSerializer.Save(Settings);
         }
     }
 }

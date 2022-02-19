@@ -1,4 +1,5 @@
 using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
@@ -26,7 +27,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         
         private bool isOpen;
 
-        public void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
+        public void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
         {
             base.Initialize(pomodoroTimer, false);
             
@@ -52,7 +53,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_optionUnityAnalytics.Initialize(Timer, settingsConfig);
         }
 
-        public void Refresh(ScriptableObjects.Settings updatedSettingsToShow)
+        public void Refresh(TimerSettings updatedSettingsToShow)
         {
             // TODO: Update our dropdown settings? Currently we are only saving booleans into the settings class.
             // TODO: We'll have to see what properties are going to save system wide and which one will save per timer.

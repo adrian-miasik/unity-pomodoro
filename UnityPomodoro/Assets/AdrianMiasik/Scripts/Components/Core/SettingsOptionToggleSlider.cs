@@ -16,7 +16,7 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] public ToggleSlider m_toggleSlider;
         [SerializeField] public RectTransform m_spacer; // Bottom margin
 
-        protected Settings Settings;
+        protected TimerSettings Settings;
         
         public void OverrideFalseColor(Color backgroundHighlight)
         {
@@ -28,7 +28,7 @@ namespace AdrianMiasik.Components.Core
             m_toggleSlider.OverrideTrueColor(modeOne);
         }
         
-        public virtual void Initialize(PomodoroTimer pomodoroTimer, Settings settingsConfig)
+        public virtual void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
         {
             base.Initialize(pomodoroTimer);
             Settings = settingsConfig;

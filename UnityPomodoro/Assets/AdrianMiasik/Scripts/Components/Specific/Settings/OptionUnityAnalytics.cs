@@ -1,4 +1,6 @@
 using AdrianMiasik.Components.Core;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
@@ -8,7 +10,7 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// </summary>
     public class OptionUnityAnalytics : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
         {
             base.Initialize(pomodoroTimer, settingsConfig);
 
@@ -29,6 +31,19 @@ namespace AdrianMiasik.Components.Specific.Settings
         private void SetSettingUnityAnalytics(bool state)
         {
             Timer.ToggleUnityAnalytics(state);
+
+            if (!state)
+            {
+                Debug.LogWarning("Unity Analytics - Restarting Application with Disabled Analytics.");
+                
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.ExitPlaymode();
+                // UnityEditor.EditorApplication.EnterPlaymode();
+#else
+                System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
+                Application.Quit();
+#endif
+            }
         }
     }
 }

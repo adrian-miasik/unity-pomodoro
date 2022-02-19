@@ -7,7 +7,7 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// </summary>
     public class OptionEnableLongBreaks : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, ScriptableObjects.Settings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
         {
             base.Initialize(pomodoroTimer, settingsConfig);
             if (Settings.m_longBreaks)

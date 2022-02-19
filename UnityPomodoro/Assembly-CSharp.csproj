@@ -87,7 +87,6 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\TimerProgress.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\IColorHook.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\Tomato.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Settings.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\ThemeIconContainer.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonImageIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\Sidebar.cs" />
@@ -104,6 +103,8 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\ITimerState.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionUnityAnalytics.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\UserSettingsSerializer.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\TimerSettings.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
