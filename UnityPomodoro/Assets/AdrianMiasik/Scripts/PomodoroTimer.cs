@@ -236,12 +236,8 @@ namespace AdrianMiasik
             }
             else
             {
-                Dictionary<string, object> parameters = new Dictionary<string, object>()
-                {
-                    
-                };
-                Events.CustomData("attempt_StopAnalytics", parameters);
-
+                Events.CustomData("analyticsDisabled", null);
+                
                 // Analytics Service does not initialize on start by our default
                 Analytics.enabled = false;
                 PerformanceReporting.enabled = false;
@@ -250,7 +246,7 @@ namespace AdrianMiasik
 
                 Debug.LogWarning("Unity Analytics - Stopped Service. " +
                                  "(Service will still record some things into it's buffer it seems, but won't upload " +
-                                 "them, unless you are in editor mode.)");
+                                 "them, unless you are in using the Unity Editor.)");
             }
         }
         
@@ -264,6 +260,7 @@ namespace AdrianMiasik
                 List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
                 
                 Debug.LogWarning("Unity Analytics - Service Started.");
+                Events.CustomData("analyticsEnabled", null);
 
                 Analytics.enabled = true;
                 PerformanceReporting.enabled = true;
