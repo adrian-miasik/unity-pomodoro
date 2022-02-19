@@ -184,7 +184,7 @@ namespace AdrianMiasik
             // If we don't have any saved settings...
             if (loadedSettings == null)
             {
-                Debug.LogWarning("Creating new Timer Settings.");
+                Debug.Log("Creating new Timer Settings.");
                 
                 // Create new settings
                 TimerSettings defaultSettings = new TimerSettings();
