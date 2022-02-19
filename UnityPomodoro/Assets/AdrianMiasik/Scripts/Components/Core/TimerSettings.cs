@@ -1,7 +1,11 @@
 ﻿using System;
+using AdrianMiasik.UWP;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// Settings that are to be applied / correspond to a PomodoroTimer.
+    /// </summary>
     [Serializable]
     public class TimerSettings
     {

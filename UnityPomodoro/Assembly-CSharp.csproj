@@ -53,6 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\ClickButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeManager.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\HotkeyDetector.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialog.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\RightButton.cs" />

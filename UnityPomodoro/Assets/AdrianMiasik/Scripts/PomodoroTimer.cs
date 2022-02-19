@@ -56,7 +56,13 @@ namespace AdrianMiasik
         /// The timer's current state. See enum <see cref="States"/>
         /// </summary>
         public States m_state = States.SETUP;
-        
+
+        [Header("Unity Pomodoro - Managers")] 
+        [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
+        [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
+        [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
+        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
+
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -83,11 +89,6 @@ namespace AdrianMiasik
         [SerializeField] private SkipButton m_skipButton;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
-        [Header("Unity Pomodoro - Managers")]
-        [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
-        [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
-
         [Header("Animations")] 
         [SerializeField] private AnimationCurve m_spawnRingProgress;
         private bool m_animateRingProgress;
@@ -122,10 +123,6 @@ namespace AdrianMiasik
         [SerializeField] private GameObject m_mainContainer; // Our main body page
         [SerializeField] private SettingsPanel m_settingsContainer; // Our settings page
         [SerializeField] private AboutPanel m_aboutContainer; // Our about page
-
-        [Header("External Extra - Deprecated")]
-        // TODO: Move to theme class
-        [SerializeField] private Theme m_theme; // Current active theme
 
         // Time
         private double currentTime; // Current time left (In seconds)
@@ -308,15 +305,17 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
+            InitializeManagers();
+            
             // Setup pages/panels
             m_settingsContainer.Hide();
             m_aboutContainer.Hide();
             m_mainContainer.gameObject.SetActive(true);
 
             // Overrides
-            m_themeSlider.OverrideFalseColor(m_theme.m_light.m_backgroundHighlight);
+            m_themeSlider.OverrideFalseColor(m_themeManager.GetTheme().m_light.m_backgroundHighlight);
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
-            m_menuToggleSprite.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
+            m_menuToggleSprite.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
 
             // TODO: Re-implement halloween theme?
@@ -337,8 +336,7 @@ namespace AdrianMiasik
                     }
                 }
             }
-
-            InitializeManagers();
+            
             InitializeComponents();
 
             // Calculate time
@@ -351,8 +349,8 @@ namespace AdrianMiasik
             PlaySpawnAnimation();
 
             // Setup & apply theme
-            m_theme.Register(this);
-            m_theme.ApplyColorChanges();
+            m_themeManager.Register(this);
+            m_themeManager.ApplyColorChanges();
         }
 
         private void InitializeManagers()
@@ -387,8 +385,8 @@ namespace AdrianMiasik
             m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
             
             // Theme Slider
-            m_themeSlider.GetToggleSlider().m_onSetToTrueClick.AddListener(SetToDarkMode);
-            m_themeSlider.GetToggleSlider().m_onSetToFalseClick.AddListener(SetToLightMode);
+            m_themeSlider.GetToggleSlider().m_onSetToTrueClick.AddListener(m_themeManager.SetToDarkMode);
+            m_themeSlider.GetToggleSlider().m_onSetToFalseClick.AddListener(m_themeManager.SetToLightMode);
             
             // TODO: Menu toggle UE listener
             
@@ -430,7 +428,7 @@ namespace AdrianMiasik
         public void OnDestroy()
         {
             // Make sure to deregister this when and if we do destroy the timer
-            GetTheme().Deregister(this);
+            m_themeManager.GetTheme().Deregister(this);
         }
         
         /// <summary>
@@ -441,20 +439,21 @@ namespace AdrianMiasik
         public void SwitchState(States desiredState)
         {
             m_state = desiredState;
+            Theme theme = m_themeManager.GetTheme();
 
             // Update the registered timer elements
             foreach (ITimerState element in timerElements)
             {
-                element.StateUpdate(m_state, m_theme);
+                element.StateUpdate(m_state, theme);
             }
             
-            UpdateRingColor(m_theme);
+            UpdateRingColor(theme);
 
             // Do transition logic
             switch (m_state)
             {
                 case States.SETUP:
-                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
+                    m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
                     // Show timer context
                     m_text.gameObject.SetActive(true);
@@ -486,7 +485,7 @@ namespace AdrianMiasik
                 case States.RUNNING:
                     m_animateRingProgress = false;
 
-                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
+                    m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
                     m_text.text = "Running";
                     
@@ -1255,16 +1254,16 @@ namespace AdrianMiasik
             }
             
             // Paused Digits
-            startingColor = m_theme.GetCurrentColorScheme().m_foreground;
-            endingColor = m_theme.GetCurrentColorScheme().m_backgroundHighlight;
+            startingColor = theme.GetCurrentColorScheme().m_foreground;
+            endingColor = theme.GetCurrentColorScheme().m_backgroundHighlight;
 
             // Reset paused digit anim
             ResetDigitFadeAnim();
             
-            m_menuToggleSprite.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
-            m_menuToggleSprite.ColorUpdate(m_theme);
+            m_menuToggleSprite.OverrideFalseColor(theme.GetCurrentColorScheme().m_foreground);
+            m_menuToggleSprite.ColorUpdate(theme);
 
-            UpdateRingColor(m_theme);
+            UpdateRingColor(theme);
         }
 
         private void UpdateRingColor(Theme theme)
@@ -1299,58 +1298,13 @@ namespace AdrianMiasik
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        // TODO: Create theme manager class?
-        /// <summary>
-        /// Returns our current active <see cref="Theme"/>
-        /// </summary>
-        /// <returns></returns>
-        public Theme GetTheme()
-        {
-            return m_theme;
-        }
-        
-        /// <summary>
-        /// Sets our <see cref="Theme"/> preference to light mode, and update's all our necessary components.
-        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
-        /// </summary>
-        public void SetToLightMode()
-        {
-            m_theme.SetToLightMode();
-        }
-
-        /// <summary>
-        /// Sets our <see cref="Theme"/> preference to dark mode, and update's all our necessary components.
-        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
-        /// </summary>
-        public void SetToDarkMode()
-        {
-            m_theme.SetToDarkMode();
-        }
-        
-        /// <summary>
-        /// Sets our current active <see cref="Theme"/> to the provided <see cref="Theme"/>. This will transfer
-        /// all our <see cref="IColorHook"/> element's to the new <see cref="Theme"/> as well.
-        /// </summary>
-        /// <param name="desiredTheme"></param>
-        public void SwitchTheme(Theme desiredTheme)
-        {
-            // Transfer elements to new theme (So theme knows which elements to color update)
-            m_theme.TransferColorElements(m_theme, desiredTheme);
-            
-            // Swap our theme
-            m_theme = desiredTheme;
-            
-            // Apply our changes
-            m_theme.ApplyColorChanges();
-        }
         
         /// <summary>
         /// Triggers a <see cref="IColorHook"/> ColorUpdate() on our <see cref="CreditsBubble"/>.
         /// </summary>
         public void ColorUpdateCreditsBubble()
         {
-            m_creditsBubble.ColorUpdate(m_theme);
+            m_creditsBubble.ColorUpdate(m_themeManager.GetTheme());
         }
         
         /// <summary>
@@ -1500,7 +1454,7 @@ namespace AdrianMiasik
             return m_tomatoCounter.GetTomatoCount();
         }
 
-        // TODO: Remove piper method
+        // TODO: Remove piper methods - We want explicit methods instead of reaching in. Separation of concerns.
         [Obsolete]
         public ConfirmationDialogManager GetConfirmDialogManager()
         {
@@ -1510,6 +1464,12 @@ namespace AdrianMiasik
         public TranslucentImageSource GetTranslucentImageSource()
         {
             return m_translucentImageSource;
+        }
+        
+        [Obsolete]
+        public Theme GetTheme()
+        {
+            return m_themeManager.GetTheme();
         }
 
         public void ShowOverlay()

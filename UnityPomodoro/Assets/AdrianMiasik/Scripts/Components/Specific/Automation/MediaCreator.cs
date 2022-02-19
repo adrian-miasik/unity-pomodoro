@@ -45,7 +45,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             MediaCapture mediaCapture = new GameObject("MediaCapture").AddComponent<MediaCapture>();
 
             // Setup theme
-            _timer.SetToLightMode();
+            _timer.GetTheme().SetToLightMode();
             _timer.DisableDarkModeToggle();
 
             // Chain screenshot scenarios
@@ -90,7 +90,7 @@ namespace AdrianMiasik.Components.Specific.Automation
                     _screenshotScenarios = _ssCopy;
                     
                     // Swap theme
-                    _timer.SetToDarkMode();
+                    _timer.GetTheme().SetToDarkMode();
                     _timer.EnableDarkModeToggle();
                     
                     // Begin media capture for dark mode
