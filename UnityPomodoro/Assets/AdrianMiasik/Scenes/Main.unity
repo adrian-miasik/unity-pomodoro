@@ -2323,7 +2323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 17.212223
+      value: 17.22623
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3082,7 +3082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 17.212223
+      value: 17.22623
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6166,7 +6166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 17.212223
+      value: 17.22623
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -8406,7 +8406,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_self: {fileID: 1015735895}
   m_digitFormatRect: {fileID: 1348329453}
-  m_format: 2
   m_digitSource: {fileID: 2939933545387467015, guid: 85b22f00844c76c428bef5fce71ff76a, type: 3}
   m_separatorSource: {fileID: 5144564842751071115, guid: 094d9dd4e500d4f4991842ea23943c99, type: 3}
   m_workTime: 0000000000000000190000000000000000000000
@@ -9825,7 +9824,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 17.212223
+      value: 17.22623
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -11631,7 +11630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957768563050848494, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8957768563050848494, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

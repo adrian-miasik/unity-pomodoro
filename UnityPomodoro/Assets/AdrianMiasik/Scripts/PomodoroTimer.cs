@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -233,6 +234,8 @@ namespace AdrianMiasik
                 // Create new settings
                 TimerSettings defaultTimerSettings = new TimerSettings();
                 defaultTimerSettings.m_longBreaks = true;
+                defaultTimerSettings.m_format = DigitFormat.SupportedFormats.HH_MM_SS;
+                defaultTimerSettings.m_pomodoroCount = 4;
 
                 // Cache
                 loadedTimerSettings = defaultTimerSettings;
@@ -412,7 +415,7 @@ namespace AdrianMiasik
             
             m_background.Initialize(this);
             m_overlay.Initialize(this);
-            m_digitFormat.Initialize(this);
+            m_digitFormat.Initialize(this, GetTimerSettings().m_format);
             m_completionLabel.Initialize(this);
             m_themeSlider.Initialize(this);
             m_creditsBubble.Initialize(this);
@@ -426,7 +429,7 @@ namespace AdrianMiasik
             
             if (GetTimerSettings().m_longBreaks)
             {
-                m_tomatoCounter.Initialize(this);
+                m_tomatoCounter.Initialize(this, GetTimerSettings().m_pomodoroCount);
                 m_completionLabel.MoveAnchors(true);
             }
             else
@@ -1218,6 +1221,8 @@ namespace AdrianMiasik
                 m_digitFormat.SwitchFormat(desiredFormat);
                 m_confirmationDialogManager.SpawnConfirmationDialog(GenerateFormat, () =>
                 {
+                    GetTimerSettings().m_format = desiredFormat;
+                    UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
                     m_settingsContainer.SetDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
             }
@@ -1225,6 +1230,8 @@ namespace AdrianMiasik
             {
                 m_digitFormat.SwitchFormat(desiredFormat);
                 GenerateFormat();
+                GetTimerSettings().m_format = desiredFormat;
+                UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
             }
         }
 

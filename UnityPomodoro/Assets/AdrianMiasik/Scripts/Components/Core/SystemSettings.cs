@@ -9,6 +9,11 @@ namespace AdrianMiasik.Components.Core
     [Serializable]
     public class SystemSettings
     {
+        /// <summary>
+        /// Do you want to use the dark mode variation of the current active theme?
+        /// If `True`, the application will use darker colors from the active theme.
+        /// If `False`, nte application will use lighter colors from the active theme.
+        /// </summary>
         public bool m_darkMode = true;        
         
         /// <summary>

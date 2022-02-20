@@ -26,6 +26,8 @@ namespace AdrianMiasik.Components.Core
             bf.Serialize(fs, timerSettings);
             
             fs.Close();
+
+            Debug.Log("Creating files.");
         }
 
         public static void SaveSystemSettings(SystemSettings systemSettings)
@@ -37,6 +39,8 @@ namespace AdrianMiasik.Components.Core
             bf.Serialize(fs, systemSettings);
 
             fs.Close();
+            
+            Debug.Log("System Settings Saved.");
         }
         
         public static void SaveTimerSettings(TimerSettings timerSettings)
@@ -48,6 +52,8 @@ namespace AdrianMiasik.Components.Core
             bf.Serialize(fs, timerSettings);
 
             fs.Close();
+            
+            Debug.Log("Timer Settings Saved.");
         }
 
         /// <summary>
@@ -90,6 +96,22 @@ namespace AdrianMiasik.Components.Core
 
             Debug.LogWarning("File not found. Unable to load system settings.");
             return null;
+        }
+
+        public static void WipeSystemSettings()
+        {
+            if (File.Exists(Application.persistentDataPath + "/system-settings" + dataExtension))
+            {
+                File.Delete(Application.persistentDataPath + "/system-settings" + dataExtension);
+            }
+        }
+
+        public static void WipeTimerSettings()
+        {
+            if (File.Exists(Application.persistentDataPath + "/timer-settings" + dataExtension))
+            {
+                File.Delete(Application.persistentDataPath + "/timer-settings" + dataExtension);
+            }
         }
     }
 }

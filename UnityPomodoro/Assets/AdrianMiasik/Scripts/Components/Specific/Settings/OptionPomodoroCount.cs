@@ -1,6 +1,7 @@
 using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
+using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
@@ -13,7 +14,8 @@ namespace AdrianMiasik.Components.Specific.Settings
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, updateColors);
-            
+
+            SetDropdownValue(Timer.GetTimerSettings().m_pomodoroCount - 1);
             m_dropdown.onValueChanged.AddListener(SetPomodoroLongBreakCount);
         }
 
@@ -23,6 +25,9 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <param name="i"></param>
         private void SetPomodoroLongBreakCount(Int32 i)
         {
+            Timer.GetTimerSettings().m_pomodoroCount = i + 1;
+            UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
+
             int desiredCount = i + 1; // Dependant on our dropdown options.
 
             if (Timer.HasTomatoProgression())

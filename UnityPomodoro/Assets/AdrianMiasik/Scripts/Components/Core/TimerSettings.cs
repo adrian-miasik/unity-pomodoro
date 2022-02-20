@@ -1,4 +1,5 @@
 ﻿using System;
+using AdrianMiasik.Components.Core.Containers;
 
 namespace AdrianMiasik.Components.Core
 {
@@ -8,8 +9,10 @@ namespace AdrianMiasik.Components.Core
     [Serializable]
     public class TimerSettings
     {
-        // TODO: Set Digit Format
-        // TODO: Set Pomodoro Count
+        /// <summary>
+        /// The timers current time format.
+        /// </summary>
+        public DigitFormat.SupportedFormats m_format;
 
         /// <summary>
         /// Enable timer long breaks?
@@ -18,5 +21,11 @@ namespace AdrianMiasik.Components.Core
         /// timer worked on version 1.6.0. or lower). 
         /// </summary>
         public bool m_longBreaks;
+
+        /// <summary>
+        /// How many pomodoro / tomatoes does the user need to unlock the long break?
+        /// <remarks>According to the Pomodoro Technique, default is 4.</remarks>
+        /// </summary>
+        public int m_pomodoroCount;
     }
 }

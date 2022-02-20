@@ -26,8 +26,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             // Apply and save
             Timer.GetTimerSettings().m_longBreaks = state;
             UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
-            Debug.Log("Timer Settings Saved.");
-            
+
             if (state == false)
             {
                 if (Timer.HasTomatoProgression())

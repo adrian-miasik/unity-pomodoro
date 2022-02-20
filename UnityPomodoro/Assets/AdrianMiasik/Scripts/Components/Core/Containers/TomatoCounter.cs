@@ -35,6 +35,12 @@ namespace AdrianMiasik.Components.Core.Containers
             Initialize();
         }
 
+        public void Initialize(PomodoroTimer timer, int startingTomatoCount, bool updateColors = true)
+        {
+            Initialize(timer, updateColors);
+            SetPomodoroCount(startingTomatoCount, 0);
+        }
+
         private void Initialize()
         {
             foreach (Tomato tomato in m_uncompletedTomatoes)
@@ -124,6 +130,9 @@ namespace AdrianMiasik.Components.Core.Containers
 
         public void SetPomodoroCount(int desiredPomodoroCount, int pomodoroProgress)
         {
+            Timer.GetTimerSettings().m_pomodoroCount = desiredPomodoroCount;
+            UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
+            
             // Preserve trashcan, it lives on the last tomato.
             m_trashcan.transform.SetParent(m_horizontal.transform);
 
