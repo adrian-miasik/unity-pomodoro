@@ -51,16 +51,10 @@ namespace AdrianMiasik.Components.Core
             // Apply our changes
             m_activeTheme.ApplyColorChanges();
         }
-
-        // Piper methods
-        public void Register(PomodoroTimer pomodoroTimer)
+        
+        public void Register(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
-            m_activeTheme.Register(pomodoroTimer);
-        }
-
-        public void ApplyColorChanges()
-        {
-            m_activeTheme.ApplyColorChanges();
+            m_activeTheme.Register(pomodoroTimer, systemSettings);
         }
     }
 }

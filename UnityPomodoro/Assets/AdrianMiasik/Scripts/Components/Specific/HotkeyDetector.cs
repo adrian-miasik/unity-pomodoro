@@ -96,7 +96,7 @@ namespace AdrianMiasik.Components.Specific
         public void RestartApplication()
         {
             timer.GetTheme().DeregisterAllElements();
-            timer.GetTheme().m_darkMode = false;
+            timer.GetSystemSettings().m_darkMode = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 

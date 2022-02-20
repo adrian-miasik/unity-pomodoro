@@ -57,7 +57,7 @@ namespace AdrianMiasik
         /// </summary>
         public States m_state = States.SETUP;
 
-        [Header("Unity Pomodoro - Managers")] 
+        [Header("Unity Pomodoro - Managers")]
         [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
@@ -152,11 +152,12 @@ namespace AdrianMiasik
         private float cachedSeconds;
         private bool isRingTickAnimating;
 
-        private TimerSettings settings;
+        private SystemSettings systemSettings;
+        private TimerSettings timerSettings;
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (settings.m_muteSoundWhenOutOfFocus)
+            if (systemSettings.m_muteSoundWhenOutOfFocus)
             {
                 // Prevent application from making noise when not in focus
                 AudioListener.volume = !hasFocus ? 0 : 1;
@@ -176,46 +177,73 @@ namespace AdrianMiasik
 
         private void ConfigureSettings()
         {
-            TimerSettings loadedSettings = UserSettingsSerializer.Load();
-            
-            // If we don't have any saved settings...
-            if (loadedSettings == null)
+            SystemSettings loadedSystemSettings = UserSettingsSerializer.LoadSystemSettings();
+            TimerSettings loadedTimerSettings = UserSettingsSerializer.LoadTimerSettings();
+
+            // System Settings
+            if (loadedSystemSettings == null)
             {
-                Debug.Log("Creating new Timer Settings.");
+                Debug.Log("No System settings found. Created new System settings successfully!");
                 
                 // Create new settings
-                TimerSettings defaultSettings = new TimerSettings();
-                
-                // All platforms have long breaks on by default
-                defaultSettings.m_longBreaks = true;
-                
+                SystemSettings defaultSystemSettings = new SystemSettings();
+                defaultSystemSettings.m_darkMode = false;
+
                 // Apply mute out of focus
 #if UNITY_STANDALONE_OSX
-                defaultSettings.m_muteSoundWhenOutOfFocus = false;
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false;
 #elif UNITY_STANDALONE_LINUX
-                defaultSettings.m_muteSoundWhenOutOfFocus = false;
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false;
 #elif UNITY_STANDALONE_WIN
-                defaultSettings.m_muteSoundWhenOutOfFocus = false;
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false;
 #elif UNITY_WSA // UWP
-                defaultSettings.m_muteSoundWhenOutOfFocus = true; // Set to true since our UWP Notification will pull focus back to our app
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = true; // Set to true since our UWP Notification will pull focus back to our app
 #elif UNITY_ANDROID
-                defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile
 #elif UNITY_IOS
-                defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
-
-                // All platforms have analytics on by default. (User can opt-out though via settings panel)
-                defaultSettings.m_enableUnityAnalytics = true;
                 
-                // Finally save
-                loadedSettings = defaultSettings;
+                // All platforms have analytics on by default. (User can opt-out though via settings panel)
+                defaultSystemSettings.m_enableUnityAnalytics = true;
+                
+                // Cache
+                loadedSystemSettings = defaultSystemSettings;
+                UserSettingsSerializer.SaveSystemSettings(loadedSystemSettings);
+            }
+
+            systemSettings = loadedSystemSettings;
+
+            m_themeManager.Register(this, systemSettings);
+            if (systemSettings.m_darkMode)
+            {
+                m_themeManager.SetToDarkMode();
+            }
+            else
+            {
+                m_themeManager.SetToLightMode();
             }
             
-            settings = loadedSettings;
-        
+            // Timer Settings
+            // If we don't have any saved settings...
+            if (loadedTimerSettings == null)
+            {
+                Debug.Log("No Timer settings found. Created new Timer settings successfully!");
+                
+                // Create new settings
+                TimerSettings defaultTimerSettings = new TimerSettings();
+                defaultTimerSettings.m_longBreaks = true;
+
+                // Cache
+                loadedTimerSettings = defaultTimerSettings;
+                UserSettingsSerializer.SaveTimerSettings(loadedTimerSettings);
+            }
+            
+            timerSettings = loadedTimerSettings;
+
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             // Update analytics
-            ToggleUnityAnalytics(settings.m_enableUnityAnalytics, true);
+            ToggleUnityAnalytics(systemSettings.m_enableUnityAnalytics, true);
 #endif
         }
 
@@ -223,8 +251,8 @@ namespace AdrianMiasik
         public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
             // Apply and save
-            settings.m_enableUnityAnalytics = enableUnityAnalytics;
-            UserSettingsSerializer.Save(settings);
+            GetSystemSettings().m_enableUnityAnalytics = enableUnityAnalytics;
+            UserSettingsSerializer.SaveSystemSettings(GetSystemSettings());
             
             // Set if service needs to start on init...
             Analytics.initializeOnStartup = enableUnityAnalytics;
@@ -347,17 +375,13 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
-
-            // Setup & apply theme
-            m_themeManager.Register(this);
-            m_themeManager.ApplyColorChanges();
         }
 
         private void InitializeManagers()
         {
             m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
-            m_notifications.Initialize(settings);
+            m_notifications.Initialize(GetTimerSettings());
         }
 
         private void InitializeComponents()
@@ -384,10 +408,6 @@ namespace AdrianMiasik
             m_breakSlider.m_onSetToTrueClick.AddListener(TrySwitchToBreakTimer);
             m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
             
-            // Theme Slider
-            m_themeSlider.GetToggleSlider().m_onSetToTrueClick.AddListener(m_themeManager.SetToDarkMode);
-            m_themeSlider.GetToggleSlider().m_onSetToFalseClick.AddListener(m_themeManager.SetToLightMode);
-            
             // TODO: Menu toggle UE listener
             
             m_background.Initialize(this);
@@ -401,10 +421,10 @@ namespace AdrianMiasik
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
-            m_settingsContainer.Initialize(this, settings);
+            m_settingsContainer.Initialize(this, GetSystemSettings());
             m_skipButton.Initialize(this);
             
-            if (settings.m_longBreaks)
+            if (GetTimerSettings().m_longBreaks)
             {
                 m_tomatoCounter.Initialize(this);
                 m_completionLabel.MoveAnchors(true);
@@ -588,7 +608,7 @@ namespace AdrianMiasik
                 if (m_state != States.COMPLETE)
                 {
                     m_text.gameObject.SetActive(true);
-                    if (settings.m_longBreaks)
+                    if (GetTimerSettings().m_longBreaks)
                     {
                         m_tomatoCounter.gameObject.SetActive(true);
                     }
@@ -597,7 +617,7 @@ namespace AdrianMiasik
             else
             {
                 m_text.gameObject.SetActive(false);
-                if (settings.m_longBreaks)
+                if (GetTimerSettings().m_longBreaks)
                 {
                     m_tomatoCounter.gameObject.SetActive(false);
                 }
@@ -676,7 +696,7 @@ namespace AdrianMiasik
             // (We don't add tomatoes for breaks)
             if (!IsOnBreak() && !IsOnLongBreak() && m_state != States.SETUP)
             {
-                if (settings.m_longBreaks)
+                if (GetTimerSettings().m_longBreaks)
                 {
                     m_tomatoCounter.FillTomato();
                 }
@@ -876,7 +896,7 @@ namespace AdrianMiasik
                 CalculateTimeValues();
             }
 
-            if (settings.m_longBreaks)
+            if (GetTimerSettings().m_longBreaks)
             {
                 // Remove long break once user has started it via Play
                 if (IsOnBreak() && IsOnLongBreak())
@@ -1317,11 +1337,6 @@ namespace AdrianMiasik
         public void SetSettingLongBreaks(bool state = true)
         {
             // TODO: Fix double theme element registration on this setting change
-            // Apply and save
-            settings.m_longBreaks = state;
-            UserSettingsSerializer.Save(settings);
-            Debug.Log("Timer Settings Saved.");
-            
             // Apply component swap
             if (state)
             {
@@ -1466,7 +1481,6 @@ namespace AdrianMiasik
             return m_translucentImageSource;
         }
         
-        [Obsolete]
         public Theme GetTheme()
         {
             return m_themeManager.GetTheme();
@@ -1540,6 +1554,17 @@ namespace AdrianMiasik
         public void DisableDarkModeToggle()
         {
             m_themeSlider.SetVisualToDisable();
+        }
+        
+        // Settings
+        public SystemSettings GetSystemSettings()
+        {
+            return systemSettings;
+        }
+        
+        public TimerSettings GetTimerSettings()
+        {
+            return timerSettings;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
 
@@ -11,10 +12,11 @@ namespace AdrianMiasik.ScriptableObjects
     [CreateAssetMenu(fileName = "New Theme", menuName = "Adrian Miasik/Create New Theme")]
     public class Theme : ScriptableObject
     {
-        public bool m_darkMode = true;
         public ColorScheme m_light;
         public ColorScheme m_dark;
 
+        // Cache
+        [HideInInspector] public SystemSettings m_systemSettings = new SystemSettings();
         private List<IColorHook> colorElements = new List<IColorHook>();
 
         private void OnValidate()
@@ -58,6 +60,13 @@ namespace AdrianMiasik.ScriptableObjects
             }
         }
 
+        // Init
+        public void Register(IColorHook hook, SystemSettings systemSettings)
+        {
+            Register(hook);
+            m_systemSettings = systemSettings;
+        }
+
         /// <summary>
         /// Disassociates the provided (<see cref="IColorHook"/>) color element from this theme (If they exist).
         /// <remarks>This is usually invoked before gameobject deletion or if you no longer want to update
@@ -87,7 +96,7 @@ namespace AdrianMiasik.ScriptableObjects
         /// <returns>The user's preferred <see cref="ColorScheme"/></returns>
         public ColorScheme GetCurrentColorScheme()
         {
-            return m_darkMode ? m_dark : m_light;
+            return m_systemSettings.m_darkMode ? m_dark : m_light;
         }
 
         private List<IColorHook> GetColorElements()
@@ -102,13 +111,14 @@ namespace AdrianMiasik.ScriptableObjects
 
         /// <summary>
         /// Transfers all our (<see cref="IColorHook"/>) color elements from one theme to another.
+        /// Including theme related settings.
         /// </summary>
         /// <param name="sourceTheme">The theme you want to pull color elements from.</param>
         /// <param name="destinationTheme">The theme you want to transfer your color elements to.</param>
         public void TransferColorElements(Theme sourceTheme, Theme destinationTheme)
         {
             destinationTheme.SetColorElements(sourceTheme.GetColorElements());
-            destinationTheme.m_darkMode = sourceTheme.m_darkMode;
+            destinationTheme.m_systemSettings.m_darkMode = sourceTheme.m_systemSettings.m_darkMode;
         }
         
         /// <summary>
@@ -127,7 +137,8 @@ namespace AdrianMiasik.ScriptableObjects
         /// </summary>
         public void SetToDarkMode()
         {
-            m_darkMode = true;
+            m_systemSettings.m_darkMode = true;
+            UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
             ApplyColorChanges();
         }
 
@@ -136,7 +147,8 @@ namespace AdrianMiasik.ScriptableObjects
         /// </summary>
         public void SetToLightMode()
         {
-            m_darkMode = false;
+            m_systemSettings.m_darkMode = false;
+            UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
             ApplyColorChanges();
         }
     }

@@ -27,7 +27,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         
         private bool isOpen;
 
-        public void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
+        public void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
             base.Initialize(pomodoroTimer, false);
             
@@ -42,17 +42,17 @@ namespace AdrianMiasik.Components.Specific.Settings
             // Init
             m_optionDigitFormat.Initialize(Timer);
             m_optionPomodoroCount.Initialize(Timer);
-            m_optionEnableLongBreak.Initialize(Timer, settingsConfig);
+            m_optionEnableLongBreak.Initialize(Timer, systemSettings);
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
 #elif UNITY_IOS
             HideMuteSoundOutOfFocusOption();
 #else
-            m_optionMuteSoundOutOfFocusToggle.Initialize(Timer, settingsConfig);
+            m_optionMuteSoundOutOfFocusToggle.Initialize(Timer, systemSettings);
 #endif
             
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-            m_optionUnityAnalytics.Initialize(Timer, settingsConfig);
+            m_optionUnityAnalytics.Initialize(Timer, systemSettings);
 #else
             // Hide settings option if Unity Analytics not enabled on this platform.
             m_optionUnityAnalytics.gameObject.SetActive(false);

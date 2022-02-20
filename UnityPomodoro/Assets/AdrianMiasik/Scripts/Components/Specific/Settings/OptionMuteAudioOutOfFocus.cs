@@ -5,9 +5,9 @@ namespace AdrianMiasik.Components.Specific.Settings
 {
     public class OptionMuteAudioOutOfFocus : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
-            base.Initialize(pomodoroTimer, settingsConfig);
+            base.Initialize(pomodoroTimer, systemSettings);
             
             m_toggleSlider.m_onSetToTrueClick.AddListener((() =>
             {
@@ -17,7 +17,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             {
                 SetSettingMuteSoundWhenOutOfFocus();
             }));
-            m_toggleSlider.Initialize(pomodoroTimer, settingsConfig.m_muteSoundWhenOutOfFocus);
+            m_toggleSlider.Initialize(pomodoroTimer, systemSettings.m_muteSoundWhenOutOfFocus);
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace AdrianMiasik.Components.Specific.Settings
         private void SetSettingMuteSoundWhenOutOfFocus(bool state = false)
         {
             // Apply and save
-            Settings.m_muteSoundWhenOutOfFocus = state;
-            UserSettingsSerializer.Save(Settings);
+            Timer.GetSystemSettings().m_muteSoundWhenOutOfFocus = state;
+            UserSettingsSerializer.SaveSystemSettings(Timer.GetSystemSettings());
             Debug.Log("Timer Settings Saved.");
         }
     }
