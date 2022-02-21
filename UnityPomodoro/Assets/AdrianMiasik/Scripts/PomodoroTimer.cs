@@ -1347,7 +1347,7 @@ namespace AdrianMiasik
             // Apply component swap
             if (state)
             {
-                m_tomatoCounter.Initialize(this);
+                m_tomatoCounter.Initialize(this, timerSettings.m_pomodoroCount);
                 m_tomatoCounter.gameObject.SetActive(true);
             }
             else
