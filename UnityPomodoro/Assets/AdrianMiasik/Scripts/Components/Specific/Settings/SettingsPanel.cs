@@ -60,6 +60,17 @@ namespace AdrianMiasik.Components.Specific.Settings
 #endif
         }
 
+        public void Refresh()
+        {
+            // Gets triggered via dropdown on value changed event
+            m_optionDigitFormat.SetDropdownValue((int)Timer.GetTimerSettings().m_format);
+            m_optionPomodoroCount.SetDropdownValue(Timer.GetTimerSettings().m_pomodoroCount - 1);
+            
+            m_optionEnableLongBreak.Refresh(Timer.GetTimerSettings().m_longBreaks);
+            m_optionMuteSoundOutOfFocusToggle.Refresh(Timer.GetSystemSettings().m_muteSoundWhenOutOfFocus);
+            m_optionUnityAnalytics.Refresh(Timer.GetSystemSettings().m_enableUnityAnalytics);
+        }
+
         /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>
@@ -86,6 +97,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_optionDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
         }
 
+        // TODO: remove / rename
         /// <summary>
         /// Sets the switch digit layout dropdown to the provided digit format index.
         /// (See: <see cref="DigitFormat.SupportedFormats"/>)
@@ -95,7 +107,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             m_optionDigitFormat.SetDropdownValue(value);
         }
-        
+
         /// <summary>
         /// Displays this panel to the user.
         /// </summary>
@@ -124,7 +136,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             return isOpen;
         }
-        
+
         /// <summary>
         /// Shows the 'sound mute when application is out of focus' option to the user.
         /// <remarks>Intended to be shown for desktop users, not mobile.</remarks>
@@ -134,7 +146,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_optionMuteSoundOutOfFocusToggle.gameObject.SetActive(true);
             m_optionMuteSoundOutOfFocusToggle.m_spacer.gameObject.SetActive(true);
         }
-        
+
         /// <summary>
         /// Hides the 'sound mute when application is out of focus' option from the user.
         /// <remarks>Intended to be hidden for mobile users, not desktop.</remarks>

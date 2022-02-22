@@ -96,9 +96,12 @@ namespace AdrianMiasik.Components.Specific
             m_toggle.SetVisualToDisable();
         }
 
-        public ToggleSlider GetToggleSlider()
+        public void Refresh()
         {
-            return m_toggle;
+            if (m_toggle.IsOn() != Timer.GetSystemSettings().m_darkMode)
+            {
+                m_toggle.Press();
+            }
         }
     }
 }

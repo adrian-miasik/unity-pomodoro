@@ -152,13 +152,14 @@ namespace AdrianMiasik
         private readonly bool isRingTickAnimationEnabled = false; // TODO: Re-implement this animation? / Expose in settings?
         private float cachedSeconds;
         private bool isRingTickAnimating;
-
-        [SerializeField] private SystemSettings systemSettings;
-        [SerializeField] private TimerSettings timerSettings;
+        
+        [SerializeField] private SystemSettings loadedSystemSettings;
+        [SerializeField] private TimerSettings loadedTimerSettings;
+        private bool haveSettingsBeenConfigured;
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (systemSettings.m_muteSoundWhenOutOfFocus)
+            if (loadedSystemSettings.m_muteSoundWhenOutOfFocus)
             {
                 // Prevent application from making noise when not in focus
                 AudioListener.volume = !hasFocus ? 0 : 1;
@@ -176,13 +177,26 @@ namespace AdrianMiasik
             Initialize();
         }
 
+        private void OnValidate()
+        {
+            if (!haveSettingsBeenConfigured)
+            {
+                return;
+            }
+            
+            // Check for changes in theme
+            m_themeSlider.Refresh();
+
+            m_settingsContainer.Refresh(); // Refresh to match settings
+        }
+
         private void ConfigureSettings()
         {
-            SystemSettings loadedSystemSettings = UserSettingsSerializer.LoadSystemSettings();
-            TimerSettings loadedTimerSettings = UserSettingsSerializer.LoadTimerSettings();
+            SystemSettings systemSettings = UserSettingsSerializer.LoadSystemSettings();
+            TimerSettings timerSettings = UserSettingsSerializer.LoadTimerSettings();
 
             // System Settings
-            if (loadedSystemSettings == null)
+            if (systemSettings == null)
             {
                 Debug.Log("No System settings found. Created new System settings successfully!");
                 
@@ -209,14 +223,15 @@ namespace AdrianMiasik
                 defaultSystemSettings.m_enableUnityAnalytics = true;
                 
                 // Cache
-                loadedSystemSettings = defaultSystemSettings;
-                UserSettingsSerializer.SaveSystemSettings(loadedSystemSettings);
+                systemSettings = defaultSystemSettings;
+                UserSettingsSerializer.SaveSystemSettings(systemSettings);
             }
 
-            systemSettings = loadedSystemSettings;
+            this.loadedSystemSettings = systemSettings;
 
-            m_themeManager.Register(this, systemSettings);
-            if (systemSettings.m_darkMode)
+            // Apply theme changes
+            m_themeManager.Register(this, this.loadedSystemSettings);
+            if (this.loadedSystemSettings.m_darkMode)
             {
                 m_themeManager.SetToDarkMode();
             }
@@ -227,7 +242,7 @@ namespace AdrianMiasik
             
             // Timer Settings
             // If we don't have any saved settings...
-            if (loadedTimerSettings == null)
+            if (timerSettings == null)
             {
                 Debug.Log("No Timer settings found. Created new Timer settings successfully!");
                 
@@ -238,15 +253,16 @@ namespace AdrianMiasik
                 defaultTimerSettings.m_pomodoroCount = 4;
 
                 // Cache
-                loadedTimerSettings = defaultTimerSettings;
-                UserSettingsSerializer.SaveTimerSettings(loadedTimerSettings);
+                timerSettings = defaultTimerSettings;
+                UserSettingsSerializer.SaveTimerSettings(timerSettings);
             }
             
-            timerSettings = loadedTimerSettings;
+            this.loadedTimerSettings = timerSettings;
+            haveSettingsBeenConfigured = true;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             // Update analytics
-            ToggleUnityAnalytics(systemSettings.m_enableUnityAnalytics, true);
+            ToggleUnityAnalytics(this.loadedSystemSettings.m_enableUnityAnalytics, true);
 #endif
         }
 
@@ -1344,7 +1360,7 @@ namespace AdrianMiasik
             // Apply component swap
             if (state)
             {
-                m_tomatoCounter.Initialize(this, timerSettings.m_pomodoroCount);
+                m_tomatoCounter.Initialize(this, loadedTimerSettings.m_pomodoroCount);
                 m_tomatoCounter.gameObject.SetActive(true);
             }
             else
@@ -1563,12 +1579,12 @@ namespace AdrianMiasik
         // Settings
         public SystemSettings GetSystemSettings()
         {
-            return systemSettings;
+            return loadedSystemSettings;
         }
         
         public TimerSettings GetTimerSettings()
         {
-            return timerSettings;
+            return loadedTimerSettings;
         }
     }
 }

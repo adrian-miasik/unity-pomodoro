@@ -41,5 +41,14 @@ namespace AdrianMiasik.Components.Core
             m_settingsLabel.color = theme.GetCurrentColorScheme().m_foreground;
             m_toggleSlider.ColorUpdate(theme);
         }
+        
+        public void Refresh(bool cachedState)
+        {
+            // If there is a difference in state...
+            if (m_toggleSlider.IsOn() != cachedState)
+            {
+                m_toggleSlider.Press();
+            }
+        }
     }
 }
