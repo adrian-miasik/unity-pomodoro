@@ -62,6 +62,11 @@ namespace AdrianMiasik.Components.Specific.Settings
 
         public void Refresh()
         {
+            if (!IsPageOpen())
+            {
+                return;
+            }
+            
             // Gets triggered via dropdown on value changed event
             m_optionDigitFormat.SetDropdownValue((int)Timer.GetTimerSettings().m_format);
             m_optionPomodoroCount.SetDropdownValue(Timer.GetTimerSettings().m_pomodoroCount - 1);
