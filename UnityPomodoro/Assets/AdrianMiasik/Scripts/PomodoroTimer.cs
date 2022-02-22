@@ -153,8 +153,8 @@ namespace AdrianMiasik
         private float cachedSeconds;
         private bool isRingTickAnimating;
 
-        private SystemSettings systemSettings;
-        private TimerSettings timerSettings;
+        [SerializeField] private SystemSettings systemSettings;
+        [SerializeField] private TimerSettings timerSettings;
 
         private void OnApplicationFocus(bool hasFocus)
         {

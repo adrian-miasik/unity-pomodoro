@@ -30,6 +30,6 @@ namespace AdrianMiasik.Components.Core
         /// If `True`, the Unity Analytics service will track user data.
         /// If `False`, the Unity Analytics service will no longer run and track user data.
         /// </summary>
-        public bool m_enableUnityAnalytics;
+        public bool m_enableUnityAnalytics = true;
     }
 }
