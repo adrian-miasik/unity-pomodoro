@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Timers;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -23,7 +22,6 @@ using UnityEngine.UI;
 namespace AdrianMiasik
 {
     // TODO: Fix credit bubble fade - Not always fading out
-    // TODO: Provide users with the ability to disable the long timers in the settings panel.
     /// <summary>
     /// Our main class / component. Responsible for controlling the main timer logic, configuring settings,
     /// initializing, and manipulating our components.
@@ -101,18 +99,18 @@ namespace AdrianMiasik
         [SerializeField] private AnimationCurve m_ringTickWidth;
 
         /// <summary>
-        /// A <see cref="UnityEvent"/> that gets invoked when the spawn animation is complete.
+        /// A UnityEvent that gets invoked when the spawn animation is complete.
         /// </summary>
         [Header("Unity Events")]
         public UnityEvent m_onSpawnCompletion;
         
         /// <summary>
-        /// A <see cref="UnityEvent"/> that gets invoked when the ring / timer alarm pulses.
+        /// A UnityEvent that gets invoked when the ring / timer alarm pulses.
         /// </summary>
         public UnityEvent m_onRingPulse;
         
         /// <summary>
-        /// A <see cref="UnityEvent"/> that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>)
+        /// A UnityEvent that gets invoked when the timer finishes. (<see cref="States.COMPLETE"/>)
         /// </summary>
         public UnityEvent m_onTimerCompletion;
 
@@ -153,6 +151,7 @@ namespace AdrianMiasik
         private float cachedSeconds;
         private bool isRingTickAnimating;
         
+        [Header("Loaded Settings")]
         [SerializeField] private SystemSettings loadedSystemSettings;
         [SerializeField] private TimerSettings loadedTimerSettings;
         private bool haveSettingsBeenConfigured;
@@ -169,13 +168,6 @@ namespace AdrianMiasik
                 AudioListener.volume = 1;
             }
         }
-        
-        void Awake()
-        {
-            // Single entry point
-            ConfigureSettings();
-            Initialize();
-        }
 
         private void OnValidate()
         {
@@ -184,12 +176,21 @@ namespace AdrianMiasik
                 return;
             }
             
-            // Check for changes in theme
+            // Updating settings visuals
             m_themeSlider.Refresh();
-
-            m_settingsContainer.Refresh(); // Refresh to match settings
+            m_settingsContainer.Refresh();
         }
 
+        void Awake()
+        {
+            // Single entry point
+            ConfigureSettings();
+            Initialize();
+        }
+
+        /// <summary>
+        /// Loads / Creates settings file for the system and timer.
+        /// </summary>
         private void ConfigureSettings()
         {
             SystemSettings systemSettings = UserSettingsSerializer.LoadSystemSettings();
@@ -227,7 +228,7 @@ namespace AdrianMiasik
                 UserSettingsSerializer.SaveSystemSettings(systemSettings);
             }
 
-            this.loadedSystemSettings = systemSettings;
+            loadedSystemSettings = systemSettings;
 
             // Apply theme changes
             m_themeManager.Register(this, this.loadedSystemSettings);
@@ -257,7 +258,7 @@ namespace AdrianMiasik
                 UserSettingsSerializer.SaveTimerSettings(timerSettings);
             }
             
-            this.loadedTimerSettings = timerSettings;
+            loadedTimerSettings = timerSettings;
             haveSettingsBeenConfigured = true;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
@@ -267,6 +268,14 @@ namespace AdrianMiasik
         }
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
+        /// <summary>
+        /// Enables / Disables our Unity Analytics Service and setting option.
+        /// Note: To fully disable analytics, we need to set initializeOnStartup to false and restart our app.
+        /// There seems to be no way to "turn off" the analytics service once it's been initialized and turned on.
+        /// The disable analytics code does not return our intended values, hence the hard restart required.
+        /// </summary>
+        /// <param name="enableUnityAnalytics"></param>
+        /// <param name="isBootingUp"></param>
         public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
             // Apply and save
@@ -300,6 +309,10 @@ namespace AdrianMiasik
             }
         }
         
+        /// <summary>
+        /// Starts up our Unity Analytics service.
+        /// </summary>
+        /// <param name="isBootingUp"></param>
         async void StartServices(bool isBootingUp)
         {
             try
@@ -398,6 +411,9 @@ namespace AdrianMiasik
             PlaySpawnAnimation();
         }
 
+        /// <summary>
+        /// Initializes our manager classes.
+        /// </summary>
         private void InitializeManagers()
         {
             m_hotkeyDetector.Initialize(this);
@@ -405,6 +421,10 @@ namespace AdrianMiasik
             m_notifications.Initialize(GetTimerSettings());
         }
 
+        /// <summary>
+        /// Hooks up our button functionality, initializes our pomodoro timer components, and registers our
+        /// ITimerState interfaced elements.
+        /// </summary>
         private void InitializeComponents()
         {
             // Play / Pause Button
@@ -428,6 +448,7 @@ namespace AdrianMiasik
             
             // TODO: Menu toggle UE listener
             
+            // Components
             m_background.Initialize(this);
             m_overlay.Initialize(this);
             m_digitFormat.Initialize(this, GetTimerSettings().m_format);
@@ -442,7 +463,6 @@ namespace AdrianMiasik
             m_settingsContainer.Initialize(this, GetSystemSettings());
             m_aboutContainer.Initialize(this);
             m_skipButton.Initialize(this);
-            
             if (GetTimerSettings().m_longBreaks)
             {
                 m_tomatoCounter.Initialize(this, GetTimerSettings().m_pomodoroCount);
@@ -462,7 +482,7 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Unity's OnDestroy() - Deregister self from <see cref="Theme"/> on destruction.
+        /// Unity's OnDestroy(). Deregisters self from <see cref="Theme"/> on destruction.
         /// </summary>
         public void OnDestroy()
         {
@@ -1399,7 +1419,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Sets our <see cref="DigitFormat"/> to long break mode.
+        /// Enables long break on our <see cref="DigitFormat"/>.
         /// </summary>
         public void ActivateLongBreak()
         {
@@ -1407,7 +1427,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Sets our <see cref="DigitFormat"/> to not use long break mode. (<see cref="DigitFormat"/> could still be
+        /// Disables long break on our <see cref="DigitFormat"/>. (Note: <see cref="DigitFormat"/> could still be
         /// in a work / break mode)
         /// </summary>
         public void DeactivateLongBreak()
@@ -1437,23 +1457,40 @@ namespace AdrianMiasik
             }
         }
 
+        /// <summary>
+        /// Positions our <see cref="CreditsBubble"/> to stay within the bounds of the sidebar.
+        /// </summary>
+        /// <param name="desiredWidthPercentage"></param>
+        /// <param name="rightOffsetInPixels"></param>
         public void ConformCreditsBubbleToSidebar(float desiredWidthPercentage, float rightOffsetInPixels = -10)
         {
             m_creditsBubble.SetWidth(desiredWidthPercentage);
             m_creditsBubble.SetRightOffset(rightOffsetInPixels);
         }
 
+        /// <summary>
+        /// Positions our <see cref="CreditsBubble"/> back to it's original position. (Not conforming to the sidebar)
+        /// </summary>
         public void ResetCreditsBubbleSidebarConformity()
         {
             m_creditsBubble.ResetWidth();
             m_creditsBubble.ResetRightOffset();
         }
         
+        /// <summary>
+        /// Does this timer currently have any pomodoro/tomato progression?
+        /// </summary>
+        /// <returns></returns>
         public bool HasTomatoProgression()
         {
             return m_tomatoCounter.HasProgression() || m_digitFormat.m_isOnLongBreak;
         }
 
+        /// <summary>
+        /// Changes the current timer to the provided value.
+        /// <remarks>Intended to be used by our Media Creator.</remarks>
+        /// </summary>
+        /// <param name="currentTimeInSeconds"></param>
         public void SetCurrentTime(float currentTimeInSeconds)
         {
             currentTime = currentTimeInSeconds;
