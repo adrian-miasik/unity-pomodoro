@@ -48,7 +48,7 @@ namespace AdrianMiasik.Components.Specific.Automation
 
             // Setup theme
             _timer.GetTheme().SetToLightMode(false);
-            _timer.DisableDarkModeToggle();
+            _timer.MCDisableDarkModeToggle();
 
             // Chain screenshot scenarios
             _screenshotScenarios.Enqueue(() => TakeSetupScreenshot(mediaCapture));
@@ -93,7 +93,7 @@ namespace AdrianMiasik.Components.Specific.Automation
                     
                     // Swap theme
                     _timer.GetTheme().SetToDarkMode(false);
-                    _timer.EnableDarkModeToggle();
+                    _timer.MCEnableDarkModeToggle();
                     
                     // Begin media capture for dark mode
                     MoveToNextScreenshotScenario();
@@ -106,14 +106,14 @@ namespace AdrianMiasik.Components.Specific.Automation
                     if (_startingThemeDarkMode)
                     {
                         _timer.GetTheme().SetToDarkMode(false);
-                        _timer.EnableDarkModeToggle();
+                        _timer.MCEnableDarkModeToggle();
                     }
                     else
                     {
                         _timer.GetTheme().SetToLightMode(false);
-                        _timer.DisableDarkModeToggle();
+                        _timer.MCDisableDarkModeToggle();
                     }
-                    _timer.EnableThemeToggleAnimation();
+                    _timer.MCEnableThemeToggleAnimation();
 
                     Debug.Log("Media Creation Complete!");
                 }
@@ -133,9 +133,9 @@ namespace AdrianMiasik.Components.Specific.Automation
 
         private static void TakeRunningScreenshot(MediaCapture mediaCapture)
         {
-            _timer.HideCreditsBubble();
+            _timer.MCHideCreditsBubble();
             _timer.SwitchState(PomodoroTimer.States.RUNNING);
-            _timer.ShowEndTimestampBubble();
+            _timer.MCShowEndTimestampBubble();
             TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
             TimeSpan subSpan = new TimeSpan(0,0,3,12,0);
             timeSpan = timeSpan.Subtract(subSpan);
@@ -147,7 +147,7 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static void TakeCompletedScreenshot(MediaCapture mediaCapture)
         {
             _timer.SwitchState(PomodoroTimer.States.COMPLETE);
-            _timer.DisableCompletionAnimation();
+            _timer.MCDisableCompletionAnimation();
             
             CaptureScreenshot(mediaCapture);
         }
@@ -155,7 +155,7 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static void TakeBreakScreenshot(MediaCapture mediaCapture)
         {
             _timer.SwitchTimer(true);
-            _timer.EnableBreakSlider();
+            _timer.MCEnableBreakSlider();
             _timer.SwitchState(PomodoroTimer.States.SETUP);
             
             CaptureScreenshot(mediaCapture);
@@ -164,18 +164,18 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static void TakeSidebarScreenshot(MediaCapture mediaCapture)
         {
             _timer.SwitchTimer(false);
-            _timer.DisableBreakSlider();
+            _timer.MCDisableBreakSlider();
             _timer.SwitchState(PomodoroTimer.States.SETUP);
-            _timer.ShowCreditsBubble();
-            _timer.ShowSidebar();
+            _timer.MCShowCreditsBubble();
+            _timer.MCShowSidebar();
             
             CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeSelectionSetupScreenshot(MediaCapture mediaCapture)
         {
-            _timer.HideCreditsBubble();
-            _timer.HideSidebar();
+            _timer.MCHideCreditsBubble();
+            _timer.MCHideSidebar();
             _timer.SelectAll();
             
             CaptureScreenshot(mediaCapture);
@@ -192,7 +192,7 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static void TakeAboutScreenshot(MediaCapture mediaCapture)
         {
             _timer.ShowAbout();
-            _timer.ShowCreditsBubble();
+            _timer.MCShowCreditsBubble();
             
             CaptureScreenshot(mediaCapture);
         }
@@ -201,9 +201,9 @@ namespace AdrianMiasik.Components.Specific.Automation
         {
             _timer.ShowMainContent();
             
-            _timer.HideCreditsBubble();
+            _timer.MCHideCreditsBubble();
             _timer.SwitchState(PomodoroTimer.States.RUNNING);
-            _timer.ShowEndTimestampBubble();
+            _timer.MCShowEndTimestampBubble();
             TimeSpan timeSpan = new TimeSpan(0,0,25,0,0);
             TimeSpan subSpan = new TimeSpan(0,0,3,12,0);
             timeSpan = timeSpan.Subtract(subSpan);

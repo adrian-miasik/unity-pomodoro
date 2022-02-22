@@ -1524,60 +1524,68 @@ namespace AdrianMiasik
             m_sidebarMenu.Close();
         }
 
+#if UNITY_EDITOR
+        // TODO: Find a more consistent way of doing all these. Such as a ShowInstantly() method or something.
         // Creator Media Methods: Only intended for instant visual changes
-        public void HideCreditsBubble()
+        public void MCHideCreditsBubble()
         {
             m_creditsBubble.FadeOut(true);
         }
 
-        public void ShowCreditsBubble()
+        public void MCShowCreditsBubble()
         {
             m_creditsBubble.FadeIn(true);
         }
 
-        public void ShowEndTimestampBubble()
+        public void MCShowEndTimestampBubble()
         {
             m_endTimestampBubble.FadeIn(true);
         }
 
-        public void DisableCompletionAnimation()
+        public void MCDisableCompletionAnimation()
         {
             m_completionLabel.HideCompletionAnimation();
             disableCompletionAnimation = true;
         }
 
-        public void EnableBreakSlider()
+        public void MCEnableBreakSlider()
         {
             m_breakSlider.SetVisualToEnable();
         }
         
-        public void ShowSidebar()
+        public void MCShowSidebar()
         {
             m_sidebarMenu.gameObject.SetActive(true);
             ConformCreditsBubbleToSidebar(m_sidebarMenu.CalculateSidebarWidth());
             ShowOverlay();
         }
 
-        public void DisableBreakSlider()
+        public void MCDisableBreakSlider()
         {
             m_breakSlider.SetVisualToDisable();
         }
 
-        public void HideSidebar()
+        public void MCHideSidebar()
         {
             m_sidebarMenu.gameObject.SetActive(false); 
             HideOverlay();
         }
 
-        public void EnableDarkModeToggle()
+        public void MCEnableDarkModeToggle()
         {
             m_themeSlider.SetVisualToEnable();
         }
 
-        public void DisableDarkModeToggle()
+        public void MCDisableDarkModeToggle()
         {
             m_themeSlider.SetVisualToDisable();
         }
+        
+        public void MCEnableThemeToggleAnimation()
+        {
+            m_themeSlider.EnableAnimation();
+        }
+#endif
         
         // Settings
         public SystemSettings GetSystemSettings()
@@ -1588,11 +1596,6 @@ namespace AdrianMiasik
         public TimerSettings GetTimerSettings()
         {
             return loadedTimerSettings;
-        }
-
-        public void EnableThemeToggleAnimation()
-        {
-            m_themeSlider.EnableAnimation();
         }
     }
 }
