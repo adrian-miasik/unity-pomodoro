@@ -13,6 +13,7 @@ namespace AdrianMiasik.Components.Specific
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, updateColors);
+            m_buttonSvg.m_onClick.AddListener(Skip);
             Hide();
         }
 
@@ -44,9 +45,10 @@ namespace AdrianMiasik.Components.Specific
             gameObject.SetActive(false);
         }
 
-        public ClickButtonSVGIcon GetClickButtonIcon()
+        private void Skip()
         {
-            return m_buttonSvg;
+            AudioMimic.Instance.PlaySound(m_buttonSvg.m_clickSound.clip);
+            Timer.Skip();
         }
     }
 }
