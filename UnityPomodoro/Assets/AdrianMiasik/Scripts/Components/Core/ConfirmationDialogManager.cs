@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// Responsible for spawning and keeping track of the currently used confirmation dialog.
+    /// Use this class for interacting with our pop-up's via code.
+    /// </summary>
     public class ConfirmationDialogManager : ThemeElement
     {
         [SerializeField] private ConfirmationDialog m_confirmationDialogPrefab; // Prefab reference
