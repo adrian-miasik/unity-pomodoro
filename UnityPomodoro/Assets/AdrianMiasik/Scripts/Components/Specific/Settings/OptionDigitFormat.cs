@@ -1,13 +1,12 @@
 using System;
 using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> dropdown with a label.
-    /// Intended to be used for 'Set digit format' settings option. (See <see cref="SettingsPanel"/>)
+    /// A <see cref="SettingsOptionDropdown"/> that changes our current timers digit format.
+    /// (See <see cref="DigitFormat"/>, also see <seealso cref="SettingsPanel"/>)
     /// </summary>
     public class OptionDigitFormat : SettingsOptionDropdown
     {

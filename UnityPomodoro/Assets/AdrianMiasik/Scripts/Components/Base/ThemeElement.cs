@@ -11,7 +11,7 @@ namespace AdrianMiasik.Components.Base
     public class ThemeElement: MonoBehaviour, IColorHook
     {
         protected PomodoroTimer Timer;
-        protected bool Initialized;
+        private bool Initialized;
 
         /// <param name="pomodoroTimer">Our main class</param>
         /// <param name="updateColors">Do you want to update or invoke this elements ColorUpdate method

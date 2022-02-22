@@ -1,9 +1,14 @@
-﻿using AdrianMiasik.Interfaces;
+﻿using AdrianMiasik.Components.Core.Settings;
+using AdrianMiasik.Components.Specific;
+using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// Holds our current active theme and is responsible for changing between themes.
+    /// </summary>
     public class ThemeManager : MonoBehaviour
     {
         [SerializeField] private Theme m_activeTheme;
@@ -16,10 +21,15 @@ namespace AdrianMiasik.Components.Core
         {
             return m_activeTheme;
         }
+        
+        public void Register(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
+        {
+            m_activeTheme.Register(pomodoroTimer, systemSettings);
+        }
 
         /// <summary>
         /// Sets our <see cref="Theme"/> preference to light mode, and update's all our necessary components.
-        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
+        /// <remarks>Used as a UnityEvent on our <see cref="ThemeSlider"/>.</remarks>
         /// </summary>
         public void SetToLightMode()
         {
@@ -28,7 +38,7 @@ namespace AdrianMiasik.Components.Core
 
         /// <summary>
         /// Sets our <see cref="Theme"/> preference to dark mode, and update's all our necessary components.
-        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
+        /// <remarks>Used as a UnityEvent on our <see cref="ThemeSlider"/>.</remarks>
         /// </summary>
         public void SetToDarkMode()
         {
@@ -50,11 +60,6 @@ namespace AdrianMiasik.Components.Core
             
             // Apply our changes
             m_activeTheme.ApplyColorChanges();
-        }
-        
-        public void Register(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
-        {
-            m_activeTheme.Register(pomodoroTimer, systemSettings);
         }
     }
 }

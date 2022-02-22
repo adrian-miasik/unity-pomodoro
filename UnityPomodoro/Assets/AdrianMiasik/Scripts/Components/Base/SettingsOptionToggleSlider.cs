@@ -1,13 +1,14 @@
-using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Base
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> that has a label with a boolean slider intended to be used
+    /// A **base class** <see cref="ThemeElement"/> that has a label with a boolean slider intended to be used
     /// as a settings option on the <see cref="SettingsPanel"/>.
     /// </summary>
     public class SettingsOptionToggleSlider : ThemeElement

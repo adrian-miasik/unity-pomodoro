@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Base
 {
+    // TODO: Debug Serialization Bug
     /// <summary>
     /// A **generic** button that is used to interact with the software and trigger events based on user input.
     /// Supports animations, click hold curves, unity events, and sound FX (with pitch variation).

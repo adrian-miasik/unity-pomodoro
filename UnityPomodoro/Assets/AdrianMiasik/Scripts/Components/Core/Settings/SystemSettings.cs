@@ -1,10 +1,10 @@
 ﻿using System;
 using AdrianMiasik.UWP;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Core.Settings
 {
     /// <summary>
-    /// Global settings for the application. (Not specific to a timer, but instead the entire application)
+    /// Global settings for the application.
     /// </summary>
     [Serializable]
     public class SystemSettings

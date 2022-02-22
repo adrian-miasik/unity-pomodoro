@@ -2,8 +2,12 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Core.Settings
 {
+    /// <summary>
+    /// Saves & loads our user settings into our persistent data paths. (<see cref="SystemSettings"/> and
+    /// <see cref="TimerSettings"/>
+    /// </summary>
     public static class UserSettingsSerializer
     {
         private static string dataExtension = ".dat";

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
+using AdrianMiasik.Components.Core.Settings;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;

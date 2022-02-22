@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
 

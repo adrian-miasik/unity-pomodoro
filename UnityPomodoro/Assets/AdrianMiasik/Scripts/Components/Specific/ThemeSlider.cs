@@ -6,7 +6,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> boolean slider with custom icon. Intended for the theme toggle (light / dark).
+    /// A <see cref="ThemeElement"/> boolean slider with a custom icon. Intended for toggling between our light / dark
+    /// mode themes.
     /// </summary>
     public class ThemeSlider : ThemeElement
     {

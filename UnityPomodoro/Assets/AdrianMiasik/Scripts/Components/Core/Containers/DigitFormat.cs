@@ -18,6 +18,9 @@ namespace AdrianMiasik.Components.Core.Containers
     /// </summary>
     public class DigitFormat : ThemeElement
     {
+        /// <summary>
+        /// The type any <see cref="DoubleDigit"/> could be.
+        /// </summary>
         public enum Digits
         {
             DAYS,
@@ -27,6 +30,9 @@ namespace AdrianMiasik.Components.Core.Containers
             MILLISECONDS
         }
 
+        /// <summary>
+        /// The formats we currently support. See abbreviation doc for details.
+        /// </summary>
         public enum SupportedFormats
         {
             DD_HH_MM_SS_MS, // Full
@@ -112,6 +118,12 @@ namespace AdrianMiasik.Components.Core.Containers
             ColorUpdate(Timer.GetTheme());
         }
 
+        /// <summary>
+        /// Switches then generates the provided digit format and updates all relevant ThemeElement components.
+        /// </summary>
+        /// <param name="pomodoroTimer"></param>
+        /// <param name="startingFormat"></param>
+        /// <param name="updateColors"></param>
         public void Initialize(PomodoroTimer pomodoroTimer, SupportedFormats startingFormat, bool updateColors = true)
         {
             format = startingFormat;
@@ -250,7 +262,7 @@ namespace AdrianMiasik.Components.Core.Containers
         }
         
         /// <summary>
-        /// Presses our break boolean.
+        /// Flips our break boolean from True to False and vice versa.
         /// </summary>
         public void FlipIsOnBreakBool()
         {
@@ -896,14 +908,6 @@ namespace AdrianMiasik.Components.Core.Containers
         public void DeactivateLongBreak()
         {
             m_isOnLongBreak = false;
-        }
-
-        public void HideArrows()
-        {
-            foreach (DoubleDigit digit in generatedDigits)
-            {
-                digit.HideArrows();
-            }
         }
     }
  }

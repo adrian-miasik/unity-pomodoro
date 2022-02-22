@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Settings;
 using Unity.Services.Analytics;
 using UnityEngine;
 
@@ -29,7 +31,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_toggleSlider.Initialize(pomodoroTimer, systemSettings.m_enableUnityAnalytics);
         }
 
-        public void SetSettingUnityAnalytics(bool state)
+        private void SetSettingUnityAnalytics(bool state)
         {
             if (!state)
             {

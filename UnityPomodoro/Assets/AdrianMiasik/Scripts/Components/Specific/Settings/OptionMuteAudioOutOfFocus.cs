@@ -1,8 +1,14 @@
-﻿using AdrianMiasik.Components.Core;
+﻿using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Settings;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
+    /// <summary>
+    /// A <see cref="SettingsOptionDropdown"/> that disables/enables audio when the application is not in focus.
+    /// (See <see cref="PomodoroTimer.OnApplicationFocus"/>, also see <seealso cref="SettingsPanel"/>)
+    /// </summary>
     public class OptionMuteAudioOutOfFocus : SettingsOptionToggleSlider
     {
         public override void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)

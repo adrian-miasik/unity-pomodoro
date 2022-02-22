@@ -1,10 +1,11 @@
-﻿using AdrianMiasik.Components.Core;
-using UnityEngine;
+﻿using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Settings;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
-    /// A settings option intended be used for 'Enable long break' settings option. (See <see cref="SettingsPanel"/>)
+    /// A <see cref="SettingsOptionDropdown"/> that enables / disables pomodoro progression for long breaks.
+    /// (See <see cref="PomodoroTimer.SetSettingLongBreaks"/>, also see <seealso cref="SettingsPanel"/>)
     /// </summary>
     public class OptionEnableLongBreaks : SettingsOptionToggleSlider
     {

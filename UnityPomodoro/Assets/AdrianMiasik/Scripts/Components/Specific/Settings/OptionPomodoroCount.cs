@@ -1,13 +1,14 @@
 using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Settings;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> dropdown with a label.
-    /// Intended to be used for 'Set Pomodoro Count' settings option. (See <see cref="SettingsPanel"/>)
+    /// A <see cref="SettingsOptionDropdown"/> that changes how many pomodoros are required to unlock our long break.
+    /// (See <see cref="PomodoroTimer.SetPomodoroCount"/>, also see <seealso cref="SettingsPanel"/>)
     /// </summary>
     public class OptionPomodoroCount : SettingsOptionDropdown
     {
@@ -18,11 +19,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             SetDropdownValue(Timer.GetTimerSettings().m_pomodoroCount - 1);
             m_dropdown.onValueChanged.AddListener(SetPomodoroLongBreakCount);
         }
-
-        /// <summary>
-        /// <remarks>Used as a UnityEvent on the Unity Pomodoro Dropdown. See <see cref="Dropdown"/></remarks>
-        /// </summary>
-        /// <param name="i"></param>
+        
         private void SetPomodoroLongBreakCount(Int32 i)
         {
             Timer.GetTimerSettings().m_pomodoroCount = i + 1;

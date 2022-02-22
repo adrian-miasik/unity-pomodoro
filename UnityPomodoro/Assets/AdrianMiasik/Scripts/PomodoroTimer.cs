@@ -4,6 +4,7 @@ using System.Linq;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
+using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.Interfaces;
@@ -1259,7 +1260,7 @@ namespace AdrianMiasik
                 {
                     GetTimerSettings().m_format = desiredFormat;
                     UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
-                    m_settingsContainer.SetDropdown(m_digitFormat.GetPreviousFormatSelection());
+                    m_settingsContainer.SetDigitFormatDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
             }
             else
@@ -1281,7 +1282,7 @@ namespace AdrianMiasik
             
             if (m_settingsContainer.IsPageOpen())
             {
-                m_settingsContainer.UpdateDropdown();
+                m_settingsContainer.UpdateDigitFormatDropdown();
             }
         }
         

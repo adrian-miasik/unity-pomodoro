@@ -1,6 +1,6 @@
 using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
+using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -8,9 +8,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> page used to display a set of interactable user options. Currently supports
-    /// switching between different digit formats and muting our application when it's not in focus.
-    /// See: <see cref="DigitFormat.SupportedFormats"/>.
+    /// A <see cref="ThemeElement"/> page used to display a set of interactable <see cref="SystemSettings"/> and
+    /// <see cref="TimerSettings"/>.
     /// </summary>
     public class SettingsPanel : ThemeElement
     {
@@ -30,14 +29,6 @@ namespace AdrianMiasik.Components.Specific.Settings
         public void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
             base.Initialize(pomodoroTimer, false);
-            
-            // Overrides
-            // m_optionEnableLongBreak.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            // m_optionEnableLongBreak.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            // m_optionMuteSoundOutOfFocusToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            // m_optionMuteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            // m_optionUnityAnalytics.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            // m_optionUnityAnalytics.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
             
             // Init
             m_optionDigitFormat.Initialize(Timer);
@@ -60,6 +51,9 @@ namespace AdrianMiasik.Components.Specific.Settings
 #endif
         }
 
+        /// <summary>
+        /// Updates all elements present on this page using the current loaded System and Timer settings.
+        /// </summary>
         public void Refresh()
         {
             if (!IsPageOpen())
@@ -97,18 +91,17 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <summary>
         /// Updates the switch digit layout dropdown to use the current timer's digit format.
         /// </summary>
-        public void UpdateDropdown()
+        public void UpdateDigitFormatDropdown()
         {
             m_optionDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
         }
-
-        // TODO: remove / rename
+        
         /// <summary>
         /// Sets the switch digit layout dropdown to the provided digit format index.
         /// (See: <see cref="DigitFormat.SupportedFormats"/>)
         /// </summary>
         /// <param name="value">The index value you want the dropdown to be set at.</param>
-        public void SetDropdown(int value)
+        public void SetDigitFormatDropdown(int value)
         {
             m_optionDigitFormat.SetDropdownValue(value);
         }

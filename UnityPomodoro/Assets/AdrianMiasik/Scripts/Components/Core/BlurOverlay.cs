@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
-    /// An overlay that will blur the UI elements behind.
-    /// <remarks>Two Canvas' are required for this Asset.</remarks>
+    /// An overlay that will blur UI elements.
+    /// <remarks>Note: Specific Canvas' is required for this Asset.</remarks>
     /// </summary>
     public class BlurOverlay : ThemeElement, IPointerClickHandler
     {

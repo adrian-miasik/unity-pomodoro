@@ -1,10 +1,10 @@
 ﻿using System;
 using AdrianMiasik.Components.Core.Containers;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Core.Settings
 {
     /// <summary>
-    /// Settings that are to be applied / correspond to a PomodoroTimer.
+    /// Settings that are to be applied / corresponds to a PomodoroTimer.
     /// </summary>
     [Serializable]
     public class TimerSettings

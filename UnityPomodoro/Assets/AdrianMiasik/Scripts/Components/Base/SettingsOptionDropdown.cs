@@ -1,12 +1,17 @@
-﻿using AdrianMiasik.Components.Base;
+﻿using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
+using Dropdown = AdrianMiasik.Components.Core.Dropdown;
 
-namespace AdrianMiasik.Components.Core
+namespace AdrianMiasik.Components.Base
 {
+    /// <summary>
+    /// A **base class** <see cref="ThemeElement"/> that has a label with a <see cref="Dropdown"/> intended to be used
+    /// as a settings option on the <see cref="SettingsPanel"/>.
+    /// </summary>
     public class SettingsOptionDropdown : ThemeElement
     {
         [SerializeField] private TMP_Text m_label;
