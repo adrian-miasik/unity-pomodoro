@@ -46,7 +46,7 @@ namespace AdrianMiasik.ScriptableObjects
         /// <summary>
         /// Associates the provided (<see cref="IColorHook"/>) color element to this theme. This is used
         /// for updating our elements when we are validating editor colors, or switching between different
-        /// <see cref="ColorScheme"/>'s. See <see cref="SetToDarkMode"/> & <see cref="SetToLightMode"/>.
+        /// <see cref="ColorScheme"/>'s. See <see cref="SetToDarkMode"/> and <see cref="SetToLightMode"/>.
         /// </summary>
         /// <param name="hook">The color element you want to register/associate with this theme.</param>
         public void Register(IColorHook hook)

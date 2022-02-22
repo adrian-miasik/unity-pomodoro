@@ -633,7 +633,7 @@ namespace AdrianMiasik.Components.Core.Containers
         }
 
         /// <summary>
-        /// Moves all our generated <see cref="DoubleDigit"/>'s into their default viewport positions & anchors.
+        /// Moves all our generated <see cref="DoubleDigit"/>'s into their default viewport positions and anchors.
         /// </summary>
         public void ResetTextPositions()
         {

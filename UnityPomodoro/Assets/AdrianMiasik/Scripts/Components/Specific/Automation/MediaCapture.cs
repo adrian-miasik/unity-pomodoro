@@ -6,7 +6,6 @@ namespace AdrianMiasik.Components.Specific.Automation
 {
     /// <summary>
     /// A MonoBehaviour script that allows us to use coroutines from a static context.
-    /// Intended to be used with <see cref="MediaCreator"/>
     /// </summary>
     public class MediaCapture : MonoBehaviour
     {
