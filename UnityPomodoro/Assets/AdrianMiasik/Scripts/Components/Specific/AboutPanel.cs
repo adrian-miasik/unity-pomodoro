@@ -22,6 +22,13 @@ namespace AdrianMiasik.Components.Specific
         
         private bool isAboutPageOpen;
 
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
+        {
+            base.Initialize(pomodoroTimer, updateColors);
+
+            m_socials.Initialize(pomodoroTimer, updateColors);
+        }
+
         /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>

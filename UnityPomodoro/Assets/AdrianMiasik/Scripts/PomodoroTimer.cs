@@ -438,6 +438,7 @@ namespace AdrianMiasik
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
             m_settingsContainer.Initialize(this, GetSystemSettings());
+            m_aboutContainer.Initialize(this);
             m_skipButton.Initialize(this);
             
             if (GetTimerSettings().m_longBreaks)

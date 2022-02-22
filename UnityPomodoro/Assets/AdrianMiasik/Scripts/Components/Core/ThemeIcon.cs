@@ -20,7 +20,7 @@ namespace AdrianMiasik.Components.Core
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>
         /// <param name="theme">The theme to apply on our referenced components.</param>
-        public void ColorUpdate(Theme theme)
+        public override void ColorUpdate(Theme theme)
         {
             m_icon.sprite = Timer.GetSystemSettings().m_darkMode ? m_darkSprite : m_lightSprite;
         }
