@@ -10,13 +10,13 @@ namespace AdrianMiasik.Components.Core.Settings
     public class TimerSettings
     {
         /// <summary>
-        /// The timers current time format.
+        /// The current timer format.
         /// </summary>
         public DigitFormat.SupportedFormats m_format = DigitFormat.SupportedFormats.HH_MM_SS;
 
         /// <summary>
         /// Enable timer long breaks?
-        /// If `True`, the user will be able to accumulate tomatoes/pomodoro & long breaks. (Work/Break/Long Break)
+        /// If `True`, the user will be able to accumulate tomatoes/pomodoro and long breaks. (Work/Break/Long Break)
         /// If `False`, the user will not be able to user long breaks. (Work/Break): The way the
         /// timer worked on version 1.6.0. or lower). 
         /// </summary>

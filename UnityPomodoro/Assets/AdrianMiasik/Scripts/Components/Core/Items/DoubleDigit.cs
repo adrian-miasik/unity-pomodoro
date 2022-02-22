@@ -229,7 +229,7 @@ namespace AdrianMiasik.Components.Core.Items
         }
 
         /// <summary>
-        /// Resets our input field's default viewport positions & anchors.
+        /// Resets our input field's default viewport positions and anchors.
         /// </summary>
         public void ResetTextPosition()
         {
@@ -247,7 +247,7 @@ namespace AdrianMiasik.Components.Core.Items
         }
         
         /// <summary>
-        /// Makes the increment & decrement arrow hidden.
+        /// Makes the increment and decrement arrow hidden.
         /// </summary>
         public void HideArrows()
         {

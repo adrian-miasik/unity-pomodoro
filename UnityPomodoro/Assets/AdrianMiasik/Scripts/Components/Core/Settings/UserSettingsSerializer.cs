@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core.Settings
 {
     /// <summary>
-    /// Saves & loads our user settings into our persistent data paths. (<see cref="SystemSettings"/> and
+    /// Saves/loads our user settings to/from our persistent data paths respectively. (<see cref="SystemSettings"/> and
     /// <see cref="TimerSettings"/>
     /// </summary>
     public static class UserSettingsSerializer
