@@ -77,6 +77,11 @@ namespace AdrianMiasik.Components.Specific
         {
             m_toggle.OverrideTrueColor(color);
         }
+        
+        public void OverrideDotColor(Color color)
+        {
+            m_toggle.OverrideDotColor(color);
+        }
 
         /// <summary>
         /// Presses our theme slider toggle.
