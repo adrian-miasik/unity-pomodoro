@@ -177,8 +177,15 @@ namespace AdrianMiasik.Components.Core
         public override void ColorUpdate(Theme theme)
         {
             ColorScheme currentColors = theme.GetCurrentColorScheme();
-            falseColor = overrideFalseColor ? overridenFalseColor : currentColors.m_modeOne;
-            trueColor = overrideTrueColor ? overridenTrueColor : currentColors.m_modeTwo;
+            if (theme.m_systemSettings.m_darkMode)
+            {
+                falseColor = overrideFalseColor ? overridenFalseColor : currentColors.m_foreground;
+            }
+            else
+            {
+                falseColor = overrideFalseColor ? overridenFalseColor : currentColors.m_backgroundHighlight;
+            }
+            trueColor = overrideTrueColor ? overridenTrueColor : currentColors.m_modeOne;
             m_background.color = state ? trueColor : falseColor;
             m_dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
         }

@@ -32,12 +32,12 @@ namespace AdrianMiasik.Components.Specific.Settings
             base.Initialize(pomodoroTimer, false);
             
             // Overrides
-            m_optionEnableLongBreak.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            m_optionEnableLongBreak.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            m_optionMuteSoundOutOfFocusToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            m_optionMuteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            m_optionUnityAnalytics.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
-            m_optionUnityAnalytics.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            // m_optionEnableLongBreak.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            // m_optionEnableLongBreak.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            // m_optionMuteSoundOutOfFocusToggle.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            // m_optionMuteSoundOutOfFocusToggle.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            // m_optionUnityAnalytics.OverrideFalseColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            // m_optionUnityAnalytics.OverrideTrueColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
             
             // Init
             m_optionDigitFormat.Initialize(Timer);
@@ -85,7 +85,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                 
                 m_optionMuteSoundOutOfFocusToggle.ColorUpdate(theme);
                 
-                // m_unityAnalyticsSettingsOption.ColorUpdate(theme);
+                m_optionUnityAnalytics.ColorUpdate(theme);
             }
         }
 

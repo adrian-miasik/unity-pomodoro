@@ -360,6 +360,8 @@ namespace AdrianMiasik
             m_mainContainer.gameObject.SetActive(true);
 
             // Overrides
+            m_breakSlider.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_modeOne);
+            m_breakSlider.OverrideTrueColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_modeTwo);
             m_themeSlider.OverrideFalseColor(m_themeManager.GetTheme().m_light.m_backgroundHighlight);
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
             m_menuToggleSprite.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_foreground);

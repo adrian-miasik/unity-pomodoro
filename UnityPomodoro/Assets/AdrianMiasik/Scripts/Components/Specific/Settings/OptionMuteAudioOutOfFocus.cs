@@ -12,10 +12,12 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_toggleSlider.m_onSetToTrueClick.AddListener((() =>
             {
                 SetSettingMuteSoundWhenOutOfFocus(true);
+                ColorUpdate(pomodoroTimer.GetTheme());
             }));
             m_toggleSlider.m_onSetToFalseClick.AddListener((() =>
             {
                 SetSettingMuteSoundWhenOutOfFocus();
+                ColorUpdate(pomodoroTimer.GetTheme());
             }));
             m_toggleSlider.Initialize(pomodoroTimer, systemSettings.m_muteSoundWhenOutOfFocus);
         }
