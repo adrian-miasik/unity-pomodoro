@@ -218,5 +218,10 @@ namespace AdrianMiasik.Components.Core
             m_dot.rectTransform.anchorMin = Vector2.zero;
             m_dot.rectTransform.anchorMax = new Vector2(0.55f, 1); 
         }
+
+        public void EnableAnimation()
+        {
+            m_animation.enabled = true;
+        }
     }
 }

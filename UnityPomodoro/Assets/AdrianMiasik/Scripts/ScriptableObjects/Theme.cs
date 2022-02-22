@@ -135,20 +135,30 @@ namespace AdrianMiasik.ScriptableObjects
         /// <summary>
         /// Set's the current ColorScheme to the dark variation and updates all registered elements.
         /// </summary>
-        public void SetToDarkMode()
+        public void SetToDarkMode(bool save = true)
         {
             m_systemSettings.m_darkMode = true;
-            UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
+
+            if (save)
+            {
+                UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
+            }
+
             ApplyColorChanges();
         }
 
         /// <summary>
         /// Set's the current ColorScheme to the light variation and updates all registered elements.
         /// </summary>
-        public void SetToLightMode()
+        public void SetToLightMode(bool save = true)
         {
             m_systemSettings.m_darkMode = false;
-            UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
+
+            if (save)
+            {
+                UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
+            }
+
             ApplyColorChanges();
         }
     }

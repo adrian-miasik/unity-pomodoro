@@ -16,15 +16,15 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private Material m_sliderDotCircle;
 
         private readonly Vector2 cachedOffsetMin = new Vector2(3, 1.5f); 
-        private readonly Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f); 
-        
+        private readonly Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f);
+
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, updateColors);
-            
+
             // Theme Slider
-            m_toggle.m_onSetToTrueClick.AddListener(pomodoroTimer.GetTheme().SetToDarkMode);
-            m_toggle.m_onSetToFalseClick.AddListener(pomodoroTimer.GetTheme().SetToLightMode);
+            m_toggle.m_onSetToTrueClick.AddListener(() => { pomodoroTimer.GetTheme().SetToDarkMode(); });
+            m_toggle.m_onSetToFalseClick.AddListener(() => { pomodoroTimer.GetTheme().SetToLightMode(); });
 
             m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
             m_toggle.Initialize(Timer, Timer.GetSystemSettings().m_darkMode);
@@ -102,6 +102,11 @@ namespace AdrianMiasik.Components.Specific
             {
                 m_toggle.Press();
             }
+        }
+
+        public void EnableAnimation()
+        {
+            m_toggle.EnableAnimation();
         }
     }
 }

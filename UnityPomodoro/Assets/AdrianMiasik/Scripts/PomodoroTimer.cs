@@ -1587,5 +1587,10 @@ namespace AdrianMiasik
         {
             return loadedTimerSettings;
         }
+
+        public void EnableThemeToggleAnimation()
+        {
+            m_themeSlider.EnableAnimation();
+        }
     }
 }

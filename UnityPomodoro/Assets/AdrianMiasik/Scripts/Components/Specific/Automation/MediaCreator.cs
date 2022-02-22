@@ -21,7 +21,8 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static Queue<Action> _ssCopy = new Queue<Action>(); // Intended to be used for dark mode capture
         private static bool _hasDarkModeBeenCaptured;
         private static int _screenshotIndex;
-
+        private static bool _startingThemeDarkMode;
+        
         [MenuItem("CONTEXT/PomodoroTimer/Create Media")]
         private static void CreateMedia(MenuCommand command)
         {
@@ -40,12 +41,13 @@ namespace AdrianMiasik.Components.Specific.Automation
             
             // Get reference
             _timer = (PomodoroTimer) command.context;
+            _startingThemeDarkMode = _timer.GetSystemSettings().m_darkMode;
             
             // Create media capture object
             MediaCapture mediaCapture = new GameObject("MediaCapture").AddComponent<MediaCapture>();
 
             // Setup theme
-            _timer.GetTheme().SetToLightMode();
+            _timer.GetTheme().SetToLightMode(false);
             _timer.DisableDarkModeToggle();
 
             // Chain screenshot scenarios
@@ -90,7 +92,7 @@ namespace AdrianMiasik.Components.Specific.Automation
                     _screenshotScenarios = _ssCopy;
                     
                     // Swap theme
-                    _timer.GetTheme().SetToDarkMode();
+                    _timer.GetTheme().SetToDarkMode(false);
                     _timer.EnableDarkModeToggle();
                     
                     // Begin media capture for dark mode
@@ -100,6 +102,19 @@ namespace AdrianMiasik.Components.Specific.Automation
                 {
                     _timer.Restart(false);
                     _timer.GetConfirmDialogManager().GetCurrentConfirmationDialog().Close();
+
+                    if (_startingThemeDarkMode)
+                    {
+                        _timer.GetTheme().SetToDarkMode(false);
+                        _timer.EnableDarkModeToggle();
+                    }
+                    else
+                    {
+                        _timer.GetTheme().SetToLightMode(false);
+                        _timer.DisableDarkModeToggle();
+                    }
+                    _timer.EnableThemeToggleAnimation();
+
                     Debug.Log("Media Creation Complete!");
                 }
             }
