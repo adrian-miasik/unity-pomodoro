@@ -11,9 +11,9 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// </summary>
     public class OptionUnityAnalytics : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
-            base.Initialize(pomodoroTimer, settingsConfig);
+            base.Initialize(pomodoroTimer, systemSettings);
 
             // Triggering true / false will invoke our analytics logic enable / disable
             m_toggleSlider.m_onSetToTrueClick.AddListener(() =>
@@ -26,10 +26,10 @@ namespace AdrianMiasik.Components.Specific.Settings
             });
             
             // Setup toggle slider visuals to match user setting
-            m_toggleSlider.Initialize(pomodoroTimer, settingsConfig.m_enableUnityAnalytics);
+            m_toggleSlider.Initialize(pomodoroTimer, systemSettings.m_enableUnityAnalytics);
         }
 
-        private void SetSettingUnityAnalytics(bool state)
+        public void SetSettingUnityAnalytics(bool state)
         {
             if (!state)
             {
@@ -62,6 +62,16 @@ namespace AdrianMiasik.Components.Specific.Settings
                 {
                     // Cancel visuals if they don't agree
                     m_toggleSlider.Initialize(Timer, true);
+                    
+                    // Edge condition: If playing in editor and tweaking values via inspector...
+#if UNITY_EDITOR
+                    if (Application.isPlaying)
+                    {
+                        // Apply and save
+                        Timer.GetSystemSettings().m_enableUnityAnalytics = true;
+                        UserSettingsSerializer.SaveSystemSettings(Timer.GetSystemSettings());
+                    }
+#endif
                 }, "Disabling 'Unity Analytics' requires a restart.", "");
             }
             else

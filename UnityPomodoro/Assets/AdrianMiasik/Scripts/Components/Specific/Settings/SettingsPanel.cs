@@ -27,7 +27,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         
         private bool isOpen;
 
-        public void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
+        public void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
             base.Initialize(pomodoroTimer, false);
             
@@ -42,22 +42,33 @@ namespace AdrianMiasik.Components.Specific.Settings
             // Init
             m_optionDigitFormat.Initialize(Timer);
             m_optionPomodoroCount.Initialize(Timer);
-            m_optionEnableLongBreak.Initialize(Timer, settingsConfig);
+            m_optionEnableLongBreak.Initialize(Timer, systemSettings);
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
 #elif UNITY_IOS
             HideMuteSoundOutOfFocusOption();
 #else
-            m_optionMuteSoundOutOfFocusToggle.Initialize(Timer, settingsConfig);
+            m_optionMuteSoundOutOfFocusToggle.Initialize(Timer, systemSettings);
 #endif
             
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-            m_optionUnityAnalytics.Initialize(Timer, settingsConfig);
+            m_optionUnityAnalytics.Initialize(Timer, systemSettings);
 #else
             // Hide settings option if Unity Analytics not enabled on this platform.
             m_optionUnityAnalytics.gameObject.SetActive(false);
             m_optionUnityAnalytics.m_spacer.gameObject.SetActive(false);
 #endif
+        }
+
+        public void Refresh()
+        {
+            // Gets triggered via dropdown on value changed event
+            m_optionDigitFormat.SetDropdownValue((int)Timer.GetTimerSettings().m_format);
+            m_optionPomodoroCount.SetDropdownValue(Timer.GetTimerSettings().m_pomodoroCount - 1);
+            
+            m_optionEnableLongBreak.Refresh(Timer.GetTimerSettings().m_longBreaks);
+            m_optionMuteSoundOutOfFocusToggle.Refresh(Timer.GetSystemSettings().m_muteSoundWhenOutOfFocus);
+            m_optionUnityAnalytics.Refresh(Timer.GetSystemSettings().m_enableUnityAnalytics);
         }
 
         /// <summary>
@@ -86,6 +97,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_optionDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
         }
 
+        // TODO: remove / rename
         /// <summary>
         /// Sets the switch digit layout dropdown to the provided digit format index.
         /// (See: <see cref="DigitFormat.SupportedFormats"/>)
@@ -95,7 +107,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             m_optionDigitFormat.SetDropdownValue(value);
         }
-        
+
         /// <summary>
         /// Displays this panel to the user.
         /// </summary>
@@ -124,7 +136,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             return isOpen;
         }
-        
+
         /// <summary>
         /// Shows the 'sound mute when application is out of focus' option to the user.
         /// <remarks>Intended to be shown for desktop users, not mobile.</remarks>
@@ -134,7 +146,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             m_optionMuteSoundOutOfFocusToggle.gameObject.SetActive(true);
             m_optionMuteSoundOutOfFocusToggle.m_spacer.gameObject.SetActive(true);
         }
-        
+
         /// <summary>
         /// Hides the 'sound mute when application is out of focus' option from the user.
         /// <remarks>Intended to be hidden for mobile users, not desktop.</remarks>

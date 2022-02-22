@@ -15,8 +15,6 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private TMP_Text m_settingsLabel;
         [SerializeField] public ToggleSlider m_toggleSlider;
         [SerializeField] public RectTransform m_spacer; // Bottom margin
-
-        protected TimerSettings Settings;
         
         public void OverrideFalseColor(Color backgroundHighlight)
         {
@@ -28,10 +26,9 @@ namespace AdrianMiasik.Components.Core
             m_toggleSlider.OverrideTrueColor(modeOne);
         }
         
-        public virtual void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
+        public virtual void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
             base.Initialize(pomodoroTimer);
-            Settings = settingsConfig;
         }
 
         public void UpdateToggle(bool state)
@@ -43,6 +40,15 @@ namespace AdrianMiasik.Components.Core
         {
             m_settingsLabel.color = theme.GetCurrentColorScheme().m_foreground;
             m_toggleSlider.ColorUpdate(theme);
+        }
+        
+        public void Refresh(bool cachedState)
+        {
+            // If there is a difference in state...
+            if (m_toggleSlider.IsOn() != cachedState)
+            {
+                m_toggleSlider.Press();
+            }
         }
     }
 }

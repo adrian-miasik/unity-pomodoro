@@ -262,6 +262,7 @@ namespace AdrianMiasik.Components.Core.Containers
             else
             {
                 Debug.LogWarning("This sidebar row is already selected!", rowToSelect.gameObject);
+                Close();
             }
             
             // Pass the buck of playing our close sound to the audio mimic,

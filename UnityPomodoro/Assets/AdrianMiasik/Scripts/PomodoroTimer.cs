@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -56,7 +57,13 @@ namespace AdrianMiasik
         /// The timer's current state. See enum <see cref="States"/>
         /// </summary>
         public States m_state = States.SETUP;
-        
+
+        [Header("Unity Pomodoro - Managers")]
+        [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
+        [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
+        [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
+        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
+
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -83,11 +90,6 @@ namespace AdrianMiasik
         [SerializeField] private SkipButton m_skipButton;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
-        [Header("Unity Pomodoro - Managers")]
-        [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
-        [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
-
         [Header("Animations")] 
         [SerializeField] private AnimationCurve m_spawnRingProgress;
         private bool m_animateRingProgress;
@@ -123,10 +125,6 @@ namespace AdrianMiasik
         [SerializeField] private SettingsPanel m_settingsContainer; // Our settings page
         [SerializeField] private AboutPanel m_aboutContainer; // Our about page
 
-        [Header("External Extra - Deprecated")]
-        // TODO: Move to theme class
-        [SerializeField] private Theme m_theme; // Current active theme
-
         // Time
         private double currentTime; // Current time left (In seconds)
         private float totalTime; // Total time left (In seconds)
@@ -154,12 +152,14 @@ namespace AdrianMiasik
         private readonly bool isRingTickAnimationEnabled = false; // TODO: Re-implement this animation? / Expose in settings?
         private float cachedSeconds;
         private bool isRingTickAnimating;
-
-        private TimerSettings settings;
+        
+        [SerializeField] private SystemSettings loadedSystemSettings;
+        [SerializeField] private TimerSettings loadedTimerSettings;
+        private bool haveSettingsBeenConfigured;
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (settings.m_muteSoundWhenOutOfFocus)
+            if (loadedSystemSettings.m_muteSoundWhenOutOfFocus)
             {
                 // Prevent application from making noise when not in focus
                 AudioListener.volume = !hasFocus ? 0 : 1;
@@ -177,48 +177,92 @@ namespace AdrianMiasik
             Initialize();
         }
 
-        private void ConfigureSettings()
+        private void OnValidate()
         {
-            TimerSettings loadedSettings = UserSettingsSerializer.Load();
-            
-            // If we don't have any saved settings...
-            if (loadedSettings == null)
+            if (!haveSettingsBeenConfigured)
             {
-                Debug.Log("Creating new Timer Settings.");
-                
-                // Create new settings
-                TimerSettings defaultSettings = new TimerSettings();
-                
-                // All platforms have long breaks on by default
-                defaultSettings.m_longBreaks = true;
-                
-                // Apply mute out of focus
-#if UNITY_STANDALONE_OSX
-                defaultSettings.m_muteSoundWhenOutOfFocus = false;
-#elif UNITY_STANDALONE_LINUX
-                defaultSettings.m_muteSoundWhenOutOfFocus = false;
-#elif UNITY_STANDALONE_WIN
-                defaultSettings.m_muteSoundWhenOutOfFocus = false;
-#elif UNITY_WSA // UWP
-                defaultSettings.m_muteSoundWhenOutOfFocus = true; // Set to true since our UWP Notification will pull focus back to our app
-#elif UNITY_ANDROID
-                defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile
-#elif UNITY_IOS
-                defaultSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
-#endif
-
-                // All platforms have analytics on by default. (User can opt-out though via settings panel)
-                defaultSettings.m_enableUnityAnalytics = true;
-                
-                // Finally save
-                loadedSettings = defaultSettings;
+                return;
             }
             
-            settings = loadedSettings;
-        
+            // Check for changes in theme
+            m_themeSlider.Refresh();
+
+            m_settingsContainer.Refresh(); // Refresh to match settings
+        }
+
+        private void ConfigureSettings()
+        {
+            SystemSettings systemSettings = UserSettingsSerializer.LoadSystemSettings();
+            TimerSettings timerSettings = UserSettingsSerializer.LoadTimerSettings();
+
+            // System Settings
+            if (systemSettings == null)
+            {
+                Debug.Log("No System settings found. Created new System settings successfully!");
+                
+                // Create new settings
+                SystemSettings defaultSystemSettings = new SystemSettings();
+                defaultSystemSettings.m_darkMode = false;
+
+                // Apply mute out of focus
+#if UNITY_STANDALONE_OSX
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false;
+#elif UNITY_STANDALONE_LINUX
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false;
+#elif UNITY_STANDALONE_WIN
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false;
+#elif UNITY_WSA // UWP
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = true; // Set to true since our UWP Notification will pull focus back to our app
+#elif UNITY_ANDROID
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile
+#elif UNITY_IOS
+                defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
+#endif
+                
+                // All platforms have analytics on by default. (User can opt-out though via settings panel)
+                defaultSystemSettings.m_enableUnityAnalytics = true;
+                
+                // Cache
+                systemSettings = defaultSystemSettings;
+                UserSettingsSerializer.SaveSystemSettings(systemSettings);
+            }
+
+            this.loadedSystemSettings = systemSettings;
+
+            // Apply theme changes
+            m_themeManager.Register(this, this.loadedSystemSettings);
+            if (this.loadedSystemSettings.m_darkMode)
+            {
+                m_themeManager.SetToDarkMode();
+            }
+            else
+            {
+                m_themeManager.SetToLightMode();
+            }
+            
+            // Timer Settings
+            // If we don't have any saved settings...
+            if (timerSettings == null)
+            {
+                Debug.Log("No Timer settings found. Created new Timer settings successfully!");
+                
+                // Create new settings
+                TimerSettings defaultTimerSettings = new TimerSettings();
+                defaultTimerSettings.m_longBreaks = true;
+                defaultTimerSettings.m_format = DigitFormat.SupportedFormats.HH_MM_SS;
+                defaultTimerSettings.m_pomodoroCount = 4;
+
+                // Cache
+                timerSettings = defaultTimerSettings;
+                UserSettingsSerializer.SaveTimerSettings(timerSettings);
+            }
+            
+            this.loadedTimerSettings = timerSettings;
+            haveSettingsBeenConfigured = true;
+
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             // Update analytics
-            ToggleUnityAnalytics(settings.m_enableUnityAnalytics, true);
+            ToggleUnityAnalytics(this.loadedSystemSettings.m_enableUnityAnalytics, true);
 #endif
         }
 
@@ -226,8 +270,8 @@ namespace AdrianMiasik
         public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
             // Apply and save
-            settings.m_enableUnityAnalytics = enableUnityAnalytics;
-            UserSettingsSerializer.Save(settings);
+            GetSystemSettings().m_enableUnityAnalytics = enableUnityAnalytics;
+            UserSettingsSerializer.SaveSystemSettings(GetSystemSettings());
             
             // Set if service needs to start on init...
             Analytics.initializeOnStartup = enableUnityAnalytics;
@@ -308,15 +352,17 @@ namespace AdrianMiasik
         /// </summary>
         private void Initialize()
         {
+            InitializeManagers();
+            
             // Setup pages/panels
             m_settingsContainer.Hide();
             m_aboutContainer.Hide();
             m_mainContainer.gameObject.SetActive(true);
 
             // Overrides
-            m_themeSlider.OverrideFalseColor(m_theme.m_light.m_backgroundHighlight);
+            m_themeSlider.OverrideFalseColor(m_themeManager.GetTheme().m_light.m_backgroundHighlight);
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
-            m_menuToggleSprite.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
+            m_menuToggleSprite.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
 
             // TODO: Re-implement halloween theme?
@@ -337,8 +383,7 @@ namespace AdrianMiasik
                     }
                 }
             }
-
-            InitializeManagers();
+            
             InitializeComponents();
 
             // Calculate time
@@ -349,17 +394,13 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
-
-            // Setup & apply theme
-            m_theme.Register(this);
-            m_theme.ApplyColorChanges();
         }
 
         private void InitializeManagers()
         {
             m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
-            m_notifications.Initialize(settings);
+            m_notifications.Initialize(GetTimerSettings());
         }
 
         private void InitializeComponents()
@@ -378,23 +419,16 @@ namespace AdrianMiasik
             {
                 TryRestart(false);
             });
-            
-            // Skip Button
-            m_skipButton.GetClickButtonIcon().m_onClick.AddListener(Skip);
-            
+
             // Switch Timer / Mode Slider
             m_breakSlider.m_onSetToTrueClick.AddListener(TrySwitchToBreakTimer);
             m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
-            
-            // Theme Slider
-            m_themeSlider.GetToggleSlider().m_onSetToTrueClick.AddListener(SetToDarkMode);
-            m_themeSlider.GetToggleSlider().m_onSetToFalseClick.AddListener(SetToLightMode);
             
             // TODO: Menu toggle UE listener
             
             m_background.Initialize(this);
             m_overlay.Initialize(this);
-            m_digitFormat.Initialize(this);
+            m_digitFormat.Initialize(this, GetTimerSettings().m_format);
             m_completionLabel.Initialize(this);
             m_themeSlider.Initialize(this);
             m_creditsBubble.Initialize(this);
@@ -403,12 +437,12 @@ namespace AdrianMiasik
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
-            m_settingsContainer.Initialize(this, settings);
+            m_settingsContainer.Initialize(this, GetSystemSettings());
             m_skipButton.Initialize(this);
             
-            if (settings.m_longBreaks)
+            if (GetTimerSettings().m_longBreaks)
             {
-                m_tomatoCounter.Initialize(this);
+                m_tomatoCounter.Initialize(this, GetTimerSettings().m_pomodoroCount);
                 m_completionLabel.MoveAnchors(true);
             }
             else
@@ -430,7 +464,7 @@ namespace AdrianMiasik
         public void OnDestroy()
         {
             // Make sure to deregister this when and if we do destroy the timer
-            GetTheme().Deregister(this);
+            m_themeManager.GetTheme().Deregister(this);
         }
         
         /// <summary>
@@ -441,20 +475,21 @@ namespace AdrianMiasik
         public void SwitchState(States desiredState)
         {
             m_state = desiredState;
+            Theme theme = m_themeManager.GetTheme();
 
             // Update the registered timer elements
             foreach (ITimerState element in timerElements)
             {
-                element.StateUpdate(m_state, m_theme);
+                element.StateUpdate(m_state, theme);
             }
             
-            UpdateRingColor(m_theme);
+            UpdateRingColor(theme);
 
             // Do transition logic
             switch (m_state)
             {
                 case States.SETUP:
-                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
+                    m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
                     // Show timer context
                     m_text.gameObject.SetActive(true);
@@ -486,7 +521,7 @@ namespace AdrianMiasik
                 case States.RUNNING:
                     m_animateRingProgress = false;
 
-                    m_digitFormat.SetDigitColor(m_theme.GetCurrentColorScheme().m_foreground);
+                    m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
                     m_text.text = "Running";
                     
@@ -589,7 +624,7 @@ namespace AdrianMiasik
                 if (m_state != States.COMPLETE)
                 {
                     m_text.gameObject.SetActive(true);
-                    if (settings.m_longBreaks)
+                    if (GetTimerSettings().m_longBreaks)
                     {
                         m_tomatoCounter.gameObject.SetActive(true);
                     }
@@ -598,7 +633,7 @@ namespace AdrianMiasik
             else
             {
                 m_text.gameObject.SetActive(false);
-                if (settings.m_longBreaks)
+                if (GetTimerSettings().m_longBreaks)
                 {
                     m_tomatoCounter.gameObject.SetActive(false);
                 }
@@ -677,7 +712,7 @@ namespace AdrianMiasik
             // (We don't add tomatoes for breaks)
             if (!IsOnBreak() && !IsOnLongBreak() && m_state != States.SETUP)
             {
-                if (settings.m_longBreaks)
+                if (GetTimerSettings().m_longBreaks)
                 {
                     m_tomatoCounter.FillTomato();
                 }
@@ -877,7 +912,7 @@ namespace AdrianMiasik
                 CalculateTimeValues();
             }
 
-            if (settings.m_longBreaks)
+            if (GetTimerSettings().m_longBreaks)
             {
                 // Remove long break once user has started it via Play
                 if (IsOnBreak() && IsOnLongBreak())
@@ -1199,6 +1234,8 @@ namespace AdrianMiasik
                 m_digitFormat.SwitchFormat(desiredFormat);
                 m_confirmationDialogManager.SpawnConfirmationDialog(GenerateFormat, () =>
                 {
+                    GetTimerSettings().m_format = desiredFormat;
+                    UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
                     m_settingsContainer.SetDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
             }
@@ -1206,6 +1243,8 @@ namespace AdrianMiasik
             {
                 m_digitFormat.SwitchFormat(desiredFormat);
                 GenerateFormat();
+                GetTimerSettings().m_format = desiredFormat;
+                UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
             }
         }
 
@@ -1255,16 +1294,16 @@ namespace AdrianMiasik
             }
             
             // Paused Digits
-            startingColor = m_theme.GetCurrentColorScheme().m_foreground;
-            endingColor = m_theme.GetCurrentColorScheme().m_backgroundHighlight;
+            startingColor = theme.GetCurrentColorScheme().m_foreground;
+            endingColor = theme.GetCurrentColorScheme().m_backgroundHighlight;
 
             // Reset paused digit anim
             ResetDigitFadeAnim();
             
-            m_menuToggleSprite.OverrideFalseColor(m_theme.GetCurrentColorScheme().m_foreground);
-            m_menuToggleSprite.ColorUpdate(m_theme);
+            m_menuToggleSprite.OverrideFalseColor(theme.GetCurrentColorScheme().m_foreground);
+            m_menuToggleSprite.ColorUpdate(theme);
 
-            UpdateRingColor(m_theme);
+            UpdateRingColor(theme);
         }
 
         private void UpdateRingColor(Theme theme)
@@ -1299,58 +1338,13 @@ namespace AdrianMiasik
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        // TODO: Create theme manager class?
-        /// <summary>
-        /// Returns our current active <see cref="Theme"/>
-        /// </summary>
-        /// <returns></returns>
-        public Theme GetTheme()
-        {
-            return m_theme;
-        }
-        
-        /// <summary>
-        /// Sets our <see cref="Theme"/> preference to light mode, and update's all our necessary components.
-        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
-        /// </summary>
-        public void SetToLightMode()
-        {
-            m_theme.SetToLightMode();
-        }
-
-        /// <summary>
-        /// Sets our <see cref="Theme"/> preference to dark mode, and update's all our necessary components.
-        /// <remarks>Used as a UnityEvent on our <see cref="m_themeSlider"/>.</remarks>
-        /// </summary>
-        public void SetToDarkMode()
-        {
-            m_theme.SetToDarkMode();
-        }
-        
-        /// <summary>
-        /// Sets our current active <see cref="Theme"/> to the provided <see cref="Theme"/>. This will transfer
-        /// all our <see cref="IColorHook"/> element's to the new <see cref="Theme"/> as well.
-        /// </summary>
-        /// <param name="desiredTheme"></param>
-        public void SwitchTheme(Theme desiredTheme)
-        {
-            // Transfer elements to new theme (So theme knows which elements to color update)
-            m_theme.TransferColorElements(m_theme, desiredTheme);
-            
-            // Swap our theme
-            m_theme = desiredTheme;
-            
-            // Apply our changes
-            m_theme.ApplyColorChanges();
-        }
         
         /// <summary>
         /// Triggers a <see cref="IColorHook"/> ColorUpdate() on our <see cref="CreditsBubble"/>.
         /// </summary>
         public void ColorUpdateCreditsBubble()
         {
-            m_creditsBubble.ColorUpdate(m_theme);
+            m_creditsBubble.ColorUpdate(m_themeManager.GetTheme());
         }
         
         /// <summary>
@@ -1363,15 +1357,10 @@ namespace AdrianMiasik
         public void SetSettingLongBreaks(bool state = true)
         {
             // TODO: Fix double theme element registration on this setting change
-            // Apply and save
-            settings.m_longBreaks = state;
-            UserSettingsSerializer.Save(settings);
-            Debug.Log("Timer Settings Saved.");
-            
             // Apply component swap
             if (state)
             {
-                m_tomatoCounter.Initialize(this);
+                m_tomatoCounter.Initialize(this, loadedTimerSettings.m_pomodoroCount);
                 m_tomatoCounter.gameObject.SetActive(true);
             }
             else
@@ -1500,7 +1489,7 @@ namespace AdrianMiasik
             return m_tomatoCounter.GetTomatoCount();
         }
 
-        // TODO: Remove piper method
+        // TODO: Remove piper methods - We want explicit methods instead of reaching in. Separation of concerns.
         [Obsolete]
         public ConfirmationDialogManager GetConfirmDialogManager()
         {
@@ -1510,6 +1499,11 @@ namespace AdrianMiasik
         public TranslucentImageSource GetTranslucentImageSource()
         {
             return m_translucentImageSource;
+        }
+        
+        public Theme GetTheme()
+        {
+            return m_themeManager.GetTheme();
         }
 
         public void ShowOverlay()
@@ -1580,6 +1574,17 @@ namespace AdrianMiasik
         public void DisableDarkModeToggle()
         {
             m_themeSlider.SetVisualToDisable();
+        }
+        
+        // Settings
+        public SystemSettings GetSystemSettings()
+        {
+            return loadedSystemSettings;
+        }
+        
+        public TimerSettings GetTimerSettings()
+        {
+            return loadedTimerSettings;
         }
     }
 }

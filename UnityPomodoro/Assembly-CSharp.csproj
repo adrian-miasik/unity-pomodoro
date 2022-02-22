@@ -75,9 +75,11 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\SidebarRow.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DigitSeparator.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Automation\MediaCreator.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\SystemSettings.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\SettingsOptionDropdown.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonText.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Toggle.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeManager.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ToggleSlider.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonSVGIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionPomodoroCount.cs" />

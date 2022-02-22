@@ -22,8 +22,12 @@ namespace AdrianMiasik.Components.Specific
         {
             base.Initialize(pomodoroTimer, updateColors);
             
+            // Theme Slider
+            m_toggle.m_onSetToTrueClick.AddListener(pomodoroTimer.GetTheme().SetToDarkMode);
+            m_toggle.m_onSetToFalseClick.AddListener(pomodoroTimer.GetTheme().SetToLightMode);
+
             m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
-            m_toggle.Initialize(Timer, Timer.GetTheme().m_darkMode);
+            m_toggle.Initialize(Timer, Timer.GetSystemSettings().m_darkMode);
         }
 
         /// <summary>
@@ -34,7 +38,7 @@ namespace AdrianMiasik.Components.Specific
         public override void ColorUpdate(Theme theme)
         {
             // Regular boolean
-            if (theme.m_darkMode)
+            if (Timer.GetSystemSettings().m_darkMode)
             {
                 m_toggle.m_dot.rectTransform.pivot = new Vector2(0.5f, m_toggle.m_dot.rectTransform.pivot.y);
                 m_toggle.m_dot.sprite = null;
@@ -92,9 +96,12 @@ namespace AdrianMiasik.Components.Specific
             m_toggle.SetVisualToDisable();
         }
 
-        public ToggleSlider GetToggleSlider()
+        public void Refresh()
         {
-            return m_toggle;
+            if (m_toggle.IsOn() != Timer.GetSystemSettings().m_darkMode)
+            {
+                m_toggle.Press();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -96,7 +97,10 @@ namespace AdrianMiasik.Components.Specific
         public void RestartApplication()
         {
             timer.GetTheme().DeregisterAllElements();
-            timer.GetTheme().m_darkMode = false;
+
+            UserSettingsSerializer.WipeSystemSettings();
+            UserSettingsSerializer.WipeTimerSettings();
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 

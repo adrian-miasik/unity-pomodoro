@@ -1,3 +1,4 @@
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace AdrianMiasik.Components.Core
     /// An SVG image component that switches between two sprites depending on the <see cref="Theme"/> preference:
     /// Light / Dark.
     /// </summary>
-    public class ThemeIcon : MonoBehaviour
+    public class ThemeIcon : ThemeElement
     {
         [SerializeField] private SVGImage m_icon;
 
@@ -21,7 +22,7 @@ namespace AdrianMiasik.Components.Core
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public void ColorUpdate(Theme theme)
         {
-            m_icon.sprite = theme.m_darkMode ? m_darkSprite : m_lightSprite;
+            m_icon.sprite = Timer.GetSystemSettings().m_darkMode ? m_darkSprite : m_lightSprite;
         }
     }
 }

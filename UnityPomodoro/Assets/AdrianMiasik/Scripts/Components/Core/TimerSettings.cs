@@ -1,18 +1,18 @@
 ﻿using System;
+using AdrianMiasik.Components.Core.Containers;
 
 namespace AdrianMiasik.Components.Core
 {
+    /// <summary>
+    /// Settings that are to be applied / correspond to a PomodoroTimer.
+    /// </summary>
     [Serializable]
     public class TimerSettings
     {
         /// <summary>
-        /// Should we mute the sound when the application is not in focus?
-        /// If `True`, the application audio will not be played when it's not in focus.
-        /// If `False`, the application audio will emit audio regardless of focus state. 
-        /// <remarks> We want this to be `True` by default for the Universal Windows Platform since we
-        /// pull focus back via UWP notification. (See <see cref="NotificationManager"/>)</remarks>
+        /// The timers current time format.
         /// </summary>
-        public bool m_muteSoundWhenOutOfFocus;
+        public DigitFormat.SupportedFormats m_format = DigitFormat.SupportedFormats.HH_MM_SS;
 
         /// <summary>
         /// Enable timer long breaks?
@@ -20,13 +20,12 @@ namespace AdrianMiasik.Components.Core
         /// If `False`, the user will not be able to user long breaks. (Work/Break): The way the
         /// timer worked on version 1.6.0. or lower). 
         /// </summary>
-        public bool m_longBreaks;
+        public bool m_longBreaks = true;
 
         /// <summary>
-        /// Do you want to enable the Unity Analytics service?
-        /// If `True`, the Unity Analytics service will track user data.
-        /// If `False`, the Unity Analytics service will no longer run and track user data.
+        /// How many pomodoro / tomatoes does the user need to unlock the long break?
+        /// <remarks>According to the Pomodoro Technique, default is 4.</remarks>
         /// </summary>
-        public bool m_enableUnityAnalytics;
+        public int m_pomodoroCount = 4;
     }
 }

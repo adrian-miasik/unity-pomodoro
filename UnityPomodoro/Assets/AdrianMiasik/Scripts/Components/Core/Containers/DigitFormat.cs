@@ -39,8 +39,7 @@ namespace AdrianMiasik.Components.Core.Containers
         // Current format
         [SerializeField] private RectTransform m_self; // Height modifier
         [SerializeField] private RectTransform m_digitFormatRect; // Width modifier
-        [SerializeField] private SupportedFormats m_format;
-        
+
         [Header("Source Prefabs")]
         [SerializeField] private DoubleDigit m_digitSource;
         [SerializeField] private DigitSeparator m_separatorSource;
@@ -73,6 +72,7 @@ namespace AdrianMiasik.Components.Core.Containers
         public bool m_isOnLongBreak;
 
         // Cache
+        private SupportedFormats format;
         private List<DoubleDigit> generatedDigits;
         private List<DigitSeparator> generatedSeparators;
         private int previousFormatSelection = -1;
@@ -106,10 +106,16 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             base.Initialize(pomodoroTimer, false);
             
-            SwitchFormat(m_format);
+            SwitchFormat(format);
             GenerateFormat();
             
             ColorUpdate(Timer.GetTheme());
+        }
+
+        public void Initialize(PomodoroTimer pomodoroTimer, SupportedFormats startingFormat, bool updateColors = true)
+        {
+            format = startingFormat;
+            Initialize(pomodoroTimer, updateColors);
         }
 
         /// <summary>
@@ -143,7 +149,7 @@ namespace AdrianMiasik.Components.Core.Containers
 
             // Generate our digits and separators (format)
             char[] separatorChar = { '_' };
-            GenerateFormat(GetDoubleDigitSet(m_format, separatorChar[0]));
+            GenerateFormat(GetDoubleDigitSet(format, separatorChar[0]));
 
             // Improve visuals based on number of generated elements
             ImproveLayoutVisuals();
@@ -283,7 +289,7 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             TimeSpan ts = new TimeSpan();
             
-            switch (m_format)
+            switch (format)
             {
                 case SupportedFormats.DD_HH_MM_SS_MS:
                     ts = ts.Add(TimeSpan.FromDays(time[0]));
@@ -854,8 +860,8 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <param name="desiredFormat"></param>
         public void SwitchFormat(SupportedFormats desiredFormat)
         {
-            previousFormatSelection = (int) m_format;
-            m_format = desiredFormat;
+            previousFormatSelection = (int) format;
+            format = desiredFormat;
         }
 
         /// <summary>
@@ -873,7 +879,7 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <returns></returns>
         public int GetFormatIndex()
         {
-            return (int) m_format;
+            return (int) format;
         }
         
         /// <summary>

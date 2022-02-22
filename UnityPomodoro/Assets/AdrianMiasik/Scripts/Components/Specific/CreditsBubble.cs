@@ -55,6 +55,7 @@ namespace AdrianMiasik.Components.Specific
             timer = pomodoroTimer;
             cachedWidthPercentage = m_self.anchorMax.x;
             cachedRightOffsetPixels = m_self.offsetMax.x;
+            m_icon.Initialize(pomodoroTimer);
 
             // Setup
             Initialize(m_duration);

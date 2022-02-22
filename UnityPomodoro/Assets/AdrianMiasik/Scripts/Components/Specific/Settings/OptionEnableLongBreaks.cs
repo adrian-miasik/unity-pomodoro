@@ -1,4 +1,5 @@
 ﻿using AdrianMiasik.Components.Core;
+using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
@@ -7,12 +8,12 @@ namespace AdrianMiasik.Components.Specific.Settings
     /// </summary>
     public class OptionEnableLongBreaks : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, TimerSettings settingsConfig)
+        public override void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
-            base.Initialize(pomodoroTimer, settingsConfig);
-            if (Settings.m_longBreaks)
+            base.Initialize(pomodoroTimer, systemSettings);
+            if (Timer.GetTimerSettings().m_longBreaks)
             {
-                m_toggleSlider.Initialize(pomodoroTimer, Settings.m_longBreaks);
+                m_toggleSlider.Initialize(pomodoroTimer, Timer.GetTimerSettings().m_longBreaks);
             }
         }
 
@@ -22,6 +23,10 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <param name="state"></param>
         public void SetSettingLongBreak(bool state)
         {
+            // Apply and save
+            Timer.GetTimerSettings().m_longBreaks = state;
+            UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
+
             if (state == false)
             {
                 if (Timer.HasTomatoProgression())

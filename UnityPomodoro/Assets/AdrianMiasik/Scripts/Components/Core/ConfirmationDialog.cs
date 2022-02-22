@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
-using LeTai.Asset.TranslucentImage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -126,7 +125,7 @@ namespace AdrianMiasik.Components.Core
         {
             // Background
             Color backgroundColor = theme.GetCurrentColorScheme().m_background;
-            backgroundColor.a = theme.m_darkMode ? 0.975f : 0.8f;
+            backgroundColor.a = Timer.GetSystemSettings().m_darkMode ? 0.975f : 0.8f;
             m_backgroundBox.color = backgroundColor;
             
             // Text

@@ -82,6 +82,11 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
+        public bool IsOn()
+        {
+            return state;
+        }
+
         public void Refresh(bool isOn)
         {
             // Early exit if there are no changes to our property
