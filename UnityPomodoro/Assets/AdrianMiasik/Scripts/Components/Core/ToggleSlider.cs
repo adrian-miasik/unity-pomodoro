@@ -175,7 +175,7 @@ namespace AdrianMiasik.Components.Core
         public override void ColorUpdate(Theme theme)
         {
             ColorScheme currentColors = theme.GetCurrentColorScheme();
-            if (theme.m_systemSettings.m_darkMode)
+            if (theme.IsDarkMode())
             {
                 falseColor = overrideFalseColor ? overridenFalseColor : currentColors.m_foreground;
                 overridenDotColor = currentColors.m_foreground;

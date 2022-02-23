@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace AdrianMiasik.ScriptableObjects
         public ColorScheme m_dark;
 
         // Cache
-        [HideInInspector] public SystemSettings m_systemSettings = new SystemSettings();
+        private PomodoroTimer timer;
         private List<IColorHook> colorElements = new List<IColorHook>();
 
         private void OnValidate()
@@ -28,6 +27,17 @@ namespace AdrianMiasik.ScriptableObjects
         private void OnEnable()
         {
             colorElements.Clear();
+        }
+
+        /// <summary>
+        /// Initialization
+        /// </summary>
+        /// <param name="hook"></param>
+        /// <param name="pomodoroTimer"></param>
+        public void Register(IColorHook hook, PomodoroTimer pomodoroTimer)
+        {
+            Register(hook);
+            timer = pomodoroTimer;
         }
 
         /// <summary>
@@ -61,13 +71,6 @@ namespace AdrianMiasik.ScriptableObjects
             }
         }
 
-        // Init
-        public void Register(IColorHook hook, SystemSettings systemSettings)
-        {
-            Register(hook);
-            m_systemSettings = systemSettings;
-        }
-
         /// <summary>
         /// Disassociates the provided (<see cref="IColorHook"/>) color element from this theme (If they exist).
         /// <remarks>This is usually invoked before gameobject deletion or if you no longer want to update
@@ -97,7 +100,12 @@ namespace AdrianMiasik.ScriptableObjects
         /// <returns>The user's preferred <see cref="ColorScheme"/></returns>
         public ColorScheme GetCurrentColorScheme()
         {
-            return m_systemSettings.m_darkMode ? m_dark : m_light;
+            return IsDarkMode() ? m_dark : m_light;
+        }
+
+        public bool IsDarkMode()
+        {
+            return timer.GetSystemSettings().m_darkMode;
         }
 
         private List<IColorHook> GetColorElements()
@@ -119,7 +127,6 @@ namespace AdrianMiasik.ScriptableObjects
         public void TransferColorElements(Theme sourceTheme, Theme destinationTheme)
         {
             destinationTheme.SetColorElements(sourceTheme.GetColorElements());
-            destinationTheme.m_systemSettings.m_darkMode = sourceTheme.m_systemSettings.m_darkMode;
         }
         
         /// <summary>
@@ -138,11 +145,11 @@ namespace AdrianMiasik.ScriptableObjects
         /// </summary>
         public void SetToDarkMode(bool save = true)
         {
-            m_systemSettings.m_darkMode = true;
+            timer.GetSystemSettings().m_darkMode = true;
 
             if (save)
             {
-                UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
+                UserSettingsSerializer.SaveSystemSettings(timer.GetSystemSettings());
             }
 
             ApplyColorChanges();
@@ -153,11 +160,11 @@ namespace AdrianMiasik.ScriptableObjects
         /// </summary>
         public void SetToLightMode(bool save = true)
         {
-            m_systemSettings.m_darkMode = false;
+            timer.GetSystemSettings().m_darkMode = false;
 
             if (save)
             {
-                UserSettingsSerializer.SaveSystemSettings(m_systemSettings);
+                UserSettingsSerializer.SaveSystemSettings(timer.GetSystemSettings());
             }
 
             ApplyColorChanges();

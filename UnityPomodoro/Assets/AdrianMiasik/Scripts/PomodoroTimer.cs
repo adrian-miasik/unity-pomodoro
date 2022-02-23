@@ -226,7 +226,7 @@ namespace AdrianMiasik
             loadedSystemSettings = systemSettings;
 
             // Apply theme changes
-            m_themeManager.Register(this, loadedSystemSettings);
+            m_themeManager.Register(this);
             if (loadedSystemSettings.m_darkMode)
             {
                 m_themeManager.SetToDarkMode();

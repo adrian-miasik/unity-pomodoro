@@ -26,10 +26,10 @@ namespace AdrianMiasik.Components.Core
             return activeTheme;
         }
         
-        public void Register(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
+        public void Register(PomodoroTimer pomodoroTimer)
         {
             activeTheme = m_defaultTheme;
-            activeTheme.Register(pomodoroTimer, systemSettings);
+            activeTheme.Register(pomodoroTimer, pomodoroTimer);
         }
 
         /// <summary>
