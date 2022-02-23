@@ -403,6 +403,12 @@ namespace AdrianMiasik
         /// </summary>
         private void InitializeComponents()
         {
+            // Restart Button
+            m_leftButtonSVGClick.m_onClick.AddListener(() =>
+            {
+                TryRestart(false);
+            });
+
             // Play / Pause Button
             m_rightButton.m_playOnClick.AddListener(Play);
             m_rightButton.m_pauseOnClick.AddListener(Pause);
@@ -410,12 +416,6 @@ namespace AdrianMiasik
             {
                 Restart(true);
                 m_breakSlider.Press();
-            });
-            
-            // Restart Button
-            m_leftButtonSVGClick.m_onClick.AddListener(() =>
-            {
-                TryRestart(false);
             });
 
             // Switch Timer / Mode Slider

@@ -1,6 +1,4 @@
-﻿using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
-using Unity.VectorGraphics;
+﻿using AdrianMiasik.Components.Core;
 using UnityEditor;
 
 namespace AdrianMiasik.Editor
@@ -8,12 +6,18 @@ namespace AdrianMiasik.Editor
     [CustomEditor(typeof(ClickButtonSVGIcon))]
     public class ClickButtonSVGIconEditor: ClickButtonEditor
     {
-        protected override void DrawInheritorFields(ClickButton _clickButton)
+        private SerializedProperty clickButtonSVGIcon;
+        
+        protected override void OnEnable()
         {
-            // Fetch target script
-            ClickButtonSVGIcon svgIconButtonSvg = (ClickButtonSVGIcon) target;
-            
-            svgIconButtonSvg.m_icon = (SVGImage) EditorGUILayout.ObjectField("Icon", svgIconButtonSvg.m_icon, typeof(SVGImage), true);
+            base.OnEnable();
+
+            clickButtonSVGIcon = serializedObject.FindProperty("m_icon");
+        }
+
+        protected override void DrawInheritorFields()
+        {
+            EditorGUILayout.PropertyField(clickButtonSVGIcon);
         }
     }
 }

@@ -9,11 +9,14 @@ namespace AdrianMiasik.Editor
     [CanEditMultipleObjects]
     public class BooleanToggleEditor : ToggleEditor
     {
+        // Properties
         private SerializedProperty icon;
         private SerializedProperty falseSprite;
         private SerializedProperty falseZRotation;
         private SerializedProperty trueSprite;
         private SerializedProperty trueZRotation;
+        
+        // Unity Events
         private SerializedProperty onTrueClick;
         private SerializedProperty onFalseClick;
 
@@ -49,27 +52,26 @@ namespace AdrianMiasik.Editor
             base.OnInspectorGUI();
             serializedObject.Update();
             
-            #region Vertical Group
             EditorGUILayout.BeginVertical();
             EditorGUILayout.Space();
 
             // Draw title
             EditorGUILayout.LabelField("Information Button", style);
-
-            // Draw property fields
+            
+            // Properties
             EditorGUILayout.PropertyField(icon);
             EditorGUILayout.PropertyField(falseSprite);
             EditorGUILayout.PropertyField(falseZRotation);
             EditorGUILayout.PropertyField(trueSprite);
             EditorGUILayout.PropertyField(trueZRotation);
+            
+            // Unity Events
             EditorGUILayout.PropertyField(onTrueClick);
             EditorGUILayout.PropertyField(onFalseClick);
             
             EditorGUILayout.EndVertical();
             
             serializedObject.ApplyModifiedProperties();
-
-            #endregion
         }
     }
 }

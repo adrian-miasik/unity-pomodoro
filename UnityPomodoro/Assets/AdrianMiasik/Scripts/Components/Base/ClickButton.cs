@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Base
 {
-    // TODO: Debug Serialization Bug
     /// <summary>
     /// A **generic** button that is used to interact with the software and trigger events based on user input.
     /// Supports animations, click hold curves, unity events, and sound FX (with pitch variation).
@@ -17,6 +16,9 @@ namespace AdrianMiasik.Components.Base
         public RectTransform m_containerTarget; // The rect transform that will scale
         public bool m_enableClickSound = true;
         public AudioSource m_clickSound;
+        public bool m_isPitchVariationOn = true;
+        public float m_lowestPitch = 0.9f;
+        public float m_highestPitch = 1.1f;
         public float m_clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
         public AnimationCurve m_clickReleaseScale; // What scale do you want the target to scale after click
         public AnimationCurve m_holdRamp;
@@ -37,11 +39,6 @@ namespace AdrianMiasik.Components.Base
         private float holdActivationTime = 0.25f; // How long does the user have to hold to activate our hold click logic?
         private float accumulatedHoldTime; // How long has the hold logic been running for? Not to be confused with userHoldTime.
         
-        // Click sound pitch variation
-        public bool m_isPitchVariationOn = true;
-        public float m_lowestPitch = 0.9f;
-        public float m_highestPitch = 1.1f;
-
         protected override void Start()
         {
             base.Start();
