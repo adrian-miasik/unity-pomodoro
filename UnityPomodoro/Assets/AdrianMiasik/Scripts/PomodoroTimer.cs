@@ -808,10 +808,6 @@ namespace AdrianMiasik
             {
                 m_aboutContainer.Initialize(this);
             }
-
-            // Prevent tick animations from pausing when switching to info page
-            // TODO: Do this for settings page too?
-            m_digitFormat.CorrectTickAnimVisuals();
             
             // Hide other content
             m_mainContainer.gameObject.SetActive(false);
