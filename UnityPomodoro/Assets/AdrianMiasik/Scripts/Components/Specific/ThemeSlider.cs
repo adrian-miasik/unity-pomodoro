@@ -2,6 +2,7 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Specific
 {

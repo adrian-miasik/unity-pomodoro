@@ -7,11 +7,10 @@ using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Core
 {
-    //  TODO: Refactor to inherit from Toggle
     /// <summary>
     /// A <see cref="ThemeElement"/> <see cref="Base.Toggle"/> in the form of a boolean slider.
     /// </summary>
-    public class ToggleSlider : ThemeElement, IPointerClickHandler
+    public class ToggleSlider : Toggle
     {
         // General
         [SerializeField] public SVGImage m_background;
@@ -31,7 +30,6 @@ namespace AdrianMiasik.Components.Core
         private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Cache
-        private bool state;
         private Color trueColor;
         private Color falseColor;
 
@@ -67,12 +65,12 @@ namespace AdrianMiasik.Components.Core
             overridenDotColor = color;
         }
 
-        public override void Initialize(PomodoroTimer timer, bool isOn)
+        public void Initialize(PomodoroTimer timer, bool state)
         {
             base.Initialize(timer);
-            
-            state = isOn;
-            if (state)
+
+            isOn = state;
+            if (isOn)
             {
                 Enable();
             }
@@ -84,18 +82,18 @@ namespace AdrianMiasik.Components.Core
 
         public bool IsOn()
         {
-            return state;
+            return isOn;
         }
 
-        public void Refresh(bool isOn)
+        public void Refresh(bool state)
         {
             // Early exit if there are no changes to our property
-            if (isOn == state)
+            if (state == isOn)
             {
                 return;
             }
             
-            state = isOn;
+            isOn = state;
             if (state)
             {
                 Enable();
@@ -117,10 +115,10 @@ namespace AdrianMiasik.Components.Core
             OnPointerClick(null);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
+        public override void OnPointerClick(PointerEventData eventData)
+        { 
             // Flip state
-            state = !state;
+            isOn = !isOn;
             OnStateChanged(true); // User interacted with this, we treating this as a click
             
             m_onClick.Invoke();
@@ -128,7 +126,7 @@ namespace AdrianMiasik.Components.Core
         
         private void OnStateChanged(bool invokeEvents = false)
         {
-            if (state)
+            if (isOn)
             {
                 // Set to on position
                 m_animation.clip = m_leftToRight;
@@ -160,7 +158,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         private void Disable()
         {
-            state = false;
+            isOn = false;
             OnStateChanged();
         }
 
@@ -170,7 +168,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         private void Enable()
         {
-            state = true;
+            isOn = true;
             OnStateChanged();
         }
         
@@ -188,7 +186,7 @@ namespace AdrianMiasik.Components.Core
             }
             
             trueColor = overrideTrueColor ? overridenTrueColor : currentColors.m_modeOne;
-            m_background.color = state ? trueColor : falseColor;
+            m_background.color = isOn ? trueColor : falseColor;
             m_dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
         }
 
