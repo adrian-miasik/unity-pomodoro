@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b25e7fe913542e9b8e642169c5af836, type: 3}
   m_Name: DarkHalloween
   m_EditorClassIdentifier: 
-  m_includedInTheseThemes: []
+  m_includedInTheseThemes:
+  - {fileID: 11400000, guid: aa574f8d6259f814ca7db509c8d1c167, type: 2}
   m_background: {r: 0, g: 0, b: 0, a: 1}
   m_backgroundHighlight: {r: 0.25590873, g: 0.1501869, b: 0.4245283, a: 1}
   m_foreground: {r: 1, g: 1, b: 1, a: 1}

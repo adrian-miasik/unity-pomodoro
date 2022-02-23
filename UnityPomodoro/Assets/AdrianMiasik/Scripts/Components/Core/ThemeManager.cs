@@ -1,4 +1,5 @@
-﻿using AdrianMiasik.Components.Core.Settings;
+﻿using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
@@ -11,20 +12,24 @@ namespace AdrianMiasik.Components.Core
     /// </summary>
     public class ThemeManager : MonoBehaviour
     {
-        [SerializeField] private Theme m_activeTheme;
+        [SerializeField] private Theme m_defaultTheme;
+        [SerializeField] private Theme m_halloweenTheme;
         
+        private Theme activeTheme;
+
         /// <summary>
         /// Returns our current active <see cref="Theme"/>
         /// </summary>
         /// <returns></returns>
         public Theme GetTheme()
         {
-            return m_activeTheme;
+            return activeTheme;
         }
         
         public void Register(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
         {
-            m_activeTheme.Register(pomodoroTimer, systemSettings);
+            activeTheme = m_defaultTheme;
+            activeTheme.Register(pomodoroTimer, systemSettings);
         }
 
         /// <summary>
@@ -33,7 +38,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         public void SetToLightMode()
         {
-            m_activeTheme.SetToLightMode();
+            activeTheme.SetToLightMode();
         }
 
         /// <summary>
@@ -42,7 +47,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         public void SetToDarkMode()
         {
-            m_activeTheme.SetToDarkMode();
+            activeTheme.SetToDarkMode();
         }
 
         /// <summary>
@@ -53,13 +58,23 @@ namespace AdrianMiasik.Components.Core
         public void SwitchTheme(Theme desiredTheme)
         {
             // Transfer elements to new theme (So theme knows which elements to color update)
-            m_activeTheme.TransferColorElements(m_activeTheme, desiredTheme);
+            activeTheme.TransferColorElements(activeTheme, desiredTheme);
             
             // Swap our theme
-            m_activeTheme = desiredTheme;
+            activeTheme = desiredTheme;
             
             // Apply our changes
-            m_activeTheme.ApplyColorChanges();
+            activeTheme.ApplyColorChanges();
+        }
+
+        public void SwitchToHalloweenTheme()
+        {
+            SwitchTheme(m_halloweenTheme);
+        }
+
+        public void SwitchToDefaultTheme()
+        {
+            SwitchTheme(m_defaultTheme);
         }
     }
 }

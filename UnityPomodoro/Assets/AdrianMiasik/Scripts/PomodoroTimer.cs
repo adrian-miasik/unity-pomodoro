@@ -17,7 +17,6 @@ using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace AdrianMiasik
@@ -79,7 +78,6 @@ namespace AdrianMiasik
         [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
         [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
         [SerializeField] private ThemeSlider m_themeSlider; // Used to change between light / dark mode
-        [SerializeField] private ToggleSprite m_halloweenToggleSprite; // Halloween theme toggle during Halloween week (Disabled by default) // TODO: Re-implement
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
         [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
@@ -229,8 +227,8 @@ namespace AdrianMiasik
             loadedSystemSettings = systemSettings;
 
             // Apply theme changes
-            m_themeManager.Register(this, this.loadedSystemSettings);
-            if (this.loadedSystemSettings.m_darkMode)
+            m_themeManager.Register(this, loadedSystemSettings);
+            if (loadedSystemSettings.m_darkMode)
             {
                 m_themeManager.SetToDarkMode();
             }
@@ -377,25 +375,6 @@ namespace AdrianMiasik
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
             m_menuToggleSprite.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
-
-            // TODO: Re-implement halloween theme?
-            // Halloween Theme Toggle
-            // Check if it's October...
-            if (DateTime.Now.Month == 10)
-            {
-                // Check if it's Halloween week...
-                for (int i = 25; i <= 31; i++)
-                {
-                    // Is today Halloween week...
-                    if (DateTime.Now.Day == i)
-                    {
-                        m_halloweenToggleSprite.gameObject.SetActive(true);
-                        m_halloweenToggleSprite.OverrideTrueColor(new Color(1f, 0.59f, 0f));
-                        m_halloweenToggleSprite.Initialize(this, false);
-                        break;
-                    }
-                }
-            }
             
             InitializeComponents();
 
