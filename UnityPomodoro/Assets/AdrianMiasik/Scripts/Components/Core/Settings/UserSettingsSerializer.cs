@@ -6,7 +6,7 @@ namespace AdrianMiasik.Components.Core.Settings
 {
     /// <summary>
     /// Saves/loads our user settings to/from our persistent data paths respectively. (<see cref="SystemSettings"/> and
-    /// <see cref="TimerSettings"/>
+    /// <see cref="TimerSettings"/>)
     /// </summary>
     public static class UserSettingsSerializer
     {
