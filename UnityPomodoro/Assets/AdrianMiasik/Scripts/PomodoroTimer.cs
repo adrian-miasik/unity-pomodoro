@@ -1484,6 +1484,7 @@ namespace AdrianMiasik
             return m_translucentImageSource;
         }
         
+        // TODO: Remove PomodoroTimer dependency
         public Theme GetTheme()
         {
             return m_themeManager.GetTheme();
