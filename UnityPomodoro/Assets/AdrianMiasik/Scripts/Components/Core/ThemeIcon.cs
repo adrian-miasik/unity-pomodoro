@@ -24,5 +24,23 @@ namespace AdrianMiasik.Components.Core
         {
             m_icon.sprite = Timer.GetSystemSettings().m_darkMode ? m_darkSprite : m_lightSprite;
         }
+
+        /// <summary>
+        /// Swaps the SVG image icon to use the provided sprite.
+        /// </summary>
+        /// <param name="sprite"></param>
+        public void ChangeSprite(Sprite sprite)
+        {
+            m_icon.sprite = sprite;
+        }
+
+        /// <summary>
+        /// Sets the SVG image icon to the provided color.
+        /// </summary>
+        /// <param name="color"></param>
+        public void ChangeColor(Color color)
+        {
+            m_icon.color = color;
+        }
     }
 }

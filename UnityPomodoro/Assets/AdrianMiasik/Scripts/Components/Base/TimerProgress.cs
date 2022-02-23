@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AdrianMiasik.Components.Base 
 { 
@@ -25,12 +26,14 @@ namespace AdrianMiasik.Components.Base
         private float elapsedTime; // How long in seconds?
         private bool hasCompleted; // Has this timer completed at least once?
 
+        public UnityEvent m_onComplete;
+        
         /// <summary>
         /// Sets up and starts the timer using the provided preferences.
         /// </summary>
         /// <param name="timerDuration">How long should this timer run for?</param>
         /// <param name="loop">Should the timer repeat on completion?</param>
-        protected void Initialize(float timerDuration, bool loop = false)
+        public void Initialize(float timerDuration, bool loop = false)
         {
             m_duration = timerDuration;
             m_loop = loop;
@@ -97,6 +100,7 @@ namespace AdrianMiasik.Components.Base
                     if (elapsedTime >= m_duration)
                     {
                         OnComplete();
+                        m_onComplete?.Invoke();
 
                         // Reset time
                         elapsedTime = 0;
