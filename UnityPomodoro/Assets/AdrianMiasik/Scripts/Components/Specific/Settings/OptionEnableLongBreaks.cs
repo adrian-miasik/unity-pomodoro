@@ -24,10 +24,6 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <param name="state"></param>
         public void SetSettingLongBreak(bool state)
         {
-            // Apply and save
-            Timer.GetTimerSettings().m_longBreaks = state;
-            UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
-
             if (state == false)
             {
                 if (Timer.HasTomatoProgression())
@@ -39,7 +35,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                     }, () =>
                     {
                         // Cancel visuals if they don't agree, similar how we do the work/break slider
-                        m_toggleSlider.Initialize(Timer, true);
+                        m_toggleSlider.Refresh(true);
                     }, "This action will delete your current pomodoro/tomato progress.");
                 }
                 else

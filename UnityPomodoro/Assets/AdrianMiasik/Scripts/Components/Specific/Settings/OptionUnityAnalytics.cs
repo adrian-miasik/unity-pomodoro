@@ -63,17 +63,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                 }, () =>
                 {
                     // Cancel visuals if they don't agree
-                    m_toggleSlider.Initialize(Timer, true);
-                    
-                    // Edge condition: If playing in editor and tweaking values via inspector...
-#if UNITY_EDITOR
-                    if (Application.isPlaying)
-                    {
-                        // Apply and save
-                        Timer.GetSystemSettings().m_enableUnityAnalytics = true;
-                        UserSettingsSerializer.SaveSystemSettings(Timer.GetSystemSettings());
-                    }
-#endif
+                    m_toggleSlider.Refresh(true);
                 }, "Disabling 'Unity Analytics' requires a restart.", "");
             }
             else

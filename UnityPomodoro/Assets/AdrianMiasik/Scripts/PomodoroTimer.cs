@@ -1315,11 +1315,23 @@ namespace AdrianMiasik
         /// long break mode?</param>
         public void SetSettingLongBreaks(bool state = true)
         {
-            // TODO: Fix double theme element registration on this setting change
+            // Apply and save
+            GetTimerSettings().m_longBreaks = state;
+            UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+            
             // Apply component swap
             if (state)
             {
-                m_tomatoCounter.Initialize(this, loadedTimerSettings.m_pomodoroCount);
+                if (!m_tomatoCounter.IsInitialized())
+                {
+                    m_tomatoCounter.Initialize(this, loadedTimerSettings.m_pomodoroCount);
+                }
+                else
+                {
+                    // Only rebuild tomatoes
+                    m_tomatoCounter.SetPomodoroCount(loadedTimerSettings.m_pomodoroCount, m_tomatoCounter.GetTomatoProgress());
+                }
+
                 m_tomatoCounter.gameObject.SetActive(true);
             }
             else
