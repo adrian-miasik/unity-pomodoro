@@ -90,7 +90,6 @@ namespace AdrianMiasik.Components.Core.Containers
             m_settingsRow.GetClickButton().m_onClick.AddListener(Timer.ShowSettings);
             m_documentationRow.GetClickButton().m_onClick.AddListener(() =>
             {
-                // TODO: Store URL's as a scriptable object?
                 m_documentationRow.GetClickButton().OpenURL("https://adrian-miasik.github.io/unity-pomodoro-docs/");
             });
             m_aboutRow.GetClickButton().m_onClick.AddListener(Timer.ShowAbout);
