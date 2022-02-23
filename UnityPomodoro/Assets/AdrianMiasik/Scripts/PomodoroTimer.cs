@@ -143,7 +143,6 @@ namespace AdrianMiasik
         private bool hasRingPulseBeenInvoked;
         
         // Pulse Tick Ring Animation
-        private readonly bool isRingTickAnimationEnabled = false; // TODO: Re-implement this animation? / Expose in settings?
         private float cachedSeconds;
         private bool isRingTickAnimating;
         
@@ -688,8 +687,6 @@ namespace AdrianMiasik
                 // Update visuals
                 m_ring.fillAmount = (float)currentTime / totalTime;
                 m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime));
-     
-                AnimateRingTickPulse();
             }
             else
             {
@@ -719,38 +716,13 @@ namespace AdrianMiasik
                 }
             }
         }
-
-        /// <summary>
-        /// Animates our ring width to pulse with each second change
-        /// </summary>
-        private void AnimateRingTickPulse()
-        {
-            if (!isRingTickAnimationEnabled)
-            {
-                return;
-            }
-            
-            if (Math.Abs(cachedSeconds - TimeSpan.FromSeconds(currentTime).Seconds) > Mathf.Epsilon)
-            {
-                isRingTickAnimating = true;
-            }
-
-            if (isRingTickAnimating)
-            {
-                accumulatedRingPulseTime += Time.deltaTime;
-                m_ring.material.SetFloat(RingDiameter, m_ringTickWidth.Evaluate(accumulatedRingPulseTime));
-            }
-                            
-            cachedSeconds = TimeSpan.FromSeconds(currentTime).Seconds;
-        }
-
+        
         /// <summary>
         /// Animates our digits to flash on and off
         /// </summary>
         private void AnimatePausedDigits()
         {
             accumulatedFadeTime += Time.deltaTime;
-
             if (isFadeComplete)
             {
                 if (accumulatedFadeTime > m_pauseHoldDuration)
