@@ -22,7 +22,6 @@ using UnityEngine.UI;
 
 namespace AdrianMiasik
 {
-    // TODO: Fix credit bubble fade - Not always fading out
     /// <summary>
     /// Our main class / component. Responsible for controlling the main timer logic, configuring settings,
     /// initializing, and manipulating our components.
@@ -446,7 +445,6 @@ namespace AdrianMiasik
             m_breakSlider.m_onSetToTrueClick.AddListener(TrySwitchToBreakTimer);
             m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
             
-            // TODO: Menu toggle UE listener
             m_menuToggleSprite.m_onSetToTrueClick.AddListener(m_sidebarMenu.Open);
             m_menuToggleSprite.m_onSetToFalseClick.AddListener(m_sidebarMenu.Close);
             
@@ -1399,8 +1397,7 @@ namespace AdrianMiasik
                 SwitchTimer(m_digitFormat.m_isOnBreak);
             }
         }
-
-        // TODO: System wide setting
+        
         /// <summary>
         /// Sets the users setting preference to enable/disable the EndTimestampBubble (located at the bottom right).
         /// </summary>

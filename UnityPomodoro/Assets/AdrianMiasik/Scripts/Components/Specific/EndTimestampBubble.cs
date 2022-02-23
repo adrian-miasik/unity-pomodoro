@@ -1,7 +1,6 @@
 using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
-using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -11,25 +10,12 @@ namespace AdrianMiasik.Components.Specific
     /// </summary>
     public class EndTimestampBubble : Bubble
     {
-        [SerializeField] private Sprite m_workMode;
-        [SerializeField] private Sprite m_breakMode;
-        
         // Cache
         private float fadeProgress;
         
         public override void FadeIn(bool instantly = false)
         {
             CalculateEndTime();
-            
-            // Set sprite depending what the user will get prompted to do next
-            if (Timer.IsOnBreak() || Timer.IsOnLongBreak())
-            {
-                m_icon.ChangeSprite(m_workMode);
-            }
-            else
-            {
-                m_icon.ChangeSprite(m_breakMode);
-            }
             
             base.FadeIn(instantly);
         }
@@ -52,6 +38,16 @@ namespace AdrianMiasik.Components.Specific
         public override void ColorUpdate(Theme theme)
         {
             base.ColorUpdate(theme);
+            
+            // Set sprite depending what the user will get prompted to do next
+            if (Timer.IsOnBreak() || Timer.IsOnLongBreak())
+            {
+                m_icon.ChangeColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
+            }
+            else
+            {
+                m_icon.ChangeColor(Timer.GetTheme().GetCurrentColorScheme().m_modeTwo);
+            }
             
             // Remain visible depending on theme dark mode preference
             m_icon.ChangeColor(theme.GetCurrentColorScheme().m_foreground);
