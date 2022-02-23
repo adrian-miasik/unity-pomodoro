@@ -1,17 +1,15 @@
 using AdrianMiasik.Components.Base;
-using AdrianMiasik.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Specific
 {
-    // TODO: Create a wrapper class for the (To be created) Bubble base class which inherits TimerProgress?
     /// <summary>
     /// A <see cref="TimerProgress"/> inheritor used for displaying the authors name of the app. Intended to minimize
     /// after a couple seconds via the base class.
     /// </summary>
     // public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler, IColorHook
-    public class CreditsBubble : Bubble, IPointerEnterHandler, IPointerExitHandler, IColorHook
+    public class CreditsBubble : Bubble, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private RectTransform m_self;
         [SerializeField] private SimpleTimer m_timer;
@@ -104,11 +102,6 @@ namespace AdrianMiasik.Components.Specific
         public void ResetRightOffset()
         {
             m_self.offsetMax = new Vector2(cachedRightOffsetPixels, m_self.offsetMax.y);
-        }
-
-        public bool IsRunning()
-        {
-            return m_timer.IsRunning();
         }
     }
 }
