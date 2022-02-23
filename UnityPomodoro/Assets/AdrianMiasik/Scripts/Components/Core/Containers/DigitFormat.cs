@@ -149,13 +149,6 @@ namespace AdrianMiasik.Components.Core.Containers
                     continue;
                 }
 
-                // TODO: Improve performance / remove get component call, possibly with a theme manager class?
-                // Deregister color hook
-                foreach (IColorHook colorHook in t.GetComponentsInChildren<IColorHook>())
-                {
-                    Timer.GetTheme().Deregister(colorHook);
-                }
-                
                 Destroy(t.gameObject);
             }
 
