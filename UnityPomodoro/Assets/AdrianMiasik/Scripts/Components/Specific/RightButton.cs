@@ -1,10 +1,12 @@
 using System;
 using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -18,6 +20,7 @@ namespace AdrianMiasik.Components.Specific
     public class RightButton : ThemeElement, ITimerState
     {
         [Header("References")] 
+        [SerializeField] private ClickButtonSVGIcon m_clickButton;
         [SerializeField] private SVGImage m_icon;
         
         [Header("SVGs")]
@@ -126,6 +129,14 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
+            // Right Button Background
+            Image rightContainerTarget = m_clickButton.m_containerTarget.GetComponent<Image>();
+            if (rightContainerTarget != null)
+            {
+                rightContainerTarget.material.SetColor(PomodoroTimer.CircleColor, 
+                    theme.GetCurrentColorScheme().m_backgroundHighlight);
+            }
+            
             switch (Timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
@@ -141,6 +152,11 @@ namespace AdrianMiasik.Components.Specific
                     m_icon.color = Timer.IsOnBreak() ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo;
                     break;
             }
+        }
+
+        public void OnPointerClick()
+        {
+            m_clickButton.OnPointerClick(null);
         }
     }
 }

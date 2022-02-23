@@ -77,8 +77,7 @@ namespace AdrianMiasik
         [FormerlySerializedAs("m_menuToggle")] [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
         [SerializeField] private ClickButtonSVGIcon m_leftButtonSVGClick; // Used to restart the timer
         // TODO: Consolidate right buttons to a single class
-        [SerializeField] private ClickButtonSVGIcon m_rightButtonSVGClick; // Used to play/pause the timer
-        [SerializeField] private RightButton m_rightButton; // Additional timer state element 
+        [SerializeField] private RightButton m_rightButton; // Used to play/pause timer + timer sprite state element 
         [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
         [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
         [SerializeField] private ThemeSlider m_themeSlider; // Used to change between light / dark mode
@@ -140,7 +139,7 @@ namespace AdrianMiasik
         // Shader Properties
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
-        private static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
+        public static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
         // Pulse Ring Complete Animation
         private bool disableCompletionAnimation;
@@ -1069,7 +1068,7 @@ namespace AdrianMiasik
         /// </summary>
         public void TriggerPlayPause()
         {
-            m_rightButtonSVGClick.OnPointerClick(null);
+            m_rightButton.OnPointerClick();
         }
 
         /// <summary>
@@ -1309,13 +1308,6 @@ namespace AdrianMiasik
             // Left Button Icon
             m_leftButtonSVGClick.m_icon.color = currentColors.m_foreground;
 
-            // Right Button Background
-            Image rightContainerTarget = m_rightButtonSVGClick.m_containerTarget.GetComponent<Image>();
-            if (rightContainerTarget != null)
-            {
-                rightContainerTarget.material.SetColor(CircleColor, currentColors.m_backgroundHighlight);
-            }
-            
             // Paused Digits
             startingColor = theme.GetCurrentColorScheme().m_foreground;
             endingColor = theme.GetCurrentColorScheme().m_backgroundHighlight;
