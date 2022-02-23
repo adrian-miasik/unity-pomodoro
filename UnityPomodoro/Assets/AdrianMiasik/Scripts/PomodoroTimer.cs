@@ -75,7 +75,6 @@ namespace AdrianMiasik
         [SerializeField] private DigitFormat m_digitFormat; // Responsible class for manipulating our digits and formats
         [FormerlySerializedAs("m_menuToggle")] [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
         [SerializeField] private ClickButtonSVGIcon m_leftButtonSVGClick; // Used to restart the timer
-        // TODO: Consolidate right buttons to a single class
         [SerializeField] private RightButton m_rightButton; // Used to play/pause timer + timer sprite state element 
         [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
         [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
