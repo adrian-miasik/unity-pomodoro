@@ -448,6 +448,8 @@ namespace AdrianMiasik
             m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
             
             // TODO: Menu toggle UE listener
+            m_menuToggleSprite.m_onSetToTrueClick.AddListener(m_sidebarMenu.Open);
+            m_menuToggleSprite.m_onSetToFalseClick.AddListener(m_sidebarMenu.Close);
             
             // Components
             m_background.Initialize(this);
@@ -872,11 +874,8 @@ namespace AdrianMiasik
             m_aboutContainer.Show();
 
             // Special behaviour that's used to display/open up credits bubble when on this page
-            if (!m_creditsBubble.IsRunning())
-            {
-                m_creditsBubble.Lock();
-                m_creditsBubble.FadeIn();
-            }
+            m_creditsBubble.Lock();
+            m_creditsBubble.FadeIn();
         }
 
         /// <summary>
@@ -1450,11 +1449,8 @@ namespace AdrianMiasik
             }
             else
             {
-                if (!IsAboutPageOpen())
-                {
-                    m_creditsBubble.FadeOut();
-                    m_creditsBubble.Unlock();
-                }
+                m_creditsBubble.FadeOut();
+                m_creditsBubble.Unlock();
             }
         }
 

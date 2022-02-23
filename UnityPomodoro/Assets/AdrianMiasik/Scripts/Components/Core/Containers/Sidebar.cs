@@ -185,14 +185,10 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void Close()
         {
-            if (!Timer.IsAboutPageOpen())
-            {
-                Timer.CloseOutCreditsBubble();
-            }
-
             Timer.ResetCreditsBubbleSidebarConformity();
             Timer.FadeCreditsBubble(false);
-            
+            Debug.Log("Close");
+
             isOpen = false;
 
             // Cancel holds in-case user holds button down and closes our menu prematurely
@@ -255,15 +251,13 @@ namespace AdrianMiasik.Components.Core.Containers
             if (!rowToSelect.IsSelected())
             {
                 rowToSelect.Select();
-                
-                // Close sidebar after selection
-                Close();
             }
             else
             {
                 Debug.LogWarning("This sidebar row is already selected!", rowToSelect.gameObject);
-                Close();
             }
+            
+            Close();
             
             // Pass the buck of playing our close sound to the audio mimic,
             // since closing the sidebar will disable the audio sources we want to play from.
