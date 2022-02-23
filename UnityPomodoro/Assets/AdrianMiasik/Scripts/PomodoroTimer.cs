@@ -1338,7 +1338,6 @@ namespace AdrianMiasik
             {
                 m_tomatoCounter.gameObject.SetActive(false);
                 DeactivateLongBreak();
-                
                 IfSetupTriggerRebuild();
             }
             m_completionLabel.MoveAnchors(state);
