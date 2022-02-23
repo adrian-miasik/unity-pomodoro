@@ -73,7 +73,7 @@ namespace AdrianMiasik
         [SerializeField] private TranslucentImageSource m_translucentImageSource; // Necessary reference for blur
         [SerializeField] private CompletionLabel m_completionLabel; // Used to prompt the user the timer is finished
         [SerializeField] private DigitFormat m_digitFormat; // Responsible class for manipulating our digits and formats
-        [FormerlySerializedAs("m_menuToggle")] [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
+        [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
         [SerializeField] private ClickButtonSVGIcon m_leftButtonSVGClick; // Used to restart the timer
         [SerializeField] private RightButton m_rightButton; // Used to play/pause timer + timer sprite state element 
         [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
