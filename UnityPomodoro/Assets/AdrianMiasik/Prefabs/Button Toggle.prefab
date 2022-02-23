@@ -202,9 +202,9 @@ MonoBehaviour:
         m_CallState: 2
   m_IsOn: 0
   m_icon: {fileID: 4742492906207072356}
-  m_falseSprite: {fileID: 3286163911610860551, guid: 7200ff7fc1c23d143bfc8224e8226ff3, type: 3}
+  m_falseSprite: {fileID: 0}
   m_falseZRotation: 0
-  m_trueSprite: {fileID: 3286163911610860551, guid: 4f03292b21f6d7f43b9e5abee8983064, type: 3}
+  m_trueSprite: {fileID: 0}
   m_trueZRotation: 0
   m_onSetToTrueClick:
     m_PersistentCalls:
