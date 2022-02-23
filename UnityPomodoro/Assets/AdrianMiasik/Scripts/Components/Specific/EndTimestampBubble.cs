@@ -39,16 +39,6 @@ namespace AdrianMiasik.Components.Specific
         {
             base.ColorUpdate(theme);
             
-            // Set sprite depending what the user will get prompted to do next
-            if (Timer.IsOnBreak() || Timer.IsOnLongBreak())
-            {
-                m_icon.ChangeColor(Timer.GetTheme().GetCurrentColorScheme().m_modeOne);
-            }
-            else
-            {
-                m_icon.ChangeColor(Timer.GetTheme().GetCurrentColorScheme().m_modeTwo);
-            }
-            
             // Remain visible depending on theme dark mode preference
             m_icon.ChangeColor(theme.GetCurrentColorScheme().m_foreground);
         }
