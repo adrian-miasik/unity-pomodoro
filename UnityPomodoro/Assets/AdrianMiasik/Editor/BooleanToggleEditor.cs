@@ -1,5 +1,4 @@
 using AdrianMiasik.Components.Core;
-using Unity.VectorGraphics;
 using UnityEditor;
 using UnityEditor.UI;
 using UnityEngine;
@@ -35,13 +34,17 @@ namespace AdrianMiasik.Editor
         public override void OnInspectorGUI()
         {
             // Define style
-            // ReSharper disable once UseObjectOrCollectionInitializer
-            GUIStyle _style = new GUIStyle();
-            _style.fontStyle = FontStyle.Bold;
-            _style.normal.textColor = Color.white;
-            
+            GUIStyle style = new GUIStyle
+            {
+                fontStyle = FontStyle.Bold,
+                normal =
+                {
+                    textColor = Color.white
+                }
+            };
+
             // Draw title
-            EditorGUILayout.LabelField("Toggle", _style);
+            EditorGUILayout.LabelField("Toggle", style);
             
             base.OnInspectorGUI();
             serializedObject.Update();
@@ -51,7 +54,7 @@ namespace AdrianMiasik.Editor
             EditorGUILayout.Space();
 
             // Draw title
-            EditorGUILayout.LabelField("Information Button", _style);
+            EditorGUILayout.LabelField("Information Button", style);
 
             // Draw property fields
             EditorGUILayout.PropertyField(icon);
@@ -61,10 +64,11 @@ namespace AdrianMiasik.Editor
             EditorGUILayout.PropertyField(trueZRotation);
             EditorGUILayout.PropertyField(onTrueClick);
             EditorGUILayout.PropertyField(onFalseClick);
-
+            
+            EditorGUILayout.EndVertical();
+            
             serializedObject.ApplyModifiedProperties();
 
-            EditorGUILayout.EndVertical();
             #endregion
         }
     }
