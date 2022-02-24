@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{8dd3cfc6-1299-156c-8b44-79d09a054f34}</ProjectGuid>
+    <ProjectGuid>{cd45e95a-97b2-4615-37b0-ad89efe9c3f6}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>LeTai.TranslucentImage</AssemblyName>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,25 +52,84 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageEditorEnhancement.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlur.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\BlurConfig.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\Extensions.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImage.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlurConfig.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ShaderId.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageSource.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\IBlurAlgorithm.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageMeshEffect.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ResizableScreenRect.cs" />
-     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\lib.hlsl" />
-     <None Include="Assets\LeTai\TranslucentImage\Resources\TranslucentImage.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\Resources\EfficientBlur.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\Resources\lib.cginc" />
-     <None Include="Assets\LeTai\TranslucentImage\Resources\FillCrop.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\EfficientBlur_UniversalRP.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\FillCrop_UniversalRP.shader" />
-     <None Include="Assets\LeTai\TranslucentImage\LeTai.TranslucentImage.asmdef" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\ClickButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\HotkeyDetector.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialog.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\RightButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialogManager.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Theme.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\BlurOverlay.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\TomatoCounter.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\DigitFormat.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\SettingsOptionToggleSlider.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CompletionLabel.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\ThemeElement.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\AudioMimic.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\AboutPanel.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DoubleDigit.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionMuteAudioOutOfFocus.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\ThemeSlider.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\UWP\NotificationManager.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\EndTimestampBubble.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\SidebarRow.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DigitSeparator.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Automation\MediaCreator.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Settings\SystemSettings.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\SettingsOptionDropdown.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonText.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Toggle.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeManager.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ToggleSlider.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonSVGIcon.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionPomodoroCount.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\ColorScheme.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\PomodoroTimer.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\WriteVersionNumber.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\TimerProgress.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\IColorHook.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\Tomato.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Settings\UserSettingsSerializer.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\ThemeIconContainer.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonImageIcon.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\Sidebar.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ImageHoverColorChange.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Settings\TimerSettings.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Background.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ToggleSprite.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionEnableLongBreaks.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\SettingsPanel.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionDigitFormat.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Dropdown.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CreditsBubble.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\SkipButton.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Automation\MediaCapture.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\ITimerState.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\SimpleTimer.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Bubble.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionUnityAnalytics.cs" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+     <None Include="Assets\AdrianMiasik\Scripts\UWP\UWPToastAlarm.xml" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\AdrianMiasik\Scripts\UWP\UWPToastNoAlarm.xml" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -293,35 +352,8 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Graphs">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.WebGL.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.OSXStandalone.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.Android.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.WindowsStandalone.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.LinuxStandalone.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.UWP.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.NRefactory">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -677,14 +709,116 @@
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Recorder.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.InternalAPIEditorBridge.003">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.003.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder.Base">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.TextMeshPro.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Services.Analytics.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VectorGraphics">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.VectorGraphics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Timeline">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.TextMeshPro">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.InternalAPIEngineBridge.003">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.003.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Searcher.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Services.Analytics">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Runtime">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Rider.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Services.Core">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ShaderGraph.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Services.Core.Analytics">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Services.Core.Environments">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Services.Core.Environments.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Timeline.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VectorGraphics.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.VectorGraphics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Editor">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="LeTai.TranslucentImage.UniversalRP.csproj">
+      <Project>{63a27481-d491-8fef-7564-263e2c6f7e79}</Project>
+      <Name>LeTai.TranslucentImage.UniversalRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TranslucentImage.Editor.csproj">
+      <Project>{2c4ba033-d432-59be-ecfd-450da013b0ef}</Project>
+      <Name>LeTai.TranslucentImage.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TranslucentImage.csproj">
+      <Project>{cacb0376-1a58-4c5c-9ce6-c0e002754b18}</Project>
+      <Name>LeTai.TranslucentImage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

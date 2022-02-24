@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2fcf79b6-f632-a61b-c376-f027cb89cda8}</ProjectGuid>
+    <ProjectGuid>{cacb0376-1a58-4c5c-9ce6-c0e002754b18}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>LeTai.TranslucentImage.Editor</AssemblyName>
+    <AssemblyName>LeTai.TranslucentImage</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,13 +52,25 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\TranslucentImageSourceEditor.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\TranslucentImageEditor.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\ScenceGizmoAutoDisable.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\MenuIntegration.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\Unity2019ShaderCompilerBugWorkaround.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\Editor\ScalableBlurConfigEditor.cs" />
-     <None Include="Assets\LeTai\TranslucentImage\Script\Editor\LeTai.TranslucentImage.Editor.asmdef" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageEditorEnhancement.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlur.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\BlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\Extensions.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImage.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\ScalableBlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ShaderId.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageSource.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm\IBlurAlgorithm.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\TranslucentImageMeshEffect.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\Utilities\ResizableScreenRect.cs" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\lib.hlsl" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\TranslucentImage.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\EfficientBlur.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\lib.cginc" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\FillCrop.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\EfficientBlur_UniversalRP.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\FillCrop_UniversalRP.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\LeTai.TranslucentImage.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -306,13 +318,10 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="nunit.framework">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -669,23 +678,13 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TestRunner">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.TestRunner">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/open-pomodoro/OpenPomodoro/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="LeTai.TranslucentImage.csproj">
-      <Project>{8dd3cfc6-1299-156c-8b44-79d09a054f34}</Project>
-      <Name>LeTai.TranslucentImage</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
