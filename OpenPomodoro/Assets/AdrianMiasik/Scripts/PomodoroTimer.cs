@@ -55,7 +55,7 @@ namespace AdrianMiasik
         /// </summary>
         public States m_state = States.SETUP;
 
-        [Header("Unity Pomodoro - Managers")]
+        [Header("Open Pomodoro - Managers")]
         [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
@@ -66,7 +66,7 @@ namespace AdrianMiasik
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
         
-        [Header("Unity Pomodoro - Components")]
+        [Header("Open Pomodoro - Components")]
         [SerializeField] private Background m_background; // Used to pull select focus
         [SerializeField] private BlurOverlay m_overlay; // Used to blur background on sidebar focus and confirmation dialog pop-ups.
         [SerializeField] private TranslucentImageSource m_translucentImageSource; // Necessary reference for blur
