@@ -720,14 +720,14 @@ PlayerSettings:
     Standalone: 3
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: unity-pomodoro
-  metroPackageVersion: 1.1.0.0
+  metroPackageName: open-pomodoro
+  metroPackageVersion: 1.1.1.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Adrian Miasik
   metroCertificateIssuer: Adrian Miasik
   metroCertificateNotAfter: 80533d20f3b5d801
-  metroApplicationDescription: Unity Pomodoro is an open source countdown timer app
+  metroApplicationDescription: Open Pomodoro is an open source countdown timer app
     created in Unity designed primarily for desktop use. Unity Pomodoro is a time
     management tool based on the pomodoro technique, the aim is to improve your productivity
     by introducing timers for both your work and break sessions. Quickly swap between
