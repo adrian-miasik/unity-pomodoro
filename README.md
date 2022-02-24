@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="#about">About</a> &bull;
-  <a href="https://adrian-miasik.github.io/unity-pomodoro-docs/">Documentation</a> &bull;
+  <a href="https://adrian-miasik.github.io/open-pomodoro-docs/">Documentation</a> &bull;
   <a href="#downloads">Downloads</a> &bull;
   <a href="#media">Screenshots</a> &bull;
   <a href="#author-notes">Author Notes</a> &bull;
