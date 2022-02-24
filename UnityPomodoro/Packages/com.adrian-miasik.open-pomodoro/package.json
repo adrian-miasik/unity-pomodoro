@@ -1,8 +1,8 @@
 {
   "name": "com.adrian-miasik.open-pomodoro",
-  "version": "1.10.3",
+  "version": "1.10.4",
   "displayName": "Open Pomodoro",
-  "description": "An open source pomodoro timer app created in Unity 🍅",
+  "description": "An open source pomodoro timer app created in Unity \ud83c\udf45",
   "unity": "2020.3",
   "unityRelease": "28f1",
   "documentationUrl": "https://adrian-miasik.github.io/unity-pomodoro-docs/",
@@ -48,8 +48,8 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
- },
- "keywords": [
+  },
+  "keywords": [
     "open-source",
     "unity3d",
     "pomodoro-technique",
