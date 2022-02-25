@@ -65,7 +65,7 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Media
-<img src="promotional/release-banner.png" width="640">
+<img src="promotional/social-banner.png" width="640">
 <img width="640" alt="unity-pomodoro-release-banner-1.6.0" src="https://user-images.githubusercontent.com/12757380/147377998-ea19460b-5ea7-48cb-85bf-a3eabcda0975.gif">
 
 ### Screenshots
