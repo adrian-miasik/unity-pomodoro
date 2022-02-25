@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
-using AdrianMiasik.Components.Specific.Settings;
+using AdrianMiasik.Components.Specific.Pages;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
@@ -112,12 +113,9 @@ namespace AdrianMiasik
 
         [Header("Cache")]
         [SerializeField] private List<DoubleDigit> m_selectedDigits = new List<DoubleDigit>(); // Contains our currently selected digits
-        
-        [Header("Pages / Panels - Deprecated")]
-        // TODO: Create a page / panel solution
-        [SerializeField] private GameObject m_mainContainer; // Our main body page
-        [SerializeField] private SettingsPanel m_settingsContainer; // Our settings page
-        [SerializeField] private AboutPanel m_aboutContainer; // Our about page
+
+        [Header("Pages")] 
+        [SerializeField] private SidebarPages m_sidebarPages;
 
         // Time
         private double currentTime; // Current time left (In seconds)
@@ -173,7 +171,7 @@ namespace AdrianMiasik
             
             // Updating settings visuals
             m_themeSlider.Refresh();
-            m_settingsContainer.Refresh();
+            m_sidebarPages.RefreshSettingsPage();
         }
 
         void Awake()
@@ -361,11 +359,6 @@ namespace AdrianMiasik
         private void Initialize()
         {
             InitializeManagers();
-            
-            // Setup pages/panels
-            m_settingsContainer.Hide();
-            m_aboutContainer.Hide();
-            m_mainContainer.gameObject.SetActive(true);
 
             // Overrides
             m_breakSlider.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_modeOne);
@@ -376,6 +369,9 @@ namespace AdrianMiasik
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
             
             InitializeComponents();
+            
+            // Switch view
+            m_sidebarPages.SwitchToTimerPage();
 
             // Calculate time
             CalculateTimeValues();
@@ -437,8 +433,7 @@ namespace AdrianMiasik
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
             m_endTimestampBubble.Initialize(this);
-            m_settingsContainer.Initialize(this, GetSystemSettings());
-            m_aboutContainer.Initialize(this);
+
             m_skipButton.Initialize(this);
             if (GetTimerSettings().m_longBreaks)
             {
@@ -451,6 +446,8 @@ namespace AdrianMiasik
                 m_completionLabel.MoveAnchors(false);
             }
             
+            m_sidebarPages.Initialize(this);
+
             // Register elements that need updating per timer state change
             timerElements.Add(m_rightButton);
             timerElements.Add(m_completionLabel);
@@ -798,24 +795,13 @@ namespace AdrianMiasik
             return currentTime;
         }
         
-        // TODO: Create a panel/page class
         /// <summary>
         /// Shows about content, hides main content, and shows credits bubble.
         /// </summary>
         public void ShowAbout()
         {
-            if (!m_aboutContainer.IsInitialized())
-            {
-                m_aboutContainer.Initialize(this);
-            }
-            
-            // Hide other content
-            m_mainContainer.gameObject.SetActive(false);
-            m_settingsContainer.Hide();
-            
-            // Show about page content
-            m_aboutContainer.Show();
-
+            m_sidebarPages.SwitchToAboutPage();
+                
             // Special behaviour that's used to display/open up credits bubble when on this page
             m_creditsBubble.Lock();
             m_creditsBubble.FadeIn();
@@ -826,12 +812,8 @@ namespace AdrianMiasik
         /// </summary>
         public void ShowMainContent()
         {
-            // Hide other content
-            m_aboutContainer.Hide();
-            m_settingsContainer.Hide();
+            m_sidebarPages.SwitchToTimerPage();
             
-            // Show main content
-            m_mainContainer.gameObject.SetActive(true);
             m_digitFormat.GenerateFormat();
             m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime)); // Update visuals to current time
             
@@ -849,12 +831,7 @@ namespace AdrianMiasik
         
         public void ShowSettings()
         {
-            // Hide other content
-            m_aboutContainer.Hide();
-            m_mainContainer.gameObject.SetActive(false);
-            
-            // Show settings content
-            m_settingsContainer.Show();
+            m_sidebarPages.SwitchToSettingsPage();
         }
         
         /// <summary>
@@ -1129,7 +1106,7 @@ namespace AdrianMiasik
         /// <returns></returns>
         public bool IsAboutPageOpen()
         {
-            return m_aboutContainer.IsAboutPageOpen();
+            return m_sidebarPages.IsAboutPageOpen();
         }
         
         /// <summary>
@@ -1147,7 +1124,7 @@ namespace AdrianMiasik
         /// <returns></returns>
         public bool IsMainContentOpen()
         {
-            return m_mainContainer.gameObject.activeSelf;
+            return m_sidebarPages.IsTimerPageOpen();
         }
         
         /// <summary>
@@ -1192,7 +1169,7 @@ namespace AdrianMiasik
                 {
                     GetTimerSettings().m_format = desiredFormat;
                     UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
-                    m_settingsContainer.SetDigitFormatDropdown(m_digitFormat.GetPreviousFormatSelection());
+                    m_sidebarPages.SetSettingDigitFormatDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
             }
             else
@@ -1212,9 +1189,9 @@ namespace AdrianMiasik
             m_digitFormat.GenerateFormat();
             Restart(false); 
             
-            if (m_settingsContainer.IsPageOpen())
+            if (m_sidebarPages.IsSettingsPageOpen())
             {
-                m_settingsContainer.UpdateDigitFormatDropdown();
+                m_sidebarPages.UpdateSettingsDigitFormatDropdown();
             }
         }
         

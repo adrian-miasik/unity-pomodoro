@@ -2,20 +2,21 @@ using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Settings;
+using AdrianMiasik.Components.Specific.Pages;
 using Unity.Services.Analytics;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
-    /// A <see cref="SettingsOptionToggleSlider"/> intended be used for 'Enable Unity Analytics' settings option. (See <see cref="SettingsPanel"/>)
+    /// A <see cref="SettingsOptionToggleSlider"/> intended be used for 'Enable Unity Analytics' settings option. (See <see cref="SettingsPage"/>)
     /// <remarks>On by default, but users can opt-out of telemetry / turn off the service at run-time by turning this boolean off (To the left position).</remarks>
     /// </summary>
     public class OptionUnityAnalytics : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
+        public override void Initialize(PomodoroTimer pomodoroTimer)
         {
-            base.Initialize(pomodoroTimer, systemSettings);
+            base.Initialize(pomodoroTimer);
 
             // Triggering true / false will invoke our analytics logic enable / disable
             m_toggleSlider.m_onSetToTrueClick.AddListener(() =>
@@ -28,7 +29,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             });
             
             // Setup toggle slider visuals to match user setting
-            m_toggleSlider.Initialize(pomodoroTimer, systemSettings.m_enableUnityAnalytics);
+            m_toggleSlider.Initialize(pomodoroTimer, Timer.GetSystemSettings().m_enableUnityAnalytics);
         }
 
         private void SetSettingUnityAnalytics(bool state)

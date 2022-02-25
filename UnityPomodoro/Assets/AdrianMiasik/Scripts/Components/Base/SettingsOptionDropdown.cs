@@ -1,4 +1,6 @@
-﻿using AdrianMiasik.Components.Specific.Settings;
+﻿using AdrianMiasik.Components.Specific;
+using AdrianMiasik.Components.Specific.Pages;
+using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
@@ -10,7 +12,7 @@ namespace AdrianMiasik.Components.Base
 {
     /// <summary>
     /// A **base class** <see cref="ThemeElement"/> that has a label with a <see cref="Dropdown"/> intended to be used
-    /// as a settings option on the <see cref="SettingsPanel"/>.
+    /// as a settings option on the <see cref="SettingsPage"/>.
     /// </summary>
     public class SettingsOptionDropdown : ThemeElement
     {

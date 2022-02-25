@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components.Base
     /// (e.g. radio button, selecting one element out of a list).
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ItemSelector<T> : MonoBehaviour
+    public class ItemSelector<T> : ThemeElement
     {
         [SerializeField] protected Collection<T> m_items = new Collection<T>();
 
@@ -53,8 +53,10 @@ namespace AdrianMiasik.Components.Base
         /// Initializes with a specific set of objects
         /// </summary>
         /// <param name="allSelectionItems"></param>
-        public void Initialize(IEnumerable<T> allSelectionItems)
+        public virtual void Initialize(PomodoroTimer pomodoroTimer, IEnumerable<T> allSelectionItems, bool updateColors = false)
         {
+            base.Initialize(pomodoroTimer, updateColors);
+            
             foreach (T item in allSelectionItems)
             {
                 m_items.Add(item);
@@ -62,7 +64,7 @@ namespace AdrianMiasik.Components.Base
 
             Initialize();
         }
-
+        
         public void Clear()
         {
             m_items.Clear();

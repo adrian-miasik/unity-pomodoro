@@ -1,18 +1,19 @@
 ﻿using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Settings;
+using AdrianMiasik.Components.Specific.Pages;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
     /// A <see cref="SettingsOptionDropdown"/> that enables / disables pomodoro progression for long breaks.
-    /// (See <see cref="PomodoroTimer.SetSettingLongBreaks"/>, also see <seealso cref="SettingsPanel"/>)
+    /// (See <see cref="PomodoroTimer.SetSettingLongBreaks"/>, also see <seealso cref="SettingsPage"/>)
     /// </summary>
     public class OptionEnableLongBreaks : SettingsOptionToggleSlider
     {
-        public override void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
+        public override void Initialize(PomodoroTimer pomodoroTimer)
         {
-            base.Initialize(pomodoroTimer, systemSettings);
+            base.Initialize(pomodoroTimer);
             if (Timer.GetTimerSettings().m_longBreaks)
             {
                 m_toggleSlider.Initialize(pomodoroTimer, Timer.GetTimerSettings().m_longBreaks);

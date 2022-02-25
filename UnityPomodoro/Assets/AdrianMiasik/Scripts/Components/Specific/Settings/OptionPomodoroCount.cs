@@ -2,13 +2,14 @@ using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Settings;
+using AdrianMiasik.Components.Specific.Pages;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
     /// <summary>
     /// A <see cref="SettingsOptionDropdown"/> that changes how many pomodoros are required to unlock our long break.
-    /// (See <see cref="PomodoroTimer.SetPomodoroCount"/>, also see <seealso cref="SettingsPanel"/>)
+    /// (See <see cref="PomodoroTimer.SetPomodoroCount"/>, also see <seealso cref="SettingsPage"/>)
     /// </summary>
     public class OptionPomodoroCount : SettingsOptionDropdown
     {

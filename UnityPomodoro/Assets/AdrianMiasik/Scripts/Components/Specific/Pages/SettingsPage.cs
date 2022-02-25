@@ -1,20 +1,18 @@
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
+using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
-using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Specific.Settings
+namespace AdrianMiasik.Components.Specific.Pages
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> page used to display a set of interactable <see cref="SystemSettings"/> and
     /// <see cref="TimerSettings"/>.
     /// </summary>
-    public class SettingsPanel : ThemeElement
+    public class SettingsPage : Page
     {
-        [SerializeField] private TMP_Text m_title;
-        
         [Header("Dropdowns")]
         [SerializeField] private OptionDigitFormat m_optionDigitFormat;
         [SerializeField] private OptionPomodoroCount m_optionPomodoroCount;
@@ -24,26 +22,24 @@ namespace AdrianMiasik.Components.Specific.Settings
         [SerializeField] private OptionMuteAudioOutOfFocus m_optionMuteSoundOutOfFocusToggle;
         [SerializeField] private OptionUnityAnalytics m_optionUnityAnalytics;
         
-        private bool isOpen;
-
-        public void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
             base.Initialize(pomodoroTimer, false);
             
             // Init
             m_optionDigitFormat.Initialize(Timer);
             m_optionPomodoroCount.Initialize(Timer);
-            m_optionEnableLongBreak.Initialize(Timer, systemSettings);
+            m_optionEnableLongBreak.Initialize(Timer);
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
 #elif UNITY_IOS
             HideMuteSoundOutOfFocusOption();
 #else
-            m_optionMuteSoundOutOfFocusToggle.Initialize(Timer, systemSettings);
+            m_optionMuteSoundOutOfFocusToggle.Initialize(Timer);
 #endif
             
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-            m_optionUnityAnalytics.Initialize(Timer, systemSettings);
+            m_optionUnityAnalytics.Initialize(Timer);
 #else
             // Hide settings option if Unity Analytics not enabled on this platform.
             m_optionUnityAnalytics.gameObject.SetActive(false);
@@ -54,8 +50,10 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <summary>
         /// Updates all elements present on this page using the current loaded System and Timer settings.
         /// </summary>
-        public void Refresh()
+        public override void Refresh()
         {
+            base.Refresh();
+            
             // Gets triggered via dropdown on value changed event
             m_optionDigitFormat.SetDropdownValue((int)Timer.GetTimerSettings().m_format);
             m_optionPomodoroCount.SetDropdownValue(Timer.GetTimerSettings().m_pomodoroCount - 1);
@@ -71,16 +69,11 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
-            if (isOpen)
-            {
-                m_title.color = theme.GetCurrentColorScheme().m_foreground;
-                
-                m_optionDigitFormat.ColorUpdate(Timer.GetTheme());
-                
-                m_optionMuteSoundOutOfFocusToggle.ColorUpdate(theme);
-                
-                m_optionUnityAnalytics.ColorUpdate(theme);
-            }
+            base.ColorUpdate(theme);
+            
+            m_optionDigitFormat.ColorUpdate(Timer.GetTheme());
+            m_optionMuteSoundOutOfFocusToggle.ColorUpdate(theme);
+            m_optionUnityAnalytics.ColorUpdate(theme);
         }
 
         /// <summary>
@@ -104,32 +97,13 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <summary>
         /// Displays this panel to the user.
         /// </summary>
-        public void Show()
+        public override void Show()
         {
-            gameObject.SetActive(true);
             m_optionDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
-            isOpen = true;
-            ColorUpdate(Timer.GetTheme());
+            
+            base.Show();
         }
-
-        /// <summary>
-        /// Hides this panel away from the user.
-        /// </summary>
-        public void Hide()
-        {
-            gameObject.SetActive(false);
-            isOpen = false;
-        }
-
-        /// <summary>
-        /// Is this <see cref="SettingsPanel"/> currently open and visible?
-        /// </summary>
-        /// <returns></returns>
-        public bool IsPageOpen()
-        {
-            return isOpen;
-        }
-
+        
         /// <summary>
         /// Shows the 'sound mute when application is out of focus' option to the user.
         /// <remarks>Intended to be shown for desktop users, not mobile.</remarks>

@@ -1,5 +1,7 @@
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Settings;
+using AdrianMiasik.Components.Specific;
+using AdrianMiasik.Components.Specific.Pages;
 using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
@@ -9,7 +11,7 @@ namespace AdrianMiasik.Components.Base
 {
     /// <summary>
     /// A **base class** <see cref="ThemeElement"/> that has a label with a boolean slider intended to be used
-    /// as a settings option on the <see cref="SettingsPanel"/>.
+    /// as a settings option on the <see cref="SettingsPage"/>.
     /// </summary>
     public class SettingsOptionToggleSlider : ThemeElement
     {
@@ -27,7 +29,7 @@ namespace AdrianMiasik.Components.Base
             m_toggleSlider.OverrideTrueColor(modeOne);
         }
         
-        public virtual void Initialize(PomodoroTimer pomodoroTimer, SystemSettings systemSettings)
+        public virtual void Initialize(PomodoroTimer pomodoroTimer)
         {
             base.Initialize(pomodoroTimer);
         }
