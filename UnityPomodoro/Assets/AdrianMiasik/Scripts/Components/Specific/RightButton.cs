@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> button used to play/pause the timer. Implements <see cref="ITimerState"/>
+    /// A <see cref="ThemeElement"/> button used to play / pause the timer. Implements <see cref="ITimerState"/>
     /// to change graphics depending on the <see cref="PomodoroTimer"/>'s current state.
     /// (See <see cref="PomodoroTimer.States"/>)
     /// <remarks>Explicitly not a <see cref="ClickButton"/> since this component relies on the pomodoro timer state.
@@ -45,7 +45,7 @@ namespace AdrianMiasik.Components.Specific
         public UnityEvent m_pauseOnClick;
         
         /// <summary>
-        /// Invoked when the user presses the switch timer button. (work / break)
+        /// Invoked when the user presses the switch timer button. (Work / Break)
         /// </summary>
         public UnityEvent m_snoozeOnClick;
 

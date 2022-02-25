@@ -4,7 +4,7 @@ using AdrianMiasik.Components.Core.Containers;
 namespace AdrianMiasik.Components.Core.Settings
 {
     /// <summary>
-    /// Settings that are to be applied / corresponds to a PomodoroTimer.
+    /// Local settings for a specific PomodoroTimer.
     /// </summary>
     [Serializable]
     public class TimerSettings

@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -215,4 +214,3 @@ namespace AdrianMiasik.Components.Specific.Automation
         }
     }
 }
-#endif

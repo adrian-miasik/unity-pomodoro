@@ -31,7 +31,7 @@ namespace AdrianMiasik.Components.Core.Containers
         }
 
         /// <summary>
-        /// The formats we currently support. See abbreviation doc for details.
+        /// The formats we currently support. See digit format doc for details.
         /// </summary>
         public enum SupportedFormats
         {

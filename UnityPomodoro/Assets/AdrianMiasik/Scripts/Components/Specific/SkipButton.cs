@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> button used for skipping / auto-completing the timer.
+    /// </summary>
     public class SkipButton : ThemeElement, ITimerState
     {
         [SerializeField] private ClickButtonSVGIcon m_buttonSvg;
