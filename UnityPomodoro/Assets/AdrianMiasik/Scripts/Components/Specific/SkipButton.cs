@@ -7,7 +7,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> button used for skipping / auto-completing the timer.
+    /// A <see cref="ThemeElement"/> button used for skipping / auto-completing the timer. Implements
+    /// <see cref="ITimerState"/> to show / hide itself depending if the timer has been started / not started.
     /// </summary>
     public class SkipButton : ThemeElement, ITimerState
     {
