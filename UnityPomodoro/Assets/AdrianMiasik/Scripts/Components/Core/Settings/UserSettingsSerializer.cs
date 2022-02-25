@@ -44,7 +44,9 @@ namespace AdrianMiasik.Components.Core.Settings
 
             fs.Close();
             
+#if USER_SETTINGS_EVENT_LOGS
             Debug.Log("System Settings Saved.");
+#endif
         }
         
         public static void SaveTimerSettings(TimerSettings timerSettings)
@@ -57,7 +59,9 @@ namespace AdrianMiasik.Components.Core.Settings
 
             fs.Close();
             
+#if USER_SETTINGS_EVENT_LOGS
             Debug.Log("Timer Settings Saved.");
+#endif
         }
 
         /// <summary>
@@ -73,7 +77,9 @@ namespace AdrianMiasik.Components.Core.Settings
                     FileMode.Open);
                 TimerSettings timerSettings = bf.Deserialize(fs) as TimerSettings;
                 fs.Close();
+#if USER_SETTINGS_EVENT_LOGS
                 Debug.Log("Loaded Timer Settings Successfully!");
+#endif
                 return timerSettings;
             }
 
@@ -94,7 +100,9 @@ namespace AdrianMiasik.Components.Core.Settings
                     FileMode.Open);
                 SystemSettings systemSettings = bf.Deserialize(fs) as SystemSettings;
                 fs.Close();
+#if USER_SETTINGS_EVENT_LOGS
                 Debug.Log("Loaded System Settings Successfully!");
+#endif
                 return systemSettings;
             }
 
