@@ -14,9 +14,9 @@ namespace AdrianMiasik.Components.Specific.Pages
         {
             base.Initialize(pomodoroTimer, updateColors);
             
-            m_timerPage.Initialize(pomodoroTimer, updateColors);
-            m_settingsPage.Initialize(pomodoroTimer, updateColors);
-            m_aboutPage.Initialize(pomodoroTimer, updateColors);
+            m_timerPage.Initialize(pomodoroTimer);
+            m_settingsPage.Initialize(pomodoroTimer);
+            m_aboutPage.Initialize(pomodoroTimer);
 
             List<Page> pages = new List<Page>
             {
