@@ -969,6 +969,7 @@ namespace AdrianMiasik
 
             // Stop digit tick animation
             m_digitFormat.ResetTextPositions();
+            ShowTickAnimation();
             
             PlaySpawnAnimation();
         }
@@ -1523,22 +1524,28 @@ namespace AdrianMiasik
         {
             m_themeSlider.SetVisualToDisable();
         }
-        
+
         public void MCEnableThemeToggleAnimation()
         {
             m_themeSlider.EnableAnimation();
         }
 #endif
-        
+
+
         // Settings
         public SystemSettings GetSystemSettings()
         {
             return loadedSystemSettings;
         }
-        
+
         public TimerSettings GetTimerSettings()
         {
             return loadedTimerSettings;
+        }
+        
+        public void ShowTickAnimation()
+        {
+            m_digitFormat.ShowTickAnimation();
         }
     }
 }

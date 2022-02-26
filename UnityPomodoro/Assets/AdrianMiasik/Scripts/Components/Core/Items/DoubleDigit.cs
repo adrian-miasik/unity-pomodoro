@@ -217,15 +217,18 @@ namespace AdrianMiasik.Components.Core.Items
             {
                 return;
             }
-            
-            m_tick.enabled = true;
-            m_tick.Stop();
+
             m_tick.Play();
         }
 
         public void HideTickAnimation()
         {
             m_tick.enabled = false;
+        }
+
+        public void ShowTickAnimation()
+        {
+            m_tick.enabled = true;
         }
 
         /// <summary>
@@ -236,7 +239,7 @@ namespace AdrianMiasik.Components.Core.Items
             m_input.textComponent.rectTransform.anchorMin = Vector2.zero;
             m_input.textComponent.rectTransform.anchorMax = Vector2.one;
         }
-        
+
         /// <summary>
         /// Returns the input fields text.
         /// </summary>
@@ -245,7 +248,7 @@ namespace AdrianMiasik.Components.Core.Items
         {
             return m_input.text;
         }
-        
+
         /// <summary>
         /// Makes the increment and decrement arrow hidden.
         /// </summary>
@@ -254,7 +257,7 @@ namespace AdrianMiasik.Components.Core.Items
             m_upArrow.Hide();
             m_downArrow.Hide();
         }
-        
+
         private void ShowArrows()
         {
             if (format != null)
@@ -288,7 +291,7 @@ namespace AdrianMiasik.Components.Core.Items
             isInteractable = true;
             m_input.interactable = true;
         }
-        
+
         /// <summary>
         /// Sets the input field text to the provided color.
         /// </summary>
@@ -297,7 +300,7 @@ namespace AdrianMiasik.Components.Core.Items
         {
             m_input.textComponent.color = newColor;
         }
-        
+
         /// <summary>
         /// Sets the digit data to the provided input.
         /// This is different from the current visuals of this digit.
@@ -311,7 +314,7 @@ namespace AdrianMiasik.Components.Core.Items
             
             format.SetDigit(m_digit, value);
         }
-        
+
         /// <summary>
         /// Sets the digit label to the provided input.
         /// This is different from setting the digit time.
@@ -333,7 +336,7 @@ namespace AdrianMiasik.Components.Core.Items
                 }
             }
         }
-        
+
         /// <summary>
         /// Add one to this digit. (+1)
         /// <remarks>Used as a UnityEvent on our (top) increment arrow.</remarks>
@@ -395,7 +398,7 @@ namespace AdrianMiasik.Components.Core.Items
         {
             OnSelect(false);
         }
-        
+
         /// <summary>
         /// Highlights this <see cref="DoubleDigit"/> to display it's arrows and set's it's background color,
         /// and set this <see cref="DoubleDigit"/> as the <see cref="PomodoroTimer"/>'s current selection.
@@ -506,7 +509,7 @@ namespace AdrianMiasik.Components.Core.Items
                 m_input.DeactivateInputField(true);
             }
         }
-        
+
         /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>

@@ -902,5 +902,13 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             m_isOnLongBreak = false;
         }
+
+        public void ShowTickAnimation()
+        {
+            foreach (DoubleDigit digit in generatedDigits)
+            {
+                digit.ShowTickAnimation();
+            }
+        }
     }
  }

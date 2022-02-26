@@ -113,6 +113,9 @@ namespace AdrianMiasik.Components.Specific.Automation
                         _timer.MCDisableDarkModeToggle();
                     }
                     _timer.MCEnableThemeToggleAnimation();
+                    
+                    // Fix tick anim
+                    _timer.ShowTickAnimation();
 
                     Debug.Log("Media Creation Complete!");
                 }
