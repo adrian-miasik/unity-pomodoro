@@ -148,7 +148,7 @@ namespace AdrianMiasik.Components.Core.Containers
         
         /// <summary>
         /// Animate sidebar open and animate our <see cref="SidebarRow"/>'s in with a stagger,
-        /// create overlay, and updates <see cref="CreditsBubble"/> colors.
+        /// create overlay, and updates <see cref="CreditsGhost"/> colors.
         /// </summary>
         public void Open()
         {
@@ -178,7 +178,7 @@ namespace AdrianMiasik.Components.Core.Containers
 
         /// <summary>
         /// Instantly closes our sidebar so it can no longer be seen by the user, hides overlay,
-        /// updates <see cref="CreditsBubble"/>'s colors.
+        /// updates <see cref="CreditsGhost"/>'s colors.
         /// </summary>
         public void Close()
         {

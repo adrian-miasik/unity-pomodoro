@@ -73,7 +73,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionMuteAudioOutOfFocus.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\ThemeSlider.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\UWP\NotificationManager.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\EndTimestampBubble.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\EndTimestampGhost.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\SidebarRow.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DigitSeparator.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Automation\MediaCreator.cs" />
@@ -105,13 +105,13 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionDigitFormat.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Dropdown.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Page.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CreditsBubble.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\CreditsGhost.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\SkipButton.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Automation\MediaCapture.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\ITimerState.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\SimpleTimer.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Bubble.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Ghost.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionUnityAnalytics.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

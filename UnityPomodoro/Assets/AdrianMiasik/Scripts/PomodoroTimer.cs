@@ -77,11 +77,11 @@ namespace AdrianMiasik
         [SerializeField] private ClickButtonSVGIcon m_leftButtonSVGClick; // Used to restart the timer
         [SerializeField] private RightButton m_rightButton; // Used to play/pause timer + timer sprite state element 
         [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
-        [SerializeField] private CreditsBubble m_creditsBubble; // Used to display project contributors
+        [SerializeField] private CreditsGhost m_creditsGhost; // Used to display project contributors
         [SerializeField] private ThemeSlider m_themeSlider; // Used to change between light / dark mode
         [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
         [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
-        [SerializeField] private EndTimestampBubble m_endTimestampBubble; // Responsible for displaying the local end time for the current running timer.
+        [SerializeField] private EndTimestampGhost m_endTimestampGhost; // Responsible for displaying the local end time for the current running timer.
         [SerializeField] private SkipButton m_skipButton;
         private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
@@ -427,12 +427,12 @@ namespace AdrianMiasik
             m_digitFormat.Initialize(this, GetTimerSettings().m_format);
             m_completionLabel.Initialize(this);
             m_themeSlider.Initialize(this);
-            m_creditsBubble.Initialize(this);
+            m_creditsGhost.Initialize(this);
             m_rightButton.Initialize(this);
             m_menuToggleSprite.Initialize(this, false);
             m_breakSlider.Initialize(this, false);
             m_sidebarMenu.Initialize(this);
-            m_endTimestampBubble.Initialize(this);
+            m_endTimestampGhost.Initialize(this);
 
             m_skipButton.Initialize(this);
             if (GetTimerSettings().m_longBreaks)
@@ -451,7 +451,7 @@ namespace AdrianMiasik
             // Register elements that need updating per timer state change
             timerElements.Add(m_rightButton);
             timerElements.Add(m_completionLabel);
-            timerElements.Add(m_endTimestampBubble);
+            timerElements.Add(m_endTimestampGhost);
             timerElements.Add(m_skipButton);
         }
         
@@ -803,8 +803,8 @@ namespace AdrianMiasik
             m_sidebarPages.SwitchToAboutPage();
                 
             // Special behaviour that's used to display/open up credits bubble when on this page
-            m_creditsBubble.Lock();
-            m_creditsBubble.FadeIn();
+            m_creditsGhost.Lock();
+            m_creditsGhost.FadeIn();
         }
 
         /// <summary>
@@ -1262,11 +1262,11 @@ namespace AdrianMiasik
         }
         
         /// <summary>
-        /// Triggers a <see cref="IColorHook"/> ColorUpdate() on our <see cref="CreditsBubble"/>.
+        /// Triggers a <see cref="IColorHook"/> ColorUpdate() on our <see cref="CreditsGhost"/>.
         /// </summary>
         public void ColorUpdateCreditsBubble()
         {
-            m_creditsBubble.ColorUpdate(m_themeManager.GetTheme());
+            m_creditsGhost.ColorUpdate(m_themeManager.GetTheme());
         }
         
         /// <summary>
@@ -1353,34 +1353,34 @@ namespace AdrianMiasik
         {
             if (fadeIn)
             {
-                m_creditsBubble.FadeIn();
-                m_creditsBubble.Lock();
+                m_creditsGhost.FadeIn();
+                m_creditsGhost.Lock();
             }
             else
             {
-                m_creditsBubble.FadeOut();
-                m_creditsBubble.Unlock();
+                m_creditsGhost.FadeOut();
+                m_creditsGhost.Unlock();
             }
         }
 
         /// <summary>
-        /// Positions our <see cref="CreditsBubble"/> to stay within the bounds of the sidebar.
+        /// Positions our <see cref="CreditsGhost"/> to stay within the bounds of the sidebar.
         /// </summary>
         /// <param name="desiredWidthPercentage"></param>
         /// <param name="rightOffsetInPixels"></param>
         public void ConformCreditsBubbleToSidebar(float desiredWidthPercentage, float rightOffsetInPixels = -10)
         {
-            m_creditsBubble.SetWidth(desiredWidthPercentage);
-            m_creditsBubble.SetRightOffset(rightOffsetInPixels);
+            m_creditsGhost.SetWidth(desiredWidthPercentage);
+            m_creditsGhost.SetRightOffset(rightOffsetInPixels);
         }
 
         /// <summary>
-        /// Positions our <see cref="CreditsBubble"/> back to it's original position. (Not conforming to the sidebar)
+        /// Positions our <see cref="CreditsGhost"/> back to it's original position. (Not conforming to the sidebar)
         /// </summary>
         public void ResetCreditsBubbleSidebarConformity()
         {
-            m_creditsBubble.ResetWidth();
-            m_creditsBubble.ResetRightOffset();
+            m_creditsGhost.ResetWidth();
+            m_creditsGhost.ResetRightOffset();
         }
         
         /// <summary>
@@ -1473,17 +1473,17 @@ namespace AdrianMiasik
         // Creator Media Methods: Only intended for instant visual changes
         public void MCHideCreditsBubble()
         {
-            m_creditsBubble.FadeOut(true);
+            m_creditsGhost.FadeOut(true);
         }
 
         public void MCShowCreditsBubble()
         {
-            m_creditsBubble.FadeIn(true);
+            m_creditsGhost.FadeIn(true);
         }
 
         public void MCShowEndTimestampBubble()
         {
-            m_endTimestampBubble.FadeIn(true);
+            m_endTimestampGhost.FadeIn(true);
         }
 
         public void MCDisableCompletionAnimation()

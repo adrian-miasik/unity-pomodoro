@@ -8,7 +8,7 @@ namespace AdrianMiasik.Components.Specific
     /// Used to display the end local time for the current running timer.
     /// (E.g. It's 3:02pm with 3 minutes left on the timer. Thus this will display: "3:05pm".)
     /// </summary>
-    public class EndTimestampBubble : Bubble
+    public class EndTimestampGhost : Ghost
     {
         // Cache
         private float fadeProgress;

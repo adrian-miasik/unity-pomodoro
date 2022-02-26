@@ -12,7 +12,7 @@ namespace AdrianMiasik.Components.Base
     /// A **base** class that is intended to be used on any component/class that needs fade in and out
     /// <see cref="ThemeIcon"/>'s and text.
     /// </summary>
-    public class Bubble : ThemeElement, ITimerState
+    public class Ghost : ThemeElement, ITimerState
     {
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;

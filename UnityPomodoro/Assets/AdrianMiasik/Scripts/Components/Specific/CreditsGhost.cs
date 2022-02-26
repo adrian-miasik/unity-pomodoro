@@ -9,7 +9,7 @@ namespace AdrianMiasik.Components.Specific
     /// after a couple seconds via the base class.
     /// </summary>
     // public class CreditsBubble : TimerProgress, IPointerEnterHandler, IPointerExitHandler, IColorHook
-    public class CreditsBubble : Bubble, IPointerEnterHandler, IPointerExitHandler
+    public class CreditsGhost : Ghost, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private RectTransform m_self;
         [SerializeField] private SimpleTimer m_timer;
