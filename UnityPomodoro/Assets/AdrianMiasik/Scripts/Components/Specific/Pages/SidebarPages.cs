@@ -26,6 +26,13 @@ namespace AdrianMiasik.Components.Specific.Pages
             };
 
             Initialize(Timer, pages, updateColors);
+            onSelectionChange += OnSelectionChange;
+        }
+
+        private new void OnSelectionChange(Page previousPage, Page newPage)
+        {
+            previousPage.Hide();
+            newPage.Show();
         }
 
         public void SwitchToTimerPage()
