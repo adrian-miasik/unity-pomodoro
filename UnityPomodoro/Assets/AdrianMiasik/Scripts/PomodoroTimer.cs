@@ -1067,11 +1067,6 @@ namespace AdrianMiasik
             return m_digitFormat.GetFormatIndex();
         }
 
-        public DigitFormat GetDigitFormat()
-        {
-            return m_digitFormat;
-        }
-        
         /// <summary>
         /// Returns a list of our current selected element.
         /// <remarks>Will return a list of <see cref="Selectable"/>'s, not specifically <see cref="DoubleDigit"/>'s.
