@@ -21,10 +21,9 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static bool _hasDarkModeBeenCaptured;
         private static int _screenshotIndex;
         private static bool _startingThemeDarkMode;
-
+        
 #if UNITY_EDITOR
         [MenuItem("CONTEXT/PomodoroTimer/Create Media")]
-#endif
         private static void CreateMedia(MenuCommand command)
         {
             // Early Exit
@@ -217,5 +216,6 @@ namespace AdrianMiasik.Components.Specific.Automation
             
             CaptureScreenshot(mediaCapture);
         }
+#endif
     }
 }
