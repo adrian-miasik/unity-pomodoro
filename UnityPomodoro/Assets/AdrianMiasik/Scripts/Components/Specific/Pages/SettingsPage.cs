@@ -71,7 +71,9 @@ namespace AdrianMiasik.Components.Specific.Pages
         {
             base.ColorUpdate(theme);
             
-            m_optionDigitFormat.ColorUpdate(Timer.GetTheme());
+            m_optionDigitFormat.ColorUpdate(theme);
+            m_optionPomodoroCount.ColorUpdate(theme);
+            m_optionEnableLongBreak.ColorUpdate(theme);
             m_optionMuteSoundOutOfFocusToggle.ColorUpdate(theme);
             m_optionUnityAnalytics.ColorUpdate(theme);
         }
