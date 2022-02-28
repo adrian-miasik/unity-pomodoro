@@ -390,7 +390,7 @@ namespace AdrianMiasik
         {
             m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
-            m_notifications.Initialize(GetTimerSettings());
+            m_notifications.Initialize(GetSystemSettings());
         }
 
         /// <summary>
