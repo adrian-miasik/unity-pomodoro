@@ -21,11 +21,11 @@ namespace AdrianMiasik.UWP
         [SerializeField] private TextAsset m_xmlToastNoAlarm;
         
         // Cache
-        private TimerSettings settings;
+        private SystemSettings settings;
         
-        public void Initialize(TimerSettings settingsConfiguration)
+        public void Initialize(SystemSettings systemSettings)
         {
-            settings = settingsConfiguration;
+            settings = systemSettings;
         }
 
         /// <summary>
