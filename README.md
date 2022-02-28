@@ -38,20 +38,21 @@ Want to help? If you're interested in contributing to the project, please see th
 
 &nbsp;
 ## Downloads
-### [Latest Release - v1.9.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
+### [Latest Release - v2.0.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-linux-desktop-64-bit.zip)
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v1.9.0 - Release Media Generator & 'Set Pomodoro Count' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
 - [v1.8.0 - End Timestamp, Skip Button, Sidebar Improvements, Toggle Long Breaks, and More!](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.8.0)
 - [v1.7.1 - Long Breaks, Documentation, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.7.1)
 - [v1.6.0 - Confirmation Dialogs & 'Mute Audio When Out Of Focus' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
