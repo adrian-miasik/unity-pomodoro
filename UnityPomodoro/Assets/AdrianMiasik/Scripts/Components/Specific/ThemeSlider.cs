@@ -2,11 +2,13 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> boolean slider with custom icon. Intended for the theme toggle (light / dark).
+    /// A <see cref="ThemeElement"/> boolean slider with a custom icon. Intended for toggling between our light / dark
+    /// mode themes.
     /// </summary>
     public class ThemeSlider : ThemeElement
     {
@@ -15,13 +17,19 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private Sprite m_moonSprite;
         [SerializeField] private Material m_sliderDotCircle;
 
-        private Vector2 cachedOffsetMin = new Vector2(3, 0); 
-        private Vector2 cachedOffsetMax = new Vector2(1.5f, 1.5f); 
+        private readonly Vector2 cachedOffsetMin = new Vector2(3, 1.5f); 
+        private readonly Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f);
 
-        private void Start()
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            cachedOffsetMin = m_toggle.m_dot.rectTransform.offsetMin;
-            cachedOffsetMax = m_toggle.m_dot.rectTransform.offsetMax;
+            base.Initialize(pomodoroTimer, updateColors);
+
+            // Theme Slider
+            m_toggle.m_onSetToTrueClick.AddListener(() => { pomodoroTimer.GetTheme().SetToDarkMode(); });
+            m_toggle.m_onSetToFalseClick.AddListener(() => { pomodoroTimer.GetTheme().SetToLightMode(); });
+
+            m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
+            m_toggle.Initialize(Timer, Timer.GetSystemSettings().m_darkMode);
         }
 
         /// <summary>
@@ -31,11 +39,8 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
-            m_toggle.OverrideDotColor(theme.GetCurrentColorScheme().m_foreground);
-            m_toggle.Initialize(Timer, theme.m_darkMode);
-            
             // Regular boolean
-            if (theme.m_darkMode)
+            if (Timer.GetSystemSettings().m_darkMode)
             {
                 m_toggle.m_dot.rectTransform.pivot = new Vector2(0.5f, m_toggle.m_dot.rectTransform.pivot.y);
                 m_toggle.m_dot.sprite = null;
@@ -74,6 +79,11 @@ namespace AdrianMiasik.Components.Specific
         {
             m_toggle.OverrideTrueColor(color);
         }
+        
+        public void OverrideDotColor(Color color)
+        {
+            m_toggle.OverrideDotColor(color);
+        }
 
         /// <summary>
         /// Presses our theme slider toggle.
@@ -91,6 +101,19 @@ namespace AdrianMiasik.Components.Specific
         public void SetVisualToDisable()
         {
             m_toggle.SetVisualToDisable();
+        }
+
+        public void Refresh()
+        {
+            if (m_toggle.IsOn() != Timer.GetSystemSettings().m_darkMode)
+            {
+                m_toggle.Press();
+            }
+        }
+
+        public void EnableAnimation()
+        {
+            m_toggle.EnableAnimation();
         }
     }
 }

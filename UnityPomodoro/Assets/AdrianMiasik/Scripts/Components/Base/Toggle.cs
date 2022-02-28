@@ -13,7 +13,7 @@ namespace AdrianMiasik.Components.Base
         protected PomodoroTimer Timer;
         protected bool IsInitialized;
 
-        protected virtual void Initialize(PomodoroTimer pomodoroTimer)
+        protected void Initialize(PomodoroTimer pomodoroTimer)
         {
             Timer = pomodoroTimer;
 

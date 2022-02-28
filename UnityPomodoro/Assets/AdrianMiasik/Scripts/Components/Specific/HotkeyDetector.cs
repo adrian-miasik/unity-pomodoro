@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
+using AdrianMiasik.Components.Core.Settings;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -66,12 +68,11 @@ namespace AdrianMiasik.Components.Specific
             // Restart application
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                timer.ClearCurrentDialogPopup();
-                timer.SpawnConfirmationDialog(() =>
-                {
-                    timer.GetTheme().DeregisterAllElements();
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                }, null, 
+                timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
+                timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
+                    {
+                        RestartApplication();
+                    }, null, 
                     "This action will <color=red>reset all settings to their factory defaults.</color>", 
                     null, 
                     false);
@@ -92,6 +93,16 @@ namespace AdrianMiasik.Components.Specific
                     }
                 }
             }
+        }
+
+        public void RestartApplication()
+        {
+            timer.GetTheme().DeregisterAllElements();
+
+            UserSettingsSerializer.WipeSystemSettings();
+            UserSettingsSerializer.WipeTimerSettings();
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         /// <summary>

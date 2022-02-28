@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific
 {
+    /// <summary>
+    /// A <see cref="ThemeElement"/> button used for skipping / auto-completing the timer. Implements
+    /// <see cref="ITimerState"/> to show / hide itself depending if the timer has been started / not started.
+    /// </summary>
     public class SkipButton : ThemeElement, ITimerState
     {
         [SerializeField] private ClickButtonSVGIcon m_buttonSvg;
@@ -13,6 +17,7 @@ namespace AdrianMiasik.Components.Specific
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, updateColors);
+            m_buttonSvg.m_onClick.AddListener(Skip);
             Hide();
         }
 
@@ -42,6 +47,12 @@ namespace AdrianMiasik.Components.Specific
         private void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        private void Skip()
+        {
+            AudioMimic.Instance.PlaySound(m_buttonSvg.m_clickSound.clip);
+            Timer.Skip();
         }
     }
 }

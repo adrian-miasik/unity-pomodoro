@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Interfaces;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace AdrianMiasik.ScriptableObjects
 {
@@ -12,10 +12,11 @@ namespace AdrianMiasik.ScriptableObjects
     [CreateAssetMenu(fileName = "New Theme", menuName = "Adrian Miasik/Create New Theme")]
     public class Theme : ScriptableObject
     {
-        [FormerlySerializedAs("m_isLightModeOn")] public bool m_darkMode = true;
         public ColorScheme m_light;
         public ColorScheme m_dark;
 
+        // Cache
+        private PomodoroTimer timer;
         private List<IColorHook> colorElements = new List<IColorHook>();
 
         private void OnValidate()
@@ -26,6 +27,17 @@ namespace AdrianMiasik.ScriptableObjects
         private void OnEnable()
         {
             colorElements.Clear();
+        }
+
+        /// <summary>
+        /// Initialization
+        /// </summary>
+        /// <param name="hook"></param>
+        /// <param name="pomodoroTimer"></param>
+        public void Register(IColorHook hook, PomodoroTimer pomodoroTimer)
+        {
+            Register(hook);
+            timer = pomodoroTimer;
         }
 
         /// <summary>
@@ -44,7 +56,7 @@ namespace AdrianMiasik.ScriptableObjects
         /// <summary>
         /// Associates the provided (<see cref="IColorHook"/>) color element to this theme. This is used
         /// for updating our elements when we are validating editor colors, or switching between different
-        /// <see cref="ColorScheme"/>'s. See <see cref="SetToDarkMode"/> & <see cref="SetToLightMode"/>.
+        /// <see cref="ColorScheme"/>'s. See <see cref="SetToDarkMode"/> and <see cref="SetToLightMode"/>.
         /// </summary>
         /// <param name="hook">The color element you want to register/associate with this theme.</param>
         public void Register(IColorHook hook)
@@ -88,7 +100,12 @@ namespace AdrianMiasik.ScriptableObjects
         /// <returns>The user's preferred <see cref="ColorScheme"/></returns>
         public ColorScheme GetCurrentColorScheme()
         {
-            return m_darkMode ? m_dark : m_light;
+            return IsDarkMode() ? m_dark : m_light;
+        }
+
+        public bool IsDarkMode()
+        {
+            return timer.GetSystemSettings().m_darkMode;
         }
 
         private List<IColorHook> GetColorElements()
@@ -103,13 +120,13 @@ namespace AdrianMiasik.ScriptableObjects
 
         /// <summary>
         /// Transfers all our (<see cref="IColorHook"/>) color elements from one theme to another.
+        /// Including theme related settings.
         /// </summary>
         /// <param name="sourceTheme">The theme you want to pull color elements from.</param>
         /// <param name="destinationTheme">The theme you want to transfer your color elements to.</param>
         public void TransferColorElements(Theme sourceTheme, Theme destinationTheme)
         {
             destinationTheme.SetColorElements(sourceTheme.GetColorElements());
-            destinationTheme.m_darkMode = sourceTheme.m_darkMode;
         }
         
         /// <summary>
@@ -126,18 +143,30 @@ namespace AdrianMiasik.ScriptableObjects
         /// <summary>
         /// Set's the current ColorScheme to the dark variation and updates all registered elements.
         /// </summary>
-        public void SetToDarkMode()
+        public void SetToDarkMode(bool save = true)
         {
-            m_darkMode = true;
+            timer.GetSystemSettings().m_darkMode = true;
+
+            if (save)
+            {
+                UserSettingsSerializer.SaveSystemSettings(timer.GetSystemSettings());
+            }
+
             ApplyColorChanges();
         }
 
         /// <summary>
         /// Set's the current ColorScheme to the light variation and updates all registered elements.
         /// </summary>
-        public void SetToLightMode()
+        public void SetToLightMode(bool save = true)
         {
-            m_darkMode = false;
+            timer.GetSystemSettings().m_darkMode = false;
+
+            if (save)
+            {
+                UserSettingsSerializer.SaveSystemSettings(timer.GetSystemSettings());
+            }
+
             ApplyColorChanges();
         }
     }

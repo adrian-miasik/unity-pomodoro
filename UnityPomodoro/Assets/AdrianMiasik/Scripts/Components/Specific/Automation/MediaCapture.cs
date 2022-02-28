@@ -5,8 +5,8 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Specific.Automation
 {
     /// <summary>
-    /// A MonoBehaviour script that allows us to use coroutines from a static context.
-    /// Intended to be used with <see cref="MediaCreator"/>
+    /// A MonoBehaviour script that gets created by our <see cref="MediaCreator"/> that allows us to use coroutines
+    /// from a static context, specifically used for taking screenshots at the end of our frame.
     /// </summary>
     public class MediaCapture : MonoBehaviour
     {

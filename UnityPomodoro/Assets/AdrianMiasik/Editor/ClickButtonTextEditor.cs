@@ -1,6 +1,4 @@
-﻿using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
-using TMPro;
+﻿using AdrianMiasik.Components.Core;
 using UnityEditor;
 
 namespace AdrianMiasik.Editor
@@ -8,12 +6,18 @@ namespace AdrianMiasik.Editor
     [CustomEditor(typeof(ClickButtonText))]
     public class ClickButtonTextEditor: ClickButtonEditor
     {
-        protected override void DrawInheritorFields(ClickButton _clickButton)
+        private SerializedProperty text;
+
+        protected override void OnEnable()
         {
-            // Fetch target script
-            ClickButtonText textButton = (ClickButtonText) target;
-            
-            textButton.m_text = (TMP_Text) EditorGUILayout.ObjectField("Text", textButton.m_text, typeof(TMP_Text), true);
+            base.OnEnable();
+
+            text = serializedObject.FindProperty("m_text");
+        }
+
+        protected override void DrawInheritorFields()
+        {
+            EditorGUILayout.PropertyField(text);
         }
     }
 }

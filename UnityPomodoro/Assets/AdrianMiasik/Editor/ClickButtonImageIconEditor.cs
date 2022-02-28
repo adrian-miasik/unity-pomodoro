@@ -1,20 +1,23 @@
-using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
-using Unity.VectorGraphics;
 using UnityEditor;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Editor
 {
     [CustomEditor(typeof(ClickButtonImageIcon))]
     public class ClickButtonImageIconEditor: ClickButtonEditor
     {
-        protected override void DrawInheritorFields(ClickButton _clickButton)
+        private SerializedProperty clickButtonImageIcon;
+        
+        protected override void OnEnable()
         {
-            // Fetch target script
-            ClickButtonImageIcon imageIconButton = (ClickButtonImageIcon) target;
-            
-            imageIconButton.m_icon = (Image) EditorGUILayout.ObjectField("Icon", imageIconButton.m_icon, typeof(Image), true);
+            base.OnEnable();
+
+            clickButtonImageIcon = serializedObject.FindProperty("m_icon");
+        }
+
+        protected override void DrawInheritorFields()
+        {
+            EditorGUILayout.PropertyField(clickButtonImageIcon);
         }
     }
 }

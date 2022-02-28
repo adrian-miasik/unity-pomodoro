@@ -20,25 +20,29 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private ClickButtonText m_submit;
         [SerializeField] private ClickButtonText m_cancel;
         [SerializeField] private List<Image> m_lineSeparations;
-        [SerializeField] private Image m_overlay;
         [SerializeField] private Animation m_spawnAnimation;
+        
+        // Cache
+        private ConfirmationDialogManager confirmationDialogManager;
         
         // Used to combine actions
         private Action onCancel;
         private Action onSubmit;
-        
+
         /// <summary>
         /// Setup our confirmation dialog with custom actions and overrideable text.
         /// </summary>
         /// <param name="pomodoroTimer">Main class reference</param>
+        /// <param name="manager"></param>
         /// <param name="submit">The action you want to take when the user presses yes</param>
         /// <param name="cancel">The action you want to take when the user presses no</param>
         /// <param name="topText">Optional: The top text label you want to override</param>
         /// <param name="bottomText">Optional: The bottom text label you want to override</param>
-        public void Initialize(PomodoroTimer pomodoroTimer, Action submit, Action cancel, 
-            string topText = null, string bottomText = null)
+        public void Initialize(PomodoroTimer pomodoroTimer, ConfirmationDialogManager manager, Action submit, 
+            Action cancel, string topText = null, string bottomText = null)
         {
             base.Initialize(pomodoroTimer);
+            confirmationDialogManager = manager;
             
             onCancel = cancel;
             onSubmit = submit;
@@ -52,6 +56,8 @@ namespace AdrianMiasik.Components.Core
             {
                 m_botLabel.text = bottomText;
             }
+
+            pomodoroTimer.ShowOverlay();
 
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
@@ -88,7 +94,7 @@ namespace AdrianMiasik.Components.Core
         {
             if (checkInterruptibility)
             {
-                if (Timer.IsConfirmationDialogInterruptible())
+                if (confirmationDialogManager.IsConfirmationDialogInterruptible())
                 {
                     DestroyDialog();
                 }
@@ -105,7 +111,8 @@ namespace AdrianMiasik.Components.Core
         
         private void DestroyDialog()
         {
-            Timer.ClearDialogPopup(this);
+            Timer.HideOverlay();
+            confirmationDialogManager.ClearDialogPopup(this);
             Timer.GetTheme().Deregister(this); // Remove self from themed components
             Destroy(gameObject);
         }
@@ -118,7 +125,7 @@ namespace AdrianMiasik.Components.Core
         {
             // Background
             Color backgroundColor = theme.GetCurrentColorScheme().m_background;
-            backgroundColor.a = theme.m_darkMode ? 0.975f : 0.8f;
+            backgroundColor.a = Timer.GetSystemSettings().m_darkMode ? 0.975f : 0.8f;
             m_backgroundBox.color = backgroundColor;
             
             // Text
@@ -132,11 +139,6 @@ namespace AdrianMiasik.Components.Core
             {
                 line.color = theme.GetCurrentColorScheme().m_backgroundHighlight;
             }
-            
-            // Overlay
-            Color overlayColor = theme.GetCurrentColorScheme().m_foreground;
-            overlayColor.a = theme.m_darkMode ? 0.025f : 0.5f;
-            m_overlay.color = overlayColor;
         }
 
         public void Show()

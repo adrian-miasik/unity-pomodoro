@@ -57,6 +57,7 @@ namespace AdrianMiasik.Components.Core
             base.Initialize(pomodoroTimer);
             
             isOn = state;
+            onValueChanged.AddListener(UpdateToggle);
 
             UpdateToggle(invokeEvents);
         }

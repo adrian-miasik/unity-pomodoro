@@ -1,5 +1,4 @@
 using AdrianMiasik.Components.Core;
-using Unity.VectorGraphics;
 using UnityEditor;
 using UnityEditor.UI;
 using UnityEngine;
@@ -7,49 +6,72 @@ using UnityEngine;
 namespace AdrianMiasik.Editor
 {
     [CustomEditor(typeof(ToggleSprite))]
-    public class BooleanToggleEditor : ToggleEditor 
+    [CanEditMultipleObjects]
+    public class BooleanToggleEditor : ToggleEditor
     {
+        // Properties
+        private SerializedProperty icon;
+        private SerializedProperty falseSprite;
+        private SerializedProperty falseZRotation;
+        private SerializedProperty trueSprite;
+        private SerializedProperty trueZRotation;
+        
+        // Unity Events
+        private SerializedProperty onTrueClick;
+        private SerializedProperty onFalseClick;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            
+            icon = serializedObject.FindProperty("m_icon");
+            falseSprite = serializedObject.FindProperty("m_falseSprite");
+            falseZRotation = serializedObject.FindProperty("m_falseZRotation");
+            trueSprite = serializedObject.FindProperty("m_trueSprite");
+            trueZRotation = serializedObject.FindProperty("m_trueZRotation");
+            
+            onTrueClick = serializedObject.FindProperty("m_onSetToTrueClick");
+            onFalseClick = serializedObject.FindProperty("m_onSetToFalseClick");
+        }
+
         public override void OnInspectorGUI()
         {
             // Define style
-            // ReSharper disable once UseObjectOrCollectionInitializer
-            GUIStyle _style = new GUIStyle();
-            _style.fontStyle = FontStyle.Bold;
-            _style.normal.textColor = Color.white;
-            
+            GUIStyle style = new GUIStyle
+            {
+                fontStyle = FontStyle.Bold,
+                normal =
+                {
+                    textColor = Color.white
+                }
+            };
+
             // Draw title
-            EditorGUILayout.LabelField("Toggle", _style);
+            EditorGUILayout.LabelField("Toggle", style);
             
             base.OnInspectorGUI();
+            serializedObject.Update();
             
-            // Fetch target script
-            ToggleSprite toggleSprite = (ToggleSprite) target;
-
-            #region Vertical Group
             EditorGUILayout.BeginVertical();
             EditorGUILayout.Space();
 
             // Draw title
-            EditorGUILayout.LabelField("Information Button", _style);
-
-            // Draw property fields
-            toggleSprite.m_icon = (SVGImage) EditorGUILayout.ObjectField("Icon", toggleSprite.m_icon, typeof(SVGImage), true);
-            toggleSprite.m_falseSprite = (Sprite) EditorGUILayout.ObjectField("False Sprite", toggleSprite.m_falseSprite, typeof(Sprite), true);
-            toggleSprite.m_falseZRotation = EditorGUILayout.FloatField("False Z Rotation", toggleSprite.m_falseZRotation);
-            toggleSprite.m_trueSprite = (Sprite) EditorGUILayout.ObjectField("True Sprite", toggleSprite.m_trueSprite, typeof(Sprite), true);
-            toggleSprite.m_trueZRotation = EditorGUILayout.FloatField("True Z Rotation", toggleSprite.m_trueZRotation);
+            EditorGUILayout.LabelField("Information Button", style);
             
-            // Draw UnityEvents
-            SerializedProperty _onFalseClick = serializedObject.FindProperty("m_onSetToFalseClick");
-            EditorGUILayout.PropertyField(_onFalseClick);
+            // Properties
+            EditorGUILayout.PropertyField(icon);
+            EditorGUILayout.PropertyField(falseSprite);
+            EditorGUILayout.PropertyField(falseZRotation);
+            EditorGUILayout.PropertyField(trueSprite);
+            EditorGUILayout.PropertyField(trueZRotation);
             
-            SerializedProperty _onTrueClick = serializedObject.FindProperty("m_onSetToTrueClick");
-            EditorGUILayout.PropertyField(_onTrueClick);
-            
-            serializedObject.ApplyModifiedProperties();
+            // Unity Events
+            EditorGUILayout.PropertyField(onTrueClick);
+            EditorGUILayout.PropertyField(onFalseClick);
             
             EditorGUILayout.EndVertical();
-            #endregion
+            
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }

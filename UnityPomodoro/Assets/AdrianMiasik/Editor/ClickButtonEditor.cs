@@ -8,17 +8,58 @@ namespace AdrianMiasik.Editor
     [CustomEditor(typeof(ClickButton))]
     public class ClickButtonEditor : ImageEditor
     {
+        // Properties
+        private SerializedProperty containerTarget;
+        private SerializedProperty enableClickSound;
+        private SerializedProperty clickSound;
+        private SerializedProperty isPitchVariationOn;
+        private SerializedProperty lowestPitch;
+        private SerializedProperty highestPitch;
+        private SerializedProperty clickHoldScale;
+        private SerializedProperty clickReleaseScale;
+        private SerializedProperty holdRamp;
+        
+        // Unity Events
+        private SerializedProperty onDown;
+        private SerializedProperty onUp;
+        private SerializedProperty onClick;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            containerTarget = serializedObject.FindProperty("m_containerTarget");
+            enableClickSound = serializedObject.FindProperty("m_enableClickSound");
+            clickSound = serializedObject.FindProperty("m_clickSound");
+            isPitchVariationOn = serializedObject.FindProperty("m_isPitchVariationOn");
+            lowestPitch = serializedObject.FindProperty("m_lowestPitch");
+            highestPitch = serializedObject.FindProperty("m_highestPitch");
+            clickHoldScale = serializedObject.FindProperty("m_clickHoldScale");
+            clickReleaseScale = serializedObject.FindProperty("m_clickReleaseScale");
+            holdRamp = serializedObject.FindProperty("m_holdRamp");
+            
+            onDown = serializedObject.FindProperty("m_onDown");
+            onUp = serializedObject.FindProperty("m_onUp");
+            onClick = serializedObject.FindProperty("m_onClick");
+        }
+
         public override void OnInspectorGUI()
         {
             // Define style
-            GUIStyle style = new GUIStyle();
-            style.fontStyle = FontStyle.Bold;
-            style.normal.textColor = Color.white;
-            
+            GUIStyle style = new GUIStyle
+            {
+                fontStyle = FontStyle.Bold,
+                normal =
+                {
+                    textColor = Color.white
+                }
+            };
+
             // Draw title
             EditorGUILayout.LabelField("Image", style);
             
             base.OnInspectorGUI();
+            serializedObject.Update();
             
             // Open formatting
             EditorGUILayout.BeginVertical();
@@ -27,52 +68,40 @@ namespace AdrianMiasik.Editor
             // Draw title
             EditorGUILayout.LabelField("Click Button", style);
 
-            // Draw fields
-            DrawPropertyFields();
-            
-            // Close formatting
-            EditorGUILayout.EndVertical();
-        }
-
-        private void DrawPropertyFields()
-        {
             // Fetch target script
             ClickButton clickButton = (ClickButton) target;
             
-            // Draw property fields
-            clickButton.m_containerTarget = (RectTransform) EditorGUILayout.ObjectField("Container Target", clickButton.m_containerTarget, typeof(RectTransform), true);
-            clickButton.m_enableClickSound = EditorGUILayout.Toggle("Enable Click Sound", clickButton.m_enableClickSound);
-            clickButton.m_clickSound = (AudioSource) EditorGUILayout.ObjectField("Click Sound", clickButton.m_clickSound, typeof(AudioSource), true);
-            string pitchVariationString = clickButton.m_isPitchVariationOn ? "Disable Pitch Variation" : "Enable Pitch Variation";
-            clickButton.m_isPitchVariationOn = EditorGUILayout.Toggle(pitchVariationString, clickButton.m_isPitchVariationOn);
-            if (clickButton.m_isPitchVariationOn)
+            // Properties
+            EditorGUILayout.PropertyField(containerTarget);
+            EditorGUILayout.PropertyField(enableClickSound);
+            EditorGUILayout.PropertyField(clickSound);
+            EditorGUILayout.PropertyField(isPitchVariationOn);
+            if (isPitchVariationOn.boolValue)
             {
-                clickButton.m_lowestPitch = EditorGUILayout.FloatField("Lowest Pitch", clickButton.m_lowestPitch);
-                clickButton.m_highestPitch = EditorGUILayout.FloatField("Highest Pitch", clickButton.m_highestPitch);
+                EditorGUILayout.PropertyField(lowestPitch);
+                EditorGUILayout.PropertyField(highestPitch);
                 EditorGUILayout.MinMaxSlider("Pitch Variation", ref clickButton.m_lowestPitch, ref clickButton.m_highestPitch, 0, 2);
-                EditorGUILayout.Space();
+                EditorGUILayout.Space();    
             }
-            clickButton.m_clickHoldScale = EditorGUILayout.FloatField("Click Hold Scale", clickButton.m_clickHoldScale);
-            clickButton.m_clickReleaseScale = EditorGUILayout.CurveField("Click Release Scale", clickButton.m_clickReleaseScale);
-            clickButton.m_holdRamp = EditorGUILayout.CurveField("Hold Ramp", clickButton.m_holdRamp);
+            EditorGUILayout.PropertyField(clickHoldScale);
+            EditorGUILayout.PropertyField(clickReleaseScale);
+            EditorGUILayout.PropertyField(holdRamp);
 
             // Draw inherited variation class property fields
-            DrawInheritorFields(clickButton);
+            DrawInheritorFields();
 
-            // Draw UnityEvents
-            SerializedProperty onDown = serializedObject.FindProperty("m_onDown");
+            // Unity Events
             EditorGUILayout.PropertyField(onDown);
-
-            SerializedProperty onUp = serializedObject.FindProperty("m_onUp");
             EditorGUILayout.PropertyField(onUp);
-            
-            SerializedProperty onClick = serializedObject.FindProperty("m_onClick");
             EditorGUILayout.PropertyField(onClick);
+            
+            // Close formatting
+            EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        protected virtual void DrawInheritorFields(ClickButton button)
+        protected virtual void DrawInheritorFields()
         {
             // Nothing by default
         }

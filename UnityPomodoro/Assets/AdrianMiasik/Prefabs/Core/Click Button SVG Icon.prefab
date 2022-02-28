@@ -80,6 +80,9 @@ MonoBehaviour:
   m_containerTarget: {fileID: 1830320757997262979}
   m_enableClickSound: 1
   m_clickSound: {fileID: 6595299227246729144}
+  m_isPitchVariationOn: 1
+  m_lowestPitch: 0.9
+  m_highestPitch: 1.1
   m_clickHoldScale: 0.75
   m_clickReleaseScale:
     serializedVersion: 2
@@ -138,9 +141,6 @@ MonoBehaviour:
   m_onClick:
     m_PersistentCalls:
       m_Calls: []
-  m_isPitchVariationOn: 1
-  m_lowestPitch: 0.9
-  m_highestPitch: 1.1
   m_icon: {fileID: 1830320759345697965}
 --- !u!82 &6595299227246729144
 AudioSource:
