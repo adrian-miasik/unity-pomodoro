@@ -1,38 +1,52 @@
 ---
-name: Bug Report Template
-about: Create a report to help us improve
+name: User Bug Report
+about: Please use this template to submit and report bugs to the project.
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+# User Bug Report
+> Please remove each quote `>` section and populate the fields accordingly.
+> To see an example of a properly formatted bug report please see this file.
+> 
+> Each header with an astrisks `*` is required to be filled in.
+> Headers without an astrisks is optional.
+> 
+> **Note: This quote section can be deleted without filling in any information.**
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## Description
+> [REQUIRED]
+> 
+> - A clear and concise description of what the bug is
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## Reproduction Steps
+> [REQUIRED]
+> 1. Go to '...'
+> 2. Click on '....'
+> 3. Scroll down to '....'
+> 4. ...
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## Impacted Version(s)
+> [REQUIRED]
+> - Version: 2.0.0
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+## Impacted Platform(s)
+> [REQUIRED]
+> - Windows - Universal Windows Platform / UWP
+> - Windows
+> - Mac
+> - Linux
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+## Expected Behaviour
+> [OPTIONAL]
+> - A clear and concise description of what you expected to happen.
 
-**Additional context**
-Add any other context about the problem here.
+## Screenshots
+> [OPTIONAL]
+> If applicable, add screenshots to help explain your problem.
+
+## Additional Context/Comments
+> [OPTIONAL]
+> - Add any other context about the problem here.
