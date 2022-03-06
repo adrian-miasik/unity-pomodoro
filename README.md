@@ -12,7 +12,7 @@
   <a href="https://github.com/adrian-miasik/unity-pomodoro/wiki">Wiki</a> &bull;
   <a href="#author-notes">Author Notes</a> &bull;
   <a href="#donate">Donate</a> &bull;
-  <a href="https://github.com/adrian-miasik/unity-pomodoro/blob/develop/CONTRIBUTING.md">Contribute</a> &bull;
+  <a href="/CONTRIBUTING.md">Contribute</a> &bull;
   <a href="#contact-us--support-line">Support</a> &bull;
   <a href="#contact-us--support-line">Contact</a>
 </p>
@@ -34,7 +34,7 @@ Unity Pomodoro is an open source countdown timer app created in Unity designed p
 **License**: [GPL-3.0](LICENSE)
 
 **Contributor(s)**: `-`  
-Want to help? If you're interested in contributing to the project, please see the <a href="#contribute">contribute</a> section.
+Want to help? If you're interested in contributing to the project, please see our <a href="/CONTRIBUTING.md">contribution</a> document.
 
 &nbsp;
 ## Downloads
