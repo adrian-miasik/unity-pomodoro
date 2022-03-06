@@ -12,7 +12,7 @@
   <a href="https://github.com/adrian-miasik/unity-pomodoro/wiki">Wiki</a> &bull;
   <a href="#author-notes">Author Notes</a> &bull;
   <a href="#donate">Donate</a> &bull;
-  <a href="#contribute">Contribute</a> &bull;
+  <a href="https://github.com/adrian-miasik/unity-pomodoro/blob/develop/CONTRIBUTING.md">Contribute</a> &bull;
   <a href="#contact-us--support-line">Support</a> &bull;
   <a href="#contact-us--support-line">Contact</a>
 </p>
@@ -108,11 +108,6 @@ Want to help? If you're interested in contributing to the project, please see th
 
 ## Donate
 If you'd like to support my work, you can donate to help support this project via [GitHub Sponsors](https://github.com/sponsors/adrian-miasik) ❤️
-
-## Contribute
-Interested in contributing?  
-Send me an email `unity-pomodoro@adrian-miasik.com` & poke me to make a contributing doc.  
-We will also modify the credits bubble to include contributors if people start contributing.
 
 ## Contact Us / Support Line
 Need help?  Found a bug?  
