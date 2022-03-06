@@ -9,7 +9,6 @@
   <a href="https://adrian-miasik.github.io/unity-pomodoro-docs/">Documentation</a> &bull;
   <a href="#downloads">Downloads</a> &bull;
   <a href="#media">Screenshots</a> &bull;
-  <a href="https://github.com/adrian-miasik/unity-pomodoro/wiki">Wiki</a> &bull;
   <a href="#author-notes">Author Notes</a> &bull;
   <a href="#donate">Donate</a> &bull;
   <a href="/CONTRIBUTING.md">Contribute</a> &bull;
