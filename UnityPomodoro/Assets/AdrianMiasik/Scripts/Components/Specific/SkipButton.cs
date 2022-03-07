@@ -54,5 +54,10 @@ namespace AdrianMiasik.Components.Specific
             AudioMimic.Instance.PlaySound(m_buttonSvg.m_clickSound.clip);
             Timer.Skip();
         }
+
+        public void Interact()
+        {
+            Skip();
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace AdrianMiasik.Components.Core
             StreamDeck.Add(this);
         }
         
+        // TODO: Convert to right button interact
         [StreamDeckButton]
         private void PlayPauseToggle()
         {
@@ -24,13 +25,16 @@ namespace AdrianMiasik.Components.Core
             {
                 case PomodoroTimer.States.COMPLETE:
                     return;
-                case PomodoroTimer.States.RUNNING:
-                    timer.Pause();
-                    break;
                 default:
-                    timer.Play();
+                    timer.TriggerPlayPause();
                     break;
             }
+        }
+
+        [StreamDeckButton]
+        private void Restart()
+        {
+            timer.TriggerTimerRestart();
         }
 
         [StreamDeckButton]
@@ -38,8 +42,14 @@ namespace AdrianMiasik.Components.Core
         {
             if (timer.m_state == PomodoroTimer.States.RUNNING || timer.m_state == PomodoroTimer.States.PAUSED)
             {
-                timer.Skip();
+                timer.TriggerSkip();
             }
+        }
+
+        [StreamDeckButton]
+        private void ToggleTheme()
+        {
+            timer.TriggerThemeSwitch();
         }
 
         /// <summary>
@@ -49,8 +59,6 @@ namespace AdrianMiasik.Components.Core
         /// <param name="theme"></param>
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
-            Debug.Log("state update!");
-            
             switch (timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:

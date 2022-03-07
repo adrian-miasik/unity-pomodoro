@@ -976,7 +976,7 @@ namespace AdrianMiasik
             PlaySpawnAnimation();
         }
 
-        #region Button/Keyboard OnClick Events
+        #region Button/Keyboard Events
         /// <summary>
         /// Presses the play/pause button.
         /// </summary>
@@ -1007,6 +1007,11 @@ namespace AdrianMiasik
         public void TriggerThemeSwitch()
         {
             m_themeSlider.Interact();
+        }
+
+        public void TriggerSkip()
+        {
+            m_skipButton.Interact();
         }
         #endregion
 
