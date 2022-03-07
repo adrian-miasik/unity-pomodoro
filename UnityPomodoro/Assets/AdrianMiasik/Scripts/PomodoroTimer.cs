@@ -11,6 +11,7 @@ using AdrianMiasik.Components.Specific.Pages;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
+using F10.StreamDeckIntegration;
 using LeTai.Asset.TranslucentImage;
 using TMPro;
 using Unity.Services.Analytics;
@@ -360,6 +361,8 @@ namespace AdrianMiasik
         {
             InitializeManagers();
 
+            StreamDeck.Add(this);
+            
             // Overrides
             m_breakSlider.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_modeOne);
             m_breakSlider.OverrideTrueColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_modeTwo);
