@@ -1,0 +1,16 @@
+{
+    "name": "F10.StreamDeckIntegration.Editor",
+    "references": [
+        "F10.StreamDeckIntegration"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
