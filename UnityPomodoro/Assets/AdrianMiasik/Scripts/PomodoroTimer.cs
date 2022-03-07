@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -11,8 +10,6 @@ using AdrianMiasik.Components.Specific.Pages;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
-using F10.StreamDeckIntegration;
-using F10.StreamDeckIntegration.Attributes;
 using LeTai.Asset.TranslucentImage;
 using TMPro;
 using Unity.Services.Analytics;
@@ -63,7 +60,8 @@ namespace AdrianMiasik
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
         [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
-
+        [SerializeField] private StreamDeckIntegration m_streamDeck;
+        
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -362,8 +360,6 @@ namespace AdrianMiasik
         {
             InitializeManagers();
 
-            StreamDeck.Add(this);
-            
             // Overrides
             m_breakSlider.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_modeOne);
             m_breakSlider.OverrideTrueColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_modeTwo);
@@ -395,6 +391,7 @@ namespace AdrianMiasik
             m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
             m_notifications.Initialize(GetSystemSettings());
+            m_streamDeck.Initialize(this);
         }
 
         /// <summary>
@@ -457,6 +454,7 @@ namespace AdrianMiasik
             timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampGhost);
             timerElements.Add(m_skipButton);
+            timerElements.Add(m_streamDeck);
         }
         
         /// <summary>
@@ -868,19 +866,6 @@ namespace AdrianMiasik
         public void Pause()
         {
             SwitchState(States.PAUSED);
-        }
-        
-        [StreamDeckButton]
-        public void PlayPauseToggle()
-        {
-            if (m_state == States.RUNNING)
-            {
-                Pause();
-            }
-            else
-            {
-                Play();
-            }
         }
         
         /// <summary>
