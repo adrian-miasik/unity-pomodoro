@@ -12,6 +12,7 @@ using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using F10.StreamDeckIntegration;
+using F10.StreamDeckIntegration.Attributes;
 using LeTai.Asset.TranslucentImage;
 using TMPro;
 using Unity.Services.Analytics;
@@ -867,6 +868,19 @@ namespace AdrianMiasik
         public void Pause()
         {
             SwitchState(States.PAUSED);
+        }
+        
+        [StreamDeckButton]
+        public void PlayPauseToggle()
+        {
+            if (m_state == States.RUNNING)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
         }
         
         /// <summary>
