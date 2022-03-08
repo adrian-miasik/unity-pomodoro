@@ -59,6 +59,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialogManager.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Pages\TimerPage.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Theme.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\StreamDeckIntegration.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\BlurOverlay.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\TomatoCounter.cs" />
@@ -113,7 +114,6 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Ghost.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionUnityAnalytics.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\StreamDeckIntegration.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

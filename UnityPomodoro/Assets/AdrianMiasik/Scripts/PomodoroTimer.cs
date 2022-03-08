@@ -1033,11 +1033,6 @@ namespace AdrianMiasik
                 AddSelection(digit);
             }
 
-            foreach (DoubleDigit digit in m_selectedDigits)
-            {
-                digit.Highlight();
-            }
-            
             // Since we are highlighting (instead of selecting), we bypass the text state logic hence we 
             // invoke it again here.
             CalculateContextVisibility();
@@ -1053,7 +1048,21 @@ namespace AdrianMiasik
             if (!m_selectedDigits.Contains(digitToAddToSelection))
             {
                 m_selectedDigits.Add(digitToAddToSelection);
+                digitToAddToSelection.Select();
             }
+            
+            CalculateContextVisibility();
+        }
+
+        private void RemoveSelection(DoubleDigit digitToRemoveFromSelection)
+        {
+            if (m_selectedDigits.Contains(digitToRemoveFromSelection))
+            {
+                m_selectedDigits.Remove(digitToRemoveFromSelection);
+                digitToRemoveFromSelection.Deselect();
+            }
+            
+            CalculateContextVisibility();
         }
         
         /// <summary>
@@ -1553,6 +1562,23 @@ namespace AdrianMiasik
         public void ShowTickAnimation()
         {
             m_digitFormat.ShowTickAnimation();
+        }
+
+        public void SelectDigit(int index)
+        {
+            ToggleDigitSelection(m_digitFormat.GetDigits()[index]);
+        }
+
+        private void ToggleDigitSelection(DoubleDigit digit)
+        {
+            if (m_selectedDigits.Contains(digit))
+            {
+                RemoveSelection(digit);
+            }
+            else
+            {
+                AddSelection(digit);
+            }
         }
     }
 }

@@ -14,16 +14,33 @@ namespace AdrianMiasik.Components.Core
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
+            
             StreamDeck.Add(this);
+            
+            UpdateTimerSwitchTitle();
+            UpdateThemeTitle();
         }
-        
-        // TODO: Convert to right button interact
+
         [StreamDeckButton]
-        private void PlayPauseToggle()
+        private void SwitchTimer()
+        {
+            timer.TriggerTimerSwitch();
+            UpdateTimerSwitchTitle();
+        }
+
+        private void UpdateTimerSwitchTitle()
+        {
+            StreamDeckSettings.SetButtonTitle(timer.IsOnBreak() ? "Work" : "Break",
+                "SwitchTimer");
+        }
+
+        [StreamDeckButton]
+        private void RightButtonInteract()
         {
             switch (timer.m_state)
             {
                 case PomodoroTimer.States.COMPLETE:
+                    timer.TriggerTimerSwitch();
                     return;
                 default:
                     timer.TriggerPlayPause();
@@ -50,6 +67,18 @@ namespace AdrianMiasik.Components.Core
         private void ToggleTheme()
         {
             timer.TriggerThemeSwitch();
+            UpdateThemeTitle();
+        }
+
+        private void UpdateThemeTitle()
+        {
+            StreamDeckSettings.SetButtonTitle(timer.GetTheme().IsDarkMode() ? "Light" : "Dark", "ToggleTheme");
+        }
+
+        [StreamDeckButton()]
+        private void SelectDigit(int index)
+        {
+            timer.SelectDigit(index);
         }
 
         /// <summary>
@@ -59,23 +88,26 @@ namespace AdrianMiasik.Components.Core
         /// <param name="theme"></param>
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
+            UpdateTimerSwitchTitle();
+            
             switch (timer.m_state)
             {
                 case PomodoroTimer.States.SETUP:
                     StreamDeckSettings.SetButtonTitle("-", "Skip");
-                    StreamDeckSettings.SetButtonTitle("Play", "PlayPauseToggle");
+                    StreamDeckSettings.SetButtonTitle("Play", "RightButtonInteract");
                     break;
                 case PomodoroTimer.States.RUNNING:
                     StreamDeckSettings.SetButtonTitle("Skip", "Skip");
-                    StreamDeckSettings.SetButtonTitle("Pause", "PlayPauseToggle");
+                    StreamDeckSettings.SetButtonTitle("Pause", "RightButtonInteract");
                     break;
                 case PomodoroTimer.States.PAUSED:
                     StreamDeckSettings.SetButtonTitle("Skip", "Skip");
-                    StreamDeckSettings.SetButtonTitle("Play", "PlayPauseToggle");
+                    StreamDeckSettings.SetButtonTitle("Play", "RightButtonInteract");
                     break;
                 case PomodoroTimer.States.COMPLETE:
                     StreamDeckSettings.SetButtonTitle("-", "Skip");
-                    StreamDeckSettings.SetButtonTitle("-", "PlayPauseToggle");
+                    StreamDeckSettings.SetButtonTitle(timer.IsOnBreak() ? "Work" : "Break",
+                        "RightButtonInteract");
                     break;
             }
         }

@@ -394,7 +394,7 @@ namespace AdrianMiasik.Components.Core.Items
         /// but does not set this as the <see cref="PomodoroTimer"/>'s digit selection. If you'd like to do both
         /// see <see cref="OnSelect"/>
         /// </summary>
-        public void Highlight()
+        public void Select()
         {
             OnSelect(false);
         }
