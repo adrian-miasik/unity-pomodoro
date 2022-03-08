@@ -118,11 +118,35 @@ namespace AdrianMiasik.Components.Core
         }
 
         [StreamDeckButton]
+        private void ToggleAllDigits()
+        {
+            timer.ToggleAllDigits();
+        }
+
+        [StreamDeckButton]
         private void ClearAll()
         {
             timer.ClearAll();
         }
+
+        [StreamDeckButton]
+        private void TrashTomatoes()
+        {
+            timer.TrashTomatoes();
+        }
+
+        [StreamDeckButton]
+        private void Submit()
+        {
+            timer.GetConfirmDialogManager().TriggerSubmit();
+        }
         
+        [StreamDeckButton]
+        private void Cancel()
+        {
+            timer.GetConfirmDialogManager().TriggerCancel();
+        }
+
         /// <summary>
         /// Updates all our Stream buttons accordingly
         /// </summary>

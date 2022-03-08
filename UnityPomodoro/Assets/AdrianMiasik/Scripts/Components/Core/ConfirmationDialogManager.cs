@@ -84,5 +84,21 @@ namespace AdrianMiasik.Components.Core
                 ClearDialogPopup(currentDialogPopup);
             }
         }
+
+        public void TriggerSubmit()
+        {
+            if (currentDialogPopup != null)
+            {
+                currentDialogPopup.TriggerSubmit();
+            }
+        }
+
+        public void TriggerCancel()
+        {
+            if (currentDialogPopup != null)
+            {
+                currentDialogPopup.TriggerCancel();
+            }
+        }
     }
 }

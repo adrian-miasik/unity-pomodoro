@@ -60,8 +60,13 @@ namespace AdrianMiasik.Components.Core.Containers
         /// Will prompt user with a <see cref="ConfirmationDialog"/> to confirm their action to prevent accidental
         /// wipes / clears.
         /// </summary>
-        private void TrashTomatoes()
+        public void TrashTomatoes()
         {
+            if (!HasProgression())
+            {
+                return;
+            }
+                
             Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
             {
                 Timer.DeactivateLongBreak();

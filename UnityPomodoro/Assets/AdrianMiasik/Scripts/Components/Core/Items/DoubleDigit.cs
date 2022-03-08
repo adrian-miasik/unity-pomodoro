@@ -558,5 +558,21 @@ namespace AdrianMiasik.Components.Core.Items
         {
             return isSelected;
         }
+
+        public void TriggerUpArrow()
+        {
+            if (format.CanIncrementOne(m_digit))
+            {
+                m_upArrow.OnPointerClick(null);
+            }
+        }
+
+        public void TriggerDownArrow()
+        {
+            if (format.CanDecrementOne(m_digit))
+            {
+                m_downArrow.OnPointerClick(null);
+            }
+        }
     }
 }

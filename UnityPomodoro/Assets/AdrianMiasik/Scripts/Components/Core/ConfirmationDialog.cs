@@ -146,5 +146,15 @@ namespace AdrianMiasik.Components.Core
             m_spawnAnimation.Stop();
             m_spawnAnimation.gameObject.transform.localScale = Vector3.one;
         }
+
+        public void TriggerSubmit()
+        {
+            m_submit.OnPointerClick(null);
+        }
+        
+        public void TriggerCancel()
+        {
+            m_cancel.OnPointerClick(null);
+        }
     }
 }

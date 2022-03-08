@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -1564,6 +1565,7 @@ namespace AdrianMiasik
             m_digitFormat.ShowTickAnimation();
         }
 
+        // Stream Deck Functionality
         public void SelectDigit(int index)
         {
             ToggleDigitSelection(m_digitFormat.GetDigits()[index]);
@@ -1589,7 +1591,8 @@ namespace AdrianMiasik
             {
                 ToggleDigitSelection(digit);
             }
-            m_digitFormat.GetDigits()[index].IncrementOne();
+            // m_digitFormat.GetDigits()[index].IncrementOne();
+            m_digitFormat.GetDigits()[index].TriggerUpArrow();
         }
         
         public void DecrementDigit(int index)
@@ -1600,14 +1603,16 @@ namespace AdrianMiasik
             {
                 ToggleDigitSelection(digit);
             }
-            m_digitFormat.GetDigits()[index].DecrementOne();
+            // m_digitFormat.GetDigits()[index].DecrementOne();
+            m_digitFormat.GetDigits()[index].TriggerDownArrow();
         }
 
         public void IncrementSelectedDigits()
         {
             foreach (DoubleDigit digit in m_selectedDigits)
             {
-                digit.IncrementOne();
+                // digit.IncrementOne();
+                digit.TriggerUpArrow();
             }
         }
 
@@ -1615,7 +1620,8 @@ namespace AdrianMiasik
         {
             foreach (DoubleDigit digit in m_selectedDigits)
             {
-                digit.DecrementOne();
+                // digit.DecrementOne();
+                digit.TriggerDownArrow();
             }
         }
 
@@ -1630,6 +1636,34 @@ namespace AdrianMiasik
                 {
                     RemoveSelection(digit);
                 }
+            }
+        }
+
+        public void TrashTomatoes()
+        {
+            m_tomatoCounter.TrashTomatoes();
+        }
+
+        public void ToggleAllDigits()
+        {
+            bool isDigitSelected = false;
+
+            foreach (DoubleDigit digit in m_selectedDigits)
+            {
+                if (digit.IsSelected())
+                {
+                    isDigitSelected = true;
+                    break;
+                }
+            }
+
+            if (isDigitSelected)
+            {
+                ClearSelection();
+            }
+            else
+            {
+                SelectAll();
             }
         }
     }
