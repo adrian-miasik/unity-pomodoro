@@ -9,10 +9,7 @@ assignees: ''
 
 # User Bug Report
 > Please remove each quote `>` section and populate the fields accordingly.
-> To see an example of a properly formatted bug report please see this [file](https://github.com/adrian-miasik/unity-pomodoro/issues/20).
-> 
-> Each header with an astrisks `*` is required to be filled in.
-> Headers without an astrisks is optional.
+> To see an example of a properly formatted bug report please refer to this correctly submitted [issue.](https://github.com/adrian-miasik/unity-pomodoro/issues/20).
 > 
 > **Note: This quote section can be deleted without filling in any information.**
 
