@@ -1580,5 +1580,57 @@ namespace AdrianMiasik
                 AddSelection(digit);
             }
         }
+
+        public void IncrementDigit(int index)
+        {
+            DoubleDigit digit = m_digitFormat.GetDigits()[index];
+            
+            if (!digit.IsSelected())
+            {
+                ToggleDigitSelection(digit);
+            }
+            m_digitFormat.GetDigits()[index].IncrementOne();
+        }
+        
+        public void DecrementDigit(int index)
+        {
+            DoubleDigit digit = m_digitFormat.GetDigits()[index];
+            
+            if (!digit.IsSelected())
+            {
+                ToggleDigitSelection(digit);
+            }
+            m_digitFormat.GetDigits()[index].DecrementOne();
+        }
+
+        public void IncrementSelectedDigits()
+        {
+            foreach (DoubleDigit digit in m_selectedDigits)
+            {
+                digit.IncrementOne();
+            }
+        }
+
+        public void DecrementSelectedDigits()
+        {
+            foreach (DoubleDigit digit in m_selectedDigits)
+            {
+                digit.DecrementOne();
+            }
+        }
+
+        public void ClearAll()
+        {
+            foreach (DoubleDigit digit in m_digitFormat.GetDigits())
+            {
+                digit.Clear();
+                digit.HideArrows();
+
+                if (digit.IsSelected())
+                {
+                    RemoveSelection(digit);
+                }
+            }
+        }
     }
 }

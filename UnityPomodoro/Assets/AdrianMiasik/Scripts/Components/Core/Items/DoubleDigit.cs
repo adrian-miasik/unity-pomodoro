@@ -101,9 +101,9 @@ namespace AdrianMiasik.Components.Core.Items
         /// <param name="value">What value should this <see cref="DoubleDigit"/> display?</param>
         public void UpdateVisuals(int value)
         {
+            m_pulseWobble.Stop();
             SetTextLabel(value);
             UpdateArrows();
-            m_pulseWobble.Stop();
         }
         
         private void Update()
@@ -130,11 +130,7 @@ namespace AdrianMiasik.Components.Core.Items
             {
                 if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
                 {
-                    if (!m_input.isFocused)
-                    {
-                        SetValue(0);
-                        UpdateVisuals(format.GetDigitValue(m_digit));
-                    }
+                    Clear();
                 }
                 
                 // Scroll input
@@ -187,6 +183,15 @@ namespace AdrianMiasik.Components.Core.Items
                         format.ClearTimerSelection();
                     }
                 }
+            }
+        }
+
+        public void Clear()
+        {
+            if (!m_input.isFocused)
+            {
+                SetValue(0);
+                UpdateVisuals(format.GetDigitValue(m_digit));
             }
         }
 
@@ -329,7 +334,8 @@ namespace AdrianMiasik.Components.Core.Items
             {
                 // Update the digit
                 m_input.text = value.ToString("D2");
-
+                m_pulseWobble.Play();
+                
                 if (format.GetTimerState() == PomodoroTimer.States.RUNNING)
                 {
                     m_onDigitChange?.Invoke();
@@ -348,7 +354,6 @@ namespace AdrianMiasik.Components.Core.Items
             
             format.IncrementOne(m_digit);
             UpdateVisuals(format.GetDigitValue(m_digit));
-            m_pulseWobble.Play();
             accumulatedSelectionTime = 0;
         }
 
@@ -362,7 +367,6 @@ namespace AdrianMiasik.Components.Core.Items
             
             format.DecrementOne(m_digit);
             UpdateVisuals(format.GetDigitValue(m_digit));
-            m_pulseWobble.Play();
             accumulatedSelectionTime = 0;
         }
 
@@ -548,6 +552,11 @@ namespace AdrianMiasik.Components.Core.Items
         public Selectable GetSelectable()
         {
             return m_selectable;
+        }
+
+        public bool IsSelected()
+        {
+            return isSelected;
         }
     }
 }

@@ -75,12 +75,54 @@ namespace AdrianMiasik.Components.Core
             StreamDeckSettings.SetButtonTitle(timer.GetTheme().IsDarkMode() ? "Light" : "Dark", "ToggleTheme");
         }
 
-        [StreamDeckButton()]
+        [StreamDeckButton]
         private void SelectDigit(int index)
         {
             timer.SelectDigit(index);
         }
 
+        [StreamDeckButton]
+        private void IncrementDigit(int index)
+        {
+            timer.IncrementDigit(index);
+        }
+        
+        [StreamDeckButton]
+        private void DecrementDigit(int index)
+        {
+            timer.DecrementDigit(index);
+        }
+
+        [StreamDeckButton]
+        private void IncrementSelectedDigits()
+        {
+            timer.IncrementSelectedDigits();
+        }
+        
+        [StreamDeckButton]
+        private void DecrementSelectedDigits()
+        {
+            timer.DecrementSelectedDigits();
+        }
+
+        [StreamDeckButton]
+        private void SelectAllDigits()
+        {
+            timer.SelectAll();
+        }
+
+        [StreamDeckButton]
+        private void DeselectAllDigits()
+        {
+            timer.ClearSelection();
+        }
+
+        [StreamDeckButton]
+        private void ClearAll()
+        {
+            timer.ClearAll();
+        }
+        
         /// <summary>
         /// Updates all our Stream buttons accordingly
         /// </summary>
