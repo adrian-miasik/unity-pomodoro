@@ -2020,7 +2020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.005127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2774,7 +2774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.005127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3778,7 +3778,8 @@ MonoBehaviour:
   m_themeManager: {fileID: 1248282687}
   m_hotkeyDetector: {fileID: 266651281}
   m_confirmationDialogManager: {fileID: 2016785227}
-  m_notifications: {fileID: 943758001}
+  m_uwpNotifications: {fileID: 943758001}
+  m_androidNotifications: {fileID: 943758002}
   m_text: {fileID: 650676969}
   m_ring: {fileID: 361292848}
   m_ringBackground: {fileID: 1090976625}
@@ -3919,19 +3920,7 @@ MonoBehaviour:
         m_CallState: 2
   m_onTimerCompletion:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 943758001}
-        m_TargetAssemblyTypeName: AdrianMiasik.UWP.NotificationManager, Assembly-CSharp
-        m_MethodName: ShowToast
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_selectedDigits: []
   m_sidebarPages: {fileID: 288170240}
   loadedSystemSettings:
@@ -5588,7 +5577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.005127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6575,8 +6564,9 @@ GameObject:
   m_Component:
   - component: {fileID: 943758000}
   - component: {fileID: 943758001}
+  - component: {fileID: 943758002}
   m_Layer: 5
-  m_Name: Notification
+  m_Name: Notifications
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6615,6 +6605,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_xmlToastAlarm: {fileID: 4900000, guid: d3141a8c2f6b4f3bbd2831a62f225996, type: 3}
   m_xmlToastNoAlarm: {fileID: 4900000, guid: 0d00427c101d53f41a309c4993e34a7e, type: 3}
+--- !u!114 &943758002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943757999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19812a33c7d73a14c9f51441cd0a7742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &957033424 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1830320759345697965, guid: 01ce964053042544a908dbc2b7805528, type: 3}
@@ -8456,7 +8458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.005127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdrianMiasik.Components.Base;
+using AdrianMiasik.Android;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -60,7 +60,8 @@ namespace AdrianMiasik
         [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
+        [SerializeField] private UWPNotifications m_uwpNotifications; // Responsible class for UWP notifications and toasts
+        [SerializeField] private AndroidNotifications m_androidNotifications;
 
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
@@ -390,7 +391,15 @@ namespace AdrianMiasik
         {
             m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
-            m_notifications.Initialize(GetSystemSettings());
+            
+            // UWP Toast / Notification
+            m_uwpNotifications.Initialize(GetSystemSettings());
+            m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
+            
+#if UNITY_ANDROID
+            // Android Notification
+            m_androidNotifications.Initialize();
+#endif
         }
 
         /// <summary>
@@ -513,6 +522,11 @@ namespace AdrianMiasik
                     
                     // Unlock editing
                     m_digitFormat.Unlock();
+
+#if UNITY_ANDROID
+                    // Revoke/Cancel our scheduled Android Notification
+                    m_androidNotifications.CancelScheduledTimerNotification();
+#endif
                     break;
 
                 case States.RUNNING:
@@ -531,11 +545,20 @@ namespace AdrianMiasik
 
                     // Lock Editing
                     m_digitFormat.Lock();
+                    
+#if UNITY_ANDROID
+                    // Schedule Android Notification
+                    m_androidNotifications.ScheduleTimerNotification(DateTime.Now.AddSeconds(currentTime));
+#endif
                     break;
 
                 case States.PAUSED:
                     m_text.text = "Paused";
                     ResetDigitFadeAnim();
+#if UNITY_ANDROID
+                    // Revoke/Cancel our scheduled Android Notification
+                    m_androidNotifications.CancelScheduledTimerNotification();
+#endif
                     break;
 
                 case States.COMPLETE:

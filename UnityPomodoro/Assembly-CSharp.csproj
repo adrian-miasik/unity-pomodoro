@@ -72,7 +72,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DoubleDigit.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionMuteAudioOutOfFocus.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\ThemeSlider.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\UWP\NotificationManager.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\UWP\UWPNotifications.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\EndTimestampGhost.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\SidebarRow.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\DigitSeparator.cs" />
@@ -113,6 +113,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\CollectionHelper.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\Ghost.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionUnityAnalytics.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Android\AndroidNotifications.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -722,11 +723,14 @@
  <Reference Include="Unity.RenderPipelines.Universal.Shaders">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Recorder.Base">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
+ <Reference Include="Unity.Notifications">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.dll</HintPath>
  </Reference>
  <Reference Include="Unity.RenderPipelines.Universal.Runtime">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder.Base">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -752,14 +756,14 @@
  <Reference Include="Unity.2D.Sprite.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Services.Analytics">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.dll</HintPath>
- </Reference>
  <Reference Include="Unity.RenderPipelines.Core.Runtime">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Services.Analytics">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
@@ -769,6 +773,9 @@
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Notifications.iOS">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.iOS.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Services.Core">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
@@ -803,20 +810,14 @@
  <Reference Include="Unity.Mathematics.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Notifications.Android">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.Android.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.RenderPipelines.Core.Editor">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Recorder">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Notifications">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Notifications.iOS">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.iOS.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Notifications.Android">
- <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.Android.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
