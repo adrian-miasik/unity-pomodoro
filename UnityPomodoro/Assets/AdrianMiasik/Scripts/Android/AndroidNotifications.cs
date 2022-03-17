@@ -9,14 +9,17 @@ namespace AdrianMiasik.Android
     public class AndroidNotifications : MonoBehaviour
     {
         private int timerNotificationID;
+        private PomodoroTimer timer;
         
         private enum NotificationChannels
         {
             ALARMS
         }
 
-        public void Initialize()
+        public void Initialize(PomodoroTimer pomodoroTimer)
         {
+            timer = pomodoroTimer;
+            
             // Create notification channel for our alarms / timer completions.
             AndroidNotificationChannel channel = new AndroidNotificationChannel
             {
@@ -31,6 +34,19 @@ namespace AdrianMiasik.Android
             AndroidNotificationCenter.RegisterNotificationChannel(channel);
 
             Debug.Log("Created notification channel: " + GetChannelString(NotificationChannels.ALARMS));
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (hasFocus)
+            {
+                AndroidNotificationIntentData intentData = AndroidNotificationCenter.GetLastNotificationIntent();
+
+                if (intentData != null)
+                {
+                    timer.Skip();
+                }
+            }
         }
 
         /// <summary>
