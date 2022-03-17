@@ -398,7 +398,7 @@ namespace AdrianMiasik
             
 #if UNITY_ANDROID
             // Android Notification
-            m_androidNotifications.Initialize();
+            m_androidNotifications.Initialize(this);
 #endif
         }
 
