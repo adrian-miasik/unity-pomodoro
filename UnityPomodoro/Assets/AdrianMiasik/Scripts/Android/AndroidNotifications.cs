@@ -57,7 +57,8 @@ namespace AdrianMiasik.Android
             {
                 Title = notificationTitle,
                 Text = "Your timer is complete! (" + notificationFireTime.ToString("h:mm:ss tt") + ")",
-                FireTime = notificationFireTime
+                FireTime = notificationFireTime,
+                LargeIcon = "../../Sprites/icon-unity-pomodoro.png"
             };
 
             timerNotificationID = AndroidNotificationCenter.SendNotification(notification, 
