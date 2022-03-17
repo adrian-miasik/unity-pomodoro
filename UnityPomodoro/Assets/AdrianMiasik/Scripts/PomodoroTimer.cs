@@ -548,7 +548,16 @@ namespace AdrianMiasik
                     
 #if UNITY_ANDROID
                     // Schedule Android Notification
-                    m_androidNotifications.ScheduleTimerNotification(DateTime.Now.AddSeconds(currentTime));
+                    string prefixTitle;
+                    if (!IsOnBreak())
+                    {
+                        prefixTitle = "Work";
+                    }
+                    else
+                    {
+                        prefixTitle = IsOnLongBreak() ? "Long Break" : "Break";
+                    }
+                    m_androidNotifications.ScheduleTimerNotification(prefixTitle, DateTime.Now.AddSeconds(currentTime));
 #endif
                     break;
 

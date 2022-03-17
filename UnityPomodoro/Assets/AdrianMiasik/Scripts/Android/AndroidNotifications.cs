@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Unity.Notifications.Android;
 using UnityEngine;
 
@@ -36,14 +37,26 @@ namespace AdrianMiasik.Android
         /// Schedules a notification to activate/prompt the user at the provided fire time.
         /// </summary>
         /// <param name="notificationFireTime"></param>
+        /// <param name="titlePrefix"></param>
         /// <returns>The scheduled notification's ID. (This ID can be used for modifying the notification if needed)
         /// </returns>
-        public int ScheduleTimerNotification(DateTime notificationFireTime)
+        public int ScheduleTimerNotification(string titlePrefix, DateTime notificationFireTime)
         {
+            string notificationTitle = "Timer Completed!";
+
+            // If a title prefix has been provided...
+            if (!string.IsNullOrEmpty(titlePrefix))
+            {
+                // Set prefix
+                string newTitle = titlePrefix + " " + notificationTitle;
+                notificationTitle = newTitle;
+            }
+            
+            // TODO: When notification is clicked...return to app in completed state.
             AndroidNotification notification = new AndroidNotification
             {
-                Title = "Timer Completed!",
-                Text = "Notification Text.",
+                Title = notificationTitle,
+                Text = "Your timer is complete! (" + notificationFireTime.ToString("h:mm:ss tt") + ")",
                 FireTime = notificationFireTime
             };
 
