@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
+using AdrianMiasik.Interfaces;
+using AdrianMiasik.ScriptableObjects;
 using Unity.Notifications.Android;
 using UnityEngine;
 
 namespace AdrianMiasik.Android
 {
     // TODO: Implement TimerState interface instead
-    public class AndroidNotifications : MonoBehaviour
+    public class AndroidNotifications : MonoBehaviour, ITimerState
     {
         private int timerNotificationID;
         private PomodoroTimer timer;
@@ -42,6 +44,7 @@ namespace AdrianMiasik.Android
             {
                 AndroidNotificationIntentData intentData = AndroidNotificationCenter.GetLastNotificationIntent();
 
+                // If user has pressed the notification...
                 if (intentData != null)
                 {
                     timer.Skip();
@@ -56,7 +59,7 @@ namespace AdrianMiasik.Android
         /// <param name="titlePrefix"></param>
         /// <returns>The scheduled notification's ID. (This ID can be used for modifying the notification if needed)
         /// </returns>
-        public int ScheduleTimerNotification(string titlePrefix, DateTime notificationFireTime)
+        private void ScheduleTimerNotification(string titlePrefix, DateTime notificationFireTime)
         {
             string notificationTitle = "Timer Completed!";
 
@@ -68,19 +71,16 @@ namespace AdrianMiasik.Android
                 notificationTitle = newTitle;
             }
             
-            // TODO: When notification is clicked...return to app in completed state.
             AndroidNotification notification = new AndroidNotification
             {
                 Title = notificationTitle,
                 Text = "Your timer is complete! (" + notificationFireTime.ToString("h:mm:ss tt") + ")",
                 FireTime = notificationFireTime,
-                LargeIcon = "../../Sprites/icon-unity-pomodoro.png"
+                LargeIcon = "app-icon"
             };
 
             timerNotificationID = AndroidNotificationCenter.SendNotification(notification, 
                 GetChannelString(NotificationChannels.ALARMS));
-
-            return timerNotificationID;
         }
 
         public void CancelScheduledTimerNotification()
@@ -107,6 +107,45 @@ namespace AdrianMiasik.Android
         private string GetChannelString(NotificationChannels desiredChannel)
         {
             return desiredChannel.ToString().ToLower();
+        }
+        
+        public void StateUpdate(PomodoroTimer.States state, Theme theme)
+        {
+            switch (state)
+            {
+                case PomodoroTimer.States.SETUP:
+                    CancelScheduledTimerNotification();
+                    break;
+                
+                case PomodoroTimer.States.RUNNING:
+                    // Schedule Android Notification
+                    string prefixTitle;
+                    if (!timer.IsOnBreak())
+                    {
+                        prefixTitle = "Work";
+                    }
+                    else
+                    {
+                        prefixTitle = timer.IsOnLongBreak() ? "Long Break" : "Break";
+                    }
+                    ScheduleTimerNotification(prefixTitle, DateTime.Now.AddSeconds(timer.GetCurrentTime()));
+                    break;
+                
+                case PomodoroTimer.States.PAUSED:
+                    CancelScheduledTimerNotification();
+                    break;
+                
+                case PomodoroTimer.States.COMPLETE:
+                    // We don't need to show notification when app is in focus.
+                    if (Application.isFocused)
+                    {
+                        CancelScheduledTimerNotification();
+                    }
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
         }
     }
 }

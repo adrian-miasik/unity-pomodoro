@@ -120,8 +120,9 @@ namespace AdrianMiasik
 
         // Time
         private double currentTime; // Current time left (In seconds)
-        private float totalTime; // Total time left (In seconds)
+        private float totalTime; // Total time (In seconds)
         private bool isTimerBeingSetup = true; // First time playing
+        private TimeSpan focusLoss;
 
         // Pause Fade Animation
         private bool isFading;
@@ -140,11 +141,7 @@ namespace AdrianMiasik
         private bool disableCompletionAnimation;
         private float accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
-        
-        // Pulse Tick Ring Animation
-        private float cachedSeconds;
-        private bool isRingTickAnimating;
-        
+
         [Header("Loaded Settings")]
         [SerializeField] private SystemSettings loadedSystemSettings;
         [SerializeField] private TimerSettings loadedTimerSettings;
@@ -160,6 +157,18 @@ namespace AdrianMiasik
             else
             {
                 AudioListener.volume = 1;
+            }
+
+            if (!hasFocus)
+            {
+                // Cache the time we lost focus.
+                focusLoss = DateTime.Now.TimeOfDay;
+            }
+            else
+            {
+                // Calculate the new time progress based on our focus loss time.
+                double secondsPassedSinceFocusLoss = DateTime.Now.TimeOfDay.TotalSeconds - focusLoss.TotalSeconds;
+                currentTime -= secondsPassedSinceFocusLoss;
             }
         }
 
@@ -400,6 +409,11 @@ namespace AdrianMiasik
             // Android Notification
             m_androidNotifications.Initialize(this);
 #endif
+            
+            // Register elements that need updating per timer state change
+#if UNITY_ANDROID
+            timerElements.Add(m_androidNotifications);
+#endif
         }
 
         /// <summary>
@@ -522,11 +536,6 @@ namespace AdrianMiasik
                     
                     // Unlock editing
                     m_digitFormat.Unlock();
-
-#if UNITY_ANDROID
-                    // Revoke/Cancel our scheduled Android Notification
-                    m_androidNotifications.CancelScheduledTimerNotification();
-#endif
                     break;
 
                 case States.RUNNING:
@@ -546,28 +555,11 @@ namespace AdrianMiasik
                     // Lock Editing
                     m_digitFormat.Lock();
                     
-#if UNITY_ANDROID
-                    // Schedule Android Notification
-                    string prefixTitle;
-                    if (!IsOnBreak())
-                    {
-                        prefixTitle = "Work";
-                    }
-                    else
-                    {
-                        prefixTitle = IsOnLongBreak() ? "Long Break" : "Break";
-                    }
-                    m_androidNotifications.ScheduleTimerNotification(prefixTitle, DateTime.Now.AddSeconds(currentTime));
-#endif
                     break;
 
                 case States.PAUSED:
                     m_text.text = "Paused";
                     ResetDigitFadeAnim();
-#if UNITY_ANDROID
-                    // Revoke/Cancel our scheduled Android Notification
-                    m_androidNotifications.CancelScheduledTimerNotification();
-#endif
                     break;
 
                 case States.COMPLETE:
