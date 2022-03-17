@@ -22,7 +22,7 @@ namespace AdrianMiasik.Android
             {
                 Id = GetChannelString(NotificationChannels.ALARMS),
                 Name = "Alarms (& Timers)",
-                Importance = Importance.Default,
+                Importance = Importance.High,
                 Description = "This channel is used to send notifications on timer completions. " +
                               "This includes both work and break timers.",
             };
