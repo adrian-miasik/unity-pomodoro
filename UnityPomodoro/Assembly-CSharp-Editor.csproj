@@ -770,6 +770,15 @@
  <Reference Include="Unity.Recorder">
  <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Notifications">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Notifications.iOS">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.iOS.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Notifications.Android">
+ <HintPath>C:/Users/user/Documents/RBLB/git-repositories/unity-pomodoro/UnityPomodoro/Library/ScriptAssemblies/Unity.Notifications.Android.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
