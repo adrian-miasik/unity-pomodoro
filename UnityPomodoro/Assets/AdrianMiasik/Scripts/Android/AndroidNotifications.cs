@@ -60,6 +60,7 @@ namespace AdrianMiasik.Android
                 Title = notificationTitle,
                 Text = "Your timer is complete! (" + notificationFireTime.ToString("h:mm:ss tt") + ")",
                 FireTime = notificationFireTime,
+                SmallIcon = "app_favicon",
                 LargeIcon = "app_icon"
             };
 
