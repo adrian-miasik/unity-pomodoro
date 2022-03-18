@@ -71,16 +71,17 @@ namespace AdrianMiasik.Android
                 "android.intent.action.SET_ALARM");
 
             // Add values to optional fields
-            setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.MESSAGE", "Test Alarmm");
-            setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.HOUR", 0);
-            setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.MINUTES", 1);
-
-            // Fetch current Unity activity object
-            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+            setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.MESSAGE", 
+                "Test Alarmm");
+            setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.HOUR",
+                0);
+            setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.MINUTES",
+                1);
             
-            // Invoke intent to current Unity activity
-            unityPlayer.Call("startActivity", setAlarmIntent);
+            // Fetch and invoke event on current Unity activity object
+            using AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")
+                .Call("startActivity", setAlarmIntent);
         }
 
         private void CancelScheduledTimerNotification()
