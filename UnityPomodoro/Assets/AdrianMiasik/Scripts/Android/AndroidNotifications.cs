@@ -67,7 +67,7 @@ namespace AdrianMiasik.Android
                 GetChannelString(NotificationChannels.ALARMS));
             
             // Create native alarm
-            AndroidJavaObject setAlarmIntent = new AndroidJavaObject("android.content.intent", 
+            AndroidJavaObject setAlarmIntent = new AndroidJavaObject("android.content.Intent", 
                 "android.intent.action.SET_ALARM");
 
             // Add values to optional fields
