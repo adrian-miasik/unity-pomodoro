@@ -38,20 +38,6 @@ namespace AdrianMiasik.Android
             Debug.Log("Created notification channel: " + GetChannelString(NotificationChannels.ALARMS));
         }
 
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            if (hasFocus)
-            {
-                AndroidNotificationIntentData intentData = AndroidNotificationCenter.GetLastNotificationIntent();
-
-                // If user has pressed the notification...
-                if (intentData != null)
-                {
-                    timer.Skip();
-                }
-            }
-        }
-
         /// <summary>
         /// Schedules a notification to activate/prompt the user at the provided fire time.
         /// </summary>
