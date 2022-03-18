@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Unity.Notifications.Android;
