@@ -24,7 +24,7 @@ namespace AdrianMiasik.Android
             AndroidNotificationChannel channel = new AndroidNotificationChannel
             {
                 Id = GetChannelString(NotificationChannels.ALARMS),
-                Name = "Alarms (& Timers)",
+                Name = "Timer Completions",
                 Importance = Importance.High,
                 Description = "This channel is used to send notifications on timer completions. " +
                               "This includes both work and break timers.",
