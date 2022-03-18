@@ -73,12 +73,13 @@ namespace AdrianMiasik.Android
 
             // Add values to optional fields
             setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.MESSAGE", 
-                "Test Alarmm");
+                "Unity Pomodoro - Native Alarm");
             setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.HOUR",
                 0);
             setAlarmIntent.Call<AndroidJavaObject>("putExtra", "android.intent.extra.alarm.MINUTES",
                 1);
-            
+            // TODO: Skip UI
+
             // Fetch and invoke event on current Unity activity object
             using AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")
