@@ -126,7 +126,7 @@ namespace AdrianMiasik.Android
                     }
                     else
                     {
-                        prefixTitle = timer.IsOnLongBreak() ? "Long Break" : "Break";
+                        prefixTitle = "Break";
                     }
                     ScheduleTimerNotification(prefixTitle, DateTime.Now.AddSeconds(timer.GetCurrentTime()));
                     break;
