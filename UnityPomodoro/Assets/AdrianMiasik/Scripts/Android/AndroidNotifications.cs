@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace AdrianMiasik.Android
 {
-    // TODO: Implement TimerState interface instead
     public class AndroidNotifications : MonoBehaviour, ITimerState
     {
         private int timerNotificationID;
