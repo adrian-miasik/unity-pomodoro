@@ -83,7 +83,7 @@ namespace AdrianMiasik.Android
                 GetChannelString(NotificationChannels.ALARMS));
         }
 
-        public void CancelScheduledTimerNotification()
+        private void CancelScheduledTimerNotification()
         {
             NotificationStatus notificationStatus = 
                 AndroidNotificationCenter.CheckScheduledNotificationStatus(timerNotificationID);
@@ -98,6 +98,7 @@ namespace AdrianMiasik.Android
                     AndroidNotificationCenter.CancelScheduledNotification(timerNotificationID);
                     break;
                 case NotificationStatus.Delivered:
+                    AndroidNotificationCenter.CancelNotification(timerNotificationID);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
