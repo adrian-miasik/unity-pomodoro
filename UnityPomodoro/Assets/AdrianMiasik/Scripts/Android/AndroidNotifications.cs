@@ -103,7 +103,7 @@ namespace AdrianMiasik.Android
                     break;
                 
                 case PomodoroTimer.States.RUNNING:
-                    // Schedule Android Notification
+                    // Schedule Android Notification when timer ends
                     ScheduleTimerNotification(!timer.IsOnBreak() ? "Work" : "Break", 
                         DateTime.Now.AddSeconds(timer.GetCurrentTime()));
                     break;

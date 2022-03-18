@@ -161,6 +161,7 @@ namespace AdrianMiasik
 
             if (m_state != States.RUNNING)
             {
+                // Early Exit
                 return;
             }
             
