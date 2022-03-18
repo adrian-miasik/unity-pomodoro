@@ -104,16 +104,8 @@ namespace AdrianMiasik.Android
                 
                 case PomodoroTimer.States.RUNNING:
                     // Schedule Android Notification
-                    string prefixTitle;
-                    if (!timer.IsOnBreak())
-                    {
-                        prefixTitle = "Work";
-                    }
-                    else
-                    {
-                        prefixTitle = "Break";
-                    }
-                    ScheduleTimerNotification(prefixTitle, DateTime.Now.AddSeconds(timer.GetCurrentTime()));
+                    ScheduleTimerNotification(!timer.IsOnBreak() ? "Work" : "Break", 
+                        DateTime.Now.AddSeconds(timer.GetCurrentTime()));
                     break;
                 
                 case PomodoroTimer.States.PAUSED:
