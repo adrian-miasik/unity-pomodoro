@@ -851,6 +851,10 @@ namespace AdrianMiasik
             {
                 m_digitFormat.Lock();
             }
+            else
+            {
+                m_digitFormat.Unlock();
+            }
             
             // Reset digit animation timings when opening/re-opening this page
             if (m_state == States.PAUSED)
@@ -1485,6 +1489,7 @@ namespace AdrianMiasik
 
         public void ShowOverlay()
         {
+            ClearSelection();
             m_overlay.Show();
         }
 
