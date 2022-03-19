@@ -32,8 +32,6 @@ namespace AdrianMiasik.Android
             
             // Register notification channel
             AndroidNotificationCenter.RegisterNotificationChannel(channel);
-
-            Debug.Log("Created notification channel: " + GetChannelString(NotificationChannels.ALARMS));
         }
 
         /// <summary>
