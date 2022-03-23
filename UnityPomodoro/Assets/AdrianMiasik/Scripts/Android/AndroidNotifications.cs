@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Unity.Notifications.Android;
@@ -9,7 +8,7 @@ namespace AdrianMiasik.Android
 {
     public class AndroidNotifications : MonoBehaviour, ITimerState
     {
-        private List<int> timerNotificationIDs = new List<int>();
+        private int timerNotificationID;
         private PomodoroTimer timer;
         
         private enum NotificationChannels
@@ -62,47 +61,30 @@ namespace AdrianMiasik.Android
                 SmallIcon = "app_favicon",
                 LargeIcon = "app_icon"
             };
-            
-            // Schedule alarm completion notification - Main notification / Buzz #0
-            timerNotificationIDs.Add(AndroidNotificationCenter.SendNotification(notification, 
-                GetChannelString(NotificationChannels.ALARMS)));
 
-            TimeSpan twoSecond = new TimeSpan(0, 0, 0, 2);
-            
-            // Additional Notification / Buzz #1
-            AndroidNotification additionalNotification1 = notification;
-            additionalNotification1.FireTime = notificationFireTime.Add(twoSecond);
-            timerNotificationIDs.Add(AndroidNotificationCenter.SendNotification(additionalNotification1, 
-                GetChannelString(NotificationChannels.ALARMS)));
-            
-            // Additional Notification / Buzz #2
-            AndroidNotification additionalNotification2 = additionalNotification1;
-            additionalNotification2.FireTime = additionalNotification2.FireTime.Add(twoSecond);
-            timerNotificationIDs.Add(AndroidNotificationCenter.SendNotification(additionalNotification1, 
-                GetChannelString(NotificationChannels.ALARMS)));
+            timerNotificationID = AndroidNotificationCenter.SendNotification(notification, 
+                GetChannelString(NotificationChannels.ALARMS));
         }
 
         private void CancelScheduledTimerNotification()
         {
-            foreach (int notificationID in timerNotificationIDs)
+            NotificationStatus notificationStatus = 
+                AndroidNotificationCenter.CheckScheduledNotificationStatus(timerNotificationID);
+
+            switch (notificationStatus)
             {
-                NotificationStatus notificationStatus = 
-                    AndroidNotificationCenter.CheckScheduledNotificationStatus(notificationID);
-                switch (notificationStatus)
-                {
-                    case NotificationStatus.Unavailable:
-                        break;
-                    case NotificationStatus.Unknown:
-                        break;
-                    case NotificationStatus.Scheduled:
-                        AndroidNotificationCenter.CancelScheduledNotification(notificationID);
-                        break;
-                    case NotificationStatus.Delivered:
-                        AndroidNotificationCenter.CancelNotification(notificationID);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                case NotificationStatus.Unavailable:
+                    break;
+                case NotificationStatus.Unknown:
+                    break;
+                case NotificationStatus.Scheduled:
+                    AndroidNotificationCenter.CancelScheduledNotification(timerNotificationID);
+                    break;
+                case NotificationStatus.Delivered:
+                    AndroidNotificationCenter.CancelNotification(timerNotificationID);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         
