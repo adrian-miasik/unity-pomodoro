@@ -46,10 +46,13 @@ Want to help? If you're interested in contributing to the project, please see ou
   - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-mac-desktop-universal.zip)
 - Linux
   - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-linux-desktop-64-bit.zip)
+- Android
+  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-android.apk) 
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
+- Google Play Store (Coming Soon...)
 ### Previous Releases
 - [v2.0.0 - Persistent Settings, Translucent Image Blur, Unity Analytics, Architecture, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)
 - [v1.9.0 - Release Media Generator & 'Set Pomodoro Count' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
