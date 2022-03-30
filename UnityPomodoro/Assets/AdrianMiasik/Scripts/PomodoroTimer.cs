@@ -169,12 +169,16 @@ namespace AdrianMiasik
             {
                 // Cache the time we lost focus.
                 focusLoss = DateTime.Now.TimeOfDay;
+                
+                Application.targetFrameRate = 0;
             }
             else
             {
                 // Calculate the new time progress based on our focus loss time.
                 double secondsPassedSinceFocusLoss = DateTime.Now.TimeOfDay.TotalSeconds - focusLoss.TotalSeconds;
                 currentTime -= secondsPassedSinceFocusLoss;
+                
+                Application.targetFrameRate = Screen.currentResolution.refreshRate;
             }
         }
 
@@ -268,6 +272,10 @@ namespace AdrianMiasik
             }
             
             loadedTimerSettings = timerSettings;
+
+            // Set target frame rate to refresh rate to prevent possible unnecessary GPU usage.
+            Application.targetFrameRate = Screen.currentResolution.refreshRate;
+            
             haveSettingsBeenConfigured = true;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
