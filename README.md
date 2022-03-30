@@ -9,10 +9,9 @@
   <a href="https://adrian-miasik.github.io/unity-pomodoro-docs/">Documentation</a> &bull;
   <a href="#downloads">Downloads</a> &bull;
   <a href="#media">Screenshots</a> &bull;
-  <a href="https://github.com/adrian-miasik/unity-pomodoro/wiki">Wiki</a> &bull;
   <a href="#author-notes">Author Notes</a> &bull;
   <a href="#donate">Donate</a> &bull;
-  <a href="#contribute">Contribute</a> &bull;
+  <a href="/CONTRIBUTING.md">Contribute</a> &bull;
   <a href="#contact-us--support-line">Support</a> &bull;
   <a href="#contact-us--support-line">Contact</a>
 </p>
@@ -25,33 +24,34 @@
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work and break sessions. Quickly swap between the two timers to keep you on track and focused.
 
-**Platforms**: Windows, Mac, & Linux
+**Platforms**: Windows, Mac, & Linux. (Android coming soon!)
 
-**Version**:  1.9.0
+**Version**:  2.0.0
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
 **License**: [GPL-3.0](LICENSE)
 
 **Contributor(s)**: `-`  
-Want to help? If you're interested in contributing to the project, please see the <a href="#contribute">contribute</a> section.
+Want to help? If you're interested in contributing to the project, please see our <a href="/CONTRIBUTING.md">contribution</a> document.
 
 &nbsp;
 ## Downloads
-### [Latest Release - v1.9.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
+### [Latest Release - v2.0.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v1.9.0/unity-pomodoro-1.9.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.0.0/unity-pomodoro-2.0.0-linux-desktop-64-bit.zip)
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v1.9.0 - Release Media Generator & 'Set Pomodoro Count' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
 - [v1.8.0 - End Timestamp, Skip Button, Sidebar Improvements, Toggle Long Breaks, and More!](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.8.0)
 - [v1.7.1 - Long Breaks, Documentation, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.7.1)
 - [v1.6.0 - Confirmation Dialogs & 'Mute Audio When Out Of Focus' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
@@ -107,11 +107,6 @@ Want to help? If you're interested in contributing to the project, please see th
 
 ## Donate
 If you'd like to support my work, you can donate to help support this project via [GitHub Sponsors](https://github.com/sponsors/adrian-miasik) ❤️
-
-## Contribute
-Interested in contributing?  
-Send me an email `unity-pomodoro@adrian-miasik.com` & poke me to make a contributing doc.  
-We will also modify the credits bubble to include contributors if people start contributing.
 
 ## Contact Us / Support Line
 Need help?  Found a bug?  

@@ -1,7 +1,4 @@
-using AdrianMiasik.Components;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Settings;
-using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 #if ENABLE_WINMD_SUPPORT
 using UnityEngine.WSA;
@@ -13,7 +10,7 @@ namespace AdrianMiasik.UWP
     /// Used to serve Windows OS level notification/toasts to the user. (using the referenced components)
     /// Intended to be invoked via UnityEvent <see cref="PomodoroTimer.m_onTimerCompletion"/>.
     /// </summary>
-    public class NotificationManager : MonoBehaviour
+    public class UWPNotifications : MonoBehaviour
     {
         // UWP
         [Header("Toast")]

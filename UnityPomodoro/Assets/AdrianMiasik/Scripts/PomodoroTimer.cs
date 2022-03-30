@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdrianMiasik.Components.Base;
+using AdrianMiasik.Android;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
@@ -60,7 +60,8 @@ namespace AdrianMiasik
         [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        [SerializeField] private NotificationManager m_notifications; // Responsible class for UWP notifications and toasts
+        [SerializeField] private UWPNotifications m_uwpNotifications; // Responsible class for UWP notifications and toasts
+        [SerializeField] private AndroidNotifications m_androidNotifications;
 
         [Header("Basic - Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
@@ -119,8 +120,9 @@ namespace AdrianMiasik
 
         // Time
         private double currentTime; // Current time left (In seconds)
-        private float totalTime; // Total time left (In seconds)
+        private float totalTime; // Total time (In seconds)
         private bool isTimerBeingSetup = true; // First time playing
+        private TimeSpan focusLoss;
 
         // Pause Fade Animation
         private bool isFading;
@@ -139,11 +141,7 @@ namespace AdrianMiasik
         private bool disableCompletionAnimation;
         private float accumulatedRingPulseTime;
         private bool hasRingPulseBeenInvoked;
-        
-        // Pulse Tick Ring Animation
-        private float cachedSeconds;
-        private bool isRingTickAnimating;
-        
+
         [Header("Loaded Settings")]
         [SerializeField] private SystemSettings loadedSystemSettings;
         [SerializeField] private TimerSettings loadedTimerSettings;
@@ -159,6 +157,28 @@ namespace AdrianMiasik
             else
             {
                 AudioListener.volume = 1;
+            }
+
+            if (m_state != States.RUNNING)
+            {
+                // Early Exit
+                return;
+            }
+            
+            if (!hasFocus)
+            {
+                // Cache the time we lost focus.
+                focusLoss = DateTime.Now.TimeOfDay;
+                
+                Application.targetFrameRate = 0;
+            }
+            else
+            {
+                // Calculate the new time progress based on our focus loss time.
+                double secondsPassedSinceFocusLoss = DateTime.Now.TimeOfDay.TotalSeconds - focusLoss.TotalSeconds;
+                currentTime -= secondsPassedSinceFocusLoss;
+                
+                Application.targetFrameRate = Screen.currentResolution.refreshRate;
             }
         }
 
@@ -252,6 +272,10 @@ namespace AdrianMiasik
             }
             
             loadedTimerSettings = timerSettings;
+
+            // Set target frame rate to refresh rate to prevent possible unnecessary GPU usage.
+            Application.targetFrameRate = Screen.currentResolution.refreshRate;
+            
             haveSettingsBeenConfigured = true;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
@@ -390,7 +414,20 @@ namespace AdrianMiasik
         {
             m_hotkeyDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
-            m_notifications.Initialize(GetSystemSettings());
+            
+            // UWP Toast / Notification
+            m_uwpNotifications.Initialize(GetSystemSettings());
+            m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
+            
+#if UNITY_ANDROID
+            // Android Notification
+            m_androidNotifications.Initialize(this);
+#endif
+            
+            // Register elements that need updating per timer state change
+#if UNITY_ANDROID
+            timerElements.Add(m_androidNotifications);
+#endif
         }
 
         /// <summary>
@@ -531,6 +568,7 @@ namespace AdrianMiasik
 
                     // Lock Editing
                     m_digitFormat.Lock();
+                    
                     break;
 
                 case States.PAUSED:
@@ -820,6 +858,10 @@ namespace AdrianMiasik
             if (m_state != States.SETUP)
             {
                 m_digitFormat.Lock();
+            }
+            else
+            {
+                m_digitFormat.Unlock();
             }
             
             // Reset digit animation timings when opening/re-opening this page
@@ -1455,6 +1497,7 @@ namespace AdrianMiasik
 
         public void ShowOverlay()
         {
+            ClearSelection();
             m_overlay.Show();
         }
 
