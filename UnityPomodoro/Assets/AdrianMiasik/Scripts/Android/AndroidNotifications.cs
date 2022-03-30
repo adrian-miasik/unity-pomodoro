@@ -1,13 +1,16 @@
 using System;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+#if UNITY_ANDROID
 using Unity.Notifications.Android;
+#endif
 using UnityEngine;
 
 namespace AdrianMiasik.Android
 {
     public class AndroidNotifications : MonoBehaviour, ITimerState
     {
+#if UNITY_ANDROID
         private int timerNotificationID;
         private PomodoroTimer timer;
         
@@ -92,9 +95,11 @@ namespace AdrianMiasik.Android
         {
             return desiredChannel.ToString().ToLower();
         }
-        
+
+#endif
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
+#if UNITY_ANDROID
             switch (state)
             {
                 case PomodoroTimer.States.SETUP:
@@ -122,6 +127,7 @@ namespace AdrianMiasik.Android
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+#endif
         }
     }
 }
