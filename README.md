@@ -37,23 +37,24 @@ Want to help? If you're interested in contributing to the project, please see ou
 
 &nbsp;
 ## Downloads
-### [Latest Release - v2.1.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.0)
+### [Latest Release - v2.1.1](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.1)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.1/unity-pomodoro-2.1.1-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.1/unity-pomodoro-2.1.1-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.1/unity-pomodoro-2.1.1-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.1/unity-pomodoro-2.1.1-linux-desktop-64-bit.zip)
 - Android
-  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.0/unity-pomodoro-2.1.0-android.apk) 
+  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.1.1/unity-pomodoro-2.1.1-android.apk) 
 #### Platform Specific
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 - Google Play Store (Coming Soon...)
 ### Previous Releases
+- [v2.1.0 - Android Support, Fixed Visual Artifacts, Improved Performance, and New Community Efforts](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.0)
 - [v2.0.0 - Persistent Settings, Translucent Image Blur, Unity Analytics, Architecture, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)
 - [v1.9.0 - Release Media Generator & 'Set Pomodoro Count' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
 - [v1.8.0 - End Timestamp, Skip Button, Sidebar Improvements, Toggle Long Breaks, and More!](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.8.0)
