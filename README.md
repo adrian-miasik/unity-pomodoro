@@ -52,7 +52,7 @@ Want to help? If you're interested in contributing to the project, please see ou
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
-- Google Play Store (Coming Soon...)
+- Google Play Store (Coming Eventually...)
 ### Previous Releases
 - [v2.1.0 - Android Support, Fixed Visual Artifacts, Improved Performance, and New Community Efforts](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.0)
 - [v2.0.0 - Persistent Settings, Translucent Image Blur, Unity Analytics, Architecture, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)
