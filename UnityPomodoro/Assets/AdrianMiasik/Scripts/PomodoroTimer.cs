@@ -123,7 +123,7 @@ namespace AdrianMiasik
         private float totalTime; // Total time (In seconds)
         private bool isTimerBeingSetup = true; // First time playing
 #if UNITY_ANDROID
-        private TimeSpan focusLoss;
+        private TimeSpan focusLossTime;
 #endif
 
         // Pause Fade Animation
@@ -171,7 +171,7 @@ namespace AdrianMiasik
             {
 #if UNITY_ANDROID
                 // Cache the time we lost focus.
-                focusLoss = DateTime.Now.TimeOfDay;
+                focusLossTime = DateTime.Now.TimeOfDay;
 #endif
                 
                 Application.targetFrameRate = 0;
@@ -180,7 +180,7 @@ namespace AdrianMiasik
             {
 #if UNITY_ANDROID
                 // Calculate the new time progress based on our focus loss time.
-                double secondsPassedSinceFocusLoss = DateTime.Now.TimeOfDay.TotalSeconds - focusLoss.TotalSeconds;
+                double secondsPassedSinceFocusLoss = DateTime.Now.TimeOfDay.TotalSeconds - focusLossTime.TotalSeconds;
                 currentTime -= secondsPassedSinceFocusLoss;
 #endif                
 
