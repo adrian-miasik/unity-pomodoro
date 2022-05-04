@@ -343,7 +343,7 @@ namespace AdrianMiasik
                 // Debug.LogWarning("Unity Analytics - Starting Up Service...");
                 
                 await UnityServices.InitializeAsync();
-                List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
+                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
                 
 #if UNITY_ANALYTICS_EVENT_LOGS
                 Debug.LogWarning("Unity Analytics - Service Started.");
