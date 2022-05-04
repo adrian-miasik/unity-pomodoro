@@ -314,7 +314,7 @@ namespace AdrianMiasik
             if (enableUnityAnalytics)
             {
                 // Enable analytics
-                StartServices(isBootingUp);
+                StartAnalyticsService(isBootingUp);
             }
             else
             {
@@ -335,7 +335,7 @@ namespace AdrianMiasik
         /// Starts up our Unity Analytics service.
         /// </summary>
         /// <param name="isBootingUp"></param>
-        async void StartServices(bool isBootingUp)
+        async void StartAnalyticsService(bool isBootingUp)
         {
             try
             {
