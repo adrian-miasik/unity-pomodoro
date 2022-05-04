@@ -160,12 +160,6 @@ namespace AdrianMiasik
             {
                 AudioListener.volume = 1;
             }
-
-            if (m_state != States.RUNNING)
-            {
-                // Early Exit
-                return;
-            }
             
             if (!hasFocus)
             {
