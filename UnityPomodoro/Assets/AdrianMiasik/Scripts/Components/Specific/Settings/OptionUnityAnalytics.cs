@@ -36,14 +36,6 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             if (!state)
             {
-                // Send disabled event log
-                Dictionary<string, object> parameters = new Dictionary<string, object>()
-                {
-                    { "testingKey", "testingValue123Disabled" },
-                };
-                Events.CustomData("analyticsDisabled", parameters);
-                Events.Flush();
-                    
                 // Disable analytics
                 Timer.ToggleUnityAnalytics(false, false);
             }

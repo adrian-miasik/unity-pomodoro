@@ -318,6 +318,14 @@ namespace AdrianMiasik
             }
             else
             {
+                // Send disabled event log
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    { "testingKey", "testingValue1234Disabled" },
+                };
+                AnalyticsService.Instance.CustomData("analyticsServiceDisabled", parameters);
+                AnalyticsService.Instance.Flush();
+
                 // Disable analytics
                 Analytics.enabled = false;
                 PerformanceReporting.enabled = false;
@@ -357,20 +365,20 @@ namespace AdrianMiasik
                     // Send enabled event log
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        { "testingKey", "testingValue123Init" },
+                        { "testingKey", "testingValue1234Init" },
                     };
-                    Events.CustomData("analyticsInitialized", parameters);
-                    Events.Flush();
+                    AnalyticsService.Instance.CustomData("analyticsServiceInitialized", parameters);
+                    AnalyticsService.Instance.Flush();
                 }
                 else
                 {
                     // Send enabled event log
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        { "testingKey", "testingValue123Enabled" },
+                        { "testingKey", "testingValue1234Enabled" },
                     };
-                    Events.CustomData("analyticsEnabled", parameters);
-                    Events.Flush();
+                    AnalyticsService.Instance.CustomData("analyticsServiceEnabled", parameters);
+                    AnalyticsService.Instance.Flush();
                 }
             }
             catch (ConsentCheckException e)
