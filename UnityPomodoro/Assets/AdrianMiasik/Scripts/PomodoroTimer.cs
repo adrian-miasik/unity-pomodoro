@@ -125,6 +125,7 @@ namespace AdrianMiasik
 #if UNITY_ANDROID
         private TimeSpan focusLossTime;
 #endif
+        private bool isApplicationInFocus;
 
         // Pause Fade Animation
         private bool isFading;
@@ -151,6 +152,8 @@ namespace AdrianMiasik
 
         private void OnApplicationFocus(bool hasFocus)
         {
+            isApplicationInFocus = hasFocus;
+            
             if (loadedSystemSettings.m_muteSoundWhenOutOfFocus)
             {
                 // Prevent application from making noise when not in focus
@@ -180,6 +183,11 @@ namespace AdrianMiasik
 
                 Application.targetFrameRate = Screen.currentResolution.refreshRate;
             }
+        }
+        
+        public bool IsApplicationInFocus()
+        {
+            return isApplicationInFocus;
         }
 
         private void OnValidate()
@@ -416,7 +424,7 @@ namespace AdrianMiasik
             m_confirmationDialogManager.Initialize(this);
             
             // UWP Toast / Notification
-            m_uwpNotifications.Initialize(GetSystemSettings());
+            m_uwpNotifications.Initialize(this, GetSystemSettings());
             m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
             
 #if UNITY_ANDROID

@@ -18,10 +18,12 @@ namespace AdrianMiasik.UWP
         [SerializeField] private TextAsset m_xmlToastNoAlarm;
         
         // Cache
+        private PomodoroTimer pomodoroTimer;
         private SystemSettings settings;
         
-        public void Initialize(SystemSettings systemSettings)
+        public void Initialize(PomodoroTimer timer, SystemSettings systemSettings)
         {
+            pomodoroTimer = timer;
             settings = systemSettings;
         }
 
@@ -39,7 +41,7 @@ namespace AdrianMiasik.UWP
             }
 
             // And the user wants to mute audio when app is out of focus...
-            if (settings.m_muteSoundWhenOutOfFocus)
+            if (!pomodoroTimer.IsApplicationInFocus() || settings.m_muteSoundWhenOutOfFocus)
             {
                 // Play Alarm Notification
                 Toast toast = Toast.Create(m_xmlToastAlarm.text);
