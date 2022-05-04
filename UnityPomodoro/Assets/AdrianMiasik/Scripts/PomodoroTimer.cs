@@ -323,11 +323,10 @@ namespace AdrianMiasik
                 PerformanceReporting.enabled = false;
                 Analytics.limitUserTracking = true;
                 Analytics.deviceStatsEnabled = false;
+                AnalyticsService.Instance.SetAnalyticsEnabled(false);
 
 #if UNITY_ANALYTICS_EVENT_LOGS
-                Debug.LogWarning("Unity Analytics - Stopped Service. " +
-                                 "(Service will still cache some events into it's buffer it seems, but won't upload " +
-                                 "them.)");
+                Debug.LogWarning("Unity Analytics - Stopped Service.");
 #endif
             }
         }
@@ -340,11 +339,8 @@ namespace AdrianMiasik
         {
             try
             {
-                // Debug.LogWarning("Unity Analytics - Starting Up Service...");
-                
                 await UnityServices.InitializeAsync();
-                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
-                
+
 #if UNITY_ANALYTICS_EVENT_LOGS
                 Debug.LogWarning("Unity Analytics - Service Started.");
 #endif
@@ -354,6 +350,7 @@ namespace AdrianMiasik
                 PerformanceReporting.enabled = true;
                 Analytics.limitUserTracking = false;
                 Analytics.deviceStatsEnabled = true;
+                await AnalyticsService.Instance.SetAnalyticsEnabled(true);
 
                 if (isBootingUp)
                 {
