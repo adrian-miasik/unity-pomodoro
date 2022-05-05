@@ -869,6 +869,8 @@ namespace AdrianMiasik
             {
                 ResetDigitFadeAnim();
             }
+            
+            m_sidebarPages.RefreshTimerPage();
         }
         
         public void ShowSettings()
