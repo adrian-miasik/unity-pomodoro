@@ -370,7 +370,7 @@ namespace AdrianMiasik
                     Events.Flush();
                 }
             }
-            catch (ConsentCheckException)
+            catch (ConsentCheckException e)
             {
                
             }
