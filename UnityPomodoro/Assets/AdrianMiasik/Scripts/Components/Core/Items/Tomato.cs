@@ -25,6 +25,8 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private Sprite m_croppedBody;
         [SerializeField] private Sprite m_fullBody;
 
+        [SerializeField] private Animation m_spawnTomato;
+
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, updateColors);
@@ -38,6 +40,8 @@ namespace AdrianMiasik.Components.Core.Items
         public void Complete()
         {
             m_body.sprite = m_croppedBody;
+            m_spawnTomato.Stop();
+            m_spawnTomato.Play();
         }
 
         /// <summary>
