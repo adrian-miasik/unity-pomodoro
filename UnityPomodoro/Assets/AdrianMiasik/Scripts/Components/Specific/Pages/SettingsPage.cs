@@ -1,3 +1,4 @@
+using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
@@ -99,11 +100,11 @@ namespace AdrianMiasik.Components.Specific.Pages
         /// <summary>
         /// Displays this panel to the user.
         /// </summary>
-        public override void Show()
+        public override void Show(Action onAnimationCompletion)
         {
             m_optionDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
             
-            base.Show();
+            base.Show(onAnimationCompletion);
         }
         
         /// <summary>

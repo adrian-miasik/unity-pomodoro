@@ -31,8 +31,11 @@ namespace AdrianMiasik.Components.Specific.Pages
 
         private new void OnSelectionChange(Page previousPage, Page newPage)
         {
-            previousPage.Hide();
-            newPage.Show();
+            // if (previousPage == newPage)
+            // {
+            //     return;
+            // }
+            previousPage.Hide(() => newPage.Show(null));
         }
 
         public void SwitchToTimerPage()
