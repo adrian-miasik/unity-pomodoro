@@ -50,6 +50,11 @@ namespace AdrianMiasik.Components.Specific.Pages
             Select(m_aboutPage);
         }
 
+        public void RefreshTimerPage()
+        {
+            m_timerPage.Refresh();
+        }
+        
         public void RefreshSettingsPage()
         {
             m_settingsPage.Refresh();
