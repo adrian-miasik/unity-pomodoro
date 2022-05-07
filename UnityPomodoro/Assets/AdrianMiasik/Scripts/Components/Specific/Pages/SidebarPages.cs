@@ -25,7 +25,7 @@ namespace AdrianMiasik.Components.Specific.Pages
                 m_aboutPage
             };
 
-            Initialize(pages);
+            Initialize(Timer, pages, updateColors);
             onSelectionChange += OnSelectionChange;
         }
 

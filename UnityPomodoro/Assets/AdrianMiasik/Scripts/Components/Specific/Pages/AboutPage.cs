@@ -35,6 +35,7 @@ namespace AdrianMiasik.Components.Specific.Pages
             
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             m_description.color = currentColors.m_foreground;
+            m_socials.ColorUpdate(theme);
             m_versionNumber.SetTextColor(currentColors.m_foreground);
             m_copyrightDisclaimer.color = currentColors.m_foreground;
         }
