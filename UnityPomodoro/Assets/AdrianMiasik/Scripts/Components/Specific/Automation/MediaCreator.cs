@@ -16,8 +16,8 @@ namespace AdrianMiasik.Components.Specific.Automation
     public class MediaCreator: MonoBehaviour
     {
         private static PomodoroTimer _timer;
-        private static Queue<Action> _screenshotScenarios = new Queue<Action>();
-        private static Queue<Action> _ssCopy = new Queue<Action>(); // Intended to be used for dark mode capture
+        private static Queue<Action> _screenshotScenarios = new();
+        private static Queue<Action> _ssCopy = new(); // Intended to be used for dark mode capture
         private static bool _hasDarkModeBeenCaptured;
         private static int _screenshotIndex;
         private static bool _startingThemeDarkMode;
