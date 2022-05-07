@@ -5,10 +5,10 @@ using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Specific.Pages
+namespace AdrianMiasik.Components.Core.Items.Pages
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> page used to display a set of interactable <see cref="SystemSettings"/> and
+    /// A <see cref="Page"/> used to display a set of interactable <see cref="SystemSettings"/> and
     /// <see cref="TimerSettings"/>.
     /// </summary>
     public class SettingsPage : Page

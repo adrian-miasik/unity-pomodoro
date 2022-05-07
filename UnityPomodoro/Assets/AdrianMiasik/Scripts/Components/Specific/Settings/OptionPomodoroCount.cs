@@ -1,8 +1,8 @@
 using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
+using AdrianMiasik.Components.Core.Items.Pages;
 using AdrianMiasik.Components.Core.Settings;
-using AdrianMiasik.Components.Specific.Pages;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings

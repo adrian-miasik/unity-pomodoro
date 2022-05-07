@@ -1,7 +1,7 @@
 using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
-using AdrianMiasik.Components.Specific.Pages;
+using AdrianMiasik.Components.Core.Items.Pages;
 
 namespace AdrianMiasik.Components.Specific.Settings
 {

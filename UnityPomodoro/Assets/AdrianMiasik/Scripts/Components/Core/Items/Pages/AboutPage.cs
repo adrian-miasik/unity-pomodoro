@@ -1,14 +1,13 @@
 using AdrianMiasik.Components.Base;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Specific.Pages
+namespace AdrianMiasik.Components.Core.Items.Pages
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> page used to display information about our application.
+    /// A <see cref="Page"/> used to display information about our application.
     /// Includes a description, social buttons (<seealso cref="ThemeIconContainer"/>), version number, and a
     /// copyright disclaimer.
     /// </summary>
