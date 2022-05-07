@@ -22,17 +22,5 @@ namespace AdrianMiasik.Components.Core.Containers
                 icon.Initialize(pomodoroTimer, updateColors);
             }
         }
-
-        /// <summary>
-        /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
-        /// </summary>
-        /// <param name="theme">The theme to apply on our referenced components.</param>
-        public void ColorUpdate(Theme theme)
-        {
-            foreach (ThemeIcon icon in m_icons)
-            {
-                icon.ColorUpdate(theme);
-            }
-        }
     }
 }
