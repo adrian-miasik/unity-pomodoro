@@ -41,6 +41,20 @@ namespace AdrianMiasik.Components.Base
         public OnDeselected onDeselected;
 
         /// <summary>
+        /// Initializes with a specific set of objects
+        /// </summary>
+        /// <param name="allSelectionItems"></param>
+        protected virtual void Initialize(IEnumerable<T> allSelectionItems)
+        {
+            foreach (T item in allSelectionItems)
+            {
+                m_items.Add(item);
+            }
+
+            Initialize();
+        }
+
+        /// <summary>
         /// Initializes with the serialized list
         /// </summary>
         private void Initialize()
@@ -49,22 +63,6 @@ namespace AdrianMiasik.Components.Base
             currentItem = m_items[currentIndex];
         }
 
-        /// <summary>
-        /// Initializes with a specific set of objects
-        /// </summary>
-        /// <param name="allSelectionItems"></param>
-        public virtual void Initialize(PomodoroTimer pomodoroTimer, IEnumerable<T> allSelectionItems, bool updateColors = false)
-        {
-            base.Initialize(pomodoroTimer, updateColors);
-            
-            foreach (T item in allSelectionItems)
-            {
-                m_items.Add(item);
-            }
-
-            Initialize();
-        }
-        
         public void Clear()
         {
             m_items.Clear();
