@@ -45,10 +45,10 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\HotkeyDetector.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialog.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ConfirmationDialogManager.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Pages\TimerPage.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\Pages\TimerPage.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\ScriptableObjects\Theme.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\TomatoCounter.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Pages\AboutPage.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\Pages\AboutPage.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionMuteAudioOutOfFocus.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\UWP\UWPNotifications.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Settings\SystemSettings.cs" />
@@ -62,7 +62,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ClickButtonImageIcon.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\Sidebar.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ToggleSprite.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Pages\SettingsPage.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\Pages\SettingsPage.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Dropdown.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Automation\MediaCapture.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\ITimerState.cs" />
@@ -91,7 +91,7 @@
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\WriteVersionNumber.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Base\TimerProgress.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Interfaces\IColorHook.cs" />
-     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Pages\SidebarPages.cs" />
+     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\SidebarPages.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\Tomato.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Containers\ThemeIconContainer.cs" />
      <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ImageHoverColorChange.cs" />
