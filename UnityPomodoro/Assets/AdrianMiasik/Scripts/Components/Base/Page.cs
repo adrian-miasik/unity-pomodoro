@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using AdrianMiasik.Components.Specific.Pages;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;

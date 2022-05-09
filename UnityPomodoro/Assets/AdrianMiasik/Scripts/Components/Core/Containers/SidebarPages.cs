@@ -1,9 +1,14 @@
 ﻿using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Items.Pages;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Specific.Pages
+namespace AdrianMiasik.Components.Core.Containers
 {
+    /// <summary>
+    /// A <see cref="ItemSelector{T}"/> that hold's references to all our application <see cref="Page"/>'s.
+    /// Intended to control which page is currently selected/opened/seen.
+    /// </summary>
     public class SidebarPages : ItemSelector<Page>
     {
         [SerializeField] private TimerPage m_timerPage;
@@ -25,7 +30,7 @@ namespace AdrianMiasik.Components.Specific.Pages
                 m_aboutPage
             };
 
-            Initialize(Timer, pages, updateColors);
+            Initialize(pages);
             onSelectionChange += OnSelectionChange;
         }
 
