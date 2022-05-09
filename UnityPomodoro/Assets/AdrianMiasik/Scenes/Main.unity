@@ -501,6 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 59348934}
   - component: {fileID: 59348935}
+  - component: {fileID: 59348936}
   m_Layer: 5
   m_Name: TimerPage
   m_TagString: Untagged
@@ -529,7 +530,7 @@ RectTransform:
   - {fileID: 1799029428}
   m_Father: {fileID: 288170239}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.000018950986, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -548,7 +549,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: {fileID: 0}
+  m_pageTurning: {fileID: 59348936}
+  m_pageEntry: {fileID: 7400000, guid: a05c4af09797cb84a881f6d56ca58b0f, type: 2}
+  m_pageExit: {fileID: 7400000, guid: 5f5a61b29d8559646a34cc912370d226, type: 2}
   m_format: {fileID: 1015735896}
+--- !u!111 &59348936
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59348933}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: a05c4af09797cb84a881f6d56ca58b0f, type: 2}
+  - {fileID: 7400000, guid: 5f5a61b29d8559646a34cc912370d226, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &61516144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,7 +2059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 14.546278
+      value: 14.58847
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2793,7 +2814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 14.546278
+      value: 14.58847
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5014,7 +5035,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.05
+  m_fontSize: 27.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5613,7 +5634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 14.546278
+      value: 14.58847
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6489,7 +6510,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.8
+  m_fontSize: 16.85
   m_fontSizeBase: 10.07
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8513,7 +8534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 14.546278
+      value: 14.58847
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -11471,6 +11492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2037041484}
   - component: {fileID: 2037041485}
+  - component: {fileID: 2037041486}
   m_Layer: 5
   m_Name: SettingsPage
   m_TagString: Untagged
@@ -11513,11 +11535,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: {fileID: 1916053762}
+  m_pageTurning: {fileID: 2037041486}
+  m_pageEntry: {fileID: 7400000, guid: a05c4af09797cb84a881f6d56ca58b0f, type: 2}
+  m_pageExit: {fileID: 7400000, guid: 5f5a61b29d8559646a34cc912370d226, type: 2}
   m_optionDigitFormat: {fileID: 526585175}
   m_optionPomodoroCount: {fileID: 6456144761252582934}
   m_optionEnableLongBreak: {fileID: 227557847}
   m_optionMuteSoundOutOfFocusToggle: {fileID: 1616257834193032480}
   m_optionUnityAnalytics: {fileID: 1789918960}
+--- !u!111 &2037041486
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037041483}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: a05c4af09797cb84a881f6d56ca58b0f, type: 2}
+  - {fileID: 7400000, guid: 5f5a61b29d8559646a34cc912370d226, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &2052387861
 GameObject:
   m_ObjectHideFlags: 0
@@ -12345,6 +12387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2138225465}
   - component: {fileID: 2138225466}
+  - component: {fileID: 2138225467}
   m_Layer: 5
   m_Name: AboutPage
   m_TagString: Untagged
@@ -12390,10 +12433,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: {fileID: 1825885570}
+  m_pageTurning: {fileID: 2138225467}
+  m_pageEntry: {fileID: 7400000, guid: a05c4af09797cb84a881f6d56ca58b0f, type: 2}
+  m_pageExit: {fileID: 7400000, guid: 5f5a61b29d8559646a34cc912370d226, type: 2}
   m_description: {fileID: 1322874092}
   m_socials: {fileID: 167431533}
   m_versionNumber: {fileID: 2085487370}
   m_copyrightDisclaimer: {fileID: 2052387863}
+--- !u!111 &2138225467
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138225464}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: a05c4af09797cb84a881f6d56ca58b0f, type: 2}
+  - {fileID: 7400000, guid: 5f5a61b29d8559646a34cc912370d226, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &2140539844
 GameObject:
   m_ObjectHideFlags: 0
