@@ -92,5 +92,31 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             m_settingsPage.SetDigitFormatDropdown(digitFormatIndex);
         }
+
+        public void MCSwitchToMainPageInstant()
+        {
+            m_aboutPage.gameObject.SetActive(false);
+            m_settingsPage.gameObject.SetActive(false);
+            
+            m_timerPage.gameObject.SetActive(true);
+        }
+
+        public void MCSwitchToAboutPageInstant()
+        {
+            m_timerPage.gameObject.SetActive(false);
+            m_settingsPage.gameObject.SetActive(false);
+            
+            m_aboutPage.gameObject.SetActive(true);
+            m_aboutPage.ColorUpdate(Timer.GetTheme());
+        }
+
+        public void MCSwitchToSettingsPageInstant()
+        {
+            m_timerPage.gameObject.SetActive(false);
+            m_aboutPage.gameObject.SetActive(false);
+            
+            m_settingsPage.gameObject.SetActive(true);
+            m_settingsPage.ColorUpdate(Timer.GetTheme());
+        }
     }
 }

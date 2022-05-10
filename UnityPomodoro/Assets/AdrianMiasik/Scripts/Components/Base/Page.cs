@@ -49,11 +49,13 @@ namespace AdrianMiasik.Components.Base
 
         public override void ColorUpdate(Theme theme)
         {
+#if !UNITY_EDITOR // Ignore for Unity Editor for our Media Creator
             // Skip the color update if this page isn't open.
             if (!isOpen)
             {
                 return;
             }
+#endif
 
             m_title.color = theme.GetCurrentColorScheme().m_foreground;
         }
