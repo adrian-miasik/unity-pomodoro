@@ -74,7 +74,7 @@ public partial class TranslucentImage : Image, IMeshModifier
     bool IsInPrefabMode()
     {
 #if UNITY_EDITOR
-        var stage = UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+        var stage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
         if (stage != null)
         {
             return true;

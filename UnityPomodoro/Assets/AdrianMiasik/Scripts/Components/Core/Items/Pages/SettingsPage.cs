@@ -1,3 +1,4 @@
+using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
@@ -5,10 +6,10 @@ using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Specific.Pages
+namespace AdrianMiasik.Components.Core.Items.Pages
 {
     /// <summary>
-    /// A <see cref="ThemeElement"/> page used to display a set of interactable <see cref="SystemSettings"/> and
+    /// A <see cref="Page"/> used to display a set of interactable <see cref="SystemSettings"/> and
     /// <see cref="TimerSettings"/>.
     /// </summary>
     public class SettingsPage : Page
@@ -99,11 +100,11 @@ namespace AdrianMiasik.Components.Specific.Pages
         /// <summary>
         /// Displays this panel to the user.
         /// </summary>
-        public override void Show()
+        public override void Show(Action onAnimationCompletion)
         {
             m_optionDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
             
-            base.Show();
+            base.Show(onAnimationCompletion);
         }
         
         /// <summary>

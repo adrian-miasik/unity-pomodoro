@@ -1,4 +1,4 @@
-﻿using AdrianMiasik.Components.Specific.Pages;
+﻿using System;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -14,16 +14,48 @@ namespace AdrianMiasik.Components.Base
     public class Page : ThemeElement
     {
         [SerializeField] private TMP_Text m_title;
+        [SerializeField] private Animation m_pageTurning;
+        [SerializeField] private AnimationClip m_pageEntry;
+        [SerializeField] private AnimationClip m_pageExit;
 
+        private Action onPageAnimCompletion;
+
+        private bool isAnimating;
         private bool isOpen;
-        
+
+        private void Update()
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            if (isAnimating)
+            {
+                if (!m_pageTurning.isPlaying)
+                {
+                    isAnimating = false;
+                    
+                    onPageAnimCompletion?.Invoke();
+
+                    if (m_pageTurning.clip == m_pageExit)
+                    {
+                        gameObject.SetActive(false);
+                    }
+                    onPageAnimCompletion = null;
+                }
+            }
+        }
+
         public override void ColorUpdate(Theme theme)
         {
+#if !UNITY_EDITOR // Ignore for Unity Editor for our Media Creator
             // Skip the color update if this page isn't open.
             if (!isOpen)
             {
                 return;
             }
+#endif
 
             m_title.color = theme.GetCurrentColorScheme().m_foreground;
         }
@@ -40,20 +72,38 @@ namespace AdrianMiasik.Components.Base
         /// <summary>
         /// Displays this page to the user.
         /// </summary>
-        public virtual void Show()
+        /// <param name="onAnimationCompletion">What do you want to do when the page turning animation is completed?</param>
+        public virtual void Show(Action onAnimationCompletion)
         {
             gameObject.SetActive(true);
+
+            onPageAnimCompletion = () =>
+            {
+                onAnimationCompletion?.Invoke();
+            };
+
+            m_pageTurning.clip = m_pageEntry;
+            m_pageTurning.Play();
+            isAnimating = true;
             isOpen = true;
             
             ColorUpdate(Timer.GetTheme());
         }
-
+        
         /// <summary>
         /// Hides this page away from the user.
         /// </summary>
-        public virtual void Hide()
+        /// <param name="onAnimationCompletion">What do you want to do when the page turning animation is completed?</param>
+        public virtual void Hide(Action onAnimationCompletion)
         {
-            gameObject.SetActive(false);
+            onPageAnimCompletion = () =>
+            {
+                onAnimationCompletion?.Invoke();
+            };
+            
+            m_pageTurning.clip = m_pageExit;
+            m_pageTurning.Play();
+            isAnimating = true;
             isOpen = false;
         }
         

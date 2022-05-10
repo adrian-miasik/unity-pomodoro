@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace AdrianMiasik.Android
 {
+    /// <summary>
+    /// Used to serve Android OS level notifications/toasts to the user. Intended to be used with
+    /// <see cref="ITimerState"/> to queue notifications when necessary.
+    /// </summary>
     public class AndroidNotifications : MonoBehaviour, ITimerState
     {
 #if UNITY_ANDROID
@@ -19,6 +23,10 @@ namespace AdrianMiasik.Android
             ALARMS
         }
 
+        /// <summary>
+        /// Creates our necessary Android Notification Channels 
+        /// </summary>
+        /// <param name="pomodoroTimer"></param>
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
@@ -69,6 +77,10 @@ namespace AdrianMiasik.Android
                 GetChannelString(NotificationChannels.ALARMS));
         }
 
+        /// <summary>
+        /// Cancels and prevents our scheduled notifications from being shown or invoked later.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         private void CancelScheduledTimerNotification()
         {
             NotificationStatus notificationStatus = 
@@ -91,12 +103,24 @@ namespace AdrianMiasik.Android
             }
         }
         
+        /// <summary>
+        /// Returns the channel string in lower case sensitivity.
+        /// </summary>
+        /// <param name="desiredChannel"></param>
+        /// <returns></returns>
         private string GetChannelString(NotificationChannels desiredChannel)
         {
             return desiredChannel.ToString().ToLower();
         }
 
 #endif
+        /// <summary>
+        /// Determines what to do with our notifications based on Timer States. So if we return to setup mode,
+        /// we discard our queued notifications, etc...
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="theme"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
 #if UNITY_ANDROID

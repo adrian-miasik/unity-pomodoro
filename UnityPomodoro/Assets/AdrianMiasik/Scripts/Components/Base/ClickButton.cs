@@ -19,8 +19,23 @@ namespace AdrianMiasik.Components.Base
         public bool m_isPitchVariationOn = true;
         public float m_lowestPitch = 0.9f;
         public float m_highestPitch = 1.1f;
-        public float m_clickHoldScale = 0.75f;  // What scale do you want the target to scale to on press?
-        public AnimationCurve m_clickReleaseScale; // What scale do you want the target to scale after click
+        
+        /// <summary>
+        /// What transform scale do you want the target to scale to on button press?
+        /// </summary>
+        public float m_clickHoldScale = 0.75f;
+        
+        /// <summary>
+        /// What transform scale (animation over time) do you want the target to scale to on button release/after click?
+        /// Used as a release animation.
+        /// </summary>
+        public AnimationCurve m_clickReleaseScale;
+        
+        /// <summary>
+        /// How fast do you want to press/click the button when user is holding down the button? Initially set to be
+        /// somewhat exponentially faster. This way the longer the user holds, the faster we invoke the next click.
+        /// Ideally scenario is incrementing / decrementing our timer digits.
+        /// </summary>
         public AnimationCurve m_holdRamp;
 
         // Unity Events
@@ -29,7 +44,7 @@ namespace AdrianMiasik.Components.Base
         public UnityEvent m_onClick;
         
         // Press and Release
-        private Vector3 cachedScale = Vector3.one; // Default
+        private Vector3 cachedScale = Vector3.one;
         private bool isAnimatingRelease;
         private float accumulatedReleaseTime;
         

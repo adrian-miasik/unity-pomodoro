@@ -7,7 +7,6 @@ using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
-using AdrianMiasik.Components.Specific.Pages;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
@@ -123,7 +122,7 @@ namespace AdrianMiasik
         private float totalTime; // Total time (In seconds)
         private bool isTimerBeingSetup = true; // First time playing
 #if UNITY_ANDROID
-        private TimeSpan focusLoss;
+        private TimeSpan focusLossTime;
 #endif
 
         // Pause Fade Animation
@@ -160,18 +159,12 @@ namespace AdrianMiasik
             {
                 AudioListener.volume = 1;
             }
-
-            if (m_state != States.RUNNING)
-            {
-                // Early Exit
-                return;
-            }
             
             if (!hasFocus)
             {
 #if UNITY_ANDROID
                 // Cache the time we lost focus.
-                focusLoss = DateTime.Now.TimeOfDay;
+                focusLossTime = DateTime.Now.TimeOfDay;
 #endif
                 
                 Application.targetFrameRate = 0;
@@ -180,7 +173,7 @@ namespace AdrianMiasik
             {
 #if UNITY_ANDROID
                 // Calculate the new time progress based on our focus loss time.
-                double secondsPassedSinceFocusLoss = DateTime.Now.TimeOfDay.TotalSeconds - focusLoss.TotalSeconds;
+                double secondsPassedSinceFocusLoss = DateTime.Now.TimeOfDay.TotalSeconds - focusLossTime.TotalSeconds;
                 currentTime -= secondsPassedSinceFocusLoss;
 #endif                
 
@@ -314,20 +307,27 @@ namespace AdrianMiasik
             if (enableUnityAnalytics)
             {
                 // Enable analytics
-                StartServices(isBootingUp);
+                StartAnalyticsService(isBootingUp);
             }
             else
             {
+                // Send disabled event log
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    { "testingKey", "testingValue1234Disabled" },
+                };
+                AnalyticsService.Instance.CustomData("analyticsServiceDisabled", parameters);
+                AnalyticsService.Instance.Flush();
+
                 // Disable analytics
                 Analytics.enabled = false;
                 PerformanceReporting.enabled = false;
                 Analytics.limitUserTracking = true;
                 Analytics.deviceStatsEnabled = false;
+                AnalyticsService.Instance.SetAnalyticsEnabled(false);
 
 #if UNITY_ANALYTICS_EVENT_LOGS
-                Debug.LogWarning("Unity Analytics - Stopped Service. " +
-                                 "(Service will still cache some events into it's buffer it seems, but won't upload " +
-                                 "them.)");
+                Debug.LogWarning("Unity Analytics - Stopped Service.");
 #endif
             }
         }
@@ -336,15 +336,12 @@ namespace AdrianMiasik
         /// Starts up our Unity Analytics service.
         /// </summary>
         /// <param name="isBootingUp"></param>
-        async void StartServices(bool isBootingUp)
+        async void StartAnalyticsService(bool isBootingUp)
         {
             try
             {
-                // Debug.LogWarning("Unity Analytics - Starting Up Service...");
-                
                 await UnityServices.InitializeAsync();
-                List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
-                
+
 #if UNITY_ANALYTICS_EVENT_LOGS
                 Debug.LogWarning("Unity Analytics - Service Started.");
 #endif
@@ -354,29 +351,30 @@ namespace AdrianMiasik
                 PerformanceReporting.enabled = true;
                 Analytics.limitUserTracking = false;
                 Analytics.deviceStatsEnabled = true;
+                await AnalyticsService.Instance.SetAnalyticsEnabled(true);
 
                 if (isBootingUp)
                 {
                     // Send enabled event log
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        { "testingKey", "testingValue123Init" },
+                        { "testingKey", "testingValue1234Init" },
                     };
-                    Events.CustomData("analyticsInitialized", parameters);
-                    Events.Flush();
+                    AnalyticsService.Instance.CustomData("analyticsServiceInitialized", parameters);
+                    AnalyticsService.Instance.Flush();
                 }
                 else
                 {
                     // Send enabled event log
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        { "testingKey", "testingValue123Enabled" },
+                        { "testingKey", "testingValue1234Enabled" },
                     };
-                    Events.CustomData("analyticsEnabled", parameters);
-                    Events.Flush();
+                    AnalyticsService.Instance.CustomData("analyticsServiceEnabled", parameters);
+                    AnalyticsService.Instance.Flush();
                 }
             }
-            catch (ConsentCheckException e)
+            catch (ConsentCheckException)
             {
                
             }
@@ -875,6 +873,8 @@ namespace AdrianMiasik
             {
                 ResetDigitFadeAnim();
             }
+            
+            m_sidebarPages.RefreshTimerPage();
         }
         
         public void ShowSettings()
@@ -1578,9 +1578,28 @@ namespace AdrianMiasik
         {
             m_themeSlider.EnableAnimation();
         }
+
+        public void MCShowMain()
+        {
+            m_sidebarPages.MCSwitchToMainPageInstant();
+        }
+
+        public void MCShowAbout()
+        {
+            m_sidebarPages.MCSwitchToAboutPageInstant();
+            
+            // Special behaviour that's used to display/open up credits bubble when on this page
+            m_creditsGhost.Lock();
+            m_creditsGhost.FadeIn();
+        }
+
+        public void MCShowSettings()
+        {
+            m_sidebarPages.MCSwitchToSettingsPageInstant();
+        }
+
 #endif
-
-
+        
         // Settings
         public SystemSettings GetSystemSettings()
         {
@@ -1591,7 +1610,7 @@ namespace AdrianMiasik
         {
             return loadedTimerSettings;
         }
-        
+
         public void ShowTickAnimation()
         {
             m_digitFormat.ShowTickAnimation();
