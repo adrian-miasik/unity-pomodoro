@@ -307,20 +307,27 @@ namespace AdrianMiasik
             if (enableUnityAnalytics)
             {
                 // Enable analytics
-                StartServices(isBootingUp);
+                StartAnalyticsService(isBootingUp);
             }
             else
             {
+                // Send disabled event log
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    { "testingKey", "testingValue1234Disabled" },
+                };
+                AnalyticsService.Instance.CustomData("analyticsServiceDisabled", parameters);
+                AnalyticsService.Instance.Flush();
+
                 // Disable analytics
                 Analytics.enabled = false;
                 PerformanceReporting.enabled = false;
                 Analytics.limitUserTracking = true;
                 Analytics.deviceStatsEnabled = false;
+                AnalyticsService.Instance.SetAnalyticsEnabled(false);
 
 #if UNITY_ANALYTICS_EVENT_LOGS
-                Debug.LogWarning("Unity Analytics - Stopped Service. " +
-                                 "(Service will still cache some events into it's buffer it seems, but won't upload " +
-                                 "them.)");
+                Debug.LogWarning("Unity Analytics - Stopped Service.");
 #endif
             }
         }
@@ -329,15 +336,12 @@ namespace AdrianMiasik
         /// Starts up our Unity Analytics service.
         /// </summary>
         /// <param name="isBootingUp"></param>
-        async void StartServices(bool isBootingUp)
+        async void StartAnalyticsService(bool isBootingUp)
         {
             try
             {
-                // Debug.LogWarning("Unity Analytics - Starting Up Service...");
-                
                 await UnityServices.InitializeAsync();
-                List<string> consentIdentifiers = await Events.CheckForRequiredConsents();
-                
+
 #if UNITY_ANALYTICS_EVENT_LOGS
                 Debug.LogWarning("Unity Analytics - Service Started.");
 #endif
@@ -347,26 +351,27 @@ namespace AdrianMiasik
                 PerformanceReporting.enabled = true;
                 Analytics.limitUserTracking = false;
                 Analytics.deviceStatsEnabled = true;
+                await AnalyticsService.Instance.SetAnalyticsEnabled(true);
 
                 if (isBootingUp)
                 {
                     // Send enabled event log
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        { "testingKey", "testingValue123Init" },
+                        { "testingKey", "testingValue1234Init" },
                     };
-                    Events.CustomData("analyticsInitialized", parameters);
-                    Events.Flush();
+                    AnalyticsService.Instance.CustomData("analyticsServiceInitialized", parameters);
+                    AnalyticsService.Instance.Flush();
                 }
                 else
                 {
                     // Send enabled event log
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        { "testingKey", "testingValue123Enabled" },
+                        { "testingKey", "testingValue1234Enabled" },
                     };
-                    Events.CustomData("analyticsEnabled", parameters);
-                    Events.Flush();
+                    AnalyticsService.Instance.CustomData("analyticsServiceEnabled", parameters);
+                    AnalyticsService.Instance.Flush();
                 }
             }
             catch (ConsentCheckException)

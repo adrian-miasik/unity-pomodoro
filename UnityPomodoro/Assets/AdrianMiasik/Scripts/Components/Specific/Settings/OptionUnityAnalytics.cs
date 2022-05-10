@@ -36,49 +36,12 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             if (!state)
             {
-                Timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
-                {
-                    // Send disabled event log
-                    Dictionary<string, object> parameters = new Dictionary<string, object>()
-                    {
-                        { "testingKey", "testingValue123Disabled" },
-                    };
-                    Events.CustomData("analyticsDisabled", parameters);
-                    Events.Flush();
-                    
-                    // Disable analytics
-                    Timer.ToggleUnityAnalytics(false, false);
-#if UNITY_ANALYTICS_EVENT_LOGS
-                    Debug.LogWarning("Unity Analytics - Restarting Application with Disabled Analytics.");
-#endif
-                    
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.ExitPlaymode();
-#elif UNITY_ANDROID
-                    RestartAndroidProcess();
-#else
-                    // Windows + (hopefully mac and linux too... TODO: Device testing)
-                    System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
-                    Application.Quit();
-#endif
-                }, () =>
-                {
-                    // Cancel visuals if they don't agree
-                    m_toggleSlider.Refresh(true);
-                    
-                    // Edge condition: If playing in editor and tweaking values via inspector...
-#if UNITY_EDITOR
-                    if (Application.isPlaying)
-                    {
-                        // Apply and save
-                        Timer.GetSystemSettings().m_enableUnityAnalytics = true;
-                        UserSettingsSerializer.SaveSystemSettings(Timer.GetSystemSettings());
-                    }
-#endif
-                }, "Disabling 'Unity Analytics' requires a restart.", "");
+                // Disable analytics
+                Timer.ToggleUnityAnalytics(false, false);
             }
             else
             {
+                // Enable analytics
                 Timer.ToggleUnityAnalytics(true, false);
             }
         }
