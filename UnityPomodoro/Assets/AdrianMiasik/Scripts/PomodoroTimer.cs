@@ -1578,9 +1578,28 @@ namespace AdrianMiasik
         {
             m_themeSlider.EnableAnimation();
         }
+
+        public void MCShowMain()
+        {
+            m_sidebarPages.MCSwitchToMainPageInstant();
+        }
+
+        public void MCShowAbout()
+        {
+            m_sidebarPages.MCSwitchToAboutPageInstant();
+            
+            // Special behaviour that's used to display/open up credits bubble when on this page
+            m_creditsGhost.Lock();
+            m_creditsGhost.FadeIn();
+        }
+
+        public void MCShowSettings()
+        {
+            m_sidebarPages.MCSwitchToSettingsPageInstant();
+        }
+
 #endif
-
-
+        
         // Settings
         public SystemSettings GetSystemSettings()
         {
@@ -1591,7 +1610,7 @@ namespace AdrianMiasik
         {
             return loadedTimerSettings;
         }
-        
+
         public void ShowTickAnimation()
         {
             m_digitFormat.ShowTickAnimation();
