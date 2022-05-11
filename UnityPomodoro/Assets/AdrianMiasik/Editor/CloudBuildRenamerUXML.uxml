@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:TextField picking-mode="Ignore" label="Unity Cloud Builds Directory: " name="unity-cloud-build-dir" style="visibility: visible;">
+        <ui:Button text="Browse..." display-tooltip-when-elided="true" name="browse-button" style="white-space: nowrap;" />
+    </ui:TextField>
+    <ui:Button text="Rename Builds" display-tooltip-when-elided="true" name="rename-button" style="left: auto; -unity-text-align: middle-center; white-space: nowrap;" />
+</ui:UXML>
