@@ -110,7 +110,7 @@ public class TranslucentImageBlurSource : ScriptableRendererFeature
         blurAlgorithm.Init(tis.BlurConfig, activeBlitMode);
         RendererType rendererType = RendererType.Universal;
 
-        if (renderer is ForwardRenderer)
+        if (renderer is UniversalRenderer)
         {
             universalRendererInternal.CacheRenderer(renderer);
         }

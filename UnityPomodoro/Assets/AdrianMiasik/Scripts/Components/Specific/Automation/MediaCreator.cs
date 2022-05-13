@@ -16,8 +16,8 @@ namespace AdrianMiasik.Components.Specific.Automation
     public class MediaCreator: MonoBehaviour
     {
         private static PomodoroTimer _timer;
-        private static Queue<Action> _screenshotScenarios = new Queue<Action>();
-        private static Queue<Action> _ssCopy = new Queue<Action>(); // Intended to be used for dark mode capture
+        private static Queue<Action> _screenshotScenarios = new();
+        private static Queue<Action> _ssCopy = new(); // Intended to be used for dark mode capture
         private static bool _hasDarkModeBeenCaptured;
         private static int _screenshotIndex;
         private static bool _startingThemeDarkMode;
@@ -187,14 +187,14 @@ namespace AdrianMiasik.Components.Specific.Automation
         private static void TakeSettingScreenshot(MediaCapture mediaCapture)
         {
             _timer.SetSelection(null); // Clear selection
-            _timer.ShowSettings();
+            _timer.MCShowSettings();
             
             CaptureScreenshot(mediaCapture);
         }
 
         private static void TakeAboutScreenshot(MediaCapture mediaCapture)
         {
-            _timer.ShowAbout();
+            _timer.MCShowAbout();
             _timer.MCShowCreditsBubble();
             
             CaptureScreenshot(mediaCapture);
@@ -202,7 +202,7 @@ namespace AdrianMiasik.Components.Specific.Automation
 
         private static void TakeRunningPopupScreenshot(MediaCapture mediaCapture)
         {
-            _timer.ShowMainContent();
+            _timer.MCShowMain();
             
             _timer.MCHideCreditsBubble();
             _timer.SwitchState(PomodoroTimer.States.RUNNING);

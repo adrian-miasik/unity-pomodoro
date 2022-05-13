@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 489833435901344923}
   m_RootOrder: 1
@@ -78,6 +79,7 @@ GameObject:
   - component: {fileID: 489833435901344923}
   - component: {fileID: 489833435901344919}
   - component: {fileID: 489833435901344920}
+  - component: {fileID: 1215093950257711213}
   m_Layer: 5
   m_Name: Tomato
   m_TagString: Untagged
@@ -95,6 +97,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2331137690116144154}
   - {fileID: 489833435528934708}
@@ -124,6 +127,7 @@ MonoBehaviour:
   m_hollowFullBody: {fileID: 3286163911610860551, guid: 950f714936384174d8995e5cb0103ff5, type: 3}
   m_croppedBody: {fileID: 3286163911610860551, guid: 7729dfaae7148c34a8ec3d9b9b9d53c6, type: 3}
   m_fullBody: {fileID: 3286163911610860551, guid: 5ce15b01615b9dc4c8ac0286c48fb1bf, type: 3}
+  m_spawnTomato: {fileID: 1215093950257711213}
 --- !u!114 &489833435901344920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +142,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1
+--- !u!111 &1215093950257711213
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489833435901344922}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1c845aa170fb10a429ad7b22252bfb2c, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1c845aa170fb10a429ad7b22252bfb2c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5747956155513954043
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +186,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 489833435901344923}
   m_RootOrder: 0
