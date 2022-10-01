@@ -29,7 +29,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             // Early Exit
             if (!Application.isPlaying)
             {
-                Debug.LogWarning("Please make sure Unity is in play mode and this timer is initialized to" +
+                Debug.LogWarning("Please make sure Unity is in play mode and this timer is initialized to " +
                                  "create your media.");
                 Debug.Log("No media has been created.");
                 return;
@@ -134,6 +134,7 @@ namespace AdrianMiasik.Components.Specific.Automation
             CaptureScreenshot(mediaCapture);
         }
 
+        [ContextMenu("TakeRunningScreenshot")]
         private static void TakeRunningScreenshot(MediaCapture mediaCapture)
         {
             _timer.MCHideCreditsBubble();
