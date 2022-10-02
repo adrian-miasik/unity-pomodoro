@@ -854,7 +854,10 @@ namespace AdrianMiasik
         /// </summary>
         public void ShowMainContent()
         {
-            m_sidebarPages.SwitchToTimerPage();
+            m_sidebarPages.SwitchToTimerPage(() =>
+            {
+                m_digitFormat.InitializeRuntimeCaret();
+            });
             
             m_digitFormat.GenerateFormat();
             m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime)); // Update visuals to current time

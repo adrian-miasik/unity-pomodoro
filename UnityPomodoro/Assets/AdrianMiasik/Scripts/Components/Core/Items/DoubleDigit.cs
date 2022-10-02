@@ -83,6 +83,13 @@ namespace AdrianMiasik.Components.Core.Items
             format = digitFormat;
             m_digit = digit;
 
+            InitializeRuntimeCaret();
+            
+            HideArrows();
+        }
+
+        public void InitializeRuntimeCaret()
+        {
             // Disable run time caret interactions - We want to run input through this classes input events
             caret = m_input.textViewport.GetChild(0).GetComponent<TMP_SelectionCaret>();
             if (caret)
@@ -90,8 +97,6 @@ namespace AdrianMiasik.Components.Core.Items
                 // Prevent input field from getting selection focus
                 caret.raycastTarget = false;
             }
-            
-            HideArrows();
         }
 
         /// <summary>

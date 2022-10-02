@@ -18,6 +18,11 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             m_format.RefreshDigitVisuals();
         }
 
+        public void InitializeRuntimeCaret()
+        {
+            m_format.InitializeRuntimeCaret();
+        }
+
         public override void ColorUpdate(Theme theme)
         {
             // No title

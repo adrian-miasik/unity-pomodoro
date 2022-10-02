@@ -2,6 +2,7 @@
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items.Pages;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AdrianMiasik.Components.Core.Containers
 {
@@ -14,6 +15,8 @@ namespace AdrianMiasik.Components.Core.Containers
         [SerializeField] private TimerPage m_timerPage;
         [SerializeField] private SettingsPage m_settingsPage;
         [SerializeField] private AboutPage m_aboutPage;
+
+        private readonly UnityEvent onTimerPageShow = new();
         
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
@@ -40,11 +43,24 @@ namespace AdrianMiasik.Components.Core.Containers
             // {
             //     return;
             // }
-            previousPage.Hide(() => newPage.Show(null));
+            previousPage.Hide(() =>
+            {
+                newPage.Show(null);
+                if (newPage == m_timerPage)
+                {
+                    onTimerPageShow?.Invoke();
+                    onTimerPageShow.RemoveAllListeners();
+                }
+            });
         }
 
-        public void SwitchToTimerPage()
+        public void SwitchToTimerPage(UnityAction onShow = null)
         {
+            if (onShow != null)
+            {
+                onTimerPageShow.AddListener(onShow);
+            }
+
             Select(m_timerPage);
         }
         

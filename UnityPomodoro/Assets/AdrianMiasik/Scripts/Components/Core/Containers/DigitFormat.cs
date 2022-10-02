@@ -181,6 +181,14 @@ namespace AdrianMiasik.Components.Core.Containers
             }
         }
         
+        public void InitializeRuntimeCaret()
+        {
+            foreach (DoubleDigit digit in generatedDigits)
+            {
+                digit.InitializeRuntimeCaret();
+            }
+        }
+
         // Specific to our anchored layouts
         private void ImproveLayoutVisuals()
         {
