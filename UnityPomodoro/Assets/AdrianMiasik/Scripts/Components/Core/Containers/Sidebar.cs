@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
@@ -57,9 +58,13 @@ namespace AdrianMiasik.Components.Core.Containers
         /// the sidebar width based on screen values.
         /// </summary>
         /// <param name="pomodoroTimer"></param>
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        /// <param name="resolutionDetector"></param>
+        public void Initialize(PomodoroTimer pomodoroTimer, ResolutionDetector resolutionDetector)
         {
             base.Initialize(pomodoroTimer);
+
+            // When resolution changes, re-calculate our content row texts to use the smallest font size.
+            resolutionDetector.onResolutionChange.AddListener(UniformContentRowFontSizesToLowestSize);
 
             // Fill content rows
             contentRows = new List<SidebarRow>
@@ -121,6 +126,12 @@ namespace AdrianMiasik.Components.Core.Containers
                         rowStaggerTime = 0;
                         rowsToSpawn[0].PlaySpawnAnimation();
                         rowsToSpawn.RemoveAt(0);
+
+                        if (rowsToSpawn.Count == 0)
+                        {
+                            // Stagger sequence finished...
+                            UniformContentRowFontSizesToLowestSize();
+                        }
                     }
                 }
             }
@@ -191,6 +202,7 @@ namespace AdrianMiasik.Components.Core.Containers
             foreach (SidebarRow row in contentRows)
             {
                 row.CancelHold();
+                row.ResetMaxFontSize();
             }
             m_logo.CancelHold();
 
@@ -280,6 +292,55 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 external.color = theme.GetCurrentColorScheme().m_foreground;
             }
+        }
+
+        /// <summary>
+        /// Will check each content row, and find the lowest font size. The lowest font size will then
+        /// be applied to each content row.
+        /// </summary>
+        private void UniformContentRowFontSizesToLowestSize()
+        {
+            if (!isOpen)
+            {
+                return;
+            }
+            
+            foreach (SidebarRow row in contentRows)
+            {
+                // Revert to starting font size (This way elements won't just shrink and never resize back to their max)
+                row.ResetMaxFontSize();
+            }
+
+            StartCoroutine(SetMaxFontSizeDelayed());
+        }
+
+        IEnumerator SetMaxFontSizeDelayed()
+        {
+            yield return new WaitForSeconds(1);
+            float smallestFoundFontSize = Mathf.Infinity;
+
+            foreach (SidebarRow row in contentRows)
+            {
+                // Cache lowest font size
+                float rowFontSize = row.GetLabelFontSize();
+                Debug.Log(rowFontSize, row.gameObject);
+                if (rowFontSize < smallestFoundFontSize)
+                {
+                    smallestFoundFontSize = rowFontSize;
+                }
+            }
+
+            Debug.Log("Smallest font found font size: " + smallestFoundFontSize);
+
+            yield return new WaitForSeconds(0.5f);
+
+            // Apply lowest found font size to all content rows
+            foreach (SidebarRow row in contentRows)
+            {
+                row.SetMaxFontSize(smallestFoundFontSize);
+            }
+            
+            Debug.Log("Applied max font size.");
         }
     }
 }
