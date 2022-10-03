@@ -15,7 +15,7 @@ namespace AdrianMiasik.Components.Specific
 
         private Vector2 cachedResolution;
         private float accumulatedTime;
-        private float checkEveryXSeconds = 1f;
+        private float checkEveryXSeconds = 0f;
 
         [HideInInspector] public UnityEvent onResolutionChange;
 

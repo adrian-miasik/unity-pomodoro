@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
+using AdrianMiasik.Components.Core.Helpers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AdrianMiasik.Components.Core.Containers
 { 
@@ -22,6 +24,9 @@ namespace AdrianMiasik.Components.Core.Containers
         [SerializeField] private ClickButtonImageIcon m_logo;
         [SerializeField] private RectTransform m_container;
         [SerializeField] private RectTransform m_background;
+        [SerializeField] private RectTransform m_maskBG;
+        [SerializeField] private RectTransform m_header;
+        [SerializeField] private CanvasGroup m_canvasGroup;
         [SerializeField] private SVGImage m_fill;
         [SerializeField] private SVGImage m_edge;
         [SerializeField] private TMP_Text m_versionNumber;
@@ -64,7 +69,7 @@ namespace AdrianMiasik.Components.Core.Containers
             base.Initialize(pomodoroTimer);
 
             // When resolution changes, re-calculate our content row texts to use the smallest font size.
-            resolutionDetector.onResolutionChange.AddListener(UniformContentRowFontSizesToLowestSize);
+            // resolutionDetector.onResolutionChange.AddListener(UniformContentRowFontSizesToLowestSize);
 
             // Fill content rows
             contentRows = new List<SidebarRow>
@@ -126,12 +131,6 @@ namespace AdrianMiasik.Components.Core.Containers
                         rowStaggerTime = 0;
                         rowsToSpawn[0].PlaySpawnAnimation();
                         rowsToSpawn.RemoveAt(0);
-
-                        if (rowsToSpawn.Count == 0)
-                        {
-                            // Stagger sequence finished...
-                            UniformContentRowFontSizesToLowestSize();
-                        }
                     }
                 }
             }
@@ -175,16 +174,74 @@ namespace AdrianMiasik.Components.Core.Containers
             
             isOpen = true;
             
+            // Open instantly
             m_container.gameObject.SetActive(true);
             gameObject.SetActive(true);
+            m_maskBG.gameObject.SetActive(true);
+            RectTransformHelper.StretchToFit(m_maskBG);
+            m_header.gameObject.SetActive(true);
+            m_edge.gameObject.SetActive(true);
+            foreach (SidebarRow contentRow in contentRows)
+            {
+                contentRow.Show();
+                contentRow.SetMaxFontSize(15f);
+                contentRow.RebuildFont();
+            }
+            // Opened sidebar visually from user
+            m_canvasGroup.alpha = 0;
 
-            PlayAnimation(m_entryAnimation);
+            StartCoroutine(CheckContentFontSizesDelayed(() =>
+            {
+                // Close instantly
+                m_maskBG.gameObject.SetActive(false);
+                m_header.gameObject.SetActive(false);
+                m_edge.gameObject.SetActive(false);
+
+                // Now show sidebar visually to user
+                m_canvasGroup.alpha = 1;
+                
+                // Open animation
+                PlayAnimation(m_entryAnimation);
+                Timer.ShowOverlay();
+
+                // Theming
+                ColorUpdate(Timer.GetTheme());
+                Timer.ColorUpdateCreditsBubble();
+            }));
+
+            // UniformContentRowFontSizesToLowestSize();
+        }
+
+        IEnumerator CheckContentFontSizesDelayed(UnityAction onCompletion)
+        {
+            yield return new WaitForEndOfFrame();
             
-            Timer.ShowOverlay();
+            // Print each font size
+            foreach (SidebarRow row in contentRows)
+            {
+                Debug.Log(row.GetLabelFontSize(), row.gameObject);
+            }
+            
+            // Cache and find the lowest font size
+            float smallestFoundFontSize = Mathf.Infinity;
+            foreach (SidebarRow row in contentRows)
+            {
+                float rowFontSize = row.GetLabelFontSize();
+                if (rowFontSize < smallestFoundFontSize)
+                {
+                    smallestFoundFontSize = rowFontSize;
+                }
+            }
 
-            // Theming
-            ColorUpdate(Timer.GetTheme());
-            Timer.ColorUpdateCreditsBubble();
+            Debug.Log("Smallest found font size: " + smallestFoundFontSize);
+
+            foreach (SidebarRow row in contentRows)
+            {
+                row.SetMaxFontSize(smallestFoundFontSize);
+                row.Hide();
+            }
+            
+            onCompletion?.Invoke();
         }
 
         /// <summary>
@@ -202,7 +259,6 @@ namespace AdrianMiasik.Components.Core.Containers
             foreach (SidebarRow row in contentRows)
             {
                 row.CancelHold();
-                row.ResetMaxFontSize();
             }
             m_logo.CancelHold();
 
@@ -311,7 +367,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 row.ResetMaxFontSize();
             }
 
-            StartCoroutine(SetMaxFontSizeDelayed());
+            //StartCoroutine(SetMaxFontSizeDelayed());
         }
 
         IEnumerator SetMaxFontSizeDelayed()

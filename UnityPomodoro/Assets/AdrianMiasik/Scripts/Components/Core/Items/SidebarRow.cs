@@ -27,6 +27,7 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private SVGImage m_icon;
         [SerializeField] private SVGImage m_iconBackground;
         [SerializeField] private TMP_Text m_label;
+        [SerializeField] private RectTransform m_labelRectTransform;
         [SerializeField] private bool m_isSelectable = true;
         
         // Cache
@@ -216,6 +217,12 @@ namespace AdrianMiasik.Components.Core.Items
         public void SetMaxFontSize(float desiredMaxSize)
         {
             m_label.fontSizeMax = desiredMaxSize;
+        }
+
+        public void RebuildFont()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(m_labelRectTransform);
+            m_label.SetLayoutDirty();
         }
     }
 }
