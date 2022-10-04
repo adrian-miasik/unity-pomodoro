@@ -50,7 +50,6 @@ namespace AdrianMiasik.Components.Core.Containers
 
         // Cache
         private bool isOpen;
-        private Color overlay;
         
         private int screenWidth;
         private int screenHeight;
