@@ -57,6 +57,8 @@ namespace AdrianMiasik.Components.Core.Containers
         
         [SerializeField] private float m_rowStaggerDelay = 0.0725f;
         private float rowStaggerTime;
+        
+        private bool isCalculatingText;
 
         /// <summary>
         /// Sets up our <see cref="SidebarRow"/>'s and selects the first one, also calculates and determines
@@ -69,7 +71,28 @@ namespace AdrianMiasik.Components.Core.Containers
             base.Initialize(pomodoroTimer);
 
             // When resolution changes, re-calculate our content row texts to use the smallest font size.
-            // resolutionDetector.onResolutionChange.AddListener(UniformContentRowFontSizesToLowestSize);
+            resolutionDetector.onResolutionChange.AddListener((() =>
+            {
+                // If sidebar is not active, don't run coroutine.
+                if (!gameObject.activeSelf)
+                {
+                    return;
+                }
+
+                // Don't run calculations until current calculation is done...
+                if (isCalculatingText)
+                {
+                    return;
+                }
+
+                isCalculatingText = true;
+                m_canvasGroup.alpha = 0;
+                StartCoroutine(CalculateAndSetSidebarRowMaxFontSize((() =>
+                {
+                    isCalculatingText = false;
+                    m_canvasGroup.alpha = 1;
+                })));
+            }));
 
             // Fill content rows
             contentRows = new List<SidebarRow>
@@ -174,33 +197,38 @@ namespace AdrianMiasik.Components.Core.Containers
             
             isOpen = true;
             
-            // Open instantly
+            // Open sidebar instantly so we can calculate and determine the optimal font size to use.
             m_container.gameObject.SetActive(true);
             gameObject.SetActive(true);
             m_maskBG.gameObject.SetActive(true);
             RectTransformHelper.StretchToFit(m_maskBG);
             m_header.gameObject.SetActive(true);
             m_edge.gameObject.SetActive(true);
-            foreach (SidebarRow contentRow in contentRows)
+            foreach (SidebarRow row in contentRows)
             {
-                contentRow.Show();
-                contentRow.SetMaxFontSize(15f);
-                contentRow.RebuildFont();
+                row.Show();
             }
-            // Opened sidebar visually from user
+            // However, hide the opened sidebar visually from user. This way we can calculate the optimal font size
+            // without displaying the sidebar rows to the user.
             m_canvasGroup.alpha = 0;
 
-            StartCoroutine(CheckContentFontSizesDelayed(() =>
+            // Calculate and set.
+            StartCoroutine(CalculateAndSetSidebarRowMaxFontSize(() =>
             {
-                // Close instantly
+                // After calculation and set we...
+                
+                // Close sidebar instantly
                 m_maskBG.gameObject.SetActive(false);
                 m_header.gameObject.SetActive(false);
                 m_edge.gameObject.SetActive(false);
-
-                // Now show sidebar visually to user
+                foreach (SidebarRow row in contentRows)
+                {
+                    row.Hide();
+                }
+                // Show sidebar visually to user when we do animate it in normally.
                 m_canvasGroup.alpha = 1;
                 
-                // Open animation
+                // Begin sidebar open animation that the user can visually see.
                 PlayAnimation(m_entryAnimation);
                 Timer.ShowOverlay();
 
@@ -210,17 +238,34 @@ namespace AdrianMiasik.Components.Core.Containers
             }));
         }
 
-        IEnumerator CheckContentFontSizesDelayed(UnityAction onCompletion)
+        IEnumerator CalculateAndSetSidebarRowMaxFontSize(UnityAction onCompletion)
         {
-            yield return new WaitForEndOfFrame();
-            
-            // Print each font size
-            foreach (SidebarRow row in contentRows)
+            // If sidebar is not open...
+            if (!isOpen)
             {
-                Debug.Log(row.GetLabelFontSize(), row.gameObject);
+                // Don't bother calculating
+                yield break;
             }
             
-            // Cache and find the lowest font size
+            Debug.Log("attempt");
+            
+            // Set to starting max font size and rebuild.
+            foreach (SidebarRow row in contentRows)
+            { 
+                row.SetMaxFontSize(15f);
+                row.RebuildFont();
+            }
+            
+            // Wait for rebuild.
+            yield return new WaitForEndOfFrame();
+            
+            // Print each font size after rebuild.
+            // foreach (SidebarRow row in contentRows)
+            // {
+            //     Debug.Log(row.GetLabelFontSize(), row.gameObject);
+            // }
+            
+            // Cache and find the lowest font size.
             float smallestFoundFontSize = Mathf.Infinity;
             foreach (SidebarRow row in contentRows)
             {
@@ -231,12 +276,12 @@ namespace AdrianMiasik.Components.Core.Containers
                 }
             }
 
-            Debug.Log("Smallest found font size: " + smallestFoundFontSize);
+            // Debug.Log("Smallest found font size: " + smallestFoundFontSize);
 
+            // Set/apply max font size.
             foreach (SidebarRow row in contentRows)
             {
                 row.SetMaxFontSize(smallestFoundFontSize);
-                row.Hide();
             }
             
             onCompletion?.Invoke();
