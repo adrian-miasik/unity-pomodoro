@@ -246,8 +246,6 @@ namespace AdrianMiasik.Components.Core.Containers
                 yield break;
             }
             
-            Debug.Log("attempt");
-            
             // Set to starting max font size and rebuild.
             foreach (SidebarRow row in contentRows)
             { 
