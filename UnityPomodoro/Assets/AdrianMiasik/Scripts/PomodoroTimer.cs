@@ -58,6 +58,7 @@ namespace AdrianMiasik
         [Header("Unity Pomodoro - Managers")]
         [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
+        [SerializeField] private ResolutionDetector m_resolutionDetector; // Responsible class for detecting changes in our application resolution sizes.
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
         [SerializeField] private UWPNotifications m_uwpNotifications; // Responsible class for UWP notifications and toasts
         [SerializeField] private AndroidNotifications m_androidNotifications;
@@ -417,8 +418,9 @@ namespace AdrianMiasik
         private void InitializeManagers()
         {
             m_hotkeyDetector.Initialize(this);
+            m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
-            
+
             // UWP Toast / Notification
             m_uwpNotifications.Initialize(GetSystemSettings());
             m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
@@ -472,7 +474,7 @@ namespace AdrianMiasik
             m_rightButton.Initialize(this);
             m_menuToggleSprite.Initialize(this, false);
             m_breakSlider.Initialize(this, false);
-            m_sidebarMenu.Initialize(this);
+            m_sidebarMenu.Initialize(this, m_resolutionDetector);
             m_endTimestampGhost.Initialize(this);
 
             m_skipButton.Initialize(this);

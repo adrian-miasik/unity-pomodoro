@@ -27,6 +27,7 @@ namespace AdrianMiasik.Components.Core.Items
         [SerializeField] private SVGImage m_icon;
         [SerializeField] private SVGImage m_iconBackground;
         [SerializeField] private TMP_Text m_label;
+        [SerializeField] private RectTransform m_labelRectTransform;
         [SerializeField] private bool m_isSelectable = true;
         
         // Cache
@@ -36,6 +37,7 @@ namespace AdrianMiasik.Components.Core.Items
         private float accumulatedAnimationTime;
         private float startingOffsetInPixels;
         private float targetOffsetInPixels;
+        private float startingMaxFontSize;
 
         public void Initialize(PomodoroTimer pomodoroTimer, Sidebar parentSidebar, bool selected = false)
         {
@@ -46,7 +48,8 @@ namespace AdrianMiasik.Components.Core.Items
             {
                 Select();
             }
-             
+            
+            startingMaxFontSize = m_label.fontSizeMax;
             m_button.m_onClick.AddListener(OnClick);
         }
 
@@ -198,6 +201,21 @@ namespace AdrianMiasik.Components.Core.Items
         public ClickButton GetClickButton()
         {
             return m_button;
+        }
+
+        public void ResetMaxFontSize()
+        {
+            m_label.fontSizeMax = startingMaxFontSize;
+        }
+
+        public float GetLabelFontSize()
+        {
+            return m_label.fontSize;
+        }
+
+        public void SetMaxFontSize(float desiredMaxSize)
+        {
+            m_label.fontSizeMax = desiredMaxSize;
         }
     }
 }
