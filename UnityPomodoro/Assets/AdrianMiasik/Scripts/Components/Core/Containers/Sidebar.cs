@@ -85,11 +85,9 @@ namespace AdrianMiasik.Components.Core.Containers
                 }
 
                 isCalculatingText = true;
-                m_canvasGroup.alpha = 0;
                 StartCoroutine(CalculateAndSetSidebarRowMaxFontSize((() =>
                 {
                     isCalculatingText = false;
-                    m_canvasGroup.alpha = 1;
                 })));
             }));
 
