@@ -208,8 +208,6 @@ namespace AdrianMiasik.Components.Core.Containers
                 ColorUpdate(Timer.GetTheme());
                 Timer.ColorUpdateCreditsBubble();
             }));
-
-            // UniformContentRowFontSizesToLowestSize();
         }
 
         IEnumerator CheckContentFontSizesDelayed(UnityAction onCompletion)
@@ -348,55 +346,6 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 external.color = theme.GetCurrentColorScheme().m_foreground;
             }
-        }
-
-        /// <summary>
-        /// Will check each content row, and find the lowest font size. The lowest font size will then
-        /// be applied to each content row.
-        /// </summary>
-        private void UniformContentRowFontSizesToLowestSize()
-        {
-            if (!isOpen)
-            {
-                return;
-            }
-            
-            foreach (SidebarRow row in contentRows)
-            {
-                // Revert to starting font size (This way elements won't just shrink and never resize back to their max)
-                row.ResetMaxFontSize();
-            }
-
-            //StartCoroutine(SetMaxFontSizeDelayed());
-        }
-
-        IEnumerator SetMaxFontSizeDelayed()
-        {
-            yield return new WaitForSeconds(1);
-            float smallestFoundFontSize = Mathf.Infinity;
-
-            foreach (SidebarRow row in contentRows)
-            {
-                // Cache lowest font size
-                float rowFontSize = row.GetLabelFontSize();
-                Debug.Log(rowFontSize, row.gameObject);
-                if (rowFontSize < smallestFoundFontSize)
-                {
-                    smallestFoundFontSize = rowFontSize;
-                }
-            }
-
-            Debug.Log("Smallest font found font size: " + smallestFoundFontSize);
-
-            yield return new WaitForSeconds(0.5f);
-
-            // Apply lowest found font size to all content rows
-            foreach (SidebarRow row in contentRows)
-            {
-                row.SetMaxFontSize(smallestFoundFontSize);
-            }
-            
-            Debug.Log("Applied max font size.");
         }
     }
 }
