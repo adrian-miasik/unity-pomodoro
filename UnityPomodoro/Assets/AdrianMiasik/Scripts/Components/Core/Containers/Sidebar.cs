@@ -131,6 +131,7 @@ namespace AdrianMiasik.Components.Core.Containers
 
         private void Update()
         {
+            // TODO: Replace with ResolutionDetector
             if (Screen.height != screenHeight || Screen.width != screenWidth)
             {
                 screenWidth = Screen.width;
