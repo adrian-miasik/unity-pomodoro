@@ -205,7 +205,6 @@ namespace AdrianMiasik.Components.Core.Items
 
         public void ResetMaxFontSize()
         {
-            Debug.Log("Resetting max font size. (" + startingMaxFontSize + ")");
             m_label.fontSizeMax = startingMaxFontSize;
         }
 
@@ -217,12 +216,6 @@ namespace AdrianMiasik.Components.Core.Items
         public void SetMaxFontSize(float desiredMaxSize)
         {
             m_label.fontSizeMax = desiredMaxSize;
-        }
-
-        public void RebuildFont()
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(m_labelRectTransform);
-            m_label.SetLayoutDirty();
         }
     }
 }
