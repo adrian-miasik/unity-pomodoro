@@ -18,6 +18,7 @@ namespace AdrianMiasik.Editor
         private SerializedProperty clickHoldScale;
         private SerializedProperty clickReleaseScale;
         private SerializedProperty holdRamp;
+        private SerializedProperty isHoldable;
         
         // Unity Events
         private SerializedProperty onDown;
@@ -37,6 +38,7 @@ namespace AdrianMiasik.Editor
             clickHoldScale = serializedObject.FindProperty("m_clickHoldScale");
             clickReleaseScale = serializedObject.FindProperty("m_clickReleaseScale");
             holdRamp = serializedObject.FindProperty("m_holdRamp");
+            isHoldable = serializedObject.FindProperty("m_isHoldable");
             
             onDown = serializedObject.FindProperty("m_onDown");
             onUp = serializedObject.FindProperty("m_onUp");
@@ -86,6 +88,7 @@ namespace AdrianMiasik.Editor
             EditorGUILayout.PropertyField(clickHoldScale);
             EditorGUILayout.PropertyField(clickReleaseScale);
             EditorGUILayout.PropertyField(holdRamp);
+            EditorGUILayout.PropertyField(isHoldable);
 
             // Draw inherited variation class property fields
             DrawInheritorFields();

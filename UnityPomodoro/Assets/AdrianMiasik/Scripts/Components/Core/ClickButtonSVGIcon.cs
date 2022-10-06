@@ -6,7 +6,7 @@ namespace AdrianMiasik.Components.Core
     /// <summary>
     /// A <see cref="ClickButton"/> with a SVG image.
     /// </summary>
-    public class ClickButtonSVGIcon: ClickButton
+    public class ClickButtonSVGIcon : ClickButton
     {
         public SVGImage m_icon;
 

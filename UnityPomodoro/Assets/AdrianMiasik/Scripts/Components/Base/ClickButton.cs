@@ -38,6 +38,11 @@ namespace AdrianMiasik.Components.Base
         /// </summary>
         public AnimationCurve m_holdRamp;
 
+        /// <summary>
+        /// Can the user invoke this button more than once by holding it down?
+        /// </summary>
+        public bool m_isHoldable = true;
+
         // Unity Events
         public UnityEvent m_onDown;
         public UnityEvent m_onUp;
@@ -200,6 +205,11 @@ namespace AdrianMiasik.Components.Base
                             PlayClickSound();
                         }
                         m_onClick.Invoke();
+
+                        if (!m_isHoldable)
+                        {
+                            CancelHold();
+                        }
                     }
                 }
             }
