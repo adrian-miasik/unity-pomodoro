@@ -269,7 +269,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 }
             }
 
-            Debug.Log("Smallest found font size: " + smallestFoundFontSize);
+            // Debug.Log("Smallest found font size: " + smallestFoundFontSize);
 
             // Set/apply max font size.
             foreach (SidebarRow row in contentRows)
