@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Helpers;
@@ -8,8 +7,6 @@ using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core.Containers
 { 
@@ -51,10 +48,7 @@ namespace AdrianMiasik.Components.Core.Containers
 
         // Cache
         private bool isOpen;
-        
-        private int screenWidth;
-        private int screenHeight;
-        
+
         [SerializeField] private float m_rowStaggerDelay = 0.0725f;
         private float rowStaggerTime;
         
@@ -70,8 +64,15 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             base.Initialize(pomodoroTimer);
 
-            // When resolution changes, re-calculate our content row texts to use the smallest font size.
-            resolutionDetector.onResolutionChange.AddListener(CalculateAndSetSidebarRowMaxFontSize);
+            // When resolution changes...
+            resolutionDetector.onResolutionChange.AddListener(() =>
+            {
+                // Resize sidebar width and conform credits bubble to it's width.
+                Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
+                
+                // Re-calculate our content row texts to use the smallest font size.
+                CalculateAndSetSidebarRowMaxFontSize();
+            });
 
             // Fill content rows
             contentRows = new List<SidebarRow>
@@ -105,24 +106,10 @@ namespace AdrianMiasik.Components.Core.Containers
                 m_documentationRow.GetClickButton().OpenURL("https://adrian-miasik.github.io/unity-pomodoro-docs/");
             });
             m_aboutRow.GetClickButton().m_onClick.AddListener(Timer.ShowAbout);
-
-            // Calculate screen dimensions
-            screenWidth = Screen.width;
-            screenHeight = Screen.height;
         }
 
         private void Update()
         {
-            // TODO: Replace with ResolutionDetector
-            if (Screen.height != screenHeight || Screen.width != screenWidth)
-            {
-                screenWidth = Screen.width;
-                screenHeight = Screen.height;
-                
-                // Set widths (credits bubble and sidebar)
-                Timer.ConformCreditsBubbleToSidebar(CalculateSidebarWidth());
-            }
-
             if (isOpen)
             {
                 if (rowsToSpawn.Count > 0)
