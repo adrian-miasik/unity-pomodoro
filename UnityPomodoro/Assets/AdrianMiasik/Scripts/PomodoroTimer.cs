@@ -11,6 +11,7 @@ using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
+using Steamworks;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -410,6 +411,11 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
+
+            if (SteamManager.Initialized)
+            {
+                Debug.Log(SteamFriends.GetPersonaName());
+            }
         }
 
         /// <summary>
