@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -68,12 +69,20 @@ namespace AdrianMiasik.Components.Specific
             // Restart application
             if (Input.GetKeyDown(KeyCode.F5))
             {
+                string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
+
+                if (SteamManager.Initialized)
+                {
+                    topText += " This will also wipe your Steam stats and any unlocked/progressed Steam achievements.";
+                }
+                
                 timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
                 timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                     {
+                        SteamUserStats.ResetAllStats(true);
                         RestartApplication();
                     }, null, 
-                    "This action will <color=red>reset all settings to their factory defaults.</color>", 
+                    topText, 
                     null, 
                     false);
             }
