@@ -43,6 +43,7 @@
   <ItemGroup>
      <Compile Include="Assets\Steamworks.NET\Editor\RedistInstall.cs" />
      <Compile Include="Assets\Steamworks.NET\Editor\RedistCopy.cs" />
+     <Folder Include="Assets\Steamworks.NET\Editor" />
      <None Include="Assets\Steamworks.NET\Editor\com.rlabrecque.steamworks.net.editor.asmdef" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
