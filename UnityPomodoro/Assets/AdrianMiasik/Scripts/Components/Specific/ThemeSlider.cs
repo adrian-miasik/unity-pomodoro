@@ -1,6 +1,8 @@
+using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,16 +22,84 @@ namespace AdrianMiasik.Components.Specific
         private readonly Vector2 cachedOffsetMin = new Vector2(3, 1.5f); 
         private readonly Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f);
 
+        private int m_timesToggled;
+        private float m_currentAccumulatedToggleTime;
+        private float m_totalAccumulatedToggleTime;
+
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, updateColors);
 
             // Theme Slider
-            m_toggle.m_onSetToTrueClick.AddListener(() => { pomodoroTimer.GetTheme().SetToDarkMode(); });
-            m_toggle.m_onSetToFalseClick.AddListener(() => { pomodoroTimer.GetTheme().SetToLightMode(); });
+            m_toggle.m_onSetToTrueClick.AddListener(() =>
+            {
+                pomodoroTimer.GetTheme().SetToDarkMode();
+                CalculateRaveToggleAchievementProgression();
+            });
+            m_toggle.m_onSetToFalseClick.AddListener(() =>
+            {
+                pomodoroTimer.GetTheme().SetToLightMode();
+                CalculateRaveToggleAchievementProgression();
+            });
 
             m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
             m_toggle.Initialize(Timer, Timer.GetSystemSettings().m_darkMode);
+        }
+
+        private void CalculateRaveToggleAchievementProgression()
+        {
+            // If current toggle time took longer than a second...
+            if (m_currentAccumulatedToggleTime > 1)
+            {
+                // Clear achievement logic progression
+                m_currentAccumulatedToggleTime = 0;
+                m_totalAccumulatedToggleTime = 0;
+                m_timesToggled = 1;
+                
+                // Early exit
+                return;
+            }
+
+            // Otherwise, this toggle took less than a second. (Cache toggle time and increment times toggled)
+            m_totalAccumulatedToggleTime += m_currentAccumulatedToggleTime;
+            m_currentAccumulatedToggleTime = 0;
+            m_timesToggled++;
+
+            // Check achievement status
+            if (m_timesToggled >= 10) // Toggle 10 times with each toggle taking a less than a second to unlock.
+            {
+                if (SteamManager.Initialized)
+                {
+                    // Fetch achievement status
+                    if (SteamUserStats.GetAchievement("ACH_RAVE", 
+                            out bool isRaveAchUnlocked))
+                    {
+                        // If rave achievement is NOT unlocked...
+                        if (!isRaveAchUnlocked)
+                        {
+                            // Unlock achievement
+                            SteamUserStats.SetAchievement("ACH_RAVE");
+                            SteamUserStats.StoreStats();
+
+                            Debug.Log("Steam Achievement Unlocked! 'Rave: Flicker the theme slider 10 times quickly.'");
+                        }
+                    }
+                }
+            }
+        }
+        
+        private void Update()
+        {
+            if (m_currentAccumulatedToggleTime <= 1)
+            {
+                m_currentAccumulatedToggleTime += Time.deltaTime;
+            }
+            else
+            {
+                // Clear achievement logic progression
+                m_totalAccumulatedToggleTime = 0;
+                m_timesToggled = 0;
+            }
         }
 
         /// <summary>
