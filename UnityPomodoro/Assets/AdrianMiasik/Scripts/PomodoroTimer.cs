@@ -1392,6 +1392,23 @@ namespace AdrianMiasik
         public void ActivateLongBreak()
         {
             m_digitFormat.ActivateLongBreak();
+
+            if (SteamManager.Initialized)
+            {
+                // Fetch achievement status
+                if (SteamUserStats.GetAchievement("ACH_ACQUIRE_LONG_BREAK", out bool unlockedFirstLongBreak))
+                {
+                    // If achievement hasn't been unlocked...
+                    if (!unlockedFirstLongBreak)
+                    {
+                        // Unlock achievement
+                        SteamUserStats.SetAchievement("ACH_ACQUIRE_LONG_BREAK");
+                        SteamUserStats.StoreStats();
+                        
+                        Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
+                    }
+                }
+            }
         }
 
         /// <summary>
