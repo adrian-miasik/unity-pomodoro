@@ -414,7 +414,7 @@ namespace AdrianMiasik
 
             if (SteamManager.Initialized)
             {
-                Debug.Log(SteamFriends.GetPersonaName());
+                Debug.Log("User found: " + SteamFriends.GetPersonaName());
             }
         }
 
