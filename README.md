@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="promotional/release-showcase.gif" width="720">
+  <img src="exports/release-showcase.gif" width="720">
 </p>
 
 ## About
@@ -74,36 +74,36 @@ Want to help? If you're interested in contributing to the project, please see ou
 
 &nbsp;
 ## Media
-<img src="promotional/social-banner.png" width="640">
+<img src="exports/social-banner.png" width="640">
 <img width="640" alt="unity-pomodoro-release-banner-1.6.0" src="https://user-images.githubusercontent.com/12757380/147377998-ea19460b-5ea7-48cb-85bf-a3eabcda0975.gif">
 
 ### Screenshots
 #### Light
 <p>
-<img src="sources/design/light-color-scheme.png" width="200">
-<img src="promotional/screenshot-0.png" width="200">
-<img src="promotional/screenshot-1.png" width="200">
-<img src="promotional/screenshot-2.png" width="200">
-<img src="promotional/screenshot-3.png" width="200">
-<img src="promotional/screenshot-4.png" width="200">
-<img src="promotional/screenshot-5.png" width="200">
-<img src="promotional/screenshot-6.png" width="200">
-<img src="promotional/screenshot-7.png" width="200">
-<img src="promotional/screenshot-8.png" width="200">
+<img src="sources/visual/light-color-scheme.png" width="200">
+<img src="exports/screenshot-0.png" width="200">
+<img src="exports/screenshot-1.png" width="200">
+<img src="exports/screenshot-2.png" width="200">
+<img src="exports/screenshot-3.png" width="200">
+<img src="exports/screenshot-4.png" width="200">
+<img src="exports/screenshot-5.png" width="200">
+<img src="exports/screenshot-6.png" width="200">
+<img src="exports/screenshot-7.png" width="200">
+<img src="exports/screenshot-8.png" width="200">
 </p>
 
 #### Dark
 <p>
-<img src="sources/design/dark-color-scheme.png" width="200">
-<img src="promotional/screenshot-9.png" width="200">
-<img src="promotional/screenshot-10.png" width="200">
-<img src="promotional/screenshot-11.png" width="200">
-<img src="promotional/screenshot-12.png" width="200">
-<img src="promotional/screenshot-13.png" width="200">
-<img src="promotional/screenshot-14.png" width="200">
-<img src="promotional/screenshot-15.png" width="200">
-<img src="promotional/screenshot-16.png" width="200">
-<img src="promotional/screenshot-17.png" width="200">
+<img src="sources/visual/dark-color-scheme.png" width="200">
+<img src="exports/screenshot-9.png" width="200">
+<img src="exports/screenshot-10.png" width="200">
+<img src="exports/screenshot-11.png" width="200">
+<img src="exports/screenshot-12.png" width="200">
+<img src="exports/screenshot-13.png" width="200">
+<img src="exports/screenshot-14.png" width="200">
+<img src="exports/screenshot-15.png" width="200">
+<img src="exports/screenshot-16.png" width="200">
+<img src="exports/screenshot-17.png" width="200">
 </p>
 
 ## Author Notes
