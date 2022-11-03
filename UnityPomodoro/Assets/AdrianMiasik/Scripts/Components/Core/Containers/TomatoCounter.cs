@@ -93,6 +93,8 @@ namespace AdrianMiasik.Components.Core.Containers
                         // Unlock achievement
                         SteamUserStats.SetAchievement("ACH_ACQUIRE_FIRST_TOMATO");
                         SteamUserStats.StoreStats();
+
+                        Debug.Log("Steam Achievement Unlocked! 'Yummy: Unlock your first pomodoro/tomato.'");
                     }
                 }
             }
