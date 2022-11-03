@@ -49,8 +49,9 @@ Want to help? If you're interested in contributing to the project, please see ou
 - Android
   - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.2.0/unity-pomodoro-2.2.0-android.apk) 
 #### Platform Specific
-- Steam 
-  - [Coming Soon...](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
+- Steam - [Wishlist Now!](https://store.steampowered.com/app/2173940/Unity_Pomodoro/) - Releasing Q1 2023
+    - The Steam version will include **Achievements**.
+    - The Steam version will include **Cloud Saves** for your preferred settings.
 - [Google Play Store (Android)](https://play.google.com/store/apps/details?id=com.adrianmiasik.unitypomodoro)
   - The Android version provides **Mobile Notifications** when the timer is complete.
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
