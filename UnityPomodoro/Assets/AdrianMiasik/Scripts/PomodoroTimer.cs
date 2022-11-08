@@ -56,6 +56,7 @@ namespace AdrianMiasik
         public States m_state = States.SETUP;
 
         [Header("Unity Pomodoro - Managers")]
+        [SerializeField] private SteamManager m_steamManager;
         [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private ResolutionDetector m_resolutionDetector; // Responsible class for detecting changes in our application resolution sizes.
@@ -417,6 +418,8 @@ namespace AdrianMiasik
         /// </summary>
         private void InitializeManagers()
         {
+            m_steamManager.Initialize();
+            
             m_hotkeyDetector.Initialize(this);
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
