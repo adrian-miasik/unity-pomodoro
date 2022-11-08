@@ -10,29 +10,6 @@ namespace AdrianMiasik.Components.Core.Settings
     /// </summary>
     public static class UserSettingsSerializer
     {
-        private static string dataExtension = ".dat";
-        
-        /// <summary>
-        /// Creates two data files in our persistent path. One for system settings, and one for timer settings.
-        /// </summary>
-        /// <param name="systemSettings"></param>
-        /// <param name="timerSettings"></param>
-        public static void Save(SystemSettings systemSettings, TimerSettings timerSettings)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            
-            // System settings
-            FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + dataExtension);
-            bf.Serialize(fs, systemSettings);
-            
-            // Timer settings
-            fs = File.Create(Application.persistentDataPath + "/timer-settings" + dataExtension);
-            bf.Serialize(fs, timerSettings);
-            
-            fs.Close();
-
-            Debug.Log("Creating files.");
-        }
 
         public static void SaveSystemSettings(SystemSettings systemSettings)
         {
