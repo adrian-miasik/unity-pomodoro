@@ -336,6 +336,9 @@
      <Reference Include="Newtonsoft.Json">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
      </Reference>
+     <Reference Include="Facepunch.Steamworks.Win64">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Assets\Facepunch.Steamworks\Facepunch.Steamworks.Win64.dll</HintPath>
+     </Reference>
      <Reference Include="nunit.framework">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
      </Reference>
