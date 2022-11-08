@@ -16,12 +16,38 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             BinaryFormatter bf = new BinaryFormatter();
             
-            // System settings
-            FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
-            bf.Serialize(fs, systemSettings);
+            // Attempt to save the provided system settings to the Steam Cloud...
+            if (SteamManager.Initialized)
+            {
+                string steamSystemSettingsPath = Application.persistentDataPath + "/" + SteamUser.GetSteamID() +
+                                                 "/system-settings" + DataExtension;
 
-            fs.Close();
-            
+                // Create Steam User ID cloud save directory
+                if (!Directory.Exists(Application.persistentDataPath + "/" + SteamUser.GetSteamID()))
+                {
+                    Directory.CreateDirectory(Application.persistentDataPath + "/" + SteamUser.GetSteamID());
+                }
+                
+                // Convert system settings to memory stream for easy byte array conversion using .ToArray().
+                MemoryStream ms = new MemoryStream();
+                FileStream fs = File.Create(steamSystemSettingsPath);
+                bf.Serialize(fs, systemSettings);
+                fs.CopyTo(ms);
+                fs.Close();
+                
+                // Save Steam Cloud file
+                SteamRemoteStorage.FileWrite(steamSystemSettingsPath, ms.ToArray(), ms.Capacity);
+            }
+            // Otherwise, use local storage.
+            else
+            {
+                // System settings
+                FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
+                bf.Serialize(fs, systemSettings);
+
+                fs.Close();
+            }
+
 #if USER_SETTINGS_EVENT_LOGS
             Debug.Log("System Settings Saved.");
 #endif
