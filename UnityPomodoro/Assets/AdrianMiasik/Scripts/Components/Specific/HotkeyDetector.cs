@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -70,17 +71,17 @@ namespace AdrianMiasik.Components.Specific
             {
                 string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
 
-                Debug.Log("TODO: Tweak hard reset text with Steam progression reset");
-                // if (SteamManager.Initialized)
-                // {
-                //     topText += " This will also wipe your Steam stats and any unlocked/progressed Steam achievements.";
-                // }
+                if (Steamworks.SteamClient.IsValid)
+                {
+                   topText += " This will also wipe your Steam stats and any unlocked/progressed Steam achievements.";
+                }
                 
                 timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
                 timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                     {
-                        Debug.Log("TODO: Steam Achievement Progression Reset");
-                        // SteamUserStats.ResetAllStats(true);
+                        SteamUserStats.ResetAll(true);
+                        SteamUserStats.StoreStats();
+                        SteamUserStats.RequestCurrentStats();
                         RestartApplication();
                     }, null, 
                     topText, 
