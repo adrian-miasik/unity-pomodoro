@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
+using Steamworks;
+using Steamworks.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -80,25 +83,20 @@ namespace AdrianMiasik.Components.Core.Containers
             completedTomatoes.Add(tomatoToFill);
             tomatoToFill.Complete();
 
-            Debug.Log("TODO: Steam Achievement Logic - First Tomato");
-            // if (SteamManager.Initialized)
-            // {
-            //     // Fetch achievement status
-            //     if (SteamUserStats.GetAchievement("ACH_ACQUIRE_FIRST_TOMATO", 
-            //             out bool unlockedFirstTomatoAchievement))
-            //     {
-            //         // If tomato acquired achievement is NOT unlocked...
-            //         if (!unlockedFirstTomatoAchievement)
-            //         {
-            //             // Unlock achievement
-            //             SteamUserStats.SetAchievement("ACH_ACQUIRE_FIRST_TOMATO");
-            //             SteamUserStats.StoreStats();
-            //
-            //             Debug.Log("Steam Achievement Unlocked! 'Yummy: Unlock your first pomodoro/tomato.'");
-            //         }
-            //     }
-            // }
-            
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
+            {
+                // Fetch first tomato achievement
+                Achievement ach = new Achievement("ACH_ACQUIRE_FIRST_TOMATO");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    ach.Trigger();
+                    Debug.Log("Steam Achievement Unlocked! 'Yummy!: Unlock your first pomodoro/tomato.'");
+                }
+            }
+
             // Check for completion
             if (m_uncompletedTomatoes.Count == 0)
             {
