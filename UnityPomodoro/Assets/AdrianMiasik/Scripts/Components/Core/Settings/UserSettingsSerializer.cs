@@ -10,13 +10,14 @@ namespace AdrianMiasik.Components.Core.Settings
     /// </summary>
     public static class UserSettingsSerializer
     {
+        private const string DataExtension = ".dat";
 
         public static void SaveSystemSettings(SystemSettings systemSettings)
         {
             BinaryFormatter bf = new BinaryFormatter();
             
             // System settings
-            FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + dataExtension);
+            FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
             bf.Serialize(fs, systemSettings);
 
             fs.Close();
@@ -31,7 +32,7 @@ namespace AdrianMiasik.Components.Core.Settings
             BinaryFormatter bf = new BinaryFormatter();
             
             // System settings
-            FileStream fs = File.Create(Application.persistentDataPath + "/timer-settings" + dataExtension);
+            FileStream fs = File.Create(Application.persistentDataPath + "/timer-settings" + DataExtension);
             bf.Serialize(fs, timerSettings);
 
             fs.Close();
@@ -47,10 +48,10 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <returns></returns>
         public static TimerSettings LoadTimerSettings()
         {
-            if (File.Exists(Application.persistentDataPath + "/timer-settings" + dataExtension))
+            if (File.Exists(Application.persistentDataPath + "/timer-settings" + DataExtension))
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = File.Open(Application.persistentDataPath + "/timer-settings" + dataExtension,
+                FileStream fs = File.Open(Application.persistentDataPath + "/timer-settings" + DataExtension,
                     FileMode.Open);
                 TimerSettings timerSettings = bf.Deserialize(fs) as TimerSettings;
                 fs.Close();
@@ -70,10 +71,10 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <returns></returns>
         public static SystemSettings LoadSystemSettings()
         {
-            if (File.Exists(Application.persistentDataPath + "/system-settings" + dataExtension))
+            if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = File.Open(Application.persistentDataPath + "/system-settings" + dataExtension,
+                FileStream fs = File.Open(Application.persistentDataPath + "/system-settings" + DataExtension,
                     FileMode.Open);
                 SystemSettings systemSettings = bf.Deserialize(fs) as SystemSettings;
                 fs.Close();
@@ -89,17 +90,17 @@ namespace AdrianMiasik.Components.Core.Settings
 
         public static void WipeSystemSettings()
         {
-            if (File.Exists(Application.persistentDataPath + "/system-settings" + dataExtension))
+            if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
             {
-                File.Delete(Application.persistentDataPath + "/system-settings" + dataExtension);
+                File.Delete(Application.persistentDataPath + "/system-settings" + DataExtension);
             }
         }
 
         public static void WipeTimerSettings()
         {
-            if (File.Exists(Application.persistentDataPath + "/timer-settings" + dataExtension))
+            if (File.Exists(Application.persistentDataPath + "/timer-settings" + DataExtension))
             {
-                File.Delete(Application.persistentDataPath + "/timer-settings" + dataExtension);
+                File.Delete(Application.persistentDataPath + "/timer-settings" + DataExtension);
             }
         }
     }
