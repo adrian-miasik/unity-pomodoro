@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
-using Steamworks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -81,23 +80,24 @@ namespace AdrianMiasik.Components.Core.Containers
             completedTomatoes.Add(tomatoToFill);
             tomatoToFill.Complete();
 
-            if (SteamManager.Initialized)
-            {
-                // Fetch achievement status
-                if (SteamUserStats.GetAchievement("ACH_ACQUIRE_FIRST_TOMATO", 
-                        out bool unlockedFirstTomatoAchievement))
-                {
-                    // If tomato acquired achievement is NOT unlocked...
-                    if (!unlockedFirstTomatoAchievement)
-                    {
-                        // Unlock achievement
-                        SteamUserStats.SetAchievement("ACH_ACQUIRE_FIRST_TOMATO");
-                        SteamUserStats.StoreStats();
-
-                        Debug.Log("Steam Achievement Unlocked! 'Yummy: Unlock your first pomodoro/tomato.'");
-                    }
-                }
-            }
+            Debug.Log("TODO: Steam Achievement Logic - First Tomato");
+            // if (SteamManager.Initialized)
+            // {
+            //     // Fetch achievement status
+            //     if (SteamUserStats.GetAchievement("ACH_ACQUIRE_FIRST_TOMATO", 
+            //             out bool unlockedFirstTomatoAchievement))
+            //     {
+            //         // If tomato acquired achievement is NOT unlocked...
+            //         if (!unlockedFirstTomatoAchievement)
+            //         {
+            //             // Unlock achievement
+            //             SteamUserStats.SetAchievement("ACH_ACQUIRE_FIRST_TOMATO");
+            //             SteamUserStats.StoreStats();
+            //
+            //             Debug.Log("Steam Achievement Unlocked! 'Yummy: Unlock your first pomodoro/tomato.'");
+            //         }
+            //     }
+            // }
             
             // Check for completion
             if (m_uncompletedTomatoes.Count == 0)

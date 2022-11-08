@@ -2,7 +2,6 @@ using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
-using Steamworks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -68,23 +67,24 @@ namespace AdrianMiasik.Components.Specific
             // Check achievement status
             if (m_timesToggled >= 10) // Toggle 10 times with each toggle taking a less than a second to unlock.
             {
-                if (SteamManager.Initialized)
-                {
-                    // Fetch achievement status
-                    if (SteamUserStats.GetAchievement("ACH_RAVE", 
-                            out bool isRaveAchUnlocked))
-                    {
-                        // If rave achievement is NOT unlocked...
-                        if (!isRaveAchUnlocked)
-                        {
-                            // Unlock achievement
-                            SteamUserStats.SetAchievement("ACH_RAVE");
-                            SteamUserStats.StoreStats();
-
-                            Debug.Log("Steam Achievement Unlocked! 'Rave: Flicker the theme slider 10 times quickly.'");
-                        }
-                    }
-                }
+                Debug.Log("TODO: Steam Achievement Logic - Rave");
+                // if (SteamManager.Initialized)
+                // {
+                //     // Fetch achievement status
+                //     if (SteamUserStats.GetAchievement("ACH_RAVE", 
+                //             out bool isRaveAchUnlocked))
+                //     {
+                //         // If rave achievement is NOT unlocked...
+                //         if (!isRaveAchUnlocked)
+                //         {
+                //             // Unlock achievement
+                //             SteamUserStats.SetAchievement("ACH_RAVE");
+                //             SteamUserStats.StoreStats();
+                //
+                //             Debug.Log("Steam Achievement Unlocked! 'Rave: Flicker the theme slider 10 times quickly.'");
+                //         }
+                //     }
+                // }
             }
         }
         

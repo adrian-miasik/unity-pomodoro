@@ -11,7 +11,6 @@ using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
-using Steamworks;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -411,11 +410,6 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
-
-            if (SteamManager.Initialized)
-            {
-                Debug.Log("User found: " + SteamFriends.GetPersonaName());
-            }
         }
 
         /// <summary>
@@ -1393,22 +1387,23 @@ namespace AdrianMiasik
         {
             m_digitFormat.ActivateLongBreak();
 
-            if (SteamManager.Initialized)
-            {
-                // Fetch achievement status
-                if (SteamUserStats.GetAchievement("ACH_ACQUIRE_LONG_BREAK", out bool unlockedFirstLongBreak))
-                {
-                    // If achievement hasn't been unlocked...
-                    if (!unlockedFirstLongBreak)
-                    {
-                        // Unlock achievement
-                        SteamUserStats.SetAchievement("ACH_ACQUIRE_LONG_BREAK");
-                        SteamUserStats.StoreStats();
-                        
-                        Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
-                    }
-                }
-            }
+            Debug.Log("TODO: Steam Achievement Logic - Long Break");
+            // if (SteamManager.Initialized)
+            // {
+            //     // Fetch achievement status
+            //     if (SteamUserStats.GetAchievement("ACH_ACQUIRE_LONG_BREAK", out bool unlockedFirstLongBreak))
+            //     {
+            //         // If achievement hasn't been unlocked...
+            //         if (!unlockedFirstLongBreak)
+            //         {
+            //             // Unlock achievement
+            //             SteamUserStats.SetAchievement("ACH_ACQUIRE_LONG_BREAK");
+            //             SteamUserStats.StoreStats();
+            //             
+            //             Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
+            //         }
+            //     }
+            // }
         }
 
         /// <summary>
