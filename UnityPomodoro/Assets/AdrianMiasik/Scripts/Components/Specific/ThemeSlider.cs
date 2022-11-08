@@ -2,8 +2,11 @@ using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
+using Steamworks;
+using Steamworks.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Color = UnityEngine.Color;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -67,24 +70,19 @@ namespace AdrianMiasik.Components.Specific
             // Check achievement status
             if (m_timesToggled >= 10) // Toggle 10 times with each toggle taking a less than a second to unlock.
             {
-                Debug.Log("TODO: Steam Achievement Logic - Rave");
-                // if (SteamManager.Initialized)
-                // {
-                //     // Fetch achievement status
-                //     if (SteamUserStats.GetAchievement("ACH_RAVE", 
-                //             out bool isRaveAchUnlocked))
-                //     {
-                //         // If rave achievement is NOT unlocked...
-                //         if (!isRaveAchUnlocked)
-                //         {
-                //             // Unlock achievement
-                //             SteamUserStats.SetAchievement("ACH_RAVE");
-                //             SteamUserStats.StoreStats();
-                //
-                //             Debug.Log("Steam Achievement Unlocked! 'Rave: Flicker the theme slider 10 times quickly.'");
-                //         }
-                //     }
-                // }
+                // Check if steam client is found...
+                if (SteamClient.IsValid)
+                {
+                    // Fetch first tomato achievement
+                    Achievement ach = new Achievement("ACH_RAVE");
+                
+                    // If achievement is not unlocked...
+                    if (!ach.State)
+                    {
+                        ach.Trigger();
+                        Debug.Log("Steam Achievement Unlocked! 'Rave: Flicker the theme slider 10 times quickly.'");
+                    }
+                }
             }
         }
         

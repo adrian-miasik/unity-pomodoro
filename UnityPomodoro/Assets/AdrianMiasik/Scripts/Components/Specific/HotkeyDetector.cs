@@ -71,7 +71,7 @@ namespace AdrianMiasik.Components.Specific
             {
                 string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
 
-                if (Steamworks.SteamClient.IsValid)
+                if (SteamClient.IsValid)
                 {
                    topText += " This will also wipe your Steam stats and any unlocked/progressed Steam achievements.";
                 }
