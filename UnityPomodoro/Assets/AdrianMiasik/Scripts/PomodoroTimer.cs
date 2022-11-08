@@ -11,6 +11,8 @@ using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
+using Steamworks;
+using Steamworks.Data;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -18,6 +20,8 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
+using Image = UnityEngine.UI.Image;
 
 namespace AdrianMiasik
 {
@@ -1390,23 +1394,19 @@ namespace AdrianMiasik
         {
             m_digitFormat.ActivateLongBreak();
 
-            Debug.Log("TODO: Steam Achievement Logic - Long Break");
-            // if (SteamManager.Initialized)
-            // {
-            //     // Fetch achievement status
-            //     if (SteamUserStats.GetAchievement("ACH_ACQUIRE_LONG_BREAK", out bool unlockedFirstLongBreak))
-            //     {
-            //         // If achievement hasn't been unlocked...
-            //         if (!unlockedFirstLongBreak)
-            //         {
-            //             // Unlock achievement
-            //             SteamUserStats.SetAchievement("ACH_ACQUIRE_LONG_BREAK");
-            //             SteamUserStats.StoreStats();
-            //             
-            //             Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
-            //         }
-            //     }
-            // }
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
+            {
+                // Fetch first tomato achievement
+                Achievement ach = new Achievement("ACH_ACQUIRE_LONG_BREAK");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    ach.Trigger();
+                    Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
+                }
+            }
         }
 
         /// <summary>
