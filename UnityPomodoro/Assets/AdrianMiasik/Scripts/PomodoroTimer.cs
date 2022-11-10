@@ -9,6 +9,7 @@ using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using AdrianMiasik.Steam;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
 using Steamworks;
@@ -211,13 +212,17 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
+            // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
+            m_steamManager.Initialize();
+            
             SystemSettings systemSettings = UserSettingsSerializer.LoadSystemSettings();
             TimerSettings timerSettings = UserSettingsSerializer.LoadTimerSettings();
 
             // System Settings
             if (systemSettings == null)
             {
-                Debug.Log("No System settings found. Created new System settings successfully!");
+                Debug.Log("No SYSTEM settings found (Steam / Local). A new SYSTEM settings file has been " +
+                          "created successfully!");
                 
                 // Create new settings
                 SystemSettings defaultSystemSettings = new SystemSettings();
@@ -285,7 +290,7 @@ namespace AdrianMiasik
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             // Update analytics
-            ToggleUnityAnalytics(this.loadedSystemSettings.m_enableUnityAnalytics, true);
+            ToggleUnityAnalytics(loadedSystemSettings.m_enableUnityAnalytics, true);
 #endif
         }
 
@@ -300,10 +305,14 @@ namespace AdrianMiasik
         /// <param name="isBootingUp"></param>
         public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
-            // Apply and save
-            GetSystemSettings().m_enableUnityAnalytics = enableUnityAnalytics;
-            UserSettingsSerializer.SaveSystemSettings(GetSystemSettings());
-            
+            // If there is a change in settings...
+            if (enableUnityAnalytics != loadedSystemSettings.m_enableUnityAnalytics)
+            {
+                // Apply and save
+                loadedSystemSettings.m_enableUnityAnalytics = enableUnityAnalytics;
+                UserSettingsSerializer.SaveSystemSettings(loadedSystemSettings);
+            }
+
             // Set if service needs to start on init...
             Analytics.initializeOnStartup = enableUnityAnalytics;
 #if UNITY_ANALYTICS_EVENT_LOGS
@@ -422,8 +431,6 @@ namespace AdrianMiasik
         /// </summary>
         private void InitializeManagers()
         {
-            m_steamManager.Initialize();
-            
             m_hotkeyDetector.Initialize(this);
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
@@ -1640,6 +1647,11 @@ namespace AdrianMiasik
         public void ShowTickAnimation()
         {
             m_digitFormat.ShowTickAnimation();
+        }
+
+        public void ShutdownSteamManager()
+        {
+            m_steamManager.Shutdown();
         }
     }
 }

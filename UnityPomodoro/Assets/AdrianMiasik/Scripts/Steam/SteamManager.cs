@@ -6,9 +6,16 @@ namespace AdrianMiasik.Steam
     public class SteamManager : MonoBehaviour
     {
         private bool isInitialized;
+        private const bool enableSteamworks = true;
     
         public void Initialize()
         {
+            if (!enableSteamworks)
+            {
+                Debug.Log("Steamworks functionality disabled. (Dev)");
+                return;
+            }
+            
             try
             {
                 SteamClient.Init(2173940);
@@ -20,8 +27,6 @@ namespace AdrianMiasik.Steam
         
             DontDestroyOnLoad(gameObject);
             isInitialized = true;
-
-            Debug.Log("Steam User Found: " + SteamClient.Name);
         }
     
         private void Update()
@@ -30,6 +35,11 @@ namespace AdrianMiasik.Steam
             {
                 SteamClient.RunCallbacks();
             }
+        }
+
+        public void Shutdown()
+        {
+            SteamClient.Shutdown();
         }
     }
 }

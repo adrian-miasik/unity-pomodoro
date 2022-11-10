@@ -113,6 +113,8 @@ namespace AdrianMiasik.Components.Specific
             UserSettingsSerializer.WipeSystemSettings();
             UserSettingsSerializer.WipeTimerSettings();
             
+            timer.ShutdownSteamManager();
+            Debug.Log("Application: Factory Reset");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
