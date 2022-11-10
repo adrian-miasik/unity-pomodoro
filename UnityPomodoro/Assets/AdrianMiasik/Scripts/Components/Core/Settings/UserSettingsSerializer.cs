@@ -150,6 +150,13 @@ namespace AdrianMiasik.Components.Core.Settings
                     
                     Debug.Log("Steam Cloud: SYSTEM settings file downloaded successfully!");
                     
+                    // Override local storage SYSTEM settings file
+                    FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
+                    bf.Serialize(fs, systemSettings);
+                    fs.Close();
+                    Debug.Log("Steam Cloud -> Local Storage: Saved Steam Cloud SYSTEM settings file to local " +
+                              "storage for future fallback.");
+                    
                     return systemSettings;
                 }
                 
