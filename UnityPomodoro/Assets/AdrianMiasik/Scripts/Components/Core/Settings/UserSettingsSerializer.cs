@@ -206,6 +206,56 @@ namespace AdrianMiasik.Components.Core.Settings
             return null;
         }
 
+        private enum MostRecentSaveLocation
+        {
+            UNABLE_TO_DETERMINE,
+            LOCAL_STORAGE,
+            STEAM_CLOUD,
+            LOCAL_STORAGE_AND_STEAM_CLOUD
+        }
+        
+        private static MostRecentSaveLocation FetchMostRecentSaveMethod()
+        {
+            if (!SteamClient.IsValid)
+            {
+                return MostRecentSaveLocation.UNABLE_TO_DETERMINE;
+            }
+            
+            // Fetch user data remote storage directory
+            string steamUserRemoteSystemSettingsPath = FetchUserDataRemoteDirectory() 
+                                                       + "\\" + SteamSystemSettingsPath;
+                    
+            // Check validity of user data remote storage directory...
+            if (File.Exists(steamUserRemoteSystemSettingsPath))
+            {
+                // Cache last accessed / modified file times of our SYSTEM settings files.
+                DateTime steamRemoteWriteTime = File.GetLastWriteTime(steamUserRemoteSystemSettingsPath);
+                DateTime localStorageWriteTime = File.GetLastWriteTime(Application.persistentDataPath +
+                                                                       "/system-settings" + DataExtension);
+                
+                // Debug.Log("Steam file time: " + steamRemoteWriteTime);
+                // Debug.Log("Local file time: " + localStorageWriteTime);
+                
+                if (steamRemoteWriteTime > localStorageWriteTime)
+                {
+                    Debug.Log("Most recent SYSTEM file: Steam Cloud");
+                    return MostRecentSaveLocation.STEAM_CLOUD;
+
+                }
+
+                if (steamRemoteWriteTime.TrimMilliseconds() == localStorageWriteTime.TrimMilliseconds())
+                {
+                    Debug.Log("Both Steam cloud & local storage SYSTEM files written at the same time.");
+                    return MostRecentSaveLocation.LOCAL_STORAGE_AND_STEAM_CLOUD;
+                }
+                
+                Debug.Log("Most recent SYSTEM file: Local Storage");
+                return MostRecentSaveLocation.LOCAL_STORAGE;
+            }
+
+            return MostRecentSaveLocation.UNABLE_TO_DETERMINE;
+        }
+
         /// <summary>
         /// Returns the remote storage directory for this app and user.
         /// </summary>
