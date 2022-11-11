@@ -43,7 +43,10 @@ namespace AdrianMiasik.Components.Core.Settings
             }
         }
 
-        [MenuItem("Adrian Miasik/Steam/Delete Steam Cloud Files")]
+        /// <summary>
+        /// Deletes/Wipes all of our Steam Cloud remote files from the cloud.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete all Steam cloud files")]
         public static void DeleteAllSteamCloudFiles()
         {
             if (SteamClient.IsValid)
