@@ -51,10 +51,18 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             if (SteamClient.IsValid)
             {
+                if (SteamRemoteStorage.FileCount <= 0)
+                {
+                    Debug.Log("No remote Steam files found.");
+                    return;
+                }
+                
                 foreach (string file in SteamRemoteStorage.Files)
                 {
                     SteamRemoteStorage.FileDelete(file);
                 }
+
+                Debug.Log("Steam Cloud: All Steam cloud files have been deleted successfully!");
             }
             else
             {
