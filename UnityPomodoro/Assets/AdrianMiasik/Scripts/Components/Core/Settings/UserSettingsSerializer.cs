@@ -188,6 +188,32 @@ namespace AdrianMiasik.Components.Core.Settings
             return null;
         }
 
+        /// <summary>
+        /// Returns the remote storage directory for this app and user.
+        /// </summary>
+        /// <example>Returns something similar to: 'C:\Program Files (x86)\Steam\userdata\1007343656\2173940\remote'
+        /// </example>
+        /// <returns></returns>
+        private static string FetchUserDataRemoteDirectory()
+        {
+            // Get install directory
+            string result = SteamApps.AppInstallDir();
+
+            // Ignore everything after "steamapps" including itself...
+            int indexToIgnoreAfter = result.IndexOf("steamapps", StringComparison.Ordinal);
+            if (indexToIgnoreAfter >= 0)
+            {
+                result = result.Substring(0, indexToIgnoreAfter);
+                
+                // Find remote storage directory
+                result += "userdata";
+                result += "\\" + SteamClient.SteamId.AccountId;
+                result += "\\" + SteamClient.AppId;
+                result += "\\" + "remote";
+            }
+
+            return result;
+        }
         public static void WipeSystemSettings()
         {
             if (SteamClient.IsValid)
