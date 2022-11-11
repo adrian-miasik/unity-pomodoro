@@ -71,6 +71,10 @@ namespace AdrianMiasik.Components.Core.Settings
             }
         }
 
+        /// <summary>
+        /// Saves the provided SystemSettings to both the Steam Cloud and Local Storage.
+        /// </summary>
+        /// <param name="systemSettings"></param>
         public static void SaveSystemSettings(SystemSettings systemSettings)
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -95,8 +99,13 @@ namespace AdrianMiasik.Components.Core.Settings
             Debug.Log("Local Storage: SYSTEM settings file saved successfully.");
         }
         
+        /// <summary>
+        /// Saves the provided TimerSettings to our Local Storage. TODO: Add Steam Cloud Support
+        /// </summary>
+        /// <param name="timerSettings"></param>
         public static void SaveTimerSettings(TimerSettings timerSettings)
         {
+            // TODO: Steam Cloud support
             BinaryFormatter bf = new BinaryFormatter();
             
             // System settings
@@ -104,14 +113,11 @@ namespace AdrianMiasik.Components.Core.Settings
             bf.Serialize(fs, timerSettings);
 
             fs.Close();
-            
-#if USER_SETTINGS_EVENT_LOGS
             Debug.Log("Timer Settings Saved.");
-#endif
         }
 
         /// <summary>
-        /// Returns the timer settings saved in  our data file.
+        /// Returns the TimerSettings saved in our data file/local storage. TODO: Add Steam Cloud Support
         /// </summary>
         /// <returns></returns>
         public static TimerSettings LoadTimerSettings()
@@ -123,9 +129,7 @@ namespace AdrianMiasik.Components.Core.Settings
                     FileMode.Open);
                 TimerSettings timerSettings = bf.Deserialize(fs) as TimerSettings;
                 fs.Close();
-#if USER_SETTINGS_EVENT_LOGS
-                Debug.Log("Loaded Timer Settings Successfully!");
-#endif
+                // Debug.Log("Loaded Timer Settings Successfully!");
                 return timerSettings;
             }
 
