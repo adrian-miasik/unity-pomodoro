@@ -59,11 +59,12 @@ namespace AdrianMiasik.Components.Core.Settings
 
         public static void SaveSystemSettings(SystemSettings systemSettings)
         {
+            BinaryFormatter bf = new BinaryFormatter();
+            
             // If Steam Client is enabled and found: Save system settings to Steam Cloud...
             if (SteamClient.IsValid)
             {
                 MemoryStream ms = new MemoryStream();
-                BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(ms, systemSettings);
 
                 SteamRemoteStorage.FileWrite(SteamSystemSettingsPath, ms.ToArray());
@@ -71,19 +72,13 @@ namespace AdrianMiasik.Components.Core.Settings
                 
                 Debug.Log("Steam Cloud: SYSTEM settings file uploaded successfully.");
             }
-            // Otherwise, use local storage...
-            else
-            {
-                BinaryFormatter bf = new BinaryFormatter();
             
-                // System settings
-                FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
-                bf.Serialize(fs, systemSettings);
-
-                fs.Close();
-                
-                Debug.Log("Local Storage: SYSTEM settings file saved.");
-            }
+            // Also save system settings to local storage...
+            FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
+            bf.Serialize(fs, systemSettings);
+            fs.Close();
+            
+            Debug.Log("Local Storage: SYSTEM settings file saved successfully.");
         }
         
         public static void SaveTimerSettings(TimerSettings timerSettings)
@@ -174,6 +169,18 @@ namespace AdrianMiasik.Components.Core.Settings
                 fs.Close();
                 
                 Debug.Log("Local Storage: SYSTEM settings file loaded successfully!");
+
+                // Override Steam Cloud SYSTEM settings file...
+                if (SteamClient.IsValid)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    bf.Serialize(ms, systemSettings);
+                    SteamRemoteStorage.FileWrite(SteamSystemSettingsPath, ms.ToArray());
+                    ms.Close();
+                    Debug.Log("Local Storage -> Steam Cloud: Saved local storage SYSTEM settings file to Steam" +
+                              " Cloud for future fallback.");
+                }
+
                 return systemSettings;
             }
 
