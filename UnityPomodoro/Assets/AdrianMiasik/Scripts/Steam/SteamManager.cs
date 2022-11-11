@@ -6,11 +6,11 @@ namespace AdrianMiasik.Steam
     public class SteamManager : MonoBehaviour
     {
         private bool isInitialized;
-        private const bool enableSteamworks = true;
+        [SerializeField] private bool m_enableSteamworks = true;
     
         public void Initialize()
         {
-            if (!enableSteamworks)
+            if (!m_enableSteamworks)
             {
                 Debug.Log("Steamworks functionality disabled. (Dev)");
                 return;
