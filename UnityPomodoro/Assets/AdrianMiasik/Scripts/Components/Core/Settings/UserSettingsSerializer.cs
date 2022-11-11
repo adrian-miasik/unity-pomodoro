@@ -282,7 +282,19 @@ namespace AdrianMiasik.Components.Core.Settings
 
             return result;
         }
+
+        [MenuItem("Adrian Miasik/Settings/Delete all SYSTEM settings files")]
         public static void WipeSystemSettings()
+        {
+            DeleteSteamCloudSystemSettings();
+            DeleteLocalSystemSettings();
+        }
+
+        /// <summary>
+        /// Deletes the Steam Cloud saved system settings.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete SYSTEM settings file")]
+        private static void DeleteSteamCloudSystemSettings()
         {
             if (SteamClient.IsValid)
             {
@@ -293,20 +305,44 @@ namespace AdrianMiasik.Components.Core.Settings
                     SteamRemoteStorage.FileDelete(SteamSystemSettingsPath);
 
                     Debug.Log("Steam Cloud: SYSTEM settings file deleted successfully.");
-                    
-                    // Early exit
-                    return;
+                }
+                else
+                {
+                    Debug.LogWarning("Steam Cloud: SYSTEM settings file not found.");
                 }
             }
-            
-            if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
+            else
             {
-                File.Delete(Application.persistentDataPath + "/system-settings" + DataExtension);
+                Debug.LogWarning("Steam Client not found. Please init Steam Manager by entering play mode" +
+                                 " and try again.");
             }
         }
 
+        /// <summary>
+        /// Deletes the Local Storage saved SYSTEM settings.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete SYSTEM settings file")]
+        private static void DeleteLocalSystemSettings()
+        {
+            if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
+            {
+                File.Delete(Application.persistentDataPath + "/system-settings" + DataExtension);
+                
+                Debug.Log("Local Storage: SYSTEM settings file deleted successfully.");
+            }
+            else
+            {
+                Debug.LogWarning("Local Storage: SYSTEM settings file not found.");
+            }
+        }
+
+        /// <summary>
+        /// Deletes the Local Storage saved TIMER settings.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete TIMER settings file")]
         public static void WipeTimerSettings()
         {
+            // TODO: Steam Cloud support
             if (File.Exists(Application.persistentDataPath + "/timer-settings" + DataExtension))
             {
                 File.Delete(Application.persistentDataPath + "/timer-settings" + DataExtension);
