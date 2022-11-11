@@ -15,7 +15,10 @@ namespace AdrianMiasik.Components.Core.Settings
         private const string DataExtension = ".dat";
         private const string SteamSystemSettingsPath = "system-settings" + DataExtension;
 
-        [MenuItem("Adrian Miasik/Steam/Print Steam Cloud Files")]
+        /// <summary>
+        /// Prints all of our Steam Cloud remote files into the console.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Print all Steam cloud files")]
         public static void PrintAllSteamCloudFiles()
         {
             if (SteamClient.IsValid)
