@@ -221,8 +221,7 @@ namespace AdrianMiasik
             // System Settings
             if (systemSettings == null)
             {
-                Debug.Log("No SYSTEM settings found (Steam / Local). A new SYSTEM settings file has been " +
-                          "created successfully!");
+                Debug.Log("A new SYSTEM settings file has been created successfully!");
                 
                 // Create new settings
                 SystemSettings defaultSystemSettings = new SystemSettings();
@@ -243,7 +242,7 @@ namespace AdrianMiasik
                 defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
                 
-                // All platforms have analytics on by default. (User can opt-out though via settings panel)
+                // All platforms have analytics on by default. (User can opt-out though via SettingsPage)
                 defaultSystemSettings.m_enableUnityAnalytics = true;
                 
                 // Cache

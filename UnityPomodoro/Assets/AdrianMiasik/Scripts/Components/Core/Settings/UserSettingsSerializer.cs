@@ -18,7 +18,7 @@ namespace AdrianMiasik.Components.Core.Settings
         private const string SteamSystemSettingsPath = "system-settings" + DataExtension;
 
         /// <summary>
-        /// Prints all of our Steam Cloud remote files into the console.
+        /// Prints all of our Steam cloud remote files into the console.
         /// </summary>
         [MenuItem("Adrian Miasik/Settings/Steam Cloud/Print all Steam cloud files")]
         public static void PrintAllSteamCloudFiles()
@@ -46,7 +46,7 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 
         /// <summary>
-        /// Deletes/Wipes all of our Steam Cloud remote files from the cloud.
+        /// Deletes/Wipes all of our Steam cloud remote files from the cloud.
         /// </summary>
         [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete all Steam cloud files")]
         public static void DeleteAllSteamCloudFiles()
@@ -55,7 +55,7 @@ namespace AdrianMiasik.Components.Core.Settings
             {
                 if (SteamRemoteStorage.FileCount <= 0)
                 {
-                    Debug.Log("No remote Steam files found.");
+                    Debug.Log("No remote Steam cloud files found.");
                     return;
                 }
                 
@@ -74,26 +74,26 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 
         /// <summary>
-        /// Saves the provided SystemSettings to both the Steam Cloud and Local Storage.
+        /// Saves the provided SystemSettings to both the Steam cloud (remote storage) and local storage.
         /// </summary>
         /// <param name="systemSettings"></param>
         public static void SaveSystemSettings(SystemSettings systemSettings)
         {
             BinaryFormatter bf = new BinaryFormatter();
             
-            // If Steam Client is enabled and found: Save system settings to Steam Cloud...
+            // If the Steam client is enabled and found...
             if (SteamClient.IsValid)
             {
+                // Save the provided SystemSettings into the Steam cloud (remote storage).
                 MemoryStream ms = new MemoryStream();
                 bf.Serialize(ms, systemSettings);
-
                 SteamRemoteStorage.FileWrite(SteamSystemSettingsPath, ms.ToArray());
                 ms.Close();
                 
                 Debug.Log("Steam Cloud: SYSTEM settings file uploaded successfully.");
             }
             
-            // Also save system settings to local storage...
+            // Save SystemSettings to our local storage.
             FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
             bf.Serialize(fs, systemSettings);
             fs.Close();
