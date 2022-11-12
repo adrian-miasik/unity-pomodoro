@@ -5971,6 +5971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c718ec8a284e49f4fa8041cf5e23eee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enableSteamworks: 1
 --- !u!1 &754563202
 GameObject:
   m_ObjectHideFlags: 0
