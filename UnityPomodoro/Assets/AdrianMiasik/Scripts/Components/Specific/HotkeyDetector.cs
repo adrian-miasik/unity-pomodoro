@@ -73,7 +73,8 @@ namespace AdrianMiasik.Components.Specific
 
                 if (SteamClient.IsValid)
                 {
-                   topText += " This will also wipe your Steam stats and any unlocked/progressed Steam achievements.";
+                   topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
+                              " any uploaded Steam cloud save data.";
                 }
                 
                 timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
