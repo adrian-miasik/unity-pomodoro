@@ -3,6 +3,7 @@ using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
 using Steamworks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -104,7 +105,30 @@ namespace AdrianMiasik.Components.Specific
             }
         }
 
-        public void RestartApplication()
+        private void PromptApplicationRestart(bool quitApplicationOnRestartConfirm = false)
+        {
+            string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
+
+            if (SteamClient.IsValid)
+            {
+                topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
+                           " any uploaded Steam cloud save data.";
+            }
+                        
+            timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
+            timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
+                {
+                    SteamUserStats.ResetAll(true);
+                    SteamUserStats.StoreStats();
+                    SteamUserStats.RequestCurrentStats();
+                    RestartApplication(quitApplicationOnRestartConfirm);
+                }, null, 
+                topText, 
+                null, 
+                false);
+        }
+
+        private void RestartApplication(bool quitApplicationOnRestart = false)
         {
             timer.GetTheme().DeregisterAllElements();
 
@@ -113,7 +137,19 @@ namespace AdrianMiasik.Components.Specific
             
             timer.ShutdownSteamManager();
             Debug.Log("Application: Factory Reset");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            if (!quitApplicationOnRestart)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            else
+            {
+#if UNITY_EDITOR
+                EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+            }
         }
 
         /// <summary>
@@ -145,30 +181,20 @@ namespace AdrianMiasik.Components.Specific
                 if (Input.GetKeyDown(KeyCode.U))
                 {
                     timer.TriggerThemeSwitch();
-                } 
-            
-                // Restart application
+                }
+
                 if (Input.GetKeyDown(KeyCode.F5))
                 {
-                    string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
-
-                    if (SteamClient.IsValid)
+                    if (IsUserHoldingShift())
                     {
-                        topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
-                                   " any uploaded Steam cloud save data.";
+                        // Restart application and quit
+                        PromptApplicationRestart(true);
                     }
-                    
-                    timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
-                    timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
-                        {
-                            SteamUserStats.ResetAll(true);
-                            SteamUserStats.StoreStats();
-                            SteamUserStats.RequestCurrentStats();
-                            RestartApplication();
-                        }, null, 
-                        topText, 
-                        null, 
-                        false);
+                    else
+                    {
+                        // Restart application
+                        PromptApplicationRestart();
+                    }
                 }
             }
 
@@ -189,6 +215,11 @@ namespace AdrianMiasik.Components.Specific
             {
                 timer.SetTimerValue(GUIUtility.systemCopyBuffer);
             }
+        }
+
+        private bool IsUserHoldingShift()
+        {
+            return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         }
 
         private bool IsUserHoldingControl()
