@@ -149,7 +149,7 @@ namespace AdrianMiasik.ScriptableObjects
 
             if (save)
             {
-                UserSettingsSerializer.SaveSystemSettings(timer.GetSystemSettings());
+                UserSettingsSerializer.SaveSettingsFile(timer.GetSystemSettings(), "system-settings");
             }
 
             ApplyColorChanges();
@@ -164,7 +164,7 @@ namespace AdrianMiasik.ScriptableObjects
 
             if (save)
             {
-                UserSettingsSerializer.SaveSystemSettings(timer.GetSystemSettings());
+                UserSettingsSerializer.SaveSettingsFile(timer.GetSystemSettings(), "system-settings");
             }
 
             ApplyColorChanges();

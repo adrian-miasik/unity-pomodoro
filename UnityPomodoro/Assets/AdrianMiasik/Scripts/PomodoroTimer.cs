@@ -215,8 +215,7 @@ namespace AdrianMiasik
             // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
             m_steamManager.Initialize();
             
-            SystemSettings systemSettings = UserSettingsSerializer.LoadSystemSettings();
-            TimerSettings timerSettings = UserSettingsSerializer.LoadTimerSettings();
+            SystemSettings systemSettings = UserSettingsSerializer.LoadSettings<SystemSettings>("system-settings");
 
             // System Settings
             if (systemSettings == null)
@@ -247,7 +246,7 @@ namespace AdrianMiasik
                 
                 // Cache
                 systemSettings = defaultSystemSettings;
-                UserSettingsSerializer.SaveSystemSettings(systemSettings);
+                UserSettingsSerializer.SaveSettingsFile(systemSettings, "system-settings");
             }
 
             loadedSystemSettings = systemSettings;
@@ -263,21 +262,24 @@ namespace AdrianMiasik
                 m_themeManager.SetToLightMode();
             }
             
+            TimerSettings timerSettings = UserSettingsSerializer.LoadSettings<TimerSettings>("timer-settings");
+            
             // Timer Settings
             // If we don't have any saved settings...
             if (timerSettings == null)
             {
-                Debug.Log("No Timer settings found. Created new Timer settings successfully!");
+                Debug.Log("A new TIMER settings file has been created successfully!");
                 
                 // Create new settings
                 TimerSettings defaultTimerSettings = new TimerSettings();
+                
                 defaultTimerSettings.m_longBreaks = true;
                 defaultTimerSettings.m_format = DigitFormat.SupportedFormats.HH_MM_SS;
                 defaultTimerSettings.m_pomodoroCount = 4;
 
                 // Cache
                 timerSettings = defaultTimerSettings;
-                UserSettingsSerializer.SaveTimerSettings(timerSettings);
+                UserSettingsSerializer.SaveSettingsFile(timerSettings, "timer-settings");
             }
             
             loadedTimerSettings = timerSettings;
@@ -309,7 +311,7 @@ namespace AdrianMiasik
             {
                 // Apply and save
                 loadedSystemSettings.m_enableUnityAnalytics = enableUnityAnalytics;
-                UserSettingsSerializer.SaveSystemSettings(loadedSystemSettings);
+                UserSettingsSerializer.SaveSettingsFile(loadedSystemSettings, "system-settings");
             }
 
             // Set if service needs to start on init...
@@ -1230,7 +1232,7 @@ namespace AdrianMiasik
                 m_confirmationDialogManager.SpawnConfirmationDialog(GenerateFormat, () =>
                 {
                     GetTimerSettings().m_format = desiredFormat;
-                    UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+                    UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
                     m_sidebarPages.SetSettingDigitFormatDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
             }
@@ -1239,7 +1241,7 @@ namespace AdrianMiasik
                 m_digitFormat.SwitchFormat(desiredFormat);
                 GenerateFormat();
                 GetTimerSettings().m_format = desiredFormat;
-                UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+                UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
             }
         }
 
@@ -1346,7 +1348,7 @@ namespace AdrianMiasik
         {
             // Apply and save
             GetTimerSettings().m_longBreaks = state;
-            UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+            UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
             
             // Apply component swap
             if (state)

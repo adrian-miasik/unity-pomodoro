@@ -132,8 +132,8 @@ namespace AdrianMiasik.Components.Specific
         {
             timer.GetTheme().DeregisterAllElements();
 
-            UserSettingsSerializer.WipeSystemSettings();
-            UserSettingsSerializer.WipeTimerSettings();
+            UserSettingsSerializer.DeleteSettingsFile("system-settings");
+            UserSettingsSerializer.DeleteSettingsFile("timer-settings");
             
             timer.ShutdownSteamManager();
             Debug.Log("Application: Factory Reset");

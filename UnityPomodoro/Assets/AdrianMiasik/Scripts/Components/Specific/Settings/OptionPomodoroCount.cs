@@ -24,7 +24,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         private void SetPomodoroLongBreakCount(Int32 i)
         {
             Timer.GetTimerSettings().m_pomodoroCount = i + 1;
-            UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
+            UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
 
             int desiredCount = i + 1; // Dependant on our dropdown options.
 

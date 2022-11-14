@@ -15,7 +15,6 @@ namespace AdrianMiasik.Components.Core.Settings
     public static class UserSettingsSerializer
     {
         private const string DataExtension = ".dat";
-        private const string SteamSystemSettingsPath = "system-settings" + DataExtension;
 
 #if UNITY_EDITOR
         /// <summary>
@@ -76,71 +75,39 @@ namespace AdrianMiasik.Components.Core.Settings
 #endif
 
         /// <summary>
-        /// Saves the provided SystemSettings to both the Steam cloud (remote storage) and local storage.
+        /// Saves the provided file to both the Steam cloud (remote storage) and local storage.
         /// </summary>
-        /// <param name="systemSettings"></param>
-        public static void SaveSystemSettings(SystemSettings systemSettings)
+        public static void SaveSettingsFile<T>(T type, string fileName)
         {
             BinaryFormatter bf = new BinaryFormatter();
-            
+            string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
+            string simpleFilePath = fileName + DataExtension;
+
             // If the Steam client is enabled and found...
             if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
-                // Save the provided SystemSettings into the Steam cloud (remote storage).
+                // Save the provided type into the Steam cloud (remote storage).
                 MemoryStream ms = new MemoryStream();
-                bf.Serialize(ms, systemSettings);
-                SteamRemoteStorage.FileWrite(SteamSystemSettingsPath, ms.ToArray());
+                bf.Serialize(ms, type);
+                if (SteamRemoteStorage.FileWrite(simpleFilePath, ms.ToArray()))
+                {
+                    Debug.Log("Steam Cloud: " + simpleFilePath + " settings file uploaded successfully.");
+                }
+                else
+                {
+                    Debug.LogAssertion("Steam Cloud: " + simpleFilePath + " upload has failed.");
+                }
                 ms.Close();
-                
-                Debug.Log("Steam Cloud: SYSTEM settings file uploaded successfully.");
             }
             
-            // Save SystemSettings to our local storage.
-            FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
-            bf.Serialize(fs, systemSettings);
+            // Save file to our local storage.
+            FileStream fs = File.Create(persistentFilePath);
+            bf.Serialize(fs, type);
             fs.Close();
             
-            Debug.Log("Local Storage: SYSTEM settings file saved successfully.");
+            Debug.Log("Local Storage: " + simpleFilePath + " settings file saved successfully.");
         }
         
-        /// <summary>
-        /// Saves the provided TimerSettings to our Local Storage. TODO: Add Steam Cloud Support
-        /// </summary>
-        /// <param name="timerSettings"></param>
-        public static void SaveTimerSettings(TimerSettings timerSettings)
-        {
-            // TODO: Steam Cloud support
-            BinaryFormatter bf = new BinaryFormatter();
-            
-            // System settings
-            FileStream fs = File.Create(Application.persistentDataPath + "/timer-settings" + DataExtension);
-            bf.Serialize(fs, timerSettings);
-
-            fs.Close();
-            Debug.Log("Timer Settings Saved.");
-        }
-
-        /// <summary>
-        /// Returns the TimerSettings saved in our data file/local storage. TODO: Add Steam Cloud Support
-        /// </summary>
-        /// <returns></returns>
-        public static TimerSettings LoadTimerSettings()
-        {
-            if (File.Exists(Application.persistentDataPath + "/timer-settings" + DataExtension))
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = File.Open(Application.persistentDataPath + "/timer-settings" + DataExtension,
-                    FileMode.Open);
-                TimerSettings timerSettings = bf.Deserialize(fs) as TimerSettings;
-                fs.Close();
-                // Debug.Log("Loaded Timer Settings Successfully!");
-                return timerSettings;
-            }
-
-            Debug.LogWarning("File not found. Unable to load timer settings.");
-            return null;
-        }
-
         private enum MostRecentSaveLocation
         {
             /// <summary>
@@ -175,168 +142,175 @@ namespace AdrianMiasik.Components.Core.Settings
             LOCAL_STORAGE_AND_STEAM_CLOUD
         }
 
-        public static SystemSettings LoadSystemSettings()
+        public static T LoadSettings<T>(string fileName) where T : class
         {
-            MostRecentSaveLocation recentSave = FetchMostRecentSaveMethod();
+            MostRecentSaveLocation recentSave = FetchMostRecentSaveMethod(fileName);
             BinaryFormatter bf = new BinaryFormatter();
+            string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
+            string simpleFilePath = fileName + DataExtension;
             
             switch (recentSave)
             {
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_OFFLINE:
                     // Load local storage save
-                    if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
+                    if (File.Exists(persistentFilePath))
                     {
-                        FileStream fs = File.Open(Application.persistentDataPath + "/system-settings" + DataExtension,
-                            FileMode.Open);
-                        SystemSettings systemSettings = bf.Deserialize(fs) as SystemSettings;
+                        FileStream fs = File.Open(persistentFilePath, FileMode.Open);
+                        T file = bf.Deserialize(fs) as T;
                         fs.Close();
                 
-                        Debug.Log("Local Storage: SYSTEM settings file loaded successfully!");
+                        Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
                         
                         // Return local save
-                        return systemSettings;
+                        return file;
                     }
                     break;
                 
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_CLOUD_EMPTY:
                 case MostRecentSaveLocation.LOCAL_STORAGE:
                     // Load local storage save
-                    if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
+                    if (File.Exists(persistentFilePath))
                     {
-                        FileStream fs = File.Open(Application.persistentDataPath + "/system-settings" + DataExtension,
-                            FileMode.Open);
-                        SystemSettings systemSettings = bf.Deserialize(fs) as SystemSettings;
+                        FileStream fs = File.Open(persistentFilePath, FileMode.Open);
+                        T file = bf.Deserialize(fs) as T;
                         fs.Close();
                 
-                        Debug.Log("Local Storage: SYSTEM settings file loaded successfully!");
+                        Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
                         
-                        // If Steam cloud is running, save local storage to steam cloud.
+                        // If Steam cloud is running, save local storage to Steam cloud.
                         if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
                         {
-                            // Overwrite Steam cloud SYSTEM settings file with local storage version.
+                            // Overwrite Steam cloud file with local storage version.
                             MemoryStream ms = new MemoryStream();
-                            bf.Serialize(ms, systemSettings);
-                            SteamRemoteStorage.FileWrite(SteamSystemSettingsPath, ms.ToArray());
+                            bf.Serialize(ms, file);
+                            if (SteamRemoteStorage.FileWrite(simpleFilePath, ms.ToArray()))
+                            {
+                                Debug.Log("Local Storage -> Steam Cloud: Saved local storage file " + simpleFilePath 
+                                    + " to Steam Cloud for future fallback.");
+                            }
+                            else
+                            {
+                                Debug.LogError("Steam Cloud: Failed upload. Unable to upload " + simpleFilePath);
+                            }
                             ms.Close();
-                            Debug.Log("Local Storage -> Steam Cloud: Saved local storage SYSTEM settings" +
-                                      " file to Steam Cloud for future fallback.");
-                            
+
                             // Write save again to local storage to match Steam cloud modified time.
-                            fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
-                            bf.Serialize(fs, systemSettings);
+                            fs = File.Create(persistentFilePath);
+                            bf.Serialize(fs, file);
                             fs.Close();
                         }
                         
                         // Return local save
-                        return systemSettings;
+                        return file;
                     }
                     break;
                 
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_LOCAL_STORAGE_EMPTY:
                 case MostRecentSaveLocation.STEAM_CLOUD:
-                    // Load steam cloud save
+                    // Load Steam cloud save
                     if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
                     {
-                        // Validate Steam Cloud Save data...
-                        if (SteamRemoteStorage.FileExists(SteamSystemSettingsPath))
+                        // Validate Steam cloud Save data...
+                        if (SteamRemoteStorage.FileExists(simpleFilePath))
                         {
                             // Fetch Steam Cloud file...
-                            byte[] steamCloudFile = SteamRemoteStorage.FileRead(SteamSystemSettingsPath);
+                            byte[] steamCloudFile = SteamRemoteStorage.FileRead(simpleFilePath);
                             
-                            // Convert byte array back into object (SystemSettings)
+                            // Convert byte array back into T object
                             MemoryStream ms = new MemoryStream();
                             bf = new BinaryFormatter();
                             ms.Write(steamCloudFile, 0, steamCloudFile.Length);
                             ms.Seek(0, SeekOrigin.Begin);
-                            SystemSettings systemSettings = bf.Deserialize(ms) as SystemSettings;
+                            T file = bf.Deserialize(ms) as T;
 
-                            Debug.Log("Steam Cloud: SYSTEM settings file downloaded successfully!");
+                            Debug.Log("Steam Cloud: " + simpleFilePath + " downloaded successfully!");
                             
-                            // Overwrite local storage SYSTEM settings file with Steam Cloud version.
-                            FileStream fs = File.Create(Application.persistentDataPath + "/system-settings" + DataExtension);
-                            bf.Serialize(fs, systemSettings);
+                            // Overwrite local storage file with Steam cloud version.
+                            FileStream fs = File.Create(persistentFilePath);
+                            bf.Serialize(fs, file);
                             fs.Close();
-                            Debug.Log("Steam Cloud -> Local Storage: Saved Steam Cloud SYSTEM settings" +
-                                      " file to local storage for future fallback.");
+                            Debug.Log("Steam Cloud -> Local Storage: Saved Steam cloud file " + simpleFilePath + 
+                                      " to local storage for future fallback.");
                             
                             // Write save again to Steam cloud to match local storage modified time.
-                            bf.Serialize(ms, systemSettings);
-                            SteamRemoteStorage.FileWrite(SteamSystemSettingsPath, ms.ToArray());
+                            bf.Serialize(ms, file);
+                            SteamRemoteStorage.FileWrite(simpleFilePath, ms.ToArray());
                             ms.Close();
                             
                             // Return cloud save
-                            return systemSettings;
+                            return file;
                         }
                     }
                     break;
                 
                 case MostRecentSaveLocation.LOCAL_STORAGE_AND_STEAM_CLOUD:
                     // Load local storage save
-                    if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
+                    if (File.Exists(persistentFilePath))
                     {
-                        FileStream fs = File.Open(Application.persistentDataPath + "/system-settings" + DataExtension,
-                            FileMode.Open);
-                        SystemSettings systemSettings = bf.Deserialize(fs) as SystemSettings;
+                        FileStream fs = File.Open(persistentFilePath, FileMode.Open);
+                        T file = bf.Deserialize(fs) as T;
                         fs.Close();
                 
-                        Debug.Log("Local Storage: SYSTEM settings file loaded successfully!");
+                        Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
 
                         // Return local save
-                        return systemSettings;
+                        return file;
                     }
                     break;
             }
             
-            Debug.LogWarning("No SYSTEM settings file could be found.");
+            Debug.LogWarning("No " + simpleFilePath + " file could be found.");
             return null;
         }
 
         /// <summary>
         /// Calculates and determines which save location was written to last. (Steam Cloud/Local Storage)
-        /// See the <see cref="MostRecentSaveLocation"/> enum for details. If the
+        /// See the <see cref="MostRecentSaveLocation"/> enum for details.
         /// </summary>
         /// <returns></returns>
-        private static MostRecentSaveLocation FetchMostRecentSaveMethod()
+        private static MostRecentSaveLocation FetchMostRecentSaveMethod(string fileName)
         {
+            string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
+            string simpleFilePath = fileName + DataExtension;
+            
             if (!SteamClient.IsValid || !SteamRemoteStorage.IsCloudEnabled)
             {
                 return MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_OFFLINE;
             }
             
             // Fetch user data remote storage directory
-            string steamUserRemoteSystemSettingsPath = FetchUserDataRemoteDirectory() 
-                                                       + "\\" + SteamSystemSettingsPath;
+            string steamUserRemoteSystemSettingsPath = FetchUserDataRemoteDirectory() + "\\" + simpleFilePath;
                     
             // Check validity of user data remote storage directory...
             if (File.Exists(steamUserRemoteSystemSettingsPath))
             {
                 // Check if local storage exists...
-                if (!File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
+                if (!File.Exists(persistentFilePath))
                 {
                     return MostRecentSaveLocation.UNABLE_TO_DETERMINE_LOCAL_STORAGE_EMPTY;
                 }
                 
                 // Cache last accessed / modified file times of our SYSTEM settings files.
                 DateTime steamRemoteWriteTime = File.GetLastWriteTime(steamUserRemoteSystemSettingsPath);
-                DateTime localStorageWriteTime = File.GetLastWriteTime(Application.persistentDataPath +
-                                                                       "/system-settings" + DataExtension);
+                DateTime localStorageWriteTime = File.GetLastWriteTime(persistentFilePath);
                 
                 // Debug.Log("Steam file time: " + steamRemoteWriteTime);
                 // Debug.Log("Local file time: " + localStorageWriteTime);
                 
                 if (steamRemoteWriteTime > localStorageWriteTime)
                 {
-                    Debug.Log("Most recent SYSTEM file: Steam Cloud");
+                    Debug.Log("Most recent " + simpleFilePath + " file: Steam Cloud");
                     return MostRecentSaveLocation.STEAM_CLOUD;
                 }
 
                 if (steamRemoteWriteTime.TrimMilliseconds() == localStorageWriteTime.TrimMilliseconds())
                 {
-                    Debug.Log("Both Steam cloud & local storage SYSTEM files written at the same time.");
+                    Debug.Log("Both Steam cloud & local storage " + simpleFilePath + " files written at the " +
+                              "same time.");
                     return MostRecentSaveLocation.LOCAL_STORAGE_AND_STEAM_CLOUD;
                 }
                 
-                Debug.Log("Most recent SYSTEM file: Local Storage");
+                Debug.Log("Most recent " + simpleFilePath + " file: Local Storage");
                 return MostRecentSaveLocation.LOCAL_STORAGE;
             }
 
@@ -370,36 +344,46 @@ namespace AdrianMiasik.Components.Core.Settings
             return result;
         }
 
-#if UNITY_EDITOR
-        [MenuItem("Adrian Miasik/Settings/Delete all SYSTEM settings files")]
-#endif
-        public static void WipeSystemSettings()
+        // TODO: Create methods for the following...
+        // TODO: Create methods for similar "Timer Settings"
+// #if UNITY_EDITOR
+//         [MenuItem("Adrian Miasik/Settings/Delete all SYSTEM settings files")]
+// #endif
+
+// #if UNITY_EDITOR
+//         [MenuItem("Adrian Miasik/Settings/Local Storage/Delete SYSTEM settings file")]
+// #endif
+
+// #if UNITY_EDITOR
+//         [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete SYSTEM settings file")]
+// #endif
+
+        public static void DeleteSettingsFile(string fileName)
         {
-            DeleteSteamCloudSystemSettings();
-            DeleteLocalSystemSettings();
+            DeleteSteamCloudSettingsFile(fileName);
+            DeleteLocalSettingsFile(fileName);
         }
         
         /// <summary>
-        /// Deletes the Steam Cloud saved system settings.
+        /// Deletes the provided Steam cloud settings file.
         /// </summary>
-#if UNITY_EDITOR
-        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete SYSTEM settings file")]
-#endif
-        private static void DeleteSteamCloudSystemSettings()
+        private static void DeleteSteamCloudSettingsFile(string fileName)
         {
+            string simpleFilePath = fileName + DataExtension;
+            
             if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
                 // Attempt to remove Steam Cloud save...
-                if (SteamRemoteStorage.FileExists(SteamSystemSettingsPath))
+                if (SteamRemoteStorage.FileExists(simpleFilePath))
                 {
                     // Wipe remote storage
-                    SteamRemoteStorage.FileDelete(SteamSystemSettingsPath);
+                    SteamRemoteStorage.FileDelete(simpleFilePath);
 
-                    Debug.Log("Steam Cloud: SYSTEM settings file deleted successfully.");
+                    Debug.Log("Steam Cloud: " + simpleFilePath + " settings file deleted successfully.");
                 }
                 else
                 {
-                    Debug.LogWarning("Steam Cloud: SYSTEM settings file not found.");
+                    Debug.LogWarning("Steam Cloud: " + simpleFilePath + " settings file not found.");
                 }
             }
             else
@@ -410,37 +394,22 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 
         /// <summary>
-        /// Deletes the Local Storage saved SYSTEM settings.
+        /// Deletes the provided local storage settings file.
         /// </summary>
-#if UNITY_EDITOR
-        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete SYSTEM settings file")]
-#endif
-        private static void DeleteLocalSystemSettings()
+        private static void DeleteLocalSettingsFile(string fileName)
         {
-            if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
+            string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
+            string simpleFilePath = fileName + DataExtension;
+            
+            if (File.Exists(persistentFilePath))
             {
-                File.Delete(Application.persistentDataPath + "/system-settings" + DataExtension);
+                File.Delete(persistentFilePath);
                 
-                Debug.Log("Local Storage: SYSTEM settings file deleted successfully.");
+                Debug.Log("Local Storage: " + simpleFilePath + " settings file deleted successfully.");
             }
             else
             {
-                Debug.LogWarning("Local Storage: SYSTEM settings file not found.");
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Local Storage saved TIMER settings.
-        /// </summary>
-#if UNITY_EDITOR
-        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete TIMER settings file")]
-#endif
-        public static void WipeTimerSettings()
-        {
-            // TODO: Steam Cloud support
-            if (File.Exists(Application.persistentDataPath + "/timer-settings" + DataExtension))
-            {
-                File.Delete(Application.persistentDataPath + "/timer-settings" + DataExtension);
+                Debug.LogWarning("Local Storage: "+ simpleFilePath + " file not found.");
             }
         }
     }
