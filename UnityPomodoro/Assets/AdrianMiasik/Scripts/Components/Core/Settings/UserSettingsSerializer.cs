@@ -24,7 +24,7 @@ namespace AdrianMiasik.Components.Core.Settings
         [MenuItem("Adrian Miasik/Settings/Steam Cloud/Print all Steam cloud files")]
         public static void PrintAllSteamCloudFiles()
         {
-            if (SteamClient.IsValid)
+            if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
                 if (SteamRemoteStorage.FileCount <= 0)
                 {
@@ -52,7 +52,7 @@ namespace AdrianMiasik.Components.Core.Settings
         [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete all Steam cloud files")]
         public static void DeleteAllSteamCloudFiles()
         {
-            if (SteamClient.IsValid)
+            if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
                 if (SteamRemoteStorage.FileCount <= 0)
                 {
@@ -84,7 +84,7 @@ namespace AdrianMiasik.Components.Core.Settings
             BinaryFormatter bf = new BinaryFormatter();
             
             // If the Steam client is enabled and found...
-            if (SteamClient.IsValid)
+            if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
                 // Save the provided SystemSettings into the Steam cloud (remote storage).
                 MemoryStream ms = new MemoryStream();
@@ -211,7 +211,7 @@ namespace AdrianMiasik.Components.Core.Settings
                         Debug.Log("Local Storage: SYSTEM settings file loaded successfully!");
                         
                         // If Steam cloud is running, save local storage to steam cloud.
-                        if (SteamClient.IsValid)
+                        if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
                         {
                             // Overwrite Steam cloud SYSTEM settings file with local storage version.
                             MemoryStream ms = new MemoryStream();
@@ -235,7 +235,7 @@ namespace AdrianMiasik.Components.Core.Settings
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_LOCAL_STORAGE_EMPTY:
                 case MostRecentSaveLocation.STEAM_CLOUD:
                     // Load steam cloud save
-                    if (SteamClient.IsValid)
+                    if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
                     {
                         // Validate Steam Cloud Save data...
                         if (SteamRemoteStorage.FileExists(SteamSystemSettingsPath))
@@ -298,7 +298,7 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <returns></returns>
         private static MostRecentSaveLocation FetchMostRecentSaveMethod()
         {
-            if (!SteamClient.IsValid)
+            if (!SteamClient.IsValid || !SteamRemoteStorage.IsCloudEnabled)
             {
                 return MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_OFFLINE;
             }
@@ -387,7 +387,7 @@ namespace AdrianMiasik.Components.Core.Settings
 #endif
         private static void DeleteSteamCloudSystemSettings()
         {
-            if (SteamClient.IsValid)
+            if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
                 // Attempt to remove Steam Cloud save...
                 if (SteamRemoteStorage.FileExists(SteamSystemSettingsPath))
