@@ -17,6 +17,7 @@ namespace AdrianMiasik.Components.Core.Settings
         private const string DataExtension = ".dat";
         private const string SteamSystemSettingsPath = "system-settings" + DataExtension;
 
+#if UNITY_EDITOR
         /// <summary>
         /// Prints all of our Steam cloud remote files into the console.
         /// </summary>
@@ -72,6 +73,7 @@ namespace AdrianMiasik.Components.Core.Settings
                                  " and try again.");
             }
         }
+#endif
 
         /// <summary>
         /// Saves the provided SystemSettings to both the Steam cloud (remote storage) and local storage.
@@ -368,17 +370,21 @@ namespace AdrianMiasik.Components.Core.Settings
             return result;
         }
 
+#if UNITY_EDITOR
         [MenuItem("Adrian Miasik/Settings/Delete all SYSTEM settings files")]
+#endif
         public static void WipeSystemSettings()
         {
             DeleteSteamCloudSystemSettings();
             DeleteLocalSystemSettings();
         }
-
+        
         /// <summary>
         /// Deletes the Steam Cloud saved system settings.
         /// </summary>
+#if UNITY_EDITOR
         [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete SYSTEM settings file")]
+#endif
         private static void DeleteSteamCloudSystemSettings()
         {
             if (SteamClient.IsValid)
@@ -406,7 +412,9 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <summary>
         /// Deletes the Local Storage saved SYSTEM settings.
         /// </summary>
+#if UNITY_EDITOR
         [MenuItem("Adrian Miasik/Settings/Local Storage/Delete SYSTEM settings file")]
+#endif
         private static void DeleteLocalSystemSettings()
         {
             if (File.Exists(Application.persistentDataPath + "/system-settings" + DataExtension))
@@ -424,7 +432,9 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <summary>
         /// Deletes the Local Storage saved TIMER settings.
         /// </summary>
+#if UNITY_EDITOR
         [MenuItem("Adrian Miasik/Settings/Local Storage/Delete TIMER settings file")]
+#endif
         public static void WipeTimerSettings()
         {
             // TODO: Steam Cloud support
