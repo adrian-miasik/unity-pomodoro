@@ -65,29 +65,26 @@ namespace AdrianMiasik.Components.Specific
             {
                 timer.ClearSelection();
             }
-            
-            // Restart application
-            if (Input.GetKeyDown(KeyCode.F5))
-            {
-                string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
 
-                if (SteamClient.IsValid)
-                {
-                   topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
-                              " any uploaded Steam cloud save data.";
-                }
-                
-                timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
-                timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
-                    {
-                        SteamUserStats.ResetAll(true);
-                        SteamUserStats.StoreStats();
-                        SteamUserStats.RequestCurrentStats();
-                        RestartApplication();
-                    }, null, 
-                    topText, 
-                    null, 
-                    false);
+            // Switch digit layouts
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
             }
 
             // Tab between digits
@@ -137,39 +134,41 @@ namespace AdrianMiasik.Components.Specific
                 }
             }
             
-            // Control modifier
+            if (!IsUserHoldingControl() && Input.GetKeyDown(KeyCode.F5))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
+            }
+
             if (IsUserHoldingControl())
             {
                 // Switch theme
                 if (Input.GetKeyDown(KeyCode.U))
                 {
                     timer.TriggerThemeSwitch();
-                }
-                
-                // Switch digit layouts
-                if (Input.GetKeyDown(KeyCode.F1))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
-                }
-
-                if (Input.GetKeyDown(KeyCode.F2))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
-                }
-
-                if (Input.GetKeyDown(KeyCode.F3))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
-                }
-
-                if (Input.GetKeyDown(KeyCode.F4))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
-                }
-
+                } 
+            
+                // Restart application
                 if (Input.GetKeyDown(KeyCode.F5))
                 {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
+                    string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
+
+                    if (SteamClient.IsValid)
+                    {
+                        topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
+                                   " any uploaded Steam cloud save data.";
+                    }
+                    
+                    timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
+                    timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
+                        {
+                            SteamUserStats.ResetAll(true);
+                            SteamUserStats.StoreStats();
+                            SteamUserStats.RequestCurrentStats();
+                            RestartApplication();
+                        }, null, 
+                        topText, 
+                        null, 
+                        false);
                 }
             }
 
