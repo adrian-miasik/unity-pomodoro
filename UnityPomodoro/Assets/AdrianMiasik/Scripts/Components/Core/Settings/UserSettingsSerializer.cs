@@ -20,7 +20,7 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <summary>
         /// Prints all of our Steam cloud remote files into the console.
         /// </summary>
-        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Print all Steam cloud files")]
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud (Remote Storage)/Print all Steam cloud files")]
         public static void PrintAllSteamCloudFiles()
         {
             if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
@@ -48,7 +48,7 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <summary>
         /// Deletes/Wipes all of our Steam cloud remote files from the cloud.
         /// </summary>
-        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete all Steam cloud files")]
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud (Remote Storage)/Delete all Steam cloud files")]
         public static void DeleteAllSteamCloudFiles()
         {
             if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
@@ -399,12 +399,21 @@ namespace AdrianMiasik.Components.Core.Settings
             }
         }
         
-        // TODO: Create methods for similar "Timer Settings"
 #if UNITY_EDITOR
+        /// <summary>
+        /// Deletes all settings files from Steam cloud (remote storage) and local storage.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Delete all settings files")]
+        private static void DeleteAllSettingsFiles()
+        {
+            DeleteSettingsFile("system-settings");
+            DeleteSettingsFile("timer-settings");
+        }
+        
         /// <summary>
         /// Deletes the system settings file from Steam cloud (remote storage) and local storage.
         /// </summary>
-        [MenuItem("Adrian Miasik/Settings/Delete 'system-settings.dat' files")]
+        [MenuItem("Adrian Miasik/Settings/Delete both 'system-settings' files")]
         private static void DeleteAllSystemSettingsFiles()
         {
             DeleteSettingsFile("system-settings");
@@ -413,7 +422,7 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <summary>
         /// Deletes the system settings file from local storage.
         /// </summary>
-        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete 'system-settings.dat' settings file")]
+        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete 'system-settings' file")]
         private static void DeleteLocalSystemSettingsFile()
         {
             DeleteLocalFile("system-settings");
@@ -422,10 +431,37 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <summary>
         /// Deletes the system settings file from the Steam cloud (remote storage).
         /// </summary>
-        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete SYSTEM settings file")]
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud (Remote Storage)/Delete 'system-settings' file")]
         private static void DeleteRemoteSystemSettingsFile()
         {
             DeleteRemoteFile("system-settings");
+        }
+        
+        /// <summary>
+        /// Deletes the timer settings file from Steam cloud (remote storage) and local storage.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Delete both 'timer-settings' files")]
+        private static void DeleteAllTimerSettingsFiles()
+        {
+            DeleteSettingsFile("timer-settings");
+        }
+
+        /// <summary>
+        /// Deletes the timer settings file from local storage.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete 'timer-settings' file")]
+        private static void DeleteLocalTimerSettingsFile()
+        {
+            DeleteLocalFile("timer-settings");
+        }
+
+        /// <summary>
+        /// Deletes the timer settings file from the Steam cloud (remote storage).
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud (Remote Storage)/Delete 'timer-settings' file")]
+        private static void DeleteRemoteTimerSettingsFile()
+        {
+            DeleteRemoteFile("timer-settings");
         }
 #endif
     }
