@@ -344,30 +344,16 @@ namespace AdrianMiasik.Components.Core.Settings
             return result;
         }
 
-        // TODO: Create methods for the following...
-        // TODO: Create methods for similar "Timer Settings"
-// #if UNITY_EDITOR
-//         [MenuItem("Adrian Miasik/Settings/Delete all SYSTEM settings files")]
-// #endif
-
-// #if UNITY_EDITOR
-//         [MenuItem("Adrian Miasik/Settings/Local Storage/Delete SYSTEM settings file")]
-// #endif
-
-// #if UNITY_EDITOR
-//         [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete SYSTEM settings file")]
-// #endif
-
         public static void DeleteSettingsFile(string fileName)
         {
-            DeleteSteamCloudSettingsFile(fileName);
-            DeleteLocalSettingsFile(fileName);
+            DeleteRemoteFile(fileName);
+            DeleteLocalFile(fileName);
         }
         
         /// <summary>
-        /// Deletes the provided Steam cloud settings file.
+        /// Deletes the provided Steam cloud file (remote storage).
         /// </summary>
-        private static void DeleteSteamCloudSettingsFile(string fileName)
+        private static void DeleteRemoteFile(string fileName)
         {
             string simpleFilePath = fileName + DataExtension;
             
@@ -379,11 +365,11 @@ namespace AdrianMiasik.Components.Core.Settings
                     // Wipe remote storage
                     SteamRemoteStorage.FileDelete(simpleFilePath);
 
-                    Debug.Log("Steam Cloud: " + simpleFilePath + " settings file deleted successfully.");
+                    Debug.Log("Steam Cloud: " + simpleFilePath + " file deleted successfully.");
                 }
                 else
                 {
-                    Debug.LogWarning("Steam Cloud: " + simpleFilePath + " settings file not found.");
+                    Debug.LogWarning("Steam Cloud: " + simpleFilePath + " file not found.");
                 }
             }
             else
@@ -394,9 +380,9 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 
         /// <summary>
-        /// Deletes the provided local storage settings file.
+        /// Deletes the provided local storage file.
         /// </summary>
-        private static void DeleteLocalSettingsFile(string fileName)
+        private static void DeleteLocalFile(string fileName)
         {
             string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
             string simpleFilePath = fileName + DataExtension;
@@ -405,12 +391,42 @@ namespace AdrianMiasik.Components.Core.Settings
             {
                 File.Delete(persistentFilePath);
                 
-                Debug.Log("Local Storage: " + simpleFilePath + " settings file deleted successfully.");
+                Debug.Log("Local Storage: " + simpleFilePath + " file deleted successfully.");
             }
             else
             {
                 Debug.LogWarning("Local Storage: "+ simpleFilePath + " file not found.");
             }
         }
+        
+        // TODO: Create methods for similar "Timer Settings"
+#if UNITY_EDITOR
+        /// <summary>
+        /// Deletes the system settings file from Steam cloud (remote storage) and local storage.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Delete 'system-settings.dat' files")]
+        private static void DeleteAllSystemSettingsFiles()
+        {
+            DeleteSettingsFile("system-settings");
+        }
+
+        /// <summary>
+        /// Deletes the system settings file from local storage.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete 'system-settings.dat' settings file")]
+        private static void DeleteLocalSystemSettingsFile()
+        {
+            DeleteLocalFile("system-settings");
+        }
+
+        /// <summary>
+        /// Deletes the system settings file from the Steam cloud (remote storage).
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Steam Cloud/Delete SYSTEM settings file")]
+        private static void DeleteRemoteSystemSettingsFile()
+        {
+            DeleteRemoteFile("system-settings");
+        }
+#endif
     }
 }
