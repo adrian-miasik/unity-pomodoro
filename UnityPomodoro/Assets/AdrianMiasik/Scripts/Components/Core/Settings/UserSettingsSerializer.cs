@@ -17,6 +17,7 @@ namespace AdrianMiasik.Components.Core.Settings
         private const string DataExtension = ".dat";
 
 #if UNITY_EDITOR
+#if USER_SETTINGS_EVENT_LOGS
         /// <summary>
         /// Prints all of our Steam cloud remote files into the console.
         /// </summary>
@@ -44,6 +45,7 @@ namespace AdrianMiasik.Components.Core.Settings
                                  " and try again.");
             }
         }
+#endif
 
         /// <summary>
         /// Deletes/Wipes all of our Steam cloud remote files from the cloud.
@@ -55,7 +57,9 @@ namespace AdrianMiasik.Components.Core.Settings
             {
                 if (SteamRemoteStorage.FileCount <= 0)
                 {
+#if USER_SETTINGS_EVENT_LOGS
                     Debug.Log("No remote Steam cloud files found.");
+#endif
                     return;
                 }
                 
@@ -63,13 +67,15 @@ namespace AdrianMiasik.Components.Core.Settings
                 {
                     SteamRemoteStorage.FileDelete(file);
                 }
-
+                
+#if USER_SETTINGS_EVENT_LOGS
                 Debug.Log("Steam Cloud: All Steam cloud files have been deleted successfully!");
             }
             else
             {
                 Debug.LogWarning("Steam Client not found. Please init Steam Manager by entering play mode" +
                                  " and try again.");
+#endif
             }
         }
 #endif
@@ -81,7 +87,9 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             BinaryFormatter bf = new BinaryFormatter();
             string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
+#if USER_SETTINGS_EVENT_LOGS
             string simpleFilePath = fileName + DataExtension;
+#endif
 
             // If the Steam client is enabled and found...
             if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
@@ -89,6 +97,7 @@ namespace AdrianMiasik.Components.Core.Settings
                 // Save the provided type into the Steam cloud (remote storage).
                 MemoryStream ms = new MemoryStream();
                 bf.Serialize(ms, type);
+#if USER_SETTINGS_EVENT_LOGS
                 if (SteamRemoteStorage.FileWrite(simpleFilePath, ms.ToArray()))
                 {
                     Debug.Log("Steam Cloud: " + simpleFilePath + " settings file uploaded successfully.");
@@ -97,6 +106,7 @@ namespace AdrianMiasik.Components.Core.Settings
                 {
                     Debug.LogAssertion("Steam Cloud: " + simpleFilePath + " upload has failed.");
                 }
+#endif
                 ms.Close();
             }
             
@@ -105,7 +115,9 @@ namespace AdrianMiasik.Components.Core.Settings
             bf.Serialize(fs, type);
             fs.Close();
             
+#if USER_SETTINGS_EVENT_LOGS
             Debug.Log("Local Storage: " + simpleFilePath + " settings file saved successfully.");
+#endif
         }
         
         private enum MostRecentSaveLocation
@@ -159,7 +171,9 @@ namespace AdrianMiasik.Components.Core.Settings
                         T file = bf.Deserialize(fs) as T;
                         fs.Close();
                 
+#if USER_SETTINGS_EVENT_LOGS
                         Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
+#endif
                         
                         // Return local save
                         return file;
@@ -175,7 +189,9 @@ namespace AdrianMiasik.Components.Core.Settings
                         T file = bf.Deserialize(fs) as T;
                         fs.Close();
                 
+#if USER_SETTINGS_EVENT_LOGS
                         Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
+#endif
                         
                         // If Steam cloud is running, save local storage to Steam cloud.
                         if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
@@ -183,6 +199,7 @@ namespace AdrianMiasik.Components.Core.Settings
                             // Overwrite Steam cloud file with local storage version.
                             MemoryStream ms = new MemoryStream();
                             bf.Serialize(ms, file);
+#if USER_SETTINGS_EVENT_LOGS
                             if (SteamRemoteStorage.FileWrite(simpleFilePath, ms.ToArray()))
                             {
                                 Debug.Log("Local Storage -> Steam Cloud: Saved local storage file " + simpleFilePath 
@@ -192,6 +209,7 @@ namespace AdrianMiasik.Components.Core.Settings
                             {
                                 Debug.LogError("Steam Cloud: Failed upload. Unable to upload " + simpleFilePath);
                             }
+#endif
                             ms.Close();
 
                             // Write save again to local storage to match Steam cloud modified time.
@@ -223,14 +241,19 @@ namespace AdrianMiasik.Components.Core.Settings
                             ms.Seek(0, SeekOrigin.Begin);
                             T file = bf.Deserialize(ms) as T;
 
+#if USER_SETTINGS_EVENT_LOGS
                             Debug.Log("Steam Cloud: " + simpleFilePath + " downloaded successfully!");
+#endif
                             
                             // Overwrite local storage file with Steam cloud version.
                             FileStream fs = File.Create(persistentFilePath);
                             bf.Serialize(fs, file);
                             fs.Close();
+                            
+#if USER_SETTINGS_EVENT_LOGS
                             Debug.Log("Steam Cloud -> Local Storage: Saved Steam cloud file " + simpleFilePath + 
                                       " to local storage for future fallback.");
+#endif
                             
                             // Write save again to Steam cloud to match local storage modified time.
                             bf.Serialize(ms, file);
@@ -251,7 +274,9 @@ namespace AdrianMiasik.Components.Core.Settings
                         T file = bf.Deserialize(fs) as T;
                         fs.Close();
                 
+#if USER_SETTINGS_EVENT_LOGS
                         Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
+#endif
 
                         // Return local save
                         return file;
@@ -259,7 +284,9 @@ namespace AdrianMiasik.Components.Core.Settings
                     break;
             }
             
+#if USER_SETTINGS_EVENT_LOGS
             Debug.LogWarning("No " + simpleFilePath + " file could be found.");
+#endif
             return null;
         }
 
@@ -299,18 +326,24 @@ namespace AdrianMiasik.Components.Core.Settings
                 
                 if (steamRemoteWriteTime > localStorageWriteTime)
                 {
+#if USER_SETTINGS_EVENT_LOGS
                     Debug.Log("Most recent " + simpleFilePath + " file: Steam Cloud");
+#endif
                     return MostRecentSaveLocation.STEAM_CLOUD;
                 }
 
                 if (steamRemoteWriteTime.TrimMilliseconds() == localStorageWriteTime.TrimMilliseconds())
                 {
+#if USER_SETTINGS_EVENT_LOGS
                     Debug.Log("Both Steam cloud & local storage " + simpleFilePath + " files written at the " +
                               "same time.");
+#endif
                     return MostRecentSaveLocation.LOCAL_STORAGE_AND_STEAM_CLOUD;
                 }
                 
+#if USER_SETTINGS_EVENT_LOGS
                 Debug.Log("Most recent " + simpleFilePath + " file: Local Storage");
+#endif
                 return MostRecentSaveLocation.LOCAL_STORAGE;
             }
 
@@ -365,18 +398,22 @@ namespace AdrianMiasik.Components.Core.Settings
                     // Wipe remote storage
                     SteamRemoteStorage.FileDelete(simpleFilePath);
 
+#if USER_SETTINGS_EVENT_LOGS
                     Debug.Log("Steam Cloud: " + simpleFilePath + " file deleted successfully.");
                 }
                 else
                 {
                     Debug.LogWarning("Steam Cloud: " + simpleFilePath + " file not found.");
+#endif
                 }
             }
+#if USER_SETTINGS_EVENT_LOGS
             else
             {
                 Debug.LogWarning("Steam Client not found. Please init Steam Manager by entering play mode" +
                                  " and try again.");
             }
+#endif
         }
 
         /// <summary>
@@ -385,21 +422,28 @@ namespace AdrianMiasik.Components.Core.Settings
         private static void DeleteLocalFile(string fileName)
         {
             string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
+            
+#if USER_SETTINGS_EVENT_LOGS
             string simpleFilePath = fileName + DataExtension;
+#endif
             
             if (File.Exists(persistentFilePath))
             {
                 File.Delete(persistentFilePath);
                 
+#if USER_SETTINGS_EVENT_LOGS
                 Debug.Log("Local Storage: " + simpleFilePath + " file deleted successfully.");
             }
             else
             {
                 Debug.LogWarning("Local Storage: "+ simpleFilePath + " file not found.");
+#endif
             }
         }
         
 #if UNITY_EDITOR
+        // Unity Editor Menu Methods
+        
         /// <summary>
         /// Deletes all settings files from Steam cloud (remote storage) and local storage.
         /// </summary>
