@@ -7,9 +7,11 @@ using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Steamworks;
+using Steamworks.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
 
 namespace AdrianMiasik.Components.Core.Containers
 {
@@ -458,22 +460,43 @@ namespace AdrianMiasik.Components.Core.Containers
             // Ignore second change call when changing from starting value
             if (previousValue == GetTime().Seconds)
             {
-                Debug.Log("Second change ignored.");
+                // Debug.Log("Starting second change ignored.");
                 return;
             }
-
-            Debug.Log("Second changed from " + previousValue + " to " + newValue);
-            SteamUserStats.AddStat("seconds_accumulated", 1);
-            SteamUserStats.StoreStats();
-
-            // Show progress every second
-            int secondsAccumulated = SteamUserStats.GetStatInt("seconds_accumulated");
-
-            // Check if seconds passed has reached the hour point... (86400 / 24 = 3600)
-            if (secondsAccumulated % 3600 == 0)
+            
+            // Debug.Log("Second changed from " + previousValue + " to " + newValue);
+            
+            if (SteamClient.IsValid)
             {
-                // Display progress every hour
-                SteamUserStats.IndicateAchievementProgress("ACH_ALL_IN_A_DAYS_WORK", secondsAccumulated, 86400);
+                // Add second to User Stats (User for stats and achievements)
+                SteamUserStats.AddStat("seconds_accumulated", 1);
+                SteamUserStats.StoreStats();
+
+                // Fetch achievement
+                Achievement ach = new Achievement("ACH_ALL_IN_A_DAYS_WORK");
+
+                // If the 'all in a days work' achievement is not unlocked...
+                if (!ach.State)
+                {
+                    // Fetch progression
+                    int secondsAccumulated = SteamUserStats.GetStatInt("seconds_accumulated");
+
+                    // Unlock achievement
+                    if (secondsAccumulated >= 86400)
+                    {
+                        ach.Trigger();
+                        Debug.Log("Steam Achievement Unlocked! 'All in a Days Work: Run your timer for a " +
+                                  "total of 24 hours. (86,400 seconds)'");
+                        return;
+                    }
+                    
+                    // Check if seconds passed has reached the hour point... (86400 / 24 = 3600)
+                    if (secondsAccumulated % 3600 == 0)
+                    {
+                        // Display progress every hour
+                        SteamUserStats.IndicateAchievementProgress("ACH_ALL_IN_A_DAYS_WORK", secondsAccumulated, 86400);
+                    }
+                }
             }
         }
 
