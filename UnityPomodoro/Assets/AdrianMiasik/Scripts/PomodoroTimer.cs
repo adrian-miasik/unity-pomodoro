@@ -733,16 +733,31 @@ namespace AdrianMiasik
             }
         }
 
+        /// <summary>
+        /// Update method for the timer logic. This get invoked every frame.
+        /// </summary>
         private void Tick()
         {
             if (currentTime > 0)
             {
+                // Cache timer seconds
+                int lastSecond = TimeSpan.FromSeconds(currentTime).Seconds;
+                
                 // Decrement timer
                 currentTime -= Time.deltaTime;
                         
                 // Update visuals
                 m_ring.fillAmount = (float)currentTime / totalTime;
                 m_digitFormat.ShowTime(TimeSpan.FromSeconds(currentTime));
+                
+                // Compare current decremented time with cached second...
+                if (TimeSpan.FromSeconds(currentTime).Seconds != lastSecond)
+                {
+                    // One second has passed
+                    Debug.Log("One second has passed.");
+                    SteamUserStats.AddStat("seconds_accumulated", 1);
+                    SteamUserStats.StoreStats();
+                }
             }
             else
             {
