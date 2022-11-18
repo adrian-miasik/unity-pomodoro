@@ -503,6 +503,13 @@ namespace AdrianMiasik.Components.Core.Containers
         [MenuItem("Adrian Miasik/Achievements and Statistics/Display 'All in a day's work' progression")]
         private static void DisplayAchievementAllInADaysWorkProgression()
         {
+            if (!SteamClient.IsValid)
+            {
+                Debug.LogWarning("Steam Client not found. Please init Steam Manager by entering play mode" +
+                                 " and try again.");
+                return;
+            }
+            
             SteamUserStats.IndicateAchievementProgress("ACH_ALL_IN_A_DAYS_WORK", 
                 SteamUserStats.GetStatInt("seconds_accumulated"), 86400);
         }
