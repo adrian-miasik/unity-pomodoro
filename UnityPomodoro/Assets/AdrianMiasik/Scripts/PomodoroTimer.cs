@@ -1164,6 +1164,7 @@ namespace AdrianMiasik
             return m_digitFormat.m_isOnLongBreak;
         }
 
+        // TODO: Grab methods from SidebarPages.cs instead
         /// <summary>
         /// Is our <see cref="AboutPanel"/> currently open and visible?
         /// </summary>
