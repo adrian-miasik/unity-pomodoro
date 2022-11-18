@@ -7,6 +7,7 @@ using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Steamworks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -460,10 +461,27 @@ namespace AdrianMiasik.Components.Core.Containers
                 Debug.Log("Second change ignored.");
                 return;
             }
-            
+
             Debug.Log("Second changed from " + previousValue + " to " + newValue);
             SteamUserStats.AddStat("seconds_accumulated", 1);
             SteamUserStats.StoreStats();
+
+            // Show progress every second
+            int secondsAccumulated = SteamUserStats.GetStatInt("seconds_accumulated");
+
+            // Check if seconds passed has reached the hour point... (86400 / 24 = 3600)
+            if (secondsAccumulated % 3600 == 0)
+            {
+                // Display progress every hour
+                SteamUserStats.IndicateAchievementProgress("ACH_ALL_IN_A_DAYS_WORK", secondsAccumulated, 86400);
+            }
+        }
+
+        [MenuItem("Adrian Miasik/Achievements and Statistics/Display 'All in a day's work' progression")]
+        private static void DisplayAchievementAllInADaysWorkProgression()
+        {
+            SteamUserStats.IndicateAchievementProgress("ACH_ALL_IN_A_DAYS_WORK", 
+                SteamUserStats.GetStatInt("seconds_accumulated"), 86400);
         }
 
         /// <summary>
