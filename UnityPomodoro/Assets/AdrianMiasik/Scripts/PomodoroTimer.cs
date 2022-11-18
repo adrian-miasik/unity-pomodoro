@@ -155,6 +155,8 @@ namespace AdrianMiasik
         [SerializeField] private TimerSettings loadedTimerSettings;
         private bool haveSettingsBeenConfigured;
 
+        private bool haveComponentsBeenInitialized;
+
         private void OnApplicationFocus(bool hasFocus)
         {
             if (loadedSystemSettings.m_muteSoundWhenOutOfFocus)
@@ -511,6 +513,13 @@ namespace AdrianMiasik
             timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampGhost);
             timerElements.Add(m_skipButton);
+
+            haveComponentsBeenInitialized = true;
+        }
+
+        public bool HaveComponentsBeenInitialized()
+        {
+            return haveComponentsBeenInitialized;
         }
         
         /// <summary>
