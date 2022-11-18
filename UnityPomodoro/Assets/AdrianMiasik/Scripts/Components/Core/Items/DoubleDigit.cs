@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
@@ -69,7 +70,7 @@ namespace AdrianMiasik.Components.Core.Items
         /// Invoked when this value changes to something different.
         /// <remarks>Invoked only when the timer is running.</remarks>
         /// </summary>
-        public UnityEvent m_onDigitChange;
+        public UnityEvent<int, int> m_onDigitChange;
 
         /// <summary>
         /// Disables TextMeshPro's run-time caret, and hides the associated increment / decrement arrows.
@@ -332,13 +333,13 @@ namespace AdrianMiasik.Components.Core.Items
             // If this digit value is actually different...
             if (value.ToString("D2") != m_input.text)
             {
-                // Update the digit
-                m_input.text = value.ToString("D2");
-
                 if (format.GetTimerState() == PomodoroTimer.States.RUNNING)
                 {
-                    m_onDigitChange?.Invoke();
+                    m_onDigitChange?.Invoke(int.Parse(m_input.text), value);
                 }
+                
+                // Update the digit
+                m_input.text = value.ToString("D2");
             }
         }
 

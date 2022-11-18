@@ -6,6 +6,7 @@ using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -405,6 +406,13 @@ namespace AdrianMiasik.Components.Core.Containers
                 DoubleDigit dd = Instantiate(m_digitSource, m_digitFormatRect);
                 dd.Initialize(Timer, this, GetDigitType(pair.Key));
                 generatedDigits.Add(dd);
+
+                // Track seconds digit changes...(Steam stats)
+                if (dd.m_digit == Digits.SECONDS)
+                {
+                    Debug.Log("'Seconds Passed' Stat: " + SteamUserStats.GetStatInt("seconds_accumulated"));
+                    dd.m_onDigitChange.AddListener(OnSecondsChanged);
+                }
                 
                 // Skip last iteration to avoid spacer generation
                 if (i == doubleDigitSetToGenerate.Count - 1)
@@ -442,6 +450,20 @@ namespace AdrianMiasik.Components.Core.Containers
                 selectOnLeft = generatedDigits[generatedDigits.Count - 1].GetSelectable()
             };
             Timer.SetBackgroundNavigation(backgroundNav);
+        }
+
+        private void OnSecondsChanged(int previousValue, int newValue)
+        {
+            // Ignore second change call when changing from starting value
+            if (previousValue == GetTime().Seconds)
+            {
+                Debug.Log("Second change ignored.");
+                return;
+            }
+            
+            Debug.Log("Second changed from " + previousValue + " to " + newValue);
+            SteamUserStats.AddStat("seconds_accumulated", 1);
+            SteamUserStats.StoreStats();
         }
 
         /// <summary>
