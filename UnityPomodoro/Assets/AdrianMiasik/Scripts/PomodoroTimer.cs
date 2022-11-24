@@ -905,8 +905,10 @@ namespace AdrianMiasik
             {
                 ResetDigitFadeAnim();
             }
-            
-            m_sidebarPages.RefreshTimerPage();
+            else
+            {
+                m_sidebarPages.RefreshTimerPage();
+            }
         }
         
         public void ShowSettings()
