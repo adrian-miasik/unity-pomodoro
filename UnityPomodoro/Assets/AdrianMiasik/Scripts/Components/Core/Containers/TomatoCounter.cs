@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
+using Steamworks;
+using Steamworks.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,7 +72,7 @@ namespace AdrianMiasik.Components.Core.Containers
                 ConsumeTomatoes();
             }, null, "This action will delete your pomodoro/tomato progress.");
         }
-        
+
         /// <summary>
         /// Completes / Fills in the latest <see cref="Tomato"/>. (from left to right)
         /// </summary>
@@ -79,7 +82,21 @@ namespace AdrianMiasik.Components.Core.Containers
             m_uncompletedTomatoes.RemoveAt(0);
             completedTomatoes.Add(tomatoToFill);
             tomatoToFill.Complete();
-            
+
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
+            {
+                // Fetch first tomato achievement
+                Achievement ach = new Achievement("ACH_ACQUIRE_FIRST_TOMATO");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    ach.Trigger();
+                    Debug.Log("Steam Achievement Unlocked! 'Yummy!: Unlock your first pomodoro/tomato.'");
+                }
+            }
+
             // Check for completion
             if (m_uncompletedTomatoes.Count == 0)
             {

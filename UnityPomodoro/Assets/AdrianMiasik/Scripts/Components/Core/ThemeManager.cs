@@ -38,7 +38,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         public void SetToLightMode()
         {
-            activeTheme.SetToLightMode();
+            activeTheme.SetToLightMode(false);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         public void SetToDarkMode()
         {
-            activeTheme.SetToDarkMode();
+            activeTheme.SetToDarkMode(false);
         }
 
         /// <summary>

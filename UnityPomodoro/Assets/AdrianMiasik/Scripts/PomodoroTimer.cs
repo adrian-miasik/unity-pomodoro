@@ -9,8 +9,11 @@ using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using AdrianMiasik.Steam;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
+using Steamworks;
+using Steamworks.Data;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -18,6 +21,8 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
+using Image = UnityEngine.UI.Image;
 
 namespace AdrianMiasik
 {
@@ -56,6 +61,7 @@ namespace AdrianMiasik
         public States m_state = States.SETUP;
 
         [Header("Unity Pomodoro - Managers")]
+        [SerializeField] private SteamManager m_steamManager;
         [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
         [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
         [SerializeField] private ResolutionDetector m_resolutionDetector; // Responsible class for detecting changes in our application resolution sizes.
@@ -149,6 +155,8 @@ namespace AdrianMiasik
         [SerializeField] private TimerSettings loadedTimerSettings;
         private bool haveSettingsBeenConfigured;
 
+        private bool haveComponentsBeenInitialized;
+
         private void OnApplicationFocus(bool hasFocus)
         {
             if (loadedSystemSettings.m_muteSoundWhenOutOfFocus)
@@ -206,13 +214,15 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
-            SystemSettings systemSettings = UserSettingsSerializer.LoadSystemSettings();
-            TimerSettings timerSettings = UserSettingsSerializer.LoadTimerSettings();
+            // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
+            m_steamManager.Initialize();
+            
+            SystemSettings systemSettings = UserSettingsSerializer.LoadSettings<SystemSettings>("system-settings");
 
             // System Settings
             if (systemSettings == null)
             {
-                Debug.Log("No System settings found. Created new System settings successfully!");
+                Debug.Log("A new SYSTEM settings file has been created successfully!");
                 
                 // Create new settings
                 SystemSettings defaultSystemSettings = new SystemSettings();
@@ -233,12 +243,12 @@ namespace AdrianMiasik
                 defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
                 
-                // All platforms have analytics on by default. (User can opt-out though via settings panel)
+                // All platforms have analytics on by default. (User can opt-out though via SettingsPage)
                 defaultSystemSettings.m_enableUnityAnalytics = true;
                 
                 // Cache
                 systemSettings = defaultSystemSettings;
-                UserSettingsSerializer.SaveSystemSettings(systemSettings);
+                UserSettingsSerializer.SaveSettingsFile(systemSettings, "system-settings");
             }
 
             loadedSystemSettings = systemSettings;
@@ -254,21 +264,24 @@ namespace AdrianMiasik
                 m_themeManager.SetToLightMode();
             }
             
+            TimerSettings timerSettings = UserSettingsSerializer.LoadSettings<TimerSettings>("timer-settings");
+            
             // Timer Settings
             // If we don't have any saved settings...
             if (timerSettings == null)
             {
-                Debug.Log("No Timer settings found. Created new Timer settings successfully!");
+                Debug.Log("A new TIMER settings file has been created successfully!");
                 
                 // Create new settings
                 TimerSettings defaultTimerSettings = new TimerSettings();
+                
                 defaultTimerSettings.m_longBreaks = true;
                 defaultTimerSettings.m_format = DigitFormat.SupportedFormats.HH_MM_SS;
                 defaultTimerSettings.m_pomodoroCount = 4;
 
                 // Cache
                 timerSettings = defaultTimerSettings;
-                UserSettingsSerializer.SaveTimerSettings(timerSettings);
+                UserSettingsSerializer.SaveSettingsFile(timerSettings, "timer-settings");
             }
             
             loadedTimerSettings = timerSettings;
@@ -280,7 +293,7 @@ namespace AdrianMiasik
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             // Update analytics
-            ToggleUnityAnalytics(this.loadedSystemSettings.m_enableUnityAnalytics, true);
+            ToggleUnityAnalytics(loadedSystemSettings.m_enableUnityAnalytics, true);
 #endif
         }
 
@@ -295,10 +308,14 @@ namespace AdrianMiasik
         /// <param name="isBootingUp"></param>
         public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
-            // Apply and save
-            GetSystemSettings().m_enableUnityAnalytics = enableUnityAnalytics;
-            UserSettingsSerializer.SaveSystemSettings(GetSystemSettings());
-            
+            // If there is a change in settings...
+            if (enableUnityAnalytics != loadedSystemSettings.m_enableUnityAnalytics)
+            {
+                // Apply and save
+                loadedSystemSettings.m_enableUnityAnalytics = enableUnityAnalytics;
+                UserSettingsSerializer.SaveSettingsFile(loadedSystemSettings, "system-settings");
+            }
+
             // Set if service needs to start on init...
             Analytics.initializeOnStartup = enableUnityAnalytics;
 #if UNITY_ANALYTICS_EVENT_LOGS
@@ -496,6 +513,13 @@ namespace AdrianMiasik
             timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampGhost);
             timerElements.Add(m_skipButton);
+
+            haveComponentsBeenInitialized = true;
+        }
+
+        public bool HaveComponentsBeenInitialized()
+        {
+            return haveComponentsBeenInitialized;
         }
         
         /// <summary>
@@ -718,6 +742,9 @@ namespace AdrianMiasik
             }
         }
 
+        /// <summary>
+        /// Update method for the timer logic. This get invoked every frame.
+        /// </summary>
         private void Tick()
         {
             if (currentTime > 0)
@@ -1151,6 +1178,7 @@ namespace AdrianMiasik
             return m_digitFormat.m_isOnLongBreak;
         }
 
+        // TODO: Grab methods from SidebarPages.cs instead
         /// <summary>
         /// Is our <see cref="AboutPanel"/> currently open and visible?
         /// </summary>
@@ -1219,7 +1247,7 @@ namespace AdrianMiasik
                 m_confirmationDialogManager.SpawnConfirmationDialog(GenerateFormat, () =>
                 {
                     GetTimerSettings().m_format = desiredFormat;
-                    UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+                    UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
                     m_sidebarPages.SetSettingDigitFormatDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
             }
@@ -1228,7 +1256,7 @@ namespace AdrianMiasik
                 m_digitFormat.SwitchFormat(desiredFormat);
                 GenerateFormat();
                 GetTimerSettings().m_format = desiredFormat;
-                UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+                UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
             }
         }
 
@@ -1335,7 +1363,7 @@ namespace AdrianMiasik
         {
             // Apply and save
             GetTimerSettings().m_longBreaks = state;
-            UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+            UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
             
             // Apply component swap
             if (state)
@@ -1388,6 +1416,20 @@ namespace AdrianMiasik
         public void ActivateLongBreak()
         {
             m_digitFormat.ActivateLongBreak();
+
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
+            {
+                // Fetch first tomato achievement
+                Achievement ach = new Achievement("ACH_ACQUIRE_LONG_BREAK");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    ach.Trigger();
+                    Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
+                }
+            }
         }
 
         /// <summary>
@@ -1621,6 +1663,11 @@ namespace AdrianMiasik
         public void ShowTickAnimation()
         {
             m_digitFormat.ShowTickAnimation();
+        }
+
+        public void ShutdownSteamManager()
+        {
+            m_steamManager.Shutdown();
         }
     }
 }

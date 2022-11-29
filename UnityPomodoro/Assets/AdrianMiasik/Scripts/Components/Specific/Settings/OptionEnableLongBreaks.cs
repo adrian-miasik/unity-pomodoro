@@ -45,7 +45,8 @@ namespace AdrianMiasik.Components.Specific.Settings
                         {
                             // Apply and save
                             Timer.GetTimerSettings().m_longBreaks = true;
-                            UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
+                            UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(),
+                                "timer-settings");
                         }
 #endif
                     }, "This action will delete your current pomodoro/tomato progress.");

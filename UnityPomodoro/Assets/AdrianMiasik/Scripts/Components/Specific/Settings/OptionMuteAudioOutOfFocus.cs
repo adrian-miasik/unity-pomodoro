@@ -38,7 +38,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             // Apply and save
             Timer.GetSystemSettings().m_muteSoundWhenOutOfFocus = state;
-            UserSettingsSerializer.SaveSystemSettings(Timer.GetSystemSettings());
+            UserSettingsSerializer.SaveSettingsFile(Timer.GetSystemSettings(), "system-settings");
         }
     }
 }
