@@ -413,7 +413,6 @@ namespace AdrianMiasik.Components.Core.Containers
                 // Track seconds digit changes...(Steam stats)
                 if (dd.m_digit == Digits.SECONDS)
                 {
-                    Debug.Log("'Seconds Passed' Stat: " + SteamUserStats.GetStatInt("seconds_accumulated"));
                     dd.m_onDigitChange.AddListener(OnSecondsChanged);
                 }
                 
