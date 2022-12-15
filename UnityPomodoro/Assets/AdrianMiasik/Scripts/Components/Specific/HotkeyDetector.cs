@@ -114,6 +114,11 @@ namespace AdrianMiasik.Components.Specific
                 topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
                            " any uploaded Steam cloud save data.";
             }
+
+            if (quitApplicationOnRestartConfirm)
+            {
+                topText += " (Quitting on Confirmation)";
+            }
                         
             timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
             timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
