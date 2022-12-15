@@ -117,7 +117,7 @@ namespace AdrianMiasik.Components.Core.Containers
                         plantasticAch.Trigger();
                         Debug.Log("Steam Achievement Unlocked! 'Plant-astic!: Unlock 32 pomodoros/tomatoes.'");
                     }
-                    else if (pomodorosAccumulated != 0 && pomodorosAccumulated % 8 == 0)
+                    else if (pomodorosAccumulated != 0 && pomodorosAccumulated % 4 == 0)
                     {
                         // Display progress every 8 tomatoes accumulated
                         SteamUserStats.IndicateAchievementProgress(plantasticAch.Identifier, pomodorosAccumulated,
