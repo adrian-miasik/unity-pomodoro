@@ -490,7 +490,7 @@ namespace AdrianMiasik.Components.Core.Containers
                     }
                     
                     // Check if seconds passed has reached the hour point... (86400 / 24 = 3600)
-                    if (secondsAccumulated % 3600 == 0)
+                    if (secondsAccumulated != 0 && secondsAccumulated % 3600 == 0)
                     {
                         // Display progress every hour
                         SteamUserStats.IndicateAchievementProgress(ach.Identifier, secondsAccumulated, 86400);
