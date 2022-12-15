@@ -2,6 +2,8 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using Steamworks;
+using Steamworks.Data;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific
@@ -53,6 +55,20 @@ namespace AdrianMiasik.Components.Specific
         {
             AudioMimic.Instance.PlaySound(m_buttonSvg.m_clickSound.clip);
             Timer.Skip();
+            
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
+            {
+                // Fetch skip achievement
+                Achievement ach = new Achievement("ACH_KETCHUP");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    ach.Trigger();
+                    Debug.Log("Steam Achievement Unlocked! 'Ketchup: Skip your first timer.'");
+                }
+            }
         }
     }
 }
