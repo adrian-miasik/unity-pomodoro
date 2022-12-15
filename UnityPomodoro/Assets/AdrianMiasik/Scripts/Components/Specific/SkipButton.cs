@@ -60,7 +60,7 @@ namespace AdrianMiasik.Components.Specific
             if (SteamClient.IsValid)
             {
                 // Fetch skip achievement
-                Achievement ach = new Achievement("ACH_KETCHUP");
+                Achievement ach = new("ACH_KETCHUP");
                 
                 // If achievement is not unlocked...
                 if (!ach.State)
