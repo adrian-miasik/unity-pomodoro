@@ -494,7 +494,7 @@ namespace AdrianMiasik.Components.Core.Containers
                     if (secondsAccumulated % 3600 == 0)
                     {
                         // Display progress every hour
-                        SteamUserStats.IndicateAchievementProgress("ACH_ALL_IN_A_DAYS_WORK", secondsAccumulated, 86400);
+                        SteamUserStats.IndicateAchievementProgress(ach.Identifier, secondsAccumulated, 86400);
                     }
                 }
             }
@@ -510,8 +510,25 @@ namespace AdrianMiasik.Components.Core.Containers
                 return;
             }
             
-            SteamUserStats.IndicateAchievementProgress("ACH_ALL_IN_A_DAYS_WORK", 
-                SteamUserStats.GetStatInt("seconds_accumulated"), 86400);
+            // Fetch achievement
+            Achievement ach = new("ACH_ALL_IN_A_DAYS_WORK");
+
+            // Fetch progression
+            int secondsAccumulated = SteamUserStats.GetStatInt("seconds_accumulated");
+            Debug.Log("Seconds accumulated: " + secondsAccumulated);
+
+            // Verify progression...(If you pass in 0 into SteamUserStats.IndicateAchievementProgress method in
+            // the current progression argument, Steam will display 'Achievement Unlocked' without unlocking the 
+            // achievement. It won't show you a progression tally either. In this case, we'll forgo showing anything
+            // related to Steam.
+            if (secondsAccumulated <= 0)
+            {
+                Debug.LogWarning("Unable to display progression. No progression has been made.");
+                return;
+            }
+            
+            // Show progress 
+            SteamUserStats.IndicateAchievementProgress(ach.Identifier, secondsAccumulated, 86400);
         }
 
         /// <summary>
