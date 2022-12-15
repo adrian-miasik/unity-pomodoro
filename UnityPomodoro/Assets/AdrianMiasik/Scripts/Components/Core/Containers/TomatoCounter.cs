@@ -86,14 +86,43 @@ namespace AdrianMiasik.Components.Core.Containers
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
+                // YUMMY ACHIEVEMENT
                 // Fetch first tomato achievement
-                Achievement ach = new Achievement("ACH_ACQUIRE_FIRST_TOMATO");
+                Achievement yummyAch = new("ACH_ACQUIRE_FIRST_TOMATO");
                 
                 // If achievement is not unlocked...
-                if (!ach.State)
+                if (!yummyAch.State)
                 {
-                    ach.Trigger();
+                    yummyAch.Trigger();
                     Debug.Log("Steam Achievement Unlocked! 'Yummy!: Unlock your first pomodoro/tomato.'");
+                }
+                
+                // PLANTASTIC ACHIEVEMENT
+                // Add collected pomodoro/tomato to User Stats
+                SteamUserStats.AddStat("pomodoros_accumulated", 1);
+                SteamUserStats.StoreStats();
+                
+                // Fetch plantastic achievement
+                Achievement plantasticAch = new("ACH_PLANTASTIC");
+            
+                // If achievement is not unlocked...
+                if (!plantasticAch.State)
+                {
+                    // Fetch progression
+                    int pomodorosAccumulated = SteamUserStats.GetStatInt("pomodoros_accumulated");
+                    Debug.Log("pomodoroAccumulated: " + pomodorosAccumulated);
+                    
+                    if (pomodorosAccumulated >= 32)
+                    {
+                        plantasticAch.Trigger();
+                        Debug.Log("Steam Achievement Unlocked! 'Plant-astic!: Unlock 32 pomodoros/tomatoes.'");
+                    }
+                    else if (pomodorosAccumulated != 0 && pomodorosAccumulated % 8 == 0)
+                    {
+                        // Display progress every 8 tomatoes accumulated
+                        SteamUserStats.IndicateAchievementProgress(plantasticAch.Identifier, pomodorosAccumulated,
+                            32);
+                    }
                 }
             }
 
