@@ -498,7 +498,8 @@ namespace AdrianMiasik.Components.Core.Containers
                 }
             }
         }
-
+        
+#if UNITY_EDITOR
         [MenuItem("Adrian Miasik/Achievements and Statistics/Display 'All in a day's work' progression")]
         private static void DisplayAchievementAllInADaysWorkProgression()
         {
@@ -529,6 +530,7 @@ namespace AdrianMiasik.Components.Core.Containers
             // Show progress 
             SteamUserStats.IndicateAchievementProgress(ach.Identifier, secondsAccumulated, 86400);
         }
+#endif
 
         /// <summary>
         /// Sets the generated <see cref="DoubleDigit"/>'s text label to the provided <see cref="TimeSpan"/>.
