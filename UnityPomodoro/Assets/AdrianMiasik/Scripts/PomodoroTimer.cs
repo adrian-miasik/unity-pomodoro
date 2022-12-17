@@ -547,7 +547,7 @@ namespace AdrianMiasik
                 element.StateUpdate(m_state, theme);
             }
             
-            UpdateRingColor(theme);
+            UpdateRing(theme);
 
             // Do transition logic
             switch (m_state)
@@ -1308,40 +1308,44 @@ namespace AdrianMiasik
             m_menuToggleSprite.OverrideFalseColor(theme.GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.ColorUpdate(theme);
 
-            UpdateRingColor(theme);
+            UpdateRing(theme);
         }
 
-        private void UpdateRingColor(Theme theme)
+        private void UpdateRing(Theme theme)
         {
+            // Create a new material (copied from m_ring)
+            Material ringMaterial = new(m_ring.material);
+            
             switch (m_state)
             {
                 case States.SETUP:
-                    // Ring
-                    m_ring.material.SetColor(RingColor,
-                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
-
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, !m_digitFormat.m_isOnBreak ? 
+                        theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
                     break;
                 
                 case States.RUNNING:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_running);
-
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, theme.GetCurrentColorScheme().m_running);
                     break;
                 
                 case States.PAUSED:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, 
-                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, !m_digitFormat.m_isOnBreak ? 
+                        theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
                     break;
                 
                 case States.COMPLETE:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
                     break;
                 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            // Apply modified material
+            m_ring.material = ringMaterial;
         }
         
         /// <summary>
