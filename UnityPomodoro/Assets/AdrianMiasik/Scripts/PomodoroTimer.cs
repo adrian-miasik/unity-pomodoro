@@ -558,9 +558,6 @@ namespace AdrianMiasik
                     // Show timer context
                     m_text.gameObject.SetActive(true);
                     
-                    // Complete ring
-                    m_ring.fillAmount = 1f;
-                    m_ring.material.SetFloat(RingDiameter, 0.9f);
                     if (!m_digitFormat.m_isOnBreak)
                     {
                         m_text.text = "Set a work time";
@@ -610,9 +607,6 @@ namespace AdrianMiasik
 
                     // Hide state text
                     m_text.gameObject.SetActive(false);
-
-                    // Complete ring
-                    m_ring.fillAmount = 1f;
 
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
@@ -1322,6 +1316,10 @@ namespace AdrianMiasik
                     // Modify copied material
                     ringMaterial.SetColor(RingColor, !m_digitFormat.m_isOnBreak ? 
                         theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    ringMaterial.SetFloat(RingDiameter, 0.9f);
+
+                    // Complete ring
+                    m_ring.fillAmount = 1f;
                     break;
                 
                 case States.RUNNING:
@@ -1338,6 +1336,9 @@ namespace AdrianMiasik
                 case States.COMPLETE:
                     // Modify copied material
                     ringMaterial.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
+                    
+                    // Complete ring
+                    m_ring.fillAmount = 1f;
                     break;
                 
                 default:
