@@ -1286,7 +1286,9 @@ namespace AdrianMiasik
             Image leftContainerTarget = m_leftButtonSVGClick.m_containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
-                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
+                Material material = new (leftContainerTarget.material);
+                material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
+                leftContainerTarget.material = material;
             }
             
             // Left Button Icon
