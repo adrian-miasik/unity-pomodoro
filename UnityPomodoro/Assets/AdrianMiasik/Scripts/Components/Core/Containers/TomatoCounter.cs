@@ -110,7 +110,6 @@ namespace AdrianMiasik.Components.Core.Containers
                 {
                     // Fetch progression
                     int pomodorosAccumulated = SteamUserStats.GetStatInt("pomodoros_accumulated");
-                    Debug.Log("pomodoroAccumulated: " + pomodorosAccumulated);
                     
                     if (pomodorosAccumulated >= 32)
                     {
@@ -164,8 +163,7 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 // Fetch progression
                 int pomodorosDiscarded = SteamUserStats.GetStatInt("pomodoros_disposed");
-                Debug.Log("pomodoroDiscarded: " + pomodorosDiscarded);
-                    
+
                 if (pomodorosDiscarded >= 8)
                 {
                     ach.Trigger();

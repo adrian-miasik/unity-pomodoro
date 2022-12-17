@@ -515,7 +515,6 @@ namespace AdrianMiasik.Components.Core.Containers
 
             // Fetch progression
             int secondsAccumulated = SteamUserStats.GetStatInt("seconds_accumulated");
-            Debug.Log("Seconds accumulated: " + secondsAccumulated);
 
             // Verify progression...(If you pass in 0 into SteamUserStats.IndicateAchievementProgress method in
             // the current progression argument, Steam will display 'Achievement Unlocked' without unlocking the 
