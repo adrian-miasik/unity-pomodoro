@@ -547,7 +547,7 @@ namespace AdrianMiasik
                 element.StateUpdate(m_state, theme);
             }
             
-            UpdateRingColor(theme);
+            UpdateRing(theme);
 
             // Do transition logic
             switch (m_state)
@@ -558,9 +558,6 @@ namespace AdrianMiasik
                     // Show timer context
                     m_text.gameObject.SetActive(true);
                     
-                    // Complete ring
-                    m_ring.fillAmount = 1f;
-                    m_ring.material.SetFloat(RingDiameter, 0.9f);
                     if (!m_digitFormat.m_isOnBreak)
                     {
                         m_text.text = "Set a work time";
@@ -610,9 +607,6 @@ namespace AdrianMiasik
 
                     // Hide state text
                     m_text.gameObject.SetActive(false);
-
-                    // Complete ring
-                    m_ring.fillAmount = 1f;
 
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
@@ -1292,7 +1286,9 @@ namespace AdrianMiasik
             Image leftContainerTarget = m_leftButtonSVGClick.m_containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
-                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
+                Material material = new (leftContainerTarget.material);
+                material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
+                leftContainerTarget.material = material;
             }
             
             // Left Button Icon
@@ -1308,40 +1304,51 @@ namespace AdrianMiasik
             m_menuToggleSprite.OverrideFalseColor(theme.GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.ColorUpdate(theme);
 
-            UpdateRingColor(theme);
+            UpdateRing(theme);
         }
 
-        private void UpdateRingColor(Theme theme)
+        private void UpdateRing(Theme theme)
         {
+            // Create a new material (copied from m_ring)
+            Material ringMaterial = new(m_ring.material);
+            
             switch (m_state)
             {
                 case States.SETUP:
-                    // Ring
-                    m_ring.material.SetColor(RingColor,
-                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, !m_digitFormat.m_isOnBreak ? 
+                        theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    ringMaterial.SetFloat(RingDiameter, 0.9f);
 
+                    // Complete ring
+                    m_ring.fillAmount = 1f;
                     break;
                 
                 case States.RUNNING:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_running);
-
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, theme.GetCurrentColorScheme().m_running);
                     break;
                 
                 case States.PAUSED:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, 
-                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, !m_digitFormat.m_isOnBreak ? 
+                        theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
                     break;
                 
                 case States.COMPLETE:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
+                    
+                    // Complete ring
+                    m_ring.fillAmount = 1f;
                     break;
                 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            // Apply modified material
+            m_ring.material = ringMaterial;
         }
         
         /// <summary>

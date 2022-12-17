@@ -1,11 +1,9 @@
-using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
 using Steamworks;
 using Steamworks.Data;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Color = UnityEngine.Color;
 
 namespace AdrianMiasik.Components.Specific
@@ -19,7 +17,9 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private ToggleSlider m_toggle;
 
         [SerializeField] private Sprite m_moonSprite;
-        [SerializeField] private Material m_sliderDotCircle;
+
+        [SerializeField] private Material m_defaultShader;
+        [SerializeField] private Material m_circleShader;
 
         private readonly Vector2 cachedOffsetMin = new Vector2(3, 1.5f); 
         private readonly Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f);
@@ -107,21 +107,21 @@ namespace AdrianMiasik.Components.Specific
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
-            // Regular boolean
+            // Regular boolean (Circle Shader)
             if (Timer.GetSystemSettings().m_darkMode)
             {
                 m_toggle.m_dot.rectTransform.pivot = new Vector2(0.5f, m_toggle.m_dot.rectTransform.pivot.y);
                 m_toggle.m_dot.sprite = null;
-                m_toggle.m_dot.material = m_sliderDotCircle;
+                m_toggle.m_dot.material = m_circleShader;
                 m_toggle.m_dot.rectTransform.offsetMin = Vector2.zero;
                 m_toggle.m_dot.rectTransform.offsetMax = Vector2.zero;
             }
-            // Moon dark boolean
+            // Moon dark boolean (Moon Sprite)
             else
             {
                 m_toggle.m_dot.rectTransform.pivot = new Vector2(0f, m_toggle.m_dot.rectTransform.pivot.y);
                 m_toggle.m_dot.sprite = m_moonSprite;
-                m_toggle.m_dot.material = null;
+                m_toggle.m_dot.material = m_defaultShader;
                 m_toggle.m_dot.rectTransform.offsetMin = cachedOffsetMin;
                 m_toggle.m_dot.rectTransform.offsetMax = cachedOffsetMax;
             }
