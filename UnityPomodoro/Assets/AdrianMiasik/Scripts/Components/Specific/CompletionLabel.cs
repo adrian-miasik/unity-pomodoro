@@ -9,8 +9,9 @@ namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
     /// A <see cref="ThemeElement"/> used primarily to update the color of the referenced
-    /// "TIMER COMPLETE" labels via <see cref="IColorHook"/> ColorUpdate. Also used for offsetting
-    /// the labels depending on long break setting. <see cref="Settings"/>
+    /// "TIMER COMPLETE" labels via <see cref="IColorHook"/> ColorUpdate.
+    /// This component is used to prompt the user that the timer is finished.
+    /// Also used for offsetting the labels depending on long break setting. <see cref="Settings"/> b
     /// </summary>
     public class CompletionLabel : ThemeElement, ITimerState
     {

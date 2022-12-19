@@ -12,7 +12,7 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
-    /// Responsible for our detecting and executing our keyboard shortcut actions.
+    /// Responsible for our detecting and executing our keyboard shortcuts/binding actions.
     /// Single keys are processed in `ProcessKeys()`,
     /// and multi-keys are processed in `ProcessKeybinds()`.
     /// </summary>

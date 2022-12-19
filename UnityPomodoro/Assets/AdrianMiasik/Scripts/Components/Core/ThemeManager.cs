@@ -8,6 +8,7 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
+    /// Responsible for executing and keeping track of themed elements and active themes.
     /// Holds our current active theme and is responsible for changing between themes.
     /// </summary>
     public class ThemeManager : MonoBehaviour
