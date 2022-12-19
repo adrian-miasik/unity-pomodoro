@@ -2171,7 +2171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.318945
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2926,7 +2926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.318945
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3935,11 +3935,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_state: 0
-  m_steamManager: {fileID: 735095294}
   m_themeManager: {fileID: 1248282687}
   m_hotkeyDetector: {fileID: 266651281}
   m_resolutionDetector: {fileID: 719469545}
   m_confirmationDialogManager: {fileID: 2016785227}
+  m_steamManager: {fileID: 735095294}
   m_uwpNotifications: {fileID: 943758001}
   m_androidNotifications: {fileID: 943758002}
   m_text: {fileID: 650676969}
@@ -4038,30 +4038,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_pauseFadeDuration: 0.1
   m_pauseHoldDuration: 0.75
-  m_ringTickWidth:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.9
-      inSlope: 4.892026
-      outSlope: 4.892026
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.022193791
-    - serializedVersion: 3
-      time: 1
-      value: 0.9
-      inSlope: -0.002867563
-      outSlope: -0.002867563
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.20532233
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 1
-    m_RotationOrder: 4
   m_onSpawnCompletion:
     m_PersistentCalls:
       m_Calls: []
@@ -4085,11 +4061,11 @@ MonoBehaviour:
       m_Calls: []
   m_selectedDigits: []
   m_sidebarPages: {fileID: 288170240}
-  loadedSystemSettings:
-    m_darkMode: 0
+  m_loadedSystemSettings:
+    m_darkMode: 1
     m_muteSoundWhenOutOfFocus: 0
     m_enableUnityAnalytics: 1
-  loadedTimerSettings:
+  m_loadedTimerSettings:
     m_format: 2
     m_longBreaks: 1
     m_pomodoroCount: 4
@@ -5149,7 +5125,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.75
+  m_fontSize: 35.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5765,7 +5741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.318945
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6734,7 +6710,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.2
+  m_fontSize: 20.95
   m_fontSizeBase: 10.07
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8758,7 +8734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.318945
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 489833435901344923, guid: 88cf29bd208ddcf4ca1a76e1dd21e99c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -11435,7 +11411,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.8
+  m_fontSize: 10.15
   m_fontSizeBase: 9
   m_fontWeight: 400
   m_enableAutoSizing: 1
