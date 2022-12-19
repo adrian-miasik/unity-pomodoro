@@ -39,10 +39,6 @@ namespace AdrianMiasik.Components.Core.Containers
 
         private new void OnSelectionChange(Page previousPage, Page newPage)
         {
-            // if (previousPage == newPage)
-            // {
-            //     return;
-            // }
             previousPage.Hide(() =>
             {
                 newPage.Show(null);

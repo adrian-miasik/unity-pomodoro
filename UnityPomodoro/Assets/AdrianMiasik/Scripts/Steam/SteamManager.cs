@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace AdrianMiasik.Steam
 {
+    /// <summary>
+    /// A class responsible for initializing our Steamworks backend.
+    /// </summary>
     public class SteamManager : MonoBehaviour
     {
         private bool isInitialized;

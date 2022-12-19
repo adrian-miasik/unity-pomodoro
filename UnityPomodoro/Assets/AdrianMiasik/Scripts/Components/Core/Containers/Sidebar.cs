@@ -12,7 +12,8 @@ namespace AdrianMiasik.Components.Core.Containers
 { 
     /// <summary>
     /// A <see cref="ThemeElement"/> container page that holds <see cref="SidebarRow"/>'s and deals with group
-    /// selections and animations.
+    /// selections and animations. Used to change and switch between our pages/panel contents (Such as main, settings,
+    /// and about).
     /// </summary>
     [ExecuteInEditMode]
     public class Sidebar : ThemeElement

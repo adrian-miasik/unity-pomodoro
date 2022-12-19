@@ -10,6 +10,7 @@ namespace AdrianMiasik.Components.Core
     /// <summary>
     /// An overlay that will blur UI elements.
     /// <remarks>Note: Specific Canvas' is required for this Asset.</remarks>
+    /// Used to currently blur background on sidebar focus and confirmation dialog pop-ups.
     /// </summary>
     public class BlurOverlay : ThemeElement, IPointerClickHandler
     {
