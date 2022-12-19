@@ -1,61 +1,53 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
 
 namespace LeTai.Asset.TranslucentImage.Editor
 {
-public static class ScenceGizmoAutoDisable
+class ScenceGizmoAutoDisable : AssetPostprocessor
 {
-    static readonly string[] NO_GIZMOS_CLASSES = {
-        "TranslucentImage",
-        "TranslucentImageSource"
-    };
-
-    [UnityEditor.Callbacks.DidReloadScripts]
-    private static void OnScriptsReloaded()
+    static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
-        var Annotation = Type.GetType("UnityEditor.Annotation, UnityEditor");
-        if (Annotation == null) return;
+        if (!importedAssets.Any(p => p.Contains("TranslucentImage")))
+            return;
 
-        var ClassId     = Annotation.GetField("classID");
-        var ScriptClass = Annotation.GetField("scriptClass");
-        var Flags       = Annotation.GetField("flags");
-        var IconEnabled = Annotation.GetField("iconEnabled");
+        var structAnnotation = Type.GetType("UnityEditor.Annotation, UnityEditor");
+        if (structAnnotation == null) return;
 
-        Type AnnotationUtility = Type.GetType("UnityEditor.AnnotationUtility, UnityEditor");
-        if (AnnotationUtility == null) return;
+        var fieldClassId     = structAnnotation.GetField("classID");
+        var fieldScriptClass = structAnnotation.GetField("scriptClass");
+        var fieldFlags       = structAnnotation.GetField("flags");
+        var fieldIconEnabled = structAnnotation.GetField("iconEnabled");
 
-        var GetAnnotations = AnnotationUtility.GetMethod("GetAnnotations",
-                                                         BindingFlags.NonPublic | BindingFlags.Public |
-                                                         BindingFlags.Static);
-        if (GetAnnotations == null) return;
-        var SetIconEnabled = AnnotationUtility.GetMethod("SetIconEnabled",
-                                                         BindingFlags.NonPublic | BindingFlags.Public |
-                                                         BindingFlags.Static);
-        if (SetIconEnabled == null) return;
+        Type classAnnotationUtility = Type.GetType("UnityEditor.AnnotationUtility, UnityEditor");
+        if (classAnnotationUtility == null) return;
 
+        var methodGetAnnotations = classAnnotationUtility.GetMethod("GetAnnotations", BindingFlags.NonPublic | BindingFlags.Static);
+        if (methodGetAnnotations == null) return;
+        var methodSetIconEnabled = classAnnotationUtility.GetMethod("SetIconEnabled", BindingFlags.NonPublic | BindingFlags.Static);
+        if (methodSetIconEnabled == null) return;
 
-        Array annotations = (Array) GetAnnotations.Invoke(null, null);
+        Array annotations = (Array)methodGetAnnotations.Invoke(null, null);
         foreach (var a in annotations)
         {
-            int    classId     = (int) ClassId.GetValue(a);
-            string scriptClass = (string) ScriptClass.GetValue(a);
-            int    flags       = (int) Flags.GetValue(a);
-            int    iconEnabled = (int) IconEnabled.GetValue(a);
+            string scriptClass = (string)fieldScriptClass.GetValue(a);
 
             // built in types
             if (string.IsNullOrEmpty(scriptClass)) continue;
 
-            // load a json or text file with class names
+            int classId     = (int)fieldClassId.GetValue(a);
+            int flags       = (int)fieldFlags.GetValue(a);
+            int iconEnabled = (int)fieldIconEnabled.GetValue(a);
 
-            const int HasIcon     = 1;
-            bool      hasIconFlag = (flags & HasIcon) == HasIcon;
+            const int maskHasIcon = 1;
+            bool      hasIconFlag = (flags & maskHasIcon) == maskHasIcon;
 
-            if (hasIconFlag &&
-                iconEnabled != 0 &&
-                NO_GIZMOS_CLASSES.Contains(scriptClass))
+            if (hasIconFlag
+             && iconEnabled != 0
+             && scriptClass.Contains("TranslucentImage"))
             {
-                SetIconEnabled.Invoke(null, new object[] {classId, scriptClass, 0});
+                methodSetIconEnabled.Invoke(null, new object[] { classId, scriptClass, 0 });
             }
         }
     }

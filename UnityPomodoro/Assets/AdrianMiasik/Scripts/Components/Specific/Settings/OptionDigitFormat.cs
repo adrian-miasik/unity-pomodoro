@@ -21,7 +21,10 @@ namespace AdrianMiasik.Components.Specific.Settings
 
             m_dropdown.onValueChanged.AddListener(TryChangeFormat);
 
-            SetDropdownValue(Timer.GetDigitFormatIndex());
+            if (Timer.HaveComponentsBeenInitialized())
+            {
+                SetDropdownValue(Timer.GetDigitFormatIndex());
+            }
         }
 
         /// <summary>

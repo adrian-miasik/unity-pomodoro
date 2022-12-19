@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
+using Steamworks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -10,7 +12,7 @@ using UnityEngine.UI;
 namespace AdrianMiasik.Components.Specific
 {
     /// <summary>
-    /// Responsible for our detecting and executing our keyboard shortcut actions.
+    /// Responsible for our detecting and executing our keyboard shortcuts/binding actions.
     /// Single keys are processed in `ProcessKeys()`,
     /// and multi-keys are processed in `ProcessKeybinds()`.
     /// </summary>
@@ -64,18 +66,26 @@ namespace AdrianMiasik.Components.Specific
             {
                 timer.ClearSelection();
             }
-            
-            // Restart application
-            if (Input.GetKeyDown(KeyCode.F5))
+
+            // Switch digit layouts
+            if (Input.GetKeyDown(KeyCode.F1))
             {
-                timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
-                timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
-                    {
-                        RestartApplication();
-                    }, null, 
-                    "This action will <color=red>reset all settings to their factory defaults.</color>", 
-                    null, 
-                    false);
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
             }
 
             // Tab between digits
@@ -95,14 +105,56 @@ namespace AdrianMiasik.Components.Specific
             }
         }
 
-        public void RestartApplication()
+        private void PromptApplicationRestart(bool quitApplicationOnRestartConfirm = false)
+        {
+            string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
+
+            if (SteamClient.IsValid)
+            {
+                topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
+                           " any uploaded Steam cloud save data.";
+            }
+
+            if (quitApplicationOnRestartConfirm)
+            {
+                topText += " (Quitting on Confirmation)";
+            }
+                        
+            timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
+            timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
+                {
+                    SteamUserStats.ResetAll(true);
+                    SteamUserStats.StoreStats();
+                    SteamUserStats.RequestCurrentStats();
+                    RestartApplication(quitApplicationOnRestartConfirm);
+                }, null, 
+                topText, 
+                null, 
+                false);
+        }
+
+        private void RestartApplication(bool quitApplicationOnRestart = false)
         {
             timer.GetTheme().DeregisterAllElements();
 
-            UserSettingsSerializer.WipeSystemSettings();
-            UserSettingsSerializer.WipeTimerSettings();
+            UserSettingsSerializer.DeleteSettingsFile("system-settings");
+            UserSettingsSerializer.DeleteSettingsFile("timer-settings");
             
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            timer.ShutdownSteamManager();
+            Debug.Log("Application: Factory Reset");
+
+            if (!quitApplicationOnRestart)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            else
+            {
+#if UNITY_EDITOR
+                EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+            }
         }
 
         /// <summary>
@@ -123,7 +175,11 @@ namespace AdrianMiasik.Components.Specific
                 }
             }
             
-            // Control modifier
+            if (!IsUserHoldingControl() && Input.GetKeyDown(KeyCode.F5))
+            {
+                timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
+            }
+
             if (IsUserHoldingControl())
             {
                 // Switch theme
@@ -131,31 +187,19 @@ namespace AdrianMiasik.Components.Specific
                 {
                     timer.TriggerThemeSwitch();
                 }
-                
-                // Switch digit layouts
-                if (Input.GetKeyDown(KeyCode.F1))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
-                }
-
-                if (Input.GetKeyDown(KeyCode.F2))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
-                }
-
-                if (Input.GetKeyDown(KeyCode.F3))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
-                }
-
-                if (Input.GetKeyDown(KeyCode.F4))
-                {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
-                }
 
                 if (Input.GetKeyDown(KeyCode.F5))
                 {
-                    timer.TryChangeFormat(DigitFormat.SupportedFormats.DD_HH_MM_SS_MS);
+                    if (IsUserHoldingShift())
+                    {
+                        // Restart application and quit
+                        PromptApplicationRestart(true);
+                    }
+                    else
+                    {
+                        // Restart application
+                        PromptApplicationRestart();
+                    }
                 }
             }
 
@@ -176,6 +220,11 @@ namespace AdrianMiasik.Components.Specific
             {
                 timer.SetTimerValue(GUIUtility.systemCopyBuffer);
             }
+        }
+
+        private bool IsUserHoldingShift()
+        {
+            return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         }
 
         private bool IsUserHoldingControl()

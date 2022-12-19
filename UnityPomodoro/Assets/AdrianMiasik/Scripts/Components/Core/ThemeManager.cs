@@ -8,6 +8,7 @@ using UnityEngine;
 namespace AdrianMiasik.Components.Core
 {
     /// <summary>
+    /// Responsible for executing and keeping track of themed elements and active themes.
     /// Holds our current active theme and is responsible for changing between themes.
     /// </summary>
     public class ThemeManager : MonoBehaviour
@@ -38,7 +39,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         public void SetToLightMode()
         {
-            activeTheme.SetToLightMode();
+            activeTheme.SetToLightMode(false);
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace AdrianMiasik.Components.Core
         /// </summary>
         public void SetToDarkMode()
         {
-            activeTheme.SetToDarkMode();
+            activeTheme.SetToDarkMode(false);
         }
 
         /// <summary>

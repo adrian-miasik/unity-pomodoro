@@ -136,7 +136,7 @@
                 backgroundColor = saturate(backgroundColor + fgScaled - 2 * fgScaled * backgroundColor);
 
                 //Vibrancy
-                backgroundColor = saturate(lerp(Luminance(backgroundColor), backgroundColor, _Vibrancy));
+                backgroundColor = saturate(lerp(LinearRgbToLuminance(backgroundColor), backgroundColor, _Vibrancy));
 
                 //Brightness
                 backgroundColor = saturate(backgroundColor + _Brightness);
