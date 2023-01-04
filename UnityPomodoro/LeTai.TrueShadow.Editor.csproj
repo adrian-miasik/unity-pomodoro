@@ -41,20 +41,22 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\TrueShadowEditor.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\ProjectSettingsEditor.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\EditorProperty.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\InsetToggle.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\MigrateToV0_5Window.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\ShadowMaterialEditor.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\Utility.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\SpreadSliderDrawer.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\InlineToolbar.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\AutoCustomScriptingDefine.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\ScenceGizmoAutoDisable.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\PrefabEventHandler.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\KnobPropertyDrawer.cs" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Editor\LeTai.TrueShadow.Editor.asmdef" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\TrueShadowEditor.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\ProjectSettingsEditor.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\EditorProperty.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\InsetToggle.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\MigrateToV0_5Window.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\ShadowMaterialEditor.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\Utility.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\SpreadSliderDrawer.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\InlineToolbar.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\AutoCustomScriptingDefine.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\ScenceGizmoAutoDisable.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\PrefabEventHandler.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Editor\KnobPropertyDrawer.cs" />
+     <Folder Include="Assets\LeTai\TrueShadow\Scripts\Editor" />
+     <None Include="Assets\LeTai\TrueShadow\Scripts\Editor\LeTai.TrueShadow.Editor.asmdef" />
+     <Folder Include="Assets\LeTai\TrueShadow\Scripts\Editor\Textures" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -322,26 +324,29 @@
      <Reference Include="UnityEditor.UWP.Extensions">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\MetroSupport\UnityEditor.UWP.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="Facepunch.Steamworks.Win64">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Assets\Facepunch.Steamworks\Facepunch.Steamworks.Win64.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Burst.Unsafe">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Rocks">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
      <Reference Include="Newtonsoft.Json">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
@@ -725,16 +730,16 @@
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.TestRunner">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.TestRunner">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

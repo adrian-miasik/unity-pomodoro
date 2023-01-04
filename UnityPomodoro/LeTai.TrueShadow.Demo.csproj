@@ -41,31 +41,50 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\Scripts\HotDogCard.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\Scripts\FpsCounter.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\SwipeView\Swipable.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Symbols\SymbolsManager.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\SwipeView\SwipeView.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\Scripts\HotDogSprite.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\Scripts\HotDogSwipeView.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Neumorphism\Scripts\AdsrBarGraphSource.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Inspiration\Scripts\ToggleSwitchAnimation.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Inspiration\Scripts\DirectionalKnob.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\SwipeView\LeftRightSwipeView.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Neumorphism\Scripts\BarGraphBar.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Neumorphism\Scripts\BarGraph.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Neumorphism\Scripts\AdsrEnvelop.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\Scripts\GradientSlider.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Symbols\OpenUrl.cs" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Grain.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\LeTai.TrueShadow.Demo.asmdef" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\Sprites\Food Sprites License.txt" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Swipe\Fonts\Daniel Hernandez Font License.txt" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Stripe.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Bubble.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Symbols\Fonts\UBUNTU FONT LICENCE.txt" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Code.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Demo\Custom Shadow Material\README.txt" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\Scripts\HotDogCard.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\Scripts\FpsCounter.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\SwipeView\Swipable.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Symbols\SymbolsManager.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\SwipeView\SwipeView.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\Scripts\HotDogSprite.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\Scripts\HotDogSwipeView.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Neumorphism\Scripts\AdsrBarGraphSource.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Inspiration\Scripts\ToggleSwitchAnimation.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Inspiration\Scripts\DirectionalKnob.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\SwipeView\LeftRightSwipeView.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Neumorphism\Scripts\BarGraphBar.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Neumorphism\Scripts\BarGraph.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Neumorphism\Scripts\AdsrEnvelop.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Swipe\Scripts\GradientSlider.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Demo\Symbols\OpenUrl.cs" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Inspiration\Scripts" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Grain.shader" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\LeTai.TrueShadow.Demo.asmdef" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Full Colors\Sprites" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Full Colors" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Custom Shadow Material\Example Shaders" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Swipe\Fonts" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Symbols" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Swipe\Sprites\Food Sprites License.txt" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Swipe\Fonts\Daniel Hernandez Font License.txt" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Inspiration\Sprites" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Swipe" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Swipe\Scripts" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Quick Presets" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Inspiration" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Swipe\SwipeView" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Stripe.shader" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Bubble.shader" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Custom Shadow Material" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Symbols\Fonts\UBUNTU FONT LICENCE.txt" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Swipe\Sprites" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Symbols\Fonts" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Custom Shadow Material\Example Shaders\Code.shader" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Inspiration\Prefabs" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Neumorphism" />
+     <None Include="Assets\LeTai\TrueShadow\Demo\Custom Shadow Material\README.txt" />
+     <Folder Include="Assets\LeTai\TrueShadow\Demo\Neumorphism\Scripts" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -330,23 +349,26 @@
      <Reference Include="UnityEditor.UWP.Extensions">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\MetroSupport\UnityEditor.UWP.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="Facepunch.Steamworks.Win64">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Assets\Facepunch.Steamworks\Facepunch.Steamworks.Win64.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Burst.Unsafe">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Rocks">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
      <Reference Include="Newtonsoft.Json">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
@@ -730,10 +752,10 @@
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

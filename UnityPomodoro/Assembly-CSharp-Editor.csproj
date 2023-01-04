@@ -26,7 +26,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\Bin\Debug\Assembly-CSharp-Editor\</OutputPath>
-    <DefineConstants>UNITY_2021_3_10;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;USE_SEARCH_TABLE;USE_SEARCH_MODULE;USE_PROPERTY_DATABASE;USE_SEARCH_EXTENSION_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2021_3_10;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;USE_SEARCH_TABLE;USE_SEARCH_MODULE;USE_PROPERTY_DATABASE;USE_SEARCH_EXTENSION_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;LETAI_TRUESHADOW;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169,0649</NoWarn>
@@ -319,28 +319,28 @@
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\MetroSupport\UnityEditor.UWP.Extensions.dll</HintPath>
      </Reference>
      <Reference Include="Facepunch.Steamworks.Win64">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Assets\Facepunch.Steamworks\Facepunch.Steamworks.Win64.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Assets\Facepunch.Steamworks\Facepunch.Steamworks.Win64.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Unsafe">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Rocks">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
      <Reference Include="Newtonsoft.Json">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
@@ -724,127 +724,127 @@
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.TestRunner">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.TestRunner">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Recorder.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Recorder.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Recorder.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.InternalAPIEditorBridge.003">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.003.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.003.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Notifications">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Notifications.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Notifications.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Recorder.Base">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Recorder.Base.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Recorder.Base.dll</HintPath>
      </Reference>
      <Reference Include="PPv2URPConverters">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
      </Reference>
      <Reference Include="Unity.TextMeshPro.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Analytics.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Analytics.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Analytics.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VectorGraphics">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.VectorGraphics.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.VectorGraphics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Timeline">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
      </Reference>
      <Reference Include="Unity.TextMeshPro">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
      </Reference>
      <Reference Include="Unity.InternalAPIEngineBridge.003">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.003.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.003.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Searcher.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.Sprite.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Runtime">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Analytics">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Analytics.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Analytics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Rider.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Notifications.iOS">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Notifications.iOS.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Notifications.iOS.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.ShaderGraph.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core.Analytics">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Universal.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core.Environments">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Timeline.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VectorGraphics.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.VectorGraphics.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.VectorGraphics.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Notifications.Android">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Notifications.Android.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Notifications.Android.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Editor">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Recorder">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Recorder.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.Recorder.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -863,6 +863,18 @@
     <ProjectReference Include="LeTai.TranslucentImage.csproj">
       <Project>{8dd3cfc6-1299-156c-8b44-79d09a054f34}</Project>
       <Name>LeTai.TranslucentImage</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TrueShadow.Editor.csproj">
+      <Project>{5540617b-21e6-fa7e-9bee-ca69efbd6d16}</Project>
+      <Name>LeTai.TrueShadow.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TrueShadow.Demo.csproj">
+      <Project>{f85b2b05-3560-7ebc-6133-49a89cfecf45}</Project>
+      <Name>LeTai.TrueShadow.Demo</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TrueShadow.csproj">
+      <Project>{53ab2b38-881a-5624-4d28-b16d6a643548}</Project>
+      <Name>LeTai.TrueShadow</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

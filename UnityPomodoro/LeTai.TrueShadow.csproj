@@ -41,51 +41,59 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Helper\ShadowMaterial.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\ShaderID.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\PropertyDrawerAttributes.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\IndexedSet.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\ShadowSettingSnapshot.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\ShadowFactory.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Structure\ColorBleedMode.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\DebugSettings.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Helper\InsetOnPress.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Structure\BlendMode.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\ExtensionMethods.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\HashCode.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\QuickPreset.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\ShadowRenderer.MaskHandling.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\SpreadSliderAttribute.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\TrueShadow.Invalidator.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\TrueShadow.Plugins.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\ProjectSettings.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Helper\DisableShadowCache.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Helper\AnimatedBiStateButton.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Effects\BlurConfig.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\ShadowSorter.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Effects\ShaderProperties.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\PluginInterfaces.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\Utility.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Effects\ScalableBlurConfig.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Effects\ScalableBlur.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Utilities\Math.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\TrueShadow.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Effects\IBlurAlgorithm.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\ShadowRenderer.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Structure\ShadowContainer.cs" />
-     <Compile Include="Assets\Le Tai&apos;s Asset\TrueShadow\Scripts\Helper\InteractiveShadow.cs" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\ShadowGenerate.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\TrueShadow-Screen.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Online Documentation (Recommended).txt" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\ShadowPostProcess.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\TrueShadow-Multiply.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\TrueShadow.cginc" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\changelog.txt" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\ImprintPostProcess.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\ShadowCutout.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\TrueShadow-Normal.shader" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\LeTai.TrueShadow.asmdef" />
-     <None Include="Assets\Le Tai&apos;s Asset\TrueShadow\Resources\Shaders\TrueShadow-Additive.shader" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Helper\ShadowMaterial.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\ShaderID.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\PropertyDrawerAttributes.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\IndexedSet.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\ShadowSettingSnapshot.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\ShadowFactory.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\DebugSettings.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Helper\InsetOnPress.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Structure\ColorBleedMode.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Structure\BlendMode.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\ExtensionMethods.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\HashCode.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\QuickPreset.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\ShadowRenderer.MaskHandling.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\SpreadSliderAttribute.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\TrueShadow.Invalidator.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\TrueShadow.Plugins.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\ProjectSettings.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Helper\DisableShadowCache.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Helper\AnimatedBiStateButton.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Effects\BlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\ShadowSorter.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Effects\ShaderProperties.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\PluginInterfaces.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\Utility.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Effects\ScalableBlurConfig.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Effects\ScalableBlur.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Utilities\Math.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\TrueShadow.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Effects\IBlurAlgorithm.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\ShadowRenderer.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Structure\ShadowContainer.cs" />
+     <Compile Include="Assets\LeTai\TrueShadow\Scripts\Helper\InteractiveShadow.cs" />
+     <Folder Include="Assets\LeTai\TrueShadow\Scripts\Effects" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\ShadowGenerate.shader" />
+     <Folder Include="Assets\LeTai\TrueShadow\Resources\Shaders" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\TrueShadow-Screen.shader" />
+     <None Include="Assets\LeTai\TrueShadow\Online Documentation (Recommended).txt" />
+     <Folder Include="Assets\LeTai\TrueShadow\Scripts\Structure" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\ShadowPostProcess.shader" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\TrueShadow-Multiply.shader" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\TrueShadow.cginc" />
+     <None Include="Assets\LeTai\TrueShadow\changelog.txt" />
+     <Folder Include="Assets\LeTai\TrueShadow\Scripts\Utilities" />
+     <Folder Include="Assets\LeTai\TrueShadow\Resources" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\ImprintPostProcess.shader" />
+     <Folder Include="Assets\LeTai\TrueShadow" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\ShadowCutout.shader" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\TrueShadow-Normal.shader" />
+     <None Include="Assets\LeTai\TrueShadow\LeTai.TrueShadow.asmdef" />
+     <Folder Include="Assets\LeTai\TrueShadow\Scripts\Helper" />
+     <None Include="Assets\LeTai\TrueShadow\Resources\Shaders\TrueShadow-Additive.shader" />
+     <Folder Include="Assets\LeTai\TrueShadow\Scripts" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -350,23 +358,26 @@
      <Reference Include="UnityEditor.UWP.Extensions">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\MetroSupport\UnityEditor.UWP.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="Facepunch.Steamworks.Win64">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Assets\Facepunch.Steamworks\Facepunch.Steamworks.Win64.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Burst.Unsafe">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Rocks">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.burst@1.7.3\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
      <Reference Include="Newtonsoft.Json">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
@@ -750,13 +761,13 @@
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
      <Reference Include="Unity.TextMeshPro">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
