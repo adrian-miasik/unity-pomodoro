@@ -5,12 +5,16 @@ using AdrianMiasik.Android;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
+using AdrianMiasik.Components.Core.Items.Pages;
 using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using AdrianMiasik.Steam;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
+using Steamworks;
+using Steamworks.Data;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -18,6 +22,8 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
+using Image = UnityEngine.UI.Image;
 
 namespace AdrianMiasik
 {
@@ -56,45 +62,48 @@ namespace AdrianMiasik
         public States m_state = States.SETUP;
 
         [Header("Unity Pomodoro - Managers")]
-        [SerializeField] private ThemeManager m_themeManager; // Responsible class for executing and keeping track of themed elements and active themes.
-        [SerializeField] private HotkeyDetector m_hotkeyDetector; // Responsible class for our keyboard shortcuts / bindings
-        [SerializeField] private ResolutionDetector m_resolutionDetector; // Responsible class for detecting changes in our application resolution sizes.
+        [SerializeField] private ThemeManager m_themeManager;
+        [SerializeField] private HotkeyDetector m_hotkeyDetector;
+        [SerializeField] private ResolutionDetector m_resolutionDetector;
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        [SerializeField] private UWPNotifications m_uwpNotifications; // Responsible class for UWP notifications and toasts
+        
+        [Header("Unity Pomodoro - Platform Specific Managers")]
+        [SerializeField] private SteamManager m_steamManager;
+        [SerializeField] private UWPNotifications m_uwpNotifications;
         [SerializeField] private AndroidNotifications m_androidNotifications;
 
-        [Header("Basic - Components")]
+        [Header("Unity - Basic Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
         
-        [Header("Unity Pomodoro - Components")]
-        [SerializeField] private Background m_background; // Used to pull select focus
-        [SerializeField] private BlurOverlay m_overlay; // Used to blur background on sidebar focus and confirmation dialog pop-ups.
+        [Header("Unity Pomodoro - Custom Components")]
+        [SerializeField] private Background m_background;
+        [SerializeField] private BlurOverlay m_overlay;
         [SerializeField] private TranslucentImageSource m_translucentImageSource; // Necessary reference for blur
-        [SerializeField] private CompletionLabel m_completionLabel; // Used to prompt the user the timer is finished
-        [SerializeField] private DigitFormat m_digitFormat; // Responsible class for manipulating our digits and formats
+        [SerializeField] private CompletionLabel m_completionLabel;
+        [SerializeField] private DigitFormat m_digitFormat;
         [SerializeField] private ToggleSprite m_menuToggleSprite; // Used to toggle our sidebar menu
         [SerializeField] private ClickButtonSVGIcon m_leftButtonSVGClick; // Used to restart the timer
-        [SerializeField] private RightButton m_rightButton; // Used to play/pause timer + timer sprite state element 
-        [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between mode one and mode two
+        [SerializeField] private RightButton m_rightButton; // Play/Pause/Snooze/Work 
+        [SerializeField] private ToggleSlider m_breakSlider; // Used for switching timer between work and break mode
         [SerializeField] private CreditsGhost m_creditsGhost; // Used to display project contributors
-        [SerializeField] private ThemeSlider m_themeSlider; // Used to change between light / dark mode
-        [SerializeField] private Sidebar m_sidebarMenu; // Used to change and switch between our pages / panel contents (Such as main, settings, and about)
-        [SerializeField] private TomatoCounter m_tomatoCounter; // Responsible class for counting work / break timers and providing a long break
-        [SerializeField] private EndTimestampGhost m_endTimestampGhost; // Responsible for displaying the local end time for the current running timer.
+        [SerializeField] private ThemeSlider m_themeSlider;
+        [SerializeField] private Sidebar m_sidebarMenu;
+        [SerializeField] private TomatoCounter m_tomatoCounter;
+        [SerializeField] private EndTimestampGhost m_endTimestampGhost;
         [SerializeField] private SkipButton m_skipButton;
-        private readonly List<ITimerState> timerElements = new List<ITimerState>();
         
-        [Header("Animations")] 
+        private readonly List<ITimerState> timerElements = new(); // Elements that react to timer state changes.
+        
+        [Header("Unity Pomodoro - Animations")] 
         [SerializeField] private AnimationCurve m_spawnRingProgress;
-        private bool m_animateRingProgress;
-        private float m_accumulatedRingAnimationTime;
+        private bool animateRingProgress;
+        private float accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
-        [SerializeField] private AnimationCurve m_ringTickWidth;
 
         /// <summary>
         /// A UnityEvent that gets invoked when the spawn animation is complete.
@@ -113,7 +122,7 @@ namespace AdrianMiasik
         public UnityEvent m_onTimerCompletion;
 
         [Header("Cache")]
-        [SerializeField] private List<DoubleDigit> m_selectedDigits = new List<DoubleDigit>(); // Contains our currently selected digits
+        [SerializeField] private List<DoubleDigit> m_selectedDigits = new();
 
         [Header("Pages")] 
         [SerializeField] private SidebarPages m_sidebarPages;
@@ -145,13 +154,21 @@ namespace AdrianMiasik
         private bool hasRingPulseBeenInvoked;
 
         [Header("Loaded Settings")]
-        [SerializeField] private SystemSettings loadedSystemSettings;
-        [SerializeField] private TimerSettings loadedTimerSettings;
+        [SerializeField] private SystemSettings m_loadedSystemSettings;
+        [SerializeField] private TimerSettings m_loadedTimerSettings;
         private bool haveSettingsBeenConfigured;
 
+        private bool haveComponentsBeenInitialized;
+
+        /// <summary>
+        /// Mutes our volume when out of focus if permitted by user system settings.
+        /// Also lowers target frame rate when not in focus.
+        /// Also calculates new time when application is focused again on Android.
+        /// </summary>
+        /// <param name="hasFocus"></param>
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (loadedSystemSettings.m_muteSoundWhenOutOfFocus)
+            if (m_loadedSystemSettings.m_muteSoundWhenOutOfFocus)
             {
                 // Prevent application from making noise when not in focus
                 AudioListener.volume = !hasFocus ? 0 : 1;
@@ -206,13 +223,15 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
-            SystemSettings systemSettings = UserSettingsSerializer.LoadSystemSettings();
-            TimerSettings timerSettings = UserSettingsSerializer.LoadTimerSettings();
+            // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
+            m_steamManager.Initialize();
+            
+            SystemSettings systemSettings = UserSettingsSerializer.LoadSettings<SystemSettings>("system-settings");
 
             // System Settings
             if (systemSettings == null)
             {
-                Debug.Log("No System settings found. Created new System settings successfully!");
+                Debug.Log("A new SYSTEM settings file has been created successfully!");
                 
                 // Create new settings
                 SystemSettings defaultSystemSettings = new SystemSettings();
@@ -233,19 +252,19 @@ namespace AdrianMiasik
                 defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
                 
-                // All platforms have analytics on by default. (User can opt-out though via settings panel)
+                // All platforms have analytics on by default. (User can opt-out though via SettingsPage)
                 defaultSystemSettings.m_enableUnityAnalytics = true;
                 
                 // Cache
                 systemSettings = defaultSystemSettings;
-                UserSettingsSerializer.SaveSystemSettings(systemSettings);
+                UserSettingsSerializer.SaveSettingsFile(systemSettings, "system-settings");
             }
 
-            loadedSystemSettings = systemSettings;
+            m_loadedSystemSettings = systemSettings;
 
             // Apply theme changes
             m_themeManager.Register(this);
-            if (loadedSystemSettings.m_darkMode)
+            if (m_loadedSystemSettings.m_darkMode)
             {
                 m_themeManager.SetToDarkMode();
             }
@@ -254,24 +273,28 @@ namespace AdrianMiasik
                 m_themeManager.SetToLightMode();
             }
             
+            TimerSettings timerSettings = UserSettingsSerializer.LoadSettings<TimerSettings>("timer-settings");
+            
             // Timer Settings
             // If we don't have any saved settings...
             if (timerSettings == null)
             {
-                Debug.Log("No Timer settings found. Created new Timer settings successfully!");
+                Debug.Log("A new TIMER settings file has been created successfully!");
                 
                 // Create new settings
-                TimerSettings defaultTimerSettings = new TimerSettings();
-                defaultTimerSettings.m_longBreaks = true;
-                defaultTimerSettings.m_format = DigitFormat.SupportedFormats.HH_MM_SS;
-                defaultTimerSettings.m_pomodoroCount = 4;
+                TimerSettings defaultTimerSettings = new()
+                {
+                    m_longBreaks = true,
+                    m_format = DigitFormat.SupportedFormats.HH_MM_SS,
+                    m_pomodoroCount = 4
+                };
 
                 // Cache
                 timerSettings = defaultTimerSettings;
-                UserSettingsSerializer.SaveTimerSettings(timerSettings);
+                UserSettingsSerializer.SaveSettingsFile(timerSettings, "timer-settings");
             }
             
-            loadedTimerSettings = timerSettings;
+            m_loadedTimerSettings = timerSettings;
 
             // Set target frame rate to refresh rate to prevent possible unnecessary GPU usage.
             Application.targetFrameRate = Screen.currentResolution.refreshRate;
@@ -280,7 +303,7 @@ namespace AdrianMiasik
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             // Update analytics
-            ToggleUnityAnalytics(this.loadedSystemSettings.m_enableUnityAnalytics, true);
+            ToggleUnityAnalytics(m_loadedSystemSettings.m_enableUnityAnalytics, true);
 #endif
         }
 
@@ -295,10 +318,14 @@ namespace AdrianMiasik
         /// <param name="isBootingUp"></param>
         public void ToggleUnityAnalytics(bool enableUnityAnalytics, bool isBootingUp)
         {
-            // Apply and save
-            GetSystemSettings().m_enableUnityAnalytics = enableUnityAnalytics;
-            UserSettingsSerializer.SaveSystemSettings(GetSystemSettings());
-            
+            // If there is a change in settings...
+            if (enableUnityAnalytics != m_loadedSystemSettings.m_enableUnityAnalytics)
+            {
+                // Apply and save
+                m_loadedSystemSettings.m_enableUnityAnalytics = enableUnityAnalytics;
+                UserSettingsSerializer.SaveSettingsFile(m_loadedSystemSettings, "system-settings");
+            }
+
             // Set if service needs to start on init...
             Analytics.initializeOnStartup = enableUnityAnalytics;
 #if UNITY_ANALYTICS_EVENT_LOGS
@@ -496,6 +523,13 @@ namespace AdrianMiasik
             timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampGhost);
             timerElements.Add(m_skipButton);
+
+            haveComponentsBeenInitialized = true;
+        }
+
+        public bool HaveComponentsBeenInitialized()
+        {
+            return haveComponentsBeenInitialized;
         }
         
         /// <summary>
@@ -523,7 +557,7 @@ namespace AdrianMiasik
                 element.StateUpdate(m_state, theme);
             }
             
-            UpdateRingColor(theme);
+            UpdateRing(theme);
 
             // Do transition logic
             switch (m_state)
@@ -534,9 +568,6 @@ namespace AdrianMiasik
                     // Show timer context
                     m_text.gameObject.SetActive(true);
                     
-                    // Complete ring
-                    m_ring.fillAmount = 1f;
-                    m_ring.material.SetFloat(RingDiameter, 0.9f);
                     if (!m_digitFormat.m_isOnBreak)
                     {
                         m_text.text = "Set a work time";
@@ -559,7 +590,7 @@ namespace AdrianMiasik
                     break;
 
                 case States.RUNNING:
-                    m_animateRingProgress = false;
+                    animateRingProgress = false;
 
                     m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
@@ -587,9 +618,6 @@ namespace AdrianMiasik
                     // Hide state text
                     m_text.gameObject.SetActive(false);
 
-                    // Complete ring
-                    m_ring.fillAmount = 1f;
-
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
                     m_digitFormat.Hide();
@@ -616,8 +644,8 @@ namespace AdrianMiasik
             m_spawnAnimation.Stop();
             m_spawnAnimation.Play();
 
-            m_accumulatedRingAnimationTime = 0;
-            m_animateRingProgress = true;
+            accumulatedRingAnimationTime = 0;
+            animateRingProgress = true;
         }
         
         /// <summary>
@@ -683,16 +711,16 @@ namespace AdrianMiasik
 
         private void Update()
         {
-            if (m_animateRingProgress)
+            if (animateRingProgress)
             {
-                m_ring.fillAmount = m_spawnRingProgress.Evaluate(m_accumulatedRingAnimationTime);
-                m_accumulatedRingAnimationTime += Time.deltaTime;
+                m_ring.fillAmount = m_spawnRingProgress.Evaluate(accumulatedRingAnimationTime);
+                accumulatedRingAnimationTime += Time.deltaTime;
 
                 // If completed...
-                if (m_accumulatedRingAnimationTime > m_spawnRingProgress.keys[m_spawnRingProgress.length-1].time)
+                if (accumulatedRingAnimationTime > m_spawnRingProgress.keys[m_spawnRingProgress.length-1].time)
                 {
                     m_ring.fillAmount = 1;
-                    m_animateRingProgress = false;
+                    animateRingProgress = false;
                     
                     m_onSpawnCompletion?.Invoke();
                 }
@@ -718,6 +746,9 @@ namespace AdrianMiasik
             }
         }
 
+        /// <summary>
+        /// Update method for the timer logic. This get invoked every frame.
+        /// </summary>
         private void Tick()
         {
             if (currentTime > 0)
@@ -878,8 +909,10 @@ namespace AdrianMiasik
             {
                 ResetDigitFadeAnim();
             }
-            
-            m_sidebarPages.RefreshTimerPage();
+            else
+            {
+                m_sidebarPages.RefreshTimerPage();
+            }
         }
         
         public void ShowSettings()
@@ -1150,7 +1183,7 @@ namespace AdrianMiasik
         }
 
         /// <summary>
-        /// Is our <see cref="AboutPanel"/> currently open and visible?
+        /// Is our <see cref="AboutPage"/> currently open and visible?
         /// </summary>
         /// <returns></returns>
         public bool IsAboutPageOpen()
@@ -1217,7 +1250,7 @@ namespace AdrianMiasik
                 m_confirmationDialogManager.SpawnConfirmationDialog(GenerateFormat, () =>
                 {
                     GetTimerSettings().m_format = desiredFormat;
-                    UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+                    UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
                     m_sidebarPages.SetSettingDigitFormatDropdown(m_digitFormat.GetPreviousFormatSelection());
                 });
             }
@@ -1226,7 +1259,7 @@ namespace AdrianMiasik
                 m_digitFormat.SwitchFormat(desiredFormat);
                 GenerateFormat();
                 GetTimerSettings().m_format = desiredFormat;
-                UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+                UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
             }
         }
 
@@ -1262,7 +1295,9 @@ namespace AdrianMiasik
             Image leftContainerTarget = m_leftButtonSVGClick.m_containerTarget.GetComponent<Image>();
             if (leftContainerTarget != null)
             {
-                leftContainerTarget.material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
+                Material material = new (leftContainerTarget.material);
+                material.SetColor(CircleColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
+                leftContainerTarget.material = material;
             }
             
             // Left Button Icon
@@ -1278,40 +1313,51 @@ namespace AdrianMiasik
             m_menuToggleSprite.OverrideFalseColor(theme.GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.ColorUpdate(theme);
 
-            UpdateRingColor(theme);
+            UpdateRing(theme);
         }
 
-        private void UpdateRingColor(Theme theme)
+        private void UpdateRing(Theme theme)
         {
+            // Create a new material (copied from m_ring)
+            Material ringMaterial = new(m_ring.material);
+            
             switch (m_state)
             {
                 case States.SETUP:
-                    // Ring
-                    m_ring.material.SetColor(RingColor,
-                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, !m_digitFormat.m_isOnBreak ? 
+                        theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    ringMaterial.SetFloat(RingDiameter, 0.9f);
 
+                    // Complete ring
+                    m_ring.fillAmount = 1f;
                     break;
                 
                 case States.RUNNING:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_running);
-
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, theme.GetCurrentColorScheme().m_running);
                     break;
                 
                 case States.PAUSED:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, 
-                        !m_digitFormat.m_isOnBreak ? theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, !m_digitFormat.m_isOnBreak ? 
+                        theme.GetCurrentColorScheme().m_modeOne : theme.GetCurrentColorScheme().m_modeTwo);
                     break;
                 
                 case States.COMPLETE:
-                    // Ring
-                    m_ring.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
+                    // Modify copied material
+                    ringMaterial.SetColor(RingColor, theme.GetCurrentColorScheme().m_complete);
+                    
+                    // Complete ring
+                    m_ring.fillAmount = 1f;
                     break;
                 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            // Apply modified material
+            m_ring.material = ringMaterial;
         }
         
         /// <summary>
@@ -1333,19 +1379,19 @@ namespace AdrianMiasik
         {
             // Apply and save
             GetTimerSettings().m_longBreaks = state;
-            UserSettingsSerializer.SaveTimerSettings(GetTimerSettings());
+            UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
             
             // Apply component swap
             if (state)
             {
                 if (!m_tomatoCounter.IsInitialized())
                 {
-                    m_tomatoCounter.Initialize(this, loadedTimerSettings.m_pomodoroCount);
+                    m_tomatoCounter.Initialize(this, m_loadedTimerSettings.m_pomodoroCount);
                 }
                 else
                 {
                     // Only rebuild tomatoes
-                    m_tomatoCounter.SetPomodoroCount(loadedTimerSettings.m_pomodoroCount, m_tomatoCounter.GetTomatoProgress());
+                    m_tomatoCounter.SetPomodoroCount(m_loadedTimerSettings.m_pomodoroCount, m_tomatoCounter.GetTomatoProgress());
                 }
 
                 m_tomatoCounter.gameObject.SetActive(true);
@@ -1371,6 +1417,7 @@ namespace AdrianMiasik
             }
         }
         
+        // TODO: Implement
         /// <summary>
         /// Sets the users setting preference to enable/disable the EndTimestampBubble (located at the bottom right).
         /// </summary>
@@ -1386,6 +1433,20 @@ namespace AdrianMiasik
         public void ActivateLongBreak()
         {
             m_digitFormat.ActivateLongBreak();
+
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
+            {
+                // Fetch first tomato achievement
+                Achievement ach = new Achievement("ACH_ACQUIRE_LONG_BREAK");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    ach.Trigger();
+                    Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
+                }
+            }
         }
 
         /// <summary>
@@ -1524,7 +1585,7 @@ namespace AdrianMiasik
 
 #if UNITY_EDITOR
         // TODO: Find a more consistent way of doing all these. Such as a ShowInstantly() method or something.
-        // Creator Media Methods: Only intended for instant visual changes
+        // Creator Media Methods: Only intended for instant visual changes for Editor tooling
         public void MCHideCreditsBubble()
         {
             m_creditsGhost.FadeOut(true);
@@ -1602,23 +1663,27 @@ namespace AdrianMiasik
         {
             m_sidebarPages.MCSwitchToSettingsPageInstant();
         }
-
 #endif
         
         // Settings
         public SystemSettings GetSystemSettings()
         {
-            return loadedSystemSettings;
+            return m_loadedSystemSettings;
         }
 
         public TimerSettings GetTimerSettings()
         {
-            return loadedTimerSettings;
+            return m_loadedTimerSettings;
         }
 
         public void ShowTickAnimation()
         {
             m_digitFormat.ShowTickAnimation();
+        }
+
+        public void ShutdownSteamManager()
+        {
+            m_steamManager.Shutdown();
         }
     }
 }

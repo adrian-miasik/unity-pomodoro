@@ -1,3 +1,4 @@
+using Steamworks;
 using TMPro;
 using UnityEngine;
 
@@ -11,9 +12,15 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private TMP_Text m_text;
         [SerializeField] private string m_prefixString = "v";
 
-        private void Start()
+        public void Initialize()
         {
             m_text.text = m_prefixString + Application.version;
+
+            // Append Steam flag to version numbering as suffix
+            if (SteamClient.IsValid)
+            {
+                m_text.text += "-s";
+            }
         }
 
         /// <summary>

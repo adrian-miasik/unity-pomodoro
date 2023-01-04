@@ -6,8 +6,12 @@ using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using Steamworks;
+using Steamworks.Data;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
 
 namespace AdrianMiasik.Components.Core.Containers
 {
@@ -405,6 +409,12 @@ namespace AdrianMiasik.Components.Core.Containers
                 DoubleDigit dd = Instantiate(m_digitSource, m_digitFormatRect);
                 dd.Initialize(Timer, this, GetDigitType(pair.Key));
                 generatedDigits.Add(dd);
+
+                // Track seconds digit changes...(Steam stats)
+                if (dd.m_digit == Digits.SECONDS)
+                {
+                    dd.m_onDigitChange.AddListener(OnSecondsChanged);
+                }
                 
                 // Skip last iteration to avoid spacer generation
                 if (i == doubleDigitSetToGenerate.Count - 1)
@@ -443,6 +453,83 @@ namespace AdrianMiasik.Components.Core.Containers
             };
             Timer.SetBackgroundNavigation(backgroundNav);
         }
+
+        private void OnSecondsChanged(int previousValue, int newValue)
+        {
+            // Ignore second change call when changing from starting value
+            if (previousValue == GetTime().Seconds)
+            {
+                // Debug.Log("Starting second change ignored.");
+                return;
+            }
+            
+            // Debug.Log("Second changed from " + previousValue + " to " + newValue);
+            
+            if (SteamClient.IsValid)
+            {
+                // Add second to User Stats (User for stats and achievements)
+                SteamUserStats.AddStat("seconds_accumulated", 1);
+                SteamUserStats.StoreStats();
+
+                // Fetch achievement
+                Achievement ach = new Achievement("ACH_ALL_IN_A_DAYS_WORK");
+
+                // If the 'all in a days work' achievement is not unlocked...
+                if (!ach.State)
+                {
+                    // Fetch progression
+                    int secondsAccumulated = SteamUserStats.GetStatInt("seconds_accumulated");
+
+                    // Unlock achievement
+                    if (secondsAccumulated >= 86400)
+                    {
+                        ach.Trigger();
+                        Debug.Log("Steam Achievement Unlocked! 'All in a Days Work: Run your timer for a " +
+                                  "total of 24 hours. (86,400 seconds)'");
+                        return;
+                    }
+                    
+                    // Check if seconds passed has reached the hour point... (86400 / 24 = 3600)
+                    if (secondsAccumulated != 0 && secondsAccumulated % 3600 == 0)
+                    {
+                        // Display progress every hour
+                        SteamUserStats.IndicateAchievementProgress(ach.Identifier, secondsAccumulated, 86400);
+                    }
+                }
+            }
+        }
+        
+#if UNITY_EDITOR
+        [MenuItem("Adrian Miasik/Achievements and Statistics/Display 'All in a day's work' progression")]
+        private static void DisplayAchievementAllInADaysWorkProgression()
+        {
+            if (!SteamClient.IsValid)
+            {
+                Debug.LogWarning("Steam Client not found. Please init Steam Manager by entering play mode" +
+                                 " and try again.");
+                return;
+            }
+            
+            // Fetch achievement
+            Achievement ach = new("ACH_ALL_IN_A_DAYS_WORK");
+
+            // Fetch progression
+            int secondsAccumulated = SteamUserStats.GetStatInt("seconds_accumulated");
+
+            // Verify progression...(If you pass in 0 into SteamUserStats.IndicateAchievementProgress method in
+            // the current progression argument, Steam will display 'Achievement Unlocked' without unlocking the 
+            // achievement. It won't show you a progression tally either. In this case, we'll forgo showing anything
+            // related to Steam.
+            if (secondsAccumulated <= 0)
+            {
+                Debug.LogWarning("Unable to display progression. No progression has been made.");
+                return;
+            }
+            
+            // Show progress 
+            SteamUserStats.IndicateAchievementProgress(ach.Identifier, secondsAccumulated, 86400);
+        }
+#endif
 
         /// <summary>
         /// Sets the generated <see cref="DoubleDigit"/>'s text label to the provided <see cref="TimeSpan"/>.

@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Rendering;
+#if ENABLE_VR
 using UnityEngine.XR;
+#endif
 
 namespace LeTai.Asset.TranslucentImage
 {
@@ -122,7 +124,7 @@ public partial class TranslucentImageSource : MonoBehaviour
         get { return blurRegion; }
         set
         {
-            Vector2 min = new Vector2(1 / (float) Cam.pixelWidth, 1 / (float) Cam.pixelHeight);
+            Vector2 min = new Vector2(1 / (float)Cam.pixelWidth, 1 / (float)Cam.pixelHeight);
             blurRegion.x      = Mathf.Clamp(value.x,      0,     1 - min.x);
             blurRegion.y      = Mathf.Clamp(value.y,      0,     1 - min.y);
             blurRegion.width  = Mathf.Clamp(value.width,  min.x, 1 - blurRegion.x);
@@ -223,14 +225,16 @@ public partial class TranslucentImageSource : MonoBehaviour
         if (BlurredScreen)
             BlurredScreen.Release();
 
+#if ENABLE_VR
         if (XRSettings.enabled)
         {
-            BlurredScreen        = new RenderTexture(XRSettings.eyeTextureDesc);
-            BlurredScreen.width  = Mathf.RoundToInt(BlurredScreen.width * BlurRegion.width) >> Downsample;
+            BlurredScreen = new RenderTexture(XRSettings.eyeTextureDesc);
+            BlurredScreen.width = Mathf.RoundToInt(BlurredScreen.width * BlurRegion.width) >> Downsample;
             BlurredScreen.height = Mathf.RoundToInt(BlurredScreen.height * BlurRegion.height) >> Downsample;
-            BlurredScreen.depth  = 0;
+            BlurredScreen.depth = 0;
         }
         else
+#endif
         {
             BlurredScreen = new RenderTexture(Mathf.RoundToInt(Cam.pixelWidth * BlurRegion.width) >> Downsample,
                                               Mathf.RoundToInt(Cam.pixelHeight * BlurRegion.height) >> Downsample, 0);
@@ -249,16 +253,22 @@ public partial class TranslucentImageSource : MonoBehaviour
 
     public void OnBeforeBlur()
     {
-        if (BlurredScreen == null
+        if (
+            BlurredScreen == null
          || !BlurredScreen.IsCreated()
          || Downsample != lastDownsample
          || !BlurRegion.Approximately(lastBlurRegion)
-         || XRSettings.deviceEyeTextureDimension != lastEyeTexDim)
+#if ENABLE_VR
+         || XRSettings.deviceEyeTextureDimension != lastEyeTexDim
+#endif
+        )
         {
             CreateNewBlurredScreen();
             lastDownsample = Downsample;
             lastBlurRegion = BlurRegion;
-            lastEyeTexDim  = XRSettings.deviceEyeTextureDimension;
+#if ENABLE_VR
+            lastEyeTexDim = XRSettings.deviceEyeTextureDimension;
+#endif
         }
     }
 
@@ -303,7 +313,7 @@ public partial class TranslucentImageSource : MonoBehaviour
     private static float GetTrueCurrentTime()
     {
 #if UNITY_EDITOR
-        return (float) UnityEditor.EditorApplication.timeSinceStartup;
+        return (float)UnityEditor.EditorApplication.timeSinceStartup;
 #else
             return Time.unscaledTime;
 #endif

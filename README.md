@@ -17,14 +17,14 @@
 </p>
 
 <p align="center">
-  <img src="promotional/release-showcase.gif" width="720">
+  <img src="exports/release-showcase.gif" width="720">
 </p>
 
 ## About
 
 Unity Pomodoro is an open source countdown timer app created in Unity designed primarily for desktop use. Unity Pomodoro is a time management tool based on the pomodoro technique, the aim is to improve your productivity by introducing timers for both your work and break sessions. Quickly swap between the two timers to keep you on track and focused.
 
-**Platforms**: Windows, Mac, & Linux. (Android in Beta! APK located in the releases page)
+**Platforms**: Windows, Mac, Linux, & Android. (Steam Windows in Beta! [Playtest available on the Steam Store](https://store.steampowered.com/app/2173940/Unity_Pomodoro/))
 
 **Version**:  2.2.0
 
@@ -49,8 +49,10 @@ Want to help? If you're interested in contributing to the project, please see ou
 - Android
   - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.2.0/unity-pomodoro-2.2.0-android.apk) 
 #### Platform Specific
-- Steam 
-  - [Coming Soon...](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
+- Steam - [Wishlist Now!](https://store.steampowered.com/app/2173940/Unity_Pomodoro/) - Releasing Q1 2023
+    - The Steam version will include **Steam Achievements**.
+    - The Steam version will include **Steam Cloud Saves** for your preferred settings.
+    - The Steam version will include **Steam Statistics**.
 - [Google Play Store (Android)](https://play.google.com/store/apps/details?id=com.adrianmiasik.unitypomodoro)
   - The Android version provides **Mobile Notifications** when the timer is complete.
 - [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
@@ -74,36 +76,36 @@ Want to help? If you're interested in contributing to the project, please see ou
 
 &nbsp;
 ## Media
-<img src="promotional/social-banner.png" width="640">
+<img src="exports/social-banner.png" width="640">
 <img width="640" alt="unity-pomodoro-release-banner-1.6.0" src="https://user-images.githubusercontent.com/12757380/147377998-ea19460b-5ea7-48cb-85bf-a3eabcda0975.gif">
 
 ### Screenshots
 #### Light
 <p>
-<img src="sources/design/light-color-scheme.png" width="200">
-<img src="promotional/screenshot-0.png" width="200">
-<img src="promotional/screenshot-1.png" width="200">
-<img src="promotional/screenshot-2.png" width="200">
-<img src="promotional/screenshot-3.png" width="200">
-<img src="promotional/screenshot-4.png" width="200">
-<img src="promotional/screenshot-5.png" width="200">
-<img src="promotional/screenshot-6.png" width="200">
-<img src="promotional/screenshot-7.png" width="200">
-<img src="promotional/screenshot-8.png" width="200">
+<img src="sources/visual/light-color-scheme.png" width="200">
+<img src="exports/screenshot-0.png" width="200">
+<img src="exports/screenshot-1.png" width="200">
+<img src="exports/screenshot-2.png" width="200">
+<img src="exports/screenshot-3.png" width="200">
+<img src="exports/screenshot-4.png" width="200">
+<img src="exports/screenshot-5.png" width="200">
+<img src="exports/screenshot-6.png" width="200">
+<img src="exports/screenshot-7.png" width="200">
+<img src="exports/screenshot-8.png" width="200">
 </p>
 
 #### Dark
 <p>
-<img src="sources/design/dark-color-scheme.png" width="200">
-<img src="promotional/screenshot-9.png" width="200">
-<img src="promotional/screenshot-10.png" width="200">
-<img src="promotional/screenshot-11.png" width="200">
-<img src="promotional/screenshot-12.png" width="200">
-<img src="promotional/screenshot-13.png" width="200">
-<img src="promotional/screenshot-14.png" width="200">
-<img src="promotional/screenshot-15.png" width="200">
-<img src="promotional/screenshot-16.png" width="200">
-<img src="promotional/screenshot-17.png" width="200">
+<img src="sources/visual/dark-color-scheme.png" width="200">
+<img src="exports/screenshot-9.png" width="200">
+<img src="exports/screenshot-10.png" width="200">
+<img src="exports/screenshot-11.png" width="200">
+<img src="exports/screenshot-12.png" width="200">
+<img src="exports/screenshot-13.png" width="200">
+<img src="exports/screenshot-14.png" width="200">
+<img src="exports/screenshot-15.png" width="200">
+<img src="exports/screenshot-16.png" width="200">
+<img src="exports/screenshot-17.png" width="200">
 </p>
 
 ## Author Notes

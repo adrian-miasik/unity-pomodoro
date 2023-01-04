@@ -21,6 +21,7 @@ namespace AdrianMiasik.Components.Core.Items.Pages
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             m_socials.Initialize(pomodoroTimer, updateColors);
+            m_versionNumber.Initialize();
             base.Initialize(pomodoroTimer, updateColors);
         }
 

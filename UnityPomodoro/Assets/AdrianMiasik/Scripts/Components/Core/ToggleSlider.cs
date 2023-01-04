@@ -187,7 +187,10 @@ namespace AdrianMiasik.Components.Core
             
             trueColor = overrideTrueColor ? overridenTrueColor : currentColors.m_modeOne;
             m_background.color = isOn ? trueColor : falseColor;
-            m_dot.material.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
+
+            Material dotMaterial = new(m_dot.material);
+            dotMaterial.SetColor(CircleColor, overrideDotColor ? overridenDotColor : currentColors.m_background);
+            m_dot.material = dotMaterial;
         }
 
         [ContextMenu("Enable (Run-time)")]

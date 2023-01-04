@@ -3,6 +3,8 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Items.Pages;
 using AdrianMiasik.Components.Core.Settings;
+using Steamworks;
+using Steamworks.Data;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Settings
@@ -24,7 +26,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         private void SetPomodoroLongBreakCount(Int32 i)
         {
             Timer.GetTimerSettings().m_pomodoroCount = i + 1;
-            UserSettingsSerializer.SaveTimerSettings(Timer.GetTimerSettings());
+            UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
 
             int desiredCount = i + 1; // Dependant on our dropdown options.
 
@@ -52,6 +54,21 @@ namespace AdrianMiasik.Components.Specific.Settings
             {
                 // No progress
                 Timer.SetPomodoroCount(desiredCount, 0);
+            }
+            
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
+            {
+                // Fetch 'tending the garden' achievement
+                Achievement ach = new("ACH_TENDING_THE_GARDEN");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    ach.Trigger();
+                    Debug.Log("Steam Achievement Unlocked! 'Tending the Garden: " +
+                              "Change the number of pomodoros required to achieve a long break.'");
+                }
             }
         }
     }
