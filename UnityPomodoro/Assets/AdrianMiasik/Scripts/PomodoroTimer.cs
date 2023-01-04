@@ -185,7 +185,7 @@ namespace AdrianMiasik
                 focusLossTime = DateTime.Now.TimeOfDay;
 #endif
                 
-                Application.targetFrameRate = 0;
+                Application.targetFrameRate = 15;
             }
             else
             {
