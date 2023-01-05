@@ -37,19 +37,19 @@ Want to help? If you're interested in contributing to the project, please see ou
 
 &nbsp;
 ## Downloads
-### [Latest Release - v2.2.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.2.0)
+### [Latest Release - v2.4.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.2.0/unity-pomodoro-2.2.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.2.0/unity-pomodoro-2.2.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.0/unity-pomodoro-2.4.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.0/unity-pomodoro-2.4.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.2.0/unity-pomodoro-2.2.0-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.0/unity-pomodoro-2.4.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.2.0/unity-pomodoro-2.2.0-linux-desktop-64-bit.zip)
-- Android
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.0/unity-pomodoro-2.4.0-linux-desktop-64-bit.zip)
+- Android (v2.2.0)
   - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.2.0/unity-pomodoro-2.2.0-android.apk) 
 #### Platform Specific
-- Steam - [Wishlist Now!](https://store.steampowered.com/app/2173940/Unity_Pomodoro/) - Releasing Q1 2023
+- [Steam (Windows)](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
     - The Steam version will include **Steam Achievements**.
     - The Steam version will include **Steam Cloud Saves** for your preferred settings.
     - The Steam version will include **Steam Statistics**.
@@ -59,6 +59,7 @@ Want to help? If you're interested in contributing to the project, please see ou
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v2.2.0 - Google Play Store, New Animations, Documentation, Code Improvements, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.2.0)
 - [v2.1.1 (Hotfix) - Desktop Timer No Longer Decrements on App Focus Loss & Regain](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.1)
 - [v2.1.0 - Android Support, Fixed Visual Artifacts, Improved Performance, and New Community Efforts](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.0)
 - [v2.0.0 - Persistent Settings, Translucent Image Blur, Unity Analytics, Architecture, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)

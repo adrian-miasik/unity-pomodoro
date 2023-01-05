@@ -1,8 +1,10 @@
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
+#if !UNITY_ANDROID
 using Steamworks;
 using Steamworks.Data;
+#endif
 using UnityEngine;
 using Color = UnityEngine.Color;
 
@@ -24,9 +26,11 @@ namespace AdrianMiasik.Components.Specific
         private readonly Vector2 cachedOffsetMin = new Vector2(3, 1.5f); 
         private readonly Vector2 cachedOffsetMax = new Vector2(1.5f, -1.5f);
 
+#if !UNITY_ANDROID
         private int m_timesToggled;
         private float m_currentAccumulatedToggleTime;
         private float m_totalAccumulatedToggleTime;
+#endif
 
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
@@ -36,18 +40,23 @@ namespace AdrianMiasik.Components.Specific
             m_toggle.m_onSetToTrueClick.AddListener(() =>
             {
                 pomodoroTimer.GetTheme().SetToDarkMode();
+#if !UNITY_ANDROID
                 CalculateRaveToggleAchievementProgression();
+#endif
             });
             m_toggle.m_onSetToFalseClick.AddListener(() =>
             {
                 pomodoroTimer.GetTheme().SetToLightMode();
+#if !UNITY_ANDROID
                 CalculateRaveToggleAchievementProgression();
+#endif
             });
 
             m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
             m_toggle.Initialize(Timer, Timer.GetSystemSettings().m_darkMode);
         }
 
+#if !UNITY_ANDROID
         private void CalculateRaveToggleAchievementProgression()
         {
             // If current toggle time took longer than a second...
@@ -85,7 +94,7 @@ namespace AdrianMiasik.Components.Specific
                 }
             }
         }
-        
+
         private void Update()
         {
             if (m_currentAccumulatedToggleTime <= 1)
@@ -99,6 +108,7 @@ namespace AdrianMiasik.Components.Specific
                 m_timesToggled = 0;
             }
         }
+#endif
 
         /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
