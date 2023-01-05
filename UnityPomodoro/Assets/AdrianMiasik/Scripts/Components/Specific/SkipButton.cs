@@ -2,8 +2,10 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+#if !UNITY_ANDROID
 using Steamworks;
 using Steamworks.Data;
+#endif
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific
@@ -56,6 +58,7 @@ namespace AdrianMiasik.Components.Specific
             AudioMimic.Instance.PlaySound(m_buttonSvg.m_clickSound.clip);
             Timer.Skip();
             
+#if !UNITY_ANDROID
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
@@ -69,6 +72,7 @@ namespace AdrianMiasik.Components.Specific
                     Debug.Log("Steam Achievement Unlocked! 'Ketchup: Skip your first timer.'");
                 }
             }
+#endif
         }
     }
 }
