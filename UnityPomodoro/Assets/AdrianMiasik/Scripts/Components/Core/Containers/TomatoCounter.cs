@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
+#if !UNITY_ANDROID
 using Steamworks;
 using Steamworks.Data;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -83,6 +85,7 @@ namespace AdrianMiasik.Components.Core.Containers
             completedTomatoes.Add(tomatoToFill);
             tomatoToFill.Complete();
 
+#if !UNITY_ANDROID
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
@@ -124,6 +127,7 @@ namespace AdrianMiasik.Components.Core.Containers
                     }
                 }
             }
+#endif
 
             // Check for completion
             if (m_uncompletedTomatoes.Count == 0)
@@ -150,6 +154,7 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void ConsumeTomatoes()
         {
+#if !UNITY_ANDROID
             // CANNED ACHIEVEMENT
             // Add discarded pomodoro/tomato to User Stats
             SteamUserStats.AddStat("pomodoros_disposed", completedTomatoes.Count);
@@ -176,6 +181,7 @@ namespace AdrianMiasik.Components.Core.Containers
                     SteamUserStats.IndicateAchievementProgress(ach.Identifier, pomodorosDiscarded, 8);
                 }
             }
+#endif
             
             // Move completed tomatoes back into the uncompleted tomatoes list in the correct order
             for (int i = completedTomatoes.Count; i > 0; i--)
