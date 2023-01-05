@@ -155,30 +155,34 @@ namespace AdrianMiasik.Components.Core.Containers
         public void ConsumeTomatoes()
         {
 #if !UNITY_ANDROID
-            // CANNED ACHIEVEMENT
-            // Add discarded pomodoro/tomato to User Stats
-            SteamUserStats.AddStat("pomodoros_disposed", completedTomatoes.Count);
-            SteamUserStats.StoreStats();
-                
-            // Fetch canned achievement
-            Achievement ach = new("ACH_CANNED");
-            
-            // If achievement is not unlocked...
-            if (!ach.State)
+            // Check if steam client is found...
+            if (SteamClient.IsValid)
             {
-                // Fetch progression
-                int pomodorosDiscarded = SteamUserStats.GetStatInt("pomodoros_disposed");
+                // CANNED ACHIEVEMENT
+                // Add discarded pomodoro/tomato to User Stats
+                SteamUserStats.AddStat("pomodoros_disposed", completedTomatoes.Count);
+                SteamUserStats.StoreStats();
+                    
+                // Fetch canned achievement
+                Achievement ach = new("ACH_CANNED");
+                
+                // If achievement is not unlocked...
+                if (!ach.State)
+                {
+                    // Fetch progression
+                    int pomodorosDiscarded = SteamUserStats.GetStatInt("pomodoros_disposed");
 
-                if (pomodorosDiscarded >= 8)
-                {
-                    ach.Trigger();
-                    Debug.Log("Steam Achievement Unlocked! 'Canned for L8R: Dispose of 8" +
-                              " pomodoros/tomatoes..'");
-                }
-                else if (pomodorosDiscarded != 0)
-                {
-                    // Display progress every time we discard
-                    SteamUserStats.IndicateAchievementProgress(ach.Identifier, pomodorosDiscarded, 8);
+                    if (pomodorosDiscarded >= 8)
+                    {
+                        ach.Trigger();
+                        Debug.Log("Steam Achievement Unlocked! 'Canned for L8R: Dispose of 8" +
+                                  " pomodoros/tomatoes..'");
+                    }
+                    else if (pomodorosDiscarded != 0)
+                    {
+                        // Display progress every time we discard
+                        SteamUserStats.IndicateAchievementProgress(ach.Identifier, pomodorosDiscarded, 8);
+                    }
                 }
             }
 #endif
