@@ -2,7 +2,9 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using AdrianMiasik.Components.Core.Helpers;
+#if !UNITY_ANDROID
 using Steamworks;
+#endif
 using UnityEditor;
 using UnityEngine;
 
@@ -11,12 +13,13 @@ namespace AdrianMiasik.Components.Core.Settings
     /// <summary>
     /// Saves/loads our user settings to/from either our persistent data paths (local storage) or Steam cloud (remote
     /// storage). The data we save/load are: (<see cref="SystemSettings"/> and <see cref="TimerSettings"/>).
+    /// Only saves/loads to/from local storage on the Android platform. 
     /// </summary>
     public static class UserSettingsSerializer
     {
         private const string DataExtension = ".dat";
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !UNITY_ANDROID
 #if USER_SETTINGS_EVENT_LOGS
         /// <summary>
         /// Prints all of our Steam cloud remote files into the console.
@@ -47,6 +50,7 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 #endif
 
+#if !UNITY_ANDROID
         /// <summary>
         /// Deletes/Wipes all of our Steam cloud remote files from the cloud.
         /// </summary>
@@ -79,9 +83,11 @@ namespace AdrianMiasik.Components.Core.Settings
             }
         }
 #endif
+#endif
 
         /// <summary>
         /// Saves the provided file to both the Steam cloud (remote storage) and local storage.
+        /// Only saves locally on Android platform.
         /// </summary>
         public static void SaveSettingsFile<T>(T type, string fileName)
         {
@@ -91,6 +97,7 @@ namespace AdrianMiasik.Components.Core.Settings
             string simpleFilePath = fileName + DataExtension;
 #endif
 
+#if !UNITY_ANDROID
             // If the Steam client is enabled and found...
             if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
@@ -109,6 +116,7 @@ namespace AdrianMiasik.Components.Core.Settings
 #endif
                 ms.Close();
             }
+#endif
             
             // Save file to our local storage.
             FileStream fs = File.Create(persistentFilePath);
@@ -122,6 +130,7 @@ namespace AdrianMiasik.Components.Core.Settings
         
         private enum MostRecentSaveLocation
         {
+#if !UNITY_ANDROID
             /// <summary>
             /// Unable to determine saves because the Steam client isn't active.
             /// </summary>
@@ -132,6 +141,7 @@ namespace AdrianMiasik.Components.Core.Settings
             /// I.e. The Steam Cloud is empty.
             /// </summary>
             UNABLE_TO_DETERMINE_STEAM_CLOUD_EMPTY,
+#endif
 
             /// <summary>
             /// Unable to determine saves because no local storage file was found.
@@ -143,6 +153,7 @@ namespace AdrianMiasik.Components.Core.Settings
             /// </summary>
             LOCAL_STORAGE,
 
+#if !UNITY_ANDROID
             /// <summary>
             /// The steam cloud contains the most recent save.
             /// </summary>
@@ -152,6 +163,7 @@ namespace AdrianMiasik.Components.Core.Settings
             /// The local storage and steam cloud were both saved at the same time.
             /// </summary>
             LOCAL_STORAGE_AND_STEAM_CLOUD
+#endif
         }
 
         public static T LoadSettings<T>(string fileName) where T : class
@@ -163,6 +175,7 @@ namespace AdrianMiasik.Components.Core.Settings
             
             switch (recentSave)
             {
+#if !UNITY_ANDROID
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_OFFLINE:
                     // Load local storage save
                     if (File.Exists(persistentFilePath))
@@ -181,6 +194,7 @@ namespace AdrianMiasik.Components.Core.Settings
                     break;
                 
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_CLOUD_EMPTY:
+#endif
                 case MostRecentSaveLocation.LOCAL_STORAGE:
                     // Load local storage save
                     if (File.Exists(persistentFilePath))
@@ -193,6 +207,7 @@ namespace AdrianMiasik.Components.Core.Settings
                         Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
 #endif
                         
+#if !UNITY_ANDROID
                         // If Steam cloud is running, save local storage to Steam cloud.
                         if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
                         {
@@ -217,13 +232,21 @@ namespace AdrianMiasik.Components.Core.Settings
                             bf.Serialize(fs, file);
                             fs.Close();
                         }
-                        
+#else
+                        // Write save again to local storage to match Steam cloud modified time.
+                        fs = File.Create(persistentFilePath);
+                        bf.Serialize(fs, file);
+                        fs.Close();
+#endif
+
                         // Return local save
                         return file;
                     }
                     break;
                 
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_LOCAL_STORAGE_EMPTY:
+                    
+#if !UNITY_ANDROID
                 case MostRecentSaveLocation.STEAM_CLOUD:
                     // Load Steam cloud save
                     if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
@@ -281,6 +304,7 @@ namespace AdrianMiasik.Components.Core.Settings
                         // Return local save
                         return file;
                     }
+#endif
                     break;
             }
             
@@ -299,7 +323,8 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
             string simpleFilePath = fileName + DataExtension;
-            
+
+#if !UNITY_ANDROID
             if (!SteamClient.IsValid || !SteamRemoteStorage.IsCloudEnabled)
             {
                 return MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_OFFLINE;
@@ -311,12 +336,14 @@ namespace AdrianMiasik.Components.Core.Settings
             // Check validity of user data remote storage directory...
             if (File.Exists(steamUserRemoteSystemSettingsPath))
             {
+#endif
                 // Check if local storage exists...
                 if (!File.Exists(persistentFilePath))
                 {
                     return MostRecentSaveLocation.UNABLE_TO_DETERMINE_LOCAL_STORAGE_EMPTY;
                 }
                 
+#if !UNITY_ANDROID
                 // Cache last accessed / modified file times of our SYSTEM settings files.
                 DateTime steamRemoteWriteTime = File.GetLastWriteTime(steamUserRemoteSystemSettingsPath);
                 DateTime localStorageWriteTime = File.GetLastWriteTime(persistentFilePath);
@@ -340,14 +367,17 @@ namespace AdrianMiasik.Components.Core.Settings
 #endif
                     return MostRecentSaveLocation.LOCAL_STORAGE_AND_STEAM_CLOUD;
                 }
+#endif
                 
 #if USER_SETTINGS_EVENT_LOGS
                 Debug.Log("Most recent " + simpleFilePath + " file: Local Storage");
 #endif
                 return MostRecentSaveLocation.LOCAL_STORAGE;
+#if !UNITY_ANDROID
             }
-
+        
             return MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_CLOUD_EMPTY;
+
         }
 
         /// <summary>
@@ -375,14 +405,18 @@ namespace AdrianMiasik.Components.Core.Settings
             }
 
             return result;
+#endif
         }
 
         public static void DeleteSettingsFile(string fileName)
         {
+#if !UNITY_ANDROID
             DeleteRemoteFile(fileName);
+#endif
             DeleteLocalFile(fileName);
         }
         
+#if !UNITY_ANDROID
         /// <summary>
         /// Deletes the provided Steam cloud file (remote storage).
         /// </summary>
@@ -415,6 +449,7 @@ namespace AdrianMiasik.Components.Core.Settings
             }
 #endif
         }
+#endif
 
         /// <summary>
         /// Deletes the provided local storage file.
@@ -441,7 +476,7 @@ namespace AdrianMiasik.Components.Core.Settings
             }
         }
         
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !UNITY_ANDROID
         // Unity Editor Menu Methods
         
         /// <summary>
@@ -462,7 +497,9 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             DeleteSettingsFile("system-settings");
         }
+#endif
 
+#if UNITY_EDITOR
         /// <summary>
         /// Deletes the system settings file from local storage.
         /// </summary>
@@ -471,7 +508,9 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             DeleteLocalFile("system-settings");
         }
+#endif
 
+#if UNITY_EDITOR && !UNITY_ANDROID
         /// <summary>
         /// Deletes the system settings file from the Steam cloud (remote storage).
         /// </summary>
@@ -489,7 +528,9 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             DeleteSettingsFile("timer-settings");
         }
+#endif
 
+#if UNITY_EDITOR
         /// <summary>
         /// Deletes the timer settings file from local storage.
         /// </summary>
@@ -498,7 +539,9 @@ namespace AdrianMiasik.Components.Core.Settings
         {
             DeleteLocalFile("timer-settings");
         }
+#endif
 
+#if UNITY_EDITOR && !UNITY_ANDROID
         /// <summary>
         /// Deletes the timer settings file from the Steam cloud (remote storage).
         /// </summary>

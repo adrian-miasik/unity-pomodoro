@@ -1,4 +1,6 @@
+#if !UNITY_ANDROID
 using Steamworks;
+#endif
 using UnityEngine;
 
 namespace AdrianMiasik.Steam
@@ -8,6 +10,7 @@ namespace AdrianMiasik.Steam
     /// </summary>
     public class SteamManager : MonoBehaviour
     {
+#if !UNITY_ANDROID
         private bool isInitialized;
         [SerializeField] private bool m_enableSteamworks = true;
     
@@ -44,5 +47,6 @@ namespace AdrianMiasik.Steam
         {
             SteamClient.Shutdown();
         }
+#endif
     }
 }

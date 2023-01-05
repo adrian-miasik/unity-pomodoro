@@ -11,10 +11,10 @@ using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using AdrianMiasik.Steam;
-using AdrianMiasik.UWP;
-using LeTai.Asset.TranslucentImage;
 using Steamworks;
 using Steamworks.Data;
+using AdrianMiasik.UWP;
+using LeTai.Asset.TranslucentImage;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -68,9 +68,9 @@ namespace AdrianMiasik
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
         
         [Header("Unity Pomodoro - Platform Specific Managers")]
-        [SerializeField] private SteamManager m_steamManager;
+        [SerializeField] private SteamManager m_steamManager; // Disable on Android platform
         [SerializeField] private UWPNotifications m_uwpNotifications;
-        [SerializeField] private AndroidNotifications m_androidNotifications;
+        [SerializeField] private AndroidNotifications m_androidNotifications; // Disabled on anything BUT the Android platform
 
         [Header("Unity - Basic Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
@@ -185,7 +185,7 @@ namespace AdrianMiasik
                 focusLossTime = DateTime.Now.TimeOfDay;
 #endif
                 
-                Application.targetFrameRate = 0;
+                Application.targetFrameRate = 15;
             }
             else
             {
@@ -223,8 +223,10 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
+#if !UNITY_ANDROID
             // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
             m_steamManager.Initialize();
+#endif
             
             SystemSettings systemSettings = UserSettingsSerializer.LoadSettings<SystemSettings>("system-settings");
 
@@ -1434,6 +1436,7 @@ namespace AdrianMiasik
         {
             m_digitFormat.ActivateLongBreak();
 
+#if !UNITY_ANDROID
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
@@ -1447,6 +1450,7 @@ namespace AdrianMiasik
                     Debug.Log("Steam Achievement Unlocked! 'Couch Tomato!: Unlock your first long break.'");
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -1681,9 +1685,11 @@ namespace AdrianMiasik
             m_digitFormat.ShowTickAnimation();
         }
 
+#if !UNITY_ANDROID
         public void ShutdownSteamManager()
         {
             m_steamManager.Shutdown();
         }
+#endif
     }
 }

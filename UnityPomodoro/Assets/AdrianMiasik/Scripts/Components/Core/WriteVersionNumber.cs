@@ -1,4 +1,6 @@
+#if !UNITY_ANDROID
 using Steamworks;
+#endif
 using TMPro;
 using UnityEngine;
 
@@ -16,11 +18,13 @@ namespace AdrianMiasik.Components.Core
         {
             m_text.text = m_prefixString + Application.version;
 
+#if !UNITY_ANDROID
             // Append Steam flag to version numbering as suffix
             if (SteamClient.IsValid)
             {
                 m_text.text += "-s";
             }
+#endif
         }
 
         /// <summary>
