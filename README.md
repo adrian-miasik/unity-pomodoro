@@ -49,13 +49,13 @@ Want to help? If you're interested in contributing to the project, please see ou
 - Android (v2.4.1)
   - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.1/unity-pomodoro-2.4.1-android.apk) 
 #### Platform Specific
-- [Steam (Windows)](https://store.steampowered.com/app/2173940/Unity_Pomodoro/) 2.4.1
+- [Steam (Windows)](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
     - The Steam version includes **Steam Achievements**.
     - The Steam version includes **Steam Cloud Saves** for your preferred settings.
     - The Steam version includes **Steam Statistics**.
-- [Google Play Store (Android)](https://play.google.com/store/apps/details?id=com.adrianmiasik.unitypomodoro) 2.2.0
+- [Google Play Store (Android)](https://play.google.com/store/apps/details?id=com.adrianmiasik.unitypomodoro)
   - The Android version provides **Mobile Notifications** when the timer is complete.
-- [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n) 2.2.0
+- [Microsoft Store (Universal Windows Platform)](https://www.microsoft.com/en-us/p/unity-pomodoro/9nbzqpmx9x7n)
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
