@@ -490,6 +490,7 @@ namespace AdrianMiasik
             m_breakSlider.m_onSetToTrueClick.AddListener(TrySwitchToBreakTimer);
             m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
             
+            // Sidebar Menu Toggle
             m_menuToggleSprite.m_onSetToTrueClick.AddListener(m_sidebarMenu.Open);
             m_menuToggleSprite.m_onSetToFalseClick.AddListener(m_sidebarMenu.Close);
             
