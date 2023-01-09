@@ -1,6 +1,7 @@
 using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.ScriptableObjects;
+using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -52,8 +53,15 @@ namespace AdrianMiasik.Components.Specific
         {
             base.ColorUpdate(theme);
             
-            // Remain visible depending on theme dark mode preference
-            m_icon.ChangeColor(theme.GetCurrentColorScheme().m_foreground);
+            Color c = theme.GetCurrentColorScheme().m_foreground;
+            
+            // Tweak alpha indicating end timestamp quick switch interactability
+            if (Timer.IsMainContentOpen())
+            {
+                c.a = 0.5f;
+            }
+
+            m_icon.ChangeColor(c);
         }
 
         /// <summary>
@@ -61,8 +69,10 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         public void OnClick()
         {
+            // If the main pomodoro page is not open...
             if (!Timer.IsMainContentOpen())
             {
+                // Switch to the pomodoro timer
                 Timer.ShowMainContent();
             }
         }
