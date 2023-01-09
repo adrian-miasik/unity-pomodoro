@@ -1,0 +1,1 @@
+These shaders are only meant to demonstrate how to use custom shaders on shadows. They do not come with any guarantees that are applied to the rest of the asset, including but not limited to compatibilities and performance.

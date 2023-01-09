@@ -1,0 +1,135 @@
+v1.4.2:
+ - Fix shadow does not appear immediately on creation.
+
+v1.4.1:
+ - Improve error messages and documentation
+
+v1.4.0:
+ - Fix shadow texture caching
+ - Fix TextMeshPro's shadow not updating in certain cases.
+ - Improve documentation on usage with custom/3rd party UIs.
+
+v1.3.2:
+ - Improve compatibility with Unity 2022
+
+v1.3.1:
+ - Fix some gizmo icons not showing in newer Unity versions
+
+v1.3:
+ - Fix shadow not fit well on Textmesh Pro in certain case
+
+v1.2:
+ - Various bug fixes
+
+v1.1:
+ - Experimental support for TextMeshPro
+ - Improve shadow quality
+ - Fix quick preset can't be undone
+ - Improve demo shaders hardware compatibility
+
+v1.0.3:
+ - Improve interface on high dpi monitor.
+ - Fix error logging on import
+
+v1.0.2:
+ - Fix shader compatibility on some platforms.
+
+v1.0.1:
+ - Fix shader compatibility on some platforms.
+
+v1.0:
+ - Super charge design iteration with Quick Presets.
+ - Unify your UI with Global Angle.
+ - Simple component to set custom material on shadow, along with some cool sample shader.
+ - Colored shadow now works with rich Text.
+ - Reduce banding artifact.
+ - Custom shadow hash: custom shader that alters the caster shape can now be supported.
+ - Other minor fixes and quality improvement.
+
+v0.10.0:
+    While the 1.0 release is being finalized, this release backport some commonly requested fixes.
+ - More accurate shadow
+ - Fix inset shadow interaction with large offset value
+ - Fix Rect Mask 2D support
+ - Shadow now respect mask-ability of parent
+ - Fix Reset features
+
+v0.9.1rc:
+    This is the last release of the beta cycle. Some breaking changes was introduced, please check the included migration tool for more info.
+ - Major re-haul of the blending system. This produce better looking shadow, especially for textured shadow.
+ - Added Screen blend mode. It's similar to Additive, but softer on bright background.
+ - Many 3rd party assets are now compatible without any additional integration. If you're using any custom integration code, please remove them.
+ - Shadow now fit tighter in some edge case.
+ - Shadow resolution now scale properly with Canvas Scaler setting.
+ - Better support for Vector Graphic package.
+
+v0.5.1:
+ - Fix compatibility with "Use 32-bit Display Buffer" option
+
+v0.5.0:
+ - Shadow spread
+
+v0.4.4:
+ - Minimize gap between shadows and caster.
+ - Fix canvas being dirtied when not needed.
+
+v0.4.3:
+ - Fix script not compiling in certain setup
+ - Update documentation
+
+v0.4.2:
+ - UI Text is now supported!
+ - Some minor fixes and optimizations
+
+v0.3.6:
+ - Clean up: remove some buggy features, fix typos, improve wording
+ - Make shadow more visible by default
+ - Minor optimizations.
+
+v0.3.5:
+ - Ground work on supporting additional types of Graphics (Text, SVG, 3rd parties)
+ - Fix editor problem on non-English OS
+
+v0.3.3:
+ - Fix world space Z rotation
+
+v0.3.2:
+ - Fix inset shadow offset artifact
+
+v0.3.1:
+ - World Space Canvas is now supported. Rotated UI also work more correctly
+ - Allow enabling/disabling caster Graphic alpha affecting shadow
+ - Fix shadows being incorrectly generated when the caster Graphic is semi transparent
+ - Fix shadows being jaggy in certain case, including the demo scene
+ - Fix interaction between 0-size shadow and sprite mip-map
+ - Hide scene view gizmo
+ - Various minor fixes and improvements
+
+v0.2.0:
+ - New: Inset shadows!
+    - Neumorphism!
+    - Helper script to make shadow inset when pressed
+ - New: Option to ignore shadow caster's color. This mean shadow can now be brighter than the shadow caster, for example, to emulate shiny edge
+ - New: Multiple shadows support! Just add more True Shadow component to a single UI
+
+ Checkout the Neumorphism demo scene to see the new features in action!
+
+    Also:
+ - Added Component icon
+ - Fix shadows being too small
+ - Many other bug fixes and performance improvements
+
+v0.1.3:
+ - Fix shadow size calculation. As a result, shadow should no longer be clipped. But for real this time
+ - Fix 1 pixel gap between shadow and shadow caster that show up in certain cases
+ - Use border mip map for demo sprites to avoid artifact when shadow size is 0
+ - Fix nullref error when you delete True Shadow component
+
+v0.1.2:
+ - Fix shadow size calculation. As a result, shadow should no longer be clipped
+ - Documentation button on True Shadow component now lead to the correct site instead of Unity's generic scripting page
+ - Some minor fixes and performance optimization
+
+v0.1.1:
+ - Fix Shadow not show up immediately
+ - Fix Additive Blend mode
