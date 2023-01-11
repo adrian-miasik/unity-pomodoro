@@ -809,7 +809,7 @@ PlayerSettings:
   webGLPowerPreference: 2
   scriptingDefineSymbols:
     Android: USER_SETTINGS_EVENT_LOGS
-    Standalone: USER_SETTINGS_EVENT_LOGS
+    Standalone: USER_SETTINGS_EVENT_LOGS;LETAI_TRUESHADOW
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

@@ -41,7 +41,11 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             previousPage.Hide(() =>
             {
-                newPage.Show(null);
+                newPage.Show(() =>
+                {
+                    Timer.ColorUpdateEndTimestampGhost();
+                });
+                
                 if (newPage == m_timerPage)
                 {
                     onTimerPageShow?.Invoke();

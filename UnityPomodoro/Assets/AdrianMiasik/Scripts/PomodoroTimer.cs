@@ -628,6 +628,8 @@ namespace AdrianMiasik
                     m_onRingPulse.Invoke();
                     break;
             }
+            
+            ColorUpdateEndTimestampGhost();
         }
 
         private void ResetDigitFadeAnim()
@@ -1586,6 +1588,11 @@ namespace AdrianMiasik
         public void CloseSidebar()
         {
             m_sidebarMenu.Close();
+        }
+        
+        public void ColorUpdateEndTimestampGhost()
+        {
+            m_endTimestampGhost.ColorUpdate(GetTheme());
         }
 
 #if UNITY_EDITOR
