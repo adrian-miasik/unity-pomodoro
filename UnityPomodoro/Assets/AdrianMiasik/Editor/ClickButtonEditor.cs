@@ -75,15 +75,18 @@ namespace AdrianMiasik.Editor
             
             // Properties
             EditorGUILayout.PropertyField(containerTarget);
-            EditorGUILayout.PropertyField(enableClickSound);
-            EditorGUILayout.PropertyField(clickSound);
-            EditorGUILayout.PropertyField(isPitchVariationOn);
-            if (isPitchVariationOn.boolValue)
+            if (enableClickSound.boolValue)
             {
-                EditorGUILayout.PropertyField(lowestPitch);
-                EditorGUILayout.PropertyField(highestPitch);
-                EditorGUILayout.MinMaxSlider("Pitch Variation", ref clickButton.m_lowestPitch, ref clickButton.m_highestPitch, 0, 2);
-                EditorGUILayout.Space();    
+                EditorGUILayout.PropertyField(clickSound);
+                EditorGUILayout.PropertyField(isPitchVariationOn);
+                
+                if (isPitchVariationOn.boolValue)
+                {
+                    EditorGUILayout.PropertyField(lowestPitch);
+                    EditorGUILayout.PropertyField(highestPitch);
+                    EditorGUILayout.MinMaxSlider("Pitch Variation", ref clickButton.m_lowestPitch, ref clickButton.m_highestPitch, 0, 2);
+                    EditorGUILayout.Space();    
+                }
             }
             EditorGUILayout.PropertyField(clickHoldScale);
             EditorGUILayout.PropertyField(clickReleaseScale);
