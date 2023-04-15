@@ -17,6 +17,7 @@ namespace AdrianMiasik.Components.Core.Items.Pages
         [Header("Dropdowns")]
         [SerializeField] private OptionDigitFormat m_optionDigitFormat;
         [SerializeField] private OptionPomodoroCount m_optionPomodoroCount;
+        [SerializeField] private OptionSetAlarmSound m_optionSetAlarmSound;
         
         [Header("Toggle Sliders")]
         [SerializeField] private OptionEnableLongBreaks m_optionEnableLongBreak;
@@ -30,6 +31,7 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             // Init
             m_optionDigitFormat.Initialize(Timer);
             m_optionPomodoroCount.Initialize(Timer);
+            m_optionSetAlarmSound.Initialize(Timer);
             m_optionEnableLongBreak.Initialize(Timer);
 #if UNITY_ANDROID
             HideMuteSoundOutOfFocusOption();
@@ -58,6 +60,7 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             // Gets triggered via dropdown on value changed event
             m_optionDigitFormat.SetDropdownValue((int)Timer.GetTimerSettings().m_format);
             m_optionPomodoroCount.SetDropdownValue(Timer.GetTimerSettings().m_pomodoroCount - 1);
+            m_optionSetAlarmSound.SetDropdownValue(Timer.GetTimerSettings().m_alarmSoundIndex);
             
             m_optionEnableLongBreak.Refresh(Timer.GetTimerSettings().m_longBreaks);
             m_optionMuteSoundOutOfFocusToggle.Refresh(Timer.GetSystemSettings().m_muteSoundWhenOutOfFocus);
@@ -74,6 +77,8 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             
             m_optionDigitFormat.ColorUpdate(theme);
             m_optionPomodoroCount.ColorUpdate(theme);
+            m_optionSetAlarmSound.ColorUpdate(theme);
+
             m_optionEnableLongBreak.ColorUpdate(theme);
             m_optionMuteSoundOutOfFocusToggle.ColorUpdate(theme);
             m_optionUnityAnalytics.ColorUpdate(theme);

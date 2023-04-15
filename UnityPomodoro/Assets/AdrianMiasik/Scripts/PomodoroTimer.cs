@@ -76,7 +76,8 @@ namespace AdrianMiasik
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
-        
+        [SerializeField] private AudioSource m_alarmSource;
+
         [Header("Unity Pomodoro - Custom Components")]
         [SerializeField] private Background m_background;
         [SerializeField] private BlurOverlay m_overlay;
@@ -288,7 +289,8 @@ namespace AdrianMiasik
                 {
                     m_longBreaks = true,
                     m_format = DigitFormat.SupportedFormats.HH_MM_SS,
-                    m_pomodoroCount = 4
+                    m_pomodoroCount = 4,
+                    m_alarmSoundIndex = 0
                 };
 
                 // Cache
@@ -626,6 +628,7 @@ namespace AdrianMiasik
                     m_digitFormat.Hide();
 
                     m_onRingPulse.Invoke();
+                    m_alarmSource.Play();
                     break;
             }
             
@@ -847,6 +850,7 @@ namespace AdrianMiasik
             {
                 m_onRingPulse.Invoke();
                 hasRingPulseBeenInvoked = true;
+                m_alarmSource.Play();
             }
 
             // Ignore wrap mode and replay completion animation from start
@@ -1544,6 +1548,11 @@ namespace AdrianMiasik
                 DeactivateLongBreak();
                 IfSetupTriggerRebuild();
             }            
+        }
+
+        public void SetAlarmSound(AudioClip alarmSound)
+        {
+            m_alarmSource.clip = alarmSound;
         }
 
         public int GetTomatoProgress()
