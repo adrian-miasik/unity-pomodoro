@@ -69,8 +69,8 @@ namespace AdrianMiasik
         
         [Header("Unity Pomodoro - Platform Specific Managers")]
         [SerializeField] private SteamManager m_steamManager; // Disable on Android platform
-        [SerializeField] private UWPNotifications m_uwpNotifications;
-        [SerializeField] private AndroidNotifications m_androidNotifications; // Disabled on anything BUT the Android platform
+        [SerializeField] private UWPNotifications m_uwpNotifications; // TODO: Gate to Windows/UWP apps
+        [SerializeField] private AndroidNotifications m_androidNotifications; // Enable only for Android platform
 
         [Header("Unity - Basic Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
