@@ -1553,6 +1553,12 @@ namespace AdrianMiasik
         public void SetAlarmSound(AudioClip alarmSound)
         {
             m_alarmSource.clip = alarmSound;
+
+            // Preview alarm sound, if it's not currently playing
+            if (m_state != States.COMPLETE)
+            {
+                m_alarmSource.Play();
+            }
         }
 
         public int GetTomatoProgress()
