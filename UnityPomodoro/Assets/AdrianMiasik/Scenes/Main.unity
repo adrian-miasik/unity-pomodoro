@@ -8873,7 +8873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3702948909609796076, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
       propertyPath: m_Options.m_Options.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3702948909609796076, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Text
@@ -8882,6 +8882,14 @@ PrefabInstance:
     - target: {fileID: 3702948909609796076, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
       value: Gentle Chime
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702948909609796076, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: Digital Watch
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702948909609796076, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: Vintage Watch
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
@@ -8970,6 +8978,8 @@ MonoBehaviour:
   m_alarmSounds:
   - {fileID: 8300000, guid: e613d2a8d2d189d48b11b4e8affa1265, type: 3}
   - {fileID: 8300000, guid: fe0b810de398e994c92010dd660dd788, type: 3}
+  - {fileID: 8300000, guid: ff072c161d0238047a7abc89ee40b2bf, type: 3}
+  - {fileID: 8300000, guid: 950c8572bc02d09428b80a2336092087, type: 3}
 --- !u!224 &1276951605 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6462380844780233066, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
@@ -13065,7 +13075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1590220842698828421, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.8981395
+      value: -4.8981323
       objectReference: {fileID: 0}
     - target: {fileID: 1590220842698828421, guid: fff5479846b4b754a91c9de09529bf8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
