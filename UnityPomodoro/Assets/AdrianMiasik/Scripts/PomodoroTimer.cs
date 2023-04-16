@@ -1550,9 +1550,14 @@ namespace AdrianMiasik
             }            
         }
 
-        public void SetAlarmSound(AudioClip alarmSound)
+        public void SetAlarmSound(AudioClip alarmSound, bool attemptAlarmSoundPreview)
         {
             m_alarmSource.clip = alarmSound;
+
+            if (!attemptAlarmSoundPreview)
+            {
+                return;
+            }
 
             // Preview alarm sound, if it's not currently playing
             if (m_state != States.COMPLETE)

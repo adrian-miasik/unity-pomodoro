@@ -14,17 +14,22 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             base.Initialize(pomodoroTimer, updateColors);
 
-            m_dropdown.onValueChanged.AddListener(SetAlarmSound);
+            // Set alarm sound (directly) based on current setting
+            m_dropdown.value = Timer.GetTimerSettings().m_alarmSoundIndex;
+            Timer.SetAlarmSound(m_alarmSounds[Timer.GetTimerSettings().m_alarmSoundIndex], false);
 
-            SetDropdownValue(Timer.GetTimerSettings().m_alarmSoundIndex);
+            // Invoke SetAlarmSound anytime the dropdown value changes
+            m_dropdown.onValueChanged.AddListener(SetAlarmSound);
         }
 
         private void SetAlarmSound(Int32 i)
         {
+            // Apply change to settings
             Timer.GetTimerSettings().m_alarmSoundIndex = i;
             UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
 
-            Timer.SetAlarmSound(m_alarmSounds[i]);
+            // Apply change to timer
+            Timer.SetAlarmSound(m_alarmSounds[i], true);
         }
     }
 }
