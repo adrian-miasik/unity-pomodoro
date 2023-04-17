@@ -1,6 +1,9 @@
-﻿using AdrianMiasik.Components.Base;
+﻿using System;
+using System.Collections.Generic;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
+using LeTai.TrueShadow;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Core.Items.Pages
@@ -11,6 +14,18 @@ namespace AdrianMiasik.Components.Core.Items.Pages
     public class TimerPage: Page
     {
         [SerializeField] private DigitFormat m_format;
+
+        [SerializeField] private List<TrueShadow> m_trueShadows = new();
+
+        public override void Show(Action onAnimationCompletion)
+        {
+            base.Show(onAnimationCompletion);
+
+            foreach (TrueShadow shadow in m_trueShadows)
+            {
+                shadow.IgnoreCasterColor = true;
+            }
+        }
 
         public override void Refresh()
         {
