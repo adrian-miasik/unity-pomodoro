@@ -3592,17 +3592,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c162dc854d2f24fa639ba0623de5ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 1
+  size: 1.0000007
   spread: 0
   useGlobalAngle: 0
   offsetAngle: 90
-  offsetDistance: 2
-  offset: {x: 0.0000001192093, y: -2}
+  offsetDistance: 1
+  offset: {x: 0.00000005960465, y: -1}
   color: {r: 0, g: 0, b: 0, a: 0.4}
   inset: 0
   blendMode: 0
   useCasterAlpha: 1
-  ignoreCasterColor: 0
+  ignoreCasterColor: 1
   colorBleedMode: 2
   disableFitCompensation: 0
   shadowAsSibling: 0
@@ -9740,17 +9740,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c162dc854d2f24fa639ba0623de5ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 1
+  size: 1.0000007
   spread: 0
   useGlobalAngle: 0
   offsetAngle: 90
-  offsetDistance: 2
-  offset: {x: 0.0000001192093, y: -2}
+  offsetDistance: 1
+  offset: {x: 0.00000005960465, y: -1}
   color: {r: 0, g: 0, b: 0, a: 0.4}
   inset: 0
   blendMode: 0
   useCasterAlpha: 1
-  ignoreCasterColor: 0
+  ignoreCasterColor: 1
   colorBleedMode: 2
   disableFitCompensation: 0
   shadowAsSibling: 0
@@ -10975,7 +10975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757997262979, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1830320757997262981, guid: 01ce964053042544a908dbc2b7805528, type: 3}
       propertyPath: m_Color.a
@@ -12762,17 +12762,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c162dc854d2f24fa639ba0623de5ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 1
+  size: 1.0000007
   spread: 0
   useGlobalAngle: 0
   offsetAngle: 90
-  offsetDistance: 2
-  offset: {x: 0.0000001192093, y: -2}
+  offsetDistance: 1
+  offset: {x: 0.00000005960465, y: -1}
   color: {r: 0, g: 0, b: 0, a: 0.4}
   inset: 0
   blendMode: 0
   useCasterAlpha: 1
-  ignoreCasterColor: 0
+  ignoreCasterColor: 1
   colorBleedMode: 2
   disableFitCompensation: 0
   shadowAsSibling: 0
