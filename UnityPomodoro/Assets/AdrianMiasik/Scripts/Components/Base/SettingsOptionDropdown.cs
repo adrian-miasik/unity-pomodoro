@@ -1,6 +1,4 @@
 ﻿using AdrianMiasik.Components.Core.Items.Pages;
-using AdrianMiasik.Components.Specific;
-using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using Unity.VectorGraphics;

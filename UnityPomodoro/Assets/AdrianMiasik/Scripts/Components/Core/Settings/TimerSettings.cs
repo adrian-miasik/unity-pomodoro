@@ -27,5 +27,7 @@ namespace AdrianMiasik.Components.Core.Settings
         /// <remarks>According to the Pomodoro Technique, default is 4.</remarks>
         /// </summary>
         public int m_pomodoroCount = 4;
+
+        public int m_alarmSoundIndex = 0;
     }
 }

@@ -69,14 +69,15 @@ namespace AdrianMiasik
         
         [Header("Unity Pomodoro - Platform Specific Managers")]
         [SerializeField] private SteamManager m_steamManager; // Disable on Android platform
-        [SerializeField] private UWPNotifications m_uwpNotifications;
-        [SerializeField] private AndroidNotifications m_androidNotifications; // Disabled on anything BUT the Android platform
+        [SerializeField] private UWPNotifications m_uwpNotifications; // TODO: Gate to Windows/UWP apps
+        [SerializeField] private AndroidNotifications m_androidNotifications; // Enable only for Android platform
 
         [Header("Unity - Basic Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
-        
+        [SerializeField] private AudioSource m_alarmSource;
+
         [Header("Unity Pomodoro - Custom Components")]
         [SerializeField] private Background m_background;
         [SerializeField] private BlurOverlay m_overlay;
@@ -288,7 +289,8 @@ namespace AdrianMiasik
                 {
                     m_longBreaks = true,
                     m_format = DigitFormat.SupportedFormats.HH_MM_SS,
-                    m_pomodoroCount = 4
+                    m_pomodoroCount = 4,
+                    m_alarmSoundIndex = 0
                 };
 
                 // Cache
@@ -626,6 +628,7 @@ namespace AdrianMiasik
                     m_digitFormat.Hide();
 
                     m_onRingPulse.Invoke();
+                    m_alarmSource.Play();
                     break;
             }
             
@@ -847,6 +850,7 @@ namespace AdrianMiasik
             {
                 m_onRingPulse.Invoke();
                 hasRingPulseBeenInvoked = true;
+                m_alarmSource.Play();
             }
 
             // Ignore wrap mode and replay completion animation from start
@@ -1544,6 +1548,22 @@ namespace AdrianMiasik
                 DeactivateLongBreak();
                 IfSetupTriggerRebuild();
             }            
+        }
+
+        public void SetAlarmSound(AudioClip alarmSound, bool attemptAlarmSoundPreview)
+        {
+            m_alarmSource.clip = alarmSound;
+
+            if (!attemptAlarmSoundPreview)
+            {
+                return;
+            }
+
+            // Preview alarm sound, if it's not currently playing
+            if (m_state != States.COMPLETE)
+            {
+                m_alarmSource.Play();
+            }
         }
 
         public int GetTomatoProgress()
