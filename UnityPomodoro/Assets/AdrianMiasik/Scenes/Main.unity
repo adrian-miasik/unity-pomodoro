@@ -3602,7 +3602,7 @@ MonoBehaviour:
   inset: 0
   blendMode: 0
   useCasterAlpha: 1
-  ignoreCasterColor: 1
+  ignoreCasterColor: 0
   colorBleedMode: 2
   disableFitCompensation: 0
   shadowAsSibling: 0
@@ -9750,7 +9750,7 @@ MonoBehaviour:
   inset: 0
   blendMode: 0
   useCasterAlpha: 1
-  ignoreCasterColor: 1
+  ignoreCasterColor: 0
   colorBleedMode: 2
   disableFitCompensation: 0
   shadowAsSibling: 0
@@ -12772,7 +12772,7 @@ MonoBehaviour:
   inset: 0
   blendMode: 0
   useCasterAlpha: 1
-  ignoreCasterColor: 1
+  ignoreCasterColor: 0
   colorBleedMode: 2
   disableFitCompensation: 0
   shadowAsSibling: 0
