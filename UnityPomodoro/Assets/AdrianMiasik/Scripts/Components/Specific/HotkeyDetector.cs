@@ -63,12 +63,6 @@ namespace AdrianMiasik.Components.Specific
                 timer.TriggerThemeSwitch();
             }
 
-            // Clear digit selection
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                timer.ClearSelection();
-            }
-
             // Switch digit layouts
             if (Input.GetKeyDown(KeyCode.F1))
             {
@@ -113,6 +107,10 @@ namespace AdrianMiasik.Components.Specific
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                // Clear digit selection
+                timer.ClearSelection();
+
+                // Cancel confirmation dialog
                 timer.TryCancelConfirmationDialog();
             }
         }
