@@ -105,6 +105,16 @@ namespace AdrianMiasik.Components.Specific
                     }
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                timer.TrySubmitConfirmationDialog();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                timer.TryCancelConfirmationDialog();
+            }
         }
 
         private void PromptApplicationRestart(bool quitApplicationOnRestartConfirm = false)

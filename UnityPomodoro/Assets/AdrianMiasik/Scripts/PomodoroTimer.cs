@@ -1719,5 +1719,14 @@ namespace AdrianMiasik
             m_steamManager.Shutdown();
         }
 #endif
+        public void TrySubmitConfirmationDialog()
+        {
+            m_confirmationDialogManager.GetCurrentConfirmationDialog()?.Submit();
+        }
+
+        public void TryCancelConfirmationDialog()
+        {
+            m_confirmationDialogManager.GetCurrentConfirmationDialog()?.Cancel();
+        }
     }
 }
