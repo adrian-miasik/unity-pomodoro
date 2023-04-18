@@ -66,6 +66,7 @@ namespace AdrianMiasik
         [SerializeField] private HotkeyDetector m_hotkeyDetector;
         [SerializeField] private ResolutionDetector m_resolutionDetector;
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
+        [SerializeField] private AddressablesManager m_addressablesManager;
         
         [Header("Unity Pomodoro - Platform Specific Managers")]
         [SerializeField] private SteamManager m_steamManager; // Disable on Android platform
@@ -451,6 +452,7 @@ namespace AdrianMiasik
             m_hotkeyDetector.Initialize(this);
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
+            m_addressablesManager.Initialize();
 
             // UWP Toast / Notification
             m_uwpNotifications.Initialize(GetSystemSettings());
