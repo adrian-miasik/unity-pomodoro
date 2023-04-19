@@ -15,6 +15,7 @@ using Steamworks;
 using Steamworks.Data;
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
+using QFSW.QC;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -62,6 +63,7 @@ namespace AdrianMiasik
         public States m_state = States.SETUP;
 
         [Header("Unity Pomodoro - Managers")]
+        [SerializeField] private QuantumConsole m_console;
         [SerializeField] private ThemeManager m_themeManager;
         [SerializeField] private HotkeyDetector m_hotkeyDetector;
         [SerializeField] private ResolutionDetector m_resolutionDetector;
@@ -460,11 +462,36 @@ namespace AdrianMiasik
             // Android Notification
             m_androidNotifications.Initialize(this);
 #endif
-            
+
+            if (m_console)
+            {
+                // Subscribe to console event callbacks
+                m_console.OnActivate += OnConsoleOpen;
+                m_console.OnDeactivate += OnConsoleClose;
+            }
+
             // Register elements that need updating per timer state change
 #if UNITY_ANDROID
             timerElements.Add(m_androidNotifications);
 #endif
+        }
+
+        /// <summary>
+        /// Invoked when the console has been opened and is seen.
+        /// </summary>
+        private void OnConsoleOpen()
+        {
+            Debug.Log("Console has been opened.");
+            m_hotkeyDetector.PauseInputs();
+        }
+
+        /// <summary>
+        /// Invoked when the console has been closed and is no longer visible.
+        /// </summary>
+        private void OnConsoleClose()
+        {
+            Debug.Log("Console has been closed.");
+            m_hotkeyDetector.ResumeInputs();
         }
 
         /// <summary>

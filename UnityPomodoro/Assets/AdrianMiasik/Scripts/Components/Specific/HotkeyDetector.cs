@@ -23,6 +23,8 @@ namespace AdrianMiasik.Components.Specific
         private PomodoroTimer timer;
         private bool isInitialized;
 
+        private bool ignoreInput;
+
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
@@ -32,6 +34,11 @@ namespace AdrianMiasik.Components.Specific
         private void Update()
         {
             if (!isInitialized)
+            {
+                return;
+            }
+
+            if (ignoreInput)
             {
                 return;
             }
@@ -264,6 +271,16 @@ namespace AdrianMiasik.Components.Specific
         {
             return Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl) ||
                    Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.RightControl);
+        }
+
+        public void PauseInputs()
+        {
+            ignoreInput = true;
+        }
+
+        public void ResumeInputs()
+        {
+            ignoreInput = false;
         }
     }
 }
