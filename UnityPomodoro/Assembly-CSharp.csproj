@@ -176,6 +176,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <Folder Include="Assets\AdrianMiasik\Prefabs\Core" />
      <Folder Include="Assets\AdrianMiasik\Scripts\Components\Core\Settings" />
+     <Folder Include="Assets\StreamingAssets" />
      <Folder Include="Assets\AdrianMiasik\Scripts\Android" />
      <Folder Include="Assets\Facepunch.Steamworks\redistributable_bin" />
      <Folder Include="Assets\Facepunch.Steamworks\redistributable_bin\linux32" />
@@ -971,6 +972,46 @@
     <ProjectReference Include="LeTai.TranslucentImage.Editor.csproj">
       <Project>{2fcf79b6-f632-a61b-c376-f027cb89cda8}</Project>
       <Name>LeTai.TranslucentImage.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Editor.csproj">
+      <Project>{8081bb53-752b-09dc-a2c0-2afcfa3c6a46}</Project>
+      <Name>QFSW.QC.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Suggestors.csproj">
+      <Project>{a9e12aec-09e2-b51b-042c-4688c042f427}</Project>
+      <Name>QFSW.QC.Suggestors</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Serializers.csproj">
+      <Project>{6cc34e04-b50d-7ebe-8f46-b93ee154f602}</Project>
+      <Name>QFSW.QC.Serializers</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Grammar.csproj">
+      <Project>{51fa42d4-0de3-1843-ee2f-ab8cb53ec7ff}</Project>
+      <Name>QFSW.QC.Grammar</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.csproj">
+      <Project>{aacbe6ec-c45d-c9ee-43a2-1009271f423a}</Project>
+      <Name>QFSW.QC</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Parsers.csproj">
+      <Project>{7fd5e3a3-1d48-ed25-2a9b-6437928c7a02}</Project>
+      <Name>QFSW.QC.Parsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.UI.csproj">
+      <Project>{f79a2727-34a6-216d-30d3-c273a846673b}</Project>
+      <Name>QFSW.QC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
+      <Project>{e19baa62-4e52-324b-76e5-0cd6e6b4f649}</Project>
+      <Name>QFSW.QC.ScanRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.QGUI.csproj">
+      <Project>{b17e5dc0-e193-106d-c3b8-66c8b3e203c5}</Project>
+      <Name>QFSW.QC.QGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Editor.Tools.csproj">
+      <Project>{10ce77e3-20d0-25a3-aaa1-6e6789026b7c}</Project>
+      <Name>QFSW.QC.Editor.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
