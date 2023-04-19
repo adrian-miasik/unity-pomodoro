@@ -450,7 +450,6 @@ namespace AdrianMiasik
         /// </summary>
         private void InitializeManagers()
         {
-            m_console = QuantumConsole.Instance;
             m_hotkeyDetector.Initialize(this);
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
@@ -483,6 +482,7 @@ namespace AdrianMiasik
         private void OnConsoleOpen()
         {
             Debug.Log("Console has been opened.");
+            m_hotkeyDetector.PauseInputs();
         }
 
         /// <summary>
@@ -491,6 +491,7 @@ namespace AdrianMiasik
         private void OnConsoleClose()
         {
             Debug.Log("Console has been closed.");
+            m_hotkeyDetector.ResumeInputs();
         }
 
         /// <summary>
