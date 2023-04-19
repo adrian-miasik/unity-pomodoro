@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AdrianMiasik.Android;
 using AdrianMiasik.Components.Core;
@@ -218,7 +220,7 @@ namespace AdrianMiasik
         {
             // Single entry point
             ConfigureSettings();
-            Initialize();
+            StartCoroutine(Initialize());
         }
 
         /// <summary>
@@ -418,8 +420,10 @@ namespace AdrianMiasik
         /// <summary>
         /// Setup view, calculate time, initialize components, transition in, and animate.
         /// </summary>
-        private void Initialize()
+        private IEnumerator Initialize()
         {
+            yield return InitializeStreamingAssets();
+
             InitializeManagers();
 
             // Overrides
@@ -429,7 +433,7 @@ namespace AdrianMiasik
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
             m_menuToggleSprite.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
-            
+
             InitializeComponents();
             
             // Switch view
@@ -492,6 +496,23 @@ namespace AdrianMiasik
         {
             Debug.Log("Console has been closed.");
             m_hotkeyDetector.ResumeInputs();
+        }
+
+        private IEnumerator InitializeStreamingAssets()
+        {
+            string[] files = Directory.GetFiles(Application.streamingAssetsPath);
+            List<string> customAudioFiles = new List<string>();
+
+            foreach (string file in files)
+            {
+                if (Path.GetExtension(file).Equals(".wav"))
+                {
+                    customAudioFiles.Add(file);
+                    Debug.Log("Custom .wav audio found: " + file);
+                }
+            }
+
+            yield return m_sidebarPages.AddCustomSoundFiles(customAudioFiles);
         }
 
         /// <summary>

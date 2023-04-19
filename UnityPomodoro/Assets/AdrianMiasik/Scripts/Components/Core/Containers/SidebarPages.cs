@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items.Pages;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
 namespace AdrianMiasik.Components.Core.Containers
 {
@@ -62,6 +65,34 @@ namespace AdrianMiasik.Components.Core.Containers
             }
 
             Select(m_timerPage);
+        }
+
+        public IEnumerator AddCustomSoundFiles(List<string> customAudioFiles)
+        {
+            foreach (string audioFile in customAudioFiles)
+            {
+                yield return StartCoroutine(AddCustomAudioFile(audioFile));
+            }
+        }
+
+        IEnumerator AddCustomAudioFile(string audioFile)
+        {
+            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + audioFile, AudioType.WAV);
+
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
+                audioClip.name = Path.GetFileName(audioFile);
+
+                // Cache custom alarm to sound bank + add dropdown option
+                m_settingsPage.AddCustomDropdownSoundOption(audioClip, Path.GetFileName(audioClip.name));
+            }
         }
         
         public void SwitchToSettingsPage()
