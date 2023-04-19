@@ -485,7 +485,6 @@ namespace AdrianMiasik
         /// </summary>
         private void OnConsoleOpen()
         {
-            Debug.Log("Console has been opened.");
             m_hotkeyDetector.PauseInputs();
         }
 
@@ -494,7 +493,6 @@ namespace AdrianMiasik
         /// </summary>
         private void OnConsoleClose()
         {
-            Debug.Log("Console has been closed.");
             m_hotkeyDetector.ResumeInputs();
         }
 
