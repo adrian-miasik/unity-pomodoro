@@ -77,16 +77,40 @@ namespace AdrianMiasik.Components.Core.Containers
 
         IEnumerator AddCustomAudioFile(string audioFile)
         {
-            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + audioFile, AudioType.WAV);
+            // Fetch audio file type based on audio file extension
+            string audioFileExtension = Path.GetExtension(audioFile);
+            AudioType type;
+            switch (audioFileExtension)
+            {
+                case ".wav":
+                    type = AudioType.WAV;
+                    break;
+                case ".mp3":
+                    type = AudioType.MPEG;
+                    break;
+                default:
+                    Debug.LogWarning("Unsupported audio file extension.");
+                    type = AudioType.UNKNOWN;
+                    break;
+            }
 
+            // Define request
+            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + audioFile, type);
+
+            // Submit and await request
             yield return www.SendWebRequest();
 
+            // On request return...
+            // If the request failed...
             if (www.result != UnityWebRequest.Result.Success)
             {
+                // Log the error in question
                 Debug.Log(www.error);
             }
+            // Otherwise...
             else
             {
+                // Create and load AudioClip
                 AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
                 audioClip.name = Path.GetFileName(audioFile);
 

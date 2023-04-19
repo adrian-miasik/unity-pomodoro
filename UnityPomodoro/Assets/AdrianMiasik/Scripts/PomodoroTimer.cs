@@ -498,16 +498,27 @@ namespace AdrianMiasik
 
         private IEnumerator InitializeStreamingAssets()
         {
+            // Fetch directory
             DirectoryInfo directoryInfo = new(Application.streamingAssetsPath);
-            FileInfo[] files = directoryInfo.GetFiles("*.wav").OrderBy(f => f.CreationTime).ToArray();
+
+            // Fetch .wav's + .mp3's and order the file paths based on creation time/date.
+            FileInfo[] files = directoryInfo.GetFiles("*.wav").Concat
+                                (directoryInfo.GetFiles("*.mp3")).
+                                    OrderBy(f => f.CreationTime).ToArray();
+
             List<string> customAudioFiles = new List<string>();
 
+            // Iterate through every found file...
             foreach (FileInfo file in files)
             {
+                // Cache
                 customAudioFiles.Add(file.FullName);
+
+                // Log
                 Debug.Log("Custom '" + file.Extension + "' audio found: " + file.Name);
             }
 
+            // Add to settings page (Cache sound + add dropdown option)
             yield return m_sidebarPages.AddCustomSoundFiles(customAudioFiles);
         }
 
