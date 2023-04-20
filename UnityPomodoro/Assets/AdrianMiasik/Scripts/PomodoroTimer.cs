@@ -161,9 +161,10 @@ namespace AdrianMiasik
         [Header("Loaded Settings")]
         [SerializeField] private SystemSettings m_loadedSystemSettings;
         [SerializeField] private TimerSettings m_loadedTimerSettings;
-        private bool haveSettingsBeenConfigured;
 
+        private bool haveSettingsBeenConfigured;
         private bool haveComponentsBeenInitialized;
+        private bool isInitialized;
 
         /// <summary>
         /// Mutes our volume when out of focus if permitted by user system settings.
@@ -201,6 +202,12 @@ namespace AdrianMiasik
 #endif                
 
                 Application.targetFrameRate = Screen.currentResolution.refreshRate;
+
+                // Prevent this from being invoked until app is fully init.
+                if (isInitialized)
+                {
+                    StartCoroutine(InitializeStreamingAssets());
+                }
             }
         }
 
@@ -418,12 +425,11 @@ namespace AdrianMiasik
 #endif
 
         /// <summary>
-        /// Setup view, calculate time, initialize components, transition in, and animate.
+        /// Fetch streaming assets, initialize managers, set component overrides, initialize components, and
+        /// setup view, and transition/animate in.
         /// </summary>
         private IEnumerator Initialize()
         {
-            yield return InitializeStreamingAssets();
-
             InitializeManagers();
 
             // Overrides
@@ -435,6 +441,8 @@ namespace AdrianMiasik
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
 
             InitializeComponents();
+
+            yield return InitializeStreamingAssets();
             
             // Switch view
             m_sidebarPages.SwitchToTimerPage();
@@ -447,6 +455,14 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
+
+            isInitialized = true;
+        }
+
+        private IEnumerator InitializeStreamingAssets()
+        {
+            Debug.Log("StreamingAssets check.");
+            yield return ValidateStreamingAssets();
         }
 
         /// <summary>
@@ -496,8 +512,10 @@ namespace AdrianMiasik
             m_hotkeyDetector.ResumeInputs();
         }
 
-        private IEnumerator InitializeStreamingAssets()
+        private IEnumerator ValidateStreamingAssets()
         {
+            m_sidebarPages.ResetCustomSoundFiles();
+
             // Fetch directory
             DirectoryInfo directoryInfo = new(Application.streamingAssetsPath);
 
@@ -520,6 +538,8 @@ namespace AdrianMiasik
 
             // Add to settings page (Cache sound + add dropdown option)
             yield return m_sidebarPages.AddCustomSoundFiles(customAudioFiles);
+
+            m_sidebarPages.ValidateCustomSoundChoice();
         }
 
         /// <summary>

@@ -137,5 +137,15 @@ namespace AdrianMiasik.Components.Core.Items.Pages
         {
             m_optionSetAlarmSound.AddCustomDropdownSoundOption(audioClip, audioFile);
         }
+
+        public void ResetCustomSoundFiles()
+        {
+            m_optionSetAlarmSound.ResetCustomSoundFiles();
+        }
+
+        public void ValidateCustomSoundChoice()
+        {
+            m_optionSetAlarmSound.ValidateAlarmSoundIndex();
+        }
     }
 }

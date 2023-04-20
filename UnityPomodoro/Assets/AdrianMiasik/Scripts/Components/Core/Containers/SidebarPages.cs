@@ -118,7 +118,17 @@ namespace AdrianMiasik.Components.Core.Containers
                 m_settingsPage.AddCustomDropdownSoundOption(audioClip, Path.GetFileName(audioClip.name));
             }
         }
-        
+
+        public void ResetCustomSoundFiles()
+        {
+            m_settingsPage.ResetCustomSoundFiles();
+        }
+
+        public void ValidateCustomSoundChoice()
+        {
+            m_settingsPage.ValidateCustomSoundChoice();
+        }
+
         public void SwitchToSettingsPage()
         {
             Select(m_settingsPage);

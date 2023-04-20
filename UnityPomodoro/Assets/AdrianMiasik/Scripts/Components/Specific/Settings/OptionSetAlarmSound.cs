@@ -18,6 +18,14 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             base.Initialize(pomodoroTimer, updateColors);
 
+            ValidateAlarmSoundIndex();
+
+            // Invoke SetAlarmSound anytime the dropdown value changes
+            m_dropdown.onValueChanged.AddListener(SetAlarmSound);
+        }
+
+        public void ValidateAlarmSoundIndex()
+        {
             // Validate index
             int startingIndex = Timer.GetTimerSettings().m_alarmSoundIndex;
 
@@ -32,13 +40,12 @@ namespace AdrianMiasik.Components.Specific.Settings
             // Set alarm sound (directly) based on current setting
             m_dropdown.value = startingIndex;
             Timer.SetAlarmSound(m_alarmSounds[startingIndex], false);
-
-            // Invoke SetAlarmSound anytime the dropdown value changes
-            m_dropdown.onValueChanged.AddListener(SetAlarmSound);
         }
 
         private void SetAlarmSound(Int32 i)
         {
+            Debug.LogWarning("Playing sound!");
+            
             // Apply change to settings
             Timer.GetTimerSettings().m_alarmSoundIndex = i;
             UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
@@ -100,6 +107,30 @@ namespace AdrianMiasik.Components.Specific.Settings
             {
                 Debug.Log("index[" +pair.Value + "] is " + pair.Key.name);
             }
+        }
+
+        public void ResetCustomSoundFiles()
+        {
+            if (customAdditionalSounds == null || customAdditionalSounds.Count <= 0)
+            {
+                // No custom sound files have been registered/found. Reset is redundant.
+                // Early exit
+                return;
+            }
+
+            Debug.Log("Removing custom sounds...");
+
+            // Copy
+            Dictionary<AudioClip, int> cachedAdditionalSounds = new(customAdditionalSounds);
+
+            // Remove entry
+            foreach (KeyValuePair<AudioClip,int> keyValuePair in cachedAdditionalSounds)
+            {
+                RemoveCustomDropdownSoundOption(keyValuePair.Key);
+            }
+
+            // Clear copy
+            cachedAdditionalSounds.Clear();
         }
     }
 }
