@@ -119,9 +119,9 @@ namespace AdrianMiasik.Components.Core.Containers
             }
         }
 
-        public void ResetCustomSoundFiles()
+        public void RemoveCustomAudioFile(string audioFile)
         {
-            m_settingsPage.ResetCustomSoundFiles();
+            m_settingsPage.RemoveCustomDropdownSoundOption(audioFile);
         }
 
         public void ValidateCustomSoundChoice()
@@ -133,7 +133,7 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             Select(m_settingsPage);
         }
-        
+
         public void SwitchToAboutPage()
         {
             Select(m_aboutPage);
@@ -143,7 +143,7 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             m_timerPage.Refresh();
         }
-        
+
         public void RefreshSettingsPage()
         {
             m_settingsPage.Refresh();

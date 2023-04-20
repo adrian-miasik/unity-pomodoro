@@ -166,6 +166,8 @@ namespace AdrianMiasik
         private bool haveComponentsBeenInitialized;
         private bool isInitialized;
 
+        private List<string> cachedCustomAudioFiles;
+
         /// <summary>
         /// Mutes our volume when out of focus if permitted by user system settings.
         /// Also lowers target frame rate when not in focus.
@@ -514,32 +516,76 @@ namespace AdrianMiasik
 
         private IEnumerator ValidateStreamingAssets()
         {
-            m_sidebarPages.ResetCustomSoundFiles();
-
             // Fetch directory
             DirectoryInfo directoryInfo = new(Application.streamingAssetsPath);
 
-            // Fetch .wav's + .mp3's and order the file paths based on creation time/date.
+            // Fetch files: .wav's + .mp3's and order the file paths based on creation time/date.
             FileInfo[] files = directoryInfo.GetFiles("*.wav").Concat
                                 (directoryInfo.GetFiles("*.mp3")).
                                     OrderBy(f => f.CreationTime).ToArray();
 
-            List<string> customAudioFiles = new List<string>();
+            List<string> allFiles = new List<string>();
+            List<string> newCustomFiles = new List<string>();
 
             // Iterate through every found file...
             foreach (FileInfo file in files)
             {
-                // Cache
-                customAudioFiles.Add(file.FullName);
+                // Cache every file
+                allFiles.Add(file.FullName);
+
+                // Ignore file if it has been previously cached.
+                if (cachedCustomAudioFiles != null && cachedCustomAudioFiles.Contains(file.FullName))
+                {
+                    Debug.Log("Custom '" + file.Name + "' has already been added. Skipping...");
+                    continue;
+                }
+
+                // Cache files that are new.
+                newCustomFiles.Add(file.FullName);
 
                 // Log
                 Debug.Log("Custom '" + file.Name + "' audio found.");
             }
 
-            // Add to settings page (Cache sound + add dropdown option)
-            yield return m_sidebarPages.AddCustomSoundFiles(customAudioFiles);
+            List<string> removedCustomFiles = new List<string>();
 
-            m_sidebarPages.ValidateCustomSoundChoice();
+            // If something has been previously cached before...(meaning if we have added custom sounds before...)
+            if (cachedCustomAudioFiles != null)
+            {
+                // Iterate through our cache...
+                foreach (string audioFile in cachedCustomAudioFiles)
+                {
+                    // If we find the cached file currently present...
+                    if (allFiles.Contains(audioFile))
+                    {
+                        // Ignore.
+                        continue;
+                    }
+
+                    // Otherwise, the cached file is no longer present.
+                    Debug.Log(Path.GetFileName(audioFile) + " has been removed.");
+                    removedCustomFiles.Add(audioFile);
+
+                    m_sidebarPages.RemoveCustomAudioFile(audioFile);
+                }
+            }
+
+            // Add to sound bank dictionary...
+            yield return m_sidebarPages.AddCustomSoundFiles(newCustomFiles);
+
+            // Validate only when we are removing or adding custom audio...
+            if (removedCustomFiles.Count > 0 || newCustomFiles.Count > 0)
+            {
+                m_sidebarPages.ValidateCustomSoundChoice();
+            }
+
+            // Cache audio files (for future cross reference...against checking removal of files)
+            cachedCustomAudioFiles = new List<string>(allFiles);
+
+            // Dispose
+            allFiles.Clear();
+            newCustomFiles.Clear();
+            removedCustomFiles.Clear();
         }
 
         /// <summary>
