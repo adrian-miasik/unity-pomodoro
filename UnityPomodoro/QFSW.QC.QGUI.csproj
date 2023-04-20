@@ -42,8 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\LayoutController.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\QGUILayout.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\IGUIItem.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\QGUILayout.cs" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\QFSW.QC.QGUI.asmdef" />
      <Reference Include="UnityEngine">
@@ -706,11 +706,11 @@
      <Reference Include="System.Xml.XPath.XDocument">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEditor.UI">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.TestRunner">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>

@@ -41,21 +41,21 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\DivisionOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\ModulusOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BinaryOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\BooleanNegationGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\IBinaryOperator.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BitwiseOrOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BinaryAndUnaryOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\DynamicBinaryOperator.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\MultiplyOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\SubtractionOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\ExpressionBodyGrammar.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\AdditionOperatorGrammar.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\ExclusiveOrOperatorGrammar.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BinaryOperatorData.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\ModulusOperatorGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\MultiplyOperatorGrammar.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BitwiseAndOperatorGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\SubtractionOperatorGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\BooleanNegationGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BinaryAndUnaryOperatorGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BinaryOperatorGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\DynamicBinaryOperator.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\DivisionOperatorGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\IBinaryOperator.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\ExpressionBodyGrammar.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators\BinaryOperatorData.cs" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\Binary Operators" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Grammar\QFSW.QC.Grammar.asmdef" />
@@ -713,11 +713,11 @@
      <Reference Include="System.Xml.XPath.XDocument">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEditor.UI">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

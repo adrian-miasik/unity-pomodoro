@@ -44,8 +44,8 @@
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Render Pass\TranslucentImageBlurRenderPass.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\ScalableBlur.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\ShaderId.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\IBlurAlgorithm.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Render Pass\TranslucentImageBlurSource.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\IBlurAlgorithm.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Extensions.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Utilities.cs" />
      <Folder Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm" />
@@ -713,11 +713,11 @@
      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEditor.UI">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

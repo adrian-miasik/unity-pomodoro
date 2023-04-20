@@ -41,14 +41,14 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QuantumConsoleInspector.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QuantumLocalizationInspector.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\DataEntryPopup.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\ModifierKeyComboEditor.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\EditorHelpers.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QuantumThemeInspector.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QCInspectorBase.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QuantumLocalizationInspector.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QuantumConsoleInspector.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\DataEntryPopup.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\ModifierKeyComboEditor.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QuantumKeyConfigInspector.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QCInspectorBase.cs" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QFSW.QC.Editor.asmdef" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor" />
      <Reference Include="UnityEngine">
@@ -714,11 +714,11 @@
      <Reference Include="Unity.TextMeshPro">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEditor.UI">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.TestRunner">
      <HintPath>C:\Users\user-am\Documents\git-repositiories\internal\unity-pomodoro\UnityPomodoro\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
