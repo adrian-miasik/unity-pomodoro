@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Settings;
 using QFSW.QC;
@@ -10,13 +11,22 @@ namespace AdrianMiasik.Components.Specific.Settings
 {
     public class OptionSetAlarmSound : SettingsOptionDropdown
     {
-        [SerializeField] private List<AudioClip> m_alarmSounds;
+        [SerializeField] private List<AudioClip> m_preinstalledAlarms;
 
-        private Dictionary<AudioClip, int> customAdditionalSounds;
+        private Dictionary<int, AudioClip> alarmBank;
 
         public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
             base.Initialize(pomodoroTimer, updateColors);
+
+            alarmBank = new Dictionary<int, AudioClip>();
+
+            // Move pre-installed alarms to alarm bank...
+            for (int i = 0; i < m_preinstalledAlarms.Count; i++)
+            {
+                AudioClip audioClip = m_preinstalledAlarms[i];
+                alarmBank.TryAdd(i, audioClip);
+            }
 
             ValidateAlarmSoundIndex();
 
@@ -26,70 +36,79 @@ namespace AdrianMiasik.Components.Specific.Settings
 
         public void ValidateAlarmSoundIndex()
         {
-            // Validate index
+            // Get saved key
             int startingIndex = Timer.GetTimerSettings().m_alarmSoundIndex;
 
-            // If preferred alarm sound is custom...(bounds check)
-            if (startingIndex > m_dropdown.options.Count - 1)
+            bool isIndexValid = false;
+
+            // Iterate through alarm bank...
+            foreach (int i in alarmBank.Keys.OrderBy(i => i))
             {
-                Debug.LogWarning("Preferred alarm sound index exceeds options dropdown count. " +
-                                 "Resetting alarm sound back to default.");
+                // If this key matches our saved key...
+                if (i == startingIndex)
+                {
+                    // Mark key as valid
+                    isIndexValid = true;
+                    break;
+                }
+            }
+
+            // Reset to default alarm if saved key in invalid...
+            if (!isIndexValid)
+            {
+                Debug.LogWarning("Preferred alarm sound key [" + startingIndex + "] not found. " +
+                                 "Reverting back to default alarm. [0]");
                 startingIndex = 0;
             }
 
             // Set alarm sound (directly) based on current setting
-            m_dropdown.value = startingIndex;
-            Timer.SetAlarmSound(m_alarmSounds[startingIndex], false);
+            if (alarmBank.TryGetValue(startingIndex, out AudioClip c))
+            {
+                m_dropdown.value = startingIndex;
+                Timer.SetAlarmSound(c, false);
+            }
         }
 
         private void SetAlarmSound(Int32 i)
         {
-            Debug.LogWarning("Playing sound!");
-            
             // Apply change to settings
             Timer.GetTimerSettings().m_alarmSoundIndex = i;
             UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
 
             // Apply change to timer
-            Timer.SetAlarmSound(m_alarmSounds[i], true);
+            if (alarmBank.TryGetValue(i, out AudioClip c))
+            {
+                Timer.SetAlarmSound(c, true);
+            }
         }
 
         public void AddCustomDropdownSoundOption(AudioClip audio, string alarmName)
         {
-            // Init dictionary
-            customAdditionalSounds ??= new Dictionary<AudioClip, int>();
-
             // Add audio to sound bank
-            m_alarmSounds.Add(audio);
+            int nextOpenIndex = alarmBank.Count;
+            alarmBank.TryAdd(nextOpenIndex, audio);
 
             // Add option to dropdown
             m_dropdown.options.Add(new TMP_Dropdown.OptionData(alarmName));
-
-            // Register to dictionary
-            customAdditionalSounds.Add(audio, m_dropdown.options.Count - 1);
-
-            Debug.Log("Custom sound has been added successfully.");
         }
 
-        public void RemoveCustomDropdownSoundOption(AudioClip audio)
+        private void RemoveCustomDropdownSoundOption(int key)
         {
-            // Check if additional sound is found...
-            if (customAdditionalSounds.TryGetValue(audio, out int index))
+            if (alarmBank.TryGetValue(key, out AudioClip audioClip))
             {
-                // Deregister from dictionary
-                customAdditionalSounds.Remove(audio);
+                // Remove from dictionary
+                alarmBank.Remove(key);
 
-                // Remove from dropdown options
-                m_dropdown.options.RemoveAt(index);
-
-                // Remove from sound bank
-                m_alarmSounds.RemoveAt(index);
-            }
-            else
-            {
-                Debug.LogWarning("Unable to remove sound drop down option. The provided audio has not been" +
-                                 "found and therefore hasn't been added to the drop down options. " +
-                                 "See AddCustomDropdownSoundOption()");
+                // Iterate through all the custom audio options...
+                for (int i = m_preinstalledAlarms.Count - 1; i < m_dropdown.options.Count; i++)
+                {
+                    // If the removed alarm from the bank matches the dropdown option...
+                    if (m_dropdown.options[i].text == audioClip.name)
+                    {
+                        // Remove drop down option
+                        m_dropdown.options.RemoveAt(i);
+                    }
+                }
             }
         }
 
@@ -97,36 +116,46 @@ namespace AdrianMiasik.Components.Specific.Settings
         [ContextMenu("Print 'Custom alarm sounds' dictionary.")]
         public void PrintCustomAlarmSoundsDictionary()
         {
-            if (customAdditionalSounds == null)
+            if (alarmBank == null)
             {
                 Debug.LogWarning("Nothing has been added to the custom alarm dictionary.");
                 return;
             }
             
-            foreach (KeyValuePair<AudioClip, int> pair in customAdditionalSounds)
+            foreach (KeyValuePair<int, AudioClip> pair in alarmBank)
             {
-                Debug.Log("index[" +pair.Value + "] is " + pair.Key.name);
+                Debug.Log("key[" +pair.Key + "] is " + pair.Value.name);
             }
         }
 
+        /// <summary>
+        /// Disposes of all our custom alarm sounds.
+        /// </summary>
         public void ResetCustomSoundFiles()
         {
-            if (customAdditionalSounds == null || customAdditionalSounds.Count <= 0)
+            if (alarmBank.Count <= m_preinstalledAlarms.Count)
             {
                 // No custom sound files have been registered/found. Reset is redundant.
                 // Early exit
                 return;
             }
 
-            Debug.Log("Removing custom sounds...");
+            Debug.Log("Recalculating Custom Alarms...");
 
             // Copy
-            Dictionary<AudioClip, int> cachedAdditionalSounds = new(customAdditionalSounds);
+            Dictionary<int, AudioClip> cachedAdditionalSounds = new(alarmBank);
 
-            // Remove entry
-            foreach (KeyValuePair<AudioClip,int> keyValuePair in cachedAdditionalSounds)
+            // Iterate through each key in order...
+            foreach (int index in cachedAdditionalSounds.Keys.OrderBy(i => i))
             {
-                RemoveCustomDropdownSoundOption(keyValuePair.Key);
+                // Ignore pre-installed alarms in alarm bank...
+                if (index <= m_preinstalledAlarms.Count - 1)
+                {
+                    continue;
+                }
+
+                // Remove custom sound entry only.
+                RemoveCustomDropdownSoundOption(index);
             }
 
             // Clear copy

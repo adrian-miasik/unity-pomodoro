@@ -461,7 +461,7 @@ namespace AdrianMiasik
 
         private IEnumerator InitializeStreamingAssets()
         {
-            Debug.Log("StreamingAssets check.");
+            Debug.Log("Validating 'StreamingAssets'...");
             yield return ValidateStreamingAssets();
         }
 
@@ -533,7 +533,7 @@ namespace AdrianMiasik
                 customAudioFiles.Add(file.FullName);
 
                 // Log
-                Debug.Log("Custom '" + file.Extension + "' audio found: " + file.Name);
+                Debug.Log("Custom '" + file.Name + "' audio found.");
             }
 
             // Add to settings page (Cache sound + add dropdown option)
