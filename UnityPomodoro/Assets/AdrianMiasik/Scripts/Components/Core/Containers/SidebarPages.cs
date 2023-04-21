@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items.Pages;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
 namespace AdrianMiasik.Components.Core.Containers
 {
@@ -63,12 +66,74 @@ namespace AdrianMiasik.Components.Core.Containers
 
             Select(m_timerPage);
         }
-        
+
+        public IEnumerator AddCustomSoundFiles(List<string> customAudioFiles)
+        {
+            foreach (string audioFile in customAudioFiles)
+            {
+                yield return StartCoroutine(AddCustomAudioFile(audioFile));
+            }
+        }
+
+        IEnumerator AddCustomAudioFile(string audioFile)
+        {
+            // Fetch audio file type based on audio file extension
+            string audioFileExtension = Path.GetExtension(audioFile);
+            AudioType type;
+            switch (audioFileExtension)
+            {
+                case ".wav":
+                    type = AudioType.WAV;
+                    break;
+                case ".mp3":
+                    type = AudioType.MPEG;
+                    break;
+                default:
+                    Debug.LogWarning("Unsupported audio file extension.");
+                    type = AudioType.UNKNOWN;
+                    break;
+            }
+
+            // Define request
+            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + audioFile, type);
+
+            // Submit and await request
+            yield return www.SendWebRequest();
+
+            // On request return...
+            // If the request failed...
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                // Log the error in question
+                Debug.Log(www.error);
+            }
+            // Otherwise...
+            else
+            {
+                // Create and load AudioClip
+                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
+                audioClip.name = Path.GetFileName(audioFile);
+
+                // Cache custom alarm to sound bank + add dropdown option
+                m_settingsPage.AddCustomDropdownSoundOption(audioClip, Path.GetFileName(audioClip.name));
+            }
+        }
+
+        public void RemoveCustomAudioFile(string audioFile)
+        {
+            m_settingsPage.RemoveCustomDropdownSoundOption(audioFile);
+        }
+
+        public void ValidateCustomSoundChoice()
+        {
+            m_settingsPage.ValidateCustomSoundChoice();
+        }
+
         public void SwitchToSettingsPage()
         {
             Select(m_settingsPage);
         }
-        
+
         public void SwitchToAboutPage()
         {
             Select(m_aboutPage);
@@ -78,7 +143,7 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             m_timerPage.Refresh();
         }
-        
+
         public void RefreshSettingsPage()
         {
             m_settingsPage.Refresh();

@@ -42,8 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\LayoutController.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\QGUILayout.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\IGUIItem.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\QGUILayout.cs" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Editor\QGUI\QFSW.QC.QGUI.asmdef" />
      <Reference Include="UnityEngine">

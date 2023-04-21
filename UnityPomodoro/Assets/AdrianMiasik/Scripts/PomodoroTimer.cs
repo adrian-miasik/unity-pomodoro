@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AdrianMiasik.Android;
 using AdrianMiasik.Components.Core;
@@ -105,6 +107,12 @@ namespace AdrianMiasik
         private float accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
+        [SerializeField] private float m_delayBetweenRingPulses = 0.5f;
+        // Pulse Ring Complete Animation
+        private bool disableCompletionAnimation;
+        private float accumulatedRingPulseTime;
+        private bool hasRingPulseBeenInvoked;
+
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
 
@@ -151,17 +159,15 @@ namespace AdrianMiasik
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         public static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
-        // Pulse Ring Complete Animation
-        private bool disableCompletionAnimation;
-        private float accumulatedRingPulseTime;
-        private bool hasRingPulseBeenInvoked;
-
         [Header("Loaded Settings")]
         [SerializeField] private SystemSettings m_loadedSystemSettings;
         [SerializeField] private TimerSettings m_loadedTimerSettings;
-        private bool haveSettingsBeenConfigured;
 
+        private bool haveSettingsBeenConfigured;
         private bool haveComponentsBeenInitialized;
+        private bool isInitialized;
+
+        private List<string> cachedCustomAudioFiles;
 
         /// <summary>
         /// Mutes our volume when out of focus if permitted by user system settings.
@@ -199,6 +205,12 @@ namespace AdrianMiasik
 #endif                
 
                 Application.targetFrameRate = Screen.currentResolution.refreshRate;
+
+                // Prevent this from being invoked until app is fully init.
+                if (isInitialized)
+                {
+                    StartCoroutine(InitializeStreamingAssets());
+                }
             }
         }
 
@@ -218,7 +230,7 @@ namespace AdrianMiasik
         {
             // Single entry point
             ConfigureSettings();
-            Initialize();
+            StartCoroutine(Initialize());
         }
 
         /// <summary>
@@ -416,9 +428,10 @@ namespace AdrianMiasik
 #endif
 
         /// <summary>
-        /// Setup view, calculate time, initialize components, transition in, and animate.
+        /// Fetch streaming assets, initialize managers, set component overrides, initialize components, and
+        /// setup view, and transition/animate in.
         /// </summary>
-        private void Initialize()
+        private IEnumerator Initialize()
         {
             InitializeManagers();
 
@@ -429,8 +442,10 @@ namespace AdrianMiasik
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
             m_menuToggleSprite.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
-            
+
             InitializeComponents();
+
+            yield return InitializeStreamingAssets();
             
             // Switch view
             m_sidebarPages.SwitchToTimerPage();
@@ -443,6 +458,14 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
+
+            isInitialized = true;
+        }
+
+        private IEnumerator InitializeStreamingAssets()
+        {
+            Debug.Log("Validating 'StreamingAssets'...");
+            yield return ValidateStreamingAssets();
         }
 
         /// <summary>
@@ -481,7 +504,6 @@ namespace AdrianMiasik
         /// </summary>
         private void OnConsoleOpen()
         {
-            Debug.Log("Console has been opened.");
             m_hotkeyDetector.PauseInputs();
         }
 
@@ -490,8 +512,81 @@ namespace AdrianMiasik
         /// </summary>
         private void OnConsoleClose()
         {
-            Debug.Log("Console has been closed.");
             m_hotkeyDetector.ResumeInputs();
+        }
+
+        private IEnumerator ValidateStreamingAssets()
+        {
+            // Fetch directory
+            DirectoryInfo directoryInfo = new(Application.streamingAssetsPath);
+
+            // Fetch files: .wav's + .mp3's and order the file paths based on creation time/date.
+            FileInfo[] files = directoryInfo.GetFiles("*.wav").Concat
+                                (directoryInfo.GetFiles("*.mp3")).
+                                    OrderBy(f => f.CreationTime).ToArray();
+
+            List<string> allFiles = new List<string>();
+            List<string> newCustomFiles = new List<string>();
+
+            // Iterate through every found file...
+            foreach (FileInfo file in files)
+            {
+                // Cache every file
+                allFiles.Add(file.FullName);
+
+                // Ignore file if it has been previously cached.
+                if (cachedCustomAudioFiles != null && cachedCustomAudioFiles.Contains(file.FullName))
+                {
+                    Debug.Log("Custom '" + file.Name + "' has already been added. Skipping...");
+                    continue;
+                }
+
+                // Cache files that are new.
+                newCustomFiles.Add(file.FullName);
+
+                // Log
+                Debug.Log("Custom '" + file.Name + "' audio found.");
+            }
+
+            List<string> removedCustomFiles = new List<string>();
+
+            // If something has been previously cached before...(meaning if we have added custom sounds before...)
+            if (cachedCustomAudioFiles != null)
+            {
+                // Iterate through our cache...
+                foreach (string audioFile in cachedCustomAudioFiles)
+                {
+                    // If we find the cached file currently present...
+                    if (allFiles.Contains(audioFile))
+                    {
+                        // Ignore.
+                        continue;
+                    }
+
+                    // Otherwise, the cached file is no longer present.
+                    Debug.Log(Path.GetFileName(audioFile) + " has been removed.");
+                    removedCustomFiles.Add(audioFile);
+
+                    m_sidebarPages.RemoveCustomAudioFile(audioFile);
+                }
+            }
+
+            // Add to sound bank dictionary...
+            yield return m_sidebarPages.AddCustomSoundFiles(newCustomFiles);
+
+            // Validate only when we are removing or adding custom audio...
+            // if (removedCustomFiles.Count > 0 || newCustomFiles.Count > 0)
+            // {
+                m_sidebarPages.ValidateCustomSoundChoice();
+            // }
+
+            // Cache audio files (for future cross reference...against checking removal of files)
+            cachedCustomAudioFiles = new List<string>(allFiles);
+
+            // Dispose
+            allFiles.Clear();
+            newCustomFiles.Clear();
+            removedCustomFiles.Clear();
         }
 
         /// <summary>
@@ -656,6 +751,7 @@ namespace AdrianMiasik
 
                     m_onRingPulse.Invoke();
                     m_alarmSource.Play();
+
                     break;
             }
             
@@ -875,14 +971,16 @@ namespace AdrianMiasik
 
             if (!hasRingPulseBeenInvoked)
             {
-                m_onRingPulse.Invoke();
                 hasRingPulseBeenInvoked = true;
+
+                m_onRingPulse.Invoke();
                 m_alarmSource.Play();
             }
 
             // Ignore wrap mode and replay completion animation from start
             if (hasRingPulseBeenInvoked && accumulatedRingPulseTime >
-                m_completeRingPulseDiameter[m_completeRingPulseDiameter.length - 1].time)
+                // m_completeRingPulseDiameter[m_completeRingPulseDiameter.length - 1].time)
+                m_alarmSource.clip.length + m_delayBetweenRingPulses)
             {
                 accumulatedRingPulseTime = 0;
                 hasRingPulseBeenInvoked = false;

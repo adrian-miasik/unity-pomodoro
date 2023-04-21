@@ -131,5 +131,21 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             m_optionMuteSoundOutOfFocusToggle.gameObject.SetActive(false);
             m_optionMuteSoundOutOfFocusToggle.m_spacer.gameObject.SetActive(false);
         }
+
+        // Piper
+        public void AddCustomDropdownSoundOption(AudioClip audioClip, string audioFile)
+        {
+            m_optionSetAlarmSound.AddCustomDropdownSoundOption(audioClip, audioFile);
+        }
+
+        public void RemoveCustomDropdownSoundOption(string audioFile)
+        {
+            m_optionSetAlarmSound.RemoveCustomDropdownSoundOption(audioFile);
+        }
+
+        public void ValidateCustomSoundChoice()
+        {
+            m_optionSetAlarmSound.ValidateAlarmSoundIndex();
+        }
     }
 }

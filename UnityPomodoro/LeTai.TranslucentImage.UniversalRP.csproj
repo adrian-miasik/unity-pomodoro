@@ -44,8 +44,8 @@
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Render Pass\TranslucentImageBlurRenderPass.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\ScalableBlur.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\ShaderId.cs" />
-     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\IBlurAlgorithm.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Render Pass\TranslucentImageBlurSource.cs" />
+     <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm\IBlurAlgorithm.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Extensions.cs" />
      <Compile Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\Utilities\Utilities.cs" />
      <Folder Include="Assets\LeTai\TranslucentImage\Script\UniversalRP\BlurAlgorithm" />

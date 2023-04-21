@@ -41,25 +41,25 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\EnumParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\ColorParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\BoolParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\CollectionParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector4Parser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\ArrayParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\NullableParser.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector2IntParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\QuaternionParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\EnumParser.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\TypeParser.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\GameObjectParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\PrimitiveParser.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\TupleParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\QuaternionParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\ArrayParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\StringParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\CollectionParser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector3Parser.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\ComponentParser.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\EnumerableParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\PrimitiveParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\BoolParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\NullableParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector2Parser.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector3IntParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\ColorParser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector3Parser.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector4Parser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\Vector2Parser.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\StringParser.cs" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Parsing\Parsers\QFSW.QC.Parsers.asmdef" />
      <Reference Include="UnityEngine">

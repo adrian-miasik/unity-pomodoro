@@ -41,16 +41,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\GameObjectSuggestor.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\MacroSuggestor.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\SceneNameSuggestor.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\ComponentSuggestor.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\CommandNameSuggestor.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\BoolSuggestor.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\CommandSuggestor.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\InlineSuggestor.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\GameObjectSuggestor.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\BoolSuggestor.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\ComponentSuggestor.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\CommandSuggestion.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\SceneNameSuggestor.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\CommandSuggestor.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\EnumSuggestor.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\MacroSuggestor.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\CommandNameSuggestor.cs" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Suggestions\Suggestors\QFSW.QC.Suggestors.asmdef" />
      <Reference Include="UnityEngine">

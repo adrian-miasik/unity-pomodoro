@@ -41,19 +41,19 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\DictionaryEntrySerializer.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\StringSerializer.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector2Serializer.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector3Serializer.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\KeyValuePairSerializer.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector2IntSerializer.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\ITupleSerializer.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\TypeSerializer.cs" />
-     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector4Serializer.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\UnityObjectSerializer.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\IEnumerableSerializer.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\IDictionarySerializer.cs" />
      <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector3IntSerializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\KeyValuePairSerializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\StringSerializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector2IntSerializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector4Serializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\ITupleSerializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\Vector2Serializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\TypeSerializer.cs" />
+     <Compile Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\DictionaryEntrySerializer.cs" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers\QFSW.QC.Serializers.asmdef" />
      <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Scripts\Serialization\Serializers" />
      <Reference Include="UnityEngine">
