@@ -574,10 +574,10 @@ namespace AdrianMiasik
             yield return m_sidebarPages.AddCustomSoundFiles(newCustomFiles);
 
             // Validate only when we are removing or adding custom audio...
-            if (removedCustomFiles.Count > 0 || newCustomFiles.Count > 0)
-            {
+            // if (removedCustomFiles.Count > 0 || newCustomFiles.Count > 0)
+            // {
                 m_sidebarPages.ValidateCustomSoundChoice();
-            }
+            // }
 
             // Cache audio files (for future cross reference...against checking removal of files)
             cachedCustomAudioFiles = new List<string>(allFiles);

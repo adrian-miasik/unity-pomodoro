@@ -21,7 +21,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// A dictionary of all our alarm sounds (preinstalled + custom).
         /// To add a custom alarm audio component, See <see cref="AddCustomDropdownSoundOption"/>().
         /// </summary>
-        [SerializeField] private GenericDictionary<int, AudioClip> alarmBank = new();
+        [SerializeField] private Dictionary<int, AudioClip> alarmBank = new();
 
         /// <summary>
         /// Initializes this SettingsOptionDropdown, adds our preInstalledAlarms to the alarm bank dictionary,
@@ -40,10 +40,13 @@ namespace AdrianMiasik.Components.Specific.Settings
                 alarmBank.TryAdd(i, audioClip);
             }
 
-            ValidateAlarmSoundIndex();
+            // ValidateAlarmSoundIndex();
 
             // Invoke SetAlarmSound anytime the dropdown value changes
-            m_dropdown.onValueChanged.AddListener(SetAlarmSound);
+            m_dropdown.onValueChanged.AddListener((i) =>
+            {
+                SetAlarmSound(i, true);
+            });
         }
 
         public void ValidateAlarmSoundIndex()
@@ -63,11 +66,11 @@ namespace AdrianMiasik.Components.Specific.Settings
             if (alarmBank.TryGetValue(startingIndex, out AudioClip c))
             {
                 m_dropdown.value = startingIndex;
-                Timer.SetAlarmSound(c, false);
+                SetAlarmSound(startingIndex);
             }
         }
 
-        private void SetAlarmSound(Int32 i)
+        private void SetAlarmSound(Int32 i, bool playPreviewSound = false)
         {
             // Apply change to settings
             Timer.GetTimerSettings().m_alarmSoundIndex = i;
@@ -76,7 +79,7 @@ namespace AdrianMiasik.Components.Specific.Settings
             // Apply change to timer
             if (alarmBank.TryGetValue(i, out AudioClip c))
             {
-                Timer.SetAlarmSound(c, true);
+                Timer.SetAlarmSound(c, playPreviewSound);
             }
         }
 
@@ -111,8 +114,13 @@ namespace AdrianMiasik.Components.Specific.Settings
                         if (m_dropdown.options[i].text == Path.GetFileName(audioFile))
                         {
                             // Remove drop down option
-                            // m_dropdown.options.RemoveAt(i);
-                            m_dropdown.options[i].text = "Removed";
+                            m_dropdown.options.RemoveAt(i);
+                            // m_dropdown.options[i].text = "-";
+
+                            // Something got removed from our dictionary, we will attempt to reshuffle
+                            // the keys to be in ascending index order. This way our dropdown settings can match the
+                            // dictionary keys.
+                            CascadeAlarmBankDictionary();
                         }
                     }
                 }
@@ -120,23 +128,47 @@ namespace AdrianMiasik.Components.Specific.Settings
 
             // Clear copy
             cachedAdditionalSounds.Clear();
+        }
 
-            // if (alarmBank.TryGetValue(key, out AudioClip audioClip))
-            // {
-            //     // Remove from dictionary
-            //     alarmBank.Remove(key);
-            //
-            //     // Iterate through all the custom audio options...
-            //     for (int i = m_preInstalledAlarms.Count; i < m_dropdown.options.Count; i++)
-            //     {
-            //         // If the removed alarm from the bank matches the dropdown option...
-            //         if (m_dropdown.options[i].text == audioClip.name)
-            //         {
-            //             // Remove drop down option
-            //             m_dropdown.options.RemoveAt(i);
-            //         }
-            //     }
-            // }
+        private void CascadeAlarmBankDictionary()
+        {
+            Debug.Log("Cascading Dictionary!");
+
+            // Cache current alarm
+            alarmBank.TryGetValue(Timer.GetTimerSettings().m_alarmSoundIndex, out AudioClip currentAlarm);
+
+            // Create
+            Dictionary<int, AudioClip> cascadedAlarmBank = new Dictionary<int, AudioClip>();
+
+            // Move pre-installed alarms to cascaded alarm bank...
+            for (int i = 0; i < m_preInstalledAlarms.Count; i++)
+            {
+                AudioClip audioClip = m_preInstalledAlarms[i];
+                cascadedAlarmBank.TryAdd(i, audioClip);
+            }
+
+            // Iterate through only our custom alarms...
+            for (int i = m_preInstalledAlarms.Count; i < alarmBank.Count; i++)
+            {
+                KeyValuePair<int, AudioClip> element = alarmBank.ElementAt(i);
+
+                // Add them to bank but to first available index, not the element's preferred key.
+                cascadedAlarmBank.Add(i, element.Value);
+
+                // If the moved/cascaded element matches the players current preference.
+                if (element.Value == currentAlarm)
+                {
+                    // Set the dropdown value to match their preference
+                    m_dropdown.value = i;
+
+                    // Apply/save preference
+                    Timer.GetTimerSettings().m_alarmSoundIndex = i;
+                    UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
+                }
+            }
+
+            // Apply cascade
+            alarmBank = cascadedAlarmBank;
         }
 
         [Command("print-custom-alarm-sound-dictionary")]
@@ -154,39 +186,5 @@ namespace AdrianMiasik.Components.Specific.Settings
                 Debug.Log("key[" +pair.Key + "] is " + pair.Value.name);
             }
         }
-
-        // /// <summary>
-        // /// Disposes of all our custom alarm sounds.
-        // /// </summary>
-        // public void ResetCustomSoundFiles()
-        // {
-        //     if (alarmBank.Count <= m_preInstalledAlarms.Count)
-        //     {
-        //         // No custom sound files have been registered/found. Reset is redundant.
-        //         // Early exit
-        //         return;
-        //     }
-        //
-        //     Debug.Log("Recalculating Custom Alarms...");
-        //
-        //     // Copy
-        //     Dictionary<int, AudioClip> cachedAdditionalSounds = new(alarmBank);
-        //
-        //     // Iterate through each key in order...
-        //     foreach (int index in cachedAdditionalSounds.Keys.OrderBy(i => i))
-        //     {
-        //         // Ignore pre-installed alarms in alarm bank...
-        //         if (index <= m_preInstalledAlarms.Count - 1)
-        //         {
-        //             continue;
-        //         }
-        //
-        //         // Remove custom sound entry only.
-        //         RemoveCustomDropdownSoundOption(index);
-        //     }
-        //
-        //     // Clear copy
-        //     cachedAdditionalSounds.Clear();
-        // }
     }
 }
