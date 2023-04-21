@@ -55,8 +55,11 @@
      <None Include="Assets\LeTai\TranslucentImage\Resources\UniversalRP\lib.hlsl" />
      <Folder Include="Assets\LeTai\TranslucentImage\Script" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\TranslucentImage.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\UniversalRP README.txt" />
      <Folder Include="Assets\LeTai\TranslucentImage\Script\BlurAlgorithm" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\EfficientBlur.shader" />
+     <None Include="Assets\LeTai\TranslucentImage\Online Documentation (recommended).txt" />
+     <None Include="Assets\LeTai\TranslucentImage\CHANGELOG.txt" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\lib.cginc" />
      <None Include="Assets\LeTai\TranslucentImage\Resources\FillCrop.shader" />
      <Folder Include="Assets\LeTai\TranslucentImage\Script\Utilities" />

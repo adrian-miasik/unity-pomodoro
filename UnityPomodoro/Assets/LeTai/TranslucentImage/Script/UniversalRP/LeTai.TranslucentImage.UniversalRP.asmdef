@@ -18,6 +18,11 @@
             "name": "com.unity.render-pipelines.universal",
             "expression": "12",
             "define": "URP12_OR_NEWER"
+        },
+        {
+            "name": "Unity",
+            "expression": "[2021.3,2021.3.13)",
+            "define": "UNITY_BUGGED_HAS_PASSES_AFTER_POSTPROCESS"
         }
     ],
     "noEngineReferences": false
