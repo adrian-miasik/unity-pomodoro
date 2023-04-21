@@ -107,6 +107,11 @@ namespace AdrianMiasik
         private float accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
+        // Pulse Ring Complete Animation
+        private bool disableCompletionAnimation;
+        private float accumulatedRingPulseTime;
+        private bool hasRingPulseBeenInvoked;
+
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
 
@@ -152,11 +157,6 @@ namespace AdrianMiasik
         private static readonly int RingColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         public static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
-
-        // Pulse Ring Complete Animation
-        private bool disableCompletionAnimation;
-        private float accumulatedRingPulseTime;
-        private bool hasRingPulseBeenInvoked;
 
         [Header("Loaded Settings")]
         [SerializeField] private SystemSettings m_loadedSystemSettings;
@@ -750,6 +750,7 @@ namespace AdrianMiasik
 
                     m_onRingPulse.Invoke();
                     m_alarmSource.Play();
+
                     break;
             }
             
@@ -969,8 +970,9 @@ namespace AdrianMiasik
 
             if (!hasRingPulseBeenInvoked)
             {
-                m_onRingPulse.Invoke();
                 hasRingPulseBeenInvoked = true;
+
+                m_onRingPulse.Invoke();
                 m_alarmSource.Play();
             }
 
