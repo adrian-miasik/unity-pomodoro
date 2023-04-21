@@ -12,7 +12,9 @@ public partial class ShadowRenderer : MonoBehaviour, ILayoutIgnorer, IMaterialMo
 {
     public bool ignoreLayout => true;
 
+#pragma warning disable CS0103
     static bool needRedraw = false;
+#pragma warning restore CS0103
 
     [Conditional("UNITY_EDITOR")]
     internal static void QueueRedraw()
@@ -35,15 +37,32 @@ public partial class ShadowRenderer : MonoBehaviour, ILayoutIgnorer, IMaterialMo
             return;
         }
 
-        var obj = new GameObject($"{shadow.gameObject.name}'s Shadow") {
+        GameObject obj;
+        var        objectName = $"{shadow.gameObject.name}'s Shadow";
+        HideFlags hideFlags =
 #if LETAI_TRUESHADOW_DEBUG
-            hideFlags = DebugSettings.Instance.showObjects
-                            ? HideFlags.DontSave
-                            : HideFlags.HideAndDontSave
+                DebugSettings.Instance.showObjects
+                    ? HideFlags.DontSave
+                    : HideFlags.HideAndDontSave
 #else
-            hideFlags = HideFlags.HideAndDontSave
+                HideFlags.HideAndDontSave
 #endif
-        };
+            ;
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            obj = UnityEditor.EditorUtility.CreateGameObjectWithHideFlags(objectName, hideFlags);
+        }
+        else
+        {
+#endif
+            obj = new GameObject(objectName) {
+                hideFlags = hideFlags
+            };
+#if UNITY_EDITOR
+        }
+#endif
 
 #if LETAI_TRUESHADOW_DEBUG && UNITY_EDITOR
         UnityEditor.SceneVisibilityManager.instance.DisablePicking(obj, true);

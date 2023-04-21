@@ -61,7 +61,8 @@ public class MigrateToVV1Window : EditorWindow
         EditorGUILayout.HelpBox(
             "!!! MAKE SURE TO BACK UP YOUR PROJECT BEFORE USE !!!\n\n" +
             "This tool will modify your project files. Please backup your project before use. If you are unsure how to do this, do NOT use this tool! Manually change any problematic shadows Color Bleed mode to Black instead!",
-            MessageType.Warning);
+            MessageType.Warning
+        );
         EditorGUILayout.Separator();
         haveBackup = EditorGUILayout.ToggleLeft("I have backed up the project and can undo any changes done by the tool", haveBackup);
         if (haveBackup)
@@ -73,12 +74,25 @@ public class MigrateToVV1Window : EditorWindow
 
     public static void MigrateToV1()
     {
+        AssetDatabase.DisallowAutoRefresh();
+        AssetDatabase.StartAssetEditing();
+
         var allPrefabs = AssetDatabase.FindAssets("t:Prefab");
-        foreach (var guid in allPrefabs)
+        for (var i = 0; i < allPrefabs.Length; i++)
         {
+            var guid       = allPrefabs[i];
             var path       = AssetDatabase.GUIDToAssetPath(guid);
             var prefabRoot = PrefabUtility.LoadPrefabContents(path);
             var changed    = false;
+
+            if (i % 5 == 0)
+            {
+                EditorUtility.DisplayProgressBar(
+                    $"Migrating prefabs ({i + 1}/{allPrefabs.Length})",
+                    $"Migrating: {path}",
+                    (i + 1) / (float)allPrefabs.Length
+                );
+            }
 
             foreach (var shadow in prefabRoot.GetComponentsInChildren<TrueShadow>())
             {
@@ -91,6 +105,13 @@ public class MigrateToVV1Window : EditorWindow
 
             PrefabUtility.UnloadPrefabContents(prefabRoot);
         }
+
+        EditorUtility.ClearProgressBar();
+
+        AssetDatabase.StopAssetEditing();
+        AssetDatabase.Refresh();
+        AssetDatabase.SaveAssets();
+        AssetDatabase.AllowAutoRefresh();
 
         var inScene = Resources.FindObjectsOfTypeAll<TrueShadow>()
                                .ToArray();

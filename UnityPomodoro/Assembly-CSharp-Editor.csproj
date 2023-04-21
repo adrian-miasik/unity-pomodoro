@@ -864,10 +864,6 @@
       <Project>{a9e12aec-09e2-b51b-042c-4688c042f427}</Project>
       <Name>QFSW.QC.Suggestors</Name>
     </ProjectReference>
-    <ProjectReference Include="LeTai.TrueShadow.Demo.csproj">
-      <Project>{f85b2b05-3560-7ebc-6133-49a89cfecf45}</Project>
-      <Name>LeTai.TrueShadow.Demo</Name>
-    </ProjectReference>
     <ProjectReference Include="LeTai.TrueShadow.csproj">
       <Project>{53ab2b38-881a-5624-4d28-b16d6a643548}</Project>
       <Name>LeTai.TrueShadow</Name>
@@ -903,6 +899,10 @@
     <ProjectReference Include="QFSW.QC.Editor.Tools.csproj">
       <Project>{10ce77e3-20d0-25a3-aaa1-6e6789026b7c}</Project>
       <Name>QFSW.QC.Editor.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeTai.TranslucentImage.UniversalRP.Editor.csproj">
+      <Project>{a3294375-94d4-9805-d066-530f29a815da}</Project>
+      <Name>LeTai.TranslucentImage.UniversalRP.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
