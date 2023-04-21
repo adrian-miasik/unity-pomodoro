@@ -107,6 +107,7 @@ namespace AdrianMiasik
         private float accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
+        [SerializeField] private float m_delayBetweenRingPulses = 0.5f;
         // Pulse Ring Complete Animation
         private bool disableCompletionAnimation;
         private float accumulatedRingPulseTime;
@@ -978,7 +979,8 @@ namespace AdrianMiasik
 
             // Ignore wrap mode and replay completion animation from start
             if (hasRingPulseBeenInvoked && accumulatedRingPulseTime >
-                m_completeRingPulseDiameter[m_completeRingPulseDiameter.length - 1].time)
+                // m_completeRingPulseDiameter[m_completeRingPulseDiameter.length - 1].time)
+                m_alarmSource.clip.length + m_delayBetweenRingPulses)
             {
                 accumulatedRingPulseTime = 0;
                 hasRingPulseBeenInvoked = false;
