@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using AdrianMiasik.Components.Core.Helpers;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 #endif
 using UnityEditor;
@@ -50,7 +50,7 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 #endif
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
         /// <summary>
         /// Deletes/Wipes all of our Steam cloud remote files from the cloud.
         /// </summary>
@@ -97,7 +97,7 @@ namespace AdrianMiasik.Components.Core.Settings
             string simpleFilePath = fileName + DataExtension;
 #endif
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // If the Steam client is enabled and found...
             if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
             {
@@ -207,7 +207,7 @@ namespace AdrianMiasik.Components.Core.Settings
                         Debug.Log("Local Storage: " + simpleFilePath + " loaded successfully!");
 #endif
                         
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
                         // If Steam cloud is running, save local storage to Steam cloud.
                         if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
                         {
@@ -246,7 +246,7 @@ namespace AdrianMiasik.Components.Core.Settings
                 
                 case MostRecentSaveLocation.UNABLE_TO_DETERMINE_LOCAL_STORAGE_EMPTY:
                     
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
                 case MostRecentSaveLocation.STEAM_CLOUD:
                     // Load Steam cloud save
                     if (SteamClient.IsValid && SteamRemoteStorage.IsCloudEnabled)
@@ -324,7 +324,7 @@ namespace AdrianMiasik.Components.Core.Settings
             string persistentFilePath = Application.persistentDataPath + "/" + fileName + DataExtension;
             string simpleFilePath = fileName + DataExtension;
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             if (!SteamClient.IsValid || !SteamRemoteStorage.IsCloudEnabled)
             {
                 return MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_OFFLINE;
@@ -343,7 +343,7 @@ namespace AdrianMiasik.Components.Core.Settings
                     return MostRecentSaveLocation.UNABLE_TO_DETERMINE_LOCAL_STORAGE_EMPTY;
                 }
                 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
                 // Cache last accessed / modified file times of our SYSTEM settings files.
                 DateTime steamRemoteWriteTime = File.GetLastWriteTime(steamUserRemoteSystemSettingsPath);
                 DateTime localStorageWriteTime = File.GetLastWriteTime(persistentFilePath);
@@ -373,7 +373,7 @@ namespace AdrianMiasik.Components.Core.Settings
                 Debug.Log("Most recent " + simpleFilePath + " file: Local Storage");
 #endif
                 return MostRecentSaveLocation.LOCAL_STORAGE;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             }
         
             return MostRecentSaveLocation.UNABLE_TO_DETERMINE_STEAM_CLOUD_EMPTY;
@@ -410,13 +410,13 @@ namespace AdrianMiasik.Components.Core.Settings
 
         public static void DeleteSettingsFile(string fileName)
         {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             DeleteRemoteFile(fileName);
 #endif
             DeleteLocalFile(fileName);
         }
         
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
         /// <summary>
         /// Deletes the provided Steam cloud file (remote storage).
         /// </summary>
@@ -510,7 +510,7 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 #endif
 
-#if UNITY_EDITOR && !UNITY_ANDROID
+#if UNITY_EDITOR && !UNITY_ANDROID && !UNITY_WSA
         /// <summary>
         /// Deletes the system settings file from the Steam cloud (remote storage).
         /// </summary>
@@ -541,7 +541,7 @@ namespace AdrianMiasik.Components.Core.Settings
         }
 #endif
 
-#if UNITY_EDITOR && !UNITY_ANDROID
+#if UNITY_EDITOR && !UNITY_ANDROID && !UNITY_WSA
         /// <summary>
         /// Deletes the timer settings file from the Steam cloud (remote storage).
         /// </summary>

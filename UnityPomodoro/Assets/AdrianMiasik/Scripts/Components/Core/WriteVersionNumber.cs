@@ -1,4 +1,4 @@
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 #endif
 using TMPro;
@@ -18,7 +18,7 @@ namespace AdrianMiasik.Components.Core
         {
             m_text.text = m_prefixString + Application.version;
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Append Steam flag to version numbering as suffix
             if (SteamClient.IsValid)
             {
