@@ -12,9 +12,11 @@ using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+#if !UNITY_ANDROID && !UNITY_WSA
 using AdrianMiasik.Steam;
 using Steamworks;
 using Steamworks.Data;
+#endif
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
 using QFSW.QC;
@@ -70,12 +72,17 @@ namespace AdrianMiasik
         [SerializeField] private HotkeyDetector m_hotkeyDetector;
         [SerializeField] private ResolutionDetector m_resolutionDetector;
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        
-        [Header("Unity Pomodoro - Platform Specific Managers")]
-        [SerializeField] private SteamManager m_steamManager; // Disable on Android platform
-        [SerializeField] private UWPNotifications m_uwpNotifications; // TODO: Gate to Windows/UWP apps
-        [SerializeField] private AndroidNotifications m_androidNotifications; // Enable only for Android platform
 
+        [Header("Unity Pomodoro - Platform Specific Managers")]
+#if !UNITY_ANDROID && !UNITY_WSA
+        [SerializeField] private SteamManager m_steamManager; // Disable on Android and WSA platforms
+#endif
+#if UNITY_WSA
+        [SerializeField] private UWPNotifications m_uwpNotifications; // TODO: Gate to Windows/UWP apps
+#endif
+#if UNITY_ANDROID
+        [SerializeField] private AndroidNotifications m_androidNotifications; // Enable only for Android platform
+#endif
         [Header("Unity - Basic Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -238,7 +245,7 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
             m_steamManager.Initialize();
 #endif
@@ -477,9 +484,11 @@ namespace AdrianMiasik
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
 
+#if UNITY_WSA
             // UWP Toast / Notification
             m_uwpNotifications.Initialize(GetSystemSettings());
             m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
+#endif
             
 #if UNITY_ANDROID
             // Android Notification
@@ -1568,7 +1577,7 @@ namespace AdrianMiasik
         {
             m_digitFormat.ActivateLongBreak();
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
@@ -1838,7 +1847,7 @@ namespace AdrianMiasik
             m_digitFormat.ShowTickAnimation();
         }
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
         public void ShutdownSteamManager()
         {
             m_steamManager.Shutdown();

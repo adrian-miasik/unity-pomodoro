@@ -953,14 +953,6 @@
       <Project>{5540617b-21e6-fa7e-9bee-ca69efbd6d16}</Project>
       <Name>LeTai.TrueShadow.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="QFSW.QC.UI.csproj">
-      <Project>{f79a2727-34a6-216d-30d3-c273a846673b}</Project>
-      <Name>QFSW.QC.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
-      <Project>{e19baa62-4e52-324b-76e5-0cd6e6b4f649}</Project>
-      <Name>QFSW.QC.ScanRules</Name>
-    </ProjectReference>
     <ProjectReference Include="QFSW.QC.Editor.csproj">
       <Project>{8081bb53-752b-09dc-a2c0-2afcfa3c6a46}</Project>
       <Name>QFSW.QC.Editor</Name>
@@ -969,10 +961,6 @@
       <Project>{8dd3cfc6-1299-156c-8b44-79d09a054f34}</Project>
       <Name>LeTai.TranslucentImage</Name>
     </ProjectReference>
-    <ProjectReference Include="QFSW.QC.Suggestors.csproj">
-      <Project>{a9e12aec-09e2-b51b-042c-4688c042f427}</Project>
-      <Name>QFSW.QC.Suggestors</Name>
-    </ProjectReference>
     <ProjectReference Include="LeTai.TrueShadow.csproj">
       <Project>{53ab2b38-881a-5624-4d28-b16d6a643548}</Project>
       <Name>LeTai.TrueShadow</Name>
@@ -980,10 +968,6 @@
     <ProjectReference Include="QFSW.QC.QGUI.csproj">
       <Project>{b17e5dc0-e193-106d-c3b8-66c8b3e203c5}</Project>
       <Name>QFSW.QC.QGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="QFSW.QC.Serializers.csproj">
-      <Project>{6cc34e04-b50d-7ebe-8f46-b93ee154f602}</Project>
-      <Name>QFSW.QC.Serializers</Name>
     </ProjectReference>
     <ProjectReference Include="LeTai.TranslucentImage.UniversalRP.csproj">
       <Project>{6eee82e8-590d-a914-aacd-18c5f4242353}</Project>
@@ -1012,6 +996,22 @@
     <ProjectReference Include="LeTai.TranslucentImage.UniversalRP.Editor.csproj">
       <Project>{a3294375-94d4-9805-d066-530f29a815da}</Project>
       <Name>LeTai.TranslucentImage.UniversalRP.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.UI.csproj">
+      <Project>{f79a2727-34a6-216d-30d3-c273a846673b}</Project>
+      <Name>QFSW.QC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
+      <Project>{e19baa62-4e52-324b-76e5-0cd6e6b4f649}</Project>
+      <Name>QFSW.QC.ScanRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Suggestors.csproj">
+      <Project>{a9e12aec-09e2-b51b-042c-4688c042f427}</Project>
+      <Name>QFSW.QC.Suggestors</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Serializers.csproj">
+      <Project>{6cc34e04-b50d-7ebe-8f46-b93ee154f602}</Project>
+      <Name>QFSW.QC.Serializers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

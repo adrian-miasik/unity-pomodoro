@@ -2,7 +2,7 @@ using System;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items.Pages;
 using AdrianMiasik.Components.Core.Settings;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 using Steamworks.Data;
 using UnityEngine;
@@ -57,7 +57,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                 Timer.SetPomodoroCount(desiredCount, 0);
             }
             
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {

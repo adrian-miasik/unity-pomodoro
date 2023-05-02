@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 #endif
 using UnityEditor;
@@ -126,7 +125,7 @@ namespace AdrianMiasik.Components.Specific
         {
             string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             if (SteamClient.IsValid)
             {
                 topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
@@ -142,7 +141,7 @@ namespace AdrianMiasik.Components.Specific
             timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
             timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                 {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
                     SteamUserStats.ResetAll(true);
                     SteamUserStats.StoreStats();
                     SteamUserStats.RequestCurrentStats();
@@ -161,7 +160,7 @@ namespace AdrianMiasik.Components.Specific
             UserSettingsSerializer.DeleteSettingsFile("system-settings");
             UserSettingsSerializer.DeleteSettingsFile("timer-settings");
             
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             timer.ShutdownSteamManager();
 #endif
             Debug.Log("Application: Factory Reset");

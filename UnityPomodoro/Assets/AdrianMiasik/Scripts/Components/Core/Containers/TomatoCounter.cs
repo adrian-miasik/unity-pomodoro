@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 using Steamworks.Data;
 #endif
@@ -85,7 +85,7 @@ namespace AdrianMiasik.Components.Core.Containers
             completedTomatoes.Add(tomatoToFill);
             tomatoToFill.Complete();
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
@@ -154,7 +154,7 @@ namespace AdrianMiasik.Components.Core.Containers
         /// </summary>
         public void ConsumeTomatoes()
         {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
