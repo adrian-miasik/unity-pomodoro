@@ -19,6 +19,7 @@ struct TISPassData
     public RenderTargetIdentifier cameraColorTarget;
     public TranslucentImageSource blurSource;
     public IBlurAlgorithm         blurAlgorithm;
+    public RenderOrder            renderOrder;
     public BlitMode               blitMode;
     public bool                   isPreviewing;
 }
@@ -69,15 +70,18 @@ public class TranslucentImageBlurRenderPass : ScriptableRenderPass
 #if URP12_OR_NEWER
         if (currentPassData.rendererType == RendererType.Universal)
         {
-            source = universalRendererInternal.GetBackBuffer().Identifier();
+            source = universalRendererInternal.GetBackBuffer();
         }
         else
         {
 #endif
-        source = renderingData.cameraData.postProcessEnabled
+        bool useAfterPostTex = renderingData.cameraData.postProcessEnabled;
+#if URP12_OR_NEWER
+            useAfterPostTex &= currentPassData.renderOrder == RenderOrder.AfterPostProcessing;
+#endif
+        source = useAfterPostTex
                      ? afterPostprocessTexture
                      : currentPassData.cameraColorTarget;
-
 #if URP12_OR_NEWER
         }
 #endif
@@ -95,7 +99,7 @@ public class TranslucentImageBlurRenderPass : ScriptableRenderPass
                            source,
                            PreviewMaterial,
                            0,
-                           currentPassData.blitMode);
+                           BlitMode.Triangle);
         }
 
         context.ExecuteCommandBuffer(cmd);

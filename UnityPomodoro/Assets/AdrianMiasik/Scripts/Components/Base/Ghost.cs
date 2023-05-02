@@ -17,9 +17,9 @@ namespace AdrianMiasik.Components.Base
         [SerializeField] private SVGImage m_background;
         [SerializeField] private CanvasGroup m_backgroundContainer;
         [SerializeField] protected ThemeIcon m_icon;
-        [SerializeField] private CanvasGroup m_textContainer;
+        [SerializeField] protected CanvasGroup m_textContainer;
         [SerializeField] protected List<TMP_Text> m_text = new List<TMP_Text>();
-        [SerializeField] private float m_fadeProgress = 1;
+        [SerializeField] protected float m_fadeProgress = 1;
         [Tooltip("E.g. 0.5f = fade time of 2 seconds, 2 = fade time of 0.5 seconds.")]
         [SerializeField] private float m_fadeSpeed = 2f;
 
@@ -41,7 +41,7 @@ namespace AdrianMiasik.Components.Base
 
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
-            if (state == PomodoroTimer.States.RUNNING && Timer.IsMainContentOpen())
+            if (state == PomodoroTimer.States.RUNNING)
             {
                 FadeIn();
             }
@@ -51,7 +51,7 @@ namespace AdrianMiasik.Components.Base
             }
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (!IsInitialized())
             {

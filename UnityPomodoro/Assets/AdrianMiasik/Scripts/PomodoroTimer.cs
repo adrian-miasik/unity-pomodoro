@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AdrianMiasik.Android;
 using AdrianMiasik.Components.Core;
@@ -10,11 +12,14 @@ using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+#if !UNITY_ANDROID && !UNITY_WSA
 using AdrianMiasik.Steam;
 using Steamworks;
 using Steamworks.Data;
+#endif
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
+using QFSW.QC;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -62,21 +67,28 @@ namespace AdrianMiasik
         public States m_state = States.SETUP;
 
         [Header("Unity Pomodoro - Managers")]
+        [SerializeField] private QuantumConsole m_console;
         [SerializeField] private ThemeManager m_themeManager;
         [SerializeField] private HotkeyDetector m_hotkeyDetector;
         [SerializeField] private ResolutionDetector m_resolutionDetector;
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        
-        [Header("Unity Pomodoro - Platform Specific Managers")]
-        [SerializeField] private SteamManager m_steamManager; // Disable on Android platform
-        [SerializeField] private UWPNotifications m_uwpNotifications;
-        [SerializeField] private AndroidNotifications m_androidNotifications; // Disabled on anything BUT the Android platform
 
+        [Header("Unity Pomodoro - Platform Specific Managers")]
+#if !UNITY_ANDROID && !UNITY_WSA
+        [SerializeField] private SteamManager m_steamManager; // Disable on Android and WSA platforms
+#endif
+#if UNITY_WSA
+        [SerializeField] private UWPNotifications m_uwpNotifications; // TODO: Gate to Windows/UWP apps
+#endif
+#if UNITY_ANDROID
+        [SerializeField] private AndroidNotifications m_androidNotifications; // Enable only for Android platform
+#endif
         [Header("Unity - Basic Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
-        
+        [SerializeField] private AudioSource m_alarmSource;
+
         [Header("Unity Pomodoro - Custom Components")]
         [SerializeField] private Background m_background;
         [SerializeField] private BlurOverlay m_overlay;
@@ -102,6 +114,12 @@ namespace AdrianMiasik
         private float accumulatedRingAnimationTime;
         [SerializeField] private Animation m_spawnAnimation; // The timers introduction animation (plays on timer restarts)
         [SerializeField] private AnimationCurve m_completeRingPulseDiameter = AnimationCurve.Linear(0, 0.9f, 1, 0.975f);
+        [SerializeField] private float m_delayBetweenRingPulses = 0.5f;
+        // Pulse Ring Complete Animation
+        private bool disableCompletionAnimation;
+        private float accumulatedRingPulseTime;
+        private bool hasRingPulseBeenInvoked;
+
         [SerializeField] private float m_pauseFadeDuration = 0.1f;
         [SerializeField] private float m_pauseHoldDuration = 0.75f; // How long to wait between fade completions?
 
@@ -148,17 +166,15 @@ namespace AdrianMiasik
         private static readonly int RingDiameter = Shader.PropertyToID("Vector1_98525729712540259c19ac6e37e93b62");
         public static readonly int CircleColor = Shader.PropertyToID("Color_297012532bf444df807f8743bdb7e4fd");
 
-        // Pulse Ring Complete Animation
-        private bool disableCompletionAnimation;
-        private float accumulatedRingPulseTime;
-        private bool hasRingPulseBeenInvoked;
-
         [Header("Loaded Settings")]
         [SerializeField] private SystemSettings m_loadedSystemSettings;
         [SerializeField] private TimerSettings m_loadedTimerSettings;
-        private bool haveSettingsBeenConfigured;
 
+        private bool haveSettingsBeenConfigured;
         private bool haveComponentsBeenInitialized;
+        private bool isInitialized;
+
+        private List<string> cachedCustomAudioFiles;
 
         /// <summary>
         /// Mutes our volume when out of focus if permitted by user system settings.
@@ -196,6 +212,12 @@ namespace AdrianMiasik
 #endif                
 
                 Application.targetFrameRate = Screen.currentResolution.refreshRate;
+
+                // Prevent this from being invoked until app is fully init.
+                if (isInitialized)
+                {
+                    StartCoroutine(InitializeStreamingAssets());
+                }
             }
         }
 
@@ -215,7 +237,7 @@ namespace AdrianMiasik
         {
             // Single entry point
             ConfigureSettings();
-            Initialize();
+            StartCoroutine(Initialize());
         }
 
         /// <summary>
@@ -223,7 +245,7 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
             m_steamManager.Initialize();
 #endif
@@ -288,7 +310,8 @@ namespace AdrianMiasik
                 {
                     m_longBreaks = true,
                     m_format = DigitFormat.SupportedFormats.HH_MM_SS,
-                    m_pomodoroCount = 4
+                    m_pomodoroCount = 4,
+                    m_alarmSoundIndex = 0
                 };
 
                 // Cache
@@ -412,9 +435,10 @@ namespace AdrianMiasik
 #endif
 
         /// <summary>
-        /// Setup view, calculate time, initialize components, transition in, and animate.
+        /// Fetch streaming assets, initialize managers, set component overrides, initialize components, and
+        /// setup view, and transition/animate in.
         /// </summary>
-        private void Initialize()
+        private IEnumerator Initialize()
         {
             InitializeManagers();
 
@@ -425,8 +449,10 @@ namespace AdrianMiasik
             m_themeSlider.OverrideTrueColor(new Color(0.59f, 0.33f, 1f));
             m_menuToggleSprite.OverrideFalseColor(m_themeManager.GetTheme().GetCurrentColorScheme().m_foreground);
             m_menuToggleSprite.OverrideTrueColor(Color.clear);
-            
+
             InitializeComponents();
+
+            yield return InitializeStreamingAssets();
             
             // Switch view
             m_sidebarPages.SwitchToTimerPage();
@@ -439,6 +465,14 @@ namespace AdrianMiasik
 
             // Animate in
             PlaySpawnAnimation();
+
+            isInitialized = true;
+        }
+
+        private IEnumerator InitializeStreamingAssets()
+        {
+            Debug.Log("Validating 'StreamingAssets'...");
+            yield return ValidateStreamingAssets();
         }
 
         /// <summary>
@@ -450,19 +484,118 @@ namespace AdrianMiasik
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
 
+#if UNITY_WSA
             // UWP Toast / Notification
             m_uwpNotifications.Initialize(GetSystemSettings());
             m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
+#endif
             
 #if UNITY_ANDROID
             // Android Notification
             m_androidNotifications.Initialize(this);
 #endif
-            
+
+            if (m_console)
+            {
+                // Subscribe to console event callbacks
+                m_console.OnActivate += OnConsoleOpen;
+                m_console.OnDeactivate += OnConsoleClose;
+            }
+
             // Register elements that need updating per timer state change
 #if UNITY_ANDROID
             timerElements.Add(m_androidNotifications);
 #endif
+        }
+
+        /// <summary>
+        /// Invoked when the console has been opened and is seen.
+        /// </summary>
+        private void OnConsoleOpen()
+        {
+            m_hotkeyDetector.PauseInputs();
+        }
+
+        /// <summary>
+        /// Invoked when the console has been closed and is no longer visible.
+        /// </summary>
+        private void OnConsoleClose()
+        {
+            m_hotkeyDetector.ResumeInputs();
+        }
+
+        private IEnumerator ValidateStreamingAssets()
+        {
+            // Fetch directory
+            DirectoryInfo directoryInfo = new(Application.streamingAssetsPath);
+
+            // Fetch files: .wav's + .mp3's and order the file paths based on creation time/date.
+            FileInfo[] files = directoryInfo.GetFiles("*.wav").Concat
+                                (directoryInfo.GetFiles("*.mp3")).
+                                    OrderBy(f => f.CreationTime).ToArray();
+
+            List<string> allFiles = new List<string>();
+            List<string> newCustomFiles = new List<string>();
+
+            // Iterate through every found file...
+            foreach (FileInfo file in files)
+            {
+                // Cache every file
+                allFiles.Add(file.FullName);
+
+                // Ignore file if it has been previously cached.
+                if (cachedCustomAudioFiles != null && cachedCustomAudioFiles.Contains(file.FullName))
+                {
+                    Debug.Log("Custom '" + file.Name + "' has already been added. Skipping...");
+                    continue;
+                }
+
+                // Cache files that are new.
+                newCustomFiles.Add(file.FullName);
+
+                // Log
+                Debug.Log("Custom '" + file.Name + "' audio found.");
+            }
+
+            List<string> removedCustomFiles = new List<string>();
+
+            // If something has been previously cached before...(meaning if we have added custom sounds before...)
+            if (cachedCustomAudioFiles != null)
+            {
+                // Iterate through our cache...
+                foreach (string audioFile in cachedCustomAudioFiles)
+                {
+                    // If we find the cached file currently present...
+                    if (allFiles.Contains(audioFile))
+                    {
+                        // Ignore.
+                        continue;
+                    }
+
+                    // Otherwise, the cached file is no longer present.
+                    Debug.Log(Path.GetFileName(audioFile) + " has been removed.");
+                    removedCustomFiles.Add(audioFile);
+
+                    m_sidebarPages.RemoveCustomAudioFile(audioFile);
+                }
+            }
+
+            // Add to sound bank dictionary...
+            yield return m_sidebarPages.AddCustomSoundFiles(newCustomFiles);
+
+            // Validate only when we are removing or adding custom audio...
+            // if (removedCustomFiles.Count > 0 || newCustomFiles.Count > 0)
+            // {
+                m_sidebarPages.ValidateCustomSoundChoice();
+            // }
+
+            // Cache audio files (for future cross reference...against checking removal of files)
+            cachedCustomAudioFiles = new List<string>(allFiles);
+
+            // Dispose
+            allFiles.Clear();
+            newCustomFiles.Clear();
+            removedCustomFiles.Clear();
         }
 
         /// <summary>
@@ -490,6 +623,7 @@ namespace AdrianMiasik
             m_breakSlider.m_onSetToTrueClick.AddListener(TrySwitchToBreakTimer);
             m_breakSlider.m_onSetToFalseClick.AddListener(TrySwitchToWorkTimer);
             
+            // Sidebar Menu Toggle
             m_menuToggleSprite.m_onSetToTrueClick.AddListener(m_sidebarMenu.Open);
             m_menuToggleSprite.m_onSetToFalseClick.AddListener(m_sidebarMenu.Close);
             
@@ -625,8 +759,12 @@ namespace AdrianMiasik
                     m_digitFormat.Hide();
 
                     m_onRingPulse.Invoke();
+                    m_alarmSource.Play();
+
                     break;
             }
+            
+            ColorUpdateEndTimestampGhost();
         }
 
         private void ResetDigitFadeAnim()
@@ -842,13 +980,16 @@ namespace AdrianMiasik
 
             if (!hasRingPulseBeenInvoked)
             {
-                m_onRingPulse.Invoke();
                 hasRingPulseBeenInvoked = true;
+
+                m_onRingPulse.Invoke();
+                m_alarmSource.Play();
             }
 
             // Ignore wrap mode and replay completion animation from start
             if (hasRingPulseBeenInvoked && accumulatedRingPulseTime >
-                m_completeRingPulseDiameter[m_completeRingPulseDiameter.length - 1].time)
+                // m_completeRingPulseDiameter[m_completeRingPulseDiameter.length - 1].time)
+                m_alarmSource.clip.length + m_delayBetweenRingPulses)
             {
                 accumulatedRingPulseTime = 0;
                 hasRingPulseBeenInvoked = false;
@@ -1436,7 +1577,7 @@ namespace AdrianMiasik
         {
             m_digitFormat.ActivateLongBreak();
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
@@ -1543,6 +1684,22 @@ namespace AdrianMiasik
             }            
         }
 
+        public void SetAlarmSound(AudioClip alarmSound, bool attemptAlarmSoundPreview)
+        {
+            m_alarmSource.clip = alarmSound;
+
+            if (!attemptAlarmSoundPreview)
+            {
+                return;
+            }
+
+            // Preview alarm sound, if it's not currently playing
+            if (m_state != States.COMPLETE)
+            {
+                m_alarmSource.Play();
+            }
+        }
+
         public int GetTomatoProgress()
         {
             return m_tomatoCounter.GetTomatoProgress();
@@ -1585,6 +1742,11 @@ namespace AdrianMiasik
         public void CloseSidebar()
         {
             m_sidebarMenu.Close();
+        }
+        
+        public void ColorUpdateEndTimestampGhost()
+        {
+            m_endTimestampGhost.ColorUpdate(GetTheme());
         }
 
 #if UNITY_EDITOR
@@ -1685,11 +1847,20 @@ namespace AdrianMiasik
             m_digitFormat.ShowTickAnimation();
         }
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
         public void ShutdownSteamManager()
         {
             m_steamManager.Shutdown();
         }
 #endif
+        public void TrySubmitConfirmationDialog()
+        {
+            m_confirmationDialogManager.GetCurrentConfirmationDialog()?.Submit();
+        }
+
+        public void TryCancelConfirmationDialog()
+        {
+            m_confirmationDialogManager.GetCurrentConfirmationDialog()?.Cancel();
+        }
     }
 }

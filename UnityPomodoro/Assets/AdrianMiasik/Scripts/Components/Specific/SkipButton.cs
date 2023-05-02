@@ -2,7 +2,7 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 using Steamworks.Data;
 #endif
@@ -58,7 +58,7 @@ namespace AdrianMiasik.Components.Specific
             AudioMimic.Instance.PlaySound(m_buttonSvg.m_clickSound.clip);
             Timer.Skip();
             
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
