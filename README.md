@@ -26,7 +26,7 @@ Unity Pomodoro is an open source countdown timer app created in Unity designed p
 
 **Platforms**: Windows, Mac, Linux, & Android. (Steam, Microsoft Store, Google Play Store)
 
-**Version**:  2.4.1
+**Version**:  2.5.0
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
@@ -37,17 +37,17 @@ Want to help? If you're interested in contributing to the project, please see ou
 
 &nbsp;
 ## Downloads
-### [Latest Release - v2.4.1](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.1)
+### [Latest Release - v2.5.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.5.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.1/unity-pomodoro-2.4.1-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.1/unity-pomodoro-2.4.1-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.1/unity-pomodoro-2.4.1-mac-desktop-universal.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-mac-desktop-64-bit-apple-silicon.app.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.1/unity-pomodoro-2.4.1-linux-desktop-64-bit.zip)
-- Android (v2.4.1)
-  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.4.1/unity-pomodoro-2.4.1-android.apk) 
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-linux-desktop-64-bit.zip)
+- Android
+  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-android.apk) 
 #### Platform Specific
 - [Steam (Windows)](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
     - The Steam version includes **Steam Achievements**.
