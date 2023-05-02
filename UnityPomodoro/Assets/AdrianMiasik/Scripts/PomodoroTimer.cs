@@ -484,9 +484,11 @@ namespace AdrianMiasik
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
 
+#if UNITY_WSA
             // UWP Toast / Notification
             m_uwpNotifications.Initialize(GetSystemSettings());
             m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
+#endif
             
 #if UNITY_ANDROID
             // Android Notification
