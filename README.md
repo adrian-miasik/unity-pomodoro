@@ -59,6 +59,7 @@ Want to help? If you're interested in contributing to the project, please see ou
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v2.4.1 (Hotfix) - Improved Performance, Fixed Android Builds, and Fixed Long Breaks](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.1)
 - [v2.4.0 - Steam Release, Cloud Build Renamer Tool, Sidebar & Code Improvements, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.0)
 - [v2.2.0 - Google Play Store Release, New Animations, Documentation, Code Improvements, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.2.0)
 - [v2.1.1 (Hotfix) - Desktop Timer No Longer Decrements on App Focus Loss & Regain](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.1)
