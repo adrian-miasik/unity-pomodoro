@@ -452,8 +452,12 @@ namespace AdrianMiasik
 
             InitializeComponents();
 
+#if !UNITY_ANDROID
             yield return InitializeStreamingAssets();
-            
+#else
+            yield return new WaitForEndOfFrame();
+#endif
+
             // Switch view
             m_sidebarPages.SwitchToTimerPage();
 
