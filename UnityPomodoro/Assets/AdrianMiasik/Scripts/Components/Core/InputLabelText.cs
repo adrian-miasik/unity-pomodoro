@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace AdrianMiasik.Components.Core
 {
@@ -12,8 +10,13 @@ namespace AdrianMiasik.Components.Core
     {
         [SerializeField] private TMP_InputField m_inputText;
 
-        private bool isOverridingDefaultText = false;
-        private string userText;
+        private bool isOverridingDefaultWorkText = false;
+        private bool isOverridingDefaultBreakText = false;
+        private bool isOverridingDefaultLongBreakText = false;
+
+        private string workText;
+        private string breakText;
+        private string longBreakText;
 
         private PomodoroTimer timer;
 
@@ -28,33 +31,56 @@ namespace AdrianMiasik.Components.Core
             m_inputText.onSubmit.AddListener(SetText);
         }
 
-        [ContextMenu("Refresh State Text")]
-        public void RefreshStateText()
-        {
-            // Force update default text
-            StateUpdate(timer.m_state, timer.GetTheme());
-        }
-
         private void SetText(string text)
         {
             if (text == String.Empty)
             {
-                isOverridingDefaultText = false;
-                userText = String.Empty;
+                SetUserStateText(string.Empty, false);
 
                 // Use defaults
-                RefreshStateText();
+                StateUpdate(timer.m_state, timer.GetTheme());
             }
             else
             {
-                isOverridingDefaultText = true;
-                userText = text;
+                SetUserStateText(text, true);
             }
+        }
+
+        private void SetUserStateText(string desiredText, bool isOverridingDefaultText)
+        {
+            if (!timer.IsOnBreak())
+            {
+                isOverridingDefaultWorkText = isOverridingDefaultText;
+                workText = desiredText;
+            }
+            else
+            {
+                if (!timer.IsOnLongBreak())
+                {
+                    isOverridingDefaultBreakText = isOverridingDefaultText;
+                    breakText = desiredText;
+                }
+                else
+                {
+                    isOverridingDefaultLongBreakText = isOverridingDefaultText;
+                    longBreakText = desiredText;
+                }
+            }
+        }
+
+        private string GetUserStateText()
+        {
+            if (!timer.IsOnBreak())
+            {
+                return workText;
+            }
+
+            return !timer.IsOnLongBreak() ? breakText : longBreakText;
         }
 
         public void SetSuffix(string suffix)
         {
-            if (string.IsNullOrEmpty(userText))
+            if (string.IsNullOrEmpty(GetUserStateText()))
             {
                 // Only show suffix
                 m_inputText.text = suffix;
@@ -62,8 +88,28 @@ namespace AdrianMiasik.Components.Core
             else
             {
                 // Show user text + suffix
-                m_inputText.text = userText + ": " + suffix;
+                m_inputText.text = GetUserStateText() + ": " + suffix;
             }
+        }
+
+        public void ClearSuffix()
+        {
+            // If we are using custom labels...
+            if (IsOverridingDefaultStateText())
+            {
+                // Apply basic custom label w/ no preset.
+                m_inputText.text = GetUserStateText();
+            }
+        }
+
+        private bool IsOverridingDefaultStateText()
+        {
+            if (!timer.IsOnBreak())
+            {
+                return isOverridingDefaultWorkText;
+            }
+
+            return !timer.IsOnLongBreak() ? isOverridingDefaultBreakText : isOverridingDefaultLongBreakText;
         }
 
         public void SetTextColor(Color desiredColor)
@@ -71,21 +117,16 @@ namespace AdrianMiasik.Components.Core
             m_inputText.textComponent.color = desiredColor;
         }
 
-        public void ClearSuffix()
-        {
-            if (isOverridingDefaultText)
-            {
-                m_inputText.text = userText;
-            }
-        }
-
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
-            if (isOverridingDefaultText)
+            // If we are using default labels...
+            if (IsOverridingDefaultStateText())
             {
+                // Early exit!
                 return;
             }
 
+            // Use pre-defined labels
             switch (state)
             {
                 case PomodoroTimer.States.SETUP:
