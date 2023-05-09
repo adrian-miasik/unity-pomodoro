@@ -1,3 +1,5 @@
+// Note: Some namespaces are platform specific even though it may seem like they are not being used.
+// Change your Unity Build Settings Platform to see which namespaces are used for which platform.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +14,9 @@ using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
-#if !UNITY_ANDROID && !UNITY_WSA
 using AdrianMiasik.Steam;
 using Steamworks;
 using Steamworks.Data;
-#endif
 using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
 using QFSW.QC;
@@ -74,15 +74,10 @@ namespace AdrianMiasik
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
 
         [Header("Unity Pomodoro - Platform Specific Managers")]
-#if !UNITY_ANDROID && !UNITY_WSA
         [SerializeField] private SteamManager m_steamManager; // Disable on Android and WSA platforms
-#endif
-#if UNITY_WSA
-        [SerializeField] private UWPNotifications m_uwpNotifications; // TODO: Gate to Windows/UWP apps
-#endif
-#if UNITY_ANDROID
-        [SerializeField] private AndroidNotifications m_androidNotifications; // Enable only for Android platform
-#endif
+        [SerializeField] private UWPNotifications m_uwpNotifications; // Only for the UWP platform
+        [SerializeField] private AndroidNotifications m_androidNotifications; // Only for the Android platform
+
         [Header("Unity - Basic Components")]
         [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
@@ -528,6 +523,7 @@ namespace AdrianMiasik
             m_hotkeyDetector.ResumeInputs();
         }
 
+        // TODO: Support Android Platform?
         private IEnumerator ValidateStreamingAssets()
         {
             // Fetch directory
