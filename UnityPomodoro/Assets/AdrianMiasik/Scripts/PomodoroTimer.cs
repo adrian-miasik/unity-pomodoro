@@ -81,7 +81,7 @@ namespace AdrianMiasik
         [SerializeField] private AndroidNotifications m_androidNotifications; // Only for the Android platform
 
         [Header("Unity - Basic Components")]
-        [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
+        [SerializeField] private TMP_InputField m_labelText; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
         [SerializeField] private AudioSource m_alarmSource;
@@ -704,15 +704,15 @@ namespace AdrianMiasik
                     m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
                     // Show timer context
-                    m_text.gameObject.SetActive(true);
+                    m_labelText.gameObject.SetActive(true);
                     
                     if (!m_digitFormat.m_isOnBreak)
                     {
-                        m_text.text = "Set a work time";
+                        m_labelText.text = "Set a work time";
                     }
                     else
                     {
-                        m_text.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
+                        m_labelText.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
                     }
 
                     // Show digits and hide completion label
@@ -732,7 +732,7 @@ namespace AdrianMiasik
 
                     m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
-                    m_text.text = "Running";
+                    m_labelText.text = "Running";
                     
                     // Deselection
                     ClearSelection();
@@ -747,14 +747,14 @@ namespace AdrianMiasik
                     break;
 
                 case States.PAUSED:
-                    m_text.text = "Paused";
+                    m_labelText.text = "Paused";
                     ResetDigitFadeAnim();
                     break;
 
                 case States.COMPLETE:
 
                     // Hide state text
-                    m_text.gameObject.SetActive(false);
+                    m_labelText.gameObject.SetActive(false);
 
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
@@ -834,7 +834,7 @@ namespace AdrianMiasik
             {
                 if (m_state != States.COMPLETE)
                 {
-                    m_text.gameObject.SetActive(true);
+                    m_labelText.gameObject.SetActive(true);
                     if (GetTimerSettings().m_longBreaks)
                     {
                         m_tomatoCounter.gameObject.SetActive(true);
@@ -843,7 +843,7 @@ namespace AdrianMiasik
             }
             else
             {
-                m_text.gameObject.SetActive(false);
+                m_labelText.gameObject.SetActive(false);
                 if (GetTimerSettings().m_longBreaks)
                 {
                     m_tomatoCounter.gameObject.SetActive(false);
@@ -1431,7 +1431,7 @@ namespace AdrianMiasik
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             // State text
-            m_text.color = currentColors.m_backgroundHighlight;
+            m_labelText.textComponent.color = currentColors.m_backgroundHighlight;
             
             // Ring background
             m_ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
