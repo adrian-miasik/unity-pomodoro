@@ -19,15 +19,45 @@ namespace AdrianMiasik.Components.Specific
     /// </summary>
     public class HotkeyDetector : MonoBehaviour
     {
+        [SerializeField] private EventSystemSelectionTracker m_eventSystemSelectionTracker;
+        [SerializeField] private List<GameObject> m_selectionsThatPreventInputs;
+
         private PomodoroTimer timer;
         private bool isInitialized;
 
         private bool ignoreInput;
+        private bool ignoreInputDueToSelection;
 
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
+
+            // Register event
+            m_eventSystemSelectionTracker.OnSelectionChange.AddListener(OnSelectionChange);
+
             isInitialized = true;
+        }
+
+        /// <summary>
+        /// Invoked everytime theres a new selection change.
+        /// </summary>
+        /// <param name="previousSelection"></param>
+        /// <param name="newSelection"></param>
+        private void OnSelectionChange(GameObject previousSelection, GameObject newSelection)
+        {
+            // Debug.Log("New selection: " + newSelection.gameObject.name, newSelection.gameObject);
+
+            foreach (GameObject selection in m_selectionsThatPreventInputs)
+            {
+                if (selection == newSelection)
+                {
+                    Debug.Log("Preventing hotkeys and shortcuts due to selection");
+                    ignoreInputDueToSelection = true;
+                    return;
+                }
+            }
+
+            ignoreInputDueToSelection = false;
         }
 
         private void Update()
@@ -37,11 +67,11 @@ namespace AdrianMiasik.Components.Specific
                 return;
             }
 
-            if (ignoreInput)
+            if (ignoreInput || ignoreInputDueToSelection)
             {
                 return;
             }
-            
+
             ProcessKeys();
             ProcessKeybinds();
         }
