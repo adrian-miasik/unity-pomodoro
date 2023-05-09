@@ -75,7 +75,9 @@ namespace AdrianMiasik
 
         [Header("Unity Pomodoro - Platform Specific Managers")]
         [SerializeField] private SteamManager m_steamManager; // Disable on Android and WSA platforms
+        // ReSharper disable once NotAccessedField.Local
         [SerializeField] private UWPNotifications m_uwpNotifications; // Only for the UWP platform
+        // ReSharper disable once NotAccessedField.Local
         [SerializeField] private AndroidNotifications m_androidNotifications; // Only for the Android platform
 
         [Header("Unity - Basic Components")]
