@@ -2528,10 +2528,11 @@ GameObject:
   m_Component:
   - component: {fileID: 309434014}
   - component: {fileID: 309434017}
+  - component: {fileID: 309434018}
   - component: {fileID: 309434016}
   - component: {fileID: 309434015}
   m_Layer: 5
-  m_Name: InputText
+  m_Name: InputLabelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2643,7 +2644,7 @@ MonoBehaviour:
       m_Calls: []
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
-  m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
+  m_SelectionColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5019608}
   m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
@@ -2694,6 +2695,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309434013}
   m_CullTransparentMesh: 1
+--- !u!114 &309434018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309434013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8b49d30ced44a9ad5ec5607d6c0a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inputText: {fileID: 309434015}
 --- !u!1001 &325038399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4318,11 +4332,11 @@ MonoBehaviour:
   m_steamManager: {fileID: 735095294}
   m_uwpNotifications: {fileID: 943758001}
   m_androidNotifications: {fileID: 943758002}
-  m_labelText: {fileID: 309434015}
   m_ring: {fileID: 361292848}
   m_ringBackground: {fileID: 1090976625}
   m_alarmSource: {fileID: 504182706}
   m_background: {fileID: 407842496}
+  m_labelText: {fileID: 309434018}
   m_overlay: {fileID: 697938272}
   m_translucentImageSource: {fileID: 248574412}
   m_completionLabel: {fileID: 222858663}
@@ -10206,7 +10220,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter text...
+  m_text: Enter custom label...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 11ce78b5b78ee0a4eb69b735c31488aa, type: 2}
   m_sharedMaterial: {fileID: -415692639485963590, guid: 11ce78b5b78ee0a4eb69b735c31488aa, type: 2}

@@ -81,13 +81,13 @@ namespace AdrianMiasik
         [SerializeField] private AndroidNotifications m_androidNotifications; // Only for the Android platform
 
         [Header("Unity - Basic Components")]
-        [SerializeField] private TMP_InputField m_labelText; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
         [SerializeField] private AudioSource m_alarmSource;
 
         [Header("Unity Pomodoro - Custom Components")]
         [SerializeField] private Background m_background;
+        [SerializeField] private InputLabelText m_labelText; // Text used to display label + current state
         [SerializeField] private BlurOverlay m_overlay;
         [SerializeField] private TranslucentImageSource m_translucentImageSource; // Necessary reference for blur
         [SerializeField] private CompletionLabel m_completionLabel;
@@ -631,6 +631,7 @@ namespace AdrianMiasik
             
             // Components
             m_background.Initialize(this);
+            m_labelText.Initialize(this);
             m_overlay.Initialize(this);
             m_digitFormat.Initialize(this, GetTimerSettings().m_format);
             m_completionLabel.Initialize(this);
@@ -657,6 +658,7 @@ namespace AdrianMiasik
             m_sidebarPages.Initialize(this);
 
             // Register elements that need updating per timer state change
+            timerElements.Add(m_labelText);
             timerElements.Add(m_rightButton);
             timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampGhost);
@@ -689,6 +691,9 @@ namespace AdrianMiasik
             m_state = desiredState;
             Theme theme = m_themeManager.GetTheme();
 
+            // Workaround...
+            m_labelText.gameObject.SetActive(true);
+
             // Update the registered timer elements
             foreach (ITimerState element in timerElements)
             {
@@ -705,15 +710,16 @@ namespace AdrianMiasik
                     
                     // Show timer context
                     m_labelText.gameObject.SetActive(true);
-                    
-                    if (!m_digitFormat.m_isOnBreak)
-                    {
-                        m_labelText.text = "Set a work time";
-                    }
-                    else
-                    {
-                        m_labelText.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
-                    }
+                    m_labelText.ClearSuffix();
+
+                    // if (!m_digitFormat.m_isOnBreak)
+                    // {
+                    //     m_labelText.text = "Set a work time";
+                    // }
+                    // else
+                    // {
+                    //     m_labelText.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
+                    // }
 
                     // Show digits and hide completion label
                     m_digitFormat.Show();
@@ -731,8 +737,7 @@ namespace AdrianMiasik
                     animateRingProgress = false;
 
                     m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
-                    
-                    m_labelText.text = "Running";
+                    m_labelText.SetSuffix("Running");
                     
                     // Deselection
                     ClearSelection();
@@ -747,7 +752,7 @@ namespace AdrianMiasik
                     break;
 
                 case States.PAUSED:
-                    m_labelText.text = "Paused";
+                    m_labelText.SetSuffix("Paused");
                     ResetDigitFadeAnim();
                     break;
 
@@ -755,6 +760,7 @@ namespace AdrianMiasik
 
                     // Hide state text
                     m_labelText.gameObject.SetActive(false);
+                    m_labelText.ClearSuffix();
 
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
@@ -1431,7 +1437,7 @@ namespace AdrianMiasik
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             // State text
-            m_labelText.textComponent.color = currentColors.m_backgroundHighlight;
+            m_labelText.SetTextColor(currentColors.m_backgroundHighlight);
             
             // Ring background
             m_ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_backgroundHighlight);

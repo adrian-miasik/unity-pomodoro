@@ -262,7 +262,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
   m_FloatCurves:
   - curve:
       serializedVersion: 2
@@ -1263,7 +1263,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1291,7 +1291,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1319,7 +1319,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
     classID: 224
     script: {fileID: 0}
   m_EulerEditorCurves: []
