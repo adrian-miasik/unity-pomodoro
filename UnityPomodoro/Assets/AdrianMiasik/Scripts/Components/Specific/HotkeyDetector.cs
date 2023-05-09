@@ -51,11 +51,16 @@ namespace AdrianMiasik.Components.Specific
             {
                 if (selection == newSelection)
                 {
-                    Debug.Log("Preventing hotkeys and shortcuts due to selection");
+                    // Debug.Log("Preventing hotkeys and shortcuts due to selection.");
                     ignoreInputDueToSelection = true;
                     return;
                 }
             }
+
+            // if (ignoreInputDueToSelection)
+            // {
+            //     Debug.Log("Resuming hotkeys and shortcuts from selection.");
+            // }
 
             ignoreInputDueToSelection = false;
         }
