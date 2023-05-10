@@ -30,6 +30,10 @@ namespace AdrianMiasik.Components.Core
 
             // Register event
             m_inputText.onSubmit.AddListener(SetUserText);
+
+            // Set default themes
+            SetTextColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
+            m_inputText.placeholder.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
         }
 
         /// <summary>
@@ -189,12 +193,6 @@ namespace AdrianMiasik.Components.Core
                     Debug.LogWarning("This timer state is not currently supported.");
                     break;
             }
-        }
-
-        public override void ColorUpdate(Theme theme)
-        {
-            // TODO: Theme support
-            // SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
         }
     }
 }
