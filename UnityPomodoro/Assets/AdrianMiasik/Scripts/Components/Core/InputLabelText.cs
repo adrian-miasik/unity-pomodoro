@@ -10,10 +10,12 @@ namespace AdrianMiasik.Components.Core
     {
         [SerializeField] private TMP_InputField m_inputText;
 
+        // A bool tracking if a timer state label is overridden (Use custom user text/default fallback?)
         private bool isOverridingDefaultWorkText = false;
         private bool isOverridingDefaultBreakText = false;
         private bool isOverridingDefaultLongBreakText = false;
 
+        // Custom user text for each timer state/context
         private string workText;
         private string breakText;
         private string longBreakText;
@@ -46,6 +48,11 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
+        /// <summary>
+        /// Set's the internal string cache based on the current timer state/context.
+        /// </summary>
+        /// <param name="desiredText"></param>
+        /// <param name="isOverridingDefaultText"></param>
         private void SetUserStateText(string desiredText, bool isOverridingDefaultText)
         {
             if (!timer.IsOnBreak())
@@ -68,6 +75,10 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
+        /// <summary>
+        /// Return's the custom user text for the current timer state/context.
+        /// </summary>
+        /// <returns></returns>
         private string GetUserStateText()
         {
             if (!timer.IsOnBreak())
@@ -79,6 +90,10 @@ namespace AdrianMiasik.Components.Core
         }
 
         public void SetSuffix(string suffix)
+        /// <summary>
+        /// Adds a suffix to the input label text (Only if the text is custom and not default)
+        /// </summary>
+        /// <param name="suffix"></param>
         {
             if (string.IsNullOrEmpty(GetUserStateText()))
             {
@@ -92,6 +107,9 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
+        /// <summary>
+        /// Removes the suffix from the input label text. (Suffix only seen if text is custom)
+        /// </summary>
         public void ClearSuffix()
         {
             // If we are using custom labels...
@@ -102,6 +120,10 @@ namespace AdrianMiasik.Components.Core
             }
         }
 
+        /// <summary>
+        /// Is the current timer state using custom user text?
+        /// </summary>
+        /// <returns></returns>
         private bool IsOverridingDefaultStateText()
         {
             if (!timer.IsOnBreak())
@@ -112,6 +134,10 @@ namespace AdrianMiasik.Components.Core
             return !timer.IsOnLongBreak() ? isOverridingDefaultBreakText : isOverridingDefaultLongBreakText;
         }
 
+        /// <summary>
+        /// Sets the font color to the provided desired color.
+        /// </summary>
+        /// <param name="desiredColor"></param>
         public void SetTextColor(Color desiredColor)
         {
             m_inputText.textComponent.color = desiredColor;
