@@ -152,7 +152,6 @@ namespace AdrianMiasik.Components.Core
                     // If we are using defaults...Use pre-defined text
                     if (!IsOverridingDefaultStateText())
                     {
-                        SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                         if (!Timer.IsOnBreak())
                         {
                             m_inputText.text = "Set a work time";
@@ -161,6 +160,9 @@ namespace AdrianMiasik.Components.Core
                         {
                             m_inputText.text = !Timer.IsOnLongBreak() ? "Set a break time" : "Set a long break time";
                         }
+
+                        // Use subtle text coloring
+                        SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     }
                     // Otherwise, using custom user text
                     else
@@ -177,13 +179,11 @@ namespace AdrianMiasik.Components.Core
                 case PomodoroTimer.States.RUNNING:
                     SetSuffix("Running");
                     m_inputText.interactable = false;
-                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
 
                 case PomodoroTimer.States.PAUSED:
                     SetSuffix("Paused");
                     m_inputText.interactable = false;
-                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
 
                 case PomodoroTimer.States.COMPLETE:
@@ -193,6 +193,22 @@ namespace AdrianMiasik.Components.Core
                     Debug.LogWarning("This timer state is not currently supported.");
                     break;
             }
+        }
+
+        public override void ColorUpdate(Theme theme)
+        {
+            if (IsOverridingDefaultStateText())
+            {
+                // Set color to foreground indicating custom label in-use.
+                SetTextColor(theme.GetCurrentColorScheme().m_foreground);
+            }
+            else
+            {
+                // Use subtle text coloring
+                SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
+            }
+
+            m_inputText.placeholder.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
         }
     }
 }
