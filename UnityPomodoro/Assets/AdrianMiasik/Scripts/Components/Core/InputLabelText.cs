@@ -1,4 +1,5 @@
 ﻿using System;
+using AdrianMiasik.Components.Base;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components.Core
 {
-    public class InputLabelText : MonoBehaviour, ITimerState
+    public class InputLabelText : ThemeElement, ITimerState
     {
         [SerializeField] private TMP_InputField m_inputText;
 
@@ -20,32 +21,38 @@ namespace AdrianMiasik.Components.Core
         private string breakText;
         private string longBreakText;
 
-        private PomodoroTimer timer;
-
-        public void Initialize(PomodoroTimer pomodoroTimer)
+        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
         {
-            timer = pomodoroTimer;
+            base.Initialize(pomodoroTimer, updateColors);
 
             // Use default text
-            SetText(string.Empty);
+            SetUserText(string.Empty);
 
             // Register event
-            m_inputText.onSubmit.AddListener(SetText);
+            m_inputText.onSubmit.AddListener(SetUserText);
         }
 
-        private void SetText(string text)
+        /// <summary>
+        /// Sets the label based on the current timer state.
+        /// </summary>
+        /// <param name="text"></param>
+        private void SetUserText(string text)
         {
-            if (text == String.Empty)
+            if (text == String.Empty ||
+                text == "Set a work time" ||
+                text == "Set a break time" ||
+                text == "Set a long break time")
             {
                 SetUserStateText(string.Empty, false);
-
-                // Use defaults
-                StateUpdate(timer.m_state, timer.GetTheme());
             }
             else
             {
                 SetUserStateText(text, true);
+                SetTextColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
             }
+
+            // Apply state context
+            StateUpdate(Timer.m_state, Timer.GetTheme());
         }
 
         /// <summary>
@@ -55,14 +62,14 @@ namespace AdrianMiasik.Components.Core
         /// <param name="isOverridingDefaultText"></param>
         private void SetUserStateText(string desiredText, bool isOverridingDefaultText)
         {
-            if (!timer.IsOnBreak())
+            if (!Timer.IsOnBreak())
             {
                 isOverridingDefaultWorkText = isOverridingDefaultText;
                 workText = desiredText;
             }
             else
             {
-                if (!timer.IsOnLongBreak())
+                if (!Timer.IsOnLongBreak())
                 {
                     isOverridingDefaultBreakText = isOverridingDefaultText;
                     breakText = desiredText;
@@ -81,19 +88,19 @@ namespace AdrianMiasik.Components.Core
         /// <returns></returns>
         private string GetUserStateText()
         {
-            if (!timer.IsOnBreak())
+            if (!Timer.IsOnBreak())
             {
                 return workText;
             }
 
-            return !timer.IsOnLongBreak() ? breakText : longBreakText;
+            return !Timer.IsOnLongBreak() ? breakText : longBreakText;
         }
 
-        public void SetSuffix(string suffix)
         /// <summary>
         /// Adds a suffix to the input label text (Only if the text is custom and not default)
         /// </summary>
         /// <param name="suffix"></param>
+        private void SetSuffix(string suffix)
         {
             if (string.IsNullOrEmpty(GetUserStateText()))
             {
@@ -126,12 +133,12 @@ namespace AdrianMiasik.Components.Core
         /// <returns></returns>
         private bool IsOverridingDefaultStateText()
         {
-            if (!timer.IsOnBreak())
+            if (!Timer.IsOnBreak())
             {
                 return isOverridingDefaultWorkText;
             }
 
-            return !timer.IsOnLongBreak() ? isOverridingDefaultBreakText : isOverridingDefaultLongBreakText;
+            return !Timer.IsOnLongBreak() ? isOverridingDefaultBreakText : isOverridingDefaultLongBreakText;
         }
 
         /// <summary>
@@ -143,38 +150,61 @@ namespace AdrianMiasik.Components.Core
             m_inputText.textComponent.color = desiredColor;
         }
 
+        /// <summary>
+        /// Interface: Invoked everytime the timer changes state + when submitting text
+        /// </summary>
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
-            // If we are using default labels...
-            if (IsOverridingDefaultStateText())
-            {
-                // Early exit!
-                return;
-            }
-
-            // Use pre-defined labels
             switch (state)
             {
                 case PomodoroTimer.States.SETUP:
-                    if (!timer.IsOnBreak())
+                    // If we are using defaults...Use pre-defined text
+                    if (!IsOverridingDefaultStateText())
                     {
-                        m_inputText.text = "Set a work time";
+                        SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
+                        if (!Timer.IsOnBreak())
+                        {
+                            m_inputText.text = "Set a work time";
+                        }
+                        else
+                        {
+                            m_inputText.text = !Timer.IsOnLongBreak() ? "Set a break time" : "Set a long break time";
+                        }
                     }
+                    // Otherwise, using custom user text
                     else
                     {
-                        m_inputText.text = !timer.IsOnLongBreak() ? "Set a break time" : "Set a long break time";
+                        SetTextColor(theme.GetCurrentColorScheme().m_foreground);
                     }
+                    ClearSuffix();
+                    m_inputText.interactable = true;
                     break;
+
                 case PomodoroTimer.States.RUNNING:
+                    SetSuffix("Running");
+                    m_inputText.interactable = false;
+                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
+
                 case PomodoroTimer.States.PAUSED:
+                    SetSuffix("Paused");
+                    m_inputText.interactable = false;
+                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
+
                 case PomodoroTimer.States.COMPLETE:
                     break;
+
                 default:
                     Debug.LogWarning("This timer state is not currently supported.");
                     break;
             }
+        }
+
+        public override void ColorUpdate(Theme theme)
+        {
+            // TODO: Theme support
+            // SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
         }
     }
 }

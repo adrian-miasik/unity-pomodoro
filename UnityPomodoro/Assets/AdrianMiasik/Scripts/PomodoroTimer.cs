@@ -710,7 +710,7 @@ namespace AdrianMiasik
                     
                     // Show timer context
                     m_labelText.gameObject.SetActive(true);
-                    m_labelText.ClearSuffix();
+                    // m_labelText.ClearSuffix();
 
                     // if (!m_digitFormat.m_isOnBreak)
                     // {
@@ -737,7 +737,7 @@ namespace AdrianMiasik
                     animateRingProgress = false;
 
                     m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
-                    m_labelText.SetSuffix("Running");
+                    //m_labelText.SetSuffix("Running");
                     
                     // Deselection
                     ClearSelection();
@@ -752,7 +752,7 @@ namespace AdrianMiasik
                     break;
 
                 case States.PAUSED:
-                    m_labelText.SetSuffix("Paused");
+                    //m_labelText.SetSuffix("Paused");
                     ResetDigitFadeAnim();
                     break;
 
@@ -760,7 +760,7 @@ namespace AdrianMiasik
 
                     // Hide state text
                     m_labelText.gameObject.SetActive(false);
-                    m_labelText.ClearSuffix();
+                    // m_labelText.ClearSuffix();
 
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
