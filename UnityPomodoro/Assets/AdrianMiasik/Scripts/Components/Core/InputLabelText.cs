@@ -115,19 +115,6 @@ namespace AdrianMiasik.Components.Core
         }
 
         /// <summary>
-        /// Removes the suffix from the input label text. (Suffix only seen if text is custom)
-        /// </summary>
-        public void ClearSuffix()
-        {
-            // If we are using custom labels...
-            if (IsOverridingDefaultStateText())
-            {
-                // Apply basic custom label w/ no preset.
-                m_inputText.text = GetUserStateText();
-            }
-        }
-
-        /// <summary>
         /// Is the current timer state using custom user text?
         /// </summary>
         /// <returns></returns>
@@ -174,9 +161,12 @@ namespace AdrianMiasik.Components.Core
                     // Otherwise, using custom user text
                     else
                     {
+                        // Use user custom text
+                        m_inputText.text = GetUserStateText();
+
+                        // Set color to foreground indicating custom label in-use.
                         SetTextColor(theme.GetCurrentColorScheme().m_foreground);
                     }
-                    ClearSuffix();
                     m_inputText.interactable = true;
                     break;
 
