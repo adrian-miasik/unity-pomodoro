@@ -1403,11 +1403,11 @@ namespace AdrianMiasik
                 GenerateFormat();
                 GetTimerSettings().m_format = desiredFormat;
                 UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
+            }
 
-                if (restartCreditsGhost)
-                {
-                    RestartCreditsGhost();
-                }
+            if (restartCreditsGhost)
+            {
+                RestartCreditsGhost();
             }
         }
 
