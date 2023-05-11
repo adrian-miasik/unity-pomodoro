@@ -1510,6 +1510,11 @@ namespace AdrianMiasik
             // Apply modified material
             m_ring.material = ringMaterial;
         }
+
+        public void UpdateInputLabelState()
+        {
+            m_labelText.StateUpdate(m_state, GetTheme());
+        }
         
         /// <summary>
         /// Triggers a <see cref="IColorHook"/> ColorUpdate() on our <see cref="CreditsGhost"/>.

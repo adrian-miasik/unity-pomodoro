@@ -148,6 +148,9 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 FillTomato();
             }
+
+            // Force refresh input label to match current context. Force label to say 'long break', if applicable.
+            Timer.UpdateInputLabelState();
         }
 
         /// <summary>
