@@ -35,6 +35,12 @@ namespace AdrianMiasik.Components.Specific
             Lock();
         }
 
+        public void Restart()
+        {
+            m_timer.Initialize(3);
+            Lock();
+        }
+
         private void OnTimerComplete()
         {
             if (!isPointerHovering && !Timer.IsAboutPageOpen())

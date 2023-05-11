@@ -1394,7 +1394,7 @@ namespace AdrianMiasik
         /// will prompt user with confirmation dialog if necessary.
         /// </summary>
         /// <param name="desiredFormat"></param>
-        public void TryChangeFormat(DigitFormat.SupportedFormats desiredFormat)
+        public void TryChangeFormat(DigitFormat.SupportedFormats desiredFormat, bool restartCreditsGhost = true)
         {
             if (!isTimerBeingSetup && m_state == States.RUNNING)
             {
@@ -1412,6 +1412,11 @@ namespace AdrianMiasik
                 GenerateFormat();
                 GetTimerSettings().m_format = desiredFormat;
                 UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
+            }
+
+            if (restartCreditsGhost)
+            {
+                RestartCreditsGhost();
             }
         }
 
@@ -1882,6 +1887,15 @@ namespace AdrianMiasik
         public void TryCancelConfirmationDialog()
         {
             m_confirmationDialogManager.GetCurrentConfirmationDialog()?.Cancel();
+        }
+
+        public void RestartCreditsGhost()
+        {
+            // Show instantly
+            m_creditsGhost.FadeIn(true);
+
+            // Re-init
+            m_creditsGhost.Restart();
         }
     }
 }
