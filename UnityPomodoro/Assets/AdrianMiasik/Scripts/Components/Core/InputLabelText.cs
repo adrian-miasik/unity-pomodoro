@@ -25,6 +25,9 @@ namespace AdrianMiasik.Components.Core
         {
             base.Initialize(pomodoroTimer, updateColors);
 
+            // Register deselect event -> Submit text on deselection
+            m_inputText.onDeselect.AddListener(OnDeselect);
+            
             // Use default text
             SetUserText(string.Empty);
 
@@ -34,6 +37,14 @@ namespace AdrianMiasik.Components.Core
             // Set default themes
             SetTextColor(Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight);
             m_inputText.placeholder.color = Timer.GetTheme().GetCurrentColorScheme().m_backgroundHighlight;
+        }
+
+        private void OnDeselect(string inputFieldString)
+        {
+            // Submit on deselection
+            m_inputText.onSubmit.Invoke(m_inputText.text);
+
+            // Debug.Log("The input label text has been deselected: " + inputFieldString);
         }
 
         /// <summary>
