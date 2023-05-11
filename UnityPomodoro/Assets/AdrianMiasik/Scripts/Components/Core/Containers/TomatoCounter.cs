@@ -150,7 +150,10 @@ namespace AdrianMiasik.Components.Core.Containers
             }
 
             // Force refresh input label to match current context. Force label to say 'long break', if applicable.
-            Timer.UpdateInputLabelState();
+            Timer.RefreshInputLabel();
+
+            // Force refresh digit values to match current context.
+            Timer.RefreshDigitVisuals();
         }
 
         /// <summary>

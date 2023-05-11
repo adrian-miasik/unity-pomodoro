@@ -758,6 +758,17 @@ namespace AdrianMiasik
 
                 case States.COMPLETE:
 
+                    if (GetTimerSettings().m_longBreaks)
+                    {
+                        // Consume tomatoes once user has started long break via Play
+                        if (IsOnBreak() && IsOnLongBreak())
+                        {
+                            // The timer will remain in 'long break' mode, until the timer is completed. See SwitchState();
+                            m_tomatoCounter.ConsumeTomatoes();
+                            DeactivateLongBreak();
+                        }
+                    }
+
                     // Hide state text
                     m_labelText.gameObject.SetActive(false);
                     // m_labelText.ClearSuffix();
@@ -1080,16 +1091,6 @@ namespace AdrianMiasik
             {
                 isTimerBeingSetup = false;
                 CalculateTimeValues();
-            }
-
-            if (GetTimerSettings().m_longBreaks)
-            {
-                // Remove long break once user has started it via Play
-                if (IsOnBreak() && IsOnLongBreak())
-                {
-                    m_tomatoCounter.ConsumeTomatoes();
-                    m_digitFormat.DeactivateLongBreak();
-                }
             }
 
             SwitchState(States.RUNNING);
@@ -1511,9 +1512,16 @@ namespace AdrianMiasik
             m_ring.material = ringMaterial;
         }
 
-        public void UpdateInputLabelState()
+        // Piper
+        public void RefreshInputLabel()
         {
             m_labelText.StateUpdate(m_state, GetTheme());
+        }
+
+        // Piper
+        public void RefreshDigitVisuals()
+        {
+            m_digitFormat.RefreshDigitVisuals();
         }
         
         /// <summary>
