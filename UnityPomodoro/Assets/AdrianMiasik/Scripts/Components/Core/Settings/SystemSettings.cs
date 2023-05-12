@@ -1,5 +1,5 @@
 ﻿using System;
-using AdrianMiasik.UWP;
+using AdrianMiasik.Components.Specific.Platforms.UWP;
 
 namespace AdrianMiasik.Components.Core.Settings
 {
