@@ -4,7 +4,7 @@ using AdrianMiasik.Components.Core.Settings;
 using UnityEngine.WSA;
 #endif
 
-namespace AdrianMiasik.UWP
+namespace AdrianMiasik.Components.Specific.Platforms.UWP
 {
     /// <summary>
     /// Used to serve Windows OS level notification/toasts to the user. (using the referenced components)

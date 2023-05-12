@@ -1,12 +1,12 @@
 using System;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using UnityEngine;
 #if UNITY_ANDROID
 using Unity.Notifications.Android;
 #endif
-using UnityEngine;
 
-namespace AdrianMiasik.Android
+namespace AdrianMiasik.Components.Specific.Platforms.Android
 {
     /// <summary>
     /// Used to serve Android OS level notifications/toasts to the user. Intended to be used with
