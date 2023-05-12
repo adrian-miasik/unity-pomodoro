@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
+using QFSW.QC;
 #if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 using Steamworks.Data;
@@ -137,6 +138,22 @@ namespace AdrianMiasik.Components.Core.Containers
             
             // Only show if user has more than one tomato
             m_trashcan.gameObject.SetActive(completedTomatoes.Count > 0);
+        }
+
+        [Command("fill-all-tomatoes")]
+        public void FillAllTomatoes()
+        {
+            int iterationCount = m_uncompletedTomatoes.Count; // Cache since m_uncompletedTomatoes will get modified...
+            for (int i = 0; i < iterationCount; i++)
+            {
+                FillTomato();
+            }
+
+            // Force refresh input label to match current context. Force label to say 'long break', if applicable.
+            Timer.RefreshInputLabel();
+
+            // Force refresh digit values to match current context.
+            Timer.RefreshDigitVisuals();
         }
 
         /// <summary>
