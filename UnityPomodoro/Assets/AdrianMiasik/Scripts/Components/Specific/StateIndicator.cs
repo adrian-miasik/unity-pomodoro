@@ -25,8 +25,7 @@ namespace AdrianMiasik.Components.Specific
         [SerializeField] private float m_pausedScale = 0.5f;
 
         [Header("Rect Transforms (Position and Layout)")]
-        [SerializeField] private RectTransform m_setupRT;
-        [SerializeField] private RectTransform m_runningAndPausedRT;
+        [SerializeField] private RectTransform m_defaultRT;
         [SerializeField] private RectTransform m_completeRT;
 
         public override void ColorUpdate(Theme theme)
@@ -46,23 +45,20 @@ namespace AdrianMiasik.Components.Specific
             switch (state)
             {
                 case PomodoroTimer.States.SETUP:
-                    // stateColor = Color.blue;
                     stateSprite = m_setup;
-                    stateRectTransform = m_setupRT;
+                    stateRectTransform = m_defaultRT;
                     m_icon.transform.localScale = Vector3.one * m_defaultScale;
                     break;
 
                 case PomodoroTimer.States.RUNNING:
-                    // stateColor = Color.green;
                     stateSprite = m_running;
-                    stateRectTransform = m_runningAndPausedRT;
+                    stateRectTransform = m_defaultRT;
                     m_icon.transform.localScale = Vector3.one * m_defaultScale;
                     break;
 
                 case PomodoroTimer.States.PAUSED:
-                    // stateColor = Color.grey;
                     stateSprite = m_paused;
-                    stateRectTransform = m_runningAndPausedRT;
+                    stateRectTransform = m_defaultRT;
                     m_icon.transform.localScale = Vector3.one * m_pausedScale;
                     break;
 
