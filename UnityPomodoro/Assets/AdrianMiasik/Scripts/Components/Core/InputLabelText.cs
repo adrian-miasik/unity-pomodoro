@@ -202,13 +202,25 @@ namespace AdrianMiasik.Components.Core
                     break;
 
                 case PomodoroTimer.States.RUNNING:
-                    // SetSuffix("Running");
+                    if (string.IsNullOrEmpty(GetUserStateText()))
+                    {
+                        // Only show suffix
+                        m_inputText.text = "Running";
+                    }
                     m_inputText.interactable = false;
+                    // Use subtle text coloring
+                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
 
                 case PomodoroTimer.States.PAUSED:
-                    // SetSuffix("Paused");
+                    if (string.IsNullOrEmpty(GetUserStateText()))
+                    {
+                        // Only show suffix
+                        m_inputText.text = "Paused";
+                    }
                     m_inputText.interactable = false;
+                    // Use subtle text coloring
+                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
 
                 case PomodoroTimer.States.COMPLETE:
