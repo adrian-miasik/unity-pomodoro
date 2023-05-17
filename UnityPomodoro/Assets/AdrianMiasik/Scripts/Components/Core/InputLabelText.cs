@@ -12,9 +12,9 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private TMP_InputField m_inputText;
 
         // A bool tracking if a timer state label is overridden (Use custom user text/default fallback?)
-        private bool isOverridingDefaultWorkText = false;
-        private bool isOverridingDefaultBreakText = false;
-        private bool isOverridingDefaultLongBreakText = false;
+        private bool isOverridingDefaultWorkText;
+        private bool isOverridingDefaultBreakText;
+        private bool isOverridingDefaultLongBreakText;
 
         // Custom user text for each timer state/context
         private string workText;
