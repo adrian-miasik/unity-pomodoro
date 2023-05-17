@@ -219,20 +219,20 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.6666667
         value: {x: 0, y: 0, z: 0}
-        inSlope: {x: 131.51555, y: 131.51555, z: 131.51555}
-        outSlope: {x: 131.51555, y: 131.51555, z: 131.51555}
+        inSlope: {x: 123.75851, y: 123.75851, z: 123.75851}
+        outSlope: {x: 123.75851, y: 123.75851, z: 123.75851}
         tangentMode: 0
         weightedMode: 3
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.01612361, y: 0.01612361, z: 0.01612361}
+        outWeight: {x: 0.013412655, y: 0.013412655, z: 0.013412655}
       - serializedVersion: 3
         time: 1
-        value: {x: 1, y: 1, z: 1}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
+        value: {x: 0.8, y: 0.8, z: 0.8}
+        inSlope: {x: 0.00076430425, y: 0.00076430425, z: 0.00076430425}
+        outSlope: {x: 0.00076430425, y: 0.00076430425, z: 0.00076430425}
         tangentMode: 0
         weightedMode: 3
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        inWeight: {x: 0.8457528, y: 0.8457528, z: 0.8457528}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -262,7 +262,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/Container/InputLabelText
   m_FloatCurves:
   - curve:
       serializedVersion: 2
@@ -1160,20 +1160,20 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.6666667
         value: 0
-        inSlope: 131.51555
-        outSlope: 131.51555
+        inSlope: 123.75851
+        outSlope: 123.75851
         tangentMode: 0
         weightedMode: 3
         inWeight: 0.33333334
-        outWeight: 0.01612361
+        outWeight: 0.013412655
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        value: 0.8
+        inSlope: 0.00076430425
+        outSlope: 0.00076430425
+        tangentMode: 0
         weightedMode: 3
-        inWeight: 0.33333334
+        inWeight: 0.8457528
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -1188,20 +1188,20 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.6666667
         value: 0
-        inSlope: 131.51555
-        outSlope: 131.51555
+        inSlope: 123.75851
+        outSlope: 123.75851
         tangentMode: 0
         weightedMode: 3
         inWeight: 0.33333334
-        outWeight: 0.01612361
+        outWeight: 0.013412655
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        value: 0.8
+        inSlope: 0.00076430425
+        outSlope: 0.00076430425
+        tangentMode: 0
         weightedMode: 3
-        inWeight: 0.33333334
+        inWeight: 0.8457528
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -1216,20 +1216,20 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.6666667
         value: 0
-        inSlope: 131.51555
-        outSlope: 131.51555
+        inSlope: 123.75851
+        outSlope: 123.75851
         tangentMode: 0
         weightedMode: 3
         inWeight: 0.33333334
-        outWeight: 0.01612361
+        outWeight: 0.013412655
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        value: 0.8
+        inSlope: 0.00076430425
+        outSlope: 0.00076430425
+        tangentMode: 0
         weightedMode: 3
-        inWeight: 0.33333334
+        inWeight: 0.8457528
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -1263,7 +1263,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/Container/InputLabelText
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1291,7 +1291,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/Container/InputLabelText
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1319,7 +1319,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/InputLabelText
+    path: Canvas'/Canvas/UI Container/Padding/Body/Ring/Pages/TimerPage/Container/InputLabelText
     classID: 224
     script: {fileID: 0}
   m_EulerEditorCurves: []
