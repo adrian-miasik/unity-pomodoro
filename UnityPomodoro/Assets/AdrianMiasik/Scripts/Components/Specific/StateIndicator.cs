@@ -63,7 +63,7 @@ namespace AdrianMiasik.Components.Specific
                     break;
 
                 case PomodoroTimer.States.COMPLETE:
-                    stateColor = theme.GetCurrentColorScheme().m_running;
+                    // stateColor = theme.GetCurrentColorScheme().m_running;
                     stateSprite = m_complete;
                     stateRectTransform = m_completeRT;
                     m_icon.transform.localScale = Vector3.one * m_defaultScale;
