@@ -125,23 +125,23 @@ namespace AdrianMiasik.Components.Core
             return !Timer.IsOnLongBreak() ? breakText : longBreakText;
         }
 
-        /// <summary>
-        /// Adds a suffix to the input label text (Only if the text is custom and not default)
-        /// </summary>
-        /// <param name="suffix"></param>
-        private void SetSuffix(string suffix)
-        {
-            if (string.IsNullOrEmpty(GetUserStateText()))
-            {
-                // Only show suffix
-                m_inputText.text = suffix;
-            }
-            else
-            {
-                // Show user text + suffix
-                m_inputText.text = GetUserStateText() + ": " + suffix;
-            }
-        }
+        // /// <summary>
+        // /// Adds a suffix to the input label text (Only if the text is custom and not default)
+        // /// </summary>
+        // /// <param name="suffix"></param>
+        // private void SetSuffix(string suffix)
+        // {
+        //     if (string.IsNullOrEmpty(GetUserStateText()))
+        //     {
+        //         // Only show suffix
+        //         m_inputText.text = suffix;
+        //     }
+        //     else
+        //     {
+        //         // Show user text + suffix
+        //         m_inputText.text = GetUserStateText() + ": " + suffix;
+        //     }
+        // }
 
         /// <summary>
         /// Is the current timer state using custom user text?
@@ -202,12 +202,12 @@ namespace AdrianMiasik.Components.Core
                     break;
 
                 case PomodoroTimer.States.RUNNING:
-                    SetSuffix("Running");
+                    // SetSuffix("Running");
                     m_inputText.interactable = false;
                     break;
 
                 case PomodoroTimer.States.PAUSED:
-                    SetSuffix("Paused");
+                    // SetSuffix("Paused");
                     m_inputText.interactable = false;
                     break;
 
