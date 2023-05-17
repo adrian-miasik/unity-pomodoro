@@ -27,9 +27,7 @@ namespace AdrianMiasik.Components.Core
 
             // Register deselect event -> Submit text on deselection
             m_inputText.onDeselect.AddListener(OnDeselect);
-            
-            m_inputText.onSelect.AddListener(OnSelect);
-            
+
             // Use default text
             SetUserText(string.Empty);
 
@@ -47,18 +45,6 @@ namespace AdrianMiasik.Components.Core
             m_inputText.onSubmit.Invoke(m_inputText.text);
 
             // Debug.Log("The input label text has been deselected: " + inputFieldString);
-        }
-
-        private void OnSelect(string inputFieldString)
-        {
-            Debug.Log("Input text has been selected! TODO: Find X position for icon");
-
-            Vector3 xPosition = m_inputText.textComponent.textInfo.characterInfo
-                [m_inputText.textComponent.textInfo.characterCount - 1].bottomRight;
-
-            // Local position
-            // TODO: Convert to world position and move StateIndicator there
-            Debug.Log("X position: " + xPosition);
         }
 
         /// <summary>
