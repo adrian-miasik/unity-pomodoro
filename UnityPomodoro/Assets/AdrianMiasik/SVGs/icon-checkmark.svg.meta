@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f220233a22aab5247948ba702f264a8f
+guid: 5a055132522f0d74f9893b82c6970e80
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -18,8 +18,8 @@ ScriptedImporter:
   viewportOptions: 0
   preserveViewport: 0
   advancedMode: 0
-  predefinedResolutionIndex: 3
-  targetResolution: 480
+  predefinedResolutionIndex: 1
+  targetResolution: 1080
   resolutionMultiplier: 1
   stepDistance: 10
   samplingStepDistance: 100
@@ -34,7 +34,7 @@ ScriptedImporter:
   wrapMode: 1
   filterMode: 1
   sampleCount: 4
-  preserveSVGImageAspect: 1
+  preserveSVGImageAspect: 0
   useSVGPixelsPerUnit: 0
   spriteData:
     TessellationDetail: 0
@@ -50,5 +50,5 @@ ScriptedImporter:
         y: 0
         width: 0
         height: 0
-      spriteID: 8bb99d8c73cc1024296a7206b496346f
+      spriteID: ac29527a8f31f5c45a47995edb9d1792
     PhysicsOutlines: []

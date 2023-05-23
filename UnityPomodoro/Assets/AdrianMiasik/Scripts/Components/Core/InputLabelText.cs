@@ -12,9 +12,9 @@ namespace AdrianMiasik.Components.Core
         [SerializeField] private TMP_InputField m_inputText;
 
         // A bool tracking if a timer state label is overridden (Use custom user text/default fallback?)
-        private bool isOverridingDefaultWorkText = false;
-        private bool isOverridingDefaultBreakText = false;
-        private bool isOverridingDefaultLongBreakText = false;
+        private bool isOverridingDefaultWorkText;
+        private bool isOverridingDefaultBreakText;
+        private bool isOverridingDefaultLongBreakText;
 
         // Custom user text for each timer state/context
         private string workText;
@@ -27,7 +27,7 @@ namespace AdrianMiasik.Components.Core
 
             // Register deselect event -> Submit text on deselection
             m_inputText.onDeselect.AddListener(OnDeselect);
-            
+
             // Use default text
             SetUserText(string.Empty);
 
@@ -111,23 +111,23 @@ namespace AdrianMiasik.Components.Core
             return !Timer.IsOnLongBreak() ? breakText : longBreakText;
         }
 
-        /// <summary>
-        /// Adds a suffix to the input label text (Only if the text is custom and not default)
-        /// </summary>
-        /// <param name="suffix"></param>
-        private void SetSuffix(string suffix)
-        {
-            if (string.IsNullOrEmpty(GetUserStateText()))
-            {
-                // Only show suffix
-                m_inputText.text = suffix;
-            }
-            else
-            {
-                // Show user text + suffix
-                m_inputText.text = GetUserStateText() + ": " + suffix;
-            }
-        }
+        // /// <summary>
+        // /// Adds a suffix to the input label text (Only if the text is custom and not default)
+        // /// </summary>
+        // /// <param name="suffix"></param>
+        // private void SetSuffix(string suffix)
+        // {
+        //     if (string.IsNullOrEmpty(GetUserStateText()))
+        //     {
+        //         // Only show suffix
+        //         m_inputText.text = suffix;
+        //     }
+        //     else
+        //     {
+        //         // Show user text + suffix
+        //         m_inputText.text = GetUserStateText() + ": " + suffix;
+        //     }
+        // }
 
         /// <summary>
         /// Is the current timer state using custom user text?
@@ -188,13 +188,25 @@ namespace AdrianMiasik.Components.Core
                     break;
 
                 case PomodoroTimer.States.RUNNING:
-                    SetSuffix("Running");
+                    if (string.IsNullOrEmpty(GetUserStateText()))
+                    {
+                        // Only show suffix
+                        m_inputText.text = "Running";
+                    }
                     m_inputText.interactable = false;
+                    // Use subtle text coloring
+                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
 
                 case PomodoroTimer.States.PAUSED:
-                    SetSuffix("Paused");
+                    if (string.IsNullOrEmpty(GetUserStateText()))
+                    {
+                        // Only show suffix
+                        m_inputText.text = "Paused";
+                    }
                     m_inputText.interactable = false;
+                    // Use subtle text coloring
+                    SetTextColor(theme.GetCurrentColorScheme().m_backgroundHighlight);
                     break;
 
                 case PomodoroTimer.States.COMPLETE:

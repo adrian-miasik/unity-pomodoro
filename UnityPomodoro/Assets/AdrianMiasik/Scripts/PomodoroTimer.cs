@@ -87,6 +87,7 @@ namespace AdrianMiasik
 
         [Header("Unity Pomodoro - Custom Components")]
         [SerializeField] private Background m_background;
+        [SerializeField] private StateIndicator m_stateIndicator;
         [SerializeField] private InputLabelText m_labelText; // Text used to display label + current state
         [SerializeField] private BlurOverlay m_overlay;
         [SerializeField] private TranslucentImageSource m_translucentImageSource; // Necessary reference for blur
@@ -631,6 +632,7 @@ namespace AdrianMiasik
             
             // Components
             m_background.Initialize(this);
+            m_stateIndicator.Initialize(this);
             m_labelText.Initialize(this);
             m_overlay.Initialize(this);
             m_digitFormat.Initialize(this, GetTimerSettings().m_format);
@@ -659,6 +661,7 @@ namespace AdrianMiasik
 
             // Register elements that need updating per timer state change
             timerElements.Add(m_labelText);
+            timerElements.Add(m_stateIndicator);
             timerElements.Add(m_rightButton);
             timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampGhost);
