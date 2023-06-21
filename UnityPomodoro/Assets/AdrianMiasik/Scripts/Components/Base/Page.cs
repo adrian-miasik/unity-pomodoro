@@ -21,7 +21,7 @@ namespace AdrianMiasik.Components.Base
         private Action onPageAnimCompletion;
 
         private bool isAnimating;
-        private bool isOpen;
+        public bool isOpen;
 
         private void Update()
         {

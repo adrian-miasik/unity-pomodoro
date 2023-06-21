@@ -1015,6 +1015,19 @@ namespace AdrianMiasik
             m_creditsGhost.Lock();
             m_creditsGhost.FadeIn();
         }
+        
+        ///<summary>
+        /// Shows Todo content, hides main content and shows credits bubble.
+        /// </sumary>
+
+        public void ShowTodo()
+        {
+            m_sidebarPages.SwitchToTodoPage();
+                
+            // // Special behaviour that's used to display/open up credits bubble when on this page
+            // m_creditsGhost.Lock();
+            // m_creditsGhost.FadeIn();
+        }
 
         /// <summary>
         /// Shows main content, hides info, and hides credits bubble
@@ -1323,6 +1336,15 @@ namespace AdrianMiasik
         public bool IsAboutPageOpen()
         {
             return m_sidebarPages.IsAboutPageOpen();
+        }
+
+        /// <summary>
+        /// Is our <see cref="TodoPage"/> currently open and visible?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsTodoPageOpen()
+        {
+            return m_sidebarPages.IsTodoPageOpen();
         }
         
         /// <summary>

@@ -16,6 +16,7 @@ namespace AdrianMiasik.Components.Core.Containers
     public class SidebarPages : ItemSelector<Page>
     {
         [SerializeField] private TimerPage m_timerPage;
+        [SerializeField] private TodoPage m_todoPage;
         [SerializeField] private SettingsPage m_settingsPage;
         [SerializeField] private AboutPage m_aboutPage;
 
@@ -26,12 +27,14 @@ namespace AdrianMiasik.Components.Core.Containers
             base.Initialize(pomodoroTimer, updateColors);
             
             m_timerPage.Initialize(pomodoroTimer);
+            m_todoPage.Initialize(pomodoroTimer);
             m_settingsPage.Initialize(pomodoroTimer);
             m_aboutPage.Initialize(pomodoroTimer);
 
             List<Page> pages = new List<Page>
             {
                 m_timerPage,
+                m_todoPage,
                 m_settingsPage,
                 m_aboutPage
             };
@@ -134,6 +137,11 @@ namespace AdrianMiasik.Components.Core.Containers
             Select(m_settingsPage);
         }
 
+        public void SwitchToTodoPage()
+        {
+            Select(m_todoPage);
+        }
+
         public void SwitchToAboutPage()
         {
             Select(m_aboutPage);
@@ -152,6 +160,11 @@ namespace AdrianMiasik.Components.Core.Containers
         public bool IsAboutPageOpen()
         {
             return m_aboutPage.IsPageOpen();
+        }
+
+        public bool IsTodoPageOpen()
+        {
+            return m_todoPage.IsPageOpen();
         }
 
         public bool IsTimerPageOpen()
