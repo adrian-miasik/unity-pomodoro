@@ -23,6 +23,8 @@ namespace AdrianMiasik.Components.Specific
     {
         public TodoPage todoPage;
         private bool todoIsOpen;
+        public CustomizationPage customizationPage;
+        private bool customizationIsOpen;
         private PomodoroTimer timer;
         private bool isInitialized;
 
@@ -46,6 +48,7 @@ namespace AdrianMiasik.Components.Specific
             }
             
             todoIsOpen = todoPage.isOpen;
+            customizationIsOpen = customizationPage.isOpen;
             ProcessKeys();
             ProcessKeybinds();
         }
@@ -55,7 +58,7 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         private void ProcessKeys()
         {
-            if (!todoIsOpen)
+            if (!todoIsOpen && !customizationIsOpen)
             {
 
                 // Play / pause the timer
@@ -195,7 +198,7 @@ namespace AdrianMiasik.Components.Specific
         private void ProcessKeybinds()
         {
             // Restart timer / Switch timer mode
-            if (Input.GetKeyDown(KeyCode.R) && !todoIsOpen)
+            if (Input.GetKeyDown(KeyCode.R) && !todoIsOpen && !customizationIsOpen)
             {
                 if (!IsUserHoldingControl())
                 {

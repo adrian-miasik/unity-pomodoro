@@ -1028,6 +1028,17 @@ namespace AdrianMiasik
             // m_creditsGhost.Lock();
             // m_creditsGhost.FadeIn();
         }
+        ///<summary>
+        /// Shows Customization content, hides main content and shows credits bubble.
+        /// </sumary>
+        public void ShowCustomization()
+        {
+            m_sidebarPages.SwitchToCustomizationPage();
+                
+            // // Special behaviour that's used to display/open up credits bubble when on this page
+            // m_creditsGhost.Lock();
+            // m_creditsGhost.FadeIn();
+        }
 
         /// <summary>
         /// Shows main content, hides info, and hides credits bubble
@@ -1345,6 +1356,15 @@ namespace AdrianMiasik
         public bool IsTodoPageOpen()
         {
             return m_sidebarPages.IsTodoPageOpen();
+        }
+
+        /// <summary>
+        /// Is our <see cref="CustomizationPage"/> currently open and visible?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsCustomizationPageOpen()
+        {
+            return m_sidebarPages.IsCustomizationPageOpen();
         }
         
         /// <summary>

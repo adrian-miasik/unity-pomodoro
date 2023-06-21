@@ -17,6 +17,7 @@ namespace AdrianMiasik.Components.Core.Containers
     {
         [SerializeField] private TimerPage m_timerPage;
         [SerializeField] private TodoPage m_todoPage;
+        [SerializeField] private CustomizationPage m_customizationPage;
         [SerializeField] private SettingsPage m_settingsPage;
         [SerializeField] private AboutPage m_aboutPage;
 
@@ -30,11 +31,13 @@ namespace AdrianMiasik.Components.Core.Containers
             m_todoPage.Initialize(pomodoroTimer);
             m_settingsPage.Initialize(pomodoroTimer);
             m_aboutPage.Initialize(pomodoroTimer);
+            m_customizationPage.Initialize(pomodoroTimer);
 
             List<Page> pages = new List<Page>
             {
                 m_timerPage,
                 m_todoPage,
+                m_customizationPage,
                 m_settingsPage,
                 m_aboutPage
             };
@@ -141,6 +144,10 @@ namespace AdrianMiasik.Components.Core.Containers
         {
             Select(m_todoPage);
         }
+        public void SwitchToCustomizationPage()
+        {
+            Select(m_customizationPage);
+        }
 
         public void SwitchToAboutPage()
         {
@@ -165,6 +172,10 @@ namespace AdrianMiasik.Components.Core.Containers
         public bool IsTodoPageOpen()
         {
             return m_todoPage.IsPageOpen();
+        }
+        public bool IsCustomizationPageOpen()
+        {
+            return m_customizationPage.IsPageOpen();
         }
 
         public bool IsTimerPageOpen()

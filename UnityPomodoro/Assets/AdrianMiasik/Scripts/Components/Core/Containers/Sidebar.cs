@@ -39,6 +39,7 @@ namespace AdrianMiasik.Components.Core.Containers
         [Header("Sidebar Rows - Content")] 
         [SerializeField] private SidebarRow m_pomodoroTimerRow;
         [SerializeField] private SidebarRow m_todoRow;
+        [SerializeField] private SidebarRow m_customizationRow;
         [SerializeField] private SidebarRow m_settingsRow;
         [SerializeField] private SidebarRow m_documentationRow;
         [SerializeField] private SidebarRow m_aboutRow;
@@ -81,6 +82,7 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 m_pomodoroTimerRow,
                 m_todoRow,
+                m_customizationRow,
                 m_documentationRow,
                 m_aboutRow,
                 m_settingsRow
@@ -105,6 +107,7 @@ namespace AdrianMiasik.Components.Core.Containers
             m_pomodoroTimerRow.GetClickButton().m_onClick.AddListener(Timer.ShowMainContent);
             m_settingsRow.GetClickButton().m_onClick.AddListener(Timer.ShowSettings);
             m_todoRow.GetClickButton().m_onClick.AddListener(Timer.ShowTodo);
+            m_customizationRow.GetClickButton().m_onClick.AddListener(Timer.ShowCustomization);
             m_documentationRow.GetClickButton().m_onClick.AddListener(() =>
             {
                 m_documentationRow.GetClickButton().OpenURL("https://adrian-miasik.github.io/unity-pomodoro-docs/");

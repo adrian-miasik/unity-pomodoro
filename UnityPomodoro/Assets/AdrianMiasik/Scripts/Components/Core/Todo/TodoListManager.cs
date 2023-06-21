@@ -25,7 +25,6 @@ public class TodoListManager : MonoBehaviour
     private void AddListItem()
     {
         string inputText = inputField.text;
-        Debug.Log(inputText);
         GameObject newListItem = Instantiate(listItemPrefab, contentTransform);
         ListItem ListItem = newListItem.GetComponent<ListItem>();
         ListItem.Initialize(inputText);
