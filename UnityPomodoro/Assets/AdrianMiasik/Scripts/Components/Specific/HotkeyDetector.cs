@@ -9,7 +9,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.UI;using AdrianMiasik.Components.Core.Items.Pages;
+using System.Collections.Generic;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -20,11 +21,12 @@ namespace AdrianMiasik.Components.Specific
     /// </summary>
     public class HotkeyDetector : MonoBehaviour
     {
+        public TodoPage todoPage;
+        private bool todoIsOpen;
         private PomodoroTimer timer;
         private bool isInitialized;
 
         private bool ignoreInput;
-
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
@@ -43,6 +45,7 @@ namespace AdrianMiasik.Components.Specific
                 return;
             }
             
+            todoIsOpen = todoPage.isOpen;
             ProcessKeys();
             ProcessKeybinds();
         }
@@ -52,74 +55,80 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         private void ProcessKeys()
         {
-            // Play / pause the timer
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (!todoIsOpen)
             {
-                timer.TriggerPlayPause();
-            }
-            
-            // Quick switch
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                timer.TriggerTimerSwitch();
-            }
-            
-            // Theme switch
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                timer.TriggerThemeSwitch();
-            }
 
-            // Switch digit layouts
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
-            }
-
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
-            }
-
-            if (Input.GetKeyDown(KeyCode.F3))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
-            }
-
-            if (Input.GetKeyDown(KeyCode.F4))
-            {
-                timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
-            }
-
-            // Tab between digits
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                List<Selectable> selectables = timer.GetSelections();
-                if (selectables.Count >= 1)
+                // Play / pause the timer
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    // Get only first selection
-                    Selectable selection = selectables[0];
-                    Selectable rightSelection = selection.FindSelectableOnRight();
-                    if (rightSelection != null && rightSelection.gameObject != null)
+                    timer.TriggerPlayPause();
+                }
+                
+                // Quick switch
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    timer.TriggerTimerSwitch();
+                }
+                
+                // Theme switch
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    timer.TriggerThemeSwitch();
+                }
+
+                // Switch digit layouts
+                if (Input.GetKeyDown(KeyCode.F1))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.SS);
+                }
+
+                if (Input.GetKeyDown(KeyCode.F2))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.MM_SS);
+                }
+
+                if (Input.GetKeyDown(KeyCode.F3))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS);
+                }
+
+                if (Input.GetKeyDown(KeyCode.F4))
+                {
+                    timer.TryChangeFormat(DigitFormat.SupportedFormats.HH_MM_SS_MS);
+                }
+
+                // Tab between digits
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    List<Selectable> selectables = timer.GetSelections();
+                    if (selectables.Count >= 1)
                     {
-                        EventSystem.current.SetSelectedGameObject(rightSelection.gameObject);
+                        // Get only first selection
+                        Selectable selection = selectables[0];
+                        Selectable rightSelection = selection.FindSelectableOnRight();
+                        if (rightSelection != null && rightSelection.gameObject != null)
+                        {
+                            EventSystem.current.SetSelectedGameObject(rightSelection.gameObject);
+                        }
                     }
                 }
+
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    timer.TrySubmitConfirmationDialog();
+                }
+
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    // Clear digit selection
+                    timer.ClearSelection();
+
+                    // Cancel confirmation dialog
+                    timer.TryCancelConfirmationDialog();
+                }
+
             }
 
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                timer.TrySubmitConfirmationDialog();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                // Clear digit selection
-                timer.ClearSelection();
-
-                // Cancel confirmation dialog
-                timer.TryCancelConfirmationDialog();
-            }
         }
 
         private void PromptApplicationRestart(bool quitApplicationOnRestartConfirm = false)
@@ -186,7 +195,7 @@ namespace AdrianMiasik.Components.Specific
         private void ProcessKeybinds()
         {
             // Restart timer / Switch timer mode
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && !todoIsOpen)
             {
                 if (!IsUserHoldingControl())
                 {
