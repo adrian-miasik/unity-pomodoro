@@ -5611,8 +5611,8 @@ MonoBehaviour:
   m_ringBackground: {fileID: 1090976625}
   m_alarmSource: {fileID: 504182706}
   m_background: {fileID: 407842496}
-  m_stateIndicator: {fileID: 0}
-  m_labelText: {fileID: 0}
+  m_stateIndicator: {fileID: 1061305494}
+  m_labelText: {fileID: 569089125}
   m_overlay: {fileID: 697938272}
   m_translucentImageSource: {fileID: 248574412}
   m_completionLabel: {fileID: 222858663}
@@ -5620,7 +5620,7 @@ MonoBehaviour:
   m_menuToggleSprite: {fileID: 1617491758}
   m_leftButtonSVGClick: {fileID: 378047032}
   m_rightButton: {fileID: 1430356801}
-  m_breakSlider: {fileID: 0}
+  m_breakSlider: {fileID: 1462252466}
   m_creditsGhost: {fileID: 929885561}
   m_themeSlider: {fileID: 683655080}
   m_sidebarMenu: {fileID: 673880599}
@@ -16054,6 +16054,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6462380844780233066, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
   m_PrefabInstance: {fileID: 1462252463}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1462252466 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6462380844780233064, guid: 7d4c2b71e829d0a4d90e6a76c64d6b14, type: 3}
+  m_PrefabInstance: {fileID: 1462252463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1010cbf5ccdb2b94f81d8a67398be820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1509926444
 GameObject:
   m_ObjectHideFlags: 0
