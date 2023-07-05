@@ -1,16 +1,15 @@
 using System.Collections.Generic;
-using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 #endif
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;using AdrianMiasik.Components.Core.Items.Pages;
-using System.Collections.Generic;
+using UnityEngine.UI;
+using AdrianMiasik.Components.Core.Items.Pages;
 
 namespace AdrianMiasik.Components.Specific
 {
@@ -21,18 +20,55 @@ namespace AdrianMiasik.Components.Specific
     /// </summary>
     public class HotkeyDetector : MonoBehaviour
     {
+        [SerializeField] private EventSystemSelectionTracker m_eventSystemSelectionTracker;
+        [SerializeField] private List<GameObject> m_selectionsThatPreventInputs;
         public TodoPage todoPage;
         private bool todoIsOpen;
         public CustomizationPage customizationPage;
         private bool customizationIsOpen;
+
+        
         private PomodoroTimer timer;
         private bool isInitialized;
 
         private bool ignoreInput;
+        private bool ignoreInputDueToSelection;
+
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
             timer = pomodoroTimer;
+
+            // Register event
+            m_eventSystemSelectionTracker.OnSelectionChange.AddListener(OnSelectionChange);
+
             isInitialized = true;
+        }
+
+        /// <summary>
+        /// Invoked everytime theres a new selection change.
+        /// </summary>
+        /// <param name="previousSelection"></param>
+        /// <param name="newSelection"></param>
+        private void OnSelectionChange(GameObject previousSelection, GameObject newSelection)
+        {
+            // Debug.Log("New selection: " + newSelection.gameObject.name, newSelection.gameObject);
+
+            foreach (GameObject selection in m_selectionsThatPreventInputs)
+            {
+                if (selection == newSelection)
+                {
+                    // Debug.Log("Preventing hotkeys and shortcuts due to selection.");
+                    ignoreInputDueToSelection = true;
+                    return;
+                }
+            }
+
+            // if (ignoreInputDueToSelection)
+            // {
+            //     Debug.Log("Resuming hotkeys and shortcuts from selection.");
+            // }
+
+            ignoreInputDueToSelection = false;
         }
 
         private void Update()
@@ -42,13 +78,16 @@ namespace AdrianMiasik.Components.Specific
                 return;
             }
 
-            if (ignoreInput)
+            if (ignoreInput || ignoreInputDueToSelection)
             {
                 return;
             }
-            
-            todoIsOpen = todoPage.isOpen;
-            customizationIsOpen = customizationPage.isOpen;
+
+// <<<<<<< HEAD
+//             
+//             todoIsOpen = todoPage.isOpen;
+//             customizationIsOpen = customizationPage.isOpen;
+// >>>>>>> develop
             ProcessKeys();
             ProcessKeybinds();
         }
@@ -58,7 +97,7 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         private void ProcessKeys()
         {
-            if (!todoIsOpen && !customizationIsOpen)
+            // if (!todoIsOpen && !customizationIsOpen)
             {
 
                 // Play / pause the timer
@@ -129,16 +168,14 @@ namespace AdrianMiasik.Components.Specific
                     // Cancel confirmation dialog
                     timer.TryCancelConfirmationDialog();
                 }
-
             }
-
         }
 
         private void PromptApplicationRestart(bool quitApplicationOnRestartConfirm = false)
         {
             string topText = "This action will <color=red>reset all settings to their factory defaults.</color>";
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             if (SteamClient.IsValid)
             {
                 topText += " This will also wipe your Steam stats, any unlocked/progressed Steam achievements, and" +
@@ -154,7 +191,7 @@ namespace AdrianMiasik.Components.Specific
             timer.GetConfirmDialogManager().ClearCurrentDialogPopup();
             timer.GetConfirmDialogManager().SpawnConfirmationDialog(() =>
                 {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
                     SteamUserStats.ResetAll(true);
                     SteamUserStats.StoreStats();
                     SteamUserStats.RequestCurrentStats();
@@ -173,7 +210,7 @@ namespace AdrianMiasik.Components.Specific
             UserSettingsSerializer.DeleteSettingsFile("system-settings");
             UserSettingsSerializer.DeleteSettingsFile("timer-settings");
             
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             timer.ShutdownSteamManager();
 #endif
             Debug.Log("Application: Factory Reset");

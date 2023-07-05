@@ -5,7 +5,7 @@ using AdrianMiasik.Components.Core.Helpers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Specific;
 using AdrianMiasik.ScriptableObjects;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 using Steamworks.Data;
 using UnityEditor;
@@ -466,7 +466,7 @@ namespace AdrianMiasik.Components.Core.Containers
             
             // Debug.Log("Second changed from " + previousValue + " to " + newValue);
             
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             if (SteamClient.IsValid)
             {
                 // Add second to User Stats (User for stats and achievements)
@@ -502,7 +502,7 @@ namespace AdrianMiasik.Components.Core.Containers
 #endif
         }
         
-#if UNITY_EDITOR && !UNITY_ANDROID
+#if UNITY_EDITOR && !UNITY_ANDROID && !UNITY_WSA
         [MenuItem("Adrian Miasik/Achievements and Statistics/Display 'All in a day's work' progression")]
         private static void DisplayAchievementAllInADaysWorkProgression()
         {

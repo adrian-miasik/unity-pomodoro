@@ -1,7 +1,7 @@
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.ScriptableObjects;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 using Steamworks.Data;
 #endif
@@ -40,14 +40,14 @@ namespace AdrianMiasik.Components.Specific
             m_toggle.m_onSetToTrueClick.AddListener(() =>
             {
                 pomodoroTimer.GetTheme().SetToDarkMode();
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
                 CalculateRaveToggleAchievementProgression();
 #endif
             });
             m_toggle.m_onSetToFalseClick.AddListener(() =>
             {
                 pomodoroTimer.GetTheme().SetToLightMode();
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
                 CalculateRaveToggleAchievementProgression();
 #endif
             });
@@ -56,7 +56,7 @@ namespace AdrianMiasik.Components.Specific
             m_toggle.Initialize(Timer, Timer.GetSystemSettings().m_darkMode);
         }
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
         private void CalculateRaveToggleAchievementProgression()
         {
             // If current toggle time took longer than a second...

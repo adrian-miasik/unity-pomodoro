@@ -1,21 +1,23 @@
+// Note: Some namespaces are platform specific even though it may seem like they are not being used.
+// Change your Unity Build Settings Platform to see which namespaces are used for which platform.
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AdrianMiasik.Android;
 using AdrianMiasik.Components.Core;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items;
 using AdrianMiasik.Components.Core.Items.Pages;
 using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific;
+using AdrianMiasik.Components.Specific.Platforms.Android;
+using AdrianMiasik.Components.Specific.Platforms.Steam;
+using AdrianMiasik.Components.Specific.Platforms.UWP;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
-using AdrianMiasik.Steam;
 using Steamworks;
 using Steamworks.Data;
-using AdrianMiasik.UWP;
 using LeTai.Asset.TranslucentImage;
 using QFSW.QC;
 using TMPro;
@@ -70,20 +72,23 @@ namespace AdrianMiasik
         [SerializeField] private HotkeyDetector m_hotkeyDetector;
         [SerializeField] private ResolutionDetector m_resolutionDetector;
         [SerializeField] private ConfirmationDialogManager m_confirmationDialogManager;
-        
+
         [Header("Unity Pomodoro - Platform Specific Managers")]
-        [SerializeField] private SteamManager m_steamManager; // Disable on Android platform
-        [SerializeField] private UWPNotifications m_uwpNotifications; // TODO: Gate to Windows/UWP apps
-        [SerializeField] private AndroidNotifications m_androidNotifications; // Enable only for Android platform
+        [SerializeField] private SteamManager m_steamManager; // Disable on Android and WSA platforms
+        // ReSharper disable once NotAccessedField.Local
+        [SerializeField] private UWPNotifications m_uwpNotifications; // Only for the UWP platform
+        // ReSharper disable once NotAccessedField.Local
+        [SerializeField] private AndroidNotifications m_androidNotifications; // Only for the Android platform
 
         [Header("Unity - Basic Components")]
-        [SerializeField] private TextMeshProUGUI m_text; // Text used to display current state
         [SerializeField] private Image m_ring; // Ring used to display timer progress
         [SerializeField] private Image m_ringBackground; // Theming
         [SerializeField] private AudioSource m_alarmSource;
 
         [Header("Unity Pomodoro - Custom Components")]
         [SerializeField] private Background m_background;
+        [SerializeField] private StateIndicator m_stateIndicator;
+        [SerializeField] private InputLabelText m_labelText; // Text used to display label + current state
         [SerializeField] private BlurOverlay m_overlay;
         [SerializeField] private TranslucentImageSource m_translucentImageSource; // Necessary reference for blur
         [SerializeField] private CompletionLabel m_completionLabel;
@@ -238,7 +243,7 @@ namespace AdrianMiasik
         /// </summary>
         private void ConfigureSettings()
         {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
             m_steamManager.Initialize();
 #endif
@@ -445,8 +450,12 @@ namespace AdrianMiasik
 
             InitializeComponents();
 
+#if !UNITY_ANDROID
             yield return InitializeStreamingAssets();
-            
+#else
+            yield return new WaitForEndOfFrame();
+#endif
+
             // Switch view
             m_sidebarPages.SwitchToTimerPage();
 
@@ -477,9 +486,11 @@ namespace AdrianMiasik
             m_resolutionDetector.Initialize(this);
             m_confirmationDialogManager.Initialize(this);
 
+#if UNITY_WSA
             // UWP Toast / Notification
             m_uwpNotifications.Initialize(GetSystemSettings());
             m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
+#endif
             
 #if UNITY_ANDROID
             // Android Notification
@@ -515,6 +526,7 @@ namespace AdrianMiasik
             m_hotkeyDetector.ResumeInputs();
         }
 
+        // TODO: Support Android Platform?
         private IEnumerator ValidateStreamingAssets()
         {
             // Fetch directory
@@ -620,6 +632,8 @@ namespace AdrianMiasik
             
             // Components
             m_background.Initialize(this);
+            m_stateIndicator.Initialize(this);
+            m_labelText.Initialize(this);
             m_overlay.Initialize(this);
             m_digitFormat.Initialize(this, GetTimerSettings().m_format);
             m_completionLabel.Initialize(this);
@@ -646,6 +660,8 @@ namespace AdrianMiasik
             m_sidebarPages.Initialize(this);
 
             // Register elements that need updating per timer state change
+            timerElements.Add(m_labelText);
+            timerElements.Add(m_stateIndicator);
             timerElements.Add(m_rightButton);
             timerElements.Add(m_completionLabel);
             timerElements.Add(m_endTimestampGhost);
@@ -678,6 +694,9 @@ namespace AdrianMiasik
             m_state = desiredState;
             Theme theme = m_themeManager.GetTheme();
 
+            // Workaround...
+            m_labelText.gameObject.SetActive(true);
+
             // Update the registered timer elements
             foreach (ITimerState element in timerElements)
             {
@@ -693,16 +712,17 @@ namespace AdrianMiasik
                     m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
                     
                     // Show timer context
-                    m_text.gameObject.SetActive(true);
-                    
-                    if (!m_digitFormat.m_isOnBreak)
-                    {
-                        m_text.text = "Set a work time";
-                    }
-                    else
-                    {
-                        m_text.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
-                    }
+                    m_labelText.gameObject.SetActive(true);
+                    // m_labelText.ClearSuffix();
+
+                    // if (!m_digitFormat.m_isOnBreak)
+                    // {
+                    //     m_labelText.text = "Set a work time";
+                    // }
+                    // else
+                    // {
+                    //     m_labelText.text = !IsOnLongBreak() ? "Set a break time" : "Set a long break time";
+                    // }
 
                     // Show digits and hide completion label
                     m_digitFormat.Show();
@@ -720,8 +740,7 @@ namespace AdrianMiasik
                     animateRingProgress = false;
 
                     m_digitFormat.SetDigitColor(theme.GetCurrentColorScheme().m_foreground);
-                    
-                    m_text.text = "Running";
+                    //m_labelText.SetSuffix("Running");
                     
                     // Deselection
                     ClearSelection();
@@ -736,14 +755,26 @@ namespace AdrianMiasik
                     break;
 
                 case States.PAUSED:
-                    m_text.text = "Paused";
+                    //m_labelText.SetSuffix("Paused");
                     ResetDigitFadeAnim();
                     break;
 
                 case States.COMPLETE:
 
+                    if (GetTimerSettings().m_longBreaks)
+                    {
+                        // Consume tomatoes once user has started long break via Play
+                        if (IsOnBreak() && IsOnLongBreak())
+                        {
+                            // The timer will remain in 'long break' mode, until the timer is completed. See SwitchState();
+                            m_tomatoCounter.ConsumeTomatoes();
+                            DeactivateLongBreak();
+                        }
+                    }
+
                     // Hide state text
-                    m_text.gameObject.SetActive(false);
+                    m_labelText.gameObject.SetActive(false);
+                    // m_labelText.ClearSuffix();
 
                     // Hide digits and reveal completion
                     m_spawnAnimation.Stop();
@@ -823,7 +854,7 @@ namespace AdrianMiasik
             {
                 if (m_state != States.COMPLETE)
                 {
-                    m_text.gameObject.SetActive(true);
+                    m_labelText.gameObject.SetActive(true);
                     if (GetTimerSettings().m_longBreaks)
                     {
                         m_tomatoCounter.gameObject.SetActive(true);
@@ -832,7 +863,7 @@ namespace AdrianMiasik
             }
             else
             {
-                m_text.gameObject.SetActive(false);
+                m_labelText.gameObject.SetActive(false);
                 if (GetTimerSettings().m_longBreaks)
                 {
                     m_tomatoCounter.gameObject.SetActive(false);
@@ -1087,16 +1118,6 @@ namespace AdrianMiasik
             {
                 isTimerBeingSetup = false;
                 CalculateTimeValues();
-            }
-
-            if (GetTimerSettings().m_longBreaks)
-            {
-                // Remove long break once user has started it via Play
-                if (IsOnBreak() && IsOnLongBreak())
-                {
-                    m_tomatoCounter.ConsumeTomatoes();
-                    m_digitFormat.DeactivateLongBreak();
-                }
             }
 
             SwitchState(States.RUNNING);
@@ -1418,7 +1439,7 @@ namespace AdrianMiasik
         /// will prompt user with confirmation dialog if necessary.
         /// </summary>
         /// <param name="desiredFormat"></param>
-        public void TryChangeFormat(DigitFormat.SupportedFormats desiredFormat)
+        public void TryChangeFormat(DigitFormat.SupportedFormats desiredFormat, bool restartCreditsGhost = true)
         {
             if (!isTimerBeingSetup && m_state == States.RUNNING)
             {
@@ -1436,6 +1457,11 @@ namespace AdrianMiasik
                 GenerateFormat();
                 GetTimerSettings().m_format = desiredFormat;
                 UserSettingsSerializer.SaveSettingsFile(GetTimerSettings(), "timer-settings");
+            }
+
+            if (restartCreditsGhost)
+            {
+                RestartCreditsGhost();
             }
         }
 
@@ -1462,7 +1488,7 @@ namespace AdrianMiasik
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             // State text
-            m_text.color = currentColors.m_backgroundHighlight;
+            m_labelText.SetTextColor(currentColors.m_backgroundHighlight);
             
             // Ring background
             m_ringBackground.material.SetColor(RingColor, theme.GetCurrentColorScheme().m_backgroundHighlight);
@@ -1534,6 +1560,18 @@ namespace AdrianMiasik
 
             // Apply modified material
             m_ring.material = ringMaterial;
+        }
+
+        // Piper
+        public void RefreshInputLabel()
+        {
+            m_labelText.StateUpdate(m_state, GetTheme());
+        }
+
+        // Piper
+        public void RefreshDigitVisuals()
+        {
+            m_digitFormat.RefreshDigitVisuals();
         }
         
         /// <summary>
@@ -1610,7 +1648,7 @@ namespace AdrianMiasik
         {
             m_digitFormat.ActivateLongBreak();
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
             if (SteamClient.IsValid)
             {
@@ -1880,7 +1918,7 @@ namespace AdrianMiasik
             m_digitFormat.ShowTickAnimation();
         }
 
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
         public void ShutdownSteamManager()
         {
             m_steamManager.Shutdown();
@@ -1894,6 +1932,15 @@ namespace AdrianMiasik
         public void TryCancelConfirmationDialog()
         {
             m_confirmationDialogManager.GetCurrentConfirmationDialog()?.Cancel();
+        }
+
+        public void RestartCreditsGhost()
+        {
+            // Show instantly
+            m_creditsGhost.FadeIn(true);
+
+            // Re-init
+            m_creditsGhost.Restart();
         }
     }
 }

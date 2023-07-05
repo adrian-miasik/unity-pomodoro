@@ -56,13 +56,13 @@
      <Folder Include="Assets\Plugins" />
      <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Shaders\Blur.shader" />
      <Reference Include="UnityEngine">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
+     <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.1f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.CoreModule">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+     <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.1f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
+     <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.1f1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,16 +1,16 @@
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
 #endif
 using UnityEngine;
 
-namespace AdrianMiasik.Steam
+namespace AdrianMiasik.Components.Specific.Platforms.Steam
 {
     /// <summary>
     /// A class responsible for initializing our Steamworks backend.
     /// </summary>
     public class SteamManager : MonoBehaviour
     {
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID && !UNITY_WSA
         private bool isInitialized;
         [SerializeField] private bool m_enableSteamworks = true;
     

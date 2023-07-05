@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 2.4.1
+  bundleVersion: 2.5.0
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -162,7 +162,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 16
+  AndroidBundleVersionCode: 18
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 31
   AndroidPreferredInstallLocation: 1
@@ -810,6 +810,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: USER_SETTINGS_EVENT_LOGS;LETAI_TRUESHADOW
     Standalone: USER_SETTINGS_EVENT_LOGS;LETAI_TRUESHADOW
+    Windows Store Apps: LETAI_TRUESHADOW
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -833,12 +834,12 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: unity-pomodoro
-  metroPackageVersion: 1.1.0.0
+  metroPackageVersion: 2.5.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Adrian Miasik
   metroCertificateIssuer: Adrian Miasik
-  metroCertificateNotAfter: 80533d20f3b5d801
+  metroCertificateNotAfter: 007c34d22c9cda01
   metroApplicationDescription: Unity Pomodoro is an open source countdown timer app
     created in Unity designed primarily for desktop use. Unity Pomodoro is a time
     management tool based on the pomodoro technique, the aim is to improve your productivity
