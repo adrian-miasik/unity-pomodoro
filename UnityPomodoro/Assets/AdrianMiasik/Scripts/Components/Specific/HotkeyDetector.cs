@@ -84,12 +84,10 @@ namespace AdrianMiasik.Components.Specific
             {
                 return;
             }
+            
+            todoIsOpen = todoPage.isOpen;
+            customizationIsOpen = customizationPage.isOpen;
 
-// <<<<<<< HEAD
-//             
-//             todoIsOpen = todoPage.isOpen;
-//             customizationIsOpen = customizationPage.isOpen;
-// >>>>>>> develop
             ProcessKeys();
             ProcessKeybinds();
         }
@@ -99,7 +97,7 @@ namespace AdrianMiasik.Components.Specific
         /// </summary>
         private void ProcessKeys()
         {
-            // if (!todoIsOpen && !customizationIsOpen)
+            if (!todoIsOpen && !customizationIsOpen)
             {
 
                 // Play / pause the timer
