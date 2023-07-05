@@ -4,7 +4,7 @@ using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Core.Items.Pages
+namespace KingWazzack.Todo
 {
     /// <summary>
     /// A <see cref="Page"/> used to display information about our application.
@@ -15,11 +15,6 @@ namespace AdrianMiasik.Components.Core.Items.Pages
     {
         [SerializeField] private TMP_Text m_description;
         
-        public override void Initialize(PomodoroTimer pomodoroTimer, bool updateColors = true)
-        {
-            base.Initialize(pomodoroTimer, updateColors);
-        }
-
         /// <summary>
         /// Applies our <see cref="Theme"/> changes to our referenced components when necessary.
         /// </summary>

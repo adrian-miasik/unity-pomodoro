@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using AdrianMiasik.ScriptableObjects;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-namespace AdrianMiasik.Components.Core.Todo
+namespace KingWazzack.Customization
 {
     /// <summary>
     /// This manager changes the Color Scheme's based on user Hex code input

@@ -1,10 +1,11 @@
+using AdrianMiasik;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace AdrianMiasik.Components.Core.Items.Pages
+namespace KingWazzack.Customization
 {
     /// <summary>
     /// A <see cref="Page"/> used to display information about our application.
