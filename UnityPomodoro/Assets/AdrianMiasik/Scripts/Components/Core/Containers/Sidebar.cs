@@ -82,7 +82,7 @@ namespace AdrianMiasik.Components.Core.Containers
             {
                 m_pomodoroTimerRow,
                 m_documentationRow,
-                m_todoRow,
+                // m_todoRow,
                 m_customizationRow,
                 m_settingsRow,
                 m_aboutRow
