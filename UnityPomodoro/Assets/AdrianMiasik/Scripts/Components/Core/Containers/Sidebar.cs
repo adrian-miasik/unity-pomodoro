@@ -81,11 +81,11 @@ namespace AdrianMiasik.Components.Core.Containers
             contentRows = new List<SidebarRow>
             {
                 m_pomodoroTimerRow,
+                m_documentationRow,
                 m_todoRow,
                 m_customizationRow,
-                m_documentationRow,
-                m_aboutRow,
-                m_settingsRow
+                m_settingsRow,
+                m_aboutRow
             };
             
             // Initialize row components
