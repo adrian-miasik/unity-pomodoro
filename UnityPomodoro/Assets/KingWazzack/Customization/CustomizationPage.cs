@@ -28,8 +28,8 @@ namespace KingWazzack.Customization
         public override void ColorUpdate(Theme theme)
         {
             base.ColorUpdate(theme);
-            ColorScheme currentColors = theme.GetCurrentColorScheme();
-            m_description.color = currentColors.m_foreground;
+            // ColorScheme currentColors = theme.GetCurrentColorScheme();
+            // m_description.color = currentColors.m_foreground;
         }
     }
 }
