@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Items;
+using AdrianMiasik.Components.Core.Settings;
 using QFSW.QC;
 #if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
@@ -59,6 +60,12 @@ namespace AdrianMiasik.Components.Core.Containers
             
             // Only show if user has more than one tomato
             m_trashcan.gameObject.SetActive(completedTomatoes.Count > 0);
+            
+            // Load saved acquired pomodoro/tomato progression
+            for (int i = 0; i < Timer.GetTimerSettings().m_acquiredPomodoroCount; i++)
+            {
+                FillTomato(false); // Don't save progression since we're loading it.
+            }
         }
         
         /// <summary>
@@ -79,12 +86,21 @@ namespace AdrianMiasik.Components.Core.Containers
         /// <summary>
         /// Completes / Fills in the latest <see cref="Tomato"/>. (from left to right)
         /// </summary>
-        public void FillTomato()
+        /// <param name="saveFillProgression">When filling this tomato, do you want to save this progress
+        /// into our local/remote settings file?</param>
+        public void FillTomato(bool saveFillProgression = true)
         {
             Tomato tomatoToFill = m_uncompletedTomatoes[0];
             m_uncompletedTomatoes.RemoveAt(0);
             completedTomatoes.Add(tomatoToFill);
             tomatoToFill.Complete();
+
+            if (saveFillProgression)
+            {
+                // Apply and save pomodoro count progression
+                Timer.GetTimerSettings().m_acquiredPomodoroCount++;
+                UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
+            }
 
 #if !UNITY_ANDROID && !UNITY_WSA
             // Check if steam client is found...
@@ -219,6 +235,10 @@ namespace AdrianMiasik.Components.Core.Containers
             
             // Only show if user has more than one tomato
             m_trashcan.gameObject.SetActive(completedTomatoes.Count > 0);
+            
+            // Reset and apply wiped pomodoro count progression
+            Timer.GetTimerSettings().m_acquiredPomodoroCount = 0;
+            UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
         }
 
         /// <summary>
