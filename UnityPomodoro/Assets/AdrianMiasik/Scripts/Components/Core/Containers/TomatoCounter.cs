@@ -100,52 +100,52 @@ namespace AdrianMiasik.Components.Core.Containers
                 // Apply and save pomodoro count progression
                 Timer.GetTimerSettings().m_acquiredPomodoroCount++;
                 UserSettingsSerializer.SaveSettingsFile(Timer.GetTimerSettings(), "timer-settings");
-            }
 
 #if !UNITY_ANDROID && !UNITY_WSA
-            // Check if steam client is found...
-            if (SteamClient.IsValid)
-            {
-                // YUMMY ACHIEVEMENT
-                // Fetch first tomato achievement
-                Achievement yummyAch = new("ACH_ACQUIRE_FIRST_TOMATO");
-                
-                // If achievement is not unlocked...
-                if (!yummyAch.State)
+                // Check if steam client is found...
+                if (SteamClient.IsValid)
                 {
-                    yummyAch.Trigger();
-                    Debug.Log("Steam Achievement Unlocked! 'Yummy!: Unlock your first pomodoro/tomato.'");
-                }
-                
-                // PLANTASTIC ACHIEVEMENT
-                // Add collected pomodoro/tomato to User Stats
-                SteamUserStats.AddStat("pomodoros_accumulated", 1);
-                SteamUserStats.StoreStats();
-                
-                // Fetch plantastic achievement
-                Achievement plantasticAch = new("ACH_PLANTASTIC");
-            
-                // If achievement is not unlocked...
-                if (!plantasticAch.State)
-                {
-                    // Fetch progression
-                    int pomodorosAccumulated = SteamUserStats.GetStatInt("pomodoros_accumulated");
+                    // YUMMY ACHIEVEMENT
+                    // Fetch first tomato achievement
+                    Achievement yummyAch = new("ACH_ACQUIRE_FIRST_TOMATO");
                     
-                    if (pomodorosAccumulated >= 32)
+                    // If achievement is not unlocked...
+                    if (!yummyAch.State)
                     {
-                        plantasticAch.Trigger();
-                        Debug.Log("Steam Achievement Unlocked! 'Plant-astic!: Unlock 32 pomodoros/tomatoes.'");
+                        yummyAch.Trigger();
+                        Debug.Log("Steam Achievement Unlocked! 'Yummy!: Unlock your first pomodoro/tomato.'");
                     }
-                    else if (pomodorosAccumulated != 0 && pomodorosAccumulated % 4 == 0)
+                    
+                    // PLANTASTIC ACHIEVEMENT
+                    // Add collected pomodoro/tomato to User Stats
+                    SteamUserStats.AddStat("pomodoros_accumulated", 1);
+                    SteamUserStats.StoreStats();
+                    
+                    // Fetch plantastic achievement
+                    Achievement plantasticAch = new("ACH_PLANTASTIC");
+                
+                    // If achievement is not unlocked...
+                    if (!plantasticAch.State)
                     {
-                        // Display progress every 8 tomatoes accumulated
-                        SteamUserStats.IndicateAchievementProgress(plantasticAch.Identifier, pomodorosAccumulated,
-                            32);
+                        // Fetch progression
+                        int pomodorosAccumulated = SteamUserStats.GetStatInt("pomodoros_accumulated");
+                        
+                        if (pomodorosAccumulated >= 32)
+                        {
+                            plantasticAch.Trigger();
+                            Debug.Log("Steam Achievement Unlocked! 'Plant-astic!: Unlock 32 pomodoros/tomatoes.'");
+                        }
+                        else if (pomodorosAccumulated != 0 && pomodorosAccumulated % 4 == 0)
+                        {
+                            // Display progress every 8 tomatoes accumulated
+                            SteamUserStats.IndicateAchievementProgress(plantasticAch.Identifier, pomodorosAccumulated,
+                                32);
+                        }
                     }
                 }
-            }
 #endif
-
+            }
+            
             // Check for completion
             if (m_uncompletedTomatoes.Count == 0)
             {
