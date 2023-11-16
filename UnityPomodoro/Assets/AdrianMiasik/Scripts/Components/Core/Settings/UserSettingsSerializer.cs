@@ -19,6 +19,7 @@ namespace AdrianMiasik.Components.Core.Settings
     {
         private const string DataExtension = ".dat";
 
+#if UNITY_EDITOR
         /// <summary>
         /// Prints all of our local settings files into the console.
         /// </summary>
@@ -55,6 +56,7 @@ namespace AdrianMiasik.Components.Core.Settings
             DeleteLocalFile("system-settings");
             DeleteLocalFile("timer-settings");
         }
+#endif
         
 #if UNITY_EDITOR && !UNITY_ANDROID
 #if USER_SETTINGS_EVENT_LOGS
