@@ -28,6 +28,11 @@ namespace AdrianMiasik.Components.Core.Settings
         /// </summary>
         public int m_pomodoroCount = 4;
 
+        /// <summary>
+        /// How many pomodoro / tomatoes has the user collected for this timer?
+        /// </summary>
+        public int m_acquiredPomodoroCount = 0;
+
         public int m_alarmSoundIndex = 0;
     }
 }
