@@ -19,6 +19,43 @@ namespace AdrianMiasik.Components.Core.Settings
     {
         private const string DataExtension = ".dat";
 
+        /// <summary>
+        /// Prints all of our local settings files into the console.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Local Storage/Print all local settings files")]
+        public static void PrintAllLocalSettingsFiles()
+        {
+            string systemSettingsPath = Application.persistentDataPath + "/" + "system-settings" + DataExtension;
+            if (File.Exists(systemSettingsPath))
+            {
+                Debug.Log("Local Storage: System settings found -> " + systemSettingsPath + ".");
+            }
+            else
+            {
+                Debug.LogWarning("No local system-settings file found.");
+            }
+            
+            string timerSettingsPath = Application.persistentDataPath + "/" + "timer-settings" + DataExtension;
+            if (File.Exists(timerSettingsPath))
+            {
+                Debug.Log("Local Storage: Timer settings found -> " + timerSettingsPath + ".");
+            } 
+            else
+            {
+                Debug.LogWarning("No local timer-settings file found.");
+            }
+        }
+        
+        /// <summary>
+        /// Deletes/Wipes all of our local settings files from the disk.
+        /// </summary>
+        [MenuItem("Adrian Miasik/Settings/Local Storage/Delete all local settings files")]
+        public static void DeleteAllLocalSettingsFiles()
+        {
+            DeleteLocalFile("system-settings");
+            DeleteLocalFile("timer-settings");
+        }
+        
 #if UNITY_EDITOR && !UNITY_ANDROID
 #if USER_SETTINGS_EVENT_LOGS
         /// <summary>
