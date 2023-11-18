@@ -26,7 +26,7 @@ Unity Pomodoro is an open source countdown timer app created in Unity designed p
 
 **Platforms**: Windows, Mac, Linux, & Android. (Steam, Microsoft Store, Google Play Store)
 
-**Version**:  2.5.0
+**Version**:  2.6.0
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
@@ -37,16 +37,16 @@ Want to help? If you're interested in contributing to the project, please see ou
 
 &nbsp;
 ## Downloads
-### [Latest Release - v2.5.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.5.0)
+### [Latest Release - v2.6.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.6.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-mac-desktop-64-bit-apple-silicon.app.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-linux-desktop-64-bit.zip)
-- Android
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-linux-desktop-64-bit.zip)
+- Android (v2.5.0)
   - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-android.apk) 
 #### Platform Specific
 - [Steam (Windows)](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
@@ -59,6 +59,7 @@ Want to help? If you're interested in contributing to the project, please see ou
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
+- [v2.5.0 - Custom Audio Support, 1-Click Return, More Alarm SFX's, Quantum Console, and Visual Improvements](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.5.0)
 - [v2.4.1 (Hotfix) - Improved Performance, Fixed Android Builds, and Fixed Long Breaks](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.1) 🔥
 - [v2.4.0 - Steam Release, Cloud Build Renamer Tool, Sidebar & Code Improvements, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.0)
 - [v2.2.0 - Google Play Store Release, New Animations, Documentation, Code Improvements, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.2.0)
