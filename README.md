@@ -46,8 +46,8 @@ Want to help? If you're interested in contributing to the project, please see ou
   - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-mac-desktop-universal.zip)
 - Linux
   - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-linux-desktop-64-bit.zip)
-- Android (v2.5.0)
-  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-android.apk) 
+- Android
+  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-android.apk) 
 #### Platform Specific
 - [Steam (Windows)](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
     - The Steam version includes **Steam Achievements**.
