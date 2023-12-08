@@ -178,7 +178,6 @@ namespace AdrianMiasik.Components.Core
             if (theme.IsDarkMode())
             {
                 falseColor = overrideFalseColor ? overridenFalseColor : currentColors.m_foreground;
-                overridenDotColor = currentColors.m_foreground;
             }
             else
             {
