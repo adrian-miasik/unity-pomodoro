@@ -93,6 +93,7 @@ namespace AdrianMiasik.Components.Base
                 state = FadeState.IDLE;
                 m_textContainer.alpha = 1;
                 m_backgroundContainer.alpha = 1;
+                m_fadeProgress = 1;
             }
             else
             {
@@ -112,6 +113,7 @@ namespace AdrianMiasik.Components.Base
                 state = FadeState.IDLE;
                 m_textContainer.alpha = 0;
                 m_backgroundContainer.alpha = 0;
+                m_fadeProgress = 0;
             }
             else
             {

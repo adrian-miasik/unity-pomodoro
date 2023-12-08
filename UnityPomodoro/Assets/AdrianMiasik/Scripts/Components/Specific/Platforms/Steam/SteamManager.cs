@@ -3,7 +3,7 @@ using Steamworks;
 #endif
 using UnityEngine;
 
-namespace AdrianMiasik.Steam
+namespace AdrianMiasik.Components.Specific.Platforms.Steam
 {
     /// <summary>
     /// A class responsible for initializing our Steamworks backend.

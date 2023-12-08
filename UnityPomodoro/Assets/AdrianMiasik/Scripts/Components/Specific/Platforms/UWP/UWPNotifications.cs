@@ -1,10 +1,10 @@
-using AdrianMiasik.Components.Core.Settings;
 using UnityEngine;
-#if ENABLE_WINMD_SUPPORT
+#if UNITY_WSA
+using AdrianMiasik.Components.Core.Settings;
 using UnityEngine.WSA;
 #endif
 
-namespace AdrianMiasik.UWP
+namespace AdrianMiasik.Components.Specific.Platforms.UWP
 {
     /// <summary>
     /// Used to serve Windows OS level notification/toasts to the user. (using the referenced components)
@@ -12,6 +12,7 @@ namespace AdrianMiasik.UWP
     /// </summary>
     public class UWPNotifications : MonoBehaviour
     {
+#if UNITY_WSA
         // UWP
         [Header("Toast")]
         [SerializeField] private TextAsset m_xmlToastAlarm;
@@ -19,7 +20,7 @@ namespace AdrianMiasik.UWP
         
         // Cache
         private SystemSettings settings;
-        
+
         public void Initialize(SystemSettings systemSettings)
         {
             settings = systemSettings;
@@ -31,7 +32,6 @@ namespace AdrianMiasik.UWP
         /// </summary>
         public void ShowToast()
         {
-#if ENABLE_WINMD_SUPPORT
             // When app is not focused...(we only want to show prompts if the app is not in focus)
             if (UnityEngine.Application.isFocused)
             {
@@ -51,7 +51,7 @@ namespace AdrianMiasik.UWP
                 Toast toast = Toast.Create(m_xmlToastNoAlarm.text);
                 toast.Show();
             }
-#endif
         }
+#endif
     }
 }

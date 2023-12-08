@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace AdrianMiasik.Components.Specific
 {
+    // TODO: Rename all instances and references of 'CreditsBubble' to 'CreditsGhost'
     /// <summary>
     /// A <see cref="TimerProgress"/> inheritor used for displaying the authors name of the app. Intended to minimize
     /// after a couple seconds via the base class.
@@ -30,6 +31,12 @@ namespace AdrianMiasik.Components.Specific
 
             // Setup
             m_timer.m_onComplete.AddListener(OnTimerComplete);
+            m_timer.Initialize(3);
+            Lock();
+        }
+
+        public void Restart()
+        {
             m_timer.Initialize(3);
             Lock();
         }

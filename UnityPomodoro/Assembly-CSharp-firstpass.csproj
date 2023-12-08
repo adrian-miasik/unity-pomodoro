@@ -41,29 +41,19 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Prefabs" />
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Fonts" />
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Materials" />
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source" />
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Textures" />
-     <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Third-Party Notices.txt" />
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Fonts\TMP" />
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console\Source\Shaders" />
-     <Folder Include="Assets\Plugins\QFSW" />
-     <None Include="Assets\Plugins\QFSW\Quantum Console\Source\changelog.txt" />
-     <Folder Include="Assets\Plugins\QFSW\Quantum Console" />
-     <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Fonts\LICENSE.txt" />
-     <Folder Include="Assets\Plugins" />
-     <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Shaders\Blur.shader" />
-     <Reference Include="UnityEngine">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.CoreModule">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
-     </Reference>
+    <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Third-Party Notices.txt" />
+    <None Include="Assets\Plugins\QFSW\Quantum Console\Source\changelog.txt" />
+    <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Fonts\LICENSE.txt" />
+    <None Include="Assets\Plugins\QFSW\Quantum Console\Source\Shaders\Blur.shader" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2023.2.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2023.2.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2023.2.0f1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

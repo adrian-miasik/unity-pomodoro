@@ -34,7 +34,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         /// <param name="i"></param>
         private void TryChangeFormat(Int32 i)
         {
-            Timer.TryChangeFormat((DigitFormat.SupportedFormats)i);
+            Timer.TryChangeFormat((DigitFormat.SupportedFormats)i, false);
         }
     }
 }

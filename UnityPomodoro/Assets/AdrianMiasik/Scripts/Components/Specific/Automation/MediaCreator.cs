@@ -125,7 +125,7 @@ namespace AdrianMiasik.Components.Specific.Automation
 
         private static void CaptureScreenshot(MediaCapture mediaCapture)
         {
-            mediaCapture.CaptureScreenshot("../promotional/screenshot-" + _screenshotIndex + ".png", 
+            mediaCapture.CaptureScreenshot("../exports/screenshot-" + _screenshotIndex + ".png",
                 MoveToNextScreenshotScenario);
         }
         
