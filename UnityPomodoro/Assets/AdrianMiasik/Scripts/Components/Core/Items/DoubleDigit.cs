@@ -522,6 +522,11 @@ namespace AdrianMiasik.Components.Core.Items
         /// <param name="theme">The theme to apply on our referenced components.</param>
         public override void ColorUpdate(Theme theme)
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+            
             ColorScheme currentColors = theme.GetCurrentColorScheme();
             
             if (isSelected)
