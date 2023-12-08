@@ -26,7 +26,7 @@ Unity Pomodoro is an open source countdown timer app created in Unity designed p
 
 **Platforms**: Windows, Mac, Linux, & Android. (Steam, Microsoft Store, Google Play Store)
 
-**Version**:  2.5.0
+**Version**:  2.6.0
 
 **Author**:  **[`Adrian Miasik`](https://adrian-miasik.com)**
 
@@ -37,17 +37,17 @@ Want to help? If you're interested in contributing to the project, please see ou
 
 &nbsp;
 ## Downloads
-### [Latest Release - v2.5.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.5.0)
+### [Latest Release - v2.6.0](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.6.0)
 #### Direct
 - Windows
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-windows-desktop-64-bit.zip)
-  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-windows-desktop-32-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-windows-desktop-64-bit.zip)
+  - [32-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-windows-desktop-32-bit.zip)
 - Mac
-  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-mac-desktop-64-bit-apple-silicon.app.zip)
+  - [Universal](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-mac-desktop-universal.zip)
 - Linux
-  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-linux-desktop-64-bit.zip)
+  - [64-bit](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-linux-desktop-64-bit.zip)
 - Android
-  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.5.0/unity-pomodoro-2.5.0-android.apk) 
+  - [APK](https://github.com/adrian-miasik/unity-pomodoro/releases/download/v2.6.0/unity-pomodoro-2.6.0-android.apk) 
 #### Platform Specific
 - [Steam (Windows)](https://store.steampowered.com/app/2173940/Unity_Pomodoro/)
     - The Steam version includes **Steam Achievements**.
@@ -59,22 +59,23 @@ Want to help? If you're interested in contributing to the project, please see ou
   - The UWP version provides **Windows Notifications** when the timer is complete.
   - The UWP version provides **Windows Launcher** when a user interacts with a URL.
 ### Previous Releases
-- [v2.4.1 (Hotfix) - Improved Performance, Fixed Android Builds, and Fixed Long Breaks](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.1) 🔥
-- [v2.4.0 - Steam Release, Cloud Build Renamer Tool, Sidebar & Code Improvements, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.0)
-- [v2.2.0 - Google Play Store Release, New Animations, Documentation, Code Improvements, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.2.0)
-- [v2.1.1 (Hotfix) - Desktop Timer No Longer Decrements on App Focus Loss & Regain](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.1) 🔥
-- [v2.1.0 - Android Support, Fixed Visual Artifacts, Improved Performance, and New Community Efforts](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.0)
-- [v2.0.0 - Persistent Settings, Translucent Image Blur, Unity Analytics, Architecture, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)
-- [v1.9.0 - Release Media Generator & 'Set Pomodoro Count' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
-- [v1.8.0 - End Timestamp, Skip Button, Sidebar Improvements, Toggle Long Breaks, and More!](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.8.0)
-- [v1.7.1 - Long Breaks, Documentation, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.7.1)
-- [v1.6.0 - Confirmation Dialogs & 'Mute Audio When Out Of Focus' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
-- [v1.5.0 - Settings Panel & Sidebar Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.5.0)
-- [v1.4.0 - Sidebar Navigation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.4.0)
+- [v2.5.0 - 🎵 Custom Audio Support, 1-Click Return, More Alarm SFX's, Quantum Console, and Visual Improvements](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.5.0)
+- [v2.4.1 (Hotfix) 🔥 - Improved Performance, Fixed Android Builds, and Fixed Long Breaks](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.1)
+- [v2.4.0 - 🚂 Steam Release, Cloud Build Renamer Tool, Sidebar & Code Improvements, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.4.0)
+- [v2.2.0 - ⏯️ Google Play Store Release, New Animations, Documentation, Code Improvements, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.2.0)
+- [v2.1.1 (Hotfix) 🔥 - Desktop Timer No Longer Decrements on App Focus Loss & Regain](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.1)
+- [v2.1.0 - 🤖 Android Support, Fixed Visual Artifacts, Improved Performance, and New Community Efforts](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.1.0)
+- [v2.0.0 - 📷 Persistent Settings, Translucent Image Blur, Unity Analytics, Architecture, and Bugfixes!](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v2.0.0)
+- [v1.9.0 - 🧰 Release Media Generator & 'Set Pomodoro Count' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.9.0)
+- [v1.8.0 - ⏲️ End Timestamp, Skip Button, Sidebar Improvements, Toggle Long Breaks, and More!](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.8.0)
+- [v1.7.1 - 🏖️ Long Breaks, Documentation, and Bugfixes](https://github.com/adrian-miasik/unity-pomodoro/tree/v1.7.1)
+- [v1.6.0 - ❓Confirmation Dialogs & 'Mute Audio When Out Of Focus' Settings Option](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.6.0)
+- [v1.5.0 - ⚙️ Settings Panel & Sidebar Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.5.0)
+- [v1.4.0 - ⬅️ Sidebar Navigation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.4.0)
 - [v1.3.0 - 🎃 Halloween Theme & Digit Format Support](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.3.0)
-- [v1.2.1 - Dark Mode, Tick Animation, and Architectural Improvements](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.2.1)
-- [v1.1.0 - UWP, Keyboard Support, New Digit Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.1.0)
-- [v1.0.0 - Initial Launch](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
+- [v1.2.1 - 🌓 Dark Mode, Tick Animation, and Architectural Improvements](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.2.1)
+- [v1.1.0 - ⌨️ UWP, Keyboard Support, New Digit Animation](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.1.0)
+- [v1.0.0 - 🚀 Initial Launch](https://github.com/adrian-miasik/unity-pomodoro/releases/tag/v1.0.0)
 
 
 &nbsp;

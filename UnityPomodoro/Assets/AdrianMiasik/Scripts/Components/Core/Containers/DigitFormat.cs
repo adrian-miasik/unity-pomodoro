@@ -143,6 +143,14 @@ namespace AdrianMiasik.Components.Core.Containers
         [ContextMenu("Generate Format")]
         public void GenerateFormat()
         {
+            if (generatedDigits != null)
+            {
+                foreach (DoubleDigit dd in generatedDigits)
+                {
+                    dd.OnDestroy();
+                }
+            }
+
             generatedDigits?.Clear();
             generatedSeparators?.Clear();
 

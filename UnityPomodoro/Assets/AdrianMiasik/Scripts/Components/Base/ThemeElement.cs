@@ -22,14 +22,14 @@ namespace AdrianMiasik.Components.Base
 
             // Register element to theme
             pomodoroTimer.GetTheme().Register(this);
+
+            Initialized = true;
             
             if (updateColors)
             {
                 // Update our component
                 ColorUpdate(pomodoroTimer.GetTheme());
             }
-
-            Initialized = true;
         }
 
         /// <summary>

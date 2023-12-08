@@ -52,7 +52,6 @@ namespace AdrianMiasik.Components.Specific
 #endif
             });
 
-            m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
             m_toggle.Initialize(Timer, Timer.GetSystemSettings().m_darkMode);
         }
 
@@ -135,6 +134,9 @@ namespace AdrianMiasik.Components.Specific
                 m_toggle.m_dot.rectTransform.offsetMin = cachedOffsetMin;
                 m_toggle.m_dot.rectTransform.offsetMax = cachedOffsetMax;
             }
+            
+            m_toggle.OverrideDotColor(Timer.GetTheme().GetCurrentColorScheme().m_foreground);
+            m_toggle.m_dot.color = theme.GetCurrentColorScheme().m_foreground;
 
             m_toggle.ColorUpdate(theme);
         }
@@ -158,11 +160,6 @@ namespace AdrianMiasik.Components.Specific
             m_toggle.OverrideTrueColor(color);
         }
         
-        public void OverrideDotColor(Color color)
-        {
-            m_toggle.OverrideDotColor(color);
-        }
-
         /// <summary>
         /// Presses our theme slider toggle.
         /// </summary>
