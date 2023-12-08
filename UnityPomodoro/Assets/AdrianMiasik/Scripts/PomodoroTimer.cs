@@ -360,7 +360,7 @@ namespace AdrianMiasik
                 // Enable analytics
                 StartAnalyticsService(isBootingUp);
             }
-            else
+            else if(!isBootingUp)
             {
                 // Send disabled event log
                 Dictionary<string, object> parameters = new Dictionary<string, object>()
