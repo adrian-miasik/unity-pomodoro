@@ -4614,6 +4614,7 @@ MonoBehaviour:
   m_resolutionDetector: {fileID: 719469545}
   m_confirmationDialogManager: {fileID: 2016785227}
   m_steamManager: {fileID: 735095294}
+  m_steamRichPresence: {fileID: 1987998127}
   m_uwpNotifications: {fileID: 943758001}
   m_androidNotifications: {fileID: 943758002}
   m_ring: {fileID: 361292848}
@@ -13397,6 +13398,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1987998125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987998126}
+  - component: {fileID: 1987998127}
+  m_Layer: 0
+  m_Name: SteamRichPresence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1987998126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987998125}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2146118772}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1987998127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987998125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3060757248163424db5e0c4c10599bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2016785225
 GameObject:
   m_ObjectHideFlags: 0
@@ -14515,6 +14560,7 @@ Transform:
   - {fileID: 943758000}
   - {fileID: 719469544}
   - {fileID: 1683033052}
+  - {fileID: 1987998126}
   m_Father: {fileID: 504182708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1292278285335342419 stripped

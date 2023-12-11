@@ -110,6 +110,7 @@
     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Items\SidebarRow.cs" />
     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Helpers\DateTimeHelper.cs" />
     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Settings\OptionUnityAnalytics.cs" />
+    <Compile Include="Assets\AdrianMiasik\Scripts\Components\Specific\Platforms\Steam\SteamRichPresence.cs" />
     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeIcon.cs" />
     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\Settings\UserSettingsSerializer.cs" />
     <Compile Include="Assets\AdrianMiasik\Scripts\Components\Core\ThemeManager.cs" />

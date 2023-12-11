@@ -75,6 +75,7 @@ namespace AdrianMiasik
 
         [Header("Unity Pomodoro - Platform Specific Managers")]
         [SerializeField] private SteamManager m_steamManager; // Disable on Android and WSA platforms
+        [SerializeField] private SteamRichPresence m_steamRichPresence;
         // ReSharper disable once NotAccessedField.Local
         [SerializeField] private UWPNotifications m_uwpNotifications; // Only for the UWP platform
         // ReSharper disable once NotAccessedField.Local
@@ -631,6 +632,7 @@ namespace AdrianMiasik
             m_menuToggleSprite.m_onSetToFalseClick.AddListener(m_sidebarMenu.Close);
             
             // Components
+            m_steamRichPresence.Initialize();
             m_background.Initialize(this);
             m_stateIndicator.Initialize(this);
             m_labelText.Initialize(this);
@@ -660,6 +662,7 @@ namespace AdrianMiasik
             m_sidebarPages.Initialize(this);
 
             // Register elements that need updating per timer state change
+            timerElements.Add(m_steamRichPresence);
             timerElements.Add(m_labelText);
             timerElements.Add(m_stateIndicator);
             timerElements.Add(m_rightButton);
