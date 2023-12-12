@@ -10,8 +10,9 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
     /// </summary>
     public class SteamManager : MonoBehaviour
     {
-#if !UNITY_ANDROID && !UNITY_WSA
         private bool isInitialized;
+        
+#if !UNITY_ANDROID && !UNITY_WSA
         [SerializeField] private bool m_enableSteamworks = true;
     
         public void Initialize()
@@ -29,6 +30,8 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
             catch (System.Exception e)
             {
                 Debug.Log("Unable to initialize Steam client. " + e);
+                isInitialized = false;
+                return;
             }
         
             DontDestroyOnLoad(gameObject);
@@ -48,5 +51,10 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
             SteamClient.Shutdown();
         }
 #endif
+        
+        public bool IsInitialized()
+        {
+            return isInitialized;
+        }
     }
 }

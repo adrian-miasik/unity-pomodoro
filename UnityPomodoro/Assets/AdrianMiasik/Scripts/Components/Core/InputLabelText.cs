@@ -47,8 +47,9 @@ namespace AdrianMiasik.Components.Core
 
             // Debug.Log("The input label text has been deselected: " + inputFieldString);
         }
-
-        public void UpdateTextLabel()
+        
+#if !UNITY_ANDROID && !UNITY_WSA
+        public void UpdateSteamRichPresenceLabel()
         {
             if (!Timer.IsOnBreak())
             {
@@ -63,6 +64,7 @@ namespace AdrianMiasik.Components.Core
                 SetUserText("Set a break time");
             }
         }
+#endif
 
         /// <summary>
         /// Sets the label based on the current timer state.
@@ -102,7 +104,11 @@ namespace AdrianMiasik.Components.Core
                 isOverridingDefaultWorkText = isOverridingDefaultText;
                 workText = desiredText;
 
-                SteamFriends.SetRichPresence("label", isTextEmpty ? "Work Timer" : desiredText);
+                // TODO: Communicate with SteamRichPresence class
+                if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
+                {
+                    SteamFriends.SetRichPresence("label", isTextEmpty ? "Work Timer" : desiredText);
+                }
             }
             else
             {
@@ -110,15 +116,23 @@ namespace AdrianMiasik.Components.Core
                 {
                     isOverridingDefaultBreakText = isOverridingDefaultText;
                     breakText = desiredText;
-                    
-                    SteamFriends.SetRichPresence("label", isTextEmpty ? "Break Timer" : desiredText);
+
+                    // TODO: Communicate with SteamRichPresence class
+                    if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
+                    {
+                        SteamFriends.SetRichPresence("label", isTextEmpty ? "Break Timer" : desiredText);
+                    }
                 }
                 else
                 {
                     isOverridingDefaultLongBreakText = isOverridingDefaultText;
                     longBreakText = desiredText;
-                    
-                    SteamFriends.SetRichPresence("label", isTextEmpty ? "Long Break Timer" : desiredText);
+
+                    // TODO: Communicate with SteamRichPresence class
+                    if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
+                    {
+                        SteamFriends.SetRichPresence("label", isTextEmpty ? "Long Break Timer" : desiredText);
+                    }
                 }
             }
         }

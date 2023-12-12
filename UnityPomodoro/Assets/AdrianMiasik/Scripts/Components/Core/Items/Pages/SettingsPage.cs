@@ -4,6 +4,7 @@ using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Settings;
 using AdrianMiasik.Components.Specific.Settings;
 using AdrianMiasik.ScriptableObjects;
+using Steamworks;
 using UnityEngine;
 
 namespace AdrianMiasik.Components.Core.Items.Pages
@@ -18,11 +19,12 @@ namespace AdrianMiasik.Components.Core.Items.Pages
         [SerializeField] private OptionDigitFormat m_optionDigitFormat;
         [SerializeField] private OptionPomodoroCount m_optionPomodoroCount;
         [SerializeField] private OptionSetAlarmSound m_optionSetAlarmSound;
-        
+
         [Header("Toggle Sliders")]
         [SerializeField] private OptionEnableLongBreaks m_optionEnableLongBreak;
         [SerializeField] private OptionMuteAudioOutOfFocus m_optionMuteSoundOutOfFocusToggle;
         [SerializeField] private OptionUnityAnalytics m_optionUnityAnalytics;
+        [SerializeField] private OptionSteamRichPresence m_optionSteamRichPresence;
         
         public void Initialize(PomodoroTimer pomodoroTimer)
         {
@@ -39,6 +41,20 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             HideMuteSoundOutOfFocusOption();
 #else
             m_optionMuteSoundOutOfFocusToggle.Initialize(Timer);
+#endif
+
+#if !UNITY_ANDROID && !UNITY_WSA
+            if (pomodoroTimer.IsSteamworksInitialized())
+            {
+                m_optionSteamRichPresence.Initialize(Timer);
+                Debug.Log("Showing Steam Rich Presence option.");
+            }
+            else
+            {
+                Debug.Log("Hiding Steam Rich Presence option.");
+                m_optionSteamRichPresence.gameObject.SetActive(false);
+                m_optionSteamRichPresence.m_spacer.gameObject.SetActive(false);
+            }
 #endif
             
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
@@ -65,6 +81,7 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             m_optionEnableLongBreak.Refresh(Timer.GetTimerSettings().m_longBreaks);
             m_optionMuteSoundOutOfFocusToggle.Refresh(Timer.GetSystemSettings().m_muteSoundWhenOutOfFocus);
             m_optionUnityAnalytics.Refresh(Timer.GetSystemSettings().m_enableUnityAnalytics);
+            m_optionSteamRichPresence.Refresh(Timer.GetSystemSettings().m_enableSteamRichPresence);
         }
 
         /// <summary>
@@ -110,8 +127,25 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             m_optionDigitFormat.SetDropdownValue(Timer.GetDigitFormatIndex());
             
             base.Show(onAnimationCompletion);
+            
+            if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
+            {
+                // TODO: Communicate with SteamRichPresence class
+                SteamFriends.SetRichPresence("steam_display", "#Settings");
+            }
         }
-        
+
+        public override void Hide(Action onAnimationCompletion)
+        {
+            base.Hide(onAnimationCompletion);
+            
+            if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
+            {
+                // TODO: Communicate with SteamRichPresence class instead
+                Timer.UpdateSteamRichPresence();
+            }
+        }
+
         /// <summary>
         /// Shows the 'sound mute when application is out of focus' option to the user.
         /// <remarks>Intended to be shown for desktop users, not mobile.</remarks>

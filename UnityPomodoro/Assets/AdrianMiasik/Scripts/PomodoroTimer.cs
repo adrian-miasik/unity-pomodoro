@@ -20,7 +20,6 @@ using Steamworks;
 using Steamworks.Data;
 using LeTai.Asset.TranslucentImage;
 using QFSW.QC;
-using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
@@ -245,7 +244,8 @@ namespace AdrianMiasik
         private void ConfigureSettings()
         {
 #if !UNITY_ANDROID && !UNITY_WSA
-            // Steam manager has to be loaded prior to the other managers since settings could be saved via Cloud Save.
+            // Steam manager has to be loaded prior to the other managers since settings could be saved in
+            // (then loaded from) Cloud Save.
             m_steamManager.Initialize();
 #endif
             
@@ -275,8 +275,13 @@ namespace AdrianMiasik
                 defaultSystemSettings.m_muteSoundWhenOutOfFocus = false; // Doesn't quite matter for mobile.
 #endif
                 
-                // All platforms have analytics on by default. (User can opt-out though via SettingsPage)
+                // All platforms have analytics on by default. (User can opt-out via the SettingsPage)
                 defaultSystemSettings.m_enableUnityAnalytics = true;
+
+#if !UNITY_ANDROID && !UNITY_WSA
+                // Steam rich presence enabled by default. (User can opt-out via the SettingsPage)
+                defaultSystemSettings.m_enableSteamRichPresence = true;
+#endif
                 
                 // Cache
                 systemSettings = defaultSystemSettings;
@@ -632,7 +637,7 @@ namespace AdrianMiasik
             m_menuToggleSprite.m_onSetToFalseClick.AddListener(m_sidebarMenu.Close);
             
             // Components
-            m_steamRichPresence.Initialize();
+            m_steamRichPresence.Initialize(this);
             m_background.Initialize(this);
             m_stateIndicator.Initialize(this);
             m_labelText.Initialize(this);
@@ -1148,7 +1153,7 @@ namespace AdrianMiasik
         public void SwitchTimer(bool isOnBreak)
         {
             m_digitFormat.m_isOnBreak = isOnBreak;
-            m_labelText.UpdateTextLabel(); // Force steam rich presence to trigger
+            m_labelText.UpdateSteamRichPresenceLabel(); // Force steam rich presence to trigger
             SwitchState(States.SETUP);
             isTimerBeingSetup = true;
             CalculateTimeValues();
@@ -1880,12 +1885,32 @@ namespace AdrianMiasik
             m_digitFormat.ShowTickAnimation();
         }
 
+        public bool IsSteamworksInitialized()
+        {
+            return m_steamManager.IsInitialized();
+        }
+        
 #if !UNITY_ANDROID && !UNITY_WSA
         public void ShutdownSteamManager()
         {
             m_steamManager.Shutdown();
         }
+
+        public bool IsSteamRichPresenceEnabled()
+        {
+            return GetSystemSettings().m_enableSteamRichPresence;
+        }
+        
+        public void UpdateSteamRichPresence()
+        {
+            // Update state
+            m_steamRichPresence.StateUpdate(m_state, GetTheme());
+            
+            // Update label
+            m_labelText.UpdateSteamRichPresenceLabel();
+        }
 #endif
+        
         public void TrySubmitConfirmationDialog()
         {
             m_confirmationDialogManager.GetCurrentConfirmationDialog()?.Submit();
