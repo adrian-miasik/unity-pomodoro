@@ -1148,6 +1148,7 @@ namespace AdrianMiasik
         public void SwitchTimer(bool isOnBreak)
         {
             m_digitFormat.m_isOnBreak = isOnBreak;
+            m_labelText.UpdateTextLabel(); // Force steam rich presence to trigger
             SwitchState(States.SETUP);
             isTimerBeingSetup = true;
             CalculateTimeValues();

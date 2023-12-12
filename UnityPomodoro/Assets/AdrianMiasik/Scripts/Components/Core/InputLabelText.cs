@@ -48,6 +48,22 @@ namespace AdrianMiasik.Components.Core
             // Debug.Log("The input label text has been deselected: " + inputFieldString);
         }
 
+        public void UpdateTextLabel()
+        {
+            if (!Timer.IsOnBreak())
+            {
+                SetUserText("Set a work time");
+            }
+            else if (Timer.IsOnLongBreak())
+            {
+                SetUserText("Set a long break time");
+            }
+            else
+            {
+                SetUserText("Set a break time");
+            }
+        }
+
         /// <summary>
         /// Sets the label based on the current timer state.
         /// </summary>
