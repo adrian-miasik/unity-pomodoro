@@ -2,6 +2,7 @@
 using AdrianMiasik.Components.Base;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
+using Steamworks;
 using TMPro;
 using UnityEngine;
 
@@ -77,10 +78,15 @@ namespace AdrianMiasik.Components.Core
         /// <param name="isOverridingDefaultText"></param>
         private void SetUserStateText(string desiredText, bool isOverridingDefaultText)
         {
+            // Steam rich presence
+            bool isTextEmpty = desiredText == String.Empty;
+
             if (!Timer.IsOnBreak())
             {
                 isOverridingDefaultWorkText = isOverridingDefaultText;
                 workText = desiredText;
+
+                SteamFriends.SetRichPresence("label", isTextEmpty ? "Work Timer" : desiredText);
             }
             else
             {
@@ -88,11 +94,15 @@ namespace AdrianMiasik.Components.Core
                 {
                     isOverridingDefaultBreakText = isOverridingDefaultText;
                     breakText = desiredText;
+                    
+                    SteamFriends.SetRichPresence("label", isTextEmpty ? "Break Timer" : desiredText);
                 }
                 else
                 {
                     isOverridingDefaultLongBreakText = isOverridingDefaultText;
                     longBreakText = desiredText;
+                    
+                    SteamFriends.SetRichPresence("label", isTextEmpty ? "Long Break Timer" : desiredText);
                 }
             }
         }
