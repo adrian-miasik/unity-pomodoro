@@ -3,8 +3,9 @@
 	"Language"	"english"
 	"Tokens"
 	{
-	    "#Setup"  "Setting Up..."
-	    "#Running"  "Running!"
-	    "#Paused"  "Paused."
+	    "#Setup"  "🛠️ Setup"
+	    "#Running"  "⌛ Running... '%LABEL%'"
+	    "#Paused"  "⏸️ Paused. '%LABEL%'"
+	    "#Completed"  "✅ Timer Completed! '%LABEL%'"
 	}
 }
