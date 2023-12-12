@@ -35,7 +35,7 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
                     SteamFriends.SetRichPresence("steam_display", "#Paused");
                     break;
                 case PomodoroTimer.States.COMPLETE:
-                    SteamFriends.ClearRichPresence();
+                    SteamFriends.SetRichPresence("steam_display", "#Completed");
                     break;
             }
             
