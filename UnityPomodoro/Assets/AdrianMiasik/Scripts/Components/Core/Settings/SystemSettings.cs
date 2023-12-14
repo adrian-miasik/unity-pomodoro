@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using AdrianMiasik.Components.Specific.Platforms.UWP;
 
 namespace AdrianMiasik.Components.Core.Settings
@@ -32,11 +33,13 @@ namespace AdrianMiasik.Components.Core.Settings
         /// </summary>
         public bool m_enableUnityAnalytics = true;
 
+#if !UNITY_ANDROID && !UNITY_WSA
         /// <summary>
         /// Do you want to enable the Steam Rich Presence functionality?
         /// If `True`, users state and custom labels will be shared with friends via Steam chat client.
         /// If `False`, users state and custom labels will not be shared on Steam.
         /// </summary>
         public bool m_enableSteamRichPresence = true;
+#endif
     }
 }

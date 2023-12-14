@@ -637,7 +637,10 @@ namespace AdrianMiasik
             m_menuToggleSprite.m_onSetToFalseClick.AddListener(m_sidebarMenu.Close);
             
             // Components
-            m_steamRichPresence.Initialize(this);
+            if (m_loadedSystemSettings.m_enableSteamRichPresence)
+            {
+                m_steamRichPresence.Initialize(this);
+            }
             m_background.Initialize(this);
             m_stateIndicator.Initialize(this);
             m_labelText.Initialize(this);
@@ -1304,9 +1307,9 @@ namespace AdrianMiasik
         /// <example>Such as "00:24:35" (without the quotation marks)</example>
         /// </summary>
         /// <returns>Our current timer value.</returns>
-        public string GetTimerString()
+        public string GetTimerString(bool richPresenceFormat = false)
         {
-            return m_digitFormat.GetTimerString();
+            return m_digitFormat.GetTimerString(richPresenceFormat);
         }
         
         /// <summary>

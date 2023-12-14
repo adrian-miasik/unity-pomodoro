@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using AdrianMiasik.Interfaces;
 using AdrianMiasik.ScriptableObjects;
 using Steamworks;
@@ -19,7 +20,22 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
             pomodoroTimer = timer;
             isInitialized = true;
         }
-        
+
+        private void Update()
+        {
+            if (!isInitialized)
+            {
+                // Early exit
+                return;
+            }
+
+            if (pomodoroTimer.IsSteamworksInitialized() && pomodoroTimer.IsSteamRichPresenceEnabled())
+            {
+                SteamFriends.SetRichPresence("time_left", pomodoroTimer.GetTimerString(true));
+                SteamFriends.SetRichPresence("time_suffix", " left.");
+            }
+        }
+
         public void StateUpdate(PomodoroTimer.States state, Theme theme)
         {
             if (!isInitialized)
@@ -45,6 +61,11 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
                         break;
                 }
             }
+        }
+
+        public void SetRichPresence(string key, string value)
+        {
+            // TODO: Implement
         }
     }
 #endif
