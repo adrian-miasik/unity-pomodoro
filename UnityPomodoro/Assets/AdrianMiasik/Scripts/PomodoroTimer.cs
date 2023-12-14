@@ -1245,6 +1245,14 @@ namespace AdrianMiasik
         }
         
         /// <summary>
+        /// Presses/Taps the skip button.
+        /// </summary>
+        public void TriggerTimerSkip()
+        {
+            m_skipButton.Press();
+        }
+        
+        /// <summary>
         /// Presses the restart button.
         /// </summary>
         public void TriggerTimerRestart()
