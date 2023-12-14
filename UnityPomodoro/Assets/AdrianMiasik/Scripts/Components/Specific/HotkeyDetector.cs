@@ -98,6 +98,12 @@ namespace AdrianMiasik.Components.Specific
                 timer.TriggerTimerSwitch();
             }
             
+            // Skip timer
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                timer.TriggerTimerSkip();
+            }   
+            
             // Theme switch
             if (Input.GetKeyDown(KeyCode.T))
             {

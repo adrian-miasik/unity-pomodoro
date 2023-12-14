@@ -74,5 +74,10 @@ namespace AdrianMiasik.Components.Specific
             }
 #endif
         }
+
+        public void Press()
+        {
+            m_buttonSvg.OnPointerClick(null);
+        }
     }
 }
