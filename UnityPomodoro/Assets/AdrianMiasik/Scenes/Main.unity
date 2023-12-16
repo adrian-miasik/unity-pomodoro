@@ -4614,7 +4614,6 @@ MonoBehaviour:
   m_resolutionDetector: {fileID: 719469545}
   m_confirmationDialogManager: {fileID: 2016785227}
   m_steamManager: {fileID: 735095294}
-  m_steamRichPresence: {fileID: 1987998127}
   m_uwpNotifications: {fileID: 943758001}
   m_androidNotifications: {fileID: 943758002}
   m_ring: {fileID: 361292848}
@@ -6671,7 +6670,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1987998126}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &735095294
@@ -6687,6 +6687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enableSteamworks: 1
+  m_richPresence: {fileID: 1987998127}
 --- !u!1 &754563202
 GameObject:
   m_ObjectHideFlags: 0
@@ -13905,7 +13906,7 @@ GameObject:
   - component: {fileID: 1987998126}
   - component: {fileID: 1987998127}
   m_Layer: 0
-  m_Name: SteamRichPresence
+  m_Name: Rich Presence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13919,12 +13920,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1987998125}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2146118772}
+  m_Father: {fileID: 735095293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1987998127
 MonoBehaviour:
@@ -15057,7 +15058,6 @@ Transform:
   - {fileID: 943758000}
   - {fileID: 719469544}
   - {fileID: 1683033052}
-  - {fileID: 1987998126}
   m_Father: {fileID: 504182708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1292278285335342419 stripped

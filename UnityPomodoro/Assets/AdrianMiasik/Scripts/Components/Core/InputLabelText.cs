@@ -103,12 +103,9 @@ namespace AdrianMiasik.Components.Core
             {
                 isOverridingDefaultWorkText = isOverridingDefaultText;
                 workText = desiredText;
-
-                // TODO: Communicate with SteamRichPresence class
-                if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
-                {
-                    SteamFriends.SetRichPresence("label", isTextEmpty ? "Work Timer" : desiredText);
-                }
+                
+                Timer.SteamTrySetRichPresence("label", isTextEmpty ? "Work Timer" : desiredText);
+                
             }
             else
             {
@@ -117,22 +114,14 @@ namespace AdrianMiasik.Components.Core
                     isOverridingDefaultBreakText = isOverridingDefaultText;
                     breakText = desiredText;
 
-                    // TODO: Communicate with SteamRichPresence class
-                    if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
-                    {
-                        SteamFriends.SetRichPresence("label", isTextEmpty ? "Break Timer" : desiredText);
-                    }
+                    Timer.SteamTrySetRichPresence("label", isTextEmpty ? "Break Timer" : desiredText);
                 }
                 else
                 {
                     isOverridingDefaultLongBreakText = isOverridingDefaultText;
                     longBreakText = desiredText;
-
-                    // TODO: Communicate with SteamRichPresence class
-                    if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
-                    {
-                        SteamFriends.SetRichPresence("label", isTextEmpty ? "Long Break Timer" : desiredText);
-                    }
+                    
+                    Timer.SteamTrySetRichPresence("label", isTextEmpty ? "Long Break Timer" : desiredText);
                 }
             }
         }

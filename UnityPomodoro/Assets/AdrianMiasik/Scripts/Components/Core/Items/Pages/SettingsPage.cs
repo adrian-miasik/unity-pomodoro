@@ -42,21 +42,19 @@ namespace AdrianMiasik.Components.Core.Items.Pages
 #else
             m_optionMuteSoundOutOfFocusToggle.Initialize(Timer);
 #endif
-
-#if !UNITY_ANDROID && !UNITY_WSA
+            
             if (pomodoroTimer.IsSteamworksInitialized())
             {
+                // Init settings option
                 m_optionSteamRichPresence.Initialize(Timer);
-                Debug.Log("Showing Steam Rich Presence option.");
             }
             else
             {
-                Debug.Log("Hiding Steam Rich Presence option.");
+                // Hide settings option
                 m_optionSteamRichPresence.gameObject.SetActive(false);
                 m_optionSteamRichPresence.m_spacer.gameObject.SetActive(false);
             }
-#endif
-            
+
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
             m_optionUnityAnalytics.Initialize(Timer);
 #else
@@ -128,22 +126,14 @@ namespace AdrianMiasik.Components.Core.Items.Pages
             
             base.Show(onAnimationCompletion);
             
-            if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
-            {
-                // TODO: Communicate with SteamRichPresence class
-                SteamFriends.SetRichPresence("steam_display", "#Settings");
-            }
+            Timer.SteamTrySetRichPresence("steam_display", "#Settings");
         }
 
         public override void Hide(Action onAnimationCompletion)
         {
             base.Hide(onAnimationCompletion);
             
-            if (Timer.IsSteamworksInitialized() && Timer.IsSteamRichPresenceEnabled())
-            {
-                // TODO: Communicate with SteamRichPresence class instead
-                Timer.UpdateSteamRichPresence();
-            }
+            Timer.UpdateSteamRichPresence();
         }
 
         /// <summary>

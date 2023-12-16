@@ -43,14 +43,24 @@ namespace AdrianMiasik.Components.Specific.Settings
                 UserSettingsSerializer.SaveSettingsFile(Timer.GetSystemSettings().m_enableSteamRichPresence, "system-settings");
                 
                 // Clear current state if present
-                SteamFriends.ClearRichPresence();
+                if (Timer.IsSteamworksRichPresenceInitialized())
+                {
+                    Timer.ClearSteamRichPresence();
+                    // TODO: hide settings option
+                }
             }
             else
             {
                 // Set and apply
                 Timer.GetSystemSettings().m_enableSteamRichPresence = true;
                 UserSettingsSerializer.SaveSettingsFile(Timer.GetSystemSettings().m_enableSteamRichPresence, "system-settings");
-
+                
+                if (!Timer.IsSteamworksRichPresenceInitialized())
+                {
+                    Timer.InitializeSteamRichPresence();
+                    // TODO: show settings options
+                }
+                
                 // Update rich presence state
                 Timer.UpdateSteamRichPresence();
             }
