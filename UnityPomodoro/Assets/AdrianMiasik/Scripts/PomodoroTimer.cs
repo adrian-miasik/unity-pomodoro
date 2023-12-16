@@ -277,11 +277,21 @@ namespace AdrianMiasik
                 // All platforms have analytics on by default. (User can opt-out via the SettingsPage)
                 defaultSystemSettings.m_enableUnityAnalytics = true;
 
+                // Steam rich presence enabled by default on platforms that support it.
+                // (User can opt-out via the SettingsPage)
 #if !UNITY_ANDROID && !UNITY_WSA
-                // Steam rich presence enabled by default. (User can opt-out via the SettingsPage)
-                defaultSystemSettings.m_enableSteamRichPresence = true;
+                if (m_steamManager.IsInitialized())
+                {
+                    defaultSystemSettings.m_enableSteamRichPresence = true;
+                }
+                else
+                {
+                    defaultSystemSettings.m_enableSteamRichPresence = false;
+                }
+#else
+                defaultSystemSettings.m_enableSteamRichPresence = false;
 #endif
-                
+
                 // Cache
                 systemSettings = defaultSystemSettings;
                 UserSettingsSerializer.SaveSettingsFile(systemSettings, "system-settings");
