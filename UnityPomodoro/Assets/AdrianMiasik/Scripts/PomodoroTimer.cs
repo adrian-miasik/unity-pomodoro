@@ -1382,7 +1382,16 @@ namespace AdrianMiasik
         {
             return m_sidebarPages.IsAboutPageOpen();
         }
-        
+
+        /// <summary>
+        /// Is our <see cref="SettingsPage"/> currently open and visible?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSettingPageOpen()
+        {
+            return m_sidebarPages.IsSettingsPageOpen();
+        }
+
         /// <summary>
         /// Is our <see cref="Sidebar"/> currently open and visible?
         /// </summary>
@@ -1929,6 +1938,12 @@ namespace AdrianMiasik
         {
             // Update state
             m_steamManager.UpdateState(m_state, GetTheme());
+            
+            // Override state if on settings page...
+            if (IsSettingPageOpen())
+            {
+                SteamTrySetRichPresence("steam_display", "#Settings");
+            }
             
             // Update label
             m_labelText.UpdateSteamRichPresenceLabel();
