@@ -253,7 +253,7 @@ namespace AdrianMiasik
             // System Settings
             if (systemSettings == null)
             {
-                Debug.Log("A new SYSTEM settings file has been created successfully!");
+                Debug.LogWarning("A new SYSTEM settings file has been created successfully!");
                 
                 // Create new settings
                 SystemSettings defaultSystemSettings = new SystemSettings();
@@ -316,7 +316,7 @@ namespace AdrianMiasik
             // If we don't have any saved settings...
             if (timerSettings == null)
             {
-                Debug.Log("A new TIMER settings file has been created successfully!");
+                Debug.LogWarning("A new TIMER settings file has been created successfully!");
                 
                 // Create new settings
                 TimerSettings defaultTimerSettings = new()
