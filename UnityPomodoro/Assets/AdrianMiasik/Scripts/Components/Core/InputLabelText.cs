@@ -48,7 +48,6 @@ namespace AdrianMiasik.Components.Core
             // Debug.Log("The input label text has been deselected: " + inputFieldString);
         }
         
-#if !UNITY_ANDROID && !UNITY_WSA
         public void UpdateSteamRichPresenceLabel()
         {
             if (!Timer.IsOnBreak())
@@ -64,7 +63,6 @@ namespace AdrianMiasik.Components.Core
                 SetUserText("Set a break time");
             }
         }
-#endif
 
         /// <summary>
         /// Sets the label based on the current timer state.
@@ -105,7 +103,6 @@ namespace AdrianMiasik.Components.Core
                 workText = desiredText;
                 
                 Timer.SteamTrySetRichPresence("label", isTextEmpty ? "Work Timer" : desiredText);
-                
             }
             else
             {

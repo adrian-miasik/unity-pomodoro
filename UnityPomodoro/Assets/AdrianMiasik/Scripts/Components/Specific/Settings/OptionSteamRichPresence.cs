@@ -3,7 +3,9 @@ using AdrianMiasik.Components.Base;
 using AdrianMiasik.Components.Core.Containers;
 using AdrianMiasik.Components.Core.Items.Pages;
 using AdrianMiasik.Components.Core.Settings;
+#if !UNITY_ANDROID && !UNITY_WSA
 using Steamworks;
+#endif
 
 namespace AdrianMiasik.Components.Specific.Settings
 {
@@ -21,6 +23,7 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             base.Initialize(pomodoroTimer);
             
+#if !UNITY_ANDROID && !UNITY_WSA
             m_toggleSlider.m_onSetToTrueClick.AddListener(() =>
             {
                 SetSteamRichPresence(true);
@@ -30,10 +33,12 @@ namespace AdrianMiasik.Components.Specific.Settings
             {
                 SetSteamRichPresence(false);
             });
+#endif
 
             m_toggleSlider.Initialize(pomodoroTimer, Timer.GetSystemSettings().m_enableSteamRichPresence);
         }
-
+        
+#if !UNITY_ANDROID && !UNITY_WSA
         private void SetSteamRichPresence(bool enableRichPresence)
         {
             if (!enableRichPresence)
@@ -65,5 +70,6 @@ namespace AdrianMiasik.Components.Specific.Settings
                 Timer.UpdateSteamRichPresence();
             }
         }
+#endif
     }
 }

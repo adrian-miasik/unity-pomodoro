@@ -509,12 +509,17 @@ namespace AdrianMiasik
             m_confirmationDialogManager.Initialize(this);
             
             // Platform Managers
+#if !UNITY_ANDROID && !UNITY_WSA
+            // Steam Platforms
             m_steamManager.InitializeSteamModules();
+#endif
+
 #if UNITY_WSA
             // UWP Toast / Notification
             m_uwpNotifications.Initialize(GetSystemSettings());
             m_onTimerCompletion.AddListener(m_uwpNotifications.ShowToast);
 #endif
+            
 #if UNITY_ANDROID
             // Android Notification
             m_androidNotifications.Initialize(this);
@@ -1918,6 +1923,7 @@ namespace AdrianMiasik
         {
             m_steamManager.Shutdown();
         }
+#endif
         
         public void UpdateSteamRichPresence()
         {
@@ -1927,7 +1933,6 @@ namespace AdrianMiasik
             // Update label
             m_labelText.UpdateSteamRichPresenceLabel();
         }
-#endif
         
         public void TrySubmitConfirmationDialog()
         {
@@ -1961,6 +1966,7 @@ namespace AdrianMiasik
             m_steamManager.SetRichPresence(key, value);
         }
         
+#if !UNITY_ANDROID && !UNITY_WSA 
         /// <summary>
         /// Is the Steam Rich presence module initialized/currently running?
         /// </summary>
@@ -1987,5 +1993,6 @@ namespace AdrianMiasik
         {
             m_steamManager.ClearSteamRichPresence();
         }
+#endif
     }
 }

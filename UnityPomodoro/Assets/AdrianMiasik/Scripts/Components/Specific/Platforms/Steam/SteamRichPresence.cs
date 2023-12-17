@@ -1,3 +1,4 @@
+#if !UNITY_ANDROID && !UNITY_WSA
 using System;
 using System.Threading;
 using AdrianMiasik.Interfaces;
@@ -11,10 +12,9 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
     // Steam Rich Presence should communicate with this class first. 
     public class SteamRichPresence : MonoBehaviour, ITimerState
     {
-#if !UNITY_ANDROID && !UNITY_WSA
         private PomodoroTimer pomodoroTimer;
         private bool isInitialized;
-
+        
         public void Initialize(PomodoroTimer timer)
         {
             pomodoroTimer = timer;
@@ -61,7 +61,7 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
                     break;
             }
         }
-
+        
         public void SetRichPresence(string key, string value)
         {
             if (!isInitialized)
@@ -72,7 +72,7 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
             
             SteamFriends.SetRichPresence(key, value);
         }
-
+        
         public void Clear()
         {
             if (isInitialized)
@@ -84,5 +84,5 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
             isInitialized = false;
         }
     }
-#endif
 }
+#endif

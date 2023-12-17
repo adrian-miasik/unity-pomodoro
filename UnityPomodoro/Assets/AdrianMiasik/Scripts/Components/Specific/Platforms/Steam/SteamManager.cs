@@ -14,10 +14,10 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
         private PomodoroTimer m_pomodoroTimer;
         private bool isInitialized;
         
-#if !UNITY_ANDROID && !UNITY_WSA
+#if !UNITY_ANDROID && !UNITY_WSA 
         [SerializeField] private bool m_enableSteamworks = true;
         [SerializeField] private SteamRichPresence m_richPresence;
-
+        
         public void Initialize(PomodoroTimer timer)
         {
             if (!m_enableSteamworks)
@@ -64,33 +64,42 @@ namespace AdrianMiasik.Components.Specific.Platforms.Steam
         {
             SteamClient.Shutdown();
         }
-#endif
-        
+#endif        
+
         public bool IsInitialized()
         {
             return isInitialized;
         }
-
+        
         // Steam Rich Presence - Piper Methods
-
         public void UpdateState(PomodoroTimer.States state, Theme theme)
         {
+#if !UNITY_ANDROID && !UNITY_WSA
             m_richPresence.StateUpdate(state, theme);
+#endif
         }
 
         public bool IsRichPresenceInitialized()
         {
+#if !UNITY_ANDROID && !UNITY_WSA
             return m_richPresence.IsInitialized();
+#else
+            return false;
+#endif
         }
 
         public void SetRichPresence(string key, string value)
         {
+#if !UNITY_ANDROID && !UNITY_WSA
             m_richPresence.SetRichPresence(key, value);
+#endif
         }
 
         public void ClearSteamRichPresence()
         {
+#if !UNITY_ANDROID && !UNITY_WSA
             m_richPresence.Clear();
+#endif
         }
     }
 }
