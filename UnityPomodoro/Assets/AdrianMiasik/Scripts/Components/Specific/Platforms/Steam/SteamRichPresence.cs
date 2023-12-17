@@ -8,8 +8,6 @@ using UnityEngine;
 
 namespace AdrianMiasik.Components.Specific.Platforms.Steam
 {
-    // TODO: Move all SteamFriends.SetRichPresence method calls into this class. Anything that is modifying 
-    // Steam Rich Presence should communicate with this class first. 
     public class SteamRichPresence : MonoBehaviour, ITimerState
     {
         private PomodoroTimer pomodoroTimer;
