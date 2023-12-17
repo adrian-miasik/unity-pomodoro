@@ -43,6 +43,8 @@ namespace AdrianMiasik.Components.Specific.Settings
         {
             if (!enableRichPresence)
             {
+                // Turn off rich presence
+                
                 // Set and apply
                 Timer.GetSystemSettings().m_enableSteamRichPresence = false;
                 UserSettingsSerializer.SaveSettingsFile(Timer.GetSystemSettings().m_enableSteamRichPresence, "system-settings");
@@ -51,11 +53,13 @@ namespace AdrianMiasik.Components.Specific.Settings
                 if (Timer.IsSteamworksRichPresenceInitialized())
                 {
                     Timer.ClearSteamRichPresence();
-                    // TODO: hide settings option
+                    // TODO: hide settings option?
                 }
             }
             else
             {
+                // Otherwise...Turn on rich presence
+                
                 // Set and apply
                 Timer.GetSystemSettings().m_enableSteamRichPresence = true;
                 UserSettingsSerializer.SaveSettingsFile(Timer.GetSystemSettings().m_enableSteamRichPresence, "system-settings");
@@ -63,7 +67,7 @@ namespace AdrianMiasik.Components.Specific.Settings
                 if (!Timer.IsSteamworksRichPresenceInitialized())
                 {
                     Timer.InitializeSteamRichPresence();
-                    // TODO: show settings options
+                    // TODO: show settings options?
                 }
                 
                 // Update rich presence state
